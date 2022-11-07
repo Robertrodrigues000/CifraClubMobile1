@@ -1,0 +1,19 @@
+{
+    "developerPage": "Developer page",
+    "failToLoad": "Fail to load",
+    "tryAgain": "Try again",
+    "ntpScreen": "NTP screen",
+    "currentTimeIs": "Current time is {time}",
+    "@currentTimeIs": {
+        "placeholders": {
+            "time" : {
+                "type": "String",
+                "example": "12:06 PM"
+            }
+        }
+    },
+    "pressTheButtonToGetTheCurrentTime": "Press the button to get the current time",
+    "loading": "loading",
+    "getIt": "Get it",
+    "error": "error"
+}

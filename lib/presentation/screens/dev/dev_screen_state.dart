@@ -1,0 +1,3 @@
+class DevScreenState {
+  const DevScreenState();
+}

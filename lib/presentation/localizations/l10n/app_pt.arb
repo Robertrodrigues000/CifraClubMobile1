@@ -1,0 +1,11 @@
+{
+    "developerPage": "Página do desenvolvedor",
+    "failToLoad": "Falha ao carregar",
+    "tryAgain": "Tentar novamente",
+    "ntpScreen": "Tela do NTP",
+    "currentTimeIs": "A hora atual é {time}!",
+    "pressTheButtonToGetTheCurrentTime": "Pressione o botão para saber as horas",
+    "loading": "carregando",
+    "getIt": "Obter",
+    "error": "erro"
+}
