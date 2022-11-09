@@ -1,7 +1,8 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_bloc.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_state.dart';
-import 'package:cifraclub/presentation/themes/text_theme/cifraclub_text_style.dart';
+import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme.dart';
+import 'package:cifraclub/presentation/style/app_typography_scheme/app_typography_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +23,7 @@ class _NtpTestScreenState extends State<NtpTestScreen> {
         backgroundColor: widget.color,
         title: Text(
           context.text.ntpScreen,
-          style: CifraClubTextStyle.of(context).veryDifferentScreenTitleStyle,
+          style: AppTypographyScheme.of(context).exoticScreenAppBarStyle,
         ),
       ),
       body: BlocBuilder<NtpTestBloc, NtpTestState>(
@@ -31,14 +32,19 @@ class _NtpTestScreenState extends State<NtpTestScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(_getStateMessage(context, state)),
+                Text(_getStateMessage(context, state),
+                    style: TextStyle(
+                      color: AppColorScheme.of(context).screenCenterMessageColor,
+                    )),
                 const SizedBox(height: 16.0),
                 if (state is NtpTestLoadingState)
                   const CircularProgressIndicator()
                 else
                   ElevatedButton(
                     onPressed: BlocProvider.of<NtpTestBloc>(context).requireCurrentTime,
-                    child: Text(context.text.getIt),
+                    child: Text(
+                      context.text.getIt,
+                    ),
                   ),
               ],
             ),

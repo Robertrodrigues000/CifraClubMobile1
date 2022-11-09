@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CifraClubColors {
+class AppColors {
   static const Color transparent = Colors.transparent;
 
   static const Color white = Color(0xFFFFFFFF);

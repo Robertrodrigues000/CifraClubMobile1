@@ -1,8 +1,11 @@
-import 'package:cifraclub/presentation/themes/cifraclub_colors.dart';
+import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme_dark.dart';
+import 'package:cifraclub/presentation/style/app_color_scheme/app_colors.dart';
+import 'package:cifraclub/presentation/style/app_typography_scheme/app_dark_typography_style.dart';
 import 'package:flutter/material.dart';
 
-ThemeData get cifraClubDarkTheme => ThemeData(
-  scaffoldBackgroundColor: CifraClubColors.grey12,
+ThemeData get appDarkTheme => ThemeData(
+  scaffoldBackgroundColor: AppColors.grey12,
+  typography: Typography.material2018(), // [https://github.com/flutter/flutter/issues/89947#issuecomment-920508415]
   brightness: Brightness.dark,
   sliderTheme: SliderThemeData(
     trackHeight: 2,
@@ -10,19 +13,19 @@ ThemeData get cifraClubDarkTheme => ThemeData(
     overlayShape: SliderComponentShape.noOverlay,
   ),
   radioTheme: RadioThemeData(
-    fillColor: MaterialStateProperty.all(CifraClubColors.greyE0),
+    fillColor: MaterialStateProperty.all(AppColors.greyE0),
   ),
   appBarTheme: const AppBarTheme(
-    backgroundColor: CifraClubColors.grey12,
+    backgroundColor: AppColors.grey12,
   ),
   dialogTheme: const DialogTheme(
-    backgroundColor: CifraClubColors.grey21,
+    backgroundColor: AppColors.grey21,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(12)),
     ),
   ),
   bottomSheetTheme: const BottomSheetThemeData(
-    backgroundColor: CifraClubColors.grey21,
+    backgroundColor: AppColors.grey21,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(12),
@@ -32,7 +35,7 @@ ThemeData get cifraClubDarkTheme => ThemeData(
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: CifraClubColors.greyE0,
+      foregroundColor: AppColors.greyE0,
       textStyle: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w700,
@@ -43,4 +46,5 @@ ThemeData get cifraClubDarkTheme => ThemeData(
       minimumSize: const Size.fromHeight(48.0),
     ),
   ),
+  extensions: const [appColorDarkScheme, appDarkTypographyStyle],
 );
