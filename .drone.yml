@@ -100,7 +100,7 @@ steps:
       FIREBASE_APP_ID:
         from_secret: FIREBASE_APP_ID
     commands:
-      - printf "%s" "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > cifraclub_secret_file.json
+      - printf "%s" "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > $GOOGLE_APPLICATION_CREDENTIALS
       - cd android
       - fastlane android firebase
     depends_on:
