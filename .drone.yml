@@ -95,13 +95,12 @@ steps:
   - name: distribute
     image: ayerribeiro/fastlane
     environment:
-      GOOGLE_APPLICATION_CREDENTIALS_RAW_B64:
-        from_secret: GOOGLE_APPLICATION_CREDENTIALS_RAW_B64
+      GOOGLE_APPLICATION_CREDENTIALS_RAW:
+        from_secret: GOOGLE_APPLICATION_CREDENTIALS_RAW
       FIREBASE_APP_ID:
         from_secret: FIREBASE_APP_ID
     commands:
-      - export GOOGLE_APPLICATION_CREDENTIALS_RAW=$(echo "$GOOGLE_APPLICATION_CREDENTIALS_RAW_B64") | base64 --decode
-      - echo "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > $GOOGLE_APPLICATION_CREDENTIALS
+      - printf "%s" "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > cifraclub_secret_file.json
       - cd android
       - fastlane android firebase
     depends_on:
