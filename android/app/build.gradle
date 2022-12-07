@@ -53,11 +53,32 @@ android {
         versionName flutterVersionName
     }
 
-    buildTypes {
+    signingConfigs {
+        debug {
+            storeFile file("../../keys/cifraclubKeyDebug.keystore")
+        }
+
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            storeFile file("../../keys/cifraclubKeyUpload")
+            storePassword "CkPQAts5QmrtuICQ94lAnvBgYQs="
+            keyAlias "cifraclubKeyGenerated"
+            keyPassword "CkPQAts5QmrtuICQ94lAnvBgYQs="
+        }
+    }
+
+    buildTypes {
+        debug {
             signingConfig signingConfigs.debug
+            debuggable true
+            minifyEnabled false
+            ext.alwaysUpdateBuildId = false
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
         }
     }
 }

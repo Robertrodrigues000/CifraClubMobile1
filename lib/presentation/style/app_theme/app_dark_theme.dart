@@ -3,7 +3,7 @@ import 'package:cifraclub/presentation/style/app_color_scheme/app_colors.dart';
 import 'package:cifraclub/presentation/style/app_typography_scheme/app_dark_typography_style.dart';
 import 'package:flutter/material.dart';
 
-ThemeData get appDarkTheme => ThemeData(
+final appDarkTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.grey12,
   typography: Typography.material2018(), // [https://github.com/flutter/flutter/issues/89947#issuecomment-920508415]
   brightness: Brightness.dark,

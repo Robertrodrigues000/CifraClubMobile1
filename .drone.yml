@@ -1,0 +1,116 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+environment:
+  PUB_CACHE: /pub-cache
+  COVERAGE_EXCLUDE_FILES: lib/di/di_setup.config.dart
+  COVERAGE_EXCLUDE_FILES_SUFFIX: .g.dart
+  GOOGLE_APPLICATION_CREDENTIALS: "/workspace/CifraClub/cifraclub_secret_file.json"
+
+workspace:
+  path: /workspace/CifraClub
+
+steps:
+  - name: pub-get
+    image: cirrusci/flutter:3.3.8
+    commands:
+      - flutter pub get
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+
+  - name: format
+    image: cirrusci/flutter:3.3.8
+    commands:
+      - flutter format --line-length=200 --set-exit-if-changed lib test
+    depends_on:
+      - pub-get
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+
+  - name: analyze
+    image: cirrusci/flutter:3.3.8
+    commands:
+      - flutter analyze --no-pub .
+    depends_on:
+      - pub-get
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+
+  - name: image-files-check
+    image: cirrusci/flutter:3.3.8
+    commands:
+      - flutter pub run images_files_checker --path assets/images --fail-test-on-unexpected-dir
+    depends_on:
+      - pub-get
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+
+  - name: tests
+    image: cirrusci/flutter:3.3.8
+    commands:
+      - dart ci/generate_coverage_helper.dart
+      - flutter test --no-pub --coverage
+    depends_on:
+      - pub-get
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+
+  - name: coverage
+    image: cirrusci/flutter:3.3.8
+    environment:
+    commands:
+      - git diff origin/development_flutter | flutter pub run pull_request_coverage --minimum-coverage 97 --maximum-uncovered-lines 5
+      - flutter pub run dlcov --exclude-files $COVERAGE_EXCLUDE_FILES --exclude-suffix=$COVERAGE_EXCLUDE_FILES_SUFFIX
+    depends_on:
+      - pub-get
+      - tests
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+
+  - name: build-apk
+    image: cirrusci/flutter:3.3.8
+    environment:
+      MVN_USER:
+        from_secret: MVN_USER
+      MVN_TOKEN:
+        from_secret: MVN_TOKEN
+    commands:
+      - flutter build apk --release
+    depends_on:
+      - pub-get
+    volumes:
+      - name: pub-cache
+        path: /pub-cache
+    when:
+      event:
+      - push
+
+  - name: distribute
+    image: ayerribeiro/fastlane
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS_RAW_B64:
+        from_secret: GOOGLE_APPLICATION_CREDENTIALS_RAW_B64
+      FIREBASE_APP_ID:
+        from_secret: FIREBASE_APP_ID
+    commands:
+      - export GOOGLE_APPLICATION_CREDENTIALS_RAW=$(echo "$GOOGLE_APPLICATION_CREDENTIALS_RAW_B64") | base64 --decode
+      - echo "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > $GOOGLE_APPLICATION_CREDENTIALS
+      - cd android
+      - fastlane android firebase
+    depends_on:
+        - build-apk
+    when:
+      event:
+      - push
+
+volumes:
+  - name: pub-cache
+    host:
+      path: /var/lib/drone/cifraclub-mobile/pub-cache

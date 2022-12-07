@@ -1,0 +1,201 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+require 'i18n'
+default_platform(:ios)
+
+platform :ios do
+
+#     Firebase App Distribution 
+
+  desc "Envia uma build para o Firebase App Distribution"
+  lane :firebase do
+    ensure_env_vars(
+      env_vars: [
+        'WORKSPACE_LOCATION', 'WORKSPACE_SCHEME', 'PODFILE_LOCATION',
+        'GOOGLE_APPLICATION_CREDENTIALS', 'FIREBASE_APP_ID', 'FIREBASE_APP_TESTERS'
+      ]
+    )
+
+    build
+    firebase_app_distribution(app: ENV['FIREBASE_APP_ID'], testers: ENV['FIREBASE_APP_TESTERS'])
+  end
+
+#     TestFlight
+
+  desc "Envia uma build ao TestFlight para teste interno. Sem criar um PR de update no GitHub"
+  lane :testflight do
+    ensure_env_vars(
+      env_vars: ['XCODEPROJ_LOCATION', 'WORKSPACE_LOCATION', 'WORKSPACE_SCHEME', 'PODFILE_LOCATION', 'GITHUB_API_TOKEN', 
+      'DEPLOY_GITHUB_REPOSITORY', 'DEPLOY_GITHUB_BRANCH_BASE', 'BUILD_NUMBER',
+      'DEPLOY_GITHUB_RELEASE_IS_DRAFT', 'DEPLOY_GITHUB_TITLE_PREFIX']
+    )
+
+    build
+    upload_to_testflight(
+      skip_submission: true, 
+      skip_waiting_for_build_processing: true,
+      changelog: getChangelog(transliteratedToAscii: true)
+    ) 
+    send_msg_to_slack(message: "📋 Build de teste interno enviada para testflight!")
+  end
+
+  desc "Envia uma build ao TestFlight para ser lançada na loja, em seguida cria um PR de update no GitHub"
+  lane :beta do
+    ensure_env_vars(
+      env_vars: ['XCODEPROJ_LOCATION', 'WORKSPACE_LOCATION', 'WORKSPACE_SCHEME', 'PODFILE_LOCATION', 'GITHUB_API_TOKEN', 
+      'DEPLOY_GITHUB_REPOSITORY', 'DEPLOY_GITHUB_BRANCH_BASE', 'BUILD_NUMBER',
+      'DEPLOY_GITHUB_RELEASE_IS_DRAFT', 'DEPLOY_GITHUB_TITLE_PREFIX']
+    )
+
+    build
+    upload_to_testflight(
+      skip_submission: true, 
+      skip_waiting_for_build_processing: true,
+      changelog: getChangelog(transliteratedToAscii: true)
+    ) 
+    github
+    send_msg_to_slack(message: "🚀 Build de release enviada para testflight!")
+  end
+
+#     Build
+
+  desc "Compila uma nova build em release, pronta para ser enviada pra loja, usada no TestFlight ou no Firebase App Distribution"
+  private_lane :build do
+    ensure_env_vars(
+      env_vars: ['WORKSPACE_LOCATION', 'WORKSPACE_SCHEME', 'PODFILE_LOCATION']
+    )
+
+    update_code_signing_settings(
+      use_automatic_signing: true
+    )
+
+    sh("pod deintegrate ../$XCODEPROJ_LOCATION")
+    
+    cocoapods(
+      clean_install: true,
+      podfile: ENV['PODFILE_LOCATION']
+    )
+
+    build_app(
+      workspace: ENV['WORKSPACE_LOCATION'], 
+      scheme: ENV['WORKSPACE_SCHEME'],
+      export_xcargs: "-allowProvisioningUpdates",
+      export_options: ({
+        method: "app-store"
+      })
+    )
+  end
+
+  desc "Executa todos os testes"
+  lane :test do
+    run_tests(scheme: ENV['WORKSPACE_SCHEME'])
+  end
+
+#     Github
+
+  desc "Cria um PR de update e uma release no GitHub"
+  private_lane :github do    
+
+    ensure_env_vars(
+      env_vars: ['XCODEPROJ_LOCATION', 'WORKSPACE_SCHEME', 'GITHUB_API_TOKEN', 'BUILD_NUMBER',
+      'DEPLOY_GITHUB_REPOSITORY', 'DEPLOY_GITHUB_BRANCH_BASE', 'DEPLOY_GITHUB_RELEASE_IS_DRAFT', 'DEPLOY_GITHUB_TITLE_PREFIX']
+    )
+
+    # O git_commit pode falhar se não tiver nada para commitar. 
+    # Nesse caso, apenas vamos ignorar o erro. (Contrário seria habilitar a opção allow_nothing_to_commit: true).
+    begin
+      git_commit(
+        path: "../*", 
+        message: github_pr_and_tag_title
+      )
+    rescue
+    end
+
+    # É necessário enviar as mudanças pro remote da StudioSol. 
+    # Nos testes, até foi possível enviar o branch pro remote do usuário, mas a ação de criar PR sempre tentava ver no remote da StudioSol o branch em questão.
+    # O código abaixo tenta manter uma compatibilidade para executar tanto pra devs ('studiosol') quanto pra CI ('origin').
+    begin
+      push_to_git_remote(
+        remote: "studiosol",
+        tags: false
+      )
+    rescue => ex
+      push_to_git_remote(
+        remote: "origin",
+        tags: false
+      )
+    end
+
+    create_pull_request(
+      api_token: ENV['GITHUB_API_TOKEN'],
+      repo: ENV['DEPLOY_GITHUB_REPOSITORY'],
+      title: github_pr_and_tag_title,
+      base: ENV['DEPLOY_GITHUB_BRANCH_BASE'],
+      body: getChangelog
+    )
+
+    set_github_release(
+      repository_name: ENV['DEPLOY_GITHUB_REPOSITORY'],
+      api_token: ENV['GITHUB_API_TOKEN'],
+      name: github_pr_and_tag_title,
+      tag_name: "v%s" % version,
+      description: getChangelog,
+      commitish: "master",
+      upload_assets: lane_context[SharedValues::XCODEBUILD_ARCHIVE],
+      is_draft: ENV['DEPLOY_GITHUB_RELEASE_IS_DRAFT'] ||= true
+    )    
+  end
+
+  def github_pr_and_tag_title
+    return "%s Update %s - Build %s" % [
+      ENV['DEPLOY_GITHUB_TITLE_PREFIX'], version, buildNumber
+    ]
+  end
+
+  def version
+    return "#{get_version_number(xcodeproj: ENV['XCODEPROJ_LOCATION'], target: ENV['WORKSPACE_SCHEME'])}"
+  end
+
+  def buildNumber
+    return "#{ENV['BUILD_NUMBER']}"
+  end
+
+  def getChangelog(transliteratedToAscii = false)
+    unless lane_context[SharedValues::FL_CHANGELOG]
+      I18n.enforce_available_locales = false
+      changelog_from_git_commits(
+        pretty: "- %s",
+        merge_commit_filtering: "exclude_merges"
+      )
+    end
+    if transliteratedToAscii 
+      return I18n.transliterate(lane_context[SharedValues::FL_CHANGELOG], replacement: "")
+    end
+    return lane_context[SharedValues::FL_CHANGELOG]
+  end
+
+#     Discord
+
+  desc "Envia uma mensagem para o Discord"
+  private_lane :send_msg_to_slack do |options|
+    slack(
+      success: true,
+      message: options[:message],
+      payload: { 
+          "Scheme" => ENV['WORKSPACE_SCHEME']
+      },
+      default_payloads: [:git_branch, :last_git_commit_hash],
+    )
+  end
+
+end

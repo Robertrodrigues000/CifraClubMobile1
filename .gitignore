@@ -31,6 +31,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+coverage/lcov.info
+test/coverage_helper_test.dart
 
 # Symbolication related
 app.*.symbols
@@ -42,3 +44,18 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Fastlane iOS
+ios/Runner.app.dSYM.zip
+ios/Runner.ipa
+ios/fastlane/report.xml
+ios/fastlane/Preview.html
+ios/fastlane/screenshots
+ios/fastlane/test_output
+
+# Fastlane Android
+android/fastlane/report.xml
+android/fastlane/Preview.html
+android/fastlane/screenshots
+android/fastlane/test_output
+cifraclub_secret_file.json

@@ -1,0 +1,8 @@
+app_identifier("br.com.studiosol.CifraClub") # The bundle identifier of your app
+# apple_id("") # Your Apple email address
+
+itc_team_id("621267") # App Store Connect Team ID
+team_id("S2PECPJEG2") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

@@ -1,0 +1,151 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+# Este arquivo usa o environment para conseguirmos reutilizá-lo em vários projetos e manter um padrão das lanes. 
+# As variáveis de environment podem ser configuradas tanto no projeto quanto na máquina, e pode ser configurado no Fastfile ou no dotenv.
+#
+# Parâmetros configuráveis:
+#
+# 'GOOGLE_APPLICATION_CREDENTIALS': Path para o arquivo json. Necessário pra Firebase App Distribution. Recomendado que seja configurado na máquina. 
+# 'GOOGLE_APPLICATION_CREDENTIALS_RAW': O conteúdo do arquivo acima. Necessário para enviar para a Play Store. Recomendado que seja configurado na máquina.
+#
+# 'GITHUB_API_TOKEN': Token para uso no Github (Criar PR e release). Recomendado que seja configurado na máquina.
+#
+# 'FIREBASE_APP_ID': O id do app no Firebase. Necessário pro Firebase App Distribution.
+# 'FIREBASE_APP_TESTERS': O grupo de testers para o Firebase App Distribution. É uma string onde múltiplos grupos são separados por vírgula
+# 'FIREBASE_APP_CHANGELOG': Opcional - Changelog da build no Firebase App Distribution.
+#
+# 'DEPLOY_PLAY_STORE_ROLLOUT_PERCENTAGE': % de usuários pra enviar a build de deploy. Valor de 0 a 1 em string. (e.g. "0.2")
+# 'DEPLOY_GRADLE_TASK': A task que o gradle deverá chamar para criar a release. Usualmente é "clean bundleRelease"
+# 'DEPLOY_GITHUB_REPOSITORY': Pra qual usuário e repositório o PR deverá ser aberto. (e.g. "StudioSol/Android")
+# 'DEPLOY_GITHUB_BRANCH_BASE': Branch base pra qual o PR deverá ser mergeado
+# 'DEPLOY_GITHUB_TITLE_PREFIX': Prefixo do texto de commit, pull request e release
+# 'DEPLOY_GITHUB_PR_BODY': Descrição do pull request
+# 'DEPLOY_GITHUB_TAG_PREFIX': Prefixo na nomenclatura da tag ao criar uma release
+# 'DEPLOY_GITHUB_RELEASE_IS_DRAFT': Se a release deverá ser draft
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new build to Firebase App Distribution"
+  lane :firebase do
+    ensure_env_vars(
+      env_vars: ['GOOGLE_APPLICATION_CREDENTIALS', 'FIREBASE_APP_ID', 'FIREBASE_APP_TESTERS']
+    )
+
+    firebase_app_distribution(
+      service_credentials_file: ENV['GOOGLE_APPLICATION_CREDENTIALS'],
+      app: ENV['FIREBASE_APP_ID'],
+      groups: ENV['FIREBASE_APP_TESTERS'],
+      apk_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      release_notes: ENV['FIREBASE_APP_CHANGELOG']
+    )
+  end
+
+  desc "Deploy a new beta version to the Google Play"
+  lane :beta do
+    gradle(task: ENV['DEPLOY_GRADLE_TASK'])
+
+    upload_to_play_store(
+      json_key_data: ENV['GOOGLE_APPLICATION_CREDENTIALS_RAW'],
+      track: 'beta',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      version_codes_to_retain: ENV['VERSION_CODES_TO_RETAIN'].split
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    ensure_env_vars(
+      env_vars: [
+        'GOOGLE_APPLICATION_CREDENTIALS_RAW', 'GITHUB_API_TOKEN',
+        'APP_VERSION_NAME', 'APP_VERSION_CODE',
+        'DEPLOY_PLAY_STORE_ROLLOUT_PERCENTAGE', 'DEPLOY_GRADLE_TASK', 'DEPLOY_GITHUB_REPOSITORY',
+        'DEPLOY_GITHUB_BRANCH_BASE', 'DEPLOY_GITHUB_TITLE_PREFIX', 'VERSION_CODES_TO_RETAIN'
+      ]
+    )
+    ensure_git_status_clean
+
+    gradle(task: ENV['DEPLOY_GRADLE_TASK'])
+
+    upload_to_play_store(
+      json_key_data: ENV['GOOGLE_APPLICATION_CREDENTIALS_RAW'],
+      rollout: ENV['DEPLOY_PLAY_STORE_ROLLOUT_PERCENTAGE'],
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      version_codes_to_retain: ENV['VERSION_CODES_TO_RETAIN'].split
+    )
+
+    git_add
+    
+    # O git_commit pode falhar se não tiver nada para commitar. 
+    # Nesse caso, apenas vamos ignorar o erro. (Contrário seria habilitar a opção allow_nothing_to_commit: true).
+    begin
+      git_commit(
+        path: ".", 
+        message: github_pr_and_tag_title
+      )
+    rescue
+    end
+
+    # É necessário enviar as mudanças pro remote da StudioSol. 
+    # Nos testes, até foi possível enviar o branch pro remote do usuário, mas a ação de criar PR sempre tentava ver no remote da StudioSol o branch em questão.
+    # O código abaixo tenta manter uma compatibilidade para executar tanto pra devs ('studiosol') quanto pra CI ('origin').
+    begin
+      push_to_git_remote(
+        remote: "studiosol",
+        tags: false
+      )
+    rescue => ex
+      push_to_git_remote(
+        remote: "origin",
+        tags: false
+      )
+    end
+
+    create_pull_request(
+      api_token: ENV["GITHUB_API_TOKEN"],
+      repo: ENV['DEPLOY_GITHUB_REPOSITORY'],
+      title: github_pr_and_tag_title,
+      base: ENV['DEPLOY_GITHUB_BRANCH_BASE'],
+      body: ENV['DEPLOY_GITHUB_PR_BODY']
+    )
+
+    set_github_release(
+      repository_name: ENV['DEPLOY_GITHUB_REPOSITORY'],
+      api_token: ENV["GITHUB_API_TOKEN"],
+      name: github_pr_and_tag_title,
+      tag_name: "%sv%s" % [ENV['DEPLOY_GITHUB_TAG_PREFIX'], ENV['APP_VERSION_NAME']],
+      description: (File.read("changelog") rescue "No changelog provided"),
+      upload_assets: lane_context[SharedValues::GRADLE_ALL_AAB_OUTPUT_PATHS] + lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS],
+      is_draft: ENV['DEPLOY_GITHUB_RELEASE_IS_DRAFT'] ||= true
+    )
+  end
+
+  def github_pr_and_tag_title
+    return "%s Update v%s (%s)" % [
+      ENV['DEPLOY_GITHUB_TITLE_PREFIX'], ENV['APP_VERSION_NAME'], ENV['APP_VERSION_CODE']
+    ]
+  end
+
+end
