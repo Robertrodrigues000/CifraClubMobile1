@@ -1,0 +1,11 @@
+pubspec.lock  linguist-generated=true
+pubspec.lock  -diff
+
+lib/di/di_setup.config.dart  linguist-generated=true
+lib/di/di_setup.config.dart  -diff
+
+ios/Podfile.lock  linguist-generated=true
+ios/Podfile.lock  -diff
+
+**/*.mocks.dart  linguist-generated=true
+**/*.mocks.dart  -diff
