@@ -1,6 +1,6 @@
 # CifraClub Mobile
 
-[![Build Status](https://drone.sscdn.co/api/badges/StudioSol/CifraClubMobile/status.svg?ref=refs/heads/development_flutter)](https://drone.sscdn.co/StudioSol/CifraClubMobile)
+[![Build Status](https://drone.sscdn.co/api/badges/StudioSol/CifraClubMobile/status.svg?ref=refs/heads/development)](https://drone.sscdn.co/StudioSol/CifraClubMobile)
 
 Bem vind@ ao repositório do maior aplicativo de ensino de música do Brasil! 🧡
 

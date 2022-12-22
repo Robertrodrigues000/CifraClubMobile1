@@ -3,7 +3,7 @@ require 'json'
 require 'uri'
 require 'open3'
 
-command = "git diff origin/development_flutter | " +
+command = "git diff origin/development | " +
   "flutter pub run pull_request_coverage " +
   "--minimum-coverage 97 " +
   "--maximum-uncovered-lines 5 " +

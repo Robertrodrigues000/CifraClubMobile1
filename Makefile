@@ -14,7 +14,7 @@ test:
 	flutter test --no-pub --coverage
 
 coverage-result:
-	git diff origin/development_flutter | flutter pub run pull_request_coverage --minimum-coverage 97 --maximum-uncovered-lines 5
+	git diff origin/development | flutter pub run pull_request_coverage --minimum-coverage 97 --maximum-uncovered-lines 5
 	flutter pub run dlcov --exclude-files $COVERAGE_EXCLUDE_FILES --exclude-suffix=$COVERAGE_EXCLUDE_FILES_SUFFIX
 
 generate-localization:
