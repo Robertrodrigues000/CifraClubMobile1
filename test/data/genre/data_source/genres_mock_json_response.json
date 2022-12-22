@@ -1,0 +1,56 @@
+{
+    "home": [
+      {
+        "id": 666,
+        "name": "Rock",
+        "url": "rock",
+        "hits": 2983992256
+      },
+      {
+        "id": 9,
+        "name": "Sertanejo",
+        "url": "sertanejo",
+        "hits": 2276150631
+      },
+      {
+        "id": 30,
+        "name": "Gospel/Religioso",
+        "url": "gospelreligioso",
+        "hits": 2579539075
+      },
+      {
+        "id": 5,
+        "name": "MPB",
+        "url": "mpb",
+        "hits": 955582800
+      }
+    ],
+    "top": [
+      {
+        "id": 666,
+        "name": "Rock",
+        "url": "rock",
+        "hits": 2983992256
+      },
+      {
+        "id": 30,
+        "name": "Gospel/Religioso",
+        "url": "gospelreligioso",
+        "hits": 2579539075
+      }
+    ],
+    "all": [
+      {
+        "id": 1,
+        "name": "Alternativo",
+        "url": "alternativo",
+        "hits": 247823476
+      },
+      {
+        "id": 7,
+        "name": "Axé",
+        "url": "axe",
+        "hits": 114033748
+      }
+    ]
+  }

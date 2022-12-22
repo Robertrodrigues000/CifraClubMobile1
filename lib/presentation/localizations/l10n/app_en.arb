@@ -15,5 +15,9 @@
     "pressTheButtonToGetTheCurrentTime": "Press the button to get the current time",
     "loading": "loading",
     "getIt": "Get it",
-    "error": "error"
+    "error": "error",
+    "genreScreen": "Music genres screen",
+    "pressTheButtonToGetGenres": "Press the button to get the genres list",
+    "emptyList": "Empty list",
+    "noConnection": "No internet connection"
 }

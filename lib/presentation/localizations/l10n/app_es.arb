@@ -1,0 +1,15 @@
+{
+    "developerPage": "Página del desarrollador",
+    "failToLoad": "Error al cargar",
+    "tryAgain": "Intentar nuevamente",
+    "ntpScreen": "Pantalla del NTP",
+    "currentTimeIs": "La hora actual es {time}!",
+    "pressTheButtonToGetTheCurrentTime": "Presiona el botón para ver la hora",
+    "loading": "cargando",
+    "getIt": "Obtener",
+    "error": "error",
+    "genreScreen": "Pantalla de géneros musicales",
+    "pressTheButtonToGetGenres": "Presione el botón para obtener la lista de géneros",
+    "emptyList": "Lista vacía",
+    "noConnection": "Sin conexión a internet"
+}

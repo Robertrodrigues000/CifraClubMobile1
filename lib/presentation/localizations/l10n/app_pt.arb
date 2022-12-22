@@ -7,5 +7,9 @@
     "pressTheButtonToGetTheCurrentTime": "Pressione o botão para saber as horas",
     "loading": "carregando",
     "getIt": "Obter",
-    "error": "erro"
+    "error": "erro",
+    "genreScreen": "Tela de gêneros musicais",
+    "pressTheButtonToGetGenres": "Pressione o botão para obter a lista de gêneros",
+    "emptyList": "Lista vazia",
+    "noConnection": "Sem conexão com a internet"
 }

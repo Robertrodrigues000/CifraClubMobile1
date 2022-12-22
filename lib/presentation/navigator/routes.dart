@@ -1,5 +1,7 @@
+// coverage:ignore-file
 import 'package:cifraclub/presentation/navigator/screen_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
+import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 
 class ScreenEntryBuilder {
@@ -17,5 +19,9 @@ final List<ScreenEntryBuilder> cifraScreenBuilders = [
   ScreenEntryBuilder(
     NtpTestEntry.name,
     (params, _) => NtpTestEntry(params),
+  ),
+  ScreenEntryBuilder(
+    GenresEntry.name,
+    (params, _) => GenresEntry(params),
   ),
 ];

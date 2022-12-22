@@ -1,4 +1,6 @@
+// coverage:ignore-file
 import 'package:cifraclub/presentation/navigator/app_navigator.dart';
+import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
@@ -26,6 +28,15 @@ class _DevScreenState extends State<DevScreen> {
               AppNavigator.of(context).push(
                 screenName: NtpTestEntry.name,
                 params: {NtpTestEntry.colorParamKey: Colors.blue.value.toString()},
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.music_note),
+            title: Text(context.text.genreScreen),
+            onTap: () {
+              AppNavigator.of(context).push(
+                screenName: GenresEntry.name,
               );
             },
           ),

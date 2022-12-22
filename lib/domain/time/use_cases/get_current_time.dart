@@ -1,6 +1,7 @@
-import 'package:cifraclub/domain/shared/request_result.dart';
+// coverage:ignore-file
 import 'package:cifraclub/domain/time/repository/time_repository.dart';
 import 'package:injectable/injectable.dart';
+import 'package:typed_result/typed_result.dart';
 
 @injectable
 class GetCurrentTime {
@@ -8,7 +9,7 @@ class GetCurrentTime {
 
   const GetCurrentTime(this.timeRepository);
 
-  Future<RequestResult<DateTime>> call() {
+  Future<Result<DateTime, dynamic>> call() {
     return timeRepository.getCurrentTime();
   }
 }

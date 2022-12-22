@@ -1,5 +1,5 @@
-import 'package:cifraclub/domain/shared/request_result.dart';
+import 'package:typed_result/typed_result.dart';
 
 abstract class TimeRepository {
-  Future<RequestResult<DateTime>> getCurrentTime();
+  Future<Result<DateTime, dynamic>> getCurrentTime();
 }
