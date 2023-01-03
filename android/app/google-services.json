@@ -1,0 +1,287 @@
+{
+  "project_info": {
+    "project_number": "1046541148461",
+    "firebase_url": "https://integral-accord-651.firebaseio.com",
+    "project_id": "integral-accord-651",
+    "storage_bucket": "integral-accord-651.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046541148461:android:1883cf3bf7caa9da",
+        "android_client_info": {
+          "package_name": "com.studiosol.afinadorlite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046541148461-46hef7guij1ljbdr1f4lo83pucgm8rj3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "a28ca4c9ce9aa0c31befac717492ba58de77ebc1"
+          }
+        },
+        {
+          "client_id": "1046541148461-ano23megh6fbpkivl2tgm752chpdpdft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "e95851ef6d9a58f6c68e38f07cc352640a0f78a7"
+          }
+        },
+        {
+          "client_id": "1046541148461-df6ss8442tdb0c6gfn3g1htt6mkup4b4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "fdd0e1e8396f025b885d7bf9f54c2714a8e60a1e"
+          }
+        },
+        {
+          "client_id": "1046541148461-ld6d2iil2ufe0ga64eb4eps2vlooa0fn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "cf0c0a6e3bad7974e0347f6d2d3447af2444299a"
+          }
+        },
+        {
+          "client_id": "1046541148461-oou7mg1qjkm8a0evcis1frh5ge8anp1q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "030a949dc8d248761d28843869fd9da2f62483f1"
+          }
+        },
+        {
+          "client_id": "1046541148461-r38anb4jksdc3444vv77dagm8snapotm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "abe00880ef048c62acb077da54690e97c990b000"
+          }
+        },
+        {
+          "client_id": "1046541148461-t0t8hrfn2n36jbqjcudq0ptdkvrnmma2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.afinadorlite",
+            "certificate_hash": "fbb4915e3afddb9de42f3acfc82cf046d96888ee"
+          }
+        },
+        {
+          "client_id": "1046541148461-h3peolc2vtgf020mu7g6it9jaf62ft3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV1DDuUKpjakXHn2y-Kbt6tu5sp846eiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046541148461-0820jtjk076js6nepl31klkgbn0i1l6j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.studiosol.CifraClub"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046541148461:android:2f95063ccd05157f",
+        "android_client_info": {
+          "package_name": "com.studiosol.cifraclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046541148461-4ef55m8rkloh84aqcoqsrfvtghbqe19p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "80262c73400b8ce2acc175cb7b64217a7dcad838"
+          }
+        },
+        {
+          "client_id": "1046541148461-7iu9tospgs8qo1s5dbolg1ncsrmr59gf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "80262c73400b8ce2acc175cb7b64217a7dcad837"
+          }
+        },
+        {
+          "client_id": "1046541148461-97llsposia70j3h6hi2ic335hqgk43t0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "9249af003e26804b93d66ad51a3ae2180e85efda"
+          }
+        },
+        {
+          "client_id": "1046541148461-9h5bg5e1v8qqp5ep57ljcq1n283ke73g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "358e2e9e674a24083f6a4a8bf9f3a346d3c0edc7"
+          }
+        },
+        {
+          "client_id": "1046541148461-f27847nftk6986tn4gu5tpj3bflk5jod.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "94a57102f93ab03a5481d3c7dbeb5989bda6bbf1"
+          }
+        },
+        {
+          "client_id": "1046541148461-f9oaev5kq2me1vfi267r806tpbpunvl4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "26979aaee089126e6a0b0b6c5749fea1d978402e"
+          }
+        },
+        {
+          "client_id": "1046541148461-g6nhb0im17qa6pn9s849mhgcdkf9n42a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "10bd145525a589c94d391917cd84994ce8c8973f"
+          }
+        },
+        {
+          "client_id": "1046541148461-p17jn5vs8rp9qp4tcentqvc2j47f9oph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "cf0c0a6e3bad7974e0347f6d2d3447af2444299a"
+          }
+        },
+        {
+          "client_id": "1046541148461-vl6imccduje1nfgn7bsg1tar3offtubj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.cifraclub",
+            "certificate_hash": "fbb4915e3afddb9de42f3acfc82cf046d96888ee"
+          }
+        },
+        {
+          "client_id": "1046541148461-h3peolc2vtgf020mu7g6it9jaf62ft3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV1DDuUKpjakXHn2y-Kbt6tu5sp846eiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046541148461-0820jtjk076js6nepl31klkgbn0i1l6j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.studiosol.CifraClub"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046541148461:android:1784700f7baeeba8",
+        "android_client_info": {
+          "package_name": "com.studiosol.metronomo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046541148461-0eqngpdekft9ilsol6sjgglooqvokjiv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.metronomo",
+            "certificate_hash": "fbb4915e3afddb9de42f3acfc82cf046d96888ee"
+          }
+        },
+        {
+          "client_id": "1046541148461-ap09i6pskrra6ogecmksfd2engggs450.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.metronomo",
+            "certificate_hash": "cf0c0a6e3bad7974e0347f6d2d3447af2444299a"
+          }
+        },
+        {
+          "client_id": "1046541148461-h4cvfh1jrh917r377rarjd9pitmi38iu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.metronomo",
+            "certificate_hash": "2cacfa1a59e40af2c6ca14cdb796b172042589b6"
+          }
+        },
+        {
+          "client_id": "1046541148461-ig4qb7hnluk2nftkp5dlgl0ske020ph0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.metronomo",
+            "certificate_hash": "a28ca4c9ce9aa0c31befac717492ba58de77ebc1"
+          }
+        },
+        {
+          "client_id": "1046541148461-klch6af6aii6eqd5d0iv9l5gn7n26ofk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.studiosol.metronomo",
+            "certificate_hash": "0788a78220b09f69fae36d940c900b3815efaab6"
+          }
+        },
+        {
+          "client_id": "1046541148461-h3peolc2vtgf020mu7g6it9jaf62ft3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV1DDuUKpjakXHn2y-Kbt6tu5sp846eiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046541148461-0820jtjk076js6nepl31klkgbn0i1l6j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.studiosol.CifraClub"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

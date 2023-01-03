@@ -1,6 +1,6 @@
 // coverage:ignore-file
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cifraclub/domain/genre/entities/all_genres.dart';
+import 'package:cifraclub/domain/genre/models/all_genres.dart';
 import 'package:cifraclub/domain/genre/repository/genres_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:injectable/injectable.dart';

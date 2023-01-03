@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:cifraclub/data/genre/models/genre_dto.dart';
-import 'package:cifraclub/domain/genre/entities/all_genres.dart';
+import 'package:cifraclub/domain/genre/models/all_genres.dart';
 
 part 'all_genres_dto.g.dart';
 

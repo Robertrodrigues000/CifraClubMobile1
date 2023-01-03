@@ -3,7 +3,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:cifraclub/domain/genre/entities/genre.dart';
+import 'package:cifraclub/domain/genre/models/genre.dart';
 
 part 'genre_dto.g.dart';
 

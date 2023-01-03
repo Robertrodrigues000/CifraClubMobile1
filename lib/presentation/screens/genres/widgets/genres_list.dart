@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/genre/entities/genre.dart';
+import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 

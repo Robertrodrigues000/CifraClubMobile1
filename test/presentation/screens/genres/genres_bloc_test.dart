@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cifraclub/domain/genre/entities/all_genres.dart';
-import 'package:cifraclub/domain/genre/entities/genre.dart';
+import 'package:cifraclub/domain/genre/models/all_genres.dart';
+import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_bloc.dart';

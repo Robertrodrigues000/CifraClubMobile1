@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cifraclub/domain/genre/entities/genre.dart';
+import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_bloc.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_screen.dart';

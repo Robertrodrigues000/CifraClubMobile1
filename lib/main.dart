@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';

@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/genre/entities/genre.dart';
+import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 
 abstract class GenresState {}
