@@ -15,7 +15,11 @@ class AuthorizationInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler, {DateTime? currentTime}) {
-    String path = options.path;
+    String path = options.uri.path;
+    if (options.uri.hasQuery) {
+      path += "?${options.uri.query}";
+    }
+
     int expireTime = (currentTime ?? DateTime.now()).add(_expireLenght).millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
     String authorization = _getAuthorizationHeader(path: path, expireTime: expireTime);
     options.headers["Authorization"] = authorization;

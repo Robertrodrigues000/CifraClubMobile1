@@ -12,6 +12,8 @@ class NetworkServiceMock extends Mock implements NetworkService {
       Headers.contentTypeHeader: [Headers.jsonContentType]
     });
 
+    registerFallbackValue(_MockNetworkRequest<T>());
+
     var transformed = await DefaultTransformer().transformResponse(options, jsonResponse) as dynamic;
 
     when(() => execute<T>(request: captureAny(named: "request"))).thenAnswer((invocation) => SynchronousFuture(
@@ -19,3 +21,5 @@ class NetworkServiceMock extends Mock implements NetworkService {
         ));
   }
 }
+
+class _MockNetworkRequest<T> extends Mock implements NetworkRequest<T> {}

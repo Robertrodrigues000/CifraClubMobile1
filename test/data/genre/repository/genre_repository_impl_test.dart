@@ -17,8 +17,9 @@ void main() {
     test("Request successful", () async {
       final genresDataSource = _GenresDataSourceMock();
       const allGenresDto = AllGenresDto(
-          top: [GenreDto(name: "Rock", url: "rock"), GenreDto(name: "Sertanejo", url: "sertanejo")],
-          all: [GenreDto(name: "Gospel/Religioso", url: "gospelreligioso"), GenreDto(name: "MPB", url: "mpb")]);
+        top: [GenreDto(id: 666, name: "Rock", url: "rock"), GenreDto(id: 9, name: "Sertanejo", url: "sertanejo")],
+        all: [GenreDto(id: 30, name: "Gospel/Religioso", url: "gospelreligioso"), GenreDto(id: 5, name: "MPB", url: "mpb")],
+      );
 
       when(genresDataSource.getGenres).thenAnswer((_) => SynchronousFuture(const Ok(allGenresDto)));
 
@@ -28,8 +29,13 @@ void main() {
       expect(allGenres.isSuccess, true);
       expect(
           allGenres.get(),
-          const AllGenres(
-              top: [Genre(name: "Rock", url: "rock"), Genre(name: "Sertanejo", url: "sertanejo")], all: [Genre(name: "Gospel/Religioso", url: "gospelreligioso"), Genre(name: "MPB", url: "mpb")]));
+          const AllGenres(top: [
+            Genre(id: 666, name: "Rock", url: "rock"),
+            Genre(id: 9, name: "Sertanejo", url: "sertanejo"),
+          ], all: [
+            Genre(id: 30, name: "Gospel/Religioso", url: "gospelreligioso"),
+            Genre(id: 5, name: "MPB", url: "mpb"),
+          ]));
     });
 
     test("Request failed", () async {

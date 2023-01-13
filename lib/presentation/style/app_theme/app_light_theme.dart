@@ -8,10 +8,11 @@ final appLightTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.white,
   brightness: Brightness.light,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.orange42,
+    backgroundColor: AppColors.white,
+    foregroundColor: AppColors.grey20,
   ),
   radioTheme: RadioThemeData(
-    fillColor: MaterialStateProperty.all(AppColors.grey42),
+    fillColor: MaterialStateProperty.all(AppColors.grey10),
   ),
   sliderTheme: SliderThemeData(
     trackHeight: 2,
@@ -43,7 +44,7 @@ final appLightTheme = ThemeData(
         fontSize: 16,
         fontWeight: FontWeight.w700,
       ),
-      foregroundColor: AppColors.grey75,
+      foregroundColor: AppColors.grey10,
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -57,7 +58,7 @@ final appLightTheme = ThemeData(
         ),
       ),
       minimumSize: MaterialStateProperty.all<Size?>(const Size(0, 48)),
-      backgroundColor: MaterialStateProperty.all<Color?>(AppColors.green66),
+      backgroundColor: MaterialStateProperty.all<Color?>(AppColors.grey10),
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24.0),

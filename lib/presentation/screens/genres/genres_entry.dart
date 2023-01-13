@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GenresEntry extends ScreenEntry {
-  static const name = "genresEntry";
+  static const name = "genres";
 
   GenresEntry(super.params);
 
@@ -21,7 +21,7 @@ class GenresEntry extends ScreenEntry {
   Widget build(BuildContext context) {
     return BlocProvider<GenresBloc>(
       create: (context) => GenresBloc(
-        getGenres: getIt(),
+        getIt(),
       ),
       child: const GenresScreen(),
     );

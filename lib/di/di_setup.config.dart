@@ -5,17 +5,21 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cifraclub/data/artist/data_source/artist_data_source.dart' as _i21;
 import 'package:cifraclub/data/clients/http/cifraclub_api_network_service.dart' as _i13;
 import 'package:cifraclub/data/genre/data_source/genres_data_source.dart' as _i15;
 import 'package:cifraclub/data/time/data_source/ntp_data_source.dart' as _i9;
-import 'package:cifraclub/di/analytics_module.dart' as _i27;
-import 'package:cifraclub/di/firebase_module.dart' as _i23;
-import 'package:cifraclub/di/genre_module.dart' as _i26;
-import 'package:cifraclub/di/log_module.dart' as _i24;
-import 'package:cifraclub/di/navigator_module.dart' as _i21;
-import 'package:cifraclub/di/network_module.dart' as _i22;
-import 'package:cifraclub/di/time_module.dart' as _i25;
+import 'package:cifraclub/di/analytics_module.dart' as _i30;
+import 'package:cifraclub/di/artist_module.dart' as _i31;
+import 'package:cifraclub/di/firebase_module.dart' as _i26;
+import 'package:cifraclub/di/genre_module.dart' as _i29;
+import 'package:cifraclub/di/log_module.dart' as _i27;
+import 'package:cifraclub/di/navigator_module.dart' as _i24;
+import 'package:cifraclub/di/network_module.dart' as _i25;
+import 'package:cifraclub/di/time_module.dart' as _i28;
 import 'package:cifraclub/domain/analytics/repository/analytics_repository.dart' as _i20;
+import 'package:cifraclub/domain/artist/repository/artist_repository.dart' as _i22;
+import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart' as _i23;
 import 'package:cifraclub/domain/genre/repository/genres_repository.dart' as _i16;
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart' as _i18;
 import 'package:cifraclub/domain/log/repository/log_repository.dart' as _i8;
@@ -52,6 +56,7 @@ Future<_i1.GetIt> $initGetIt(
   final timeModule = _$TimeModule();
   final genreModule = _$GenreModule();
   final analyticsModule = _$AnalyticsModule();
+  final artistModule = _$ArtistModule();
   gh.factory<_i3.DeepLinkParser>(() => navigatorModule.getDeepLinkParser());
   gh.factory<_i4.Dio>(() => networkModule.getDio());
   await gh.singletonAsync<_i5.FirebaseApp>(
@@ -86,19 +91,24 @@ Future<_i1.GetIt> $initGetIt(
         get<_i7.GlobalKey<_i7.NavigatorState>>(),
       ));
   gh.factory<_i20.AnalyticsRepository>(() => analyticsModule.getAnalyticsRepository(get<_i14.FirebaseAnalytics>()));
+  gh.factory<_i21.ArtistDataSource>(() => artistModule.getGenresDataSource(get<_i13.CifraClubAPINetworkService>()));
+  gh.factory<_i22.ArtistRepository>(() => artistModule.getGenresRepository(get<_i21.ArtistDataSource>()));
+  gh.factory<_i23.GetTopArtists>(() => _i23.GetTopArtists(artistRepository: get<_i22.ArtistRepository>()));
   return get;
 }
 
-class _$NavigatorModule extends _i21.NavigatorModule {}
+class _$NavigatorModule extends _i24.NavigatorModule {}
 
-class _$NetworkModule extends _i22.NetworkModule {}
+class _$NetworkModule extends _i25.NetworkModule {}
 
-class _$FirebaseModule extends _i23.FirebaseModule {}
+class _$FirebaseModule extends _i26.FirebaseModule {}
 
-class _$LogModule extends _i24.LogModule {}
+class _$LogModule extends _i27.LogModule {}
 
-class _$TimeModule extends _i25.TimeModule {}
+class _$TimeModule extends _i28.TimeModule {}
 
-class _$GenreModule extends _i26.GenreModule {}
+class _$GenreModule extends _i29.GenreModule {}
 
-class _$AnalyticsModule extends _i27.AnalyticsModule {}
+class _$AnalyticsModule extends _i30.AnalyticsModule {}
+
+class _$ArtistModule extends _i31.ArtistModule {}

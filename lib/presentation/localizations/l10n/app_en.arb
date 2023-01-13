@@ -19,5 +19,7 @@
     "genreScreen": "Music genres screen",
     "pressTheButtonToGetGenres": "Press the button to get the genres list",
     "emptyList": "Empty list",
-    "noConnection": "No internet connection"
+    "noConnection": "No internet connection",
+    "genreHeaderTops": "Tops",
+    "genreHeaderAll": "All"
 }

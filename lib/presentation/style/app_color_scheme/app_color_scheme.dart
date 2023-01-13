@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class AppColorScheme extends ThemeExtension<AppColorScheme> {
@@ -6,12 +7,15 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   }
 
   final Color screenCenterMessageColor;
-
-  const AppColorScheme({required this.screenCenterMessageColor});
+  final Color genreHeaderDividerColor;
+  const AppColorScheme({
+    required this.screenCenterMessageColor,
+    required this.genreHeaderDividerColor,
+  });
 
   @override
-  ThemeExtension<AppColorScheme> copyWith({Color? screenCenterMessageColor}) {
-    return AppColorScheme(screenCenterMessageColor: screenCenterMessageColor ?? this.screenCenterMessageColor);
+  ThemeExtension<AppColorScheme> copyWith({Color? screenCenterMessageColor, Color? genreHeaderDividerColor}) {
+    return AppColorScheme(screenCenterMessageColor: screenCenterMessageColor ?? this.screenCenterMessageColor, genreHeaderDividerColor: genreHeaderDividerColor ?? this.genreHeaderDividerColor);
   }
 
   @override
@@ -20,7 +24,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       return this;
     }
     return AppColorScheme(
-      screenCenterMessageColor: Color.lerp(screenCenterMessageColor, other.screenCenterMessageColor, t) ?? screenCenterMessageColor,
-    );
+        screenCenterMessageColor: Color.lerp(screenCenterMessageColor, other.screenCenterMessageColor, t) ?? screenCenterMessageColor,
+        genreHeaderDividerColor: Color.lerp(genreHeaderDividerColor, other.genreHeaderDividerColor, t) ?? genreHeaderDividerColor);
   }
 }

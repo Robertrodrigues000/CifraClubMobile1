@@ -1,0 +1,89 @@
+{
+    "artists": [
+      {
+        "id": 7507,
+        "name": "Zé Ramalho",
+        "url": "ze-ramalho",
+        "hits": 86804,
+        "totalPhotos": 12,
+        "genre": {
+          "id": 5,
+          "name": "MPB",
+          "url": "mpb"
+        },
+        "image": {
+          "50": "https://akamai.sscdn.co/letras/50x50/fotos/6/f/3/9/6f39e12f408ea757ac2d6950cdec7e2c-tb2.jpg",
+          "162": "https://akamai.sscdn.co/letras/162x162/fotos/6/f/3/9/6f39e12f408ea757ac2d6950cdec7e2c.jpg",
+          "250": "https://akamai.sscdn.co/letras/250x250/fotos/6/f/3/9/6f39e12f408ea757ac2d6950cdec7e2c.jpg",
+          "color": "#DF7734"
+        },
+        "headImage": null,
+        "inappropriateContent": {
+          "artist": false,
+          "albuns": false,
+          "photos": false
+        },
+        "songs": null,
+        "externalURLs": {
+          
+        }
+      },
+      {
+        "id": 6106,
+        "name": "Caetano Veloso",
+        "url": "caetano-veloso",
+        "hits": 86688,
+        "totalPhotos": 31,
+        "genre": {
+          "id": 5,
+          "name": "MPB",
+          "url": "mpb"
+        },
+        "image": {
+          "50": "https://akamai.sscdn.co/letras/50x50/fotos/3/a/8/5/3a852df5917814a20762d8ea755170ba-tb2.jpg",
+          "162": "https://akamai.sscdn.co/letras/162x162/fotos/3/a/8/5/3a852df5917814a20762d8ea755170ba.jpg",
+          "250": "https://akamai.sscdn.co/letras/250x250/fotos/3/a/8/5/3a852df5917814a20762d8ea755170ba.jpg",
+          "color": "#C44D5E"
+        },
+        "headImage": null,
+        "inappropriateContent": {
+          "artist": false,
+          "albuns": false,
+          "photos": false
+        },
+        "songs": null,
+        "externalURLs": {
+          
+        }
+      },
+      {
+        "id": 1417,
+        "name": "Djavan",
+        "url": "djavan",
+        "hits": 86245,
+        "totalPhotos": 23,
+        "genre": {
+          "id": 5,
+          "name": "MPB",
+          "url": "mpb"
+        },
+        "image": {
+          "50": "https://akamai.sscdn.co/letras/50x50/fotos/2/e/b/c/2ebc927a1d55a7aff4058491288ace6e-tb2.jpg",
+          "162": "https://akamai.sscdn.co/letras/162x162/fotos/2/e/b/c/2ebc927a1d55a7aff4058491288ace6e.jpg",
+          "250": "https://akamai.sscdn.co/letras/250x250/fotos/2/e/b/c/2ebc927a1d55a7aff4058491288ace6e.jpg",
+          "color": "#BDBDBD"
+        },
+        "headImage": null,
+        "inappropriateContent": {
+          "artist": false,
+          "albuns": false,
+          "photos": false
+        },
+        "songs": null,
+        "externalURLs": {
+          
+        }
+      }
+    ],
+    "moreResults": true
+  }

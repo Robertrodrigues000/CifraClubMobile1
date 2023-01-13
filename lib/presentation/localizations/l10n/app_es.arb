@@ -11,5 +11,7 @@
     "genreScreen": "Pantalla de géneros musicales",
     "pressTheButtonToGetGenres": "Presione el botón para obtener la lista de géneros",
     "emptyList": "Lista vacía",
-    "noConnection": "Sin conexión a internet"
+    "noConnection": "Sin conexión a internet",
+    "genreHeaderTops": "Más tocados",
+    "genreHeaderAll": "Todos"
 }

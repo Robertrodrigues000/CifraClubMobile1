@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 
 class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
@@ -6,13 +7,24 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
   }
 
   final TextStyle exoticScreenAppBarStyle;
+  final TextStyle genreHeaderItemStyle;
+  final TextStyle listTileTitleStyle;
+  final TextStyle listTileLeadingStyle;
 
-  const AppTypographyScheme({required this.exoticScreenAppBarStyle});
+  const AppTypographyScheme({
+    required this.exoticScreenAppBarStyle,
+    required this.genreHeaderItemStyle,
+    required this.listTileTitleStyle,
+    required this.listTileLeadingStyle,
+  });
 
   @override
-  ThemeExtension<AppTypographyScheme> copyWith({TextStyle? veryDifferentScreenTitle}) {
+  ThemeExtension<AppTypographyScheme> copyWith({TextStyle? exoticScreenAppBarStyle, TextStyle? genreHeaderItemStyle, TextStyle? listTileTitleStyle, TextStyle? listTileLeadingStyle}) {
     return AppTypographyScheme(
-      exoticScreenAppBarStyle: veryDifferentScreenTitle ?? exoticScreenAppBarStyle,
+      exoticScreenAppBarStyle: exoticScreenAppBarStyle ?? this.exoticScreenAppBarStyle,
+      genreHeaderItemStyle: genreHeaderItemStyle ?? this.genreHeaderItemStyle,
+      listTileLeadingStyle: listTileLeadingStyle ?? this.listTileLeadingStyle,
+      listTileTitleStyle: listTileTitleStyle ?? this.listTileTitleStyle,
     );
   }
 
@@ -22,9 +34,11 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
       return this;
     }
     return AppTypographyScheme(
-      exoticScreenAppBarStyle: exoticScreenAppBarStyle.copyWith(
-        color: Color.lerp(exoticScreenAppBarStyle.color, other.exoticScreenAppBarStyle.color, t),
-      ),
-    );
+        exoticScreenAppBarStyle: exoticScreenAppBarStyle.copyWith(
+          color: Color.lerp(exoticScreenAppBarStyle.color, other.exoticScreenAppBarStyle.color, t),
+        ),
+        genreHeaderItemStyle: genreHeaderItemStyle.copyWith(color: Color.lerp(genreHeaderItemStyle.color, other.genreHeaderItemStyle.color, t)),
+        listTileTitleStyle: listTileTitleStyle.copyWith(color: Color.lerp(listTileTitleStyle.color, other.listTileTitleStyle.color, t)),
+        listTileLeadingStyle: listTileLeadingStyle.copyWith(color: Color.lerp(listTileLeadingStyle.color, other.listTileLeadingStyle.color, t)));
   }
 }

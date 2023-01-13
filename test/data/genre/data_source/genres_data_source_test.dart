@@ -13,9 +13,6 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
 void main() {
-  setUpAll(() {
-    registerFallbackValue(NetworkRequest(type: NetworkRequestType.get, path: "", parser: (p0) => const AllGenresDto(top: [], all: [])));
-  });
   group("When getGenres() is called", () {
     test("Request successful", () async {
       final networkService = NetworkServiceMock();
@@ -31,8 +28,14 @@ void main() {
       expect(request.type, NetworkRequestType.get);
 
       const expectedAllGenresDto = AllGenresDto(
-        all: [GenreDto(name: "Alternativo", url: "alternativo"), GenreDto(name: "Axé", url: "axe")],
-        top: [GenreDto(name: "Rock", url: "rock"), GenreDto(name: "Gospel/Religioso", url: "gospelreligioso")],
+        all: [
+          GenreDto(id: 1, name: "Alternativo", url: "alternativo"),
+          GenreDto(id: 7, name: "Axé", url: "axe"),
+        ],
+        top: [
+          GenreDto(id: 666, name: "Rock", url: "rock"),
+          GenreDto(id: 30, name: "Gospel/Religioso", url: "gospelreligioso"),
+        ],
       );
 
       expect(result.isSuccess, true);

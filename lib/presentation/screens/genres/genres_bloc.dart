@@ -1,24 +1,43 @@
-import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
-import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/presentation/screens/genres/models/genre_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';
 
-class GenresBloc extends Cubit<GenresState> {
-  final GetGenres getGenres;
+import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
+import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
 
-  GenresBloc({required this.getGenres}) : super(GenresInitialState());
+class GenresBloc extends Cubit<GenresState> {
+  final GetGenres _getGenres;
+
+  GenresBloc(this._getGenres) : super(GenresLoadingState());
 
   Future<void> requestGenres() async {
-    if (state is GenresLoadingState) {
-      return;
-    }
-
-    emit(GenresLoadingState());
-
-    var genresResult = await getGenres();
+    var genresResult = await _getGenres();
 
     genresResult.when(
-      success: (allGenres) => emit(GenresLoadedState(allGenres.top + allGenres.all)),
+      success: (allGenres) {
+        if (allGenres.all.isEmpty || allGenres.top.isEmpty) {
+          emit(GenresErrorState(ServerError()));
+        } else {
+          List<GenreItem> genreItemList = [
+            const GenreHeaderItem(type: GenreHeaderType.top),
+            ...allGenres.top
+                .map(
+                  (genre) => GenreListItem(genre: genre),
+                )
+                .toList(),
+            const GenreHeaderItem(type: GenreHeaderType.all),
+            ...allGenres.all
+                .map(
+                  (genre) => GenreListItem(genre: genre),
+                )
+                .toList(),
+          ];
+
+          emit(GenresLoadedState(genres: genreItemList));
+        }
+      },
       failure: (error) => emit(GenresErrorState(error)),
     );
   }

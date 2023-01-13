@@ -4,13 +4,13 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_bloc.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_screen.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
-import 'package:flutter/foundation.dart';
+import 'package:cifraclub/presentation/screens/genres/models/genre_item.dart';
+import 'package:cifraclub/presentation/screens/genres/widgets/genre_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
 class _BlocMock extends Mock implements GenresBloc {}
@@ -18,29 +18,30 @@ class _BlocMock extends Mock implements GenresBloc {}
 class _UnexpectedState extends GenresState {}
 
 void main() {
-  group("When screen is on GenresInitialState", () {
-    testWidgets("When screen is on GenresInitialState", (widgetTester) async {
-      final bloc = _BlocMock();
+  const rock = Genre(id: 666, name: "Rock", url: "rock");
+  const sertanejo = Genre(id: 9, name: "Sertanejo", url: "sertanejo");
+  const gospel = Genre(id: 30, name: "Gospel/Religioso", url: "gospelreligioso");
+  const mpb = Genre(id: 5, name: "MPB", url: "mpb");
 
-      whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresInitialState());
+  const genreItems = [
+    GenreHeaderItem(type: GenreHeaderType.top),
+    GenreListItem(genre: rock),
+    GenreListItem(genre: sertanejo),
+    GenreHeaderItem(type: GenreHeaderType.all),
+    GenreListItem(genre: gospel),
+    GenreListItem(genre: mpb),
+  ];
 
-      await widgetTester.pumpWidget(
-        TestWrapper(
-          child: BlocProvider<GenresBloc>.value(
-            value: bloc,
-            child: const GenresScreen(),
-          ),
-        ),
-      );
-
-      expect(find.text(appTextEn.pressTheButtonToGetGenres), findsOneWidget);
-      expect(find.text(appTextEn.getIt), findsOneWidget);
-    });
+  late GenresBloc bloc;
+  setUpAll(() {
+    bloc = _BlocMock();
+    when(bloc.requestGenres).thenAnswer((invocation) => Future.value(null));
   });
-
   group("When screen is on GenresLoadingState", () {
     testWidgets("When screen is on GenresLoadingState", (widgetTester) async {
-      final bloc = _BlocMock();
+      when(bloc.requestGenres).thenAnswer(
+        (invocation) => Future.value(null),
+      );
 
       whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresLoadingState());
 
@@ -59,9 +60,7 @@ void main() {
 
   group("When screen is on GenresLoadedState", () {
     testWidgets("When screen is on GenresLoadedState", (widgetTester) async {
-      final bloc = _BlocMock();
-
-      whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresLoadedState([const Genre(name: "Rock", url: "rock")]));
+      whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresLoadedState(genres: genreItems));
 
       await widgetTester.pumpWidget(
         TestWrapper(
@@ -72,33 +71,13 @@ void main() {
         ),
       );
 
-      expect(find.text("Rock"), findsOneWidget);
-    });
-  });
-
-  group("When screen is on GenresLoadedState with empty result", () {
-    testWidgets("When screen is on GenresLoadedState with empty result", (widgetTester) async {
-      final bloc = _BlocMock();
-
-      whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresLoadedState([]));
-
-      await widgetTester.pumpWidget(
-        TestWrapper(
-          child: BlocProvider<GenresBloc>.value(
-            value: bloc,
-            child: const GenresScreen(),
-          ),
-        ),
-      );
-
-      expect(find.text(appTextEn.emptyList), findsOneWidget);
+      expect(find.byType(GenreHeader), findsNWidgets(2));
+      expect(find.byType(ListTile), findsNWidgets(4));
     });
   });
 
   group("When screen is on GenresErrorState", () {
     testWidgets("When screen is on GenresErrorState", (widgetTester) async {
-      final bloc = _BlocMock();
-
       whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresErrorState(ServerError()));
 
       await widgetTester.pumpWidget(
@@ -110,14 +89,12 @@ void main() {
         ),
       );
 
-      expect(find.text(appTextEn.failToLoad), findsOneWidget);
+      expect(find.text("Erro"), findsOneWidget);
     });
   });
 
   group("When screen is on unexpected state", () {
     testWidgets("When screen is on unexpected State", (widgetTester) async {
-      final bloc = _BlocMock();
-
       whenListen(bloc, const Stream<GenresState>.empty(), initialState: _UnexpectedState());
 
       await widgetTester.pumpWidget(
@@ -129,27 +106,7 @@ void main() {
         ),
       );
 
-      expect(find.text(appTextEn.failToLoad), findsOneWidget);
-    });
-  });
-  group("When button is pressed, call requestGenres()", () {
-    testWidgets("When screen is on GenresInitialState ", (widgetTester) async {
-      final bloc = _BlocMock();
-      when(bloc.requestGenres).thenAnswer((invocation) => SynchronousFuture(null));
-      whenListen(bloc, const Stream<GenresState>.empty(), initialState: GenresInitialState());
-
-      await widgetTester.pumpWidget(
-        TestWrapper(
-          child: BlocProvider<GenresBloc>.value(
-            value: bloc,
-            child: const GenresScreen(),
-          ),
-        ),
-      );
-
-      await widgetTester.tap(find.text(appTextEn.getIt));
-
-      verify(bloc.requestGenres).called(1);
+      expect(find.text("Erro"), findsOneWidget);
     });
   });
 }
