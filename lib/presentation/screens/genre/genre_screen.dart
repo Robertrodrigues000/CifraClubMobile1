@@ -29,10 +29,9 @@ class _GenreScreenState extends State<GenreScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GenreBloc, GenreState>(builder: (context, state) {
-      final genreName = bloc.genreName ?? ((state is GenreLoadedState) ? state.genreName : "");
       return Scaffold(
         appBar: AppBar(
-          title: Text(genreName),
+          title: Text(state.genreName ?? ""),
         ),
         body: Builder(
           builder: (context) {

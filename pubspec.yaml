@@ -35,6 +35,7 @@ dev_dependencies:
   bloc_test: ^9.1.0
   build_runner:
   dlcov: ^4.2.1
+  faker: ^2.1.0
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter

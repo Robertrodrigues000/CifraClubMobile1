@@ -1,11 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
 import 'package:cifraclub/presentation/screens/genres/models/genre_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';
-
-import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
-import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
 
 class GenresBloc extends Cubit<GenresState> {
   final GetGenres _getGenres;

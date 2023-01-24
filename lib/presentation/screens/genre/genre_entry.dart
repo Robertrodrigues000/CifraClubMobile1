@@ -26,9 +26,9 @@ class GenreEntry extends ScreenEntry {
     final genreName = params[genreNameParamKey];
     return BlocProvider<GenreBloc>(
       create: (context) => GenreBloc(
-        getTopArtists: getIt(),
-        genreUrl: genreUrl,
-        genreName: genreName,
+        genreUrl,
+        genreName,
+        getIt(),
       ),
       child: const GenreScreen(),
     );
