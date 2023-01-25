@@ -49,5 +49,41 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>FacebookAppID</key>
+	<string>366825497022071</string>
+	<key>FacebookClientToken</key>
+	<string>61318f2de3a70ae19cf94a54a318482c</string>
+	<key>FacebookDisplayName</key>
+	<string>Cifra Club</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb366825497022071</string>
+				<string>CifraClubApp</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>bundleID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>br.com.studiosol.CifraClub</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>reversed_clientID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

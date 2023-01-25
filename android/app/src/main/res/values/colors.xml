@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_222">#222222</color>
+
+    <color name="login_primary">#FF7700</color>
+    <color name="login_hover">#E65100</color>
+</resources>

@@ -16,6 +16,7 @@ dependencies:
   firebase_analytics: ^10.0.8
   firebase_core: ^2.4.0
   firebase_crashlytics: ^3.0.7
+  firebase_messaging: ^14.2.1
   firebase_remote_config: ^3.0.9
   flutter:
     sdk: flutter
@@ -28,7 +29,9 @@ dependencies:
   intl: ^0.17.0
   json_annotation: ^4.7.0
   logging: ^1.1.0
+  mutex: ^3.0.1
   ntp: ^2.0.0
+  rxdart: ^0.27.7
   typed_result: ^0.0.3
 
 dev_dependencies:

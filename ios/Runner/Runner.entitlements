@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aps-environment</key>
+	<string>development</string>
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:www.cifraclub.com.br</string>
+		<string>applinks:cifraclub.com.br</string>
+		<string>applinks:m.cifraclub.com.br</string>
+	</array>
+	<key>com.apple.developer.siri</key>
+	<true/>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>$(TeamIdentifierPrefix)br.com.studiosol.Afinador</string>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.studiosol.ccid</string>
+		<string>group.br.com.studiosol.cifraclub</string>
+	</array>
+</dict>
+</plist>

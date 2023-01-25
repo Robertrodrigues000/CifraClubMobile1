@@ -8,6 +8,14 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+
+    LoginCcidPlugin.createChannel(
+      application: application,
+      flutterViewController: window?.rootViewController as! FlutterViewController,
+      launchOptions: launchOptions,
+      flutterBinaryMessenger: window?.rootViewController as! FlutterBinaryMessenger
+    )
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

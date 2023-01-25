@@ -1,6 +1,7 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
+import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/style/app_theme/app_dark_theme.dart';
@@ -9,10 +10,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:cifraclub/presentation/style/app_theme/app_light_theme.dart';
 
+Future<void> initializeCcid() {
+  final ccid = getIt<AuthenticationRepository>();
+  return ccid.init();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await configureDependencies();
+  initializeCcid();
   runApp(const CifraClub());
 }
 

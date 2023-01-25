@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Login -->
+    <string name="google_id_token" translatable="false">1046541148461-csqnsr99di77j72am8gpr0grjc4o6n0u.apps.googleusercontent.com</string>
+    <string name="facebook_app_id" translatable="false">366825497022071</string>
+    <string name="facebook_app_client_token" translatable="false">61318f2de3a70ae19cf94a54a318482c</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb366825497022071</string>
+</resources>

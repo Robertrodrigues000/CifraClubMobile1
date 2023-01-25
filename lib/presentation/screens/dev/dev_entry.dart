@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/navigator/screen_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
@@ -20,7 +21,7 @@ class DevScreenEntry extends ScreenEntry {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => DevScreenBloc(),
-      child: const DevScreen(),
+      child: DevScreen(getCredentialsStream: getIt(), logout: getIt(), openLoginView: getIt(), openUserProfilePage: getIt()),
     );
   }
 }
