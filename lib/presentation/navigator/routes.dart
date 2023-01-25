@@ -3,6 +3,7 @@ import 'package:cifraclub/presentation/navigator/screen_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
+import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 
 class ScreenEntryBuilder {
@@ -28,5 +29,9 @@ final List<ScreenEntryBuilder> cifraScreenBuilders = [
   ScreenEntryBuilder(
     GenreEntry.name,
     (params, _) => GenreEntry(params),
+  ),
+  ScreenEntryBuilder(
+    HomeEntry.name,
+    (params, _) => HomeEntry(params),
   ),
 ];

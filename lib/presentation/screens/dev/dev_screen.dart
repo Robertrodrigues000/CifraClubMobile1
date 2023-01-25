@@ -7,6 +7,7 @@ import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/presentation/navigator/app_navigator.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
+import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
@@ -89,6 +90,15 @@ class _DevScreenState extends State<DevScreen> {
               AppNavigator.of(context).push(
                 screenName: GenreEntry.name,
                 params: {GenreEntry.genreUrlParamKey: "mpb"},
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.house),
+            title: const Text("Home"),
+            onTap: () {
+              AppNavigator.of(context).push(
+                screenName: HomeEntry.name,
               );
             },
           ),
