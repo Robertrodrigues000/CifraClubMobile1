@@ -55,7 +55,7 @@ platform :android do
       app: ENV['FIREBASE_APP_ID'],
       groups: ENV['FIREBASE_APP_TESTERS'],
       apk_path: "../build/app/outputs/flutter-apk/app-release.apk",
-      release_notes: ENV['FIREBASE_APP_CHANGELOG']
+      release_notes: ENV['DRONE_COMMIT_MESSAGE']
     )
   end
 
