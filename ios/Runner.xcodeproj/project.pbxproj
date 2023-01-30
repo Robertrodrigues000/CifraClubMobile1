@@ -10,7 +10,6 @@
 		02902ED961DE1A774560F901 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7251810B7F36F1FB32D75D3 /* GoogleService-Info.plist */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		3D116B822966E6EE0078F738 /* LoginBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D116B812966E6EE0078F738 /* LoginBackgroundView.xib */; };
 		3D16153029814B70005A0622 /* LocaleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D16152F29814B70005A0622 /* LocaleHelper.swift */; };
 		3DAD96C92965F68E000D584B /* LoginCCID in Frameworks */ = {isa = PBXBuildFile; productRef = 3DAD96C82965F68E000D584B /* LoginCCID */; };
 		3DAD96CC2965FB8F000D584B /* LoginCcid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAD96CB2965FB8F000D584B /* LoginCcid.swift */; };
@@ -19,6 +18,7 @@
 		3DAD96D22965FEB5000D584B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DAD96D12965FEB5000D584B /* Colors.xcassets */; };
 		3DAD96D42966053D000D584B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DAD96D32966053D000D584B /* Images.xcassets */; };
 		3DAD96D6296606DE000D584B /* LoginBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAD96D5296606DE000D584B /* LoginBackgroundView.swift */; };
+		3DC328512987F693000ADBD1 /* LoginBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DC328502987F693000ADBD1 /* LoginBackgroundView.xib */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -45,7 +45,6 @@
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		1AA18E9BE46114076D551911 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
-		3D116B812966E6EE0078F738 /* LoginBackgroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginBackgroundView.xib; path = ../../../../../3/IOSCifraClub/CifraClub/CifraClub/Classes/Login/BackgroundView/LoginBackgroundView.xib; sourceTree = "<group>"; };
 		3D16152F29814B70005A0622 /* LocaleHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocaleHelper.swift; path = Runner/LocaleHelper.swift; sourceTree = SOURCE_ROOT; };
 		3D161536298157AA005A0622 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
 		3D161537298157AA005A0622 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -58,6 +57,7 @@
 		3DAD96D32966053D000D584B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3DAD96D5296606DE000D584B /* LoginBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBackgroundView.swift; sourceTree = "<group>"; };
 		3DAD96D7296617F4000D584B /* Runner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
+		3DC328502987F693000ADBD1 /* LoginBackgroundView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginBackgroundView.xib; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 				3DAD96CD2965FBBD000D584B /* LoginCcidPlugin.swift */,
 				3DAD96CF2965FC0C000D584B /* LoginColors.swift */,
 				3DAD96D5296606DE000D584B /* LoginBackgroundView.swift */,
-				3D116B812966E6EE0078F738 /* LoginBackgroundView.xib */,
+				3DC328502987F693000ADBD1 /* LoginBackgroundView.xib */,
 			);
 			path = Ccid;
 			sourceTree = "<group>";
@@ -243,7 +243,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				3DAD96D42966053D000D584B /* Images.xcassets in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
-				3D116B822966E6EE0078F738 /* LoginBackgroundView.xib in Resources */,
+				3DC328512987F693000ADBD1 /* LoginBackgroundView.xib in Resources */,
 				3DAD96D22965FEB5000D584B /* Colors.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				02902ED961DE1A774560F901 /* GoogleService-Info.plist in Resources */,
