@@ -1,15 +1,8 @@
-import 'package:cifraclub/presentation/navigator/app_navigator.dart';
 import 'package:flutter/widgets.dart';
 
 // coverage:ignore-file
 class InheritedDependenciesWidget extends InheritedWidget {
-  final AppNavigator appNavigator;
-
-  const InheritedDependenciesWidget({
-    Key? key,
-    required Widget child,
-    required this.appNavigator,
-  }) : super(key: key, child: child);
+  const InheritedDependenciesWidget({Key? key, required Widget child}) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;

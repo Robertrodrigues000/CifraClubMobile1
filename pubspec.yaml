@@ -31,6 +31,10 @@ dependencies:
   json_annotation: ^4.7.0
   logging: ^1.1.0
   mutex: ^3.0.1
+  nav:
+    git:
+      url: "git@github.com:CifraClub/flutter_nav.git"
+      ref: "1.0.0"
   ntp: ^2.0.0
   rxdart: ^0.27.7
   typed_result: ^0.0.3

@@ -1,5 +1,5 @@
 import 'package:cifraclub/di/di_setup.dart';
-import 'package:cifraclub/presentation/navigator/screen_entry.dart';
+import 'package:nav/nav.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_bloc.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_screen.dart';
 import 'package:flutter/material.dart';

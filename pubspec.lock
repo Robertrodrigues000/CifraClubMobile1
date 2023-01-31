@@ -595,6 +595,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  nav:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "1.0.0"
+      resolved-ref: af65de597608132eee4dd0fe248b3a266307c79c
+      url: "git@github.com:CifraClub/flutter_nav.git"
+    source: git
+    version: "1.0.0"
   nested:
     dependency: transitive
     description:

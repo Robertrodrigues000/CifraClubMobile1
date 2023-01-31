@@ -1,6 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
-import 'package:cifraclub/presentation/navigator/screen_entry.dart';
+import 'package:nav/nav.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_bloc.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_screen.dart';
 import 'package:flutter/material.dart';

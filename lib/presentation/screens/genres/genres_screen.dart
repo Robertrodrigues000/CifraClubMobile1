@@ -1,4 +1,3 @@
-import 'package:cifraclub/presentation/navigator/app_navigator.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_bloc.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
@@ -6,6 +5,7 @@ import 'package:cifraclub/presentation/screens/genres/widgets/genres_list.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nav/nav.dart';
 
 class GenresScreen extends StatefulWidget {
   const GenresScreen({super.key});
@@ -44,7 +44,7 @@ class _GenresScreenState extends State<GenresScreen> {
             return GenresList(
               genres: state.genres,
               onTap: (genre) {
-                AppNavigator.of(context).push(
+                Nav.of(context).push(
                   screenName: GenreEntry.name,
                   params: {GenreEntry.genreUrlParamKey: genre.url, GenreEntry.genreNameParamKey: genre.name},
                 );

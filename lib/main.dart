@@ -2,8 +2,12 @@
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
+import 'package:cifraclub/di/navigator_module.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
+import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
+import 'package:cifraclub/presentation/screens/home/home_entry.dart';
+import 'package:cifraclub/presentation/screens/main/main_entry.dart';
 import 'package:cifraclub/presentation/style/app_theme/app_dark_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,11 +35,8 @@ class CifraClub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InheritedDependenciesWidget(
-      appNavigator: getIt(),
-      child: MaterialApp.router(
+      child: MaterialApp(
         restorationScopeId: _navigationRestorationScope,
-        routerDelegate: getIt(),
-        routeInformationParser: getIt(param1: DevScreenEntry(const {})),
         darkTheme: appDarkTheme,
         theme: appLightTheme,
         supportedLocales: supportedLocales,
@@ -45,6 +46,19 @@ class CifraClub extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        home: MainEntry(
+          bottomNavigationPages: [
+            getIt(
+              param1: NavConstructorParams(firstScreen: HomeEntry({}), restorationId: 'BottomNav1'),
+            ),
+            getIt(
+              param1: NavConstructorParams(firstScreen: DevScreenEntry({}), restorationId: 'BottomNav2'),
+            ),
+            getIt(
+              param1: NavConstructorParams(firstScreen: GenresEntry({}), restorationId: 'BottomNav3'),
+            ),
+          ],
+        ),
       ),
     );
   }

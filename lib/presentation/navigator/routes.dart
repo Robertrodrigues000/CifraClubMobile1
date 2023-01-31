@@ -1,36 +1,29 @@
 // coverage:ignore-file
-import 'package:cifraclub/presentation/navigator/screen_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
+import 'package:nav/nav.dart';
 
-class ScreenEntryBuilder {
-  final String screenName;
-  final ScreenEntry? Function(Map<String, String> params, Object? objectParam) builder;
-
-  const ScreenEntryBuilder(this.screenName, this.builder);
-}
-
-final List<ScreenEntryBuilder> cifraScreenBuilders = [
-  ScreenEntryBuilder(
+final List<NavRoute> routes = [
+  NavRoute(
     DevScreenEntry.name,
     (params, _) => DevScreenEntry(params),
   ),
-  ScreenEntryBuilder(
+  NavRoute(
     NtpTestEntry.name,
     (params, _) => NtpTestEntry(params),
   ),
-  ScreenEntryBuilder(
+  NavRoute(
     GenresEntry.name,
     (params, _) => GenresEntry(params),
   ),
-  ScreenEntryBuilder(
+  NavRoute(
     GenreEntry.name,
     (params, _) => GenreEntry(params),
   ),
-  ScreenEntryBuilder(
+  NavRoute(
     HomeEntry.name,
     (params, _) => HomeEntry(params),
   ),

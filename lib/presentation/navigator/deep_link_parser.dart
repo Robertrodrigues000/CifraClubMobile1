@@ -1,5 +1,5 @@
-import 'package:cifraclub/presentation/navigator/screen_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
+import 'package:nav/nav.dart';
 
 abstract class DeepLinkParser {
   List<ScreenEntry>? parseUriSegments(List<String> uriSegments);

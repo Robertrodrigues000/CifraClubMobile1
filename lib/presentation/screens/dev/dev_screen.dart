@@ -4,13 +4,13 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
-import 'package:cifraclub/presentation/navigator/app_navigator.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:nav/nav.dart';
 
 class DevScreen extends StatefulWidget {
   final GetCredentialStream getCredentialsStream;
@@ -68,7 +68,7 @@ class _DevScreenState extends State<DevScreen> {
             leading: const Icon(Icons.access_time_filled),
             title: Text(context.text.ntpScreen),
             onTap: () {
-              AppNavigator.of(context).push(
+              Nav.of(context).push(
                 screenName: NtpTestEntry.name,
                 params: {NtpTestEntry.colorParamKey: Colors.blue.value.toString()},
               );
@@ -78,7 +78,7 @@ class _DevScreenState extends State<DevScreen> {
             leading: const Icon(Icons.music_note),
             title: Text(context.text.genreScreen),
             onTap: () {
-              AppNavigator.of(context).push(
+              Nav.of(context).push(
                 screenName: GenresEntry.name,
               );
             },
@@ -87,7 +87,7 @@ class _DevScreenState extends State<DevScreen> {
             leading: const Icon(Icons.accessible),
             title: const Text("Internal Genre"),
             onTap: () {
-              AppNavigator.of(context).push(
+              Nav.of(context).push(
                 screenName: GenreEntry.name,
                 params: {GenreEntry.genreUrlParamKey: "mpb"},
               );
@@ -97,7 +97,7 @@ class _DevScreenState extends State<DevScreen> {
             leading: const Icon(Icons.house),
             title: const Text("Home"),
             onTap: () {
-              AppNavigator.of(context).push(
+              Nav.of(context).push(
                 screenName: HomeEntry.name,
               );
             },

@@ -14,7 +14,12 @@ workspace:
 steps:
   - name: pub-get
     image: cirrusci/flutter:3.3.8
+    environment:
+      GITHUB_ACCESS_TOKEN:
+        from_secret: GITHUB_ACCESS_TOKEN
     commands:
+      - 'git config --global url."https://x-access-token:$${GITHUB_ACCESS_TOKEN}@github.com/StudioSol".insteadOf git@github.com:StudioSol'
+      - 'git config --global url."https://x-access-token:$${GITHUB_ACCESS_TOKEN}@github.com/CifraClub".insteadOf git@github.com:CifraClub'
       - flutter pub get
     volumes:
       - name: pub-cache
