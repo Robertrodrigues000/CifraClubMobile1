@@ -66,5 +66,6 @@ final appLightTheme = ThemeData(
       ),
     ),
   ),
+
   extensions: const [appColorLightScheme, appLightTypographyStyle],
 );

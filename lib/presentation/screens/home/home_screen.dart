@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/blog.dart';
@@ -5,6 +6,8 @@ import 'package:cifraclub/presentation/screens/home/widgets/highlights.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +44,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: CustomScrollView(
             slivers: [
-              // Filtros de gênero
+              SliverToBoxAdapter(
+                child: FilterCapsuleList(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  filters: [
+                    if (state is HomeLoadedState)
+                      ...state.genres
+                          .map(
+                            (genre) => Filter(
+                                label: genre,
+                                onTap: () {
+                                  bloc.onGenreSelected(genre);
+                                },
+                                isSelected: state.selectedGenre == genre),
+                          )
+                          .toList()
+                  ],
+                ),
+              ),
               if (state is HomeLoadingState)
                 const SliverToBoxAdapter(
                   child: Center(child: CircularProgressIndicator()),
