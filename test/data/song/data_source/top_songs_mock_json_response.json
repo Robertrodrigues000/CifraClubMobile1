@@ -1,0 +1,75 @@
+{
+    "songs": [
+      {
+        "id": 6578,
+        "name": "All Star",
+        "url": "all-star",
+        "artist": {
+          "id": 7237,
+          "name": "Nando Reis",
+          "url": "nando-reis",
+          "totalPhotos": 35,
+          "genre": {
+            "id": 5,
+            "name": "MPB",
+            "url": "mpb"
+          },
+          "image": {
+            "50": "https://akamai.sscdn.co/letras/50x50/fotos/3/f/0/5/3f05e8324777415c94d0bcc265874e39-tb2.jpg",
+            "162": "https://akamai.sscdn.co/letras/162x162/fotos/3/f/0/5/3f05e8324777415c94d0bcc265874e39.jpg",
+            "250": "https://akamai.sscdn.co/letras/250x250/fotos/3/f/0/5/3f05e8324777415c94d0bcc265874e39.jpg",
+            "color": "#D76432"
+          },
+          "headImage": null,
+          "inappropriateContent": {
+            "artist": false,
+            "albuns": false,
+            "photos": false
+          },
+          "songs": null,
+          "externalURLs": {
+            
+          }
+        },
+        "hits": 12076,
+        "verified": false,
+        "mod": "video-aula"
+      },
+      {
+        "id": 103683,
+        "name": "De Janeiro a Janeiro (part. Nando Reis)",
+        "url": "de-janeiro-janeiro",
+        "artist": {
+          "id": 72407,
+          "name": "Roberta Campos",
+          "url": "roberta-campos",
+          "totalPhotos": 6,
+          "genre": {
+            "id": 5,
+            "name": "MPB",
+            "url": "mpb"
+          },
+          "image": {
+            "50": "https://akamai.sscdn.co/letras/50x50/fotos/0/1/0/8/010883239274103042078e84c0683225-tb2.jpg",
+            "162": "https://akamai.sscdn.co/letras/162x162/fotos/0/1/0/8/010883239274103042078e84c0683225.jpg",
+            "250": "https://akamai.sscdn.co/letras/250x250/fotos/0/1/0/8/010883239274103042078e84c0683225.jpg",
+            "color": "#C43A3A"
+          },
+          "headImage": null,
+          "inappropriateContent": {
+            "artist": false,
+            "albuns": false,
+            "photos": false
+          },
+          "songs": null,
+          "externalURLs": {
+            
+          }
+        },
+        "hits": 11185,
+        "verified": false,
+        "mod": "video-aula"
+      }
+    ],
+    "moreResults": true
+  }

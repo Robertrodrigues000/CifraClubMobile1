@@ -8,10 +8,10 @@ class Artist extends Equatable {
   final int id;
   final String name;
   final String url;
-  final Genre genre;
+  final Genre? genre;
   final ArtistImage? image;
 
-  const Artist({required this.url, required this.genre, required this.image, required this.name, required this.id});
+  const Artist({required this.url, this.genre, required this.image, required this.name, required this.id});
 
   @override
   List<Object?> get props => [id, name, url, genre, image];

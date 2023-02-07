@@ -11,15 +11,15 @@ class ArtistDto extends Equatable {
   final int id;
   final String name;
   final String url;
-  final GenreDto genre;
+  final GenreDto? genre;
   final ArtistImageDto? image;
 
-  const ArtistDto({required this.url, required this.genre, required this.image, required this.name, required this.id});
+  const ArtistDto({required this.url, this.genre, required this.image, required this.name, required this.id});
 
   factory ArtistDto.fromJson(Map<String, dynamic> json) => _$ArtistDtoFromJson(json);
 
   Artist toDomain() {
-    return Artist(url: url, genre: genre.toDomain(), image: image?.toDomain(), name: name, id: id);
+    return Artist(url: url, genre: genre?.toDomain(), image: image?.toDomain(), name: name, id: id);
   }
 
   // coverage:ignore-start

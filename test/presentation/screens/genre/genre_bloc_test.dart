@@ -47,7 +47,7 @@ void main() {
         build: () => GenreBloc("genreUrl", null, getTopArtists),
         act: (bloc) => bloc.requestTopArtists(),
         expect: () => [
-          isA<GenreLoadedState>().having((state) => state.genreName, "genreName", topArtists.first.genre.name),
+          isA<GenreLoadedState>().having((state) => state.genreName, "genreName", topArtists.first.genre?.name),
         ],
       );
     });

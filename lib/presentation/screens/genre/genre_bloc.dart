@@ -27,7 +27,7 @@ class GenreBloc extends Cubit<GenreState> {
         } else {
           emit(GenreLoadedState(
             artists: list.items,
-            genreName: state.genreName ?? list.items.first.genre.name,
+            genreName: state.genreName ?? list.items.first.genre?.name,
           ));
         }
       },
