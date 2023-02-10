@@ -13,7 +13,7 @@ workspace:
 
 steps:
   - name: pub-get
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     environment:
       GITHUB_ACCESS_TOKEN:
         from_secret: GITHUB_ACCESS_TOKEN
@@ -26,9 +26,9 @@ steps:
         path: /pub-cache
 
   - name: format
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     commands:
-      - flutter format --line-length=200 --set-exit-if-changed lib test
+      - dart format --line-length=200 --set-exit-if-changed lib test
     depends_on:
       - pub-get
     volumes:
@@ -36,7 +36,7 @@ steps:
         path: /pub-cache
 
   - name: analyze
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     commands:
       - flutter analyze --no-pub .
     depends_on:
@@ -46,7 +46,7 @@ steps:
         path: /pub-cache
 
   - name: image-files-check
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     commands:
       - flutter pub run images_files_checker --path assets/images --fail-test-on-unexpected-dir
     depends_on:
@@ -56,7 +56,7 @@ steps:
         path: /pub-cache
 
   - name: tests
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     commands:
       - dart ci/generate_coverage_helper.dart
       - flutter test --no-pub --coverage
@@ -67,7 +67,7 @@ steps:
         path: /pub-cache
 
   - name: coverage
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     environment:
     commands:
       - ruby ci/github_coverage.rb
@@ -81,7 +81,7 @@ steps:
         path: /pub-cache
 
   - name: build-apk
-    image: cirrusci/flutter:3.3.8
+    image: cirrusci/flutter:3.7.0
     environment:
       MVN_USER:
         from_secret: MVN_USER
