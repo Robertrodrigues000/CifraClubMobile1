@@ -6,10 +6,10 @@ import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
 class NetworkServiceMock extends Mock implements NetworkService {
-  Future<void> mock<T>({required String response}) async {
+  Future<void> mock<T>({required String response, String? contentType}) async {
     var options = RequestOptions(path: '', responseType: ResponseType.json);
     var jsonResponse = ResponseBody.fromString(response, 200, headers: {
-      Headers.contentTypeHeader: [Headers.jsonContentType]
+      Headers.contentTypeHeader: [contentType ?? Headers.jsonContentType]
     });
 
     registerFallbackValue(_MockNetworkRequest<T>());

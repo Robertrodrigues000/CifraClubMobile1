@@ -1,0 +1,32 @@
+{
+    "response": {
+        "numFound": 127,
+        "start": 0,
+        "maxScore": 82.04467,
+        "docs": [
+            {
+                "txt": "Lifehouse",
+                "art": "Lifehouse",
+                "dns": "lifehouse",
+                "img": "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg",
+                "imgm": "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
+                "score": 82.04467,
+                "tipo": "1",
+                "id_artist": 2843
+            },
+            {
+                "art": "Lifehouse",
+                "dns": "lifehouse",
+                "txt": "You And Me",
+                "url": "you-and-me",
+                "img": "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg",
+                "imgm": "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
+                "score": 27.412634,
+                "tipo": "2",
+                "id_artist": 2843,
+                "id_song": 27161,
+                "b": 0
+            }
+        ]
+    }
+}
