@@ -24,7 +24,6 @@ void main() {
         ArtistDto(
           url: "ze-ramalho",
           genre: GenreDto(
-            id: 666,
             name: "Rock",
             url: "rock",
           ),
@@ -56,7 +55,6 @@ void main() {
         const Artist(
           url: "ze-ramalho",
           genre: Genre(
-            id: 666,
             name: "Rock",
             url: "rock",
           ),

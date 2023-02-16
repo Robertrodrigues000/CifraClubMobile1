@@ -34,7 +34,7 @@ class LogRepositoryImpl extends LogRepository {
   // coverage:ignore-end
 
   @override
-  Future<void> sendNonFatalCrash({required exception, required StackTrace? stack, reason, Iterable<String> information = const [], bool fatal = false}) {
+  Future<void> sendNonFatalCrash({required exception, StackTrace? stack, reason, Iterable<String> information = const [], bool fatal = false}) {
     return crashlytics.recordError(
       Error.safeToString(exception),
       stack ?? StackTrace.current,

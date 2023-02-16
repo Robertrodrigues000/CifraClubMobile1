@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class HomeEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
-      create: (context) => HomeBloc(),
+      create: (context) => HomeBloc(getIt()),
       child: const HomeScreen(),
     );
   }

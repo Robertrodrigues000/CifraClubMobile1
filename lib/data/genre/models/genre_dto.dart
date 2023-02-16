@@ -9,12 +9,10 @@ part 'genre_dto.g.dart';
 
 @JsonSerializable(createToJson: false)
 class GenreDto extends Equatable {
-  final int id;
   final String name;
   final String url;
 
   const GenreDto({
-    required this.id,
     required this.name,
     required this.url,
   });
@@ -22,9 +20,9 @@ class GenreDto extends Equatable {
   factory GenreDto.fromJson(Map<String, dynamic> json) => _$GenreDtoFromJson(json);
 
   Genre toDomain() {
-    return Genre(id: id, name: name, url: url);
+    return Genre(name: name, url: url);
   }
 
   @override
-  List<Object> get props => [id, name, url];
+  List<Object> get props => [name, url];
 }

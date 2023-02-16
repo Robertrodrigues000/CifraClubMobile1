@@ -17,7 +17,7 @@ abstract class LogRepository {
 
   Future<void> sendNonFatalCrash({
     required dynamic exception,
-    required StackTrace? stack,
+    StackTrace? stack,
     dynamic reason,
     Iterable<String> information = const [],
     bool fatal = false,

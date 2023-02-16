@@ -29,12 +29,12 @@ void main() {
 
       const expectedAllGenresDto = AllGenresDto(
         all: [
-          GenreDto(id: 1, name: "Alternativo", url: "alternativo"),
-          GenreDto(id: 7, name: "Axé", url: "axe"),
+          GenreDto(name: "Alternativo", url: "alternativo"),
+          GenreDto(name: "Axé", url: "axe"),
         ],
         top: [
-          GenreDto(id: 666, name: "Rock", url: "rock"),
-          GenreDto(id: 30, name: "Gospel/Religioso", url: "gospelreligioso"),
+          GenreDto(name: "Rock", url: "rock"),
+          GenreDto(name: "Gospel/Religioso", url: "gospelreligioso"),
         ],
       );
 
