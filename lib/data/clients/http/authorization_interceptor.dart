@@ -9,7 +9,10 @@ class AuthorizationInterceptor extends Interceptor {
 
   String _getAuthorizationHeader({required String path, required int expireTime}) {
     var message = _secret + path + expireTime.toString();
-    var base64String = base64Encode(md5.convert(utf8.encode(message)).bytes).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
+    var base64String = base64Encode(md5.convert(utf8.encode(message)).bytes)
+        .replaceAll("+", "-")
+        .replaceAll("/", "_")
+        .replaceAll("=", "");
     return "StudioSol $base64String";
   }
 
@@ -20,7 +23,8 @@ class AuthorizationInterceptor extends Interceptor {
       path += "?${options.uri.query}";
     }
 
-    int expireTime = (currentTime ?? DateTime.now()).add(_expireLenght).millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
+    int expireTime =
+        (currentTime ?? DateTime.now()).add(_expireLenght).millisecondsSinceEpoch ~/ Duration.millisecondsPerSecond;
     String authorization = _getAuthorizationHeader(path: path, expireTime: expireTime);
     options.headers["Authorization"] = authorization;
     options.headers["X-Expires"] = expireTime.toString();

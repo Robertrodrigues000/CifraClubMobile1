@@ -169,7 +169,8 @@ extension UserGenreDtoQueryFilter on QueryBuilder<UserGenreDto, UserGenreDto, QF
     });
   }
 
-  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> nameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> nameContains(String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'name',
@@ -179,7 +180,8 @@ extension UserGenreDtoQueryFilter on QueryBuilder<UserGenreDto, UserGenreDto, QF
     });
   }
 
-  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> nameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> nameMatches(String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'name',
@@ -295,7 +297,8 @@ extension UserGenreDtoQueryFilter on QueryBuilder<UserGenreDto, UserGenreDto, QF
     });
   }
 
-  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> urlContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> urlContains(String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'url',
@@ -305,7 +308,8 @@ extension UserGenreDtoQueryFilter on QueryBuilder<UserGenreDto, UserGenreDto, QF
     });
   }
 
-  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> urlMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<UserGenreDto, UserGenreDto, QAfterFilterCondition> urlMatches(String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'url',

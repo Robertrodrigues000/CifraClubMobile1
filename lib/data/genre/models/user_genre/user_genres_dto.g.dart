@@ -82,7 +82,7 @@ UserGenresDto _userGenresDtoDeserialize(
           allOffsets,
           UserGenreDto(),
         ) ??
-        const [],
+        [],
   );
   object.id = id;
   return object;
@@ -102,7 +102,7 @@ P _userGenresDtoDeserializeProp<P>(
             allOffsets,
             UserGenreDto(),
           ) ??
-          const []) as P;
+          []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }

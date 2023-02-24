@@ -44,9 +44,13 @@ void main() {
       );
       const exception = "nonFatalError";
       final stack = StackTrace.current;
-      when(() => crashlytics.recordError(any(), any(), information: any(named: "information"), fatal: any(named: "fatal"), reason: any(named: "reason"))).thenAnswer((_) => Future.value(null));
+      when(() => crashlytics.recordError(any(), any(),
+          information: any(named: "information"),
+          fatal: any(named: "fatal"),
+          reason: any(named: "reason"))).thenAnswer((_) => Future.value(null));
       repository.sendNonFatalCrash(exception: exception, stack: stack);
-      verify(() => crashlytics.recordError(Error.safeToString(exception), stack, information: any(named: "information"), fatal: any(named: "fatal"), reason: any(named: "reason"))).called(1);
+      verify(() => crashlytics.recordError(Error.safeToString(exception), stack,
+          information: any(named: "information"), fatal: any(named: "fatal"), reason: any(named: "reason"))).called(1);
     });
   });
 }

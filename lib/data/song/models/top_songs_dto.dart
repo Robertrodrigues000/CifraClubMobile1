@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:cifraclub/data/song/models/song_dto.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
@@ -19,7 +17,8 @@ class TopSongsDto extends Equatable {
   });
 
   PaginatedList<Song> toDomain() {
-    return PaginatedList(items: songs.map((song) => song.toDomain()).toList(growable: false), hasMoreResults: moreResults);
+    return PaginatedList(
+        items: songs.map((song) => song.toDomain()).toList(growable: false), hasMoreResults: moreResults);
   }
 
   factory TopSongsDto.fromJson(Map<String, dynamic> json) => _$TopSongsDtoFromJson(json);

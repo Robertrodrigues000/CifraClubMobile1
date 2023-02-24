@@ -47,7 +47,8 @@ When<Future<Response<dynamic>>> _whenDioRequest(Dio dio) {
   );
 }
 
-Future<Result<T, RequestError>> _executeRequest<T>(_TestNetworkService networkService, {required T Function(dynamic) parser}) {
+Future<Result<T, RequestError>> _executeRequest<T>(_TestNetworkService networkService,
+    {required T Function(dynamic) parser}) {
   return networkService.execute(
     request: NetworkRequest(
       type: NetworkRequestType.get,
@@ -75,7 +76,8 @@ void main() {
     group("when request is successful", () {
       test("Receiving json with object", () async {
         Map<String, dynamic> okResponse = {"value1": "ok", "value2": 42};
-        _whenDioRequest(dio).thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
+        _whenDioRequest(dio)
+            .thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
 
         var networkService = _TestNetworkService(dio: dio);
         var response = await _executeRequest(
@@ -94,7 +96,8 @@ void main() {
           {"value1": "ok1", "value2": 42},
           {"value1": "ok2", "value2": 666}
         ];
-        _whenDioRequest(dio).thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
+        _whenDioRequest(dio)
+            .thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
 
         var networkService = _TestNetworkService(dio: dio);
         var response = await _executeRequest(
@@ -115,7 +118,8 @@ void main() {
           {"value1": "ok1", "value2": 42},
           {"value1": "ok2", "value2": 666}
         ];
-        _whenDioRequest(dio).thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
+        _whenDioRequest(dio)
+            .thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
 
         var networkService = _TestNetworkService(dio: dio);
         var response = await _executeRequest(

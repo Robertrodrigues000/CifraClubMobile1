@@ -11,6 +11,8 @@ abstract class LogModule {
   @singleton
   LogRepository getLogRepository(FirebaseCrashlytics crashlytics) {
     return LogRepositoryImpl(
-        crashlytics: crashlytics, shouldLogOnConsole: (String tag, Level level) => kDebugMode, shouldLogOnCrashlytics: (String tag, Level level) => !kDebugMode && (level.value >= Level.INFO.value));
+        crashlytics: crashlytics,
+        shouldLogOnConsole: (String tag, Level level) => kDebugMode,
+        shouldLogOnCrashlytics: (String tag, Level level) => !kDebugMode && (level.value >= Level.INFO.value));
   }
 }

@@ -28,7 +28,7 @@ steps:
   - name: format
     image: cirrusci/flutter:3.7.0
     commands:
-      - dart format --line-length=200 --set-exit-if-changed lib test
+      - dart format --line-length=120 --set-exit-if-changed lib test
     depends_on:
       - pub-get
     volumes:

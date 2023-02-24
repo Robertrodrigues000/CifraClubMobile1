@@ -23,7 +23,8 @@ void main() {
       when(getUserGenresAsStream).thenAnswer((_) => Stream.value(genres));
       when(() => setUserGenres(captureAny())).thenAnswer((_) => SynchronousFuture(null));
 
-      final insertUserGenreUseCase = InsertUserGenre(getUserGenresAsStream: getUserGenresAsStream, setUserGenres: setUserGenres);
+      final insertUserGenreUseCase =
+          InsertUserGenre(getUserGenresAsStream: getUserGenresAsStream, setUserGenres: setUserGenres);
 
       await insertUserGenreUseCase(genre);
 
@@ -39,7 +40,8 @@ void main() {
       when(getUserGenresAsStream).thenAnswer((_) => Stream.value(genres));
       when(() => setUserGenres(captureAny())).thenAnswer((_) => SynchronousFuture(null));
 
-      final insertUserGenreUseCase = InsertUserGenre(getUserGenresAsStream: getUserGenresAsStream, setUserGenres: setUserGenres);
+      final insertUserGenreUseCase =
+          InsertUserGenre(getUserGenresAsStream: getUserGenresAsStream, setUserGenres: setUserGenres);
 
       await insertUserGenreUseCase(genre);
 
@@ -56,7 +58,8 @@ void main() {
       when(getUserGenresAsStream).thenAnswer((_) => Stream.value(genres));
       when(() => setUserGenres(captureAny())).thenAnswer((_) => SynchronousFuture(null));
 
-      final insertUserGenreUseCase = InsertUserGenre(getUserGenresAsStream: getUserGenresAsStream, setUserGenres: setUserGenres);
+      final insertUserGenreUseCase =
+          InsertUserGenre(getUserGenresAsStream: getUserGenresAsStream, setUserGenres: setUserGenres);
 
       await insertUserGenreUseCase(genre);
 

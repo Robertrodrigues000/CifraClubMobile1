@@ -12,7 +12,8 @@ class MockMainBloc extends MockCubit<MainState> implements MainBloc {
     whenListen<MainState>(
       this,
       statesStream ?? Stream.fromIterable([]),
-      initialState: MainInitialState(bottomNavigationNavs: [NavMock.getDummy()], selectedPage: BottomNavigationItem.artist),
+      initialState:
+          MainInitialState(bottomNavigationNavs: [NavMock.getDummy()], selectedPage: BottomNavigationItem.artist),
     );
   }
 }

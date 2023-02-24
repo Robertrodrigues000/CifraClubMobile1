@@ -19,7 +19,15 @@ class SearchDto extends Equatable {
   final String? dns;
   final String? img;
 
-  const SearchDto({required this.idSong, required this.tipo, required this.txt, required this.url, required this.idArtist, required this.art, required this.dns, required this.img});
+  const SearchDto(
+      {required this.idSong,
+      required this.tipo,
+      required this.txt,
+      required this.url,
+      required this.idArtist,
+      required this.art,
+      required this.dns,
+      required this.img});
 
   factory SearchDto.fromJson(Map<String, dynamic> json) => _$SearchDtoFromJson(json);
 

@@ -22,7 +22,8 @@ void main() {
       final allSearchDto = _MockAllSearchDto();
       final allSearch = AllSearch(search: [getFakeArtistSearch(), getFakeSongSearch()]);
 
-      when(() => searchDataSource.getAll(query: "lifehouse")).thenAnswer((_) => SynchronousFuture(Ok(SearchResponseDto(response: allSearchDto))));
+      when(() => searchDataSource.getAll(query: "lifehouse"))
+          .thenAnswer((_) => SynchronousFuture(Ok(SearchResponseDto(response: allSearchDto))));
 
       when(allSearchDto.toDomain).thenAnswer((_) => allSearch);
 

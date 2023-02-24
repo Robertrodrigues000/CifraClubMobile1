@@ -34,7 +34,8 @@ class TestWrapper extends StatelessWidget {
 }
 
 extension PumpWithWrapper on WidgetTester {
-  Future<void> pumpWidgetWithWrapper(Widget widget, {Nav? nav, Duration? duration, EnginePhase phase = EnginePhase.sendSemanticsUpdate}) {
+  Future<void> pumpWidgetWithWrapper(Widget widget,
+      {Nav? nav, Duration? duration, EnginePhase phase = EnginePhase.sendSemanticsUpdate}) {
     return pumpWidget(
       TestWrapper(
         nav: nav,

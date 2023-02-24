@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 // coverage:ignore-file
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
         filterCapsuleSelectedColor: filterCapsuleSelectedColor ?? this.filterCapsuleSelectedColor,
         filterCapsuleUnselectedColor: filterCapsuleUnselectedColor ?? this.filterCapsuleUnselectedColor,
         filterCapsuleSelectedBorderColor: filterCapsuleSelectedBorderColor ?? this.filterCapsuleSelectedBorderColor,
-        filterCapsuleUnselectedBorderColor: filterCapsuleUnselectedBorderColor ?? this.filterCapsuleUnselectedBorderColor);
+        filterCapsuleUnselectedBorderColor:
+            filterCapsuleUnselectedBorderColor ?? this.filterCapsuleUnselectedBorderColor);
   }
 
   @override
@@ -47,12 +47,20 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       return this;
     }
     return AppColorScheme(
-      screenCenterMessageColor: Color.lerp(screenCenterMessageColor, other.screenCenterMessageColor, t) ?? screenCenterMessageColor,
-      genreHeaderDividerColor: Color.lerp(genreHeaderDividerColor, other.genreHeaderDividerColor, t) ?? genreHeaderDividerColor,
-      filterCapsuleSelectedColor: Color.lerp(filterCapsuleSelectedColor, other.filterCapsuleSelectedColor, t) ?? filterCapsuleSelectedColor,
-      filterCapsuleUnselectedColor: Color.lerp(filterCapsuleUnselectedColor, other.filterCapsuleUnselectedColor, t) ?? filterCapsuleUnselectedColor,
-      filterCapsuleSelectedBorderColor: Color.lerp(filterCapsuleSelectedBorderColor, other.filterCapsuleSelectedBorderColor, t) ?? filterCapsuleSelectedBorderColor,
-      filterCapsuleUnselectedBorderColor: Color.lerp(filterCapsuleUnselectedBorderColor, filterCapsuleUnselectedBorderColor, t) ?? filterCapsuleUnselectedBorderColor,
+      screenCenterMessageColor:
+          Color.lerp(screenCenterMessageColor, other.screenCenterMessageColor, t) ?? screenCenterMessageColor,
+      genreHeaderDividerColor:
+          Color.lerp(genreHeaderDividerColor, other.genreHeaderDividerColor, t) ?? genreHeaderDividerColor,
+      filterCapsuleSelectedColor:
+          Color.lerp(filterCapsuleSelectedColor, other.filterCapsuleSelectedColor, t) ?? filterCapsuleSelectedColor,
+      filterCapsuleUnselectedColor: Color.lerp(filterCapsuleUnselectedColor, other.filterCapsuleUnselectedColor, t) ??
+          filterCapsuleUnselectedColor,
+      filterCapsuleSelectedBorderColor:
+          Color.lerp(filterCapsuleSelectedBorderColor, other.filterCapsuleSelectedBorderColor, t) ??
+              filterCapsuleSelectedBorderColor,
+      filterCapsuleUnselectedBorderColor:
+          Color.lerp(filterCapsuleUnselectedBorderColor, filterCapsuleUnselectedBorderColor, t) ??
+              filterCapsuleUnselectedBorderColor,
     );
   }
 }

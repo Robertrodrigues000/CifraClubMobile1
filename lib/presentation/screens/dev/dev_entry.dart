@@ -21,7 +21,8 @@ class DevScreenEntry extends ScreenEntry {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => DevScreenBloc(),
-      child: DevScreen(getCredentialsStream: getIt(), logout: getIt(), openLoginView: getIt(), openUserProfilePage: getIt()),
+      child: DevScreen(
+          getCredentialsStream: getIt(), logout: getIt(), openLoginView: getIt(), openUserProfilePage: getIt()),
     );
   }
 }

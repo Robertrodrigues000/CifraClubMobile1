@@ -31,7 +31,9 @@ void main() {
         offset: queryParams['offset'] as int,
       );
 
-      final request = verify(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request"))).captured.first as NetworkRequest<TopSongsDto>;
+      final request = verify(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<TopSongsDto>;
 
       expect(request.path, "/v3/top/songs");
       expect(request.type, NetworkRequestType.get);
@@ -64,7 +66,9 @@ void main() {
         offset: 0,
       );
 
-      final request = verify(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request"))).captured.first as NetworkRequest<TopSongsDto>;
+      final request = verify(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<TopSongsDto>;
 
       expect(request.path, "/v3/top/songs");
       expect(request.type, NetworkRequestType.get);

@@ -49,14 +49,17 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
         exoticScreenAppBarStyle: exoticScreenAppBarStyle.copyWith(
           color: Color.lerp(exoticScreenAppBarStyle.color, other.exoticScreenAppBarStyle.color, t),
         ),
-        genreHeaderItemStyle: genreHeaderItemStyle.copyWith(color: Color.lerp(genreHeaderItemStyle.color, other.genreHeaderItemStyle.color, t)),
-        listTileTitleStyle: listTileTitleStyle.copyWith(color: Color.lerp(listTileTitleStyle.color, other.listTileTitleStyle.color, t)),
+        genreHeaderItemStyle: genreHeaderItemStyle.copyWith(
+            color: Color.lerp(genreHeaderItemStyle.color, other.genreHeaderItemStyle.color, t)),
+        listTileTitleStyle:
+            listTileTitleStyle.copyWith(color: Color.lerp(listTileTitleStyle.color, other.listTileTitleStyle.color, t)),
         listTileLeadingStyle: listTileLeadingStyle.copyWith(
           color: Color.lerp(listTileLeadingStyle.color, other.listTileLeadingStyle.color, t),
         ),
         filterCapsuleSelectedStyle: filterCapsuleSelectedStyle.copyWith(
           color: Color.lerp(filterCapsuleSelectedStyle.color, other.filterCapsuleSelectedStyle.color, t),
         ),
-        filterCapsuleUnselectedStyle: filterCapsuleUnselectedStyle.copyWith(color: Color.lerp(filterCapsuleUnselectedStyle.color, other.filterCapsuleUnselectedStyle.color, t)));
+        filterCapsuleUnselectedStyle: filterCapsuleUnselectedStyle.copyWith(
+            color: Color.lerp(filterCapsuleUnselectedStyle.color, other.filterCapsuleUnselectedStyle.color, t)));
   }
 }

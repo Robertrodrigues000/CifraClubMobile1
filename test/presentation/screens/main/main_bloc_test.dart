@@ -52,7 +52,8 @@ void main() {
     test(
       "return false and pop to home if BottomNavigationItem.home exists in navigatedItems",
       () async {
-        final bloc = getBloc(navs: [NavMock.getDummy(), NavMock.getDummy(canPop: false), NavMock.getDummy(canPop: false)]);
+        final bloc =
+            getBloc(navs: [NavMock.getDummy(), NavMock.getDummy(canPop: false), NavMock.getDummy(canPop: false)]);
 
         bloc.setSelectedItem(BottomNavigationItem.dev);
         bloc.setSelectedItem(BottomNavigationItem.artist);

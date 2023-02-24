@@ -25,7 +25,8 @@ class RemoteImage extends StatelessWidget {
     this.fadeOutCurve = Curves.easeInOut,
     this.fadeInDuration = Duration.zero,
     this.fadeInCurve = Curves.easeInOut,
-  }) : assert(placeholder == null || progressIndicatorBuilder == null, "Should use a placeholder or a progressIndicatorBuilder");
+  }) : assert(placeholder == null || progressIndicatorBuilder == null,
+            "Should use a placeholder or a progressIndicatorBuilder");
 
   @override
   Widget build(BuildContext context) {

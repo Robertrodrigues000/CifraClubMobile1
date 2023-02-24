@@ -22,7 +22,9 @@ void main() {
       final genresDataSource = GenresDataSource(networkService: networkService);
       final result = await genresDataSource.getGenres();
 
-      final request = verify(() => networkService.execute<AllGenresDto>(request: captureAny(named: "request"))).captured.first as NetworkRequest<AllGenresDto>;
+      final request = verify(() => networkService.execute<AllGenresDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<AllGenresDto>;
 
       expect(request.path, "/v3/genres");
       expect(request.type, NetworkRequestType.get);
@@ -45,11 +47,14 @@ void main() {
     test("Request failed", () async {
       final networkService = NetworkServiceMock();
 
-      when(() => networkService.execute<AllGenresDto>(request: captureAny(named: "request"))).thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
+      when(() => networkService.execute<AllGenresDto>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
 
       final genresDataSource = GenresDataSource(networkService: networkService);
       final result = await genresDataSource.getGenres();
-      final request = verify(() => networkService.execute<AllGenresDto>(request: captureAny(named: "request"))).captured.first as NetworkRequest<AllGenresDto>;
+      final request = verify(() => networkService.execute<AllGenresDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<AllGenresDto>;
 
       expect(request.path, "/v3/genres");
       expect(request.type, NetworkRequestType.get);

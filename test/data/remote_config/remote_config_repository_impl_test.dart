@@ -81,7 +81,8 @@ void main() {
 
     test(" get() called", () async {
       final timeBetweenInterstitialParameter = TimeBetweenIntersitialsParameter();
-      when(() => mockRemoteConfigParameters.timeBetweenInterstitials).thenAnswer((realInvocation) => timeBetweenInterstitialParameter);
+      when(() => mockRemoteConfigParameters.timeBetweenInterstitials)
+          .thenAnswer((realInvocation) => timeBetweenInterstitialParameter);
       final value = repository.getTimeBetweenInterstitials();
       expect(value == timeBetweenInterstitialParameter.value, true);
     });

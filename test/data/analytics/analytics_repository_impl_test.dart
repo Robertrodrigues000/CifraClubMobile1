@@ -13,7 +13,8 @@ void main() {
     final repository = AnalyticsRepositoryImpl(firebaseAnalytics);
     final event = AnalyticsEvent.pageView("testePage");
 
-    when(() => firebaseAnalytics.logEvent(name: event.name, parameters: event.parameters)).thenAnswer((_) => Future.value(null));
+    when(() => firebaseAnalytics.logEvent(name: event.name, parameters: event.parameters))
+        .thenAnswer((_) => Future.value(null));
 
     await repository.logEvent(event);
 
@@ -25,7 +26,8 @@ void main() {
     final repository = AnalyticsRepositoryImpl(firebaseAnalytics);
     final property = UserProperty.login(false);
 
-    when(() => firebaseAnalytics.setUserProperty(name: property.name, value: property.value)).thenAnswer((_) => Future.value(null));
+    when(() => firebaseAnalytics.setUserProperty(name: property.name, value: property.value))
+        .thenAnswer((_) => Future.value(null));
 
     await repository.setUserProperty(property);
 

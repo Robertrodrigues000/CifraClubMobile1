@@ -10,11 +10,13 @@ class LogRepositoryImpl extends LogRepository {
   final LogCondition shouldLogOnCrashlytics;
   final FirebaseCrashlytics crashlytics;
 
-  LogRepositoryImpl({required this.crashlytics, required this.shouldLogOnConsole, required this.shouldLogOnCrashlytics});
+  LogRepositoryImpl(
+      {required this.crashlytics, required this.shouldLogOnConsole, required this.shouldLogOnCrashlytics});
 
   // coverage:ignore-start
   @override
-  Future<void> log({required String tag, Level level = Level.FINE, required String message, Object? error, StackTrace? stackTrace}) {
+  Future<void> log(
+      {required String tag, Level level = Level.FINE, required String message, Object? error, StackTrace? stackTrace}) {
     if (shouldLogOnConsole(tag, level)) {
       developer.log(
         "${_logLevelToEmoji(level)} $message",
@@ -34,7 +36,8 @@ class LogRepositoryImpl extends LogRepository {
   // coverage:ignore-end
 
   @override
-  Future<void> sendNonFatalCrash({required exception, StackTrace? stack, reason, Iterable<String> information = const [], bool fatal = false}) {
+  Future<void> sendNonFatalCrash(
+      {required exception, StackTrace? stack, reason, Iterable<String> information = const [], bool fatal = false}) {
     return crashlytics.recordError(
       Error.safeToString(exception),
       stack ?? StackTrace.current,

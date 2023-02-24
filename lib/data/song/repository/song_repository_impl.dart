@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/repository/song_repository.dart';

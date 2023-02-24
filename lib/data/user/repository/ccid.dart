@@ -31,7 +31,8 @@ class Ccid implements AuthenticationRepository {
   // ignore_for_file: close_sinks
   // ignoring rule because Ccid is a singleton
   @override
-  BehaviorSubject<UserCredential> credential = BehaviorSubject<UserCredential>.seeded(const UserCredential(isUserLoggedIn: false));
+  BehaviorSubject<UserCredential> credential =
+      BehaviorSubject<UserCredential>.seeded(const UserCredential(isUserLoggedIn: false));
 
   Future<void> updateCredentials() async {
     final isUserLoggedIn = await this.isUserLoggedIn();

@@ -9,7 +9,9 @@ class MainBottomNavigation extends StatelessWidget {
   final double safeAreaBottomOffset;
   final void Function(BottomNavigationItem selectedItem) onItemSelected;
 
-  const MainBottomNavigation({Key? key, required this.currentItem, required this.onItemSelected, this.safeAreaBottomOffset = 0}) : super(key: key);
+  const MainBottomNavigation(
+      {Key? key, required this.currentItem, required this.onItemSelected, this.safeAreaBottomOffset = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

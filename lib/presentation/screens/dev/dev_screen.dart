@@ -18,7 +18,13 @@ class DevScreen extends StatefulWidget {
   final OpenUserProfilePage openUserProfilePage;
   final Logout logout;
 
-  const DevScreen({Key? key, required this.getCredentialsStream, required this.openLoginView, required this.openUserProfilePage, required this.logout}) : super(key: key);
+  const DevScreen(
+      {Key? key,
+      required this.getCredentialsStream,
+      required this.openLoginView,
+      required this.openUserProfilePage,
+      required this.logout})
+      : super(key: key);
 
   @override
   State<DevScreen> createState() => _DevScreenState();

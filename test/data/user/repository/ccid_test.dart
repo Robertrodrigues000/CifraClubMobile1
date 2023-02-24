@@ -193,9 +193,13 @@ void main() {
       return ccid.credential.value.isUserLoggedIn;
     }
 
-    test("onLoginComplete", () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onLoginComplete"), isTrue));
-    test("onSilentLogoutComplete", () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onSilentLogoutComplete"), isTrue));
-    test("onLogoutComplete", () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onLogoutComplete"), isTrue));
-    test("onUserDataChanged", () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onUserDataChanged"), isTrue));
+    test(
+        "onLoginComplete", () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onLoginComplete"), isTrue));
+    test("onSilentLogoutComplete",
+        () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onSilentLogoutComplete"), isTrue));
+    test("onLogoutComplete",
+        () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onLogoutComplete"), isTrue));
+    test("onUserDataChanged",
+        () async => expect(await wasCredentialsUpdatedWhenInvokedMethod("onUserDataChanged"), isTrue));
   });
 }

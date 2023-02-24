@@ -32,7 +32,8 @@ void main() {
       when(genresDataSource.getGenres).thenAnswer((_) => SynchronousFuture(Ok(allGenresDto)));
       when(allGenresDto.toDomain).thenAnswer((_) => allGenres);
 
-      final repository = GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
+      final repository =
+          GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
       final result = await repository.getGenres();
 
       verify(allGenresDto.toDomain).called(1);
@@ -47,7 +48,8 @@ void main() {
       final userGenreDataSource = _MockUserGenreDataSource();
       when(genresDataSource.getGenres).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
 
-      final repository = GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
+      final repository =
+          GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
       final allGenres = await repository.getGenres();
 
       expect(allGenres.isSuccess, false);
@@ -66,7 +68,8 @@ void main() {
       when(userGenreDataSource.getAll).thenAnswer((_) => Stream.value(userGenresDto));
       when(userGenresDto.toDomain).thenAnswer((_) => genres);
 
-      final repository = GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
+      final repository =
+          GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
 
       final genreList = await repository.getUserGenresAsStream().first;
 
@@ -82,7 +85,8 @@ void main() {
 
       when(userGenreDataSource.getAll).thenAnswer((_) => Stream.value(null));
 
-      final repository = GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
+      final repository =
+          GenresRepositoryImpl(userGenreDataSource: userGenreDataSource, genresDataSource: genresDataSource);
 
       final genreList = await repository.getUserGenresAsStream().first;
 

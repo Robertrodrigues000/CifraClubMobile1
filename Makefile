@@ -7,17 +7,18 @@ build-runner:
 	flutter packages pub run build_runner build --delete-conflicting-outputs
 
 format:
-	dart format --line-length=200 lib test
+	dart format --line-length=120 lib test
 
 prepare: pub-get build-runner format
 
 format-exiting-if-changed:
-	dart format --line-length=200 --set-exit-if-changed lib test
+	dart format --line-length=120 --set-exit-if-changed lib test
 
 analyze:
 	flutter analyze --no-pub .
 
 test:
+	rm -rf test/coverage_helper_test.dart
 	dart ci/generate_coverage_helper.dart
 	flutter test --no-pub --coverage
 

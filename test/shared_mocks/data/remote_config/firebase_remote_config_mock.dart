@@ -10,7 +10,8 @@ class FirebaseRemoteConfigMock extends Mock implements FirebaseRemoteConfig {
     Map<String, dynamic>? remoteValues,
     bool fetchAndActivateShouldFail = false,
   }) {
-    registerFallbackValue(RemoteConfigSettings(fetchTimeout: const Duration(seconds: 1), minimumFetchInterval: const Duration(seconds: 1)));
+    registerFallbackValue(RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 1), minimumFetchInterval: const Duration(seconds: 1)));
     final remoteConfig = FirebaseRemoteConfigMock();
 
     final List<VoidCallback> listeners = [];

@@ -21,7 +21,8 @@ void main() {
       };
 
       final networkService = NetworkServiceMock();
-      final mockResponse = await File("test/data/artist/data_source/top_artists_mock_json_response.json").readAsString();
+      final mockResponse =
+          await File("test/data/artist/data_source/top_artists_mock_json_response.json").readAsString();
       await networkService.mock<TopArtistsDto>(response: mockResponse);
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
@@ -31,7 +32,9 @@ void main() {
         offset: queryParams['offset'] as int,
       );
 
-      final request = verify(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request"))).captured.first as NetworkRequest<TopArtistsDto>;
+      final request = verify(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<TopArtistsDto>;
 
       expect(request.path, "/v3/top/artists");
       expect(request.type, NetworkRequestType.get);
@@ -53,7 +56,8 @@ void main() {
       };
 
       final networkService = NetworkServiceMock();
-      final mockResponse = await File("test/data/artist/data_source/top_artists_mock_json_response.json").readAsString();
+      final mockResponse =
+          await File("test/data/artist/data_source/top_artists_mock_json_response.json").readAsString();
       await networkService.mock<TopArtistsDto>(response: mockResponse);
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
@@ -62,7 +66,9 @@ void main() {
         offset: 0,
       );
 
-      final request = verify(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request"))).captured.first as NetworkRequest<TopArtistsDto>;
+      final request = verify(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<TopArtistsDto>;
 
       expect(request.path, "/v3/top/artists");
       expect(request.type, NetworkRequestType.get);

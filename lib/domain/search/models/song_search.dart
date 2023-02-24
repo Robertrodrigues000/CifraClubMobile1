@@ -9,7 +9,14 @@ class SongSearch implements Search {
   final String artistUrl;
   final String? artistImage;
 
-  const SongSearch({required this.songId, required this.songName, required this.songUrl, required this.artistId, required this.artistName, required this.artistUrl, required this.artistImage});
+  const SongSearch(
+      {required this.songId,
+      required this.songName,
+      required this.songUrl,
+      required this.artistId,
+      required this.artistName,
+      required this.artistUrl,
+      required this.artistImage});
 
   // coverage:ignore-start
   @override

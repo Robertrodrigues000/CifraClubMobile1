@@ -8,5 +8,7 @@ class UserProperty {
 
   UserProperty._(this.name, this.value);
 
-  UserProperty.login(bool isLoggedIn) : this._(UserPropertyName.loginStatusProperty, isLoggedIn ? UserPropertyValues.loggedIn : UserPropertyValues.loggedOut);
+  UserProperty.login(bool isLoggedIn)
+      : this._(UserPropertyName.loginStatusProperty,
+            isLoggedIn ? UserPropertyValues.loggedIn : UserPropertyValues.loggedOut);
 }

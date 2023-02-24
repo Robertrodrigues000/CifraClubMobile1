@@ -8,7 +8,8 @@ class InheritedDependenciesWidget extends InheritedWidget {
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
 
   static InheritedDependenciesWidget of(BuildContext context) {
-    final InheritedDependenciesWidget? result = context.dependOnInheritedWidgetOfExactType<InheritedDependenciesWidget>();
+    final InheritedDependenciesWidget? result =
+        context.dependOnInheritedWidgetOfExactType<InheritedDependenciesWidget>();
     assert(result != null, 'No InheritedWidgetDependencies found in context');
     return result!;
   }

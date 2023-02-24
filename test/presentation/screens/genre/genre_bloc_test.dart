@@ -38,7 +38,9 @@ void main() {
         build: () => GenreBloc("genreUrl", "genreName", getTopArtists),
         act: (bloc) => bloc.requestTopArtists(),
         expect: () => [
-          isA<GenreLoadedState>().having((state) => state.artists, "artists", topArtists).having((state) => state.genreName, "genre name", "genreName"),
+          isA<GenreLoadedState>()
+              .having((state) => state.artists, "artists", topArtists)
+              .having((state) => state.genreName, "genre name", "genreName"),
         ],
       );
 
@@ -54,7 +56,10 @@ void main() {
 
     group("When request fails", () {
       final getTopArtists = _MockGetTopArtists();
-      when(() => getTopArtists.call(genreUrl: any(named: "genreUrl"), limit: any(named: "limit"), offset: any(named: "offset"))).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
+      when(() => getTopArtists.call(
+          genreUrl: any(named: "genreUrl"),
+          limit: any(named: "limit"),
+          offset: any(named: "offset"))).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
 
       blocTest(
         "should emit an error state",
