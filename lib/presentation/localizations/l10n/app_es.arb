@@ -13,5 +13,6 @@
     "emptyList": "Lista vacía",
     "noConnection": "Sin conexión a internet",
     "genreHeaderTops": "Más tocados",
-    "genreHeaderAll": "Todos"
+    "genreHeaderAll": "Todos",
+    "login" : "Iniciar Sesión"
 }

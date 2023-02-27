@@ -12,6 +12,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color filterCapsuleUnselectedColor;
   final Color filterCapsuleSelectedBorderColor;
   final Color filterCapsuleUnselectedBorderColor;
+  final Color homeLogInColor;
   const AppColorScheme({
     required this.screenCenterMessageColor,
     required this.genreHeaderDividerColor,
@@ -19,6 +20,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.filterCapsuleUnselectedColor,
     required this.filterCapsuleSelectedBorderColor,
     required this.filterCapsuleUnselectedBorderColor,
+    required this.homeLogInColor,
   });
 
   @override
@@ -30,15 +32,17 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? filterCapsuleUnselectedColor,
     Color? filterCapsuleSelectedBorderColor,
     Color? filterCapsuleUnselectedBorderColor,
+    Color? homeLogInColor,
   }) {
     return AppColorScheme(
-        screenCenterMessageColor: screenCenterMessageColor ?? this.screenCenterMessageColor,
-        genreHeaderDividerColor: genreHeaderDividerColor ?? this.genreHeaderDividerColor,
-        filterCapsuleSelectedColor: filterCapsuleSelectedColor ?? this.filterCapsuleSelectedColor,
-        filterCapsuleUnselectedColor: filterCapsuleUnselectedColor ?? this.filterCapsuleUnselectedColor,
-        filterCapsuleSelectedBorderColor: filterCapsuleSelectedBorderColor ?? this.filterCapsuleSelectedBorderColor,
-        filterCapsuleUnselectedBorderColor:
-            filterCapsuleUnselectedBorderColor ?? this.filterCapsuleUnselectedBorderColor);
+      screenCenterMessageColor: screenCenterMessageColor ?? this.screenCenterMessageColor,
+      genreHeaderDividerColor: genreHeaderDividerColor ?? this.genreHeaderDividerColor,
+      filterCapsuleSelectedColor: filterCapsuleSelectedColor ?? this.filterCapsuleSelectedColor,
+      filterCapsuleUnselectedColor: filterCapsuleUnselectedColor ?? this.filterCapsuleUnselectedColor,
+      filterCapsuleSelectedBorderColor: filterCapsuleSelectedBorderColor ?? this.filterCapsuleSelectedBorderColor,
+      filterCapsuleUnselectedBorderColor: filterCapsuleUnselectedBorderColor ?? this.filterCapsuleUnselectedBorderColor,
+      homeLogInColor: homeLogInColor ?? this.homeLogInColor,
+    );
   }
 
   @override
@@ -61,6 +65,7 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       filterCapsuleUnselectedBorderColor:
           Color.lerp(filterCapsuleUnselectedBorderColor, filterCapsuleUnselectedBorderColor, t) ??
               filterCapsuleUnselectedBorderColor,
+      homeLogInColor: Color.lerp(homeLogInColor, homeLogInColor, t) ?? homeLogInColor,
     );
   }
 }

@@ -21,5 +21,6 @@
     "emptyList": "Empty list",
     "noConnection": "No internet connection",
     "genreHeaderTops": "Tops",
-    "genreHeaderAll": "All"
+    "genreHeaderAll": "All",
+    "login" : "Log in"
 }

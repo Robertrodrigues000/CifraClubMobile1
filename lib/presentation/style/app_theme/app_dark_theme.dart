@@ -7,6 +7,7 @@ final appDarkTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.grey10,
   typography: Typography.material2018(), // [https://github.com/flutter/flutter/issues/89947#issuecomment-920508415]
   brightness: Brightness.dark,
+  useMaterial3: true,
   sliderTheme: SliderThemeData(
     trackHeight: 2,
     thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6, disabledThumbRadius: 6),
@@ -16,7 +17,8 @@ final appDarkTheme = ThemeData(
     fillColor: MaterialStateProperty.all(AppColors.grey10),
   ),
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.grey10,
+    backgroundColor: AppColors.darkNeutralPrimary,
+    surfaceTintColor: AppColors.darkNeutralSecondary,
     foregroundColor: AppColors.grey90,
   ),
   dialogTheme: const DialogTheme(

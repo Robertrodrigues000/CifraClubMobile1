@@ -3,6 +3,7 @@ import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/blog.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<HomeBloc>(context);
+    bloc.getUserInfo();
   }
 
   @override
@@ -35,12 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //Bloc
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text("Home"),
+          appBar: HomeHeader(
+            user: state.user,
+            isPro: state.isPro,
+            openLogin: bloc.openLoginPage,
+            openProfile: bloc.openProfilePage,
           ),
           body: CustomScrollView(
             slivers: [

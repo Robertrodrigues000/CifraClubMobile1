@@ -8,4 +8,5 @@ const appColorLightScheme = AppColorScheme(
     filterCapsuleSelectedColor: AppColors.grey10,
     filterCapsuleUnselectedColor: AppColors.white,
     filterCapsuleSelectedBorderColor: AppColors.grey10,
-    filterCapsuleUnselectedBorderColor: AppColors.grey90);
+    filterCapsuleUnselectedBorderColor: AppColors.grey90,
+    homeLogInColor: AppColors.grey10);

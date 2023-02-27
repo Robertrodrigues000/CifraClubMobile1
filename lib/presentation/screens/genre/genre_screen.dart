@@ -1,6 +1,7 @@
 import 'package:cifraclub/presentation/screens/genre/genre_bloc.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_state.dart';
 import 'package:cifraclub/presentation/screens/genre/widgets/artist_list_item.dart';
+import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,7 @@ class _GenreScreenState extends State<GenreScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<GenreBloc, GenreState>(builder: (context, state) {
       return Scaffold(
-        appBar: AppBar(
+        appBar: CosmosAppBar(
           title: Text(state.genreName ?? ""),
         ),
         body: Builder(

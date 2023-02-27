@@ -7,8 +7,10 @@ final appLightTheme = ThemeData(
   typography: Typography.material2018(), // [https://github.com/flutter/flutter/issues/89947#issuecomment-920508415]
   scaffoldBackgroundColor: AppColors.white,
   brightness: Brightness.light,
+  useMaterial3: true,
   appBarTheme: const AppBarTheme(
-    backgroundColor: AppColors.white,
+    backgroundColor: AppColors.lightNeutralPrimary,
+    surfaceTintColor: AppColors.lightNeutralSecondary,
     foregroundColor: AppColors.grey20,
   ),
   radioTheme: RadioThemeData(
