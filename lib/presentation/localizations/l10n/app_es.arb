@@ -14,5 +14,10 @@
     "noConnection": "Sin conexión a internet",
     "genreHeaderTops": "Más tocados",
     "genreHeaderAll": "Todos",
+    "home": "Principio",
+    "songbook": "Listas",
+    "search": "Buscar",
+    "academy": "Academy",
+    "more": "Más",
     "login" : "Iniciar Sesión"
 }

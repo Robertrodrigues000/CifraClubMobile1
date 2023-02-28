@@ -55,8 +55,8 @@ void main() {
         final bloc =
             getBloc(navs: [NavMock.getDummy(), NavMock.getDummy(canPop: false), NavMock.getDummy(canPop: false)]);
 
-        bloc.setSelectedItem(BottomNavigationItem.dev);
-        bloc.setSelectedItem(BottomNavigationItem.artist);
+        bloc.setSelectedItem(BottomNavigationItem.songbook);
+        bloc.setSelectedItem(BottomNavigationItem.search);
         var result = await bloc.onWillPop();
 
         expect(result, false);
@@ -70,10 +70,10 @@ void main() {
     blocTest<MainBloc, MainState>(
       "change selected state",
       build: getBloc,
-      act: (bloc) => bloc.setSelectedItem(BottomNavigationItem.dev),
+      act: (bloc) => bloc.setSelectedItem(BottomNavigationItem.songbook),
       expect: () => [
         predicate(
-          (state) => state is MainInitialState && state.selectedPage == BottomNavigationItem.dev,
+          (state) => state is MainInitialState && state.selectedPage == BottomNavigationItem.songbook,
         ),
       ],
     );

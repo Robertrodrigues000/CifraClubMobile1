@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum BottomNavigationItem { home, dev, artist }
+enum BottomNavigationItem { home, songbook, search, academy, more }
 
 class RestorableBottomNavigationItem extends RestorableValue<BottomNavigationItem> {
   @override

@@ -13,7 +13,7 @@ class MockMainBloc extends MockCubit<MainState> implements MainBloc {
       this,
       statesStream ?? Stream.fromIterable([]),
       initialState:
-          MainInitialState(bottomNavigationNavs: [NavMock.getDummy()], selectedPage: BottomNavigationItem.artist),
+          MainInitialState(bottomNavigationNavs: [NavMock.getDummy()], selectedPage: BottomNavigationItem.search),
     );
   }
 }

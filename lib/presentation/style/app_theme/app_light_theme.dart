@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme_light.dart';
 import 'package:cifraclub/presentation/style/app_color_scheme/app_colors.dart';
 import 'package:cifraclub/presentation/style/app_typography_scheme/app_light_typography_style.dart';
@@ -68,6 +70,28 @@ final appLightTheme = ThemeData(
       ),
     ),
   ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Platform.isIOS ? AppColors.grey95 : AppColors.white,
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      selectedLabelStyle: const TextStyle(
+        color: AppColors.grey10,
+        fontSize: 12,
+        height: 16 / 12,
+        fontWeight: FontWeight.w500,
+        inherit: false,
+      ),
+      unselectedLabelStyle: const TextStyle(
+        color: AppColors.grey60,
+        fontSize: 12,
+        height: 16 / 12,
+        fontWeight: FontWeight.w500,
+        inherit: false,
+      ),
+      selectedItemColor: AppColors.grey10,
+      unselectedItemColor: AppColors.grey60,
+      selectedIconTheme: const IconThemeData(color: AppColors.grey10),
+      unselectedIconTheme: const IconThemeData(color: AppColors.grey60)),
 
   extensions: const [appColorLightScheme, appLightTypographyStyle],
 );

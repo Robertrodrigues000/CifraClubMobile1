@@ -1,6 +1,9 @@
+import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/main/bottom_navigation_item.dart';
-import 'package:cifraclub/presentation/style/app_color_scheme/app_colors.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_bottom_navigation/cifraclub_bottom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class MainBottomNavigation extends StatelessWidget {
   static const double bottomNavigationHeight = 56;
@@ -17,19 +20,65 @@ class MainBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: bottomNavigationHeight + safeAreaBottomOffset,
-      child: BottomNavigationBar(
+      child: CifraclubBottomNavigation(
         currentIndex: currentItem.index,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.white,
-        unselectedItemColor: AppColors.grey90,
-        selectedFontSize: 12.0,
-        unselectedFontSize: 10.0,
-        backgroundColor: AppColors.grey10,
         onTap: (index) => onItemSelected(BottomNavigationItem.values[index]),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.house), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.developer_mode), label: "Dev"),
-          BottomNavigationBarItem(icon: Icon(Icons.music_note), label: "Artist"),
+        items: [
+          BottomNavigationBarItem(
+            icon: const ImageIcon(
+              Svg(AppSvgs.homeBottomNavIcon),
+              size: 24,
+            ),
+            activeIcon: const ImageIcon(
+              Svg(AppSvgs.homeBottomNavIcon),
+              size: 24,
+            ),
+            label: context.text.home,
+          ),
+          BottomNavigationBarItem(
+            icon: const ImageIcon(
+              Svg(AppSvgs.songbookBottomNavIcon),
+              size: 24,
+            ),
+            activeIcon: const ImageIcon(
+              Svg(AppSvgs.songbookBottomNavIcon),
+              size: 24,
+            ),
+            label: context.text.songbook,
+          ),
+          BottomNavigationBarItem(
+            icon: const ImageIcon(
+              Svg(AppSvgs.searchBottomNavIcon),
+              size: 24,
+            ),
+            activeIcon: const ImageIcon(
+              Svg(AppSvgs.searchBottomNavIcon),
+              size: 24,
+            ),
+            label: context.text.search,
+          ),
+          BottomNavigationBarItem(
+            icon: const ImageIcon(
+              Svg(AppSvgs.academyBottomNavIcon),
+              size: 24,
+            ),
+            activeIcon: const ImageIcon(
+              Svg(AppSvgs.academyBottomNavIcon),
+              size: 24,
+            ),
+            label: context.text.academy,
+          ),
+          BottomNavigationBarItem(
+            icon: const ImageIcon(
+              Svg(AppSvgs.moreBottomNavIcon),
+              size: 24,
+            ),
+            activeIcon: const ImageIcon(
+              Svg(AppSvgs.moreBottomNavIcon),
+              size: 24,
+            ),
+            label: context.text.more,
+          ),
         ],
       ),
     );

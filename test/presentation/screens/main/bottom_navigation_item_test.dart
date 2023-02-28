@@ -18,7 +18,7 @@ void main() {
       itemUpdated = true;
     });
 
-    item.didUpdateValue(BottomNavigationItem.dev);
+    item.didUpdateValue(BottomNavigationItem.songbook);
 
     expect(itemUpdated, isTrue);
   });

@@ -12,6 +12,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
   final Color filterCapsuleUnselectedColor;
   final Color filterCapsuleSelectedBorderColor;
   final Color filterCapsuleUnselectedBorderColor;
+  final Color bottomNavigationIndicatorColor;
+  final Color bottomNavigationTopBorderColor;
   final Color homeLogInColor;
   const AppColorScheme({
     required this.screenCenterMessageColor,
@@ -20,6 +22,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.filterCapsuleUnselectedColor,
     required this.filterCapsuleSelectedBorderColor,
     required this.filterCapsuleUnselectedBorderColor,
+    required this.bottomNavigationIndicatorColor,
+    required this.bottomNavigationTopBorderColor,
     required this.homeLogInColor,
   });
 
@@ -32,6 +36,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? filterCapsuleUnselectedColor,
     Color? filterCapsuleSelectedBorderColor,
     Color? filterCapsuleUnselectedBorderColor,
+    Color? bottomNavigationIndicatorColor,
+    Color? bottomNavigationTopBorderColor,
     Color? homeLogInColor,
   }) {
     return AppColorScheme(
@@ -41,6 +47,8 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       filterCapsuleUnselectedColor: filterCapsuleUnselectedColor ?? this.filterCapsuleUnselectedColor,
       filterCapsuleSelectedBorderColor: filterCapsuleSelectedBorderColor ?? this.filterCapsuleSelectedBorderColor,
       filterCapsuleUnselectedBorderColor: filterCapsuleUnselectedBorderColor ?? this.filterCapsuleUnselectedBorderColor,
+      bottomNavigationIndicatorColor: bottomNavigationIndicatorColor ?? this.bottomNavigationIndicatorColor,
+      bottomNavigationTopBorderColor: bottomNavigationTopBorderColor ?? this.bottomNavigationTopBorderColor,
       homeLogInColor: homeLogInColor ?? this.homeLogInColor,
     );
   }
@@ -63,8 +71,14 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
           Color.lerp(filterCapsuleSelectedBorderColor, other.filterCapsuleSelectedBorderColor, t) ??
               filterCapsuleSelectedBorderColor,
       filterCapsuleUnselectedBorderColor:
-          Color.lerp(filterCapsuleUnselectedBorderColor, filterCapsuleUnselectedBorderColor, t) ??
+          Color.lerp(filterCapsuleUnselectedBorderColor, other.filterCapsuleUnselectedBorderColor, t) ??
               filterCapsuleUnselectedBorderColor,
+      bottomNavigationIndicatorColor:
+          Color.lerp(bottomNavigationIndicatorColor, other.bottomNavigationIndicatorColor, t) ??
+              bottomNavigationIndicatorColor,
+      bottomNavigationTopBorderColor:
+          Color.lerp(bottomNavigationTopBorderColor, other.bottomNavigationTopBorderColor, t) ??
+              bottomNavigationTopBorderColor,
       homeLogInColor: Color.lerp(homeLogInColor, homeLogInColor, t) ?? homeLogInColor,
     );
   }

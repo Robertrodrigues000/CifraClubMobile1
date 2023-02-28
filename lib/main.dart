@@ -8,6 +8,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
+import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/style/app_theme/app_dark_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -56,6 +57,12 @@ class CifraClub extends StatelessWidget {
             ),
             getIt(
               param1: NavConstructorParams(firstScreen: GenresEntry({}), restorationId: 'BottomNav3'),
+            ),
+            getIt(
+              param1: NavConstructorParams(firstScreen: NtpTestEntry({}), restorationId: 'BottomNav4'),
+            ),
+            getIt(
+              param1: NavConstructorParams(firstScreen: NtpTestEntry({}), restorationId: 'BottomNav5'),
             ),
           ],
         ),

@@ -22,5 +22,10 @@
     "noConnection": "No internet connection",
     "genreHeaderTops": "Tops",
     "genreHeaderAll": "All",
+    "home": "Home",
+    "songbook": "Songbook",
+    "search": "Search",
+    "academy": "Academy",
+    "more": "More",
     "login" : "Log in"
 }

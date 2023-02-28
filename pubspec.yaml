@@ -25,6 +25,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   flutter_localizations:
     sdk: flutter
+  flutter_svg_provider: ^1.0.3
   get_it: ^7.2.0
   injectable: ^1.5.4
   intl: ^0.17.0
@@ -60,7 +61,8 @@ dev_dependencies:
 flutter:
   generate: true
 
-  uses-material-design: true
-
   assets:
     - assets/images/
+
+  uses-material-design: true
+  

@@ -70,10 +70,10 @@ void main() {
         ),
       );
 
-      await widgetTester.tap(find.text("Artist"));
+      await widgetTester.tap(find.text("Search"));
       await widgetTester.pumpAndSettle();
 
-      expect(pageController.page, equals(BottomNavigationItem.artist.index));
+      expect(pageController.page, equals(BottomNavigationItem.search.index));
     });
   });
 
@@ -99,13 +99,13 @@ void main() {
           NavMock.getDummy(),
           NavMock.getDummy(),
         ],
-        selectedPage: BottomNavigationItem.dev,
+        selectedPage: BottomNavigationItem.songbook,
       ),
     );
 
     await widgetTester.pumpAndSettle();
 
-    expect(pageController.page, BottomNavigationItem.dev.index);
+    expect(pageController.page, BottomNavigationItem.songbook.index);
     stream.close();
   });
 }

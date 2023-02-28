@@ -49,5 +49,27 @@ final appDarkTheme = ThemeData(
       minimumSize: const Size.fromHeight(48.0),
     ),
   ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.grey10,
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      selectedLabelStyle: TextStyle(
+        color: AppColors.white,
+        fontSize: 12,
+        height: 16 / 12,
+        fontWeight: FontWeight.w500,
+        inherit: false,
+      ),
+      unselectedLabelStyle: TextStyle(
+        color: AppColors.grey60,
+        fontSize: 12,
+        height: 16 / 12,
+        fontWeight: FontWeight.w500,
+        inherit: false,
+      ),
+      selectedItemColor: AppColors.white,
+      unselectedItemColor: AppColors.grey60,
+      selectedIconTheme: IconThemeData(color: AppColors.white),
+      unselectedIconTheme: IconThemeData(color: AppColors.grey60)),
   extensions: const [appColorDarkScheme, appDarkTypographyStyle],
 );
