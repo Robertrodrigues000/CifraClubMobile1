@@ -1,0 +1,245 @@
+{
+    "highlights": {
+        "pageId": 3478,
+        "start": "2023-02-23 08:00:00",
+        "end": "2023-02-23 11:00:00",
+        "highlights": [
+            {
+                "id": 3737,
+                "url": "/jimi-hendrix/purple-haze/",
+                "title": "Jimi Hendrix",
+                "subtitle": "Purple Haze",
+                "description": "O melhor que nós temos!",
+                "alt": "Na imagem, foto do guitarrista Jimi Hendrix.",
+                "icon": "guitarra",
+                "language": "PT",
+                "newWindow": true,
+                "autoPlay": false,
+                "tags": [
+                    {
+                        "tagId": 30,
+                        "name": "rock and roll"
+                    }
+                ],
+                "photos": {
+                    "big_1295": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/f/f/0/2/2e29cc81677089831_x1_big_1295.jpeg",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/0/b/6/7/2e29cc81677089832_x2_big_1295.jpeg",
+                        "dominant": "#212121",
+                        "vibrant": "#3DA4B4"
+                    },
+                    "big_1055": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/6/d/e/f/af35d0a1677089833_x1_big_1055.jpeg",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/6/4/c/d/af35d0a1677089833_x2_big_1055.jpeg",
+                        "dominant": "#212121",
+                        "vibrant": "#7249B8"
+                    },
+                    "big_935": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/f/b/c/b/2fcbe8c1677089834_x1_big_935.jpeg",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/2/6/2/2/2fcbe8c1677089835_x2_big_935.jpeg",
+                        "dominant": "#212121",
+                        "vibrant": "#7249B8"
+                    },
+                    "small": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/3/1/7/8/e879cfc1677089836_x1_small.jpeg",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/d/6/5/a/e879cfc1677089836_x2_small.jpeg",
+                        "dominant": "#4240B1",
+                        "vibrant": "#9B4CBA"
+                    },
+                    "app": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/d/b/a/5/d9559191677089837_x1_app.jpeg",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/1/8/c/c/d9559191677089837_x2_app.jpeg",
+                        "x3": "https://akamai.sscdn.co/gcs/cifraclub/destaques/5/3/e/f/d9559191677089838_x3_app.jpeg",
+                        "dominant": "#8397A4",
+                        "vibrant": "#9B4CBA"
+                    }
+                }
+            }
+        ],
+        "countries": [
+            {
+                "countryCode": "BR",
+                "genres": [
+                    {
+                        "id": 0,
+                        "name": "Todos",
+                        "url": "all",
+                        "hits": 0
+                    }
+                ]
+            }
+        ]
+    },
+    "songs": [
+        {
+            "id": 738834,
+            "name": "Deserto",
+            "url": "deserto",
+            "artist": {
+                "id": 321205,
+                "name": "Maria Marçal",
+                "url": "maria-marcal",
+                "totalPhotos": 3,
+                "genre": {
+                    "id": 30,
+                    "name": "Gospel/Religioso",
+                    "url": "gospelreligioso"
+                },
+                "image": {
+                    "50": "https://akamai.sscdn.co/letras/50x50/fotos/5/6/a/8/56a887faf6b464a910cfa5bffbc70f86-tb2.jpg",
+                    "162": "https://akamai.sscdn.co/letras/162x162/fotos/5/6/a/8/56a887faf6b464a910cfa5bffbc70f86.jpg",
+                    "250": "https://akamai.sscdn.co/letras/250x250/fotos/5/6/a/8/56a887faf6b464a910cfa5bffbc70f86.jpg",
+                    "color": "#387ED6"
+                },
+                "headImage": null,
+                "inappropriateContent": {
+                    "artist": false,
+                    "albuns": false,
+                    "photos": false
+                },
+                "songs": null,
+                "externalURLs": {}
+            },
+            "hits": 125951,
+            "verified": false,
+            "mod": "video-aula"
+        }
+    ],
+    "artists": [
+        {
+            "id": 6908,
+            "name": "Bruno e Marrone",
+            "url": "bruno-e-marrone",
+            "hits": 342976,
+            "totalPhotos": 16,
+            "genre": {
+                "id": 9,
+                "name": "Sertanejo",
+                "url": "sertanejo"
+            },
+            "image": {
+                "50": "https://akamai.sscdn.co/letras/50x50/fotos/7/e/c/2/7ec2f5f5d6dd08dee3bf8add7487f5dd-tb2.jpg",
+                "162": "https://akamai.sscdn.co/letras/162x162/fotos/7/e/c/2/7ec2f5f5d6dd08dee3bf8add7487f5dd.jpg",
+                "250": "https://akamai.sscdn.co/letras/250x250/fotos/7/e/c/2/7ec2f5f5d6dd08dee3bf8add7487f5dd.jpg",
+                "color": "#387ED6"
+            },
+            "headImage": null,
+            "inappropriateContent": {
+                "artist": false,
+                "albuns": false,
+                "photos": false
+            },
+            "songs": null,
+            "externalURLs": {}
+        }
+    ],
+    "videoLessons": [
+        {
+            "id": 5583,
+            "youtubeId": "tuFfT0ycVNA",
+            "title": "COMO TOCAR I'LL BE THERE FOR YOU DO BON JOVI NA GUITARRA",
+            "url": "bon-jovi-ill-be-there-for-you-aula-de-guitarra-completa",
+            "views": 174,
+            "duration": 508,
+            "type": "musica",
+            "subTypeId": 1,
+            "subType": "musicas",
+            "instruments": [
+                "electric-guitar"
+            ],
+            "teachers": [
+                6
+            ],
+            "level": 2,
+            "date": "2023-02-15 18:25:35",
+            "cc": false,
+            "images": {
+                "img": "https://i3.ytimg.com/vi/tuFfT0ycVNA/default.jpg",
+                "imgmq": "https://i3.ytimg.com/vi/tuFfT0ycVNA/mqdefault.jpg",
+                "imgsd": "https://i3.ytimg.com/vi/tuFfT0ycVNA/sddefault.jpg"
+            },
+            "version": {
+                "id": 755,
+                "type": 1,
+                "label": "principal"
+            },
+            "song": {
+                "id": 755,
+                "name": "I'll Be There For You",
+                "url": "ill-be-there-for-you",
+                "hits": {
+                    "week": 1714,
+                    "month": 4544,
+                    "all": 699910
+                },
+                "artist": {
+                    "id": 8709,
+                    "name": "Bon Jovi",
+                    "url": "bon-jovi"
+                }
+            },
+            "artist": {
+                "id": 8709,
+                "name": "Bon Jovi",
+                "url": "bon-jovi"
+            },
+            "genre": {
+                "id": 3,
+                "name": "Rock and Roll",
+                "url": "rock-roll"
+            },
+            "captions": null,
+            "urlApi": "/bon-jovi/ill-be-there-for-you",
+            "urlSite": "/bon-jovi/ill-be-there-for-you/",
+            "apiURL": "/bon-jovi/ill-be-there-for-you",
+            "videolessonURL": "/bon-jovi/ill-be-there-for-you/"
+        }
+    ],
+    "learnHighlights": {
+        "pageId": 1,
+        "start": "2019-01-30 00:00:00",
+        "end": "2025-12-30 00:00:00",
+        "genre": {
+            "id": 0,
+            "name": "Todos",
+            "url": "all"
+        },
+        "highlights": [
+            {
+                "id": 17,
+                "url": "/aprenda/violao/como-tocar/",
+                "title": "",
+                "description": "",
+                "alt": "Na imagem está escrito: aprenda violão",
+                "position": 1,
+                "photos": {
+                    "big": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/6/c/c/f/e574fe11567002427_x1_big.png",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/f/9/e/2/e574fe11567002427_x2_big.png"
+                    },
+                    "medium": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/a/6/c/3/45832961567002429_x1_medium.png",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/0/f/3/6/45832961567002429_x2_medium.png"
+                    },
+                    "small": {
+                        "x1": "https://akamai.sscdn.co/gcs/cifraclub/destaques/4/5/3/b/e704fc71567002430_x1_small.png",
+                        "x2": "https://akamai.sscdn.co/gcs/cifraclub/destaques/a/5/a/0/e704fc71567002430_x2_small.png"
+                    }
+                }
+            }
+        ]
+    },
+    "news": [
+        {
+            "url": "https://www.cifraclub.com.br/blog/cifras-simplificadas-jorge-e-mateus/",
+            "image": "https://akamai.sscdn.co/tb/cifra-blog/pt/wp-content/uploads/2023/02/a591cc2-cifras-simplificadas-de-jorge-e-mateus.png",
+            "thumb": {
+                "x1": "https://akamai.sscdn.co/tb/80x80/cifra-blog/pt/wp-content/uploads/2023/02/a591cc2-cifras-simplificadas-de-jorge-e-mateus.png",
+                "x2": "https://akamai.sscdn.co/tb/160x160/cifra-blog/pt/wp-content/uploads/2023/02/a591cc2-cifras-simplificadas-de-jorge-e-mateus.png",
+                "x3": "https://akamai.sscdn.co/tb/240x240/cifra-blog/pt/wp-content/uploads/2023/02/a591cc2-cifras-simplificadas-de-jorge-e-mateus.png"
+            },
+            "headline": "Aprenda 20 cifras simplificadas de Jorge e Mateus",
+            "publishDate": "2023-02-22 11:02:00"
+        }
+    ]
+}

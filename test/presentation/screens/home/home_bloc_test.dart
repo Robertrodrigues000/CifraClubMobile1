@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
+import 'package:cifraclub/domain/home/use_cases/get_home_info.dart';
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
@@ -48,6 +49,8 @@ class _GetCredentialStreamMock extends Mock implements GetCredentialStream {
 
 class _GetUserGenresAsStreamMock extends Mock implements GetUserGenresAsStream {}
 
+class _GetHomeInfoMock extends Mock implements GetHomeInfo {}
+
 void main() {
   HomeBloc getHomeBloc({
     GetCredentialStream? getCredentialStream,
@@ -58,6 +61,7 @@ void main() {
         _OpenLoginPageMock.newDummy(),
         _OpenUserProfileMock.newDummy(),
         _LogoutMock.newDummy(),
+        _GetHomeInfoMock(),
       );
 
   group("When user selection profile action, ", () {

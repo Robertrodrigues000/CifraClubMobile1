@@ -7,8 +7,10 @@ import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
+import 'package:cifraclub/domain/home/use_cases/get_home_info.dart';
 import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:typed_result/typed_result.dart';
 
 class HomeBloc extends Cubit<HomeState> {
   final GetCredentialStream _getCredentialsStream;
@@ -16,11 +18,17 @@ class HomeBloc extends Cubit<HomeState> {
   final OpenUserProfilePage _openUserProfilePage;
   final Logout _logout;
   final GetUserGenresAsStream _getUserGenresAsStream;
+  final GetHomeInfo _getHomeInfo;
   StreamSubscription? _credentialStreamSubscription;
 
-  HomeBloc(this._getUserGenresAsStream, this._getCredentialsStream, this._openLoginView, this._openUserProfilePage,
-      this._logout)
-      : super(HomeLoadingState(user: null, isPro: false));
+  HomeBloc(
+    this._getUserGenresAsStream,
+    this._getCredentialsStream,
+    this._openLoginView,
+    this._openUserProfilePage,
+    this._logout,
+    this._getHomeInfo,
+  ) : super(HomeLoadingState(user: null, isPro: false));
   List<int> highlights = List.generate(10, (index) => index + 1);
   List<int> topArtists = List.generate(4, (index) => index + 1);
   List<int> topCifras = List.generate(10, (index) => index + 1);
@@ -31,15 +39,16 @@ class HomeBloc extends Cubit<HomeState> {
   void onGenreSelected(String genre) async {
     emit(
       HomeLoadedState(
-          highlights: highlights,
-          topCifras: topCifras,
-          topArtists: topArtists,
-          videoLessons: videoLessons,
-          blog: blogPosts,
-          selectedGenre: genre,
-          genres: genres,
-          user: state.user,
-          isPro: state.isPro),
+        highlights: highlights,
+        topCifras: topCifras,
+        topArtists: topArtists,
+        videoLessons: videoLessons,
+        blog: blogPosts,
+        selectedGenre: genre,
+        genres: genres,
+        user: state.user,
+        isPro: state.isPro,
+      ),
     );
   }
 
@@ -63,6 +72,14 @@ class HomeBloc extends Cubit<HomeState> {
   Future<void> requestHomeData() async {
     emit(HomeLoadingState(user: state.user, isPro: state.isPro));
     await Future.delayed(const Duration(seconds: 2));
+    var homeinfo = await _getHomeInfo("sertanejo");
+
+    homeinfo.when(
+      success: (value) {
+        print(value);
+      },
+      failure: (error) {},
+    );
 
     var stream = _getUserGenresAsStream();
     var firstValueOfStream = await stream.first;
