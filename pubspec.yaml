@@ -10,6 +10,10 @@ environment:
 dependencies:
   cached_network_image: ^3.2.3
   clock: ^1.1.1
+  cosmos:
+    git:
+      url: "git@github.com:CifraClub/CosmosMobile.git"
+      ref: "fc0f94f9d3b78a8e3a06dc541886091caa353810"
   crypto: ^3.0.2
   cupertino_icons: ^1.0.5
   dio: ^4.0.6

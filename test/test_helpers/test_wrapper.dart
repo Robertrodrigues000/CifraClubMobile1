@@ -1,7 +1,6 @@
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
-import 'package:cifraclub/presentation/style/app_theme/app_dark_theme.dart';
-import 'package:cifraclub/presentation/style/app_theme/app_light_theme.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,8 +19,8 @@ class TestWrapper extends StatelessWidget {
       child: MaterialApp(
         home: child,
         supportedLocales: supportedLocales,
-        darkTheme: appDarkTheme,
-        theme: appLightTheme,
+        darkTheme: getCosmosDarkTheme(BrandColors.asCifra()),
+        theme: getCosmosLightTheme(BrandColors.asCifra()),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,

@@ -1,4 +1,3 @@
-import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:cifraclub/domain/home/models/home_image.dart';
 import 'package:json_annotation/json_annotation.dart';
 

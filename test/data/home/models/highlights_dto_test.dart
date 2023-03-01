@@ -1,6 +1,5 @@
 import 'package:cifraclub/data/home/models/highlight/highlight_dto.dart';
 import 'package:cifraclub/data/home/models/highlight/highlights_dto.dart';
-import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

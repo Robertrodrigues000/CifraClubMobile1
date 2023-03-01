@@ -75,9 +75,7 @@ class HomeBloc extends Cubit<HomeState> {
     var homeinfo = await _getHomeInfo("sertanejo");
 
     homeinfo.when(
-      success: (value) {
-        print(value);
-      },
+      success: (value) {},
       failure: (error) {},
     );
 

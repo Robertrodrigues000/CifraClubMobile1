@@ -63,7 +63,7 @@ void main() {
     songs: const [songDto],
     artists: const [artistDto],
     videoLessons: const [videoLessonsDto],
-    news: [newsDto],
+    news: const [newsDto],
   );
 
   group("When `getHomeInfos` is called", () {

@@ -1,7 +1,6 @@
 // coverage:ignore-file
-import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme.dart';
-import 'package:cifraclub/presentation/style/app_typography_scheme/app_typography_scheme.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class FilterCapsule extends StatelessWidget {
@@ -23,15 +22,15 @@ class FilterCapsule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
-    final typography = AppTypographyScheme.of(context);
+    final colors = CosmosColorScheme.of(context);
+    final typography = CosmosTypography.of(context);
     return ContainerWithRippleEffect(
       height: 32,
       onTap: onTap,
       decoration: BoxDecoration(
-          color: isSelected ? colors.filterCapsuleSelectedColor : colors.filterCapsuleUnselectedColor,
+          color: isSelected ? colors.textPrimary : colors.neutralPrimary,
           border: Border.all(
-            color: isSelected ? colors.filterCapsuleSelectedBorderColor : colors.filterCapsuleUnselectedBorderColor,
+            color: isSelected ? colors.textPrimary : colors.neutralTertiary,
           ),
           borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
@@ -44,7 +43,7 @@ class FilterCapsule extends StatelessWidget {
               padding: labelPadding,
               child: Text(
                 label,
-                style: isSelected ? typography.filterCapsuleSelectedStyle : typography.filterCapsuleUnselectedStyle,
+                style: isSelected ? typography.body6.copyWith(color: colors.textOnPrimary) : typography.body6,
               ),
             ),
             if (trailing != null) trailing!,

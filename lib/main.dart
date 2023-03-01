@@ -9,11 +9,10 @@ import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
-import 'package:cifraclub/presentation/style/app_theme/app_dark_theme.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:cifraclub/presentation/style/app_theme/app_light_theme.dart';
 
 Future<void> initializeCcid() {
   final ccid = getIt<AuthenticationRepository>();
@@ -38,8 +37,8 @@ class CifraClub extends StatelessWidget {
     return InheritedDependenciesWidget(
       child: MaterialApp(
         restorationScopeId: _navigationRestorationScope,
-        darkTheme: appDarkTheme,
-        theme: appLightTheme,
+        darkTheme: getCosmosDarkTheme(BrandColors.asCifra()),
+        theme: getCosmosLightTheme(BrandColors.asCifra()),
         supportedLocales: supportedLocales,
         localizationsDelegates: const [
           AppLocalizations.delegate,

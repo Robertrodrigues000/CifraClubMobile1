@@ -1,5 +1,5 @@
 import 'package:cifraclub/extensions/iterable.dart';
-import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class CifraclubBottomNavigation extends StatefulWidget {
@@ -35,7 +35,7 @@ class _CifraclubBottomNavigationState extends State<CifraclubBottomNavigation> w
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorScheme.of(context);
+    final colors = CosmosColorScheme.of(context);
     const double indicatorHorizontalPadding = 12;
     const double indicatorHeight = 3;
     const double topBorderHeight = 1;
@@ -43,7 +43,7 @@ class _CifraclubBottomNavigationState extends State<CifraclubBottomNavigation> w
       builder: (context, constraints) => Stack(
         children: [
           Container(
-            color: colors.bottomNavigationTopBorderColor,
+            color: colors.neutralTertiary,
             height: topBorderHeight,
           ),
           TabBar(
@@ -54,8 +54,7 @@ class _CifraclubBottomNavigationState extends State<CifraclubBottomNavigation> w
                 left: indicatorHorizontalPadding,
                 right: indicatorHorizontalPadding),
             indicatorWeight: 0,
-            indicator:
-                BoxDecoration(color: colors.bottomNavigationIndicatorColor, borderRadius: BorderRadius.circular(1.5)),
+            indicator: BoxDecoration(color: colors.primary, borderRadius: BorderRadius.circular(1.5)),
             onTap: widget.onTap,
             splashFactory: NoSplash.splashFactory,
             overlayColor: MaterialStateProperty.resolveWith((_) => Colors.transparent),

@@ -1,5 +1,4 @@
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
-import 'package:cifraclub/data/home/models/highlight/highlight_dto.dart';
 import 'package:cifraclub/data/home/models/highlight/highlights_dto.dart';
 import 'package:cifraclub/data/home/models/home_dto.dart';
 import 'package:cifraclub/data/home/models/news/news_dto.dart';

@@ -1,9 +1,8 @@
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
-import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme.dart';
-import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class HomeHeader extends StatefulWidget implements PreferredSizeWidget {
@@ -37,10 +36,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             onPressed: widget.openLogin,
             child: Text(
               context.text.login,
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColorScheme.of(context).homeLogInColor,
-              ),
+              style: CosmosTypography.of(context).subtitle5.copyWith(fontWeight: FontWeight.bold),
             ),
           )
         else

@@ -1,5 +1,5 @@
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
-import 'package:cifraclub/presentation/style/app_typography_scheme/app_typography_scheme.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class ArtistListItem extends StatelessWidget {
@@ -10,7 +10,7 @@ class ArtistListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = AppTypographyScheme.of(context);
+    final typography = CosmosTypography.of(context);
 
     return InkWell(
       onTap: () => logger?.log(tag: runtimeType.toString(), message: "Tapped on $title"), // coverage:ignore-line
@@ -25,7 +25,7 @@ class ArtistListItem extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "$ranking",
-                  style: typography.listTileLeadingStyle,
+                  style: typography.subtitle3.copyWith(color: CosmosColorScheme.of(context).textSecondary),
                 ),
               ),
             ),
@@ -34,7 +34,7 @@ class ArtistListItem extends StatelessWidget {
             ),
             Text(
               title,
-              style: typography.listTileTitleStyle,
+              style: typography.subtitle3,
             )
           ],
         ),

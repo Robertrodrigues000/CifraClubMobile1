@@ -1,5 +1,4 @@
-import 'package:cifraclub/presentation/style/app_color_scheme/app_color_scheme.dart';
-import 'package:cifraclub/presentation/style/app_typography_scheme/app_typography_scheme.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class GenreHeader extends StatelessWidget {
@@ -15,12 +14,12 @@ class GenreHeader extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
             text,
-            style: AppTypographyScheme.of(context).genreHeaderItemStyle,
+            style: CosmosTypography.of(context).title3,
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Divider(color: AppColorScheme.of(context).genreHeaderDividerColor),
+          child: Divider(color: CosmosColorScheme.of(context).neutralTertiary),
         ),
       ],
     );
