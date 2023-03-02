@@ -4,4 +4,6 @@ class AppSvgs {
   static const searchBottomNavIcon = "assets/images/search_bottom_nav_icon.svg";
   static const academyBottomNavIcon = "assets/images/academy_bottom_nav_icon.svg";
   static const moreBottomNavIcon = "assets/images/more_bottom_nav_icon.svg";
+  static const verifiedIcon = "assets/images/verified_icon.svg";
+  static const artistsAvatarPlaceHolder = "assets/images/artist_avatar_placeholder.svg";
 }

@@ -8,6 +8,8 @@ import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
+import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
+import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:nav/nav.dart';
@@ -105,6 +107,24 @@ class _DevScreenState extends State<DevScreen> {
             onTap: () {
               Nav.of(context).push(
                 screenName: HomeEntry.name,
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.people_outline),
+            title: const Text("Top Artists"),
+            onTap: () {
+              Nav.of(context).push(
+                screenName: TopArtistsEntry.name,
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.disc_full),
+            title: const Text("Top Songs"),
+            onTap: () {
+              Nav.of(context).push(
+                screenName: TopSongsEntry.name,
               );
             },
           ),

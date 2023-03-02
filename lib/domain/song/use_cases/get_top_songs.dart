@@ -12,7 +12,11 @@ class GetTopSongs {
 
   GetTopSongs({required this.songRepository});
 
-  Future<Result<PaginatedList<Song>, RequestError>> call({String? genreUrl, int limit = 100, int offset = 0}) {
-    return songRepository.getTopSongs(genreUrl: genreUrl, limit: limit, offset: offset);
+  Future<Result<PaginatedList<Song>, RequestError>> call({String? genreUrl, int limit = 100, int offset = 0}) async {
+    final result = await songRepository.getTopSongs(genreUrl: genreUrl, limit: limit, offset: offset);
+    if (result.isSuccess) {
+      return result.get()!.items.isNotEmpty ? result : Err(ServerError());
+    }
+    return result;
   }
 }

@@ -3,11 +3,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class RemoteImage extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final Widget Function(BuildContext, ImageProvider<Object>)? imageBuilder;
-  final Widget Function(BuildContext, String)? placeholder;
+  final Widget? placeholder;
   final Widget Function(BuildContext, String, DownloadProgress)? progressIndicatorBuilder;
-  final Widget Function(BuildContext, String, dynamic)? errorWidget;
   final EdgeInsetsGeometry padding;
   final Duration? fadeOutDuration;
   final Curve fadeOutCurve;
@@ -19,7 +18,6 @@ class RemoteImage extends StatelessWidget {
     this.imageBuilder,
     this.placeholder,
     this.progressIndicatorBuilder,
-    this.errorWidget,
     this.padding = EdgeInsets.zero,
     this.fadeOutDuration = Duration.zero,
     this.fadeOutCurve = Curves.easeInOut,
@@ -33,11 +31,11 @@ class RemoteImage extends StatelessWidget {
     return Padding(
       padding: padding,
       child: CachedNetworkImage(
-        imageUrl: imageUrl,
+        imageUrl: imageUrl ?? "",
         imageBuilder: imageBuilder,
-        placeholder: placeholder,
+        placeholder: placeholder != null ? (context, string) => placeholder! : null,
         progressIndicatorBuilder: progressIndicatorBuilder,
-        errorWidget: errorWidget,
+        errorWidget: placeholder != null ? (context, url, error) => placeholder! : null,
         fadeOutDuration: fadeOutDuration,
         fadeOutCurve: fadeOutCurve,
         fadeInDuration: fadeInDuration,

@@ -22,6 +22,8 @@
     "noConnection": "No internet connection",
     "genreHeaderTops": "Tops",
     "genreHeaderAll": "All",
+    "topArtists": "Top artists",
+    "topSongs": "Top tabs",
     "home": "Home",
     "songbook": "Songbook",
     "search": "Search",

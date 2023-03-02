@@ -10,10 +10,11 @@ environment:
 dependencies:
   cached_network_image: ^3.2.3
   clock: ^1.1.1
+  copy_with_extension: ^5.0.1
   cosmos:
     git:
       url: "git@github.com:CifraClub/CosmosMobile.git"
-      ref: "fc0f94f9d3b78a8e3a06dc541886091caa353810"
+      ref: "b460847040a82d2e1ce5edd93d69d2007929f989"
   crypto: ^3.0.2
   cupertino_icons: ^1.0.5
   dio: ^4.0.6
@@ -29,6 +30,7 @@ dependencies:
   flutter_cache_manager: ^3.3.0
   flutter_localizations:
     sdk: flutter
+  flutter_svg: ^1.1.6
   flutter_svg_provider: ^1.0.3
   get_it: ^7.2.0
   injectable: ^1.5.4
@@ -50,6 +52,7 @@ dependencies:
 dev_dependencies:
   bloc_test: ^9.1.0
   build_runner: ^2.3.3
+  copy_with_extension_gen: ^5.0.1
   dlcov: ^4.2.1
   faker: ^2.1.0
   flutter_lints: ^2.0.1
@@ -64,9 +67,25 @@ dev_dependencies:
 
 flutter:
   generate: true
-
-  assets:
-    - assets/images/
-
   uses-material-design: true
   
+  assets:
+    - assets/images/
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/montserrat/Montserrat-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/montserrat/Montserrat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/montserrat/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/montserrat/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/montserrat/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/montserrat/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/montserrat/Montserrat-Black.ttf
+          weight: 900
+    

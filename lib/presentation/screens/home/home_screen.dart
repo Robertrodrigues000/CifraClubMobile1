@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             slivers: [
               SliverToBoxAdapter(
                 child: FilterCapsuleList(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                  capsulePadding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
                   filters: [
                     if (state is HomeLoadedState)
                       ...state.genres
