@@ -15,39 +15,40 @@ import 'package:cifraclub/data/home/data_souce/home_data_source.dart' as _i34;
 import 'package:cifraclub/data/search/data_source/search_data_source.dart' as _i36;
 import 'package:cifraclub/data/song/data_source/song_data_source.dart' as _i39;
 import 'package:cifraclub/data/time/data_source/ntp_data_source.dart' as _i19;
-import 'package:cifraclub/di/analytics_module.dart' as _i61;
-import 'package:cifraclub/di/artist_module.dart' as _i62;
-import 'package:cifraclub/di/authentication_module.dart' as _i49;
-import 'package:cifraclub/di/firebase_module.dart' as _i52;
-import 'package:cifraclub/di/genre_module.dart' as _i57;
-import 'package:cifraclub/di/home_module.dart' as _i58;
-import 'package:cifraclub/di/isar_module.dart' as _i53;
-import 'package:cifraclub/di/log_module.dart' as _i54;
+import 'package:cifraclub/di/analytics_module.dart' as _i62;
+import 'package:cifraclub/di/artist_module.dart' as _i63;
+import 'package:cifraclub/di/authentication_module.dart' as _i50;
+import 'package:cifraclub/di/bottom_sheet_module.dart' as _i64;
+import 'package:cifraclub/di/firebase_module.dart' as _i53;
+import 'package:cifraclub/di/genre_module.dart' as _i58;
+import 'package:cifraclub/di/home_module.dart' as _i59;
+import 'package:cifraclub/di/isar_module.dart' as _i54;
+import 'package:cifraclub/di/log_module.dart' as _i55;
 import 'package:cifraclub/di/navigator_module.dart' as _i18;
-import 'package:cifraclub/di/network_module.dart' as _i50;
-import 'package:cifraclub/di/path_module.dart' as _i51;
-import 'package:cifraclub/di/remote_config_module.dart' as _i56;
-import 'package:cifraclub/di/search_module.dart' as _i59;
-import 'package:cifraclub/di/song_module.dart' as _i60;
-import 'package:cifraclub/di/time_module.dart' as _i55;
+import 'package:cifraclub/di/network_module.dart' as _i51;
+import 'package:cifraclub/di/path_module.dart' as _i52;
+import 'package:cifraclub/di/remote_config_module.dart' as _i57;
+import 'package:cifraclub/di/search_module.dart' as _i60;
+import 'package:cifraclub/di/song_module.dart' as _i61;
+import 'package:cifraclub/di/time_module.dart' as _i56;
 import 'package:cifraclub/domain/analytics/repository/analytics_repository.dart' as _i41;
 import 'package:cifraclub/domain/artist/repository/artist_repository.dart' as _i43;
-import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart' as _i45;
+import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart' as _i46;
 import 'package:cifraclub/domain/genre/repository/genres_repository.dart' as _i28;
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart' as _i30;
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart' as _i33;
-import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart' as _i47;
+import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart' as _i48;
 import 'package:cifraclub/domain/genre/use_cases/set_user_genre.dart' as _i38;
 import 'package:cifraclub/domain/home/repository/home_repository.dart' as _i35;
-import 'package:cifraclub/domain/home/use_cases/get_home_info.dart' as _i44;
+import 'package:cifraclub/domain/home/use_cases/get_home_info.dart' as _i45;
 import 'package:cifraclub/domain/log/repository/log_repository.dart' as _i15;
 import 'package:cifraclub/domain/remote_config/repository/remote_config_repository.dart' as _i22;
 import 'package:cifraclub/domain/remote_config/use_cases/get_instrument_urls.dart' as _i31;
 import 'package:cifraclub/domain/remote_config/use_cases/get_time_between_interstitials.dart' as _i32;
 import 'package:cifraclub/domain/search/repository/search_repository.dart' as _i37;
-import 'package:cifraclub/domain/search/use_case/search_all_use_case.dart' as _i48;
+import 'package:cifraclub/domain/search/use_case/search_all_use_case.dart' as _i49;
 import 'package:cifraclub/domain/song/repository/song_repository.dart' as _i40;
-import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart' as _i46;
+import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart' as _i47;
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart' as _i10;
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart' as _i9;
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart' as _i13;
@@ -60,6 +61,7 @@ import 'package:cifraclub/domain/user/use_cases/logout.dart' as _i16;
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart' as _i20;
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart' as _i21;
 import 'package:cifraclub/presentation/navigator/deep_link_parser.dart' as _i4;
+import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart' as _i44;
 import 'package:dio/dio.dart' as _i5;
 import 'package:firebase_analytics/firebase_analytics.dart' as _i26;
 import 'package:firebase_core/firebase_core.dart' as _i7;
@@ -96,6 +98,7 @@ Future<_i1.GetIt> $initGetIt(
   final songModule = _$SongModule();
   final analyticsModule = _$AnalyticsModule();
   final artistModule = _$ArtistModule();
+  final bottomSheetModule = _$BottomSheetModule();
   await gh.singletonAsync<_i3.AuthenticationRepository>(
     () => authenticationModule.getAuthenticationRepository(),
     preResolve: true,
@@ -160,43 +163,46 @@ Future<_i1.GetIt> $initGetIt(
   gh.factory<_i41.AnalyticsRepository>(() => analyticsModule.getAnalyticsRepository(get<_i26.FirebaseAnalytics>()));
   gh.factory<_i42.ArtistDataSource>(() => artistModule.getGenresDataSource(get<_i25.CifraClubAPINetworkService>()));
   gh.factory<_i43.ArtistRepository>(() => artistModule.getGenresRepository(get<_i42.ArtistDataSource>()));
-  gh.factory<_i44.GetHomeInfo>(() => _i44.GetHomeInfo(get<_i35.HomeRepository>()));
-  gh.factory<_i45.GetTopArtists>(() => _i45.GetTopArtists(artistRepository: get<_i43.ArtistRepository>()));
-  gh.factory<_i46.GetTopSongs>(() => _i46.GetTopSongs(songRepository: get<_i40.SongRepository>()));
-  gh.factory<_i47.InsertUserGenre>(() => _i47.InsertUserGenre(
+  gh.factory<_i44.DevBottomSheet>(() => bottomSheetModule.getDevBottomSheet(get<_i30.GetGenres>()));
+  gh.factory<_i45.GetHomeInfo>(() => _i45.GetHomeInfo(get<_i35.HomeRepository>()));
+  gh.factory<_i46.GetTopArtists>(() => _i46.GetTopArtists(artistRepository: get<_i43.ArtistRepository>()));
+  gh.factory<_i47.GetTopSongs>(() => _i47.GetTopSongs(songRepository: get<_i40.SongRepository>()));
+  gh.factory<_i48.InsertUserGenre>(() => _i48.InsertUserGenre(
         getUserGenresAsStream: get<_i33.GetUserGenresAsStream>(),
         setUserGenres: get<_i38.SetUserGenres>(),
       ));
-  gh.factory<_i48.SearchAll>(() => _i48.SearchAll(searchRepository: get<_i37.SearchRepository>()));
+  gh.factory<_i49.SearchAll>(() => _i49.SearchAll(searchRepository: get<_i37.SearchRepository>()));
   return get;
 }
 
-class _$AuthenticationModule extends _i49.AuthenticationModule {}
+class _$AuthenticationModule extends _i50.AuthenticationModule {}
 
 class _$NavigatorModule extends _i18.NavigatorModule {}
 
-class _$NetworkModule extends _i50.NetworkModule {}
+class _$NetworkModule extends _i51.NetworkModule {}
 
-class _$PathModule extends _i51.PathModule {}
+class _$PathModule extends _i52.PathModule {}
 
-class _$FirebaseModule extends _i52.FirebaseModule {}
+class _$FirebaseModule extends _i53.FirebaseModule {}
 
-class _$IsarModule extends _i53.IsarModule {}
+class _$IsarModule extends _i54.IsarModule {}
 
-class _$LogModule extends _i54.LogModule {}
+class _$LogModule extends _i55.LogModule {}
 
-class _$TimeModule extends _i55.TimeModule {}
+class _$TimeModule extends _i56.TimeModule {}
 
-class _$RemoteConfigModule extends _i56.RemoteConfigModule {}
+class _$RemoteConfigModule extends _i57.RemoteConfigModule {}
 
-class _$GenreModule extends _i57.GenreModule {}
+class _$GenreModule extends _i58.GenreModule {}
 
-class _$HomeModule extends _i58.HomeModule {}
+class _$HomeModule extends _i59.HomeModule {}
 
-class _$SearchModule extends _i59.SearchModule {}
+class _$SearchModule extends _i60.SearchModule {}
 
-class _$SongModule extends _i60.SongModule {}
+class _$SongModule extends _i61.SongModule {}
 
-class _$AnalyticsModule extends _i61.AnalyticsModule {}
+class _$AnalyticsModule extends _i62.AnalyticsModule {}
 
-class _$ArtistModule extends _i62.ArtistModule {}
+class _$ArtistModule extends _i63.ArtistModule {}
+
+class _$BottomSheetModule extends _i64.BottomSheetModule {}

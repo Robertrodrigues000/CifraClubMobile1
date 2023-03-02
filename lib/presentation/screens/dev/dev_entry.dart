@@ -22,7 +22,12 @@ class DevScreenEntry extends ScreenEntry {
     return BlocProvider(
       create: (context) => DevScreenBloc(),
       child: DevScreen(
-          getCredentialsStream: getIt(), logout: getIt(), openLoginView: getIt(), openUserProfilePage: getIt()),
+        getCredentialsStream: getIt(),
+        logout: getIt(),
+        openLoginView: getIt(),
+        openUserProfilePage: getIt(),
+        devBottomSheet: getIt(),
+      ),
     );
   }
 }

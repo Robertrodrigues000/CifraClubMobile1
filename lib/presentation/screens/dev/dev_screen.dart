@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
+import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
@@ -19,13 +20,15 @@ class DevScreen extends StatefulWidget {
   final OpenLoginPage openLoginView;
   final OpenUserProfilePage openUserProfilePage;
   final Logout logout;
+  final DevBottomSheet devBottomSheet;
 
   const DevScreen(
       {Key? key,
       required this.getCredentialsStream,
       required this.openLoginView,
       required this.openUserProfilePage,
-      required this.logout})
+      required this.logout,
+      required this.devBottomSheet})
       : super(key: key);
 
   @override
@@ -126,6 +129,15 @@ class _DevScreenState extends State<DevScreen> {
               Nav.of(context).push(
                 screenName: TopSongsEntry.name,
               );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_box_outlined),
+            title: const Text("Bottom Sheet"),
+            onTap: () async {
+              final result = await widget.devBottomSheet.open(context);
+              // ignore: avoid_print
+              print(result);
             },
           ),
         ],
