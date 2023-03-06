@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/blog.dart';
@@ -45,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             isPro: state.isPro,
             openLogin: bloc.openLoginPage,
             openProfile: bloc.openProfilePage,
+            height: context.appDimensionScheme.appBarHeight,
           ),
           body: CustomScrollView(
             slivers: [

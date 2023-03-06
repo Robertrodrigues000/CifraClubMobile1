@@ -1,0 +1,19 @@
+import 'package:cifraclub/presentation/style/app_dimension_scheme.dart';
+
+const appDimensionSchemePhone = AppDimensionScheme(
+  // Used across all app
+  appBarHeight: 56,
+  screenMargin: 16,
+  sectionHeaderToFirstElement: 16,
+  bottomSheetContentToBottom: 16,
+  scrollContentToBottom: 32,
+  internalMargin: 16,
+
+  // Home
+  topCifrasItemsPerRow: 1,
+  topArtistsItemsPerRow: 2,
+  topVideosItemsPerRow: 2,
+
+  // Top cifras, Top artists
+  topCellRankingWidth: 52,
+);

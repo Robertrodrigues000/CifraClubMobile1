@@ -1,10 +1,10 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/song/models/song.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/top_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class TopSongs extends StatelessWidget {
   final List<Song> topSongs;
@@ -16,8 +16,13 @@ class TopSongs extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        childCount: topSongs.length,
+        childCount: topSongs.length + 1,
         (context, index) {
+          if (index >= topSongs.length) {
+            return Container(
+              height: context.appDimensionScheme.scrollContentToBottom,
+            );
+          }
           final song = topSongs[index];
           return TopListItem(
             onTap: () => onTap(song),

@@ -10,22 +10,27 @@ class HomeHeader extends StatefulWidget implements PreferredSizeWidget {
   final bool isPro;
   final VoidCallback openLogin;
   final VoidCallback openProfile;
+  final double height;
   const HomeHeader(
-      {super.key, required this.user, required this.openLogin, required this.openProfile, required this.isPro});
-
-  static const preferredHomeHeaderSize = Size.fromHeight(56);
+      {super.key,
+      required this.height,
+      this.user,
+      required this.openLogin,
+      required this.openProfile,
+      required this.isPro});
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
 
   @override
-  Size get preferredSize => HomeHeader.preferredHomeHeaderSize;
+  Size get preferredSize => Size.fromHeight(height);
 }
 
 class _HomeHeaderState extends State<HomeHeader> {
   @override
   Widget build(BuildContext context) {
     return CosmosAppBar(
+      toolbarHeight: widget.height,
       automaticallyImplyLeading: false,
       title: Image.asset(
         widget.isPro ? AppWebp.logoCifraClubPro : AppWebp.logoCifraClub,

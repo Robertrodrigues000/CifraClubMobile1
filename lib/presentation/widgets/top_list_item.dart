@@ -1,7 +1,7 @@
 // coverage:ignore-file
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
-import 'package:cifraclub/presentation/widgets/device_type_builder.dart';
 import 'package:cifraclub/presentation/widgets/pick_shaped_image.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
@@ -27,17 +27,15 @@ class TopListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DeviceTypeBuilder(builder: (context, deviceType) {
-      return _TopListItemContent(
-          title: title,
-          subtitle: subtitle,
-          ranking: ranking,
-          imageUrl: imageUrl,
-          onTap: onTap,
-          trailing: trailing,
-          padding: deviceType == DeviceType.phone ? 16 : 24,
-          rankWidth: deviceType == DeviceType.phone ? 42 : 60);
-    });
+    return _TopListItemContent(
+        title: title,
+        subtitle: subtitle,
+        ranking: ranking,
+        imageUrl: imageUrl,
+        onTap: onTap,
+        trailing: trailing,
+        padding: context.appDimensionScheme.screenMargin,
+        rankWidth: context.appDimensionScheme.topCellRankingWidth);
   }
 }
 

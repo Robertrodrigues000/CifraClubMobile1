@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/artist/models/artist.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/top_list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,13 @@ class TopArtists extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        childCount: topArtists.length,
+        childCount: topArtists.length + 1,
         (context, index) {
+          if (index >= topArtists.length) {
+            return Container(
+              height: context.appDimensionScheme.scrollContentToBottom,
+            );
+          }
           final artist = topArtists[index];
           return TopListItem(
             key: Key(artist.name),

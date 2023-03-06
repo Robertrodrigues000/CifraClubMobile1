@@ -3,7 +3,6 @@ import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/artist/repository/artist_repository.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';
 
