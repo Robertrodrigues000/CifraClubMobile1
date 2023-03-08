@@ -33,7 +33,7 @@ void main() {
 
       final repository = HomeRepositoryImpl(dataSource);
 
-      when(() => dataSource.getHomeInfos(any())).thenAnswer((invocation) => SynchronousFuture(Ok(homeDto)));
+      when(() => dataSource.getHomeInfos(any())).thenAnswer((_) => SynchronousFuture(Ok(homeDto)));
       when(homeDto.toDomain).thenReturn(homeInfo);
 
       final result = await repository.getHomeInfos(null);
@@ -47,19 +47,10 @@ void main() {
 
     test("when request failure, should return server error", () async {
       final dataSource = _HomeDataSourceMock();
-      final homeDto = _HomeDtoMock();
-      final homeInfo = HomeInfo(
-        highlights: [getFakeHighlight(), getFakeHighlight()],
-        songs: [getFakeSong(), getFakeSong()],
-        artists: [getFakeArtist(), getFakeArtist()],
-        videoLessons: [getFakeVideoLessons(), getFakeVideoLessons()],
-        news: [getFakeNews(), getFakeNews()],
-      );
 
       final repository = HomeRepositoryImpl(dataSource);
 
       when(() => dataSource.getHomeInfos(any())).thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
-      when(homeDto.toDomain).thenReturn(homeInfo);
 
       final result = await repository.getHomeInfos(null);
 

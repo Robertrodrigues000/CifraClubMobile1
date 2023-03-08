@@ -1,9 +1,14 @@
+// coverage:ignore-file
+import 'package:cifraclub/domain/home/models/news.dart';
 import 'package:flutter/material.dart';
 
 class Blog extends StatelessWidget {
-  const Blog({super.key, required this.list});
+  const Blog({
+    super.key = const Key("blog"),
+    required this.list,
+  });
 
-  final List<int> list;
+  final List<News> list;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class Blog extends StatelessWidget {
             return const Text("Mostrar mais posts do blog");
           } else {
             return Card(
-              child: Text("${list[index - 1]}"),
+              child: Text(list[index - 1].headline),
             );
           }
         },

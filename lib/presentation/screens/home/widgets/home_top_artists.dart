@@ -1,9 +1,14 @@
+// coverage:ignore-file
+import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:flutter/material.dart';
 
 class HomeTopArtists extends StatelessWidget {
-  const HomeTopArtists({super.key, required this.list});
+  const HomeTopArtists({
+    super.key = const Key("top artists"),
+    required this.list,
+  });
 
-  final List<int> list;
+  final List<Artist> list;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,7 @@ class HomeTopArtists extends StatelessWidget {
             return const Text("Mais artistas");
           } else {
             return Card(
-              child: Text("${list[index - 1]}"),
+              child: Text(list[index - 1].name),
             );
           }
         },

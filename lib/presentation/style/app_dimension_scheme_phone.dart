@@ -13,6 +13,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   topCifrasItemsPerRow: 1,
   topArtistsItemsPerRow: 2,
   topVideosItemsPerRow: 2,
+  highlighCardBorderRadius: 8,
 
   // Top cifras, Top artists
   topCellRankingWidth: 52,

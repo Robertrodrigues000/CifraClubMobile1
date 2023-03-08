@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,8 @@ class FilterCapsuleList extends StatelessWidget {
           final isLastCapsule = index == filters.length - 1;
           return Padding(
             padding: EdgeInsets.only(
-                left: isFirstCapsule ? 16.0 : capsulePadding.left,
-                right: isLastCapsule ? 16.0 : capsulePadding.right,
+                left: isFirstCapsule ? context.appDimensionScheme.screenMargin : capsulePadding.left,
+                right: isLastCapsule ? context.appDimensionScheme.screenMargin : 0,
                 top: capsulePadding.top,
                 bottom: capsulePadding.bottom),
             child: FilterCapsule(

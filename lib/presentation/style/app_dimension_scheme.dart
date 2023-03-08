@@ -11,6 +11,7 @@ class AppDimensionScheme {
   final double topArtistsItemsPerRow;
   final double topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
+  final double highlighCardBorderRadius;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -23,5 +24,6 @@ class AppDimensionScheme {
     required this.topArtistsItemsPerRow,
     required this.topVideosItemsPerRow,
     required this.bottomSheetContentToBottom,
+    required this.highlighCardBorderRadius,
   });
 }

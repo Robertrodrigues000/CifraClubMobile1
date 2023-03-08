@@ -1,9 +1,9 @@
 // coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
-import 'package:cifraclub/presentation/screens/home/home_state.dart';
+import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/blog.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/highlights.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<HomeBloc>(context);
+    bloc.initGenres();
     bloc.getUserInfo();
   }
 
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = context.appDimensionScheme;
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
@@ -46,52 +48,46 @@ class _HomeScreenState extends State<HomeScreen> {
             isPro: state.isPro,
             openLogin: bloc.openLoginPage,
             openProfile: bloc.openProfilePage,
-            height: context.appDimensionScheme.appBarHeight,
+            height: dimensions.appBarHeight,
           ),
           body: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: FilterCapsuleList(
-                  capsulePadding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
-                  filters: [
-                    if (state is HomeLoadedState)
-                      ...state.genres
-                          .map(
-                            (genre) => Filter(
-                                label: genre,
-                                onTap: () {
-                                  bloc.onGenreSelected(genre);
-                                },
-                                isSelected: state.selectedGenre == genre),
-                          )
-                          .toList()
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: dimensions.screenMargin),
+                  child: FilterCapsuleList(
+                    capsulePadding: const EdgeInsets.symmetric(horizontal: 8),
+                    filters: [
+                      if (state.genres.isNotEmpty)
+                        ...state.genres
+                            .map(
+                              (genre) => Filter(
+                                  label: genre.name,
+                                  onTap: () {
+                                    bloc.onGenreSelected(genre.url);
+                                  },
+                                  isSelected: state.selectedGenre == genre.url),
+                            )
+                            .toList()
+                    ],
+                  ),
                 ),
               ),
-              if (state is HomeLoadingState)
+              if (state.isLoading)
                 const SliverToBoxAdapter(
                   child: Center(child: CircularProgressIndicator()),
-                ),
-              if (state is HomeLoadedState) ...[
-                Highlights(
-                  list: state.highlights,
-                ),
-                HomeTopCifras(
-                  list: state.topCifras,
-                ),
-                HomeTopArtists(
-                  list: state.topArtists,
-                ),
-                VideoLessons(
-                  list: state.videoLessons,
-                ),
-                Blog(
-                  list: state.blog,
-                ),
-              ] else if (state is HomeErrorState)
-                const SliverToBoxAdapter(
-                  child: Text("Erro"),
                 )
+              else if (state.error != null)
+                const SliverToBoxAdapter(
+                  child: Center(child: Text("Erro")),
+                )
+              else ...[
+                Highlights(highlights: state.highlights),
+                HomeTopCifras(list: state.topCifras),
+                HomeTopArtists(list: state.topArtists),
+                HomeVideoLessons(list: state.videoLessons),
+                Blog(list: state.blog),
+              ]
             ],
           ),
         );
