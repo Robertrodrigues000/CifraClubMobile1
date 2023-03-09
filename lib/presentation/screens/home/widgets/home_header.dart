@@ -46,6 +46,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           )
         else
           InkWell(
+            key: const Key("Open profile"),
             onTap: widget.openProfile,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

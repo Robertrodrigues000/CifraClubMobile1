@@ -8,6 +8,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   bottomSheetContentToBottom: 16,
   scrollContentToBottom: 32,
   internalMargin: 16,
+  widthBottomSheet: double.infinity,
 
   // Home
   topCifrasItemsPerRow: 1,

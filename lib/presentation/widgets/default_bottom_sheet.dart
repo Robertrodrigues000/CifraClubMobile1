@@ -1,3 +1,4 @@
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ class DefaultBottomSheet extends StatefulWidget {
         clipBehavior: Clip.hardEdge,
         useSafeArea: true,
         useRootNavigator: true,
+        constraints: BoxConstraints(maxWidth: context.appDimensionScheme.widthBottomSheet),
         builder: (context) {
           return DefaultBottomSheet(
             scrollController: scrollController,
@@ -31,7 +33,7 @@ class DefaultBottomSheet extends StatefulWidget {
         },
       );
 
-  static void closeBottomSheet(BuildContext context) {
+  static void close(BuildContext context) {
     Navigator.of(context, rootNavigator: true).pop();
   }
 
@@ -79,10 +81,10 @@ class _DefaultBottomSheetState extends State<DefaultBottomSheet> {
               color: haveScroll ? colorScheme.neutralSecondary : colorScheme.neutralPrimary,
               child: Center(
                 child: Container(
-                  width: 60.0,
-                  height: 6,
+                  width: 32,
+                  height: 4,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(42)),
+                    borderRadius: const BorderRadius.all(Radius.circular(2)),
                     color: colorScheme.neutralSextenary,
                   ),
                 ),

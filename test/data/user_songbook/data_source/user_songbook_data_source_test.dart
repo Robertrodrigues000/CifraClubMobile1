@@ -37,7 +37,7 @@ void main() {
 
       await isar.writeTxn(
         () async {
-          isar.userSongbookDtos.put(fakeUserSongBookDto);
+          await isar.userSongbookDtos.put(fakeUserSongBookDto);
         },
       );
 
@@ -63,7 +63,7 @@ void main() {
 
       await isar.writeTxn(
         () async {
-          isar.userSongbookDtos.put(fakeUserSongBookDto);
+          await isar.userSongbookDtos.put(fakeUserSongBookDto);
           await isar.userCifraDtos.put(userCifraDto);
           fakeUserSongBookDto.userCifras.add(userCifraDto);
           await fakeUserSongBookDto.userCifras.save();

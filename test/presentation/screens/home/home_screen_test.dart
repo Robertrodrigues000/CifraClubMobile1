@@ -2,6 +2,7 @@ import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -67,5 +68,23 @@ void main() {
     );
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets("When user is log in and tap in profile photo should open bottom sheet", (widgetTester) async {
+    bloc.mockStream(const HomeState(user: User()));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: const HomeScreen(),
+        ),
+      ),
+    );
+
+    await widgetTester.tap(find.byKey(const Key("Open profile")));
+    await widgetTester.pump();
+
+    expect(find.byType(ProfileBottomSheet), findsOneWidget);
   });
 }

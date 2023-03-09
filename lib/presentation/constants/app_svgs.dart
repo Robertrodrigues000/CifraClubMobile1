@@ -7,4 +7,7 @@ class AppSvgs {
   static const acousticGuitarBadge = "assets/images/acoustic_guitar_badge.svg";
   static const verifiedIcon = "assets/images/verified_icon.svg";
   static const artistsAvatarPlaceHolder = "assets/images/artist_avatar_placeholder.svg";
+  static const editIcon = "assets/images/edit_icon.svg";
+  static const playlistIcon = "assets/images/playlist_icon.svg";
+  static const exitArrowIcon = "assets/images/exit_arrow_icon.svg";
 }

@@ -29,5 +29,9 @@
     "search": "Search",
     "academy": "Academy",
     "more": "More",
-    "login" : "Log in"
+    "login" : "Log in",
+    "logout" : "Log out",
+    "editProfile" : "Edit profile",
+    "myLists" : "My lists",
+    "profile" : "Profile"
 }

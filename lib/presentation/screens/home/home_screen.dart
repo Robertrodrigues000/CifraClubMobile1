@@ -12,6 +12,7 @@ import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,7 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
             user: state.user,
             isPro: state.isPro,
             openLogin: bloc.openLoginPage,
-            openProfile: bloc.openProfilePage,
+            openProfile: () {
+              ProfileBottomSheet(
+                user: state.user!,
+                onOpenProfile: () => bloc.openProfilePage(),
+                onOpenMyLists: () {}, // TODO: verificar se vai permanecer esse icone, caso sim implementar a navegação
+                onLogout: () => bloc.logoutUser(),
+              ).open(context);
+            },
             height: dimensions.appBarHeight,
           ),
           body: CustomScrollView(

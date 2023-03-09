@@ -21,5 +21,9 @@
     "search": "Buscar",
     "academy": "Academy",
     "more": "Mais",
-    "login" : "Entrar"
+    "login" : "Entrar",
+    "logout" : "Sair",
+    "editProfile" : "Editar perfil",
+    "myLists" : "Minhas listas",
+    "profile" : "Perfil"
 }

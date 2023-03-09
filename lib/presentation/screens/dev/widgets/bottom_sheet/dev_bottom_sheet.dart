@@ -1,7 +1,7 @@
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet_state.dart';
-import 'package:cifraclub/presentation/widgets/bottom_sheet_default.dart';
+import 'package:cifraclub/presentation/widgets/default_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

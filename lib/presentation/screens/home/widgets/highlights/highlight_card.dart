@@ -1,12 +1,10 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:cifraclub/presentation/constants/app_colors.dart';
-import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class HighlightCard extends StatelessWidget {
   final double size;

@@ -59,7 +59,7 @@ steps:
     image: cirrusci/flutter:3.7.0
     commands:
       - dart ci/generate_coverage_helper.dart
-      - flutter test --no-pub --coverage
+      - flutter test --no-pub --coverage -r expanded
     depends_on:
       - pub-get
     volumes:

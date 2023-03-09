@@ -5,6 +5,7 @@ class AppDimensionScheme {
   final double topCellRankingWidth;
   final double screenMargin;
   final double internalMargin;
+  final double widthBottomSheet;
   final double sectionHeaderToFirstElement;
   final double scrollContentToBottom;
   final double topCifrasItemsPerRow;
@@ -18,6 +19,7 @@ class AppDimensionScheme {
     required this.topCellRankingWidth,
     required this.screenMargin,
     required this.internalMargin,
+    required this.widthBottomSheet,
     required this.sectionHeaderToFirstElement,
     required this.scrollContentToBottom,
     required this.topCifrasItemsPerRow,
