@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
@@ -80,6 +79,7 @@ class _TopListItemContent extends StatelessWidget {
                 imageProvider: imageProvider,
               ),
               placeholder: PickShapeImage(
+                key: const Key("avatarPlaceHolder"),
                 child: SvgPicture.asset(
                   AppSvgs.artistsAvatarPlaceHolder,
                 ),

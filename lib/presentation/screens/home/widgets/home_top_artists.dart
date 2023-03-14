@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class HomeTopArtists extends StatelessWidget {
   const HomeTopArtists({
-    super.key = const Key("top artists"),
+    super.key = const Key("home top artists"),
     required this.list,
   });
 

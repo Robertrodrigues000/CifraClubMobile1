@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
@@ -25,6 +24,7 @@ class TopSongs extends StatelessWidget {
           }
           final song = topSongs[index];
           return TopListItem(
+            key: Key(song.name),
             onTap: () => onTap(song),
             title: song.name,
             imageUrl: song.artist?.image?.size162,

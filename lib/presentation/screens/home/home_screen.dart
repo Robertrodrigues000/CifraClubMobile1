@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';

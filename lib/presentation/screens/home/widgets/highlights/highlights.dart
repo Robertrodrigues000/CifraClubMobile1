@@ -1,5 +1,3 @@
-// coverage:ignore-file
-
 import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlight_card.dart';
@@ -10,7 +8,7 @@ class Highlights extends StatelessWidget {
   final List<Highlight> highlights;
 
   const Highlights({
-    super.key,
+    super.key = const Key("highlights"),
     required this.highlights,
   });
 
@@ -39,6 +37,7 @@ class Highlights extends StatelessWidget {
               padding:
                   EdgeInsets.only(left: dimensions.internalMargin, right: isLastItem ? dimensions.internalMargin : 0),
               child: HighlightCard(
+                key: Key(highlights[index].title),
                 highlight: highlights[index],
                 size: highlightCardSize,
                 borderRadius: dimensions.highlighCardBorderRadius,

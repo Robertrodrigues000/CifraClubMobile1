@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:cifraclub/presentation/constants/app_colors.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
