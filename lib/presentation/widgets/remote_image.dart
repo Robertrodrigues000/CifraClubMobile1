@@ -15,6 +15,7 @@ class RemoteImage extends StatelessWidget {
   final Curve fadeOutCurve;
   final Duration fadeInDuration;
   final Curve fadeInCurve;
+
   const RemoteImage({
     super.key,
     required this.imageUrl,

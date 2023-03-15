@@ -35,10 +35,11 @@ class CifraClub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InheritedDependenciesWidget(
+      colorApproximator: getIt(),
       child: MaterialApp(
         restorationScopeId: _navigationRestorationScope,
-        darkTheme: getCosmosDarkTheme(BrandColors.asCifra()),
-        theme: getCosmosLightTheme(BrandColors.asCifra()),
+        darkTheme: getCosmosDarkTheme(const BrandColors.asCifra()),
+        theme: getCosmosLightTheme(const BrandColors.asCifra()),
         supportedLocales: supportedLocales,
         localizationsDelegates: const [
           AppLocalizations.delegate,

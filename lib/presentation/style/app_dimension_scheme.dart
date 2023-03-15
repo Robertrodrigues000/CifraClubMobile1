@@ -9,7 +9,7 @@ class AppDimensionScheme {
   final double sectionHeaderToFirstElement;
   final double scrollContentToBottom;
   final double topCifrasItemsPerRow;
-  final double topArtistsItemsPerRow;
+  final int topArtistsItemsPerRow;
   final double topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
   final double highlighCardBorderRadius;

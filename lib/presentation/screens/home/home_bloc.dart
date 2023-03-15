@@ -17,7 +17,7 @@ class HomeBloc extends Cubit<HomeState> {
   final OpenUserProfilePage _openUserProfilePage;
   final Logout _logout;
   final GetUserGenresAsStream _getUserGenresAsStream;
-  final GetHomeInfo _gethomeInfo;
+  final GetHomeInfo _getHomeInfo;
   StreamSubscription? _credentialStreamSubscription;
 
   HomeBloc(
@@ -26,7 +26,7 @@ class HomeBloc extends Cubit<HomeState> {
     this._openLoginView,
     this._openUserProfilePage,
     this._logout,
-    this._gethomeInfo,
+    this._getHomeInfo,
   ) : super(const HomeState(user: null, isPro: false));
 
   Future<void> initGenres() async {
@@ -61,7 +61,7 @@ class HomeBloc extends Cubit<HomeState> {
 
   Future<void> requestHomeData({String genreUrl = ""}) async {
     emit(state.copyWith(isLoading: true));
-    final result = await _gethomeInfo(genreUrl);
+    final result = await _getHomeInfo(genreUrl);
 
     result.when(
         success: (homeInfo) => emit(state.copyWith(

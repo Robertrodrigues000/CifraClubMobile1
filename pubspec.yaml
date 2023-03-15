@@ -14,7 +14,7 @@ dependencies:
   cosmos:
     git:
       url: "git@github.com:CifraClub/CosmosMobile.git"
-      ref: "b460847040a82d2e1ce5edd93d69d2007929f989"
+      ref: "99d883b324c2f380387fe88b45bace2abb75bac2"
   crypto: ^3.0.2
   cupertino_icons: ^1.0.5
   dio: ^4.0.6
@@ -29,6 +29,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.1
   flutter_cache_manager: ^3.3.0
+  flutter_color_models: ^1.3.3+2
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^1.1.6
@@ -47,6 +48,7 @@ dependencies:
       ref: "1.0.0"
   ntp: ^2.0.0
   path_provider: ^2.0.12
+  quiver: ^3.2.1
   rxdart: ^0.27.7
   typed_result: ^0.0.3
 
@@ -69,7 +71,7 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
-  
+
   assets:
     - assets/images/
   fonts:
@@ -89,4 +91,4 @@ flutter:
           weight: 700
         - asset: assets/fonts/montserrat/Montserrat-Black.ttf
           weight: 900
-    
+

@@ -25,5 +25,7 @@
     "logout" : "Salir",
     "editProfile" : "Editar perfil",
     "myLists" : "Mis listas",
-    "profile" : "Perfil"
+    "profile" : "Perfil",
+    "more_artists" : "Mostrar más artistas",
+    "top_artists" : "Top artistas"
 }

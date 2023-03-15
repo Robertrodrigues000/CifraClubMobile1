@@ -33,5 +33,7 @@
     "logout" : "Log out",
     "editProfile" : "Edit profile",
     "myLists" : "My lists",
-    "profile" : "Profile"
+    "profile" : "Profile",
+    "more_artists" : "Show more artists",
+    "top_artists" : "Top artists"
 }

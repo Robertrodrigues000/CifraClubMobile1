@@ -6,6 +6,6 @@ ArtistImage getFakeArtistImage() {
     size50: faker.image.image(random: true),
     size162: faker.image.image(random: true),
     size250: faker.image.image(random: true),
-    color: faker.color.color(),
+    color: "ffaabbcc",
   );
 }

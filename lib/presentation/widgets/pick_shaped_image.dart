@@ -5,24 +5,29 @@ import 'package:flutter/material.dart';
 class PickShapeImage extends StatelessWidget {
   final ImageProvider? imageProvider;
   final Widget? child;
+  final double size;
+  final Color? backgroundColor;
   const PickShapeImage({
     super.key,
     this.imageProvider,
     this.child,
+    this.size = 40,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAlias,
-      height: 40,
-      width: 40,
+      height: size,
+      width: size,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadiusDirectional.only(
-            topStart: Radius.circular(20),
-            topEnd: Radius.circular(20),
-            bottomEnd: Radius.circular(20),
-            bottomStart: Radius.circular(5)),
+        color: backgroundColor,
+        borderRadius: BorderRadiusDirectional.only(
+            topStart: Radius.circular(size / 2),
+            topEnd: Radius.circular(size / 2),
+            bottomEnd: Radius.circular(size / 2),
+            bottomStart: Radius.circular(size / 8)),
         image: imageProvider != null ? DecorationImage(image: imageProvider!) : null,
       ),
       child: child != null ? Align(alignment: Alignment.bottomLeft, child: child!) : null,

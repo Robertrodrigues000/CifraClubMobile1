@@ -4,9 +4,11 @@ import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/blog.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons.dart';
+import 'package:cifraclub/presentation/widgets/buttons/stroked_button.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +93,22 @@ class _HomeScreenState extends State<HomeScreen> {
               else ...[
                 Highlights(highlights: state.highlights),
                 HomeTopCifras(list: state.topCifras),
-                HomeTopArtists(list: state.topArtists),
+                //Artists section
+                HomeTitle(
+                  text: context.text.top_artists,
+                  horizontalPadding: context.appDimensionScheme.screenMargin,
+                ),
+                HomeTopArtists(
+                  artists: state.topArtists,
+                  onTap: (artist) {},
+                ),
+                SliverToBoxAdapter(
+                  child: StrokedButton(
+                    padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                    text: context.text.more_artists,
+                    onClick: () {},
+                  ),
+                ),
                 HomeVideoLessons(list: state.videoLessons),
                 Blog(list: state.blog),
               ]
