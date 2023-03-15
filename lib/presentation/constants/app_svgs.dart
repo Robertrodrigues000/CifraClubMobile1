@@ -10,4 +10,5 @@ class AppSvgs {
   static const editIcon = "assets/images/edit_icon.svg";
   static const playlistIcon = "assets/images/playlist_icon.svg";
   static const exitArrowIcon = "assets/images/exit_arrow_icon.svg";
+  static const videoPlaceholder = "assets/images/video_placeholder.svg";
 }

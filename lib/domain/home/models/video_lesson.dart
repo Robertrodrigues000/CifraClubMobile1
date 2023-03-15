@@ -3,7 +3,7 @@ import 'package:cifraclub/domain/home/models/home_image.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:equatable/equatable.dart';
 
-class VideoLessons extends Equatable {
+class VideoLesson extends Equatable {
   final int id;
   final String youtubeId;
   final String title;
@@ -16,7 +16,7 @@ class VideoLessons extends Equatable {
   final Artist? artist;
   final HomeImage images;
 
-  const VideoLessons({
+  const VideoLesson({
     required this.id,
     required this.youtubeId,
     required this.title,

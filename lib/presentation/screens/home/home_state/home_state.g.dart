@@ -13,7 +13,7 @@ abstract class _$HomeStateCWProxy {
 
   HomeState topArtists(List<Artist> topArtists);
 
-  HomeState videoLessons(List<VideoLessons> videoLessons);
+  HomeState videoLessons(List<VideoLesson> videoLessons);
 
   HomeState blog(List<News> blog);
 
@@ -39,7 +39,7 @@ abstract class _$HomeStateCWProxy {
     List<Highlight>? highlights,
     List<Song>? topCifras,
     List<Artist>? topArtists,
-    List<VideoLessons>? videoLessons,
+    List<VideoLesson>? videoLessons,
     List<News>? blog,
     String? selectedGenre,
     List<Genre>? genres,
@@ -66,7 +66,7 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   HomeState topArtists(List<Artist> topArtists) => this(topArtists: topArtists);
 
   @override
-  HomeState videoLessons(List<VideoLessons> videoLessons) => this(videoLessons: videoLessons);
+  HomeState videoLessons(List<VideoLesson> videoLessons) => this(videoLessons: videoLessons);
 
   @override
   HomeState blog(List<News> blog) => this(blog: blog);
@@ -126,7 +126,7 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
       videoLessons: videoLessons == const $CopyWithPlaceholder() || videoLessons == null
           ? _value.videoLessons
           // ignore: cast_nullable_to_non_nullable
-          : videoLessons as List<VideoLessons>,
+          : videoLessons as List<VideoLesson>,
       blog: blog == const $CopyWithPlaceholder() || blog == null
           ? _value.blog
           // ignore: cast_nullable_to_non_nullable

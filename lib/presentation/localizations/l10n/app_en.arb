@@ -30,6 +30,16 @@
     "academy": "Academy",
     "more": "More",
     "login" : "Log in",
+     "videos":"Videos",
+    "showMoreButton": "Show more {sectionName}",
+    "@showMoreButton":{
+        "placeholders": {
+            "sectionName": {
+                "type": "String",
+                "example": "Videos"
+            }
+        }
+    },
     "logout" : "Log out",
     "editProfile" : "Edit profile",
     "myLists" : "My lists",

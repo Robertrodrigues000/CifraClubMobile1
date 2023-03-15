@@ -7,7 +7,7 @@ import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/video_lessons.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/widgets/buttons/stroked_button.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //Artists section
                 HomeTitle(
                   text: context.text.top_artists,
-                  horizontalPadding: context.appDimensionScheme.screenMargin,
+                  horizontalPadding: dimensions.screenMargin,
                 ),
                 HomeTopArtists(
                   artists: state.topArtists,
@@ -104,12 +104,32 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: StrokedButton(
-                    padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                    padding: EdgeInsets.only(left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
                     text: context.text.more_artists,
                     onClick: () {},
                   ),
                 ),
-                HomeVideoLessons(list: state.videoLessons),
+                //Videolessons section
+
+                HomeTitle(
+                    onClick: state.videoLessons.length >= 4 ? () {} : null,
+                    text: context.text.videos,
+                    horizontalPadding: dimensions.screenMargin),
+                VideoLessons(
+                  list: state.videoLessons.take(4).toList(),
+                ),
+                if (state.videoLessons.length >= 4)
+                  SliverToBoxAdapter(
+                      key: const Key("videolessons more button"),
+                      child: StrokedButton(
+                          padding: EdgeInsets.only(
+                            left: dimensions.screenMargin,
+                            right: dimensions.screenMargin,
+                            bottom: 32,
+                          ),
+                          text: context.text.showMoreButton(context.text.videos.toLowerCase()),
+                          onClick: () {})),
+
                 Blog(list: state.blog),
               ]
             ],

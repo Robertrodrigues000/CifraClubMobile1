@@ -22,6 +22,17 @@
     "academy": "Academy",
     "more": "Más",
     "login" : "Iniciar Sesión",
+    "videos":"Vídeos",
+    "showMoreButton": "Mostrar más {sectionName}",
+    "@showMoreButton":{
+        "placeholders": {
+            "sectionName": {
+                "type": "String",
+                "example": "Vídeos"
+            }
+        }
+    },
+ 
     "logout" : "Salir",
     "editProfile" : "Editar perfil",
     "myLists" : "Mis listas",

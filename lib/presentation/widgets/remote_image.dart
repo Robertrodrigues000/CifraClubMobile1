@@ -36,6 +36,7 @@ class RemoteImage extends StatelessWidget {
     return Padding(
       padding: padding,
       child: CachedNetworkImage(
+        color: Colors.white,
         imageUrl: imageUrl ?? "",
         imageBuilder: imageBuilder,
         cacheManager: RemoteImageCacheManager.maybeOf(context)?.cacheManager,

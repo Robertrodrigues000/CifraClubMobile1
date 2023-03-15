@@ -1,3 +1,4 @@
+import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlight_card.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,7 +23,6 @@ void main() {
 
     await widgetTester.pumpAndSettle();
 
-    expect(find.byKey(Key(highlights.first.title)), findsOneWidget);
-    expect(find.byKey(Key(highlights.last.title)), findsOneWidget);
+    expect(find.byType(HighlightCard), findsNWidgets(2));
   });
 }

@@ -104,6 +104,32 @@ void main() {
     expect(find.byKey(const Key("blog"), skipOffstage: false), findsOneWidget);
   });
 
+  testWidgets("When state videolessons has more than 3 itens, should show more button", (widgetTester) async {
+    bloc.mockStream(
+      HomeState(
+          selectedGenre: "",
+          genres: [],
+          isLoading: false,
+          highlights: [],
+          topArtists: [],
+          topCifras: [],
+          videoLessons: [getFakeVideoLessons(), getFakeVideoLessons(), getFakeVideoLessons(), getFakeVideoLessons()],
+          blog: []),
+    );
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: const HomeScreen(),
+        ),
+      ),
+    );
+
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byKey(const Key("videolessons more button"), skipOffstage: false), findsOneWidget);
+  });
   testWidgets("When user is log in and tap in profile photo should open bottom sheet", (widgetTester) async {
     bloc.mockStream(const HomeState(user: User()));
 

@@ -10,7 +10,7 @@ class AppDimensionScheme {
   final double scrollContentToBottom;
   final double topCifrasItemsPerRow;
   final int topArtistsItemsPerRow;
-  final double topVideosItemsPerRow;
+  final int topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
   final double highlighCardBorderRadius;
 
