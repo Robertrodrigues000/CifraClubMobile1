@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
 import 'package:cifraclub/data/song/models/top_songs_dto.dart';
 import 'package:cifraclub/data/song/repository/song_repository_impl.dart';
@@ -25,13 +26,15 @@ void main() {
       when(topSongsDto.toDomain).thenReturn(paginatedList);
 
       when(() => songDataSource.getTopSongs(limit: any(named: "limit"), offset: any(named: "offset"))).thenAnswer(
-        (_) => SynchronousFuture(
-          Ok(topSongsDto),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Ok(topSongsDto),
+          ),
         ),
       );
 
       final repository = SongRepositoryImpl(songDataSource: songDataSource);
-      final result = await repository.getTopSongs(limit: 2, offset: 0);
+      final result = await repository.getTopSongs(limit: 2, offset: 0).value;
 
       verify(topSongsDto.toDomain).called(1);
 
@@ -45,13 +48,15 @@ void main() {
       final songDataSource = _MockSongDataSource();
 
       when(() => songDataSource.getTopSongs(limit: 2, offset: 0)).thenAnswer(
-        (_) => SynchronousFuture(
-          Err(ServerError()),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Err(ServerError()),
+          ),
         ),
       );
 
       final repository = SongRepositoryImpl(songDataSource: songDataSource);
-      final result = await repository.getTopSongs(limit: 2, offset: 0);
+      final result = await repository.getTopSongs(limit: 2, offset: 0).value;
 
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);

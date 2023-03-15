@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
 import 'package:dio/dio.dart';
@@ -16,9 +17,15 @@ class NetworkServiceMock extends Mock implements NetworkService {
 
     var transformed = await DefaultTransformer().transformResponse(options, jsonResponse) as dynamic;
 
-    when(() => execute<T>(request: captureAny(named: "request"))).thenAnswer((invocation) => SynchronousFuture(
-          Ok((invocation.namedArguments[const Symbol("request")] as NetworkRequest<T>).parser(transformed)),
-        ));
+    when(() => execute<T>(request: captureAny(named: "request"), cancelToken: captureAny(named: "cancelToken")))
+        .thenAnswer((invocation) => SynchronousFuture(
+              Ok((invocation.namedArguments[const Symbol("request")] as NetworkRequest<T>).parser(transformed)),
+            ));
+
+    when(() => cancelableExecute<T>(request: captureAny(named: "request")))
+        .thenAnswer((invocation) => CancelableOperation.fromFuture(SynchronousFuture(
+              Ok((invocation.namedArguments[const Symbol("request")] as NetworkRequest<T>).parser(transformed)),
+            )));
   }
 }
 

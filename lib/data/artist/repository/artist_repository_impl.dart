@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:typed_result/typed_result.dart';
 
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
@@ -14,9 +15,10 @@ class ArtistRepositoryImpl extends ArtistRepository {
   });
 
   @override
-  Future<Result<PaginatedList<Artist>, RequestError>> getTopArtists(
-      {String? genreUrl, required int limit, required int offset}) async {
-    return (await artistDataSource.getTopArtists(genreUrl: genreUrl, limit: limit, offset: offset))
-        .map((value) => value.toDomain());
+  CancelableOperation<Result<PaginatedList<Artist>, RequestError>> getTopArtists(
+      {String? genreUrl, required int limit, required int offset}) {
+    return artistDataSource
+        .getTopArtists(genreUrl: genreUrl, limit: limit, offset: offset)
+        .then((result) => result.map((topArtistsDto) => topArtistsDto.toDomain()));
   }
 }

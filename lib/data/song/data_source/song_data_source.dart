@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
 import 'package:cifraclub/data/song/models/top_songs_dto.dart';
@@ -11,11 +12,11 @@ class SongDataSource {
     required this.networkService,
   });
 
-  Future<Result<TopSongsDto, RequestError>> getTopSongs({
+  CancelableOperation<Result<TopSongsDto, RequestError>> getTopSongs({
     String? genreUrl,
     required int limit,
     required int offset,
-  }) async {
+  }) {
     final Map<String, dynamic> queryParams = {'limit': limit};
     if (genreUrl != null) {
       queryParams['genre'] = genreUrl;
@@ -30,6 +31,6 @@ class SongDataSource {
       queryParams: queryParams,
       parser: (data) => TopSongsDto.fromJson(data as Map<String, dynamic>),
     );
-    return networkService.execute(request: request);
+    return networkService.cancelableExecute(request: request);
   }
 }

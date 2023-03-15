@@ -18,7 +18,7 @@ class GenreBloc extends Cubit<GenreState> {
   Future<void> requestTopArtists() async {
     var topArtistsResult = await _getTopArtists(
       genreUrl: _genreUrl,
-    );
+    ).value;
     topArtistsResult.when(
       success: (list) {
         if (list.items.isEmpty) {

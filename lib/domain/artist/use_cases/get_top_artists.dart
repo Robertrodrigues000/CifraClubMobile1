@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/artist/repository/artist_repository.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
@@ -14,12 +15,13 @@ class GetTopArtists {
     required this.artistRepository,
   });
 
-  Future<Result<PaginatedList<Artist>, RequestError>> call({String? genreUrl, int limit = 100, int offset = 0}) async {
-    final result = await artistRepository.getTopArtists(genreUrl: genreUrl, limit: limit, offset: offset);
-
-    if (result.isSuccess) {
-      return result.get()!.items.isNotEmpty ? result : Err(ServerError());
-    }
-    return result;
+  CancelableOperation<Result<PaginatedList<Artist>, RequestError>> call(
+      {String? genreUrl, int limit = 100, int offset = 0}) {
+    return artistRepository.getTopArtists(genreUrl: genreUrl, limit: limit, offset: offset).then((result) {
+      if (result.isSuccess && result.get()!.items.isEmpty) {
+        return Err(ServerError());
+      }
+      return result;
+    });
   }
 }

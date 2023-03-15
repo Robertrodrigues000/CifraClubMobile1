@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_image_dto.dart';
@@ -39,13 +40,15 @@ void main() {
       ]);
 
       when(() => artistDataSource.getTopArtists(limit: any(named: "limit"), offset: any(named: "offset"))).thenAnswer(
-        (_) => SynchronousFuture(
-          Ok(topArtistsDto),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Ok(topArtistsDto),
+          ),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final topArtists = await repository.getTopArtists(limit: 3, offset: 0);
+      final topArtists = await repository.getTopArtists(limit: 3, offset: 0).value;
 
       expect(topArtists.isSuccess, true);
       expect(topArtists.get()!.items.length, 1);
@@ -74,13 +77,15 @@ void main() {
       final artistDataSource = _MockArtistDataSource();
 
       when(() => artistDataSource.getTopArtists(limit: 3, offset: 0)).thenAnswer(
-        (_) => SynchronousFuture(
-          Err(ServerError()),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Err(ServerError()),
+          ),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final topArtists = await repository.getTopArtists(limit: 3, offset: 0);
+      final topArtists = await repository.getTopArtists(limit: 3, offset: 0).value;
 
       expect(topArtists.isFailure, true);
       expect(topArtists.getError().runtimeType, ServerError);

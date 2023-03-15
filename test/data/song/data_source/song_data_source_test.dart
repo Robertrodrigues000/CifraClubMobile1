@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
 import 'package:cifraclub/data/song/models/top_songs_dto.dart';
@@ -25,13 +26,15 @@ void main() {
       await networkService.mock<TopSongsDto>(response: mockResponse);
 
       final songDataSource = SongDataSource(networkService: networkService);
-      final result = await songDataSource.getTopSongs(
-        genreUrl: queryParams['genre'] as String,
-        limit: queryParams['limit'] as int,
-        offset: queryParams['offset'] as int,
-      );
+      final result = await songDataSource
+          .getTopSongs(
+            genreUrl: queryParams['genre'] as String,
+            limit: queryParams['limit'] as int,
+            offset: queryParams['offset'] as int,
+          )
+          .value;
 
-      final request = verify(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request")))
+      final request = verify(() => networkService.cancelableExecute<TopSongsDto>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<TopSongsDto>;
 
@@ -61,12 +64,14 @@ void main() {
       await networkService.mock<TopSongsDto>(response: mockResponse);
 
       final songDataSource = SongDataSource(networkService: networkService);
-      final result = await songDataSource.getTopSongs(
-        limit: queryParams['limit'] as int,
-        offset: 0,
-      );
+      final result = await songDataSource
+          .getTopSongs(
+            limit: queryParams['limit'] as int,
+            offset: 0,
+          )
+          .value;
 
-      final request = verify(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request")))
+      final request = verify(() => networkService.cancelableExecute<TopSongsDto>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<TopSongsDto>;
 
@@ -88,17 +93,21 @@ void main() {
 
     test("When request fails", () async {
       final networkService = NetworkServiceMock();
-      when(() => networkService.execute<TopSongsDto>(request: captureAny(named: "request"))).thenAnswer(
-        (invocation) => SynchronousFuture(
-          Err(ServerError(statusCode: 404)),
+      when(() => networkService.cancelableExecute<TopSongsDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Err(ServerError(statusCode: 404)),
+          ),
         ),
       );
 
       final songDataSource = SongDataSource(networkService: networkService);
-      final result = await songDataSource.getTopSongs(
-        limit: 2,
-        offset: 10,
-      );
+      final result = await songDataSource
+          .getTopSongs(
+            limit: 2,
+            offset: 10,
+          )
+          .value;
 
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);

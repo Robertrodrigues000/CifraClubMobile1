@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -50,6 +51,17 @@ When<Future<Response<dynamic>>> _whenDioRequest(Dio dio) {
 Future<Result<T, RequestError>> _executeRequest<T>(_TestNetworkService networkService,
     {required T Function(dynamic) parser}) {
   return networkService.execute(
+    request: NetworkRequest(
+      type: NetworkRequestType.get,
+      path: "v3/test",
+      parser: parser,
+    ),
+  );
+}
+
+CancelableOperation<Result<T, RequestError>> _cancelableExecuteRequest<T>(_TestNetworkService networkService,
+    {required T Function(dynamic) parser}) {
+  return networkService.cancelableExecute(
     request: NetworkRequest(
       type: NetworkRequestType.get,
       path: "v3/test",
@@ -134,7 +146,33 @@ void main() {
     });
 
     group("when request is cancelled", () {
-      test("Throw Request cancelled error", () async {
+      test("Set the Dio`s cancelToken when the request is canceled", () async {
+        Map<String, dynamic> okResponse = {"value1": "ok", "value2": 42};
+        _whenDioRequest(dio)
+            .thenAnswer((_) => SynchronousFuture(Response(data: okResponse, requestOptions: RequestOptions(path: ''))));
+
+        var networkService = _TestNetworkService(dio: dio);
+        var currentRequest = _cancelableExecuteRequest(
+          networkService,
+          parser: (data) => _MapModel.fromJson(data as Map<String, dynamic>),
+        );
+
+        currentRequest.cancel();
+
+        final cancelToken = verify(
+          () => dio.request<dynamic>(
+            any(),
+            cancelToken: captureAny(named: "cancelToken"),
+            data: any(named: "data"),
+            onReceiveProgress: any(named: "onReceiveProgress"),
+            onSendProgress: any(named: "onSendProgress"),
+            options: any(named: "options"),
+            queryParameters: any(named: "queryParameters"),
+          ),
+        ).captured.first as CancelToken;
+        expect(cancelToken.isCancelled, true);
+      });
+      test("Throw Request cancelled error when dio receives cancelation", () async {
         var cancelToken = _CancelTokenMock();
         var dioError = DioError(requestOptions: RequestOptions(path: "v3/test"));
         dioError.requestOptions.cancelToken = cancelToken;

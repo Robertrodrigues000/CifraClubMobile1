@@ -7,7 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../shared_mocks/domain/artist/models/artist_mock.dart';
 import '../../../../test_helpers/fake_cache_manager.dart';
-import '../../../../test_helpers/image_data.dart';
 import '../../../../test_helpers/test_wrapper.dart';
 
 void main() {

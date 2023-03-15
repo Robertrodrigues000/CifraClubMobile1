@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
 import 'package:cifraclub/data/home/models/home_dto.dart';
@@ -9,12 +10,11 @@ class HomeDataSource {
 
   HomeDataSource(this._networkService);
 
-  Future<Result<HomeDto, RequestError>> getHomeInfos(String? genreUrl) async {
+  CancelableOperation<Result<HomeDto, RequestError>> getHomeInfos(String? genreUrl) {
     var request = NetworkRequest(
         type: NetworkRequestType.get,
         path: "/v3/home/${genreUrl ?? ""}",
         parser: (data) => HomeDto.fromJson(data as Map<String, dynamic>));
-    var response = await _networkService.execute(request: request);
-    return response;
+    return _networkService.cancelableExecute(request: request);
   }
 }

@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
+import 'package:cifraclub/domain/home/models/home_info.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -19,6 +22,7 @@ class HomeBloc extends Cubit<HomeState> {
   final GetUserGenresAsStream _getUserGenresAsStream;
   final GetHomeInfo _getHomeInfo;
   StreamSubscription? _credentialStreamSubscription;
+  CancelableOperation<Result<HomeInfo, RequestError>>? currentRequest;
 
   HomeBloc(
     this._getUserGenresAsStream,
@@ -61,9 +65,12 @@ class HomeBloc extends Cubit<HomeState> {
 
   Future<void> requestHomeData({String genreUrl = ""}) async {
     emit(state.copyWith(isLoading: true));
-    final result = await _getHomeInfo(genreUrl);
+    currentRequest?.cancel();
+    currentRequest = _getHomeInfo(genreUrl);
 
-    result.when(
+    var result = await currentRequest!.valueOrCancellation(Err(RequestCancelled()));
+
+    result?.when(
         success: (homeInfo) => emit(state.copyWith(
               highlights: homeInfo.highlights,
               topArtists: homeInfo.artists,
@@ -72,10 +79,14 @@ class HomeBloc extends Cubit<HomeState> {
               blog: homeInfo.news,
               isLoading: false,
             )),
-        failure: (error) => emit(state.copyWith(
+        failure: (error) {
+          if (error is! RequestCancelled) {
+            emit(state.copyWith(
               error: error,
               isLoading: false,
-            )));
+            ));
+          }
+        });
   }
 
   void openLoginPage() => _openLoginView();

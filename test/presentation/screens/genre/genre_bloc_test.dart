@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
@@ -28,10 +29,12 @@ void main() {
             genreUrl: any(named: "genreUrl"),
             limit: any(named: "limit"),
             offset: any(named: "offset"),
-          )).thenAnswer((_) => SynchronousFuture(Ok(PaginatedList(
-            items: topArtists,
-            hasMoreResults: false,
-          ))));
+          )).thenAnswer(
+        (_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(PaginatedList(
+          items: topArtists,
+          hasMoreResults: false,
+        )))),
+      );
 
       blocTest(
         "should emit a loaded state with artists from use case and genre from parameter",
@@ -57,9 +60,8 @@ void main() {
     group("When request fails", () {
       final getTopArtists = _MockGetTopArtists();
       when(() => getTopArtists.call(
-          genreUrl: any(named: "genreUrl"),
-          limit: any(named: "limit"),
-          offset: any(named: "offset"))).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
+              genreUrl: any(named: "genreUrl"), limit: any(named: "limit"), offset: any(named: "offset")))
+          .thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
 
       blocTest(
         "should emit an error state",
@@ -74,10 +76,12 @@ void main() {
     group("When request returns empty list", () {
       final getTopArtists = _MockGetTopArtists();
       when(() => getTopArtists.call(
-            genreUrl: any(named: "genreUrl"),
-            limit: any(named: "limit"),
-            offset: any(named: "offset"),
-          )).thenAnswer((_) => SynchronousFuture(const Ok(PaginatedList(items: [], hasMoreResults: false))));
+                genreUrl: any(named: "genreUrl"),
+                limit: any(named: "limit"),
+                offset: any(named: "offset"),
+              ))
+          .thenAnswer((_) => CancelableOperation.fromFuture(
+              SynchronousFuture(const Ok(PaginatedList(items: [], hasMoreResults: false)))));
 
       blocTest(
         "should emit an error state",

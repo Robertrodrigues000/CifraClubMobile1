@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/home/data_souce/home_data_source.dart';
@@ -73,9 +74,9 @@ void main() {
       await networkService.mock<HomeDto>(response: mockResponse);
 
       final dataSource = HomeDataSource(networkService);
-      final result = await dataSource.getHomeInfos(null);
+      final result = await dataSource.getHomeInfos(null).value;
 
-      final request = verify(() => networkService.execute<HomeDto>(request: captureAny(named: "request")))
+      final request = verify(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<HomeDto>;
 
@@ -94,9 +95,9 @@ void main() {
       await networkService.mock<HomeDto>(response: mockResponse);
 
       final dataSource = HomeDataSource(networkService);
-      final result = await dataSource.getHomeInfos(dns);
+      final result = await dataSource.getHomeInfos(dns).value;
 
-      final request = verify(() => networkService.execute<HomeDto>(request: captureAny(named: "request")))
+      final request = verify(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<HomeDto>;
 
@@ -112,13 +113,14 @@ void main() {
       final mockResponse = await File("test/data/home/data_source/home_mock_json_response.json").readAsString();
       await networkService.mock<HomeDto>(response: mockResponse);
 
-      when(() => networkService.execute<HomeDto>(request: captureAny(named: "request")))
-          .thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
+      when(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))),
+      );
 
       final dataSource = HomeDataSource(networkService);
-      final result = await dataSource.getHomeInfos(null);
+      final result = await dataSource.getHomeInfos(null).value;
 
-      final request = verify(() => networkService.execute<HomeDto>(request: captureAny(named: "request")))
+      final request = verify(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<HomeDto>;
 

@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/repository/song_repository.dart';
@@ -13,18 +14,13 @@ class SongRepositoryImpl extends SongRepository {
   });
 
   @override
-  Future<Result<PaginatedList<Song>, RequestError>> getTopSongs({
+  CancelableOperation<Result<PaginatedList<Song>, RequestError>> getTopSongs({
     String? genreUrl,
     required int limit,
     required int offset,
-  }) async {
-    return (await songDataSource.getTopSongs(
-      genreUrl: genreUrl,
-      limit: limit,
-      offset: offset,
-    ))
-        .map(
-      (value) => value.toDomain(),
-    );
+  }) {
+    return songDataSource
+        .getTopSongs(genreUrl: genreUrl, limit: limit, offset: offset)
+        .then((result) => result.map((topSongsDto) => topSongsDto.toDomain()));
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:dio/dio.dart';
@@ -10,10 +11,19 @@ abstract class NetworkService {
 
   final Dio _dio;
 
-  Future<Result<T, RequestError>> execute<T>({required NetworkRequest<T> request}) async {
+  CancelableOperation<Result<T, RequestError>> cancelableExecute<T>({required NetworkRequest<T> request}) {
+    final cancelToken = CancelToken();
+    return CancelableOperation.fromFuture(
+      execute(request: request, cancelToken: cancelToken),
+      onCancel: cancelToken.cancel,
+    );
+  }
+
+  Future<Result<T, RequestError>> execute<T>({required NetworkRequest<T> request, CancelToken? cancelToken}) async {
     try {
       final response = await _dio.request(
         request.path,
+        cancelToken: cancelToken,
         data: request.data ?? {},
         queryParameters: request.queryParams,
         options: Options(

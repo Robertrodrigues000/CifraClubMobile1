@@ -1,5 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
+import 'package:cifraclub/domain/shared/paginated_list.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_state/top_songs_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +12,7 @@ import 'package:typed_result/typed_result.dart';
 class TopSongsBloc extends Cubit<TopSongsState> {
   final GetTopSongs _getTopSongs;
   final GetGenres _getGenres;
+  CancelableOperation<Result<PaginatedList<Song>, RequestError>>? currentRequest;
 
   TopSongsBloc(
     this._getTopSongs,
@@ -47,9 +52,16 @@ class TopSongsBloc extends Cubit<TopSongsState> {
         state.copyWith(isLoadingSongs: true),
       );
     }
-    final topSongsResult = await _getTopSongs(
+
+    currentRequest?.cancel();
+    currentRequest = _getTopSongs(
       genreUrl: genreUrl,
     );
+
+    var topSongsResult = (await currentRequest!.valueOrCancellation(Err(RequestCancelled())))!;
+    if (topSongsResult.getError() is RequestCancelled) {
+      return;
+    }
 
     emit(
       state.copyWith(

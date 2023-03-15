@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/home/data_souce/home_data_source.dart';
 import 'package:cifraclub/domain/home/models/home_info.dart';
 import 'package:cifraclub/domain/home/repository/home_repository.dart';
@@ -9,7 +10,7 @@ class HomeRepositoryImpl extends HomeRepository {
   HomeRepositoryImpl(this._homeDataSource);
 
   @override
-  Future<Result<HomeInfo, RequestError>> getHomeInfos(String? genreUrl) async {
-    return (await _homeDataSource.getHomeInfos(genreUrl)).map((value) => value.toDomain());
+  CancelableOperation<Result<HomeInfo, RequestError>> getHomeInfos(String? genreUrl) {
+    return (_homeDataSource.getHomeInfos(genreUrl)).then((result) => result.map((homeDto) => homeDto.toDomain()));
   }
 }

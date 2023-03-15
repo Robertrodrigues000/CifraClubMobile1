@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart';
 import 'package:cifraclub/domain/genre/models/all_genres.dart';
@@ -70,10 +71,12 @@ void main() {
           genreUrl: any(named: "genreUrl"),
           limit: any(named: "limit"),
           offset: any(named: "offset"),
-        )).thenAnswer((_) => SynchronousFuture(const Ok(PaginatedList(
-          items: [],
-          hasMoreResults: false,
-        ))));
+        )).thenAnswer(
+      (_) => CancelableOperation.fromFuture(SynchronousFuture(const Ok(PaginatedList(
+        items: [],
+        hasMoreResults: false,
+      )))),
+    );
 
     test("should update de current state with selected genre and trigger requestTopArtists", () {
       final bloc = TopArtistsBloc(getTopArtists, _MockGetGenres());
@@ -93,10 +96,12 @@ void main() {
             genreUrl: any(named: "genreUrl"),
             limit: any(named: "limit"),
             offset: any(named: "offset"),
-          )).thenAnswer((_) => SynchronousFuture(Ok(PaginatedList(
-            items: topArtists,
-            hasMoreResults: false,
-          ))));
+          )).thenAnswer(
+        (_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(PaginatedList(
+          items: topArtists,
+          hasMoreResults: false,
+        )))),
+      );
 
       blocTest(
         "should update the state with Artists from use case",
@@ -112,9 +117,9 @@ void main() {
     group("When request fails", () {
       final getTopArtists = _MockGetTopArtists();
       when(() => getTopArtists.call(
-          genreUrl: any(named: "genreUrl"),
-          limit: any(named: "limit"),
-          offset: any(named: "offset"))).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
+          genreUrl: any(named: "genreUrl"), limit: any(named: "limit"), offset: any(named: "offset"))).thenAnswer(
+        (_) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))),
+      );
 
       blocTest(
         "should update state with error",

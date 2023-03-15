@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
@@ -26,15 +27,18 @@ void main() {
       await networkService.mock<TopArtistsDto>(response: mockResponse);
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
-      final result = await artistDataSource.getTopArtists(
-        genreUrl: queryParams['genre'] as String,
-        limit: queryParams['limit'] as int,
-        offset: queryParams['offset'] as int,
-      );
+      final result = await artistDataSource
+          .getTopArtists(
+            genreUrl: queryParams['genre'] as String,
+            limit: queryParams['limit'] as int,
+            offset: queryParams['offset'] as int,
+          )
+          .value;
 
-      final request = verify(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<TopArtistsDto>;
+      final request =
+          verify(() => networkService.cancelableExecute<TopArtistsDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<TopArtistsDto>;
 
       expect(request.path, "/v3/top/artists");
       expect(request.type, NetworkRequestType.get);
@@ -61,14 +65,17 @@ void main() {
       await networkService.mock<TopArtistsDto>(response: mockResponse);
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
-      final result = await artistDataSource.getTopArtists(
-        limit: queryParams['limit'] as int,
-        offset: 0,
-      );
+      final result = await artistDataSource
+          .getTopArtists(
+            limit: queryParams['limit'] as int,
+            offset: 0,
+          )
+          .value;
 
-      final request = verify(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<TopArtistsDto>;
+      final request =
+          verify(() => networkService.cancelableExecute<TopArtistsDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<TopArtistsDto>;
 
       expect(request.path, "/v3/top/artists");
       expect(request.type, NetworkRequestType.get);
@@ -86,17 +93,21 @@ void main() {
 
     test("When request fails", () async {
       final networkService = NetworkServiceMock();
-      when(() => networkService.execute<TopArtistsDto>(request: captureAny(named: "request"))).thenAnswer(
-        (invocation) => SynchronousFuture(
-          Err(ServerError(statusCode: 404)),
+      when(() => networkService.cancelableExecute<TopArtistsDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Err(ServerError(statusCode: 404)),
+          ),
         ),
       );
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
-      final result = await artistDataSource.getTopArtists(
-        limit: 10,
-        offset: 0,
-      );
+      final result = await artistDataSource
+          .getTopArtists(
+            limit: 10,
+            offset: 0,
+          )
+          .value;
 
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);

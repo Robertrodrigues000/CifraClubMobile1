@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
@@ -157,15 +158,17 @@ void main() {
       const selectedGenre = "MPB";
       final getHomeInfo = _GetHomeInfoMock();
 
-      when(() => getHomeInfo(any())).thenAnswer((_) => SynchronousFuture(const Ok(
-            HomeInfo(
-              highlights: [],
-              songs: [],
-              artists: [],
-              videoLessons: [],
-              news: [],
-            ),
-          )));
+      when(() => getHomeInfo(any())).thenAnswer(
+        (_) => CancelableOperation.fromFuture(SynchronousFuture(const Ok(
+          HomeInfo(
+            highlights: [],
+            songs: [],
+            artists: [],
+            videoLessons: [],
+            news: [],
+          ),
+        ))),
+      );
       final bloc = getHomeBloc(getHomeInfo: getHomeInfo);
 
       bloc.onGenreSelected(selectedGenre);
@@ -185,7 +188,7 @@ void main() {
         videoLessons: [getFakeVideoLessons(), getFakeVideoLessons()],
         news: [getFakeNews(), getFakeNews()],
       );
-      when(() => getHomeInfo(any())).thenAnswer((_) => SynchronousFuture(Ok(homeInfo)));
+      when(() => getHomeInfo(any())).thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(homeInfo))));
 
       final bloc = getHomeBloc(getHomeInfo: getHomeInfo);
       blocTest(
@@ -206,7 +209,9 @@ void main() {
 
     group("fails", () {
       final getHomeInfo = _GetHomeInfoMock();
-      when(() => getHomeInfo(any())).thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
+      when(() => getHomeInfo(any())).thenAnswer(
+        (invocation) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))),
+      );
 
       final bloc = getHomeBloc(getHomeInfo: getHomeInfo);
       blocTest(

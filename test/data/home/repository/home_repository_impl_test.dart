@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/home/data_souce/home_data_source.dart';
 import 'package:cifraclub/data/home/models/home_dto.dart';
 import 'package:cifraclub/data/home/repository/home_repository_impl.dart';
@@ -33,10 +34,11 @@ void main() {
 
       final repository = HomeRepositoryImpl(dataSource);
 
-      when(() => dataSource.getHomeInfos(any())).thenAnswer((_) => SynchronousFuture(Ok(homeDto)));
+      when(() => dataSource.getHomeInfos(any()))
+          .thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(homeDto))));
       when(homeDto.toDomain).thenReturn(homeInfo);
 
-      final result = await repository.getHomeInfos(null);
+      final result = await repository.getHomeInfos(null).value;
 
       verify(homeDto.toDomain).called(1);
       verify(() => dataSource.getHomeInfos(null)).called(1);
@@ -50,9 +52,10 @@ void main() {
 
       final repository = HomeRepositoryImpl(dataSource);
 
-      when(() => dataSource.getHomeInfos(any())).thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
+      when(() => dataSource.getHomeInfos(any()))
+          .thenAnswer((invocation) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
 
-      final result = await repository.getHomeInfos(null);
+      final result = await repository.getHomeInfos(null).value;
 
       verify(() => dataSource.getHomeInfos(null)).called(1);
 
