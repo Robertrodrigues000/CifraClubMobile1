@@ -30,6 +30,7 @@ void main() {
         const GenreHeaderItem(type: GenreHeaderType.top),
         GenreListItem(genre: allGenres.top.first),
         GenreListItem(genre: allGenres.top.last),
+        GenreDivider(),
         const GenreHeaderItem(type: GenreHeaderType.all),
         GenreListItem(genre: allGenres.all.first),
         GenreListItem(genre: allGenres.all.last),

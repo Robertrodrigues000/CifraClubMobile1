@@ -1,7 +1,7 @@
 import 'package:cifraclub/presentation/screens/genre/genre_bloc.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_state.dart';
-import 'package:cifraclub/presentation/screens/genre/widgets/artist_list_item.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
+import 'package:cifraclub/presentation/widgets/top_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,9 +42,11 @@ class _GenreScreenState extends State<GenreScreen> {
               return ListView.builder(
                 itemCount: state.artists.length,
                 itemBuilder: (context, index) {
-                  return ArtistListItem(
+                  return TopListItem(
                     title: state.artists[index].name,
-                    ranking: index + 1,
+                    imageUrl: state.artists[index].image?.size162,
+                    ranking: (index + 1).toString(),
+                    onTap: () {}, // coverage:ignore-line
                   );
                 },
               );

@@ -25,6 +25,7 @@ class GenresBloc extends Cubit<GenresState> {
                   (genre) => GenreListItem(genre: genre),
                 )
                 .toList(),
+            GenreDivider(),
             const GenreHeaderItem(type: GenreHeaderType.all),
             ...allGenres.all
                 .map(

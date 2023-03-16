@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lesson_item.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:flutter/material.dart';

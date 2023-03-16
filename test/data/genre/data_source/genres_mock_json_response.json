@@ -4,25 +4,49 @@
         "id": 666,
         "name": "Rock",
         "url": "rock",
-        "hits": 2983992256
+        "hits": 2983992256,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-inactive-dark.svg"
+        }
       },
       {
         "id": 9,
         "name": "Sertanejo",
         "url": "sertanejo",
-        "hits": 2276150631
+        "hits": 2276150631,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/sertanejo-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/sertanejo-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/sertanejo-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/sertanejo-inactive-dark.svg"
+        }
       },
       {
         "id": 30,
         "name": "Gospel/Religioso",
         "url": "gospelreligioso",
-        "hits": 2579539075
+        "hits": 2579539075,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-inactive-dark.svg"
+        }
       },
       {
         "id": 5,
         "name": "MPB",
         "url": "mpb",
-        "hits": 955582800
+        "hits": 955582800,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/mpb-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/mpb-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/mpb-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/mpb-inactive-dark.svg"
+        }
       }
     ],
     "top": [
@@ -30,13 +54,25 @@
         "id": 666,
         "name": "Rock",
         "url": "rock",
-        "hits": 2983992256
+        "hits": 2983992256,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-inactive-dark.svg"
+        }
       },
       {
         "id": 30,
         "name": "Gospel/Religioso",
         "url": "gospelreligioso",
-        "hits": 2579539075
+        "hits": 2579539075,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/gospelreligioso-inactive-dark.svg"
+        }
       }
     ],
     "all": [
@@ -44,13 +80,25 @@
         "id": 1,
         "name": "Alternativo",
         "url": "alternativo",
-        "hits": 247823476
+        "hits": 247823476,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/alternativo-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/alternativo-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/alternativo-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/alternativo-inactive-dark.svg"
+        }
       },
       {
         "id": 7,
         "name": "Axé",
         "url": "axe",
-        "hits": 114033748
+        "hits": 114033748,
+        "icons": {
+          "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/pagode-light.svg",
+          "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/pagode-inactive-light.svg",
+          "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/pagode-dark.svg",
+          "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/pagode-inactive-dark.svg"
+        }
       }
     ]
   }

@@ -111,7 +111,7 @@ class ProfileBottomSheet extends StatelessWidget {
             onOpenProfile();
             DefaultBottomSheet.close(context);
           },
-          leadingIcon: AppSvgs.editIcon,
+          leadingIconAsset: AppSvgs.editIcon,
           text: context.text.editProfile,
         ),
         IconTextTile(
@@ -119,7 +119,7 @@ class ProfileBottomSheet extends StatelessWidget {
             onOpenMyLists();
             DefaultBottomSheet.close(context);
           },
-          leadingIcon: AppSvgs.playlistIcon,
+          leadingIconAsset: AppSvgs.playlistIcon,
           text: context.text.myLists,
         ),
         IconTextTile(
@@ -127,7 +127,7 @@ class ProfileBottomSheet extends StatelessWidget {
             onLogout();
             DefaultBottomSheet.close(context);
           },
-          leadingIcon: AppSvgs.exitArrowIcon,
+          leadingIconAsset: AppSvgs.exitArrowIcon,
           text: context.text.logout,
         ),
         const SizedBox(height: 16)

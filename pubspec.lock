@@ -750,6 +750,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  mockito:
+    dependency: transitive
+    description:
+      name: mockito
+      sha256: "2a8a17b82b1bde04d514e75d90d634a0ac23f6cb4991f6098009dd56836aeafe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.2"
   mocktail:
     dependency: "direct dev"
     description:
@@ -783,6 +791,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  network_image_mock:
+    dependency: "direct main"
+    description:
+      name: network_image_mock
+      sha256: "855cdd01d42440e0cffee0d6c2370909fc31b3bcba308a59829f24f64be42db7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   node_preamble:
     dependency: transitive
     description:

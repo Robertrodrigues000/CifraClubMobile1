@@ -24,6 +24,11 @@ class GenreListItem extends GenreItem {
   List<Object?> get props => [genre];
 }
 
+class GenreDivider extends GenreItem {
+  @override
+  List<Object?> get props => [];
+}
+
 enum GenreHeaderType {
   top,
   all;

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 import '../../../test_helpers/bloc_stream.dart';
@@ -46,20 +47,21 @@ void main() {
       const GenreHeaderItem(type: GenreHeaderType.top),
       GenreListItem(genre: getFakeGenre()),
       GenreListItem(genre: getFakeGenre()),
+      GenreDivider(),
       const GenreHeaderItem(type: GenreHeaderType.all),
       GenreListItem(genre: getFakeGenre()),
       GenreListItem(genre: getFakeGenre()),
     ];
     bloc.mockStream(GenresLoadedState(genres: genreItems));
 
-    await widgetTester.pumpWidget(
-      TestWrapper(
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(TestWrapper(
         child: BlocProvider<GenresBloc>.value(
           value: bloc,
           child: const GenresScreen(),
         ),
-      ),
-    );
+      ));
+    });
 
     expect(find.byType(CircularProgressIndicator), findsNothing);
     expect(find.byType(GenresList), findsOneWidget);
