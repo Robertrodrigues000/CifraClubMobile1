@@ -118,14 +118,14 @@ class _ArtistCard extends StatelessWidget {
                   children: [
                     Text(
                       _artist.name,
-                      style: CosmosTypography.of(context).subtitle4.copyWith(color: CosmosColors.grey80),
+                      style: context.typography.subtitle4.copyWith(color: CosmosColors.grey80),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       _artist.genre?.name ?? "",
-                      style: CosmosTypography.of(context).subtitle4.copyWith(color: CosmosColors.white),
+                      style: context.typography.subtitle4.copyWith(color: CosmosColors.white),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

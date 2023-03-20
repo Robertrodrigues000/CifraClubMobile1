@@ -9,6 +9,7 @@ import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
+import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -38,8 +39,16 @@ class CifraClub extends StatelessWidget {
       colorApproximator: getIt(),
       child: MaterialApp(
         restorationScopeId: _navigationRestorationScope,
-        darkTheme: getCosmosDarkTheme(const BrandColors.asCifra()),
-        theme: getCosmosLightTheme(const BrandColors.asCifra()),
+        darkTheme: getCosmosDarkTheme(const BrandColors.asCifra(), extensions: [
+          getTypographyScheme(
+            getCosmosDarkColorScheme(const BrandColors.asCifra()),
+          ),
+        ]),
+        theme: getCosmosLightTheme(const BrandColors.asCifra(), extensions: [
+          getTypographyScheme(
+            getCosmosLightColorScheme(const BrandColors.asCifra()),
+          ),
+        ]),
         supportedLocales: supportedLocales,
         localizationsDelegates: const [
           AppLocalizations.delegate,

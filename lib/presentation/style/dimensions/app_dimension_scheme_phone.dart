@@ -1,4 +1,4 @@
-import 'package:cifraclub/presentation/style/app_dimension_scheme.dart';
+import 'package:cifraclub/presentation/style/dimensions/app_dimension_scheme.dart';
 
 const appDimensionSchemePhone = AppDimensionScheme(
   // Used across all app

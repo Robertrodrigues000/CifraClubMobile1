@@ -21,7 +21,7 @@ class VideoLessonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styles = CosmosTypography.of(context);
+    final styles = context.typography;
     return InkWell(
       borderRadius: BorderRadius.circular(8.0),
       onTap: onTap,

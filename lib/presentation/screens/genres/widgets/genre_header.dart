@@ -1,5 +1,4 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class GenreHeader extends StatelessWidget {
@@ -14,7 +13,7 @@ class GenreHeader extends StatelessWidget {
           horizontal: context.appDimensionScheme.screenMargin, vertical: context.appDimensionScheme.internalMargin),
       child: Text(
         text,
-        style: CosmosTypography.of(context).title3,
+        style: context.typography.title3,
       ),
     );
   }

@@ -44,7 +44,7 @@ class IconTextTile extends StatelessWidget {
                 Expanded(
                   child: Text(
                     text,
-                    style: CosmosTypography.of(context).subtitle3,
+                    style: context.typography.subtitle3,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

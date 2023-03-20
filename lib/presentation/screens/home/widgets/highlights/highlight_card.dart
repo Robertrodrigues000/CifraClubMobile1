@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/home/models/highlight.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_colors.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
@@ -21,7 +22,7 @@ class HighlightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styles = CosmosTypography.of(context);
+    final styles = context.typography;
 
     return RemoteImage(
       imageUrl: highlight.images.large,

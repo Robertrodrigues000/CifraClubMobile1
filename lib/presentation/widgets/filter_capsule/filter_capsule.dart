@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class FilterCapsule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = CosmosColorScheme.of(context);
-    final typography = CosmosTypography.of(context);
+    final typography = context.typography;
     return ContainerWithRippleEffect(
       height: 32,
       onTap: onTap,

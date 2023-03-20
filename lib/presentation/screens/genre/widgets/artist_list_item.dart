@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class ArtistListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = CosmosTypography.of(context);
+    final typography = context.typography;
 
     return InkWell(
       onTap: () => logger?.log(tag: runtimeType.toString(), message: "Tapped on $title"), // coverage:ignore-line

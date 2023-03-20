@@ -60,7 +60,7 @@ class _TopListItemContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final typography = CosmosTypography.of(context);
+    final typography = context.typography;
     final maxWidth = MediaQuery.of(context).size.width;
     return ContainerWithRippleEffect(
       width: maxWidth,

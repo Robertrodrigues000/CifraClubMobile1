@@ -1,3 +1,4 @@
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class HomeTitle extends StatelessWidget {
             children: [
               Text(
                 text,
-                style: CosmosTypography.of(context).title3,
+                style: context.typography.title3,
               ),
             ],
           ),

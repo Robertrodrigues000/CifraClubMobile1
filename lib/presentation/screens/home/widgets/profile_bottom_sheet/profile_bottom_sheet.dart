@@ -49,7 +49,7 @@ class ProfileBottomSheet extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
           child: Text(
             context.text.profile,
-            style: CosmosTypography.of(context).title3,
+            style: context.typography.title3,
           ),
         ),
         const SizedBox(
@@ -82,14 +82,14 @@ class ProfileBottomSheet extends StatelessWidget {
                   children: [
                     Text(
                       user.name ?? "",
-                      style: CosmosTypography.of(context).subtitle3,
+                      style: context.typography.subtitle3,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 2),
                     Text(
                       user.email ?? "",
-                      style: CosmosTypography.of(context).subtitle5,
+                      style: context.typography.subtitle5,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

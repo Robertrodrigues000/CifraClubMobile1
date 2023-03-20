@@ -1,7 +1,6 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_bloc.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_state.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +21,7 @@ class _NtpTestScreenState extends State<NtpTestScreen> {
         backgroundColor: widget.color,
         title: Text(
           context.text.ntpScreen,
-          style: CosmosTypography.of(context).title1,
+          style: context.typography.title2,
         ),
       ),
       body: BlocBuilder<NtpTestBloc, NtpTestState>(
@@ -31,7 +30,7 @@ class _NtpTestScreenState extends State<NtpTestScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(_getStateMessage(context, state), style: CosmosTypography.of(context).body10),
+                Text(_getStateMessage(context, state), style: context.typography.body10),
                 const SizedBox(height: 16.0),
                 if (state is NtpTestLoadingState)
                   const CircularProgressIndicator()

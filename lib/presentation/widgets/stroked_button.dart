@@ -1,5 +1,5 @@
 // coverage:ignore-file
-import 'package:cosmos/cosmos.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
 class StrokedButton extends StatelessWidget {
@@ -21,7 +21,7 @@ class StrokedButton extends StatelessWidget {
         onPressed: onClick,
         child: Text(
           text,
-          style: CosmosTypography.of(context).body9,
+          style: context.typography.body9,
         ),
       ),
     );
