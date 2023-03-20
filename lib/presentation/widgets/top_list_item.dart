@@ -64,14 +64,14 @@ class _TopListItemContent extends StatelessWidget {
     final maxWidth = MediaQuery.of(context).size.width;
     return ContainerWithRippleEffect(
       width: maxWidth,
+      height: 72,
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.all(padding),
+        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: padding),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           textBaseline: TextBaseline.alphabetic,
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
             RemoteImage(
               imageUrl: imageUrl,
@@ -87,7 +87,8 @@ class _TopListItemContent extends StatelessWidget {
             ),
             SizedBox(
               width: rankWidth,
-              child: Center(
+              child: Align(
+                alignment: Alignment.topCenter,
                 child: Text(
                   ranking,
                   style: typography.subtitle3.copyWith(
@@ -99,20 +100,24 @@ class _TopListItemContent extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                textBaseline: TextBaseline.ideographic,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Row(children: [
-                    Flexible(
-                      child: Text(
-                        title,
-                        style: typography.subtitle3,
-                        overflow: TextOverflow.ellipsis,
-                        textWidthBasis: TextWidthBasis.longestLine,
+                  Expanded(
+                    child: Row(children: [
+                      Flexible(
+                        child: Text(
+                          title,
+                          style: typography.subtitle3,
+                          overflow: TextOverflow.ellipsis,
+                          textWidthBasis: TextWidthBasis.longestLine,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    if (trailing != null) trailing!,
-                  ]),
+                      const SizedBox(width: 8),
+                      if (trailing != null) trailing!,
+                    ]),
+                  ),
                   if (subtitle != null)
                     Text(
                       subtitle!,

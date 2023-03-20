@@ -8,12 +8,14 @@ import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
+import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/buttons/stroked_button.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
+import 'package:nav/nav.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -92,7 +94,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               else ...[
                 Highlights(highlights: state.highlights),
-                HomeTopCifras(list: state.topCifras),
+                //Cifras section
+                HomeTitle(
+                  text: context.text.topSongs,
+                  horizontalPadding: dimensions.screenMargin,
+                  // coverage:ignore-start
+                  onClick: () => Nav.of(context).push(
+                    screenName: TopSongsEntry.name,
+                  ),
+                  // coverage:ignore-end
+                ),
+                HomeTopCifras(
+                  topSongs: state.topCifras,
+                  onTap: (song) {},
+                ),
+                SliverToBoxAdapter(
+                  child: StrokedButton(
+                    padding: EdgeInsets.only(left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
+                    text: context.text.more_songs,
+                    // coverage:ignore-start
+                    onClick: () => Nav.of(context).push(
+                      screenName: TopSongsEntry.name,
+                    ),
+                    // coverage:ignore-end
+                  ),
+                ),
                 //Artists section
                 HomeTitle(
                   text: context.text.top_artists,

@@ -8,12 +8,11 @@ class AppDimensionScheme {
   final double widthBottomSheet;
   final double sectionHeaderToFirstElement;
   final double scrollContentToBottom;
-  final double topCifrasItemsPerRow;
+  final int topCifrasItemsPerRow;
   final int topArtistsItemsPerRow;
   final int topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
   final double highlighCardBorderRadius;
-
   const AppDimensionScheme({
     required this.appBarHeight,
     required this.topCellRankingWidth,

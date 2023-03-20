@@ -38,5 +38,6 @@
     "myLists" : "Mis listas",
     "profile" : "Perfil",
     "more_artists" : "Mostrar más artistas",
-    "top_artists" : "Top artistas"
+    "top_artists" : "Top artistas",
+    "more_songs": "Mostrar más cifrados"
 }

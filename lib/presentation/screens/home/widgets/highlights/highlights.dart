@@ -25,26 +25,29 @@ class Highlights extends StatelessWidget {
     }
     final viewportFraction = (highlightCardSize + dimensions.internalMargin) / width;
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: highlightCardSize,
-        child: PageView.builder(
-          padEnds: false,
-          controller: PageController(viewportFraction: viewportFraction),
-          itemCount: highlights.length,
-          itemBuilder: (_, index) {
-            final isLastItem = index == highlights.length - 1;
-            return Padding(
-              padding:
-                  EdgeInsets.only(left: dimensions.internalMargin, right: isLastItem ? dimensions.internalMargin : 0),
-              child: HighlightCard(
-                key: Key(highlights[index].title),
-                highlight: highlights[index],
-                size: highlightCardSize,
-                borderRadius: dimensions.highlighCardBorderRadius,
-                internalPadding: dimensions.internalMargin,
-              ),
-            );
-          },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 32),
+        child: SizedBox(
+          height: highlightCardSize,
+          child: PageView.builder(
+            padEnds: false,
+            controller: PageController(viewportFraction: viewportFraction),
+            itemCount: highlights.length,
+            itemBuilder: (_, index) {
+              final isLastItem = index == highlights.length - 1;
+              return Padding(
+                padding:
+                    EdgeInsets.only(left: dimensions.internalMargin, right: isLastItem ? dimensions.internalMargin : 0),
+                child: HighlightCard(
+                  key: Key(highlights[index].title),
+                  highlight: highlights[index],
+                  size: highlightCardSize,
+                  borderRadius: dimensions.highlighCardBorderRadius,
+                  internalPadding: dimensions.internalMargin,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

@@ -45,5 +45,6 @@
     "myLists" : "My lists",
     "profile" : "Profile",
     "more_artists" : "Show more artists",
-    "top_artists" : "Top artists"
+    "top_artists" : "Top artists",
+    "more_songs": "Show more tabs"
 }
