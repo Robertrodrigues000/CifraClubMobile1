@@ -1,10 +1,10 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/blog.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/news/blog.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
@@ -156,7 +156,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           text: context.text.showMoreButton(context.text.videos.toLowerCase()),
                           onClick: () {})),
 
-                Blog(list: state.blog),
+                HomeTitle(
+                  text: context.text.homeNews,
+                  horizontalPadding: dimensions.screenMargin,
+                ),
+                Blog(
+                  list: state.blog,
+                  onTap: (news) {},
+                ),
+                SliverToBoxAdapter(
+                  child: StrokedButton(
+                      padding: EdgeInsets.only(
+                        left: dimensions.screenMargin,
+                        right: dimensions.screenMargin,
+                        bottom: 32,
+                      ),
+                      text: context.text.homeMoreNews,
+                      onClick: () {}),
+                ),
               ]
             ],
           ),

@@ -8,5 +8,5 @@ News getFakeNews() => News(
       image: faker.internet.httpUrl(),
       thumb: getFakeHomeImage(),
       headline: faker.animal.name(),
-      publishDate: faker.date.random.toString(),
+      publishDate: '2023-03-16 14:03:00',
     );

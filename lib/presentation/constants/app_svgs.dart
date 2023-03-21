@@ -10,6 +10,7 @@ class AppSvgs {
   static const editIcon = "assets/images/edit_icon.svg";
   static const playlistIcon = "assets/images/playlist_icon.svg";
   static const exitArrowIcon = "assets/images/exit_arrow_icon.svg";
+  static const newsPlaceholder = "assets/images/news_placeholder.svg";
   static const genresInactive = "assets/images/genres_inactive.svg";
   static const videoPlaceholder = "assets/images/video_placeholder.svg";
 }

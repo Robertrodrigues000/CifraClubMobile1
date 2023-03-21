@@ -13,6 +13,8 @@ class AppDimensionScheme {
   final int topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
   final double highlighCardBorderRadius;
+  final int newsItemsPerRow;
+  final double newsItemVerticalPadding;
   const AppDimensionScheme({
     required this.appBarHeight,
     required this.topCellRankingWidth,
@@ -26,5 +28,7 @@ class AppDimensionScheme {
     required this.topVideosItemsPerRow,
     required this.bottomSheetContentToBottom,
     required this.highlighCardBorderRadius,
+    required this.newsItemsPerRow,
+    required this.newsItemVerticalPadding,
   });
 }

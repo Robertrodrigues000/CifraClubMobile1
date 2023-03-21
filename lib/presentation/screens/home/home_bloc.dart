@@ -76,7 +76,7 @@ class HomeBloc extends Cubit<HomeState> {
               topArtists: homeInfo.artists,
               topCifras: homeInfo.songs,
               videoLessons: homeInfo.videoLessons,
-              blog: homeInfo.news,
+              blog: homeInfo.news?.take(4).toList(),
               isLoading: false,
             )),
         failure: (error) {

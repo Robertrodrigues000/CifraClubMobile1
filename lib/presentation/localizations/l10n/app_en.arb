@@ -44,7 +44,10 @@
     "editProfile" : "Edit profile",
     "myLists" : "My lists",
     "profile" : "Profile",
+    "homeNews":"News and more",
+    "homeMoreNews":"Show more news",
     "more_artists" : "Show more artists",
     "top_artists" : "Top artists",
+    "dateFormat":"MMM d, y",
     "more_songs": "Show more tabs"
 }

@@ -15,6 +15,8 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   topArtistsItemsPerRow: 4,
   topVideosItemsPerRow: 4,
   highlighCardBorderRadius: 12,
+  newsItemsPerRow: 2,
+  newsItemVerticalPadding: 10,
 
   // Top cifras, Top artists
   topCellRankingWidth: 60,

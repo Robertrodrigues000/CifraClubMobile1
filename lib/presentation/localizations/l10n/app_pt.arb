@@ -36,8 +36,11 @@
     "editProfile" : "Editar perfil",
     "myLists" : "Minhas listas",
     "profile" : "Perfil",
+    "homeNews":"Notícias e Novidades",
+    "homeMoreNews":"Mostrar mais notícias e novidades",
     "more_artists" : "Mostrar mais artistas",
     "top_artists" : "Top artistas",
+    "dateFormat": "d 'de' MMM, y",
     "more_songs": "Mostrar mais cifras"
     
 }
