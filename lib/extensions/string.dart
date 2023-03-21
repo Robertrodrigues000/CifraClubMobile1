@@ -1,5 +1,4 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 

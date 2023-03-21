@@ -20,7 +20,7 @@ class DevScreenEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DevScreenBloc(),
+      create: (context) => DevScreenBloc(getIt()),
       child: DevScreen(
         getCredentialsStream: getIt(),
         logout: getIt(),

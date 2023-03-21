@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
+import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
@@ -13,6 +14,7 @@ import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dar
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class DevScreen extends StatefulWidget {
@@ -36,6 +38,14 @@ class DevScreen extends StatefulWidget {
 }
 
 class _DevScreenState extends State<DevScreen> {
+  late DevScreenBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = BlocProvider.of<DevScreenBloc>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +148,13 @@ class _DevScreenState extends State<DevScreen> {
               final result = await widget.devBottomSheet.open(context);
               // ignore: avoid_print
               print(result);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.accessible_forward_outlined),
+            title: const Text("Compra"),
+            onTap: () {
+              _bloc.getProducts();
             },
           ),
         ],
