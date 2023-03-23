@@ -6,4 +6,6 @@ class AppWebp {
   static const guitarBadge = "assets/images/guitar_badge.webp";
   static const cavacoBadge = "assets/images/cavaco_badge.webp";
   static const highlightPlaceholder = "assets/images/highlight_placeholder.webp";
+  static const withoutConnectionLight = "assets/images/without_connection_light.webp";
+  static const withoutConnectionDark = "assets/images/without_connection_dark.webp";
 }

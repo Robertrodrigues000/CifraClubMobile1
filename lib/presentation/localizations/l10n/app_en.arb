@@ -44,10 +44,14 @@
     "editProfile" : "Edit profile",
     "myLists" : "My lists",
     "profile" : "Profile",
-    "homeNews":"News and more",
-    "homeMoreNews":"Show more news",
-    "more_artists" : "Show more artists",
-    "top_artists" : "Top artists",
-    "dateFormat":"MMM d, y",
-    "more_songs": "Show more tabs"
+    "moreArtists" : "Show more artists",
+    "topArtists" : "Top artists",
+    "connectionErrorTitle" : "You are offline",
+    "connectionErrorDescription" : "To access this content you need to be online. Please check your connection.",
+    "serverErrorTitle" : "Connection failure",
+    "serverErrorDescription" : "We couldn't access the server. Try again later.",
+    "homeNews": "News and more",
+    "homeMoreNews": "Show more news",
+    "dateFormat": "MMM d, y",
+    "moreSongs": "Show more tabs"
 }

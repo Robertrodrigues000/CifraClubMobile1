@@ -36,11 +36,14 @@
     "editProfile" : "Editar perfil",
     "myLists" : "Minhas listas",
     "profile" : "Perfil",
-    "homeNews":"Notícias e Novidades",
-    "homeMoreNews":"Mostrar mais notícias e novidades",
-    "more_artists" : "Mostrar mais artistas",
-    "top_artists" : "Top artistas",
+    "moreArtists" : "Mostrar mais artistas",
+    "topArtists" : "Top artistas",
+    "connectionErrorTitle" : "Você está offline",
+    "connectionErrorDescription" : "Para acessar esse conteúdo você precisa estar online. Por favor, verifique sua conexão.",
+    "serverErrorTitle" : "Falha na conexão",
+    "serverErrorDescription" : "Não conseguimos acessar o servidor. Tente novamente mais tarde.",
+    "homeNews": "Notícias e Novidades",
+    "homeMoreNews": "Mostrar mais notícias e novidades",
     "dateFormat": "d 'de' MMM, y",
-    "more_songs": "Mostrar mais cifras"
-    
+    "moreSongs": "Mostrar mais cifras"
 }

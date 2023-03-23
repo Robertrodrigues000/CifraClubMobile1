@@ -20,4 +20,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
 
   // Top cifras, Top artists
   topCellRankingWidth: 52,
+
+  //Error Description
+  externalMarginWithoutConnection: 36,
 );

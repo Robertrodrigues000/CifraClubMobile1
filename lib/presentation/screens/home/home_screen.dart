@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
@@ -10,6 +11,8 @@ import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/buttons/stroked_button.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:nav/nav.dart';
 
+// coverage:ignore-file
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -61,122 +65,127 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             height: dimensions.appBarHeight,
           ),
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: dimensions.screenMargin),
-                  child: FilterCapsuleList(
-                    capsulePadding: const EdgeInsets.symmetric(horizontal: 8),
-                    filters: [
-                      if (state.genres.isNotEmpty)
-                        ...state.genres
-                            .map(
-                              (genre) => Filter(
-                                  label: genre.name,
-                                  onTap: () {
-                                    bloc.onGenreSelected(genre.url);
-                                  },
-                                  isSelected: state.selectedGenre == genre.url),
-                            )
-                            .toList()
-                    ],
-                  ),
-                ),
-              ),
-              if (state.isLoading)
-                const SliverToBoxAdapter(
-                  child: Center(child: CircularProgressIndicator()),
-                )
-              else if (state.error != null)
-                const SliverToBoxAdapter(
-                  child: Center(child: Text("Erro")),
-                )
-              else ...[
-                Highlights(highlights: state.highlights),
-                //Cifras section
-                HomeTitle(
-                  text: context.text.topSongs,
-                  horizontalPadding: dimensions.screenMargin,
-                  // coverage:ignore-start
-                  onClick: () => Nav.of(context).push(
-                    screenName: TopSongsEntry.name,
-                  ),
-                  // coverage:ignore-end
-                ),
-                HomeTopCifras(
-                  topSongs: state.topCifras,
-                  onTap: (song) {},
-                ),
-                SliverToBoxAdapter(
-                  child: StrokedButton(
-                    padding: EdgeInsets.only(left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
-                    text: context.text.more_songs,
-                    // coverage:ignore-start
-                    onClick: () => Nav.of(context).push(
-                      screenName: TopSongsEntry.name,
-                    ),
-                    // coverage:ignore-end
-                  ),
-                ),
-                //Artists section
-                HomeTitle(
-                  text: context.text.top_artists,
-                  horizontalPadding: dimensions.screenMargin,
-                ),
-                HomeTopArtists(
-                  artists: state.topArtists,
-                  onTap: (artist) {},
-                ),
-                SliverToBoxAdapter(
-                  child: StrokedButton(
-                    padding: EdgeInsets.only(left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
-                    text: context.text.more_artists,
-                    onClick: () {},
-                  ),
-                ),
-                //Videolessons section
-
-                HomeTitle(
-                    onClick: state.videoLessons.length >= 4 ? () {} : null,
-                    text: context.text.videos,
-                    horizontalPadding: dimensions.screenMargin),
-                VideoLessons(
-                  list: state.videoLessons.take(4).toList(),
-                ),
-                if (state.videoLessons.length >= 4)
-                  SliverToBoxAdapter(
-                      key: const Key("videolessons more button"),
-                      child: StrokedButton(
-                          padding: EdgeInsets.only(
-                            left: dimensions.screenMargin,
-                            right: dimensions.screenMargin,
-                            bottom: 32,
-                          ),
-                          text: context.text.showMoreButton(context.text.videos.toLowerCase()),
-                          onClick: () {})),
-
-                HomeTitle(
-                  text: context.text.homeNews,
-                  horizontalPadding: dimensions.screenMargin,
-                ),
-                Blog(
-                  list: state.blog,
-                  onTap: (news) {},
-                ),
-                SliverToBoxAdapter(
-                  child: StrokedButton(
-                      padding: EdgeInsets.only(
-                        left: dimensions.screenMargin,
-                        right: dimensions.screenMargin,
-                        bottom: 32,
+          body: state.error is ConnectionError
+              ? const Center(child: ErrorDescriptionWidget(ErrorDescriptionWidgetType.connection))
+              : CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: dimensions.screenMargin),
+                        child: FilterCapsuleList(
+                          capsulePadding: const EdgeInsets.symmetric(horizontal: 8),
+                          filters: [
+                            if (state.genres.isNotEmpty)
+                              ...state.genres
+                                  .map(
+                                    (genre) => Filter(
+                                        label: genre.name,
+                                        onTap: () {
+                                          bloc.onGenreSelected(genre.url);
+                                        },
+                                        isSelected: state.selectedGenre == genre.url),
+                                  )
+                                  .toList()
+                          ],
+                        ),
                       ),
-                      text: context.text.homeMoreNews,
-                      onClick: () {}),
+                    ),
+                    if (state.isLoading)
+                      const SliverToBoxAdapter(
+                        child: Center(child: CircularProgressIndicator()),
+                      )
+                    else if (state.error is ServerError)
+                      const SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: ErrorDescriptionWidget(ErrorDescriptionWidgetType.server),
+                      )
+                    else ...[
+                      Highlights(highlights: state.highlights),
+                      //Cifras section
+                      HomeTitle(
+                        text: context.text.topSongs,
+                        horizontalPadding: dimensions.screenMargin,
+                        // coverage:ignore-start
+                        onClick: () => Nav.of(context).push(
+                          screenName: TopSongsEntry.name,
+                        ),
+                        // coverage:ignore-end
+                      ),
+                      HomeTopCifras(
+                        topSongs: state.topCifras,
+                        onTap: (song) {},
+                      ),
+                      SliverToBoxAdapter(
+                        child: StrokedButton(
+                          padding: EdgeInsets.only(
+                              left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
+                          text: context.text.moreSongs,
+                          // coverage:ignore-start
+                          onClick: () => Nav.of(context).push(
+                            screenName: TopSongsEntry.name,
+                          ),
+                          // coverage:ignore-end
+                        ),
+                      ),
+                      //Artists section
+                      HomeTitle(
+                        text: context.text.topArtists,
+                        horizontalPadding: dimensions.screenMargin,
+                      ),
+                      HomeTopArtists(
+                        artists: state.topArtists,
+                        onTap: (artist) {},
+                      ),
+                      SliverToBoxAdapter(
+                        child: StrokedButton(
+                          padding: EdgeInsets.only(
+                              left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
+                          text: context.text.moreArtists,
+                          onClick: () {},
+                        ),
+                      ),
+                      //Videolessons section
+
+                      HomeTitle(
+                          onClick: state.videoLessons.length >= 4 ? () {} : null,
+                          text: context.text.videos,
+                          horizontalPadding: dimensions.screenMargin),
+                      VideoLessons(
+                        list: state.videoLessons.take(4).toList(),
+                      ),
+                      if (state.videoLessons.length >= 4)
+                        SliverToBoxAdapter(
+                            key: const Key("videolessons more button"),
+                            child: StrokedButton(
+                                padding: EdgeInsets.only(
+                                  left: dimensions.screenMargin,
+                                  right: dimensions.screenMargin,
+                                  bottom: 32,
+                                ),
+                                text: context.text.showMoreButton(context.text.videos.toLowerCase()),
+                                onClick: () {})),
+
+                      HomeTitle(
+                        text: context.text.homeNews,
+                        horizontalPadding: dimensions.screenMargin,
+                      ),
+                      Blog(
+                        list: state.blog,
+                        onTap: (news) {},
+                      ),
+                      SliverToBoxAdapter(
+                        child: StrokedButton(
+                            padding: EdgeInsets.only(
+                              left: dimensions.screenMargin,
+                              right: dimensions.screenMargin,
+                              bottom: 32,
+                            ),
+                            text: context.text.homeMoreNews,
+                            onClick: () {}),
+                      ),
+                    ]
+                  ],
                 ),
-              ]
-            ],
-          ),
         );
       },
     );

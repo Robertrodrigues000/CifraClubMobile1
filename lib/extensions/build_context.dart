@@ -18,3 +18,10 @@ extension AppDimensionSchemeExt on BuildContext {
 extension TypographySchemeExt on BuildContext {
   AppTypographyScheme get typography => AppTypographyScheme.of(this);
 }
+
+extension AppDarkModeExt on BuildContext {
+  bool get isDarkMode {
+    final brightness = MediaQuery.of(this).platformBrightness;
+    return brightness == Brightness.dark;
+  }
+}

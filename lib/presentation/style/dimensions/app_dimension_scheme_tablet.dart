@@ -20,4 +20,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
 
   // Top cifras, Top artists
   topCellRankingWidth: 60,
+
+  //Error Description
+  externalMarginWithoutConnection: 72,
 );

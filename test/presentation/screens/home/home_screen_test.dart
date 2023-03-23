@@ -1,9 +1,11 @@
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,6 +75,40 @@ void main() {
     );
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets("When state error is not null and is connection error then error description widget should be displayed",
+      (widgetTester) async {
+    bloc.mockStream(HomeState(error: ConnectionError()));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: const HomeScreen(),
+        ),
+      ),
+    );
+
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+    expect(find.text("You are offline"), findsOneWidget);
+  });
+
+  testWidgets("When state error is not null and is server error then error description widget should be displayed",
+      (widgetTester) async {
+    bloc.mockStream(HomeState(error: ServerError()));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: const HomeScreen(),
+        ),
+      ),
+    );
+
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+    expect(find.text("Connection failure"), findsOneWidget);
   });
 
   testWidgets("When state isLoading is false and error is null should show home sections", (widgetTester) async {

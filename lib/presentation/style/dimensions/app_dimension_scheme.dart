@@ -15,6 +15,8 @@ class AppDimensionScheme {
   final double highlighCardBorderRadius;
   final int newsItemsPerRow;
   final double newsItemVerticalPadding;
+  final double externalMarginWithoutConnection;
+
   const AppDimensionScheme({
     required this.appBarHeight,
     required this.topCellRankingWidth,
@@ -30,5 +32,6 @@ class AppDimensionScheme {
     required this.highlighCardBorderRadius,
     required this.newsItemsPerRow,
     required this.newsItemVerticalPadding,
+    required this.externalMarginWithoutConnection,
   });
 }
