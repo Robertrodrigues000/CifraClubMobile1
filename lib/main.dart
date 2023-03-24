@@ -1,13 +1,14 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
-import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
 import 'package:cifraclub/di/navigator_module.dart';
+import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
+import 'package:cifraclub/presentation/screens/more/more_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
@@ -25,6 +26,7 @@ void main() async {
 
   await configureDependencies();
   initializeCcid();
+
   runApp(const CifraClub());
 }
 
@@ -71,7 +73,7 @@ class CifraClub extends StatelessWidget {
               param1: NavConstructorParams(firstScreen: NtpTestEntry({}), restorationId: 'BottomNav4'),
             ),
             getIt(
-              param1: NavConstructorParams(firstScreen: NtpTestEntry({}), restorationId: 'BottomNav5'),
+              param1: NavConstructorParams(firstScreen: MoreEntry({}), restorationId: 'BottomNav5'),
             ),
           ],
         ),

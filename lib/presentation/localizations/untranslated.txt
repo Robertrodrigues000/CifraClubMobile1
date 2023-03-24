@@ -1,0 +1,21 @@
+{
+  "es": [
+    "instagram",
+    "facebook",
+    "youtube",
+    "tiktok",
+    "twitter",
+    "atCifraClub",
+    "slashCifraClub"
+  ],
+
+  "pt": [
+    "instagram",
+    "facebook",
+    "youtube",
+    "tiktok",
+    "twitter",
+    "atCifraClub",
+    "slashCifraClub"
+  ]
+}

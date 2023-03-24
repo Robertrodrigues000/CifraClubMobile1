@@ -9,6 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nav/nav.dart';
 
+import '../shared_mocks/presentation/navigator/nav_mock.dart';
+
 class TestWrapper extends StatelessWidget {
   final Widget child;
   final Nav? nav;
@@ -21,7 +23,6 @@ class TestWrapper extends StatelessWidget {
     return InheritedDependenciesWidget(
       colorApproximator: colorApproximator ?? ColorApproximator.getDefaultImplementation(),
       child: MaterialApp(
-        home: child,
         supportedLocales: supportedLocales,
         darkTheme: getCosmosDarkTheme(const BrandColors.asCifra(), extensions: [
           getTypographyScheme(
@@ -39,14 +40,24 @@ class TestWrapper extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        home: NavInheritedWidget(
+          nav: nav ?? NavMock.getDummy(),
+          child: Material(
+            child: child,
+          ),
+        ),
       ),
     );
   }
 }
 
 extension PumpWithWrapper on WidgetTester {
-  Future<void> pumpWidgetWithWrapper(Widget widget,
-      {Nav? nav, Duration? duration, EnginePhase phase = EnginePhase.sendSemanticsUpdate}) {
+  Future<void> pumpWidgetWithWrapper(
+    Widget widget, {
+    Nav? nav,
+    Duration? duration,
+    EnginePhase phase = EnginePhase.sendSemanticsUpdate,
+  }) {
     return pumpWidget(
       TestWrapper(
         nav: nav,

@@ -3,12 +3,13 @@ import 'package:flutter/widgets.dart';
 
 // coverage:ignore-file
 class InheritedDependenciesWidget extends InheritedWidget {
+  final ColorApproximator colorApproximator;
+
   const InheritedDependenciesWidget({
     Key? key,
     required Widget child,
     required this.colorApproximator,
   }) : super(key: key, child: child);
-  final ColorApproximator colorApproximator;
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;

@@ -14,15 +14,23 @@
     "noConnection": "Sin conexión a internet",
     "genreHeaderTops": "Más tocados",
     "genreHeaderAll": "Todos",
-    "topArtists": "Top Artistas",
     "topSongs": "Top cifrados",
+    "genres": "Géneros musicales",
+    "sendNewCifra": "Enviar Cifrado",
+    "cifraClubStore": "Cifra Club Store",
+    "manageSubscription": "Administrar suscripción",
+    "cifraClubPro": "Cifra Club Pro",
+    "termsOfUse": "Terminos de Uso",
+    "privacyPolicy": "Política de Privacidad",
+    "support": "Hable con Nosotros",
+    "premium": "Premium",
     "home": "Principio",
     "songbook": "Listas",
     "search": "Buscar",
     "academy": "Academy",
     "more": "Más",
-    "login" : "Iniciar Sesión",
-    "videos":"Vídeos",
+    "login": "Iniciar Sesión",
+    "videos": "Vídeos",
     "showMoreButton": "Mostrar más {sectionName}",
     "@showMoreButton":{
         "placeholders": {
@@ -32,8 +40,9 @@
             }
         }
     },
- 
+    "cancel": "Cancelar",
     "logout" : "Salir",
+    "confirmLogoutDescription": "¿Estás seguro de que vas a cerrar la sesión?",
     "editProfile" : "Editar perfil",
     "myLists" : "Mis listas",
     "profile" : "Perfil",
@@ -46,5 +55,18 @@
     "homeNews": "Noticias y novedades",
     "homeMoreNews": "Mostrar más noticias",
     "dateFormat": "d 'de' MMM, y",
-    "moreSongs": "Mostrar más cifrados"
+    "moreSongs": "Mostrar más cifrados",
+    "ourApps" : "Nosotros apps",
+    "followCifraClub" : "Siga o Cifra Club",
+    "appTuner" : "Afinador Cifra Club",
+    "appTunerDescription" : "Afina tu instrumento",
+    "appMetronome" : "Metrónomo Cifra Club",
+    "appMetronomeDescription" : "Manten tu ritmo musical",
+    "appTheLostPick" : "La Púa Perdida",
+    "appTheLostPickDescription" : "Aprende los acordes jugando",
+    "appPalco" : "Palco MP3",
+    "appPalcoDescription" : "Mayor app de música independiente",
+    "appLetras" : "Letras",
+    "appLetrasDescription" : "El sitio de letras más grande de Brasil",
+    "loginSubtitle": "Guarda tus listas en el Cifra Club"
 }

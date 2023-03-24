@@ -16,6 +16,7 @@ import '../../../shared_mocks/domain/home/models/highlight_mock.dart';
 import '../../../shared_mocks/domain/home/models/news_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
 import '../../../shared_mocks/domain/song/models/song_mock.dart';
+import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
@@ -43,7 +44,7 @@ void main() {
       ),
     );
 
-    expect(find.text("Log in"), findsOneWidget);
+    expect(find.text(appTextEn.login), findsOneWidget);
     expect(find.image(const AssetImage(AppWebp.logoCifraClub)), findsOneWidget);
   });
 

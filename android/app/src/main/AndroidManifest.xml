@@ -1,6 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.studiosol.cifraclub">
+
+    <queries>
+        <package android:name="com.google.android.youtube" />
+        <package android:name="com.studiosol.metronomo" />
+        <package android:name="com.studiosol.afinadorlite" />
+        <package android:name="com.studiosol.cifraclub.academy" />
+        <package android:name="com.studiosol.player.letras" />
+        <package android:name="com.studiosol.palcomp3" />
+        <package android:name="br.com.studiosol.apalhetaperdida" />
+    </queries>
+
    <application
         android:label="cifraclub"
         android:name="${applicationName}"
