@@ -64,14 +64,14 @@ class _TopListItemContent extends StatelessWidget {
     final maxWidth = MediaQuery.of(context).size.width;
     return ContainerWithRippleEffect(
       width: maxWidth,
-      height: 72,
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: padding),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           textBaseline: TextBaseline.alphabetic,
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RemoteImage(
               imageUrl: imageUrl,
@@ -104,20 +104,18 @@ class _TopListItemContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Expanded(
-                    child: Row(children: [
-                      Flexible(
-                        child: Text(
-                          title,
-                          style: typography.subtitle3,
-                          overflow: TextOverflow.ellipsis,
-                          textWidthBasis: TextWidthBasis.longestLine,
-                        ),
+                  Row(children: [
+                    Flexible(
+                      child: Text(
+                        title,
+                        style: typography.subtitle3,
+                        overflow: TextOverflow.ellipsis,
+                        textWidthBasis: TextWidthBasis.longestLine,
                       ),
-                      const SizedBox(width: 8),
-                      if (trailing != null) trailing!,
-                    ]),
-                  ),
+                    ),
+                    const SizedBox(width: 8),
+                    if (trailing != null) trailing!,
+                  ]),
                   if (subtitle != null)
                     Text(
                       subtitle!,

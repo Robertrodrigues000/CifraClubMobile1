@@ -14,7 +14,8 @@ class AppDimensionScheme {
   final double bottomSheetContentToBottom;
   final double highlighCardBorderRadius;
   final int newsItemsPerRow;
-  final double newsItemVerticalPadding;
+  final double newsItemThumbPadding;
+  final double newsItemTextPadding;
   final double externalMarginWithoutConnection;
 
   const AppDimensionScheme({
@@ -31,7 +32,8 @@ class AppDimensionScheme {
     required this.bottomSheetContentToBottom,
     required this.highlighCardBorderRadius,
     required this.newsItemsPerRow,
-    required this.newsItemVerticalPadding,
+    required this.newsItemThumbPadding,
+    required this.newsItemTextPadding,
     required this.externalMarginWithoutConnection,
   });
 }

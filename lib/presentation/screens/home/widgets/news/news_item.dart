@@ -19,41 +19,44 @@ class NewsItem extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: context.appDimensionScheme.screenMargin,
-            vertical: context.appDimensionScheme.newsItemVerticalPadding),
+          horizontal: context.appDimensionScheme.screenMargin,
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            RemoteImage(
-              // coverage:ignore-start
-              imageUrl: news.image,
-              imageBuilder: (context, imageProvider) => Container(
-                height: 80,
-                width: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: context.appDimensionScheme.newsItemThumbPadding),
+              child: RemoteImage(
+                // coverage:ignore-start
+                imageUrl: news.image,
+                imageBuilder: (context, imageProvider) => Container(
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+                  ),
                 ),
-              ),
-              // coverage:ignore-end
-              placeholder: Container(
-                height: 80,
-                width: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: CosmosColors.grey90,
-                ),
-                child: Center(
-                  child: Container(
-                    height: 56,
-                    width: 56,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: CosmosColors.white,
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        AppSvgs.newsPlaceholder,
+                // coverage:ignore-end
+                placeholder: Container(
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: CosmosColors.grey90,
+                  ),
+                  child: Center(
+                    child: Container(
+                      height: 56,
+                      width: 56,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: CosmosColors.white,
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          AppSvgs.newsPlaceholder,
+                        ),
                       ),
                     ),
                   ),
@@ -64,25 +67,28 @@ class NewsItem extends StatelessWidget {
               width: 16.0,
             ),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    news.publishDate.dateTodMMMyFormat(context),
-                    style: typography.subtitle5,
-                  ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  Text(
-                    news.headline,
-                    style: typography.subtitle2,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: context.appDimensionScheme.newsItemTextPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      news.publishDate.dateTodMMMyFormat(context),
+                      style: typography.subtitle5,
+                    ),
+                    const SizedBox(
+                      height: 4.0,
+                    ),
+                    Text(
+                      news.headline,
+                      style: typography.subtitle2,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

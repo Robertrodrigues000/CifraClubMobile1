@@ -25,9 +25,12 @@ class HomeTitle extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: Row(
             children: [
-              Text(
-                text,
-                style: context.typography.title3,
+              Expanded(
+                child: Text(
+                  text,
+                  style: context.typography.title3,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

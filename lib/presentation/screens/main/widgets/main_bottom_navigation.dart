@@ -18,68 +18,72 @@ class MainBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: bottomNavigationHeight + safeAreaBottomOffset,
-      child: CifraclubBottomNavigation(
-        currentIndex: currentItem.index,
-        onTap: (index) => onItemSelected(BottomNavigationItem.values[index]),
-        items: [
-          BottomNavigationBarItem(
-            icon: const ImageIcon(
-              Svg(AppSvgs.homeBottomNavIcon),
-              size: 24,
+    final mediaQuery = MediaQuery.of(context);
+    return MediaQuery(
+      data: mediaQuery.copyWith(textScaleFactor: 1.0),
+      child: SizedBox(
+        height: bottomNavigationHeight + safeAreaBottomOffset,
+        child: CifraclubBottomNavigation(
+          currentIndex: currentItem.index,
+          onTap: (index) => onItemSelected(BottomNavigationItem.values[index]),
+          items: [
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                Svg(AppSvgs.homeBottomNavIcon),
+                size: 24,
+              ),
+              activeIcon: const ImageIcon(
+                Svg(AppSvgs.homeBottomNavIcon),
+                size: 24,
+              ),
+              label: context.text.home,
             ),
-            activeIcon: const ImageIcon(
-              Svg(AppSvgs.homeBottomNavIcon),
-              size: 24,
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                Svg(AppSvgs.songbookBottomNavIcon),
+                size: 24,
+              ),
+              activeIcon: const ImageIcon(
+                Svg(AppSvgs.songbookBottomNavIcon),
+                size: 24,
+              ),
+              label: context.text.songbook,
             ),
-            label: context.text.home,
-          ),
-          BottomNavigationBarItem(
-            icon: const ImageIcon(
-              Svg(AppSvgs.songbookBottomNavIcon),
-              size: 24,
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                Svg(AppSvgs.searchBottomNavIcon),
+                size: 24,
+              ),
+              activeIcon: const ImageIcon(
+                Svg(AppSvgs.searchBottomNavIcon),
+                size: 24,
+              ),
+              label: context.text.search,
             ),
-            activeIcon: const ImageIcon(
-              Svg(AppSvgs.songbookBottomNavIcon),
-              size: 24,
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                Svg(AppSvgs.academyBottomNavIcon),
+                size: 24,
+              ),
+              activeIcon: const ImageIcon(
+                Svg(AppSvgs.academyBottomNavIcon),
+                size: 24,
+              ),
+              label: context.text.academy,
             ),
-            label: context.text.songbook,
-          ),
-          BottomNavigationBarItem(
-            icon: const ImageIcon(
-              Svg(AppSvgs.searchBottomNavIcon),
-              size: 24,
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                Svg(AppSvgs.moreBottomNavIcon),
+                size: 24,
+              ),
+              activeIcon: const ImageIcon(
+                Svg(AppSvgs.moreBottomNavIcon),
+                size: 24,
+              ),
+              label: context.text.more,
             ),
-            activeIcon: const ImageIcon(
-              Svg(AppSvgs.searchBottomNavIcon),
-              size: 24,
-            ),
-            label: context.text.search,
-          ),
-          BottomNavigationBarItem(
-            icon: const ImageIcon(
-              Svg(AppSvgs.academyBottomNavIcon),
-              size: 24,
-            ),
-            activeIcon: const ImageIcon(
-              Svg(AppSvgs.academyBottomNavIcon),
-              size: 24,
-            ),
-            label: context.text.academy,
-          ),
-          BottomNavigationBarItem(
-            icon: const ImageIcon(
-              Svg(AppSvgs.moreBottomNavIcon),
-              size: 24,
-            ),
-            activeIcon: const ImageIcon(
-              Svg(AppSvgs.moreBottomNavIcon),
-              size: 24,
-            ),
-            label: context.text.more,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
