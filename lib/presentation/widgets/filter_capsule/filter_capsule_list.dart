@@ -11,7 +11,10 @@ class FilterCapsuleList extends StatelessWidget {
     super.key,
     required this.filters,
     this.capsulePadding = EdgeInsets.zero,
+    this.scrollController,
   });
+
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class FilterCapsuleList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: filters.length,
+        controller: scrollController,
         itemBuilder: (context, index) {
           final filter = filters[index];
           final isFirstCapsule = index == 0;

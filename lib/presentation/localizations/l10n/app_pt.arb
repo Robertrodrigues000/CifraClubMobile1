@@ -30,6 +30,8 @@
     "academy": "Academy",
     "more": "Mais",
     "login" : "Entrar",
+    "all" : "Todos",
+    "more" : "Mais",
     "videos": "Vídeos",
     "showMoreButton": "Mostrar mais {sectionName}",
     "@showMoreButton":{
@@ -68,5 +70,6 @@
     "appPalcoDescription" : "Maior app de música independente",
     "appLetras" : "Letras",
     "appLetrasDescription" : "Maior site de Letras do Brasil",
-    "loginSubtitle": "Mantenha suas listas salvas no Cifra Club"
+    "loginSubtitle": "Mantenha suas listas salvas no Cifra Club",
+    "musicalStyles" : "Estilos musicais"
 }

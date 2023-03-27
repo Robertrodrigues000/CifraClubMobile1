@@ -17,7 +17,7 @@ abstract class _$HomeStateCWProxy {
 
   HomeState blog(List<News> blog);
 
-  HomeState selectedGenre(String selectedGenre);
+  HomeState selectedGenre(String? selectedGenre);
 
   HomeState genres(List<Genre> genres);
 
@@ -72,7 +72,7 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   HomeState blog(List<News> blog) => this(blog: blog);
 
   @override
-  HomeState selectedGenre(String selectedGenre) => this(selectedGenre: selectedGenre);
+  HomeState selectedGenre(String? selectedGenre) => this(selectedGenre: selectedGenre);
 
   @override
   HomeState genres(List<Genre> genres) => this(genres: genres);
@@ -131,10 +131,10 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
           ? _value.blog
           // ignore: cast_nullable_to_non_nullable
           : blog as List<News>,
-      selectedGenre: selectedGenre == const $CopyWithPlaceholder() || selectedGenre == null
+      selectedGenre: selectedGenre == const $CopyWithPlaceholder()
           ? _value.selectedGenre
           // ignore: cast_nullable_to_non_nullable
-          : selectedGenre as String,
+          : selectedGenre as String?,
       genres: genres == const $CopyWithPlaceholder() || genres == null
           ? _value.genres
           // ignore: cast_nullable_to_non_nullable

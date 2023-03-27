@@ -13,16 +13,16 @@ import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/buttons/stroked_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
-import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
-import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
+import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
+import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:nav/nav.dart';
 
-// coverage:ignore-file
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen(this._genreBottomSheet, {super.key});
+  final GenreBottomSheet _genreBottomSheet;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -72,21 +72,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: dimensions.screenMargin),
-                        child: FilterCapsuleList(
-                          capsulePadding: const EdgeInsets.symmetric(horizontal: 8),
-                          filters: [
-                            if (state.genres.isNotEmpty)
-                              ...state.genres
-                                  .map(
-                                    (genre) => Filter(
-                                        label: genre.name,
-                                        onTap: () {
-                                          bloc.onGenreSelected(genre.url);
-                                        },
-                                        isSelected: state.selectedGenre == genre.url),
-                                  )
-                                  .toList()
-                          ],
+                        child: GenresCapsule(
+                          genres: state.genres,
+                          selectedGenre: state.selectedGenre,
+                          onGenreSelected: bloc.onGenreSelected,
+                          onMore: () async {
+                            final result = await widget._genreBottomSheet.open(context);
+                            if (result != null) {
+                              bloc.insertGenre(result);
+                              return true;
+                            }
+                            return false;
+                          },
                         ),
                       ),
                     ),

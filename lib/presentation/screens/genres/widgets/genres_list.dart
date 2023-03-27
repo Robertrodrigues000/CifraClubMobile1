@@ -9,14 +9,23 @@ import 'package:flutter/material.dart';
 class GenresList extends StatelessWidget {
   final List<GenreItem> genres;
   final void Function(Genre) onTap;
+  final EdgeInsets padding;
+  final ScrollController? scrollController;
 
-  const GenresList({super.key, required this.genres, required this.onTap});
+  const GenresList({
+    super.key,
+    required this.genres,
+    required this.onTap,
+    this.padding = const EdgeInsets.symmetric(vertical: 8),
+    this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: padding,
       itemCount: genres.length,
+      controller: scrollController,
       itemBuilder: (context, index) {
         final item = genres[index];
         if (item is GenreHeaderItem) {
@@ -26,10 +35,11 @@ class GenresList extends StatelessWidget {
           );
         } else if (item is GenreListItem) {
           return IconTextTile(
-              onClick: () => onTap(item.genre),
-              leadingIconUrl: item.genre.genreImages?.light ?? "",
-              leadingIconPlaceholder: AppSvgs.genresInactive,
-              text: item.genre.name);
+            onClick: () => onTap(item.genre),
+            leadingIconUrl: item.genre.genreImages?.light ?? "",
+            leadingIconPlaceholder: AppSvgs.genresInactive,
+            text: item.genre.name,
+          );
         } else if (item is GenreDivider) {
           return Divider(
             color: CosmosColorScheme.of(context).neutralTertiary,

@@ -36,10 +36,10 @@ class FilterCapsule extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(16.0)),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: (leadingIconUri != null || trailingIconUri != null) ? 8.0 : 16.0, vertical: 7),
+        padding: EdgeInsets.symmetric(horizontal: (leadingIconUri != null || trailingIconUri != null) ? 8.0 : 16.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (leadingIconUri != null) SvgPicture.asset(leadingIconUri!),
             Padding(
@@ -49,7 +49,17 @@ class FilterCapsule extends StatelessWidget {
                 style: isSelected ? typography.body6.copyWith(color: colors.textOnPrimary) : typography.body6,
               ),
             ),
-            if (trailingIconUri != null) SvgPicture.asset(trailingIconUri!),
+            if (trailingIconUri != null)
+              Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(shape: BoxShape.circle, color: CosmosColorScheme.of(context).neutralTertiary),
+                child: SvgPicture.asset(
+                  trailingIconUri!,
+                  color: CosmosColorScheme.of(context).textSecondary,
+                  fit: BoxFit.none,
+                ),
+              )
           ],
         ),
       ),

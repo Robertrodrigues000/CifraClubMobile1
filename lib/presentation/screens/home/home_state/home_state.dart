@@ -12,7 +12,7 @@ part 'home_state.g.dart';
 
 @CopyWith()
 class HomeState {
-  final String selectedGenre;
+  final String? selectedGenre;
   final List<Highlight> highlights;
   final List<Song> topCifras;
   final List<Artist> topArtists;
@@ -30,7 +30,7 @@ class HomeState {
     this.topArtists = const [],
     this.videoLessons = const [],
     this.blog = const [],
-    this.selectedGenre = "",
+    this.selectedGenre,
     this.genres = const [],
     this.user,
     this.isPro = false,

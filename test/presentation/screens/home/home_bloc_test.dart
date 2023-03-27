@@ -2,6 +2,7 @@ import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
+import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart';
 import 'package:cifraclub/domain/home/models/home_info.dart';
 import 'package:cifraclub/domain/home/use_cases/get_home_info.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -60,18 +61,48 @@ class _GetCredentialStreamMock extends Mock implements GetCredentialStream {
 }
 
 class _GetUserGenresAsStreamMock extends Mock implements GetUserGenresAsStream {
-  static _GetUserGenresAsStreamMock newDummy({List<Genre> genres = const []}) {
+  static _GetUserGenresAsStreamMock newDummy([List<Genre>? genres]) {
     final mock = _GetUserGenresAsStreamMock();
-    when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(genres));
+    when(mock).thenAnswer((_) => BehaviorSubject.seeded(genres ?? []));
     return mock;
   }
 }
 
-class _GetHomeInfoMock extends Mock implements GetHomeInfo {}
+class _InsertUserGenreMock extends Mock implements InsertUserGenre {
+  static _InsertUserGenreMock newDummy() {
+    final mock = _InsertUserGenreMock();
+    when(() => mock(captureAny())).thenAnswer((_) => SynchronousFuture(null));
+    return mock;
+  }
+}
+
+class _GetHomeInfoMock extends Mock implements GetHomeInfo {
+  static _GetHomeInfoMock newDummy({HomeInfo? homeInfo}) {
+    final mock = _GetHomeInfoMock();
+    when(() => mock.call(any())).thenAnswer(
+      (_) => CancelableOperation.fromFuture(
+        SynchronousFuture(
+          Ok(
+            homeInfo ??
+                const HomeInfo(
+                  highlights: [],
+                  songs: [],
+                  artists: [],
+                  videoLessons: [],
+                  news: [],
+                ),
+          ),
+        ),
+      ),
+    );
+    return mock;
+  }
+}
 
 void main() {
   HomeBloc getHomeBloc({
     _GetUserGenresAsStreamMock? getUserGenresAsStream,
+    _InsertUserGenreMock? insertUserGenreMock,
     _GetCredentialStreamMock? getCredentialStream,
     _OpenLoginPageMock? openLoginPage,
     _OpenUserProfileMock? openUserProfile,
@@ -80,12 +111,17 @@ void main() {
   }) =>
       HomeBloc(
         getUserGenresAsStream ?? _GetUserGenresAsStreamMock(),
+        insertUserGenreMock ?? _InsertUserGenreMock(),
         getCredentialStream ?? _GetCredentialStreamMock.newDummy(),
         openLoginPage ?? _OpenLoginPageMock.newDummy(),
         openUserProfile ?? _OpenUserProfileMock.newDummy(),
         logout ?? _LogoutMock.newDummy(),
-        getHomeInfo ?? _GetHomeInfoMock(),
+        getHomeInfo ?? _GetHomeInfoMock.newDummy(),
       );
+
+  setUpAll(() {
+    registerFallbackValue(getFakeGenre());
+  });
 
   test("When user action is openLoginPage should call openLoginPage use case", () async {
     final openLoginPage = _OpenLoginPageMock.newDummy();
@@ -136,39 +172,11 @@ void main() {
     );
   });
 
-  group("When initGenres is called", () {
-    final genres = [getFakeGenre(), getFakeGenre(), getFakeGenre(), getFakeGenre()];
-    final userGenresAsStream = _GetUserGenresAsStreamMock.newDummy(genres: genres);
-
-    final bloc = getHomeBloc(getUserGenresAsStream: userGenresAsStream);
-
-    blocTest(
-      "should update state with genres from use case",
-      build: () => bloc,
-      act: (bloc) => bloc.initGenres(),
-      expect: () => [
-        isA<HomeState>().having((state) => state.isLoading, "is Loading Genres", true),
-        isA<HomeState>().having((state) => state.genres, "genres", genres),
-      ],
-    );
-  });
-
   group("When onGenreSelected is called", () {
     test("should update de current state with selected genre and trigger requestHomeInfo", () {
       const selectedGenre = "MPB";
-      final getHomeInfo = _GetHomeInfoMock();
+      final getHomeInfo = _GetHomeInfoMock.newDummy();
 
-      when(() => getHomeInfo(any())).thenAnswer(
-        (_) => CancelableOperation.fromFuture(SynchronousFuture(const Ok(
-          HomeInfo(
-            highlights: [],
-            songs: [],
-            artists: [],
-            videoLessons: [],
-            news: [],
-          ),
-        ))),
-      );
       final bloc = getHomeBloc(getHomeInfo: getHomeInfo);
 
       bloc.onGenreSelected(selectedGenre);
@@ -180,7 +188,6 @@ void main() {
 
   group("when requestHomeInfo", () {
     group("is succesful", () {
-      final getHomeInfo = _GetHomeInfoMock();
       final homeInfo = HomeInfo(
         highlights: [getFakeHighlight(), getFakeHighlight()],
         songs: [getFakeSong(), getFakeSong()],
@@ -188,7 +195,7 @@ void main() {
         videoLessons: [getFakeVideoLessons(), getFakeVideoLessons()],
         news: [getFakeNews(), getFakeNews()],
       );
-      when(() => getHomeInfo(any())).thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(homeInfo))));
+      final getHomeInfo = _GetHomeInfoMock.newDummy(homeInfo: homeInfo);
 
       final bloc = getHomeBloc(getHomeInfo: getHomeInfo);
       blocTest(
@@ -224,5 +231,74 @@ void main() {
         ],
       );
     });
+  });
+
+  group("When receive `newGenre`", () {
+    final genre = getFakeGenre();
+    final bloc = getHomeBloc();
+
+    blocTest(
+      "should emit new selected genre and update screen",
+      build: () => bloc,
+      act: (bloc) => bloc.newGenre(genre),
+      expect: () => [
+        isA<HomeState>().having((state) => state.selectedGenre, "selectedGenre", genre.url),
+        isA<HomeState>().having((state) => state.isLoading, "is loading", true),
+        isA<HomeState>(),
+      ],
+    );
+  });
+
+  group("When emit genres", () {
+    final genres = [getFakeGenre(), getFakeGenre()];
+    final bloc = getHomeBloc();
+
+    blocTest(
+      "should emit new list of genres",
+      build: () => bloc,
+      act: (bloc) => bloc.emitGenres(genres),
+      expect: () => [
+        isA<HomeState>().having((state) => state.genres, "selectedGenre", genres),
+      ],
+    );
+  });
+
+  group("When emit genres and selected genre is off the list", () {
+    final genres = [getFakeGenre(), getFakeGenre()];
+    final bloc = getHomeBloc();
+    bloc.onGenreSelected(getFakeGenre().url);
+
+    blocTest(
+      "should emit new list of genres and change selected genre to all",
+      build: () => bloc,
+      act: (bloc) => bloc.emitGenres(genres),
+      expect: () => [
+        isA<HomeState>().having((state) => state.genres, "selectedGenre", genres),
+        isA<HomeState>().having((state) => state.selectedGenre, "selectedGenre", null),
+        isA<HomeState>().having((state) => state.isLoading, "is loading", true),
+        isA<HomeState>(),
+      ],
+    );
+  });
+
+  test("When insertGenres should insert correctly genre", () async {
+    final insertUserGenre = _InsertUserGenreMock.newDummy();
+    final mixin = getHomeBloc(insertUserGenreMock: insertUserGenre);
+    final genre = getFakeGenre();
+
+    mixin.insertGenre(genre);
+
+    final insertedGenre = verify(() => insertUserGenre(captureAny())).captured.first as Genre;
+    expect(insertedGenre, genre);
+  });
+
+  test("When init should emit genres stream", () async {
+    final genres = [getFakeGenre(), getFakeGenre()];
+    final getUserGenres = _GetUserGenresAsStreamMock.newDummy(genres);
+    final mixin = getHomeBloc(getUserGenresAsStream: getUserGenres);
+
+    mixin.initGenres();
+
+    verify(getUserGenres).called(1);
   });
 }

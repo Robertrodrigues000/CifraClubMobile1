@@ -31,7 +31,8 @@ class GenreDivider extends GenreItem {
 
 enum GenreHeaderType {
   top,
-  all;
+  all,
+  musicalStyles;
 
   String getLocalizedText(BuildContext context) {
     switch (this) {
@@ -39,6 +40,8 @@ enum GenreHeaderType {
         return context.text.genreHeaderTops; // TODO: revisar textos
       case all:
         return context.text.genreHeaderAll; // TODO: revisar textos
+      case musicalStyles:
+        return context.text.musicalStyles;
     }
   }
 }

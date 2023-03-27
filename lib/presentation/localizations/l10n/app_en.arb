@@ -38,6 +38,8 @@
     "academy": "Academy",
     "more": "More",
     "login": "Log in",
+    "all" : "All",
+    "more" : "More",
     "videos": "Videos",
     "showMoreButton": "Show more {sectionName}",
     "@showMoreButton":{
@@ -52,6 +54,7 @@
     "logout": "Log out",
     "confirmLogoutDescription": "Are you sure you want to leave?",
     "editProfile" : "Edit profile",
+    "musicalStyles" : "Musical styles",
     "myLists" : "My lists",
     "profile" : "Profile",
     "moreArtists" : "Show more artists",

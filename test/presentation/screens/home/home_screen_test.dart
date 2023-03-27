@@ -5,6 +5,8 @@ import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
+import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
+import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 import '../../../shared_mocks/domain/home/models/highlight_mock.dart';
 import '../../../shared_mocks/domain/home/models/news_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
@@ -22,14 +25,21 @@ import '../../../test_helpers/test_wrapper.dart';
 
 class _HomeBlocMock extends Mock implements HomeBloc {}
 
+class _GenreBottomSheetMock extends Mock implements GenreBottomSheet {}
+
+class _BuildContextMock extends Mock implements BuildContext {}
+
 void main() {
   late HomeBloc bloc;
+  _GenreBottomSheetMock genreBottomSheetMock = _GenreBottomSheetMock();
 
   setUpAll(() {
+    registerFallbackValue(_BuildContextMock());
+    registerFallbackValue(getFakeGenre());
     bloc = _HomeBlocMock();
     when(bloc.requestHomeData).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
-    when(bloc.initGenres).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.insertGenre(any())).thenAnswer((_) => SynchronousFuture(null));
   });
 
   testWidgets("When user is not logged shoud show Log in option", (widgetTester) async {
@@ -39,7 +49,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -55,7 +65,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -70,7 +80,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -86,7 +96,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -103,7 +113,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -127,7 +137,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -158,7 +168,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -174,7 +184,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<HomeBloc>.value(
           value: bloc,
-          child: const HomeScreen(),
+          child: HomeScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -183,5 +193,24 @@ void main() {
     await widgetTester.pump();
 
     expect(find.byType(ProfileBottomSheet), findsOneWidget);
+  });
+
+  testWidgets("When tap in more capsule and return a genre should insert genre", (widgetTester) async {
+    bloc.mockStream(const HomeState(user: User()));
+    when(() => genreBottomSheetMock.open(any())).thenAnswer((_) => SynchronousFuture(getFakeGenre()));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: HomeScreen(genreBottomSheetMock),
+        ),
+      ),
+    );
+
+    await widgetTester.tap(find.byType(FilterCapsule).last);
+    await widgetTester.pumpAndSettle();
+
+    verify(() => bloc.insertGenre(any())).called(1);
   });
 }

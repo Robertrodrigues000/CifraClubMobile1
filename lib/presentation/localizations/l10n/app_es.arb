@@ -68,5 +68,8 @@
     "appPalcoDescription" : "Mayor app de música independiente",
     "appLetras" : "Letras",
     "appLetrasDescription" : "El sitio de letras más grande de Brasil",
-    "loginSubtitle": "Guarda tus listas en el Cifra Club"
+    "loginSubtitle": "Guarda tus listas en el Cifra Club",
+    "all" : "Todo",
+    "more" : "Más",
+    "musicalStyles" : "Estilos musicales"
 }
