@@ -1,9 +1,9 @@
 import 'package:cifraclub/domain/genre/models/genre.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/genres/models/genre_item.dart';
 import 'package:cifraclub/presentation/screens/genres/widgets/genre_header.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class GenresList extends StatelessWidget {
@@ -42,7 +42,7 @@ class GenresList extends StatelessWidget {
           );
         } else if (item is GenreDivider) {
           return Divider(
-            color: CosmosColorScheme.of(context).neutralTertiary,
+            color: context.colors.neutralTertiary,
           );
         }
         return Container();

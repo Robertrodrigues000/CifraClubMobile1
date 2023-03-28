@@ -2,9 +2,8 @@ import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
-import 'package:cosmos/cosmos.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class UserCard extends StatelessWidget {
   final User? user;
@@ -24,7 +23,7 @@ class UserCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: CosmosColorScheme.of(context).neutralTertiary,
+              color: context.colors.neutralTertiary,
               width: 1,
             ),
           ),
@@ -42,10 +41,11 @@ class UserCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                placeholder: const ImageIcon(
-                  Svg(AppSvgs.profilePlaceholderIcon),
-                  size: 40,
-                ),
+                placeholder: SvgImage(
+                    assetPath: AppSvgs.profilePlaceholderIcon,
+                    height: 40,
+                    width: 40,
+                    color: context.colors.textPrimary),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -54,13 +54,13 @@ class UserCard extends StatelessWidget {
                   children: [
                     Text(
                       user?.name ?? context.text.login,
-                      style: CosmosTypography.of(context).subtitle2,
+                      style: context.typography.subtitle2,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       user?.email ?? context.text.loginSubtitle,
-                      style: CosmosTypography.of(context).subtitle5,
+                      style: context.typography.subtitle5,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -73,7 +73,8 @@ class UserCard extends StatelessWidget {
                   child: Material(
                     child: InkWell(
                       onTap: onLogoutTap,
-                      child: const ImageIcon(Svg(AppSvgs.logoutIcon)),
+                      child: SvgImage(
+                          assetPath: AppSvgs.logoutIcon, height: 24, width: 24, color: context.colors.textPrimary),
                     ),
                   ),
                 ),

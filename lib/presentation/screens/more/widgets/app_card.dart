@@ -1,6 +1,5 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -44,12 +43,12 @@ class AppCard extends StatelessWidget {
                   children: [
                     Text(
                       appName,
-                      style: CosmosTypography.of(context).subtitle3,
+                      style: context.typography.subtitle3,
                     ),
                     const SizedBox(height: 2),
                     Text(
                       appDescription,
-                      style: CosmosTypography.of(context).subtitle5,
+                      style: context.typography.subtitle5,
                     )
                   ],
                 ),
@@ -57,7 +56,7 @@ class AppCard extends StatelessWidget {
               const SizedBox(width: 16),
               SvgPicture.asset(
                 isInstalled ? AppSvgs.openAppIcon : AppSvgs.downloadIcon,
-                color: CosmosColorScheme.of(context).textPrimary,
+                color: context.colors.textPrimary,
               ),
             ],
           ),

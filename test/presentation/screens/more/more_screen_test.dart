@@ -12,10 +12,10 @@ import 'package:cifraclub/presentation/screens/more/widgets/app_card.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/social_network_card.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/user_card.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -78,8 +78,7 @@ void main() {
       );
 
       await tester.tap(find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is ImageIcon && widget.image is Svg && (widget.image as Svg).path == AppSvgs.logoutIcon,
+        (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.logoutIcon,
         description: 'widget with logout icon',
       ));
       await tester.pumpAndSettle();

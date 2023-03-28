@@ -1,7 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class IconTextTile extends StatelessWidget {
@@ -23,7 +22,7 @@ class IconTextTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: CosmosColorScheme.of(context).neutralPrimary,
+      color: context.colors.neutralPrimary,
       child: InkWell(
         onTap: onClick,
         child: SizedBox(
@@ -33,12 +32,12 @@ class IconTextTile extends StatelessWidget {
             child: Row(
               children: [
                 SvgImage(
-                  leadingIconAsset: leadingIconAsset,
-                  leadingIconUrl: leadingIconUrl,
+                  assetPath: leadingIconAsset,
+                  url: leadingIconUrl,
                   placeholderAsset: leadingIconPlaceholder,
                   width: 24,
                   height: 24,
-                  color: CosmosColorScheme.of(context).textPrimary,
+                  color: context.colors.textPrimary,
                 ),
                 const SizedBox(width: 16),
                 Expanded(

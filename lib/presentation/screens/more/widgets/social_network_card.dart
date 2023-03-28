@@ -1,5 +1,4 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class SocialNetworkCard extends StatelessWidget {
@@ -36,12 +35,12 @@ class SocialNetworkCard extends StatelessWidget {
               const SizedBox(width: 16),
               Text(
                 name,
-                style: CosmosTypography.of(context).subtitle3,
+                style: context.typography.subtitle3,
               ),
               const SizedBox(width: 12),
               Text(
                 username,
-                style: CosmosTypography.of(context).subtitle5,
+                style: context.typography.subtitle5,
               )
             ],
           ),

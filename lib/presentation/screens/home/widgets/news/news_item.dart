@@ -14,7 +14,7 @@ class NewsItem extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    final typography = CosmosTypography.of(context);
+    final typography = context.typography;
     return ContainerWithRippleEffect(
       onTap: onTap,
       child: Padding(

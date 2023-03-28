@@ -71,7 +71,7 @@ class VideoLessonItem extends StatelessWidget {
             Expanded(
               child: Container(
                 alignment: Alignment.topCenter,
-                color: CosmosColorScheme.of(context).neutralPrimary,
+                color: context.colors.neutralPrimary,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +90,7 @@ class VideoLessonItem extends StatelessWidget {
                         key: const Key("videolesson artist name"),
                         videolesson.artist!.name,
                         style: styles.subtitle4.copyWith(
-                          color: CosmosColorScheme.of(context).primary,
+                          color: context.colors.primary,
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),

@@ -3,7 +3,6 @@ import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cifraclub/presentation/widgets/pick_shaped_image.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -92,7 +91,7 @@ class _TopListItemContent extends StatelessWidget {
                 child: Text(
                   ranking,
                   style: typography.subtitle3.copyWith(
-                    color: CosmosColorScheme.of(context).textSecondary,
+                    color: context.colors.textSecondary,
                   ),
                 ),
               ),

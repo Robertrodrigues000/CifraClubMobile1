@@ -1,7 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -24,7 +23,7 @@ class FilterCapsule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = CosmosColorScheme.of(context);
+    final colors = context.colors;
     final typography = context.typography;
     return ContainerWithRippleEffect(
       height: 32,
@@ -53,10 +52,10 @@ class FilterCapsule extends StatelessWidget {
               Container(
                 width: 16,
                 height: 16,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: CosmosColorScheme.of(context).neutralTertiary),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: context.colors.neutralTertiary),
                 child: SvgPicture.asset(
                   trailingIconUri!,
-                  color: CosmosColorScheme.of(context).textSecondary,
+                  color: context.colors.textSecondary,
                   fit: BoxFit.none,
                 ),
               )

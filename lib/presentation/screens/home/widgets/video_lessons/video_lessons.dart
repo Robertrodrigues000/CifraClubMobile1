@@ -1,5 +1,4 @@
 import 'package:cifraclub/domain/home/models/video_lesson.dart';
-import 'package:cifraclub/extensions/string.dart';
 import 'package:cifraclub/extensions/text_style.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lesson_item.dart';
 import 'package:flutter/material.dart';

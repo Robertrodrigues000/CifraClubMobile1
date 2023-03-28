@@ -1,7 +1,6 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/widgets.dart';
 
 class ErrorDescriptionWidget extends StatelessWidget {
@@ -31,13 +30,13 @@ class ErrorDescriptionWidget extends StatelessWidget {
             children: [
               Text(
                 _typeError.getTitle(context),
-                style: CosmosTypography.of(context).title4.copyWith(color: CosmosColorScheme.of(context).textPrimary),
+                style: context.typography.title4.copyWith(color: context.colors.textPrimary),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
                 _typeError.getDescription(context),
-                style: CosmosTypography.of(context).body10,
+                style: context.typography.body10,
                 textAlign: TextAlign.center,
               ),
             ],

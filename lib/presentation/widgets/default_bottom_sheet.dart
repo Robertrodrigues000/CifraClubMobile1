@@ -1,5 +1,4 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 // coverage:ignore-file
@@ -66,7 +65,7 @@ class _DefaultBottomSheetState extends State<DefaultBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = CosmosColorScheme.of(context);
+    final colorScheme = context.colors;
 
     return Container(
       color: colorScheme.neutralPrimary,

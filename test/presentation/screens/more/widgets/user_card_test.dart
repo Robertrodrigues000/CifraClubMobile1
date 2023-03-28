@@ -1,7 +1,7 @@
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/user_card.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../shared_mocks/domain/user/models/user_mock.dart';
@@ -35,8 +35,7 @@ void main() {
 
         expect(
             find.byWidgetPredicate(
-              (Widget widget) =>
-                  widget is ImageIcon && widget.image is Svg && (widget.image as Svg).path == AppSvgs.logoutIcon,
+              (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.logoutIcon,
               description: 'widget with logout icon',
             ),
             findsNothing);
@@ -74,8 +73,7 @@ void main() {
         );
 
         final logoutFinder = find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is ImageIcon && widget.image is Svg && (widget.image as Svg).path == AppSvgs.logoutIcon,
+          (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.logoutIcon,
           description: 'widget with logout icon',
         );
 

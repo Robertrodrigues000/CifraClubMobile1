@@ -4,7 +4,6 @@ import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cifraclub/presentation/widgets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class ProfileBottomSheet extends StatelessWidget {
@@ -103,7 +102,7 @@ class ProfileBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: Divider(
             height: 1,
-            color: CosmosColorScheme.of(context).neutralTertiary,
+            color: context.colors.neutralTertiary,
           ),
         ),
         IconTextTile(

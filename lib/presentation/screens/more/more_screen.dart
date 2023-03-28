@@ -102,7 +102,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   ),
                   child: Text(
                     context.text.ourApps,
-                    style: CosmosTypography.of(context).title3,
+                    style: context.typography.title3,
                   ),
                 ),
               ),
@@ -118,7 +118,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   ),
                   child: Text(
                     context.text.followCifraClub,
-                    style: CosmosTypography.of(context).title3,
+                    style: context.typography.title3,
                   ),
                 ),
               ),

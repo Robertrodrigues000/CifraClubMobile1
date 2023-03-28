@@ -1,5 +1,5 @@
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/extensions/iterable.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class CifraclubBottomNavigation extends StatefulWidget {
@@ -35,7 +35,7 @@ class _CifraclubBottomNavigationState extends State<CifraclubBottomNavigation> w
 
   @override
   Widget build(BuildContext context) {
-    final colors = CosmosColorScheme.of(context);
+    final colors = context.colors;
     const double indicatorHorizontalPadding = 12;
     const double indicatorHeight = 3;
     const double topBorderHeight = 1;
