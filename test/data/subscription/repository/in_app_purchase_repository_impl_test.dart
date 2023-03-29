@@ -7,9 +7,37 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
+import '../../../shared_mocks/domain/subscription/models/product_mock.dart';
+import '../../../shared_mocks/domain/subscription/models/purchase_mock.dart';
+
 class _InAppPurchaseDataSourceMock extends Mock implements InAppPurchaseDataSource {}
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(
+      PurchaseDetails(
+        productID: "",
+        status: PurchaseStatus.canceled,
+        transactionDate: "",
+        verificationData: PurchaseVerificationData(
+          localVerificationData: "",
+          serverVerificationData: "",
+          source: "",
+        ),
+      ),
+    );
+
+    registerFallbackValue(
+      ProductDetails(
+        id: "",
+        title: "",
+        description: "",
+        price: "",
+        rawPrice: 0,
+        currencyCode: "",
+      ),
+    );
+  });
   test("When `getProducts` is Called should return List of products", () async {
     final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
     final productDetails = ProductDetails(
@@ -49,5 +77,55 @@ void main() {
     expect(result.getError()!.code, iAPError.code);
     expect(result.getError()!.source, iAPError.source);
     expect(result.getError()!.message, iAPError.message);
+  });
+
+  test("When `purchaseProduct` is called, should call the data source method", () async {
+    final product = getFakeProduct();
+    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
+    when(() => inAppPurchaseDataSource.purchaseProduct(any())).thenAnswer((invocation) => Future.value(true));
+    final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
+
+    inAppPurchaseRepository.purchaseProduct(product);
+
+    final productDetails =
+        verify(() => inAppPurchaseDataSource.purchaseProduct(captureAny())).captured.first as ProductDetails;
+
+    expect(productDetails.id, product.id);
+    expect(productDetails.currencyCode, product.currencyCode);
+    expect(productDetails.currencySymbol, product.currencySymbol);
+    expect(productDetails.description, product.description);
+    expect(productDetails.price, product.price);
+    expect(productDetails.rawPrice, product.rawPrice);
+    expect(productDetails.title, product.title);
+  });
+
+  test("When `completePurchase` is called, should call the data source method", () async {
+    final purchase = getFakePurchase();
+    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
+    when(() => inAppPurchaseDataSource.completePurchase(any())).thenAnswer((invocation) => Future.value());
+    final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
+
+    inAppPurchaseRepository.completePurchase(purchase);
+
+    final purchaseDetails =
+        verify(() => inAppPurchaseDataSource.completePurchase(captureAny())).captured.first as PurchaseDetails;
+
+    expect(purchaseDetails.pendingCompletePurchase, purchase.pendingCompletePurchase);
+    expect(purchaseDetails.productID, purchase.productId);
+    expect(purchaseDetails.purchaseID, purchase.purchaseId);
+    expect(purchaseDetails.transactionDate, purchase.transactionDate);
+    expect(purchaseDetails.verificationData.localVerificationData, purchase.verificationData.localVerificationData);
+    expect(purchaseDetails.verificationData.serverVerificationData, purchase.verificationData.serverVerificationData);
+    expect(purchaseDetails.verificationData.source, purchase.verificationData.source);
+  });
+
+  test("When `cleanIosTransactions` is called, should call the data source method", () async {
+    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
+    when(inAppPurchaseDataSource.cleanIosTransactions).thenAnswer((invocation) => Future.value());
+    final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
+
+    inAppPurchaseRepository.cleanIosTransactions();
+
+    verify(inAppPurchaseDataSource.cleanIosTransactions).called(1);
   });
 }

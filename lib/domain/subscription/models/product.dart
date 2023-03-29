@@ -5,6 +5,7 @@ class Product {
   final double rawPrice;
   final String description;
   final String currencyCode;
+  final String currencySymbol;
 
   Product({
     required this.id,
@@ -13,5 +14,6 @@ class Product {
     required this.rawPrice,
     required this.description,
     required this.currencyCode,
+    required this.currencySymbol,
   });
 }

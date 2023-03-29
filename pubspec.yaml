@@ -19,6 +19,7 @@ dependencies:
       ref: "99d883b324c2f380387fe88b45bace2abb75bac2"
   crypto: ^3.0.2
   cupertino_icons: ^1.0.5
+  device_info_plus: ^8.1.0
   dio: ^4.0.6
   equatable: ^2.0.5
   file: ^6.1.4
@@ -37,11 +38,13 @@ dependencies:
   flutter_svg: ^1.1.6
   get_it: ^7.2.0
   in_app_purchase: ^3.1.5
+  in_app_purchase_storekit: ^0.3.6+2
   injectable: ^1.5.4
   intl: ^0.17.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
   json_annotation: ^4.7.0
+  lehttp_overrides: ^1.0.2
   logging: ^1.1.0
   mutex: ^3.0.1
   nav:

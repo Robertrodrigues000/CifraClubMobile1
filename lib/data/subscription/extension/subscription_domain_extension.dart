@@ -22,6 +22,7 @@ extension PurchaseVerificationExtension on PurchaseVerificationData {
 
 extension PurchaseExtension on PurchaseDetails {
   static PurchaseDetails fromDomain(Purchase purchase) => PurchaseDetails(
+        purchaseID: purchase.purchaseId,
         productID: purchase.productId,
         verificationData: PurchaseVerificationExtension.fromDomain(purchase.verificationData),
         transactionDate: purchase.transactionDate,
@@ -78,6 +79,7 @@ extension ProductExtension on ProductDetails {
         price: product.price,
         rawPrice: product.rawPrice,
         currencyCode: product.currencyCode,
+        currencySymbol: product.currencySymbol,
       );
 
   Product toDomain() => Product(
@@ -87,6 +89,7 @@ extension ProductExtension on ProductDetails {
         rawPrice: rawPrice,
         description: description,
         currencyCode: currencyCode,
+        currencySymbol: currencySymbol,
       );
 }
 

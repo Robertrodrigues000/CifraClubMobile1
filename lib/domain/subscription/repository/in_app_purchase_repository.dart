@@ -8,4 +8,5 @@ abstract class InAppPurchaseRepository {
   Future<bool> purchaseProduct(Product product);
   Stream<List<Purchase>> getPurchaseStream();
   Future<void> completePurchase(Purchase purchase);
+  Future<void> cleanIosTransactions();
 }

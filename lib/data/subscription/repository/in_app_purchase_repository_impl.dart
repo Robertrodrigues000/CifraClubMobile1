@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/data/subscription/data_source/in_app_purchase_data_source.dart';
 import 'package:cifraclub/data/subscription/extension/subscription_domain_extension.dart';
 import 'package:cifraclub/domain/subscription/models/product.dart';
@@ -32,4 +31,7 @@ class InAppPurchaseRepositoryImpl extends InAppPurchaseRepository {
   @override
   Future<void> completePurchase(Purchase purchase) =>
       _inAppPurchaseDataSource.completePurchase(PurchaseExtension.fromDomain(purchase));
+
+  @override
+  Future<void> cleanIosTransactions() => _inAppPurchaseDataSource.cleanIosTransactions();
 }

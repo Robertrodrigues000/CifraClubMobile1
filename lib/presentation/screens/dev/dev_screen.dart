@@ -44,6 +44,7 @@ class _DevScreenState extends State<DevScreen> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<DevScreenBloc>(context);
+    _bloc.initPurchaseStream();
   }
 
   @override

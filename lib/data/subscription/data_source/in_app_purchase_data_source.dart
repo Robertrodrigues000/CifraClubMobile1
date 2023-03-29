@@ -1,7 +1,10 @@
-// coverage:ignore-file
-import 'package:cifraclub/domain/log/repository/log_repository.dart';
+import 'dart:io';
+
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:typed_result/typed_result.dart';
+
+import 'package:cifraclub/domain/log/repository/log_repository.dart';
 
 class InAppPurchaseDataSource {
   final InAppPurchase inAppPurchase;
@@ -35,4 +38,17 @@ class InAppPurchaseDataSource {
   Future<void> completePurchase(PurchaseDetails purchaseDetails) {
     return inAppPurchase.completePurchase(purchaseDetails);
   }
+
+  // coverage:ignore-start
+  Future<void> cleanIosTransactions() async {
+    if (Platform.isIOS) {
+      var skPaymentQueueWrapper = SKPaymentQueueWrapper();
+      var transactions = await skPaymentQueueWrapper.transactions();
+
+      for (var skPaymentTransactionWrapper in transactions) {
+        await skPaymentQueueWrapper.finishTransaction(skPaymentTransactionWrapper);
+      }
+    }
+  }
+  // coverage:ignore-end
 }

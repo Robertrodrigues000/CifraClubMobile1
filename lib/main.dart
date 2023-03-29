@@ -1,4 +1,6 @@
 // coverage:ignore-file
+import 'dart:io';
+
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/di/navigator_module.dart';
@@ -12,19 +14,32 @@ import 'package:cifraclub/presentation/screens/more/more_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lehttp_overrides/lehttp_overrides.dart';
 
 Future<void> initializeCcid() {
   final ccid = getIt<AuthenticationRepository>();
   return ccid.init();
 }
 
+/// Fix SSL certificate problems with Android 7.1.1 and below
+Future<void> applyLeHttp() async {
+  if (Platform.isAndroid) {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    if (androidInfo.version.sdkInt < 26) {
+      HttpOverrides.global = LEHttpOverrides();
+    }
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await configureDependencies();
+  await applyLeHttp();
   initializeCcid();
 
   runApp(const CifraClub());
