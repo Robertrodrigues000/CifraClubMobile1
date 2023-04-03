@@ -2,26 +2,28 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/news/blog.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/news/blog.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
-import 'package:cifraclub/presentation/widgets/buttons/stroked_button.dart';
+import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:nav/nav.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(this._genreBottomSheet, {super.key});
+
   final GenreBottomSheet _genreBottomSheet;
 
   @override
@@ -59,7 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ProfileBottomSheet(
                 user: state.user!,
                 onOpenProfile: () => bloc.openProfilePage(),
-                onOpenMyLists: () {}, // TODO: verificar se vai permanecer esse icone, caso sim implementar a navegação
+                onOpenMyLists: () {},
+                // TODO: verificar se vai permanecer esse icone, caso sim implementar a navegação
                 onLogout: () => bloc.logoutUser(),
               ).open(context);
             },
@@ -113,15 +116,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: (song) {},
                       ),
                       SliverToBoxAdapter(
-                        child: StrokedButton(
-                          padding: EdgeInsets.only(
-                              left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
-                          text: context.text.moreSongs,
+                        child: CifraButton(
+                          type: ButtonType.outline,
                           // coverage:ignore-start
-                          onClick: () => Nav.of(context).push(
+                          onPressed: () => Nav.of(context).push(
                             screenName: TopSongsEntry.name,
                           ),
                           // coverage:ignore-end
+                          padding: EdgeInsets.only(
+                              left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
+                          child: Text(context.text.moreSongs),
                         ),
                       ),
                       //Artists section
@@ -134,11 +138,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: (artist) {},
                       ),
                       SliverToBoxAdapter(
-                        child: StrokedButton(
+                        child: CifraButton(
+                          type: ButtonType.outline,
+                          // coverage:ignore-start
+                          onPressed: () {},
+                          // coverage:ignore-end
                           padding: EdgeInsets.only(
                               left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
-                          text: context.text.moreArtists,
-                          onClick: () {},
+                          child: Text(context.text.moreArtists),
                         ),
                       ),
                       //Videolessons section
@@ -152,15 +159,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       if (state.videoLessons.length >= 4)
                         SliverToBoxAdapter(
-                            key: const Key("videolessons more button"),
-                            child: StrokedButton(
-                                padding: EdgeInsets.only(
-                                  left: dimensions.screenMargin,
-                                  right: dimensions.screenMargin,
-                                  bottom: 32,
-                                ),
-                                text: context.text.showMoreButton(context.text.videos.toLowerCase()),
-                                onClick: () {})),
+                          key: const Key("videolessons more button"),
+                          child: CifraButton(
+                            type: ButtonType.outline,
+                            // coverage:ignore-start
+                            onPressed: () {},
+                            // coverage:ignore-end
+                            padding: EdgeInsets.only(
+                                left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
+                            child: Text(context.text.showMoreButton(context.text.videos.toLowerCase())),
+                          ),
+                        ),
 
                       HomeTitle(
                         text: context.text.homeNews,
@@ -171,14 +180,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: (news) {},
                       ),
                       SliverToBoxAdapter(
-                        child: StrokedButton(
-                            padding: EdgeInsets.only(
-                              left: dimensions.screenMargin,
-                              right: dimensions.screenMargin,
-                              bottom: 32,
-                            ),
-                            text: context.text.homeMoreNews,
-                            onClick: () {}),
+                        child: CifraButton(
+                          type: ButtonType.outline,
+                          // coverage:ignore-start
+                          onPressed: () {},
+                          // coverage:ignore-end
+                          padding: EdgeInsets.only(
+                            left: dimensions.screenMargin,
+                            right: dimensions.screenMargin,
+                            bottom: 32,
+                          ),
+                          child: Text(context.text.homeMoreNews),
+                        ),
                       ),
                     ]
                   ],

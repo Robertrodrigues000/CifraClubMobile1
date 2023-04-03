@@ -12,6 +12,8 @@ import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
+import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -157,6 +159,31 @@ class _DevScreenState extends State<DevScreen> {
             onTap: () {
               _bloc.getProducts();
             },
+          ),
+          CifraButton(
+            type: ButtonType.primary,
+            padding: const EdgeInsets.all(8),
+            child: Text(context.text.developerPage),
+          ),
+          CifraButton(
+            type: ButtonType.secondary,
+            padding: const EdgeInsets.all(8),
+            child: Text(context.text.developerPage),
+          ),
+          CifraButton(
+            type: ButtonType.tertiary,
+            padding: const EdgeInsets.all(8),
+            child: Text(context.text.developerPage),
+          ),
+          CifraButton(
+            type: ButtonType.outline,
+            padding: const EdgeInsets.all(8),
+            child: Text(context.text.developerPage),
+          ),
+          CifraButton(
+            type: ButtonType.ghost,
+            padding: const EdgeInsets.all(8),
+            child: Text(context.text.developerPage),
           ),
         ],
       ),

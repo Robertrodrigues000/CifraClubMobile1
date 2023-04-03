@@ -11,6 +11,7 @@ import 'package:cifraclub/presentation/screens/more/more_state.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/app_card.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/social_network_card.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/user_card.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/foundation.dart';
@@ -84,7 +85,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(LogoutDialog), findsOneWidget);
 
-      await tester.tap(find.byType(ElevatedButton));
+      await tester.tap(find.widgetWithText(CifraButton, "Log out"));
       verify(() => bloc.logout()).called(1);
     });
   });

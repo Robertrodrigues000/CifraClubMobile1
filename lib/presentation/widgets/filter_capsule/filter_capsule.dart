@@ -45,7 +45,7 @@ class FilterCapsule extends StatelessWidget {
               padding: trailingIconUri != null ? const EdgeInsets.symmetric(horizontal: 8.0) : labelPadding,
               child: Text(
                 label,
-                style: isSelected ? typography.body6.copyWith(color: colors.textOnPrimary) : typography.body6,
+                style: isSelected ? typography.body6.copyWith(color: colors.textPrimaryInverse) : typography.body6,
               ),
             ),
             if (trailingIconUri != null)
