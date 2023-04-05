@@ -1,0 +1,17 @@
+[
+    {
+        "id": "41D7C",
+        "userId": 549746301,
+        "status": 0,
+        "orderStatus": "Inativo",
+        "paymentMethod": "",
+        "productGroup": "Anual",
+        "product": "cifraclub_pro_anual_2021",
+        "productType": "pro",
+        "expirationDate": "2023-03-15",
+        "activationDate": "2023-03-15",
+        "price": "0",
+        "paymentClient": "google_play",
+        "paymentCard": null
+    }
+]
