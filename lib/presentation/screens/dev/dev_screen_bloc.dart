@@ -1,4 +1,6 @@
 // coverage:ignore-file
+
+import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_products.dart';
@@ -15,20 +17,13 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final InAppPurchaseRepository _inAppPurchaseRepository;
   final GetOrders _getOrders;
 
-  void initPurchaseStream() {
-    // ignore: avoid_print
-    print("Starting purchase stream");
-    _inAppPurchaseRepository.getPurchaseStream().listen((event) {
-      // ignore: avoid_print
-      print(event);
-      _inAppPurchaseRepository.completePurchase(event[0]);
-    });
+  Future<void> restorePurchases() {
+    return _inAppPurchaseRepository.restorePurchases();
   }
 
   Future<void> getProducts() async {
-    await getOrders();
-    // final productsIds = {"cifraclub_pro_mensal_2021", "cifraclub_pro_anual_2021"}; // Android
-    final productsIds = {"cifra_club_pro_mensal"}; // iOS
+    final productsIds = {"cifraclub_pro_mensal_2021", "cifraclub_pro_anual_2021"}; // Android
+    //final productsIds = {"cifra_club_pro_mensal"}; // iOS
 
     final products = await _getProducts(productsIds);
 
@@ -37,8 +32,8 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     products.onSuccess(
       (products) {
         // ignore: avoid_print
-        print("Purchasing ${products[0]}");
-        _purchaseProduct(products[0]);
+        logger?.log(tag: runtimeType.toString(), message: "Purchasing ${products[1]}");
+        _purchaseProduct(products[1]);
       },
     );
     // ignore: avoid_print

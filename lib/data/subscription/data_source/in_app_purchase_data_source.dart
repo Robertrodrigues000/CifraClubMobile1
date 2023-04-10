@@ -11,6 +11,13 @@ class InAppPurchaseDataSource {
 
   InAppPurchaseDataSource({required this.inAppPurchase});
 
+  Future<bool> get ensureInitialized => inAppPurchase.isAvailable();
+
+  Future<void> restorePurchases() {
+    logger?.log(tag: runtimeType.toString(), message: "Restore Purchases");
+    return inAppPurchase.restorePurchases();
+  }
+
   Future<Result<List<ProductDetails>, IAPError>> getProducts(Set<String> ids) async {
     final ProductDetailsResponse productDetailsResponse = await inAppPurchase.queryProductDetails(ids);
     //coverage:ignore-start

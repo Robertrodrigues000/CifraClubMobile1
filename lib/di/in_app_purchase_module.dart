@@ -12,13 +12,13 @@ abstract class InAppPurchaseModule {
     return InAppPurchase.instance;
   }
 
-  InAppPurchaseDataSource getSongDataSource(InAppPurchase inAppPurchase) {
+  InAppPurchaseDataSource getInAppPurchaseDataSource(InAppPurchase inAppPurchase) {
     return InAppPurchaseDataSource(
       inAppPurchase: inAppPurchase,
     );
   }
 
-  InAppPurchaseRepository getSongRepository(InAppPurchaseDataSource inAppPurchaseDataSource) {
+  InAppPurchaseRepository getInAppPurchaseRepository(InAppPurchaseDataSource inAppPurchaseDataSource) {
     return InAppPurchaseRepositoryImpl(
       inAppPurchaseDataSource,
     );

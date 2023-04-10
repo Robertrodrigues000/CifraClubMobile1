@@ -1,7 +1,6 @@
 enum PurchaseState {
-  pending,
-  purchased,
+  idle,
+  waitingStoreResponse,
+  waitingBackendValidation,
   error,
-  restored,
-  canceled,
 }

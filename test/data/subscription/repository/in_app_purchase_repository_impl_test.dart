@@ -1,10 +1,12 @@
 import 'package:cifraclub/data/subscription/data_source/in_app_purchase_data_source.dart';
 import 'package:cifraclub/data/subscription/repository/in_app_purchase_repository_impl.dart';
+import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/subscription/models/product_mock.dart';
@@ -13,6 +15,7 @@ import '../../../shared_mocks/domain/subscription/models/purchase_mock.dart';
 class _InAppPurchaseDataSourceMock extends Mock implements InAppPurchaseDataSource {}
 
 void main() {
+  final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
   setUpAll(() {
     registerFallbackValue(
       PurchaseDetails(
@@ -38,8 +41,66 @@ void main() {
       ),
     );
   });
-  test("When `getProducts` is Called should return List of products", () async {
-    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
+
+  setUp(() {
+    clearInteractions(inAppPurchaseDataSource);
+    when(inAppPurchaseDataSource.cleanIosTransactions).thenAnswer((_) => SynchronousFuture(null));
+    when(() => inAppPurchaseDataSource.ensureInitialized).thenAnswer((_) => SynchronousFuture(true));
+    when(inAppPurchaseDataSource.getPurchaseStream).thenAnswer((_) => const Stream.empty());
+  });
+
+  PurchaseDetails getPurchase(PurchaseStatus status, {required bool pending}) {
+    return PurchaseDetails(
+        purchaseID: "",
+        productID: "",
+        verificationData: PurchaseVerificationData(localVerificationData: "", serverVerificationData: "", source: ""),
+        transactionDate: "",
+        status: status)
+      ..pendingCompletePurchase = pending;
+  }
+
+  test(
+      "When `InAppPurchaseRepository` is created, it should wait for the datasource to start and then subscribe to purchase stream",
+      () async {
+    final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
+    verify(() => inAppPurchaseDataSource.ensureInitialized).called(1);
+    await inAppPurchaseRepository.ensureInitialized;
+    verify(inAppPurchaseDataSource.getPurchaseStream).called(1);
+  });
+
+  test("When purchaseStream emit values, the repository should listen", () async {
+    // ignore: close_sinks
+    final purchaseStream = BehaviorSubject<List<PurchaseDetails>>();
+    // ignore: close_sinks
+    final stateStream = BehaviorSubject<InAppRepositoryStatus>();
+
+    when(inAppPurchaseDataSource.getPurchaseStream).thenAnswer((invocation) => purchaseStream);
+    final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
+
+    inAppPurchaseRepository.addListener(() {
+      stateStream.add(inAppPurchaseRepository.state);
+    });
+
+    expect(inAppPurchaseRepository.state, InAppRepositoryStatus.idle);
+
+    purchaseStream.add([getPurchase(PurchaseStatus.pending, pending: true)]);
+    expect(await stateStream.first, InAppRepositoryStatus.purchasing);
+
+    purchaseStream.add([getPurchase(PurchaseStatus.canceled, pending: true)]);
+    expect(await stateStream.firstWhere((element) => element != InAppRepositoryStatus.purchasing),
+        InAppRepositoryStatus.idle);
+    verify(inAppPurchaseDataSource.cleanIosTransactions).called(1);
+
+    purchaseStream.add([getPurchase(PurchaseStatus.purchased, pending: true)]);
+    expect(await stateStream.firstWhere((element) => element != InAppRepositoryStatus.idle),
+        InAppRepositoryStatus.validating);
+    expect(
+        await stateStream.firstWhere((element) => element != InAppRepositoryStatus.validating),
+        InAppRepositoryStatus
+            .purchased); // Todo: Mocado no código. Mudar isso quando estivermos fazendo post no V3/orders
+  });
+
+  test("When `getProducts` is called should return List of products", () async {
     final productDetails = ProductDetails(
       id: faker.animal.name(),
       title: faker.company.name(),
@@ -65,7 +126,6 @@ void main() {
   });
 
   test("When `getProducts` fails should return error", () async {
-    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
     final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
     final iAPError = IAPError(source: "erro", code: "404", message: "error");
 
@@ -81,7 +141,6 @@ void main() {
 
   test("When `purchaseProduct` is called, should call the data source method", () async {
     final product = getFakeProduct();
-    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
     when(() => inAppPurchaseDataSource.purchaseProduct(any())).thenAnswer((invocation) => Future.value(true));
     final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
 
@@ -101,7 +160,6 @@ void main() {
 
   test("When `completePurchase` is called, should call the data source method", () async {
     final purchase = getFakePurchase();
-    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
     when(() => inAppPurchaseDataSource.completePurchase(any())).thenAnswer((invocation) => Future.value());
     final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
 
@@ -120,12 +178,19 @@ void main() {
   });
 
   test("When `cleanIosTransactions` is called, should call the data source method", () async {
-    final inAppPurchaseDataSource = _InAppPurchaseDataSourceMock();
     when(inAppPurchaseDataSource.cleanIosTransactions).thenAnswer((invocation) => Future.value());
     final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
 
     inAppPurchaseRepository.cleanIosTransactions();
 
     verify(inAppPurchaseDataSource.cleanIosTransactions).called(1);
+  });
+  test("When `restorePurchases` is called, should call the data source method", () async {
+    when(inAppPurchaseDataSource.restorePurchases).thenAnswer((invocation) => Future.value());
+    final inAppPurchaseRepository = InAppPurchaseRepositoryImpl(inAppPurchaseDataSource);
+
+    inAppPurchaseRepository.restorePurchases();
+
+    verify(inAppPurchaseDataSource.restorePurchases).called(1);
   });
 }

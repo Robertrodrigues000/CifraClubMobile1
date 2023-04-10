@@ -46,7 +46,6 @@ class _DevScreenState extends State<DevScreen> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<DevScreenBloc>(context);
-    _bloc.initPurchaseStream();
   }
 
   @override
@@ -158,6 +157,20 @@ class _DevScreenState extends State<DevScreen> {
             title: const Text("Compra"),
             onTap: () {
               _bloc.getProducts();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.g_translate_rounded),
+            title: const Text("Restore purchases"),
+            onTap: () {
+              _bloc.restorePurchases();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_chart_sharp),
+            title: const Text("Get orders"),
+            onTap: () {
+              _bloc.getOrders();
             },
           ),
           CifraButton(

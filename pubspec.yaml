@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^1.1.6
   get_it: ^7.2.0
   in_app_purchase: ^3.1.5
+  in_app_purchase_android: ^0.2.4+3
   in_app_purchase_storekit: ^0.3.6+2
   injectable: ^1.5.4
   intl: ^0.17.0

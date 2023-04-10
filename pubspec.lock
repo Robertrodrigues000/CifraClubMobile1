@@ -639,7 +639,7 @@ packages:
     source: hosted
     version: "3.1.5"
   in_app_purchase_android:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: in_app_purchase_android
       sha256: "7c4a99a1d44c0ba7514ae4490654405931afb221466677bb63f6bac51e5f4f61"
