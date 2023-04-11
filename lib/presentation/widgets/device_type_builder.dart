@@ -13,9 +13,15 @@ class DeviceTypeBuilder extends StatelessWidget {
       );
 }
 
-enum DeviceType { phone, tablet }
+enum DeviceType { smallPhone, phone, tablet }
 
 DeviceType getDeviceType(context) {
   final data = MediaQuery.of(context);
-  return data.size.shortestSide > 550 ? DeviceType.tablet : DeviceType.phone;
+
+  if (data.size.shortestSide < 360) {
+    return DeviceType.smallPhone;
+  } else if (data.size.shortestSide < 576) {
+    return DeviceType.phone;
+  }
+  return DeviceType.tablet;
 }

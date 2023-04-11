@@ -24,4 +24,10 @@ const appDimensionSchemePhone = AppDimensionScheme(
 
   //Error Description
   externalMarginWithoutConnection: 36,
+
+  //Academy
+  verticalMarginAcademyInfo: 24,
+  academyLogoHeight: 60,
+  academyLogoBottomPadding: 24,
+  paddingBetweenInstructors: 8,
 );

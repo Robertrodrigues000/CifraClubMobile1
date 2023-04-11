@@ -20,4 +20,22 @@ class AppWebp {
   static const socialYoutube = "assets/images/social_youtube.webp";
   static const withoutConnectionLight = "assets/images/without_connection_light.webp";
   static const withoutConnectionDark = "assets/images/without_connection_dark.webp";
+
+  static const cardBateria = "assets/images/card_bateria.webp";
+  static const cardCanto = "assets/images/card_canto.webp";
+  static const cardContrabaixo = "assets/images/card_contrabaixo.webp";
+  static const cardFingerstyle = "assets/images/card_fingerstyle.webp";
+  static const cardGuitarra = "assets/images/card_guitarra.webp";
+  static const cardGuitarraBlues = "assets/images/card_guitarra_blues.webp";
+  static const cardHarmoniaEPartitura = "assets/images/card_harmonia_e_partitura.webp";
+  static const cardTeclado = "assets/images/card_teclado.webp";
+  static const cardTeoriaMusical = "assets/images/card_teoria_musical.webp";
+  static const cardUkulele = "assets/images/card_ukulele.webp";
+  static const cardViolao = "assets/images/card_violao.webp";
+  static const cardViolaoIntermediario = "assets/images/card_violao_intermediario.webp";
+  static const cardViolaoSertanejo = "assets/images/card_violao_sertanejo.webp";
+
+  static const logoAcademy = "assets/images/logo_academy.webp";
+  static const academyBg = "assets/images/academy_bg.webp";
+  static const academyBgTablet = "assets/images/academy_bg_tablet.webp";
 }

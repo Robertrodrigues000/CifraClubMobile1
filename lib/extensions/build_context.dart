@@ -1,5 +1,6 @@
 import 'package:cifraclub/presentation/style/dimensions/app_dimension_scheme.dart';
 import 'package:cifraclub/presentation/style/dimensions/app_dimension_scheme_phone.dart';
+import 'package:cifraclub/presentation/style/dimensions/app_dimension_scheme_small_phone.dart';
 import 'package:cifraclub/presentation/style/dimensions/app_dimension_scheme_tablet.dart';
 import 'package:cifraclub/presentation/style/typography/app_typography_scheme.dart';
 import 'package:cifraclub/presentation/widgets/device_type_builder.dart';
@@ -12,8 +13,16 @@ extension AppLocalizationsExt on BuildContext {
 }
 
 extension AppDimensionSchemeExt on BuildContext {
-  AppDimensionScheme get appDimensionScheme =>
-      getDeviceType(this) == DeviceType.phone ? appDimensionSchemePhone : appDimensionSchemeTablet;
+  AppDimensionScheme get appDimensionScheme {
+    switch (getDeviceType(this)) {
+      case DeviceType.phone:
+        return appDimensionSchemePhone;
+      case DeviceType.tablet:
+        return appDimensionSchemeTablet;
+      case DeviceType.smallPhone:
+        return appDimensionSchemeSmallPhone;
+    }
+  }
 }
 
 extension TypographySchemeExt on BuildContext {

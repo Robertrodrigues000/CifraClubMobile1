@@ -1,5 +1,10 @@
 // coverage:ignore-file
 
+import 'package:copy_with_extension/copy_with_extension.dart';
+
+part 'app_dimension_scheme.g.dart';
+
+@CopyWith()
 class AppDimensionScheme {
   final double appBarHeight;
   final double topCellRankingWidth;
@@ -17,6 +22,10 @@ class AppDimensionScheme {
   final double newsItemThumbPadding;
   final double newsItemTextPadding;
   final double externalMarginWithoutConnection;
+  final double verticalMarginAcademyInfo;
+  final double academyLogoHeight;
+  final double academyLogoBottomPadding;
+  final double paddingBetweenInstructors;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -35,5 +44,9 @@ class AppDimensionScheme {
     required this.newsItemThumbPadding,
     required this.newsItemTextPadding,
     required this.externalMarginWithoutConnection,
+    required this.verticalMarginAcademyInfo,
+    required this.academyLogoHeight,
+    required this.academyLogoBottomPadding,
+    required this.paddingBetweenInstructors,
   });
 }

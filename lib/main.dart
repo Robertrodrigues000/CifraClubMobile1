@@ -6,12 +6,12 @@ import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/di/navigator_module.dart';
 import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
+import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
 import 'package:cifraclub/presentation/screens/more/more_entry.dart';
-import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -85,7 +85,7 @@ class CifraClub extends StatelessWidget {
               param1: NavConstructorParams(firstScreen: GenresEntry({}), restorationId: 'BottomNav3'),
             ),
             getIt(
-              param1: NavConstructorParams(firstScreen: NtpTestEntry({}), restorationId: 'BottomNav4'),
+              param1: NavConstructorParams(firstScreen: AcademyEntry({}), restorationId: 'BottomNav4'),
             ),
             getIt(
               param1: NavConstructorParams(firstScreen: MoreEntry({}), restorationId: 'BottomNav5'),

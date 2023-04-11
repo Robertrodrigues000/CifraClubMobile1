@@ -71,5 +71,11 @@
     "loginSubtitle": "Guarda tus listas en el Cifra Club",
     "all" : "Todo",
     "more" : "Más",
-    "musicalStyles" : "Estilos musicales"
+    "musicalStyles" : "Estilos musicales",
+    "academyScreenTitle1": "¡Ahora es más fácil ",
+    "academyScreenTitle2": "estudiar música!",
+    "academyScreenDescription": "Cifra Club Academy sigue siendo la misma: una plataforma, varios cursos de música. Pero ahora ha llegado la aplicación para facilitar tus estudios.",
+    "downloadAcademy": "Descargar Cifra Club Academy",
+    "openAcademy": "Abrir Cifra Club Academy",
+    "portugueseOnly": "Contenido disponible solo en portugués"
 }

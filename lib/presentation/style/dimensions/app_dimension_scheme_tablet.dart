@@ -24,4 +24,10 @@ const appDimensionSchemeTablet = AppDimensionScheme(
 
   //Error Description
   externalMarginWithoutConnection: 72,
+
+  //Academy
+  verticalMarginAcademyInfo: 24,
+  academyLogoHeight: 90,
+  academyLogoBottomPadding: 24,
+  paddingBetweenInstructors: 12,
 );
