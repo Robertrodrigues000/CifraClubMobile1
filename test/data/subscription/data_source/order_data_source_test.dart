@@ -2,16 +2,29 @@ import 'dart:io';
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/subscription/data_source/order_data_source.dart';
 import 'package:cifraclub/data/subscription/models/order_dto.dart';
+import 'package:cifraclub/data/subscription/models/purchase_result.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/billing_client_wrappers.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
+import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
+// ignore: prefer_void_to_null
+class _NetworkdRequestMock extends Fake implements NetworkRequest<Null> {}
+
 void main() {
   group("When called `getUserOrders`", () {
+    setUpAll(() {
+      registerFallbackValue(_NetworkdRequestMock());
+    });
+
     test("When request is success should return list orderDto", () async {
       final networkService = NetworkServiceMock();
       final mockResponse =
@@ -50,6 +63,136 @@ void main() {
       expect(result.isFailure, isTrue);
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When called `postOrder`", () {
+    test("When send google play order", () async {
+      final networkService = NetworkServiceMock();
+      final dataSource = OrderDataSource(networkService: networkService);
+
+      registerFallbackValue(_NetworkdRequestMock());
+
+      // ignore: prefer_void_to_null
+      when(() => networkService.execute<Null>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final order = GooglePlayPurchaseDetails(
+        productID: "",
+        verificationData: PurchaseVerificationData(localVerificationData: "", serverVerificationData: "", source: ""),
+        transactionDate: "",
+        billingClientPurchase: const PurchaseWrapper(
+          orderId: "",
+          packageName: "",
+          purchaseTime: 12,
+          purchaseToken: "",
+          signature: "",
+          skus: [],
+          isAutoRenewing: true,
+          originalJson: "",
+          isAcknowledged: true,
+          purchaseState: PurchaseStateWrapper.purchased,
+        ),
+        status: PurchaseStatus.purchased,
+      );
+
+      final result = await dataSource.postOrder(order);
+
+      // ignore: prefer_void_to_null
+      final request = verify(() => networkService.execute<Null>(request: captureAny(named: "request"))).captured.first
+          // ignore: prefer_void_to_null
+          as NetworkRequest<Null>;
+
+      expect(request.path, "/v3/orders");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result, PurchaseResult.success);
+    });
+
+    test("When send app store order", () async {
+      final networkService = NetworkServiceMock();
+      final dataSource = OrderDataSource(networkService: networkService);
+
+      registerFallbackValue(_NetworkdRequestMock());
+
+      // ignore: prefer_void_to_null
+      when(() => networkService.execute<Null>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final order = AppStorePurchaseDetails(
+        productID: "",
+        verificationData: PurchaseVerificationData(localVerificationData: "", serverVerificationData: "", source: ""),
+        transactionDate: "",
+        status: PurchaseStatus.purchased,
+        skPaymentTransaction: SKPaymentTransactionWrapper(
+          payment: const SKPaymentWrapper(productIdentifier: ""),
+          transactionState: SKPaymentTransactionStateWrapper.purchased,
+        ),
+      );
+
+      final result = await dataSource.postOrder(order);
+
+      // ignore: prefer_void_to_null
+      final request = verify(() => networkService.execute<Null>(request: captureAny(named: "request"))).captured.first
+          // ignore: prefer_void_to_null
+          as NetworkRequest<Null>;
+
+      expect(request.path, "/v3/orders");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result, PurchaseResult.success);
+    });
+
+    test("When request fail", () async {
+      final networkService = NetworkServiceMock();
+      final dataSource = OrderDataSource(networkService: networkService);
+
+      registerFallbackValue(_NetworkdRequestMock());
+
+      final erros = [
+        ConnectionError(),
+        ServerError(statusCode: 204),
+        ServerError(statusCode: 400),
+        ServerError(statusCode: 401),
+        ServerError(statusCode: 409),
+        ServerError(statusCode: 424),
+        ServerError(statusCode: 500),
+        ServerError(),
+      ];
+
+      final expextResult = [
+        PurchaseResult.requestError,
+        PurchaseResult.success,
+        PurchaseResult.invalidParams,
+        PurchaseResult.userNotLogged,
+        PurchaseResult.tokenAlreadyValidated,
+        PurchaseResult.paymentError,
+        PurchaseResult.serverError,
+        PurchaseResult.unknown,
+      ];
+
+      for (var i = 0; i < erros.length; i++) {
+        // ignore: prefer_void_to_null
+        when(() => networkService.execute<Null>(request: captureAny(named: "request"))).thenAnswer(
+          (_) => SynchronousFuture(Err(erros[i])),
+        );
+
+        final order = AppStorePurchaseDetails(
+          productID: "",
+          verificationData: PurchaseVerificationData(localVerificationData: "", serverVerificationData: "", source: ""),
+          transactionDate: "",
+          status: PurchaseStatus.purchased,
+          skPaymentTransaction: SKPaymentTransactionWrapper(
+              payment: const SKPaymentWrapper(productIdentifier: ""),
+              transactionState: SKPaymentTransactionStateWrapper.purchased),
+        );
+
+        final result = await dataSource.postOrder(order);
+
+        expect(result, expextResult[i]);
+      }
     });
   });
 }
