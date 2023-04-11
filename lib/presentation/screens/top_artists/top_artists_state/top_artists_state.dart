@@ -8,18 +8,16 @@ part 'top_artists_state.g.dart';
 
 @CopyWith()
 class TopArtistsState {
-  final String selectedGenre;
+  final String? selectedGenre;
   final List<Genre> genres;
   final List<Artist> topArtists;
   final RequestError? error;
   final bool isLoadingArtists;
-  final bool isLoadingGenres;
 
   TopArtistsState({
-    this.selectedGenre = "",
+    this.selectedGenre,
     this.genres = const [],
     this.topArtists = const [],
-    this.isLoadingGenres = false,
     this.error,
     this.isLoadingArtists = false,
   });

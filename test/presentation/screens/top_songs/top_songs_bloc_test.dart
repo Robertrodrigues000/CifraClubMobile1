@@ -1,9 +1,10 @@
 import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cifraclub/domain/genre/models/all_genres.dart';
-import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
+import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
+import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_bloc.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_state/top_songs_state.dart';
@@ -15,79 +16,64 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 import '../../../shared_mocks/domain/song/models/song_mock.dart';
 
-class _MockGetTopSongs extends Mock implements GetTopSongs {}
+class _GetTopSongsMock extends Mock implements GetTopSongs {
+  static _GetTopSongsMock newDummy({PaginatedList<Song>? topSongs}) {
+    final mock = _GetTopSongsMock();
+    when(() => mock.call(genreUrl: any(named: "genreUrl"))).thenAnswer(
+      (_) => CancelableOperation.fromFuture(
+        SynchronousFuture(
+          Ok(topSongs ?? const PaginatedList(items: [], hasMoreResults: false)),
+        ),
+      ),
+    );
+    return mock;
+  }
+}
 
-class _MockGetGenres extends Mock implements GetGenres {}
+class _InsertUserGenreMock extends Mock implements InsertUserGenre {}
+
+class _GetUserGenresAsStreamMock extends Mock implements GetUserGenresAsStream {}
 
 void main() {
-  test("When bloc is created, expect state to be TopSongsState", () {
-    final bloc = TopSongsBloc(_MockGetTopSongs(), _MockGetGenres());
-    expect(bloc.state, isA<TopSongsState>());
+  TopSongsBloc getTopSongsBloc({
+    _GetTopSongsMock? getTopSongs,
+    _InsertUserGenreMock? insertUserGenreMock,
+    _GetUserGenresAsStreamMock? getUserGenresAsStream,
+  }) =>
+      TopSongsBloc(
+        getTopSongs ?? _GetTopSongsMock(),
+        getUserGenresAsStream ?? _GetUserGenresAsStreamMock(),
+        insertUserGenreMock ?? _InsertUserGenreMock(),
+      );
+
+  setUpAll(() {
+    registerFallbackValue(getFakeGenre());
   });
 
-  group("When initGenres is called", () {
-    group("when request is successful", () {
-      final getGenres = _MockGetGenres();
-      final genres = [getFakeGenre(), getFakeGenre(), getFakeGenre(), getFakeGenre()];
-
-      when(getGenres.call).thenAnswer((_) => SynchronousFuture(Ok(AllGenres(
-            all: genres,
-            top: genres,
-          ))));
-
-      blocTest(
-        "should update state with genres from use case",
-        build: () => TopSongsBloc(_MockGetTopSongs(), getGenres),
-        act: (bloc) => bloc.initGenres(),
-        expect: () => [
-          isA<TopSongsState>().having((state) => state.isLoadingGenres, "is Loading Genres", true),
-          isA<TopSongsState>().having((state) => state.genres, "genres", genres),
-        ],
-      );
-    });
-
-    group("when request fails", () {
-      final getGenres = _MockGetGenres();
-
-      when(getGenres.call).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
-
-      blocTest(
-        "should update the state with error",
-        build: () => TopSongsBloc(_MockGetTopSongs(), getGenres),
-        act: (bloc) => bloc.initGenres(),
-        expect: () => [
-          isA<TopSongsState>().having((state) => state.isLoadingGenres, "is Loading Genres", true),
-          isA<TopSongsState>().having((state) => state.error, "Error", isNotNull)
-        ],
-      );
-    });
+  test("When bloc is created, expect genres to be empty", () {
+    final bloc = getTopSongsBloc();
+    expect(bloc.state, isA<TopSongsState>().having((state) => state.genres, "genres", []));
   });
+
   group("When onGenreSelected is called", () {
-    const selectedGenre = "MPB";
-    final getTopSongs = _MockGetTopSongs();
+    test("should update the current state with selected genre and trigger requestTopSongs", () {
+      const selectedGenre = "MPB";
+      final getTopSongs = _GetTopSongsMock.newDummy();
 
-    when(() => getTopSongs.call(
-          genreUrl: any(named: "genreUrl"),
-          limit: any(named: "limit"),
-          offset: any(named: "offset"),
-        )).thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(const Ok(PaginatedList(
-          items: [],
-          hasMoreResults: false,
-        )))));
+      final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
 
-    test("should update de current state with selected genre and trigger requestTopSongs", () {
-      final bloc = TopSongsBloc(getTopSongs, _MockGetGenres());
       bloc.onGenreSelected(selectedGenre);
 
       expect(bloc.state.selectedGenre, selectedGenre);
-      verify(() => getTopSongs(genreUrl: selectedGenre)).called(1);
+      verify(() => getTopSongs.call(genreUrl: any(named: "genreUrl"))).called(1);
     });
   });
 
   group("When requestTopSongs is called", () {
     group("when request is successful", () {
-      final getTopSongs = _MockGetTopSongs();
+      final getTopSongs = _GetTopSongsMock.newDummy();
       final topSongs = [getFakeSong(), getFakeSong()];
+      final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
 
       when(() => getTopSongs.call(
             genreUrl: any(named: "genreUrl"),
@@ -100,7 +86,7 @@ void main() {
 
       blocTest(
         "should update the state with songs from use case",
-        build: () => TopSongsBloc(getTopSongs, _MockGetGenres()),
+        build: () => bloc,
         act: (bloc) => bloc.requestTopSongs(),
         expect: () => [
           isA<TopSongsState>().having((state) => state.isLoadingSongs, "is Loading Songs", true),
@@ -110,14 +96,15 @@ void main() {
     });
 
     group("When request fails", () {
-      final getTopSongs = _MockGetTopSongs();
+      final getTopSongs = _GetTopSongsMock.newDummy();
+      final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
       when(() => getTopSongs.call(
               genreUrl: any(named: "genreUrl"), limit: any(named: "limit"), offset: any(named: "offset")))
           .thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
 
       blocTest(
         "should update state with error",
-        build: () => TopSongsBloc(getTopSongs, _MockGetGenres()),
+        build: () => bloc,
         act: (bloc) => bloc.requestTopSongs(),
         expect: () => [
           isA<TopSongsState>().having((state) => state.isLoadingSongs, "is Loading Songs", true),
@@ -125,5 +112,56 @@ void main() {
         ],
       );
     });
+  });
+
+  group("When receive `newGenre`", () {
+    final genre = getFakeGenre();
+    final getTopSongs = _GetTopSongsMock.newDummy();
+    final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
+
+    blocTest(
+      "should emit new selected genre and update screen",
+      build: () => bloc,
+      act: (bloc) => bloc.newGenre(genre),
+      expect: () => [
+        isA<TopSongsState>().having((state) => state.selectedGenre, "selectedGenre", genre.url),
+        isA<TopSongsState>().having((state) => state.isLoadingSongs, "is Loading Songs", true),
+        isA<TopSongsState>(),
+      ],
+    );
+  });
+
+  group("When emit genres", () {
+    final genres = [getFakeGenre(), getFakeGenre()];
+    final getTopSongs = _GetTopSongsMock.newDummy();
+    final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
+
+    blocTest(
+      "should emit new list of genres",
+      build: () => bloc,
+      act: (bloc) => bloc.emitGenres(genres),
+      expect: () => [
+        isA<TopSongsState>().having((state) => state.genres, "selectedGenre", genres),
+      ],
+    );
+  });
+
+  group("When emit genres and selected genre is off the list", () {
+    final genres = [getFakeGenre(), getFakeGenre()];
+    final getTopSongs = _GetTopSongsMock.newDummy();
+    final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
+    bloc.onGenreSelected(getFakeGenre().url);
+
+    blocTest(
+      "should emit new list of genres and change selected genre to all",
+      build: () => bloc,
+      act: (bloc) => bloc.emitGenres(genres),
+      expect: () => [
+        isA<TopSongsState>().having((state) => state.genres, "selectedGenre", genres),
+        isA<TopSongsState>().having((state) => state.selectedGenre, "selectedGenre", null),
+        isA<TopSongsState>().having((state) => state.isLoadingSongs, "is Loading Songs", true),
+        isA<TopSongsState>(),
+      ],
+    );
   });
 }

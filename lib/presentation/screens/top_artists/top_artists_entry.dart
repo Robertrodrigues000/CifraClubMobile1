@@ -23,8 +23,9 @@ class TopArtistsEntry extends ScreenEntry {
       create: (context) => TopArtistsBloc(
         getIt(),
         getIt(),
+        getIt(),
       ),
-      child: const TopArtistsScreen(),
+      child: TopArtistsScreen(getIt()),
     );
   }
 }

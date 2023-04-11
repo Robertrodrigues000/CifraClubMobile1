@@ -7,13 +7,11 @@ part of 'top_songs_state.dart';
 // **************************************************************************
 
 abstract class _$TopSongsStateCWProxy {
-  TopSongsState selectedGenre(String selectedGenre);
+  TopSongsState selectedGenre(String? selectedGenre);
 
   TopSongsState genres(List<Genre> genres);
 
   TopSongsState topSongs(List<Song> topSongs);
-
-  TopSongsState isLoadingGenres(bool isLoadingGenres);
 
   TopSongsState error(RequestError? error);
 
@@ -29,7 +27,6 @@ abstract class _$TopSongsStateCWProxy {
     String? selectedGenre,
     List<Genre>? genres,
     List<Song>? topSongs,
-    bool? isLoadingGenres,
     RequestError? error,
     bool? isLoadingSongs,
   });
@@ -42,16 +39,13 @@ class _$TopSongsStateCWProxyImpl implements _$TopSongsStateCWProxy {
   final TopSongsState _value;
 
   @override
-  TopSongsState selectedGenre(String selectedGenre) => this(selectedGenre: selectedGenre);
+  TopSongsState selectedGenre(String? selectedGenre) => this(selectedGenre: selectedGenre);
 
   @override
   TopSongsState genres(List<Genre> genres) => this(genres: genres);
 
   @override
   TopSongsState topSongs(List<Song> topSongs) => this(topSongs: topSongs);
-
-  @override
-  TopSongsState isLoadingGenres(bool isLoadingGenres) => this(isLoadingGenres: isLoadingGenres);
 
   @override
   TopSongsState error(RequestError? error) => this(error: error);
@@ -71,15 +65,14 @@ class _$TopSongsStateCWProxyImpl implements _$TopSongsStateCWProxy {
     Object? selectedGenre = const $CopyWithPlaceholder(),
     Object? genres = const $CopyWithPlaceholder(),
     Object? topSongs = const $CopyWithPlaceholder(),
-    Object? isLoadingGenres = const $CopyWithPlaceholder(),
     Object? error = const $CopyWithPlaceholder(),
     Object? isLoadingSongs = const $CopyWithPlaceholder(),
   }) {
     return TopSongsState(
-      selectedGenre: selectedGenre == const $CopyWithPlaceholder() || selectedGenre == null
+      selectedGenre: selectedGenre == const $CopyWithPlaceholder()
           ? _value.selectedGenre
           // ignore: cast_nullable_to_non_nullable
-          : selectedGenre as String,
+          : selectedGenre as String?,
       genres: genres == const $CopyWithPlaceholder() || genres == null
           ? _value.genres
           // ignore: cast_nullable_to_non_nullable
@@ -88,10 +81,6 @@ class _$TopSongsStateCWProxyImpl implements _$TopSongsStateCWProxy {
           ? _value.topSongs
           // ignore: cast_nullable_to_non_nullable
           : topSongs as List<Song>,
-      isLoadingGenres: isLoadingGenres == const $CopyWithPlaceholder() || isLoadingGenres == null
-          ? _value.isLoadingGenres
-          // ignore: cast_nullable_to_non_nullable
-          : isLoadingGenres as bool,
       error: error == const $CopyWithPlaceholder()
           ? _value.error
           // ignore: cast_nullable_to_non_nullable

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class TopArtists extends StatelessWidget {
   final List<Artist> topArtists;
-  final String selectedGenre;
+  final String? selectedGenre;
   final Function(Artist) onTap;
   const TopArtists({
     super.key,
@@ -31,7 +31,7 @@ class TopArtists extends StatelessWidget {
             onTap: () => onTap(artist),
             title: artist.name,
             imageUrl: artist.image?.size162,
-            subtitle: selectedGenre == "todos" ? artist.genre?.name : null, //TODO : adiconar capsula de todos
+            subtitle: selectedGenre,
             ranking: (index + 1).toString(),
           );
         },

@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class TopSongs extends StatelessWidget {
   final List<Song> topSongs;
   final Function(Song) onTap;
-  final String selectedGenre;
+  final String? selectedGenre;
   const TopSongs({super.key, required this.topSongs, required this.onTap, required this.selectedGenre});
 
   @override

@@ -2,6 +2,8 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_bloc.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_screen.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_state/top_artists_state.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
+import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,30 +18,22 @@ import '../../../test_helpers/test_wrapper.dart';
 
 class _TopArtistsBlocMock extends Mock implements TopArtistsBloc {}
 
+class _GenreBottomSheetMock extends Mock implements GenreBottomSheet {}
+
+class _BuildContextMock extends Mock implements BuildContext {}
+
 void main() {
   late TopArtistsBloc bloc;
+  _GenreBottomSheetMock genreBottomSheetMock = _GenreBottomSheetMock();
 
   setUpAll(() {
+    registerFallbackValue(_BuildContextMock());
+    registerFallbackValue(getFakeGenre());
     bloc = _TopArtistsBlocMock();
     when(bloc.initGenres).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.requestTopArtists).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.insertGenre(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
-  });
-
-  testWidgets("When state isLoadingGenres is true then loading should be displayed", (widgetTester) async {
-    bloc.mockStream(TopArtistsState(selectedGenre: "", genres: [], isLoadingGenres: true));
-
-    await widgetTester.pumpWidget(
-      TestWrapper(
-        child: BlocProvider<TopArtistsBloc>.value(
-          value: bloc,
-          child: const TopArtistsScreen(),
-        ),
-      ),
-    );
-
-    expect(find.byType(ListView), findsNothing);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
   testWidgets("when state isLoadingArtists is true then loading and filter list should be displayed",
@@ -52,7 +46,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<TopArtistsBloc>.value(
           value: bloc,
-          child: const TopArtistsScreen(),
+          child: TopArtistsScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -62,21 +56,19 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
-  testWidgets(
-      "When state isLoadingGenres is false and isLoadingArtists is false then TopArtists and filter list should be displayed",
+  testWidgets("When state isLoadingArtists is false then TopArtists and filter list should be displayed",
       (widgetTester) async {
     final topArtists = [getFakeArtist(), getFakeArtist()];
     final genres = [getFakeGenre()];
     bloc.mockStream(
-      TopArtistsState(
-          topArtists: topArtists, genres: genres, selectedGenre: "", isLoadingGenres: false, isLoadingArtists: false),
+      TopArtistsState(topArtists: topArtists, genres: genres, selectedGenre: "", isLoadingArtists: false),
     );
 
     await widgetTester.pumpWidget(
       TestWrapper(
         child: BlocProvider<TopArtistsBloc>.value(
           value: bloc,
-          child: const TopArtistsScreen(),
+          child: TopArtistsScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -102,7 +94,7 @@ void main() {
         TestWrapper(
           child: BlocProvider<TopArtistsBloc>.value(
             value: bloc,
-            child: const TopArtistsScreen(),
+            child: TopArtistsScreen(_GenreBottomSheetMock()),
           ),
         ),
       );
@@ -111,28 +103,6 @@ void main() {
       expect(find.byType(ListView), findsOneWidget);
       expect(find.text("Erro"), findsOneWidget);
     });
-  });
-
-  testWidgets("then if genres is empty, only error should be displayed", (widgetTester) async {
-    bloc.mockStream(
-      TopArtistsState(
-        genres: [],
-        selectedGenre: "",
-        error: ServerError(),
-      ),
-    );
-
-    await widgetTester.pumpWidget(
-      TestWrapper(
-        child: BlocProvider<TopArtistsBloc>.value(
-          value: bloc,
-          child: const TopArtistsScreen(),
-        ),
-      ),
-    );
-
-    expect(find.byType(ListView), findsNothing);
-    expect(find.text("Erro"), findsOneWidget);
   });
 
   testWidgets("when genre is selected should call onGenreleSelected from bloc with the genreUrl", (widgetTester) async {
@@ -147,7 +117,7 @@ void main() {
       TestWrapper(
         child: BlocProvider<TopArtistsBloc>.value(
           value: bloc,
-          child: const TopArtistsScreen(),
+          child: TopArtistsScreen(_GenreBottomSheetMock()),
         ),
       ),
     );
@@ -163,5 +133,24 @@ void main() {
     verify(() => bloc.onGenreSelected(genres.first.url)).called(1);
 
     expect(find.byType(ListView), findsOneWidget);
+  });
+
+  testWidgets("When more capsule is tapped and return a genre should insert genre", (widgetTester) async {
+    bloc.mockStream(TopArtistsState());
+    when(() => genreBottomSheetMock.open(any())).thenAnswer((_) => SynchronousFuture(getFakeGenre()));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<TopArtistsBloc>.value(
+          value: bloc,
+          child: TopArtistsScreen(genreBottomSheetMock),
+        ),
+      ),
+    );
+
+    await widgetTester.tap(find.byType(FilterCapsule).last);
+    await widgetTester.pumpAndSettle();
+
+    verify(() => bloc.insertGenre(any())).called(1);
   });
 }

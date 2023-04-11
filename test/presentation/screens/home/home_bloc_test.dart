@@ -173,7 +173,7 @@ void main() {
   });
 
   group("When onGenreSelected is called", () {
-    test("should update de current state with selected genre and trigger requestHomeInfo", () {
+    test("should update the current state with selected genre and trigger requestHomeInfo", () {
       const selectedGenre = "MPB";
       final getHomeInfo = _GetHomeInfoMock.newDummy();
 
