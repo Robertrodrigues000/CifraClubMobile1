@@ -176,37 +176,19 @@ class _DevScreenState extends State<DevScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.list),
+            title: const Text("Get all listas"),
+            onTap: () {
+              _bloc.getSongBooks();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.list),
             title: const Text("List"),
             onTap: () {
               Nav.of(context).push(
                 screenName: ListsEntry.name,
               );
             },
-          ),
-          CifraButton(
-            type: ButtonType.primary,
-            padding: const EdgeInsets.all(8),
-            child: Text(context.text.developerPage),
-          ),
-          CifraButton(
-            type: ButtonType.secondary,
-            padding: const EdgeInsets.all(8),
-            child: Text(context.text.developerPage),
-          ),
-          CifraButton(
-            type: ButtonType.tertiary,
-            padding: const EdgeInsets.all(8),
-            child: Text(context.text.developerPage),
-          ),
-          CifraButton(
-            type: ButtonType.outline,
-            padding: const EdgeInsets.all(8),
-            child: Text(context.text.developerPage),
-          ),
-          CifraButton(
-            type: ButtonType.ghost,
-            padding: const EdgeInsets.all(8),
-            child: Text(context.text.developerPage),
           ),
         ],
       ),

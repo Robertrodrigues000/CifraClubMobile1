@@ -1,0 +1,66 @@
+[
+    {
+        "id": 9116248,
+        "name": "test2",
+        "userId": 545320573,
+        "userName": "Testando",
+        "createdAt": "2022-10-27 15:18:04",
+        "lastUpdate": "2023-01-16 17:04:44",
+        "public": false,
+        "status": 1,
+        "songs": [
+            {
+                "cifraId": 639733,
+                "songId": 670187,
+                "type": 1,
+                "name": "Lindo Testemunho",
+                "artist": {
+                    "id": 269030,
+                    "name": "Kellen Byanca",
+                    "url": "kellen-byanca-ofc",
+                    "image": "8/b/0/f/8b0f4671c7b61d73b99aa8c73f1adfdb.jpg",
+                    "color": "#C4557F"
+                },
+                "siteUrl": "/kellen-byanca-ofc/lindo-testemunho/#instrument=guitar",
+                "apiUrl": "/kellen-byanca-ofc/lindo-testemunho",
+                "songUrl": "lindo-testemunho",
+                "tone": "F",
+                "stdTone": "F",
+                "capo": 0,
+                "tuning": "E A D G B E",
+                "id": 122674888,
+                "uuid": "fc225b8a-7ebb-41a0-b7b1-004fdf47a8a2",
+                "isMinorScale": false,
+                "lastUpdate": "2022-10-27 15:18:04"
+            },
+            {
+                "cifraId": 18480,
+                "songId": 18480,
+                "type": 1,
+                "name": "We Are The World",
+                "artist": {
+                    "id": 5635,
+                    "name": "Michael Jackson",
+                    "url": "michael-jackson",
+                    "image": "3/4/1/b/341be9c93b5809ae1cf9862d71319531.jpg",
+                    "color": "#E15849"
+                },
+                "siteUrl": "/michael-jackson/we-are-the-world/#instrument=guitar",
+                "apiUrl": "/michael-jackson/we-are-the-world",
+                "songUrl": "we-are-the-world",
+                "tone": "E",
+                "stdTone": "E",
+                "capo": 0,
+                "tuning": "E A D G B E",
+                "id": 128668178,
+                "uuid": "cbef9012-fa52-4109-82d0-529b86ff998d",
+                "isMinorScale": false,
+                "lastUpdate": "2023-01-16 17:04:38"
+            }
+        ],
+        "totalSongs": 2,
+        "timestamp": 1673899484,
+        "type": "default",
+        "thumb": "https://akamai.sscdn.co/letras/50x50/fotos/8/b/0/f/8b0f4671c7b61d73b99aa8c73f1adfdb-tb2.jpg"
+    }
+]

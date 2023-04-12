@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/songbook/data_source/user_songbook_data_source.dart';
+import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_cifra_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
 import 'package:faker/faker.dart';
@@ -29,11 +30,13 @@ void main() {
 
     test("when user has a songbook without cifras should return list of songbooks with empty cifra list", () async {
       final fakeUserSongBookDto = UserSongbookDto(
-        id: faker.randomGenerator.integer(1000),
-        createdAt: faker.date.dateTime(),
-        lastUpdated: faker.date.dateTime(),
-        name: faker.animal.name(),
-      );
+          id: faker.randomGenerator.integer(1000),
+          createdAt: faker.date.dateTime(),
+          lastUpdated: faker.date.dateTime(),
+          name: faker.animal.name(),
+          type: ListTypeDto.user,
+          isPublic: false,
+          totalSongs: 0);
 
       await isar.writeTxn(
         () async {
@@ -53,13 +56,15 @@ void main() {
 
     test("when user has songbooks with cifras should return unloaded cifra list", () async {
       final fakeUserSongBookDto = UserSongbookDto(
-        id: faker.randomGenerator.integer(1000),
-        createdAt: faker.date.dateTime(),
-        lastUpdated: faker.date.dateTime(),
-        name: faker.animal.name(),
-      );
+          id: faker.randomGenerator.integer(1000),
+          createdAt: faker.date.dateTime(),
+          lastUpdated: faker.date.dateTime(),
+          name: faker.animal.name(),
+          type: ListTypeDto.user,
+          isPublic: false,
+          totalSongs: 1);
 
-      final userCifraDto = UserCifraDto(name: faker.animal.name());
+      final userCifraDto = UserCifraDto(name: faker.animal.name(), apiId: 1, songUrl: "testemunho", tone: "F", type: 1);
 
       await isar.writeTxn(
         () async {
@@ -84,11 +89,13 @@ void main() {
   group("when insert is called", () {
     test("when songbook has id, should return same id", () async {
       final fakeUserSongBookDto = UserSongbookDto(
-        id: faker.randomGenerator.integer(1000),
-        createdAt: faker.date.dateTime(),
-        lastUpdated: faker.date.dateTime(),
-        name: faker.animal.name(),
-      );
+          id: faker.randomGenerator.integer(1000),
+          createdAt: faker.date.dateTime(),
+          lastUpdated: faker.date.dateTime(),
+          name: faker.animal.name(),
+          type: ListTypeDto.user,
+          isPublic: false,
+          totalSongs: 0);
 
       final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
 
@@ -97,10 +104,12 @@ void main() {
 
     test("when songbook has no id, should return a new same id", () async {
       final fakeUserSongBookDto = UserSongbookDto(
-        createdAt: faker.date.dateTime(),
-        lastUpdated: faker.date.dateTime(),
-        name: faker.animal.name(),
-      );
+          createdAt: faker.date.dateTime(),
+          lastUpdated: faker.date.dateTime(),
+          name: faker.animal.name(),
+          type: ListTypeDto.user,
+          isPublic: false,
+          totalSongs: 0);
 
       final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
 

@@ -5,6 +5,15 @@ part 'user_cifra_dto.g.dart';
 class UserCifraDto {
   Id id = Isar.autoIncrement;
   final String name;
-
-  UserCifraDto({required this.name});
+  final int apiId;
+  final String songUrl;
+  final String? tone;
+  final int type;
+  UserCifraDto({
+    required this.apiId,
+    required this.songUrl,
+    this.tone,
+    required this.type,
+    required this.name,
+  });
 }

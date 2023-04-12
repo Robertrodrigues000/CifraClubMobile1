@@ -13,7 +13,6 @@ void main() {
     final DateTime now = DateTime.fromMillisecondsSinceEpoch(1671132940000);
     final getCredential = _GetCredentialMock();
     when(getCredential).thenReturn(const UserCredential(isUserLoggedIn: false));
-
     test("Fill the request with appropriate headers", () {
       final AuthorizationInterceptor authorizationInterceptor = AuthorizationInterceptor(getCredential);
       final RequestInterceptorHandler handler = RequestInterceptorHandler();
