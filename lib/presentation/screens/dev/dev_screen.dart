@@ -9,6 +9,7 @@ import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bott
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/lists_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
@@ -171,6 +172,15 @@ class _DevScreenState extends State<DevScreen> {
             title: const Text("Get orders"),
             onTap: () {
               _bloc.getOrders();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.list),
+            title: const Text("List"),
+            onTap: () {
+              Nav.of(context).push(
+                screenName: ListsEntry.name,
+              );
             },
           ),
           CifraButton(

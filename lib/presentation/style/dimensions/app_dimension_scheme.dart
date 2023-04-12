@@ -22,6 +22,7 @@ class AppDimensionScheme {
   final double newsItemThumbPadding;
   final double newsItemTextPadding;
   final double externalMarginWithoutConnection;
+  final double appBarMargin;
   final double verticalMarginAcademyInfo;
   final double academyLogoHeight;
   final double academyLogoBottomPadding;
@@ -44,6 +45,7 @@ class AppDimensionScheme {
     required this.newsItemThumbPadding,
     required this.newsItemTextPadding,
     required this.externalMarginWithoutConnection,
+    required this.appBarMargin,
     required this.verticalMarginAcademyInfo,
     required this.academyLogoHeight,
     required this.academyLogoBottomPadding,

@@ -39,6 +39,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme externalMarginWithoutConnection(double externalMarginWithoutConnection);
 
+  AppDimensionScheme appBarMargin(double appBarMargin);
+
   AppDimensionScheme verticalMarginAcademyInfo(double verticalMarginAcademyInfo);
 
   AppDimensionScheme academyLogoHeight(double academyLogoHeight);
@@ -70,6 +72,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? newsItemThumbPadding,
     double? newsItemTextPadding,
     double? externalMarginWithoutConnection,
+    double? appBarMargin,
     double? verticalMarginAcademyInfo,
     double? academyLogoHeight,
     double? academyLogoBottomPadding,
@@ -139,6 +142,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(externalMarginWithoutConnection: externalMarginWithoutConnection);
 
   @override
+  AppDimensionScheme appBarMargin(double appBarMargin) => this(appBarMargin: appBarMargin);
+
+  @override
   AppDimensionScheme verticalMarginAcademyInfo(double verticalMarginAcademyInfo) =>
       this(verticalMarginAcademyInfo: verticalMarginAcademyInfo);
 
@@ -178,6 +184,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? newsItemThumbPadding = const $CopyWithPlaceholder(),
     Object? newsItemTextPadding = const $CopyWithPlaceholder(),
     Object? externalMarginWithoutConnection = const $CopyWithPlaceholder(),
+    Object? appBarMargin = const $CopyWithPlaceholder(),
     Object? verticalMarginAcademyInfo = const $CopyWithPlaceholder(),
     Object? academyLogoHeight = const $CopyWithPlaceholder(),
     Object? academyLogoBottomPadding = const $CopyWithPlaceholder(),
@@ -252,6 +259,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.externalMarginWithoutConnection
               // ignore: cast_nullable_to_non_nullable
               : externalMarginWithoutConnection as double,
+      appBarMargin: appBarMargin == const $CopyWithPlaceholder() || appBarMargin == null
+          ? _value.appBarMargin
+          // ignore: cast_nullable_to_non_nullable
+          : appBarMargin as double,
       verticalMarginAcademyInfo:
           verticalMarginAcademyInfo == const $CopyWithPlaceholder() || verticalMarginAcademyInfo == null
               ? _value.verticalMarginAcademyInfo
