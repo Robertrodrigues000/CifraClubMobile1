@@ -1,6 +1,7 @@
 import 'package:cifraclub/data/remote_config/remote_config_registered_parameters.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/remote_config/models/instrument_urls.dart';
+import 'package:cifraclub/domain/remote_config/models/remote_product.dart';
 import 'package:cifraclub/domain/remote_config/repository/remote_config_repository.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
@@ -84,5 +85,15 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   @override
   List<int> getTimeBetweenInterstitials() {
     return remoteConfigParameters.timeBetweenInterstitials.value;
+  }
+
+  @override
+  List<RemoteProduct> getProducts() {
+    return remoteConfigParameters.products.value;
+  }
+
+  @override
+  List<String> getProductsIds() {
+    return getProducts().map((remoteProduct) => remoteProduct.id).toList();
   }
 }

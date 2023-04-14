@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
 
 import 'package:cifraclub/domain/songbook/use_cases/get_all_songbooks.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
@@ -14,6 +15,7 @@ import 'package:typed_result/typed_result.dart';
 
 class DevScreenBloc extends Cubit<DevScreenState> {
   final GetProducts _getProducts;
+  final GetRemoteProductsIds _getRemoteProductsIds;
   final PurchaseProduct _purchaseProduct;
   final InAppPurchaseRepository _inAppPurchaseRepository;
   final GetAllSongbooks _getAllSongbooks;
@@ -22,6 +24,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
   DevScreenBloc(
     this._getProducts,
+    this._getRemoteProductsIds,
     this._purchaseProduct,
     this._inAppPurchaseRepository,
     this._getAllSongbooks,
@@ -45,13 +48,9 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   }
 
   Future<void> getProducts() async {
-    initPurchaseStream();
     await getOrders();
-    final productsIds = {"cifraclub_pro_mensal_2021", "cifraclub_pro_anual_2021"}; // Android
-    //final productsIds = {"cifra_club_pro_mensal"}; // iOS
-
-    final products = await _getProducts(productsIds);
-
+    final productIds = _getRemoteProductsIds();
+    final products = await _getProducts(productIds.toSet());
     await _inAppPurchaseRepository.cleanIosTransactions();
 
     products.onSuccess(

@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/time_between_interstitials_parameter.dart';
 import 'package:cifraclub/data/remote_config/remote_config_registered_parameters.dart';
 import 'package:cifraclub/data/remote_config/remote_config_repository_impl.dart';
@@ -79,12 +80,27 @@ void main() {
       expect(value == instrumentUrlsParameter.value, true);
     });
 
-    test(" get() called", () async {
+    test(" getTimeBetweenInterstitials() called", () async {
       final timeBetweenInterstitialParameter = TimeBetweenIntersitialsParameter();
       when(() => mockRemoteConfigParameters.timeBetweenInterstitials)
           .thenAnswer((realInvocation) => timeBetweenInterstitialParameter);
       final value = repository.getTimeBetweenInterstitials();
       expect(value == timeBetweenInterstitialParameter.value, true);
+    });
+
+    test(" getRemoteProducts() called", () async {
+      final remoteProductParameter = RemoteProductParameter();
+      when(() => mockRemoteConfigParameters.products).thenAnswer((realInvocation) => remoteProductParameter);
+      final value = repository.getProducts();
+      expect(value == remoteProductParameter.value, true);
+    });
+
+    test(" getRemoteProductsIds() called", () async {
+      final remoteProductParameter = RemoteProductParameter();
+      when(() => mockRemoteConfigParameters.products).thenAnswer((realInvocation) => remoteProductParameter);
+      final value = repository.getProductsIds();
+      expect(value.first == remoteProductParameter.value.first.id, true);
+      expect(value.last == remoteProductParameter.value.last.id, true);
     });
   });
 }
