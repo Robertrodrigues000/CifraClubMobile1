@@ -35,12 +35,8 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   void initPurchaseStream() {
     // ignore: avoid_print
     print("Starting purchase stream");
-    _inAppPurchaseRepository.getPurchaseStream().listen((event) {
-      // ignore: avoid_print
-      print(event);
-      postOrder(event[0]);
-      //_inAppPurchaseRepository.completePurchase(event[0]);
-    });
+    // ignore: avoid_print
+    _inAppPurchaseRepository.getPurchaseStream().listen(print);
   }
 
   Future<void> restorePurchases() {
@@ -48,6 +44,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   }
 
   Future<void> getProducts() async {
+    initPurchaseStream();
     await getOrders();
     final productIds = _getRemoteProductsIds();
     final products = await _getProducts(productIds.toSet());

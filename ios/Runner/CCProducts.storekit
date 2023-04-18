@@ -1,0 +1,37 @@
+{
+  "identifier" : "F6019331",
+  "nonRenewingSubscriptions" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "72042407",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "cifra_club_pro_mensal",
+      "referenceName" : "CifraClubPro",
+      "type" : "NonRenewingSubscription"
+    }
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "subscriptionOffersKeyPair" : {
+    "id" : "3B3BB2E0",
+    "privateKey" : "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgbq+mjuL/YFfYSYCSN9lhbxb6nXcwd6lYLHOxbAR9h4egCgYIKoZIzj0DAQehRANCAAQtBEHMlu8Mv+pHgLwwrpCe6KLc5W51GepD8Eqvs41DAQlfOFi0x2PFMcqP1N58+n6UV2YNi2d491ug9srZaVcP"
+  },
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

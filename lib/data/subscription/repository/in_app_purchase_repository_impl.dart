@@ -4,16 +4,22 @@ import 'package:cifraclub/data/subscription/data_source/in_app_purchase_data_sou
 import 'package:cifraclub/data/subscription/extension/subscription_domain_extension.dart';
 import 'package:cifraclub/data/subscription/models/purchase_result.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/subscription/models/order.dart';
 import 'package:cifraclub/domain/subscription/models/product.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/models/purchase_error.dart';
 import 'package:cifraclub/domain/subscription/models/purchase_state.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
+import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
+import 'package:cifraclub/domain/subscription/use_cases/post_purchase_order.dart';
 import 'package:flutter/foundation.dart';
 import 'package:typed_result/typed_result.dart';
 
 class InAppPurchaseRepositoryImpl extends ValueNotifier implements InAppPurchaseRepository {
   final InAppPurchaseDataSource _inAppPurchaseDataSource;
+  final PostPurchaseOrder _postOrder;
+  final GetOrders _getOrders;
   final _initialized = Completer<bool>();
   StreamSubscription? inAppPurchaseStreamSubscription;
 
@@ -25,7 +31,7 @@ class InAppPurchaseRepositoryImpl extends ValueNotifier implements InAppPurchase
   // Null if there is no purchase in progress
   Purchase? _purchaseInProgress;
 
-  InAppPurchaseRepositoryImpl(this._inAppPurchaseDataSource) : super(null) {
+  InAppPurchaseRepositoryImpl(this._inAppPurchaseDataSource, this._postOrder, this._getOrders) : super(null) {
     _inAppPurchaseDataSource.ensureInitialized.then((value) {
       // coverage:ignore-start
       assert(value, "Payment platform is not ready/available");
@@ -106,10 +112,9 @@ class InAppPurchaseRepositoryImpl extends ValueNotifier implements InAppPurchase
   }
 
   // coverage:ignore-start
-  // ignore: unused_element
   Future<void> _validateNewPurchase(Purchase purchase, {bool replaceCcidAccount = false}) async {
     _setState(InAppRepositoryStatus.validating, purchase);
-    const validation = PurchaseResult.success; // TODO: POST no v3/orders
+    final validation = await _postOrder(purchase, replaceCcidAccount: replaceCcidAccount);
     switch (validation) {
       case PurchaseResult.success:
         cleanIosTransactions();
@@ -136,8 +141,9 @@ class InAppPurchaseRepositoryImpl extends ValueNotifier implements InAppPurchase
       case PurchaseResult.unknown:
         cleanIosTransactions();
         logger?.sendNonFatalCrash(
-            exception:
-                Exception("Could not validate purchase. ID= ${purchase.purchaseId} PurchaseResult= $validation"));
+          exception: Exception("Could not validate purchase."),
+          information: ["ID= ${purchase.purchaseId} PurchaseResult= $validation"],
+        );
         _setState(InAppRepositoryStatus.serverError, purchase);
         break;
     }
@@ -145,12 +151,41 @@ class InAppPurchaseRepositoryImpl extends ValueNotifier implements InAppPurchase
   // coverage:ignore-end
 
   Future<void> _confirmPurchase(Purchase purchase) async {
-    // TODO: GET no v3/orders
+    final orders = await _getOrders();
 
-    _setState(InAppRepositoryStatus.purchased, purchase); // Simulando servidor respondendo tudo OK com a compra
-    //_setState(InAppRepositoryStatus.deniedByApi, purchase); // Simulando servidor respondendo que a compra não é válida
-    //_setState(InAppRepositoryStatus.validationRequestError, purchase); // Simulando falha de conexão
-    //_setState(InAppRepositoryStatus.serverError, purchase); // Simulando outro erro
+    orders.when(
+      success: (value) async {
+        final validOrder = value.firstWhere((e) => e.status == OrderStatus.statusActive, orElse: () => value.first);
+
+        if (validOrder.status.isValid) {
+          _setState(InAppRepositoryStatus.purchased, purchase);
+          try {
+            await _inAppPurchaseDataSource.completePurchase(purchase.purchaseDto);
+          } catch (e) {
+            // coverage:ignore-start
+            logger?.sendNonFatalCrash(
+              exception: Exception("Failed to confirm purchase with store"),
+            );
+            // coverage:ignore-end
+          }
+        } else {
+          _setState(InAppRepositoryStatus.deniedByApi, purchase);
+          // coverage:ignore-start
+          logger?.sendNonFatalCrash(
+            exception: Exception("Purchase denied by API"),
+            information: ["API returned $validOrder for purchase '${purchase.productId}'"],
+          );
+          // coverage:ignore-end
+        }
+      },
+      failure: (error) {
+        if (error is ConnectionError) {
+          _setState(InAppRepositoryStatus.validationRequestError, purchase);
+        } else {
+          _setState(InAppRepositoryStatus.serverError, purchase);
+        }
+      },
+    );
   }
 
   @override

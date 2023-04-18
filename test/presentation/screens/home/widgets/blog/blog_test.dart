@@ -45,9 +45,11 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     await widgetTester.tap(
-      find.byKey(
-        Key(newsList.first.headline),
-      ),
+      find
+          .byKey(
+            Key(newsList.first.headline),
+          )
+          .first,
     );
     expect(completer.isCompleted, isTrue);
     expect((await completer.future).headline, newsList.first.headline);
