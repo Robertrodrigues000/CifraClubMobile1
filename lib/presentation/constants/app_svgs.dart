@@ -34,4 +34,5 @@ class AppSvgs {
   static const videoPlaceholder = "assets/images/video_placeholder.svg";
 
   static const addIcon = "assets/images/add_icon.svg";
+  static const imagePlaceholder = "assets/images/image_placeholder.svg";
 }
