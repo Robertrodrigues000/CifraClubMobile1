@@ -1,6 +1,5 @@
 import 'package:cifraclub/domain/home/models/news.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/extensions/string.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
@@ -74,13 +73,6 @@ class NewsItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      news.publishDate.dateTodMMMyFormat(context),
-                      style: typography.subtitle5,
-                    ),
-                    const SizedBox(
-                      height: 4.0,
-                    ),
                     Text(
                       news.headline,
                       style: typography.subtitle2,

@@ -21,7 +21,7 @@ class _VideoLessonsState extends State<VideoLessons> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    textHeight = context.typography.subtitle4.getTextSize(context: context).height * 3;
+    textHeight = context.typography.subtitle4.getTextSize(context: context).height * 4;
   }
 
   @override
@@ -41,7 +41,7 @@ class _VideoLessonsState extends State<VideoLessons> {
           crossAxisCount: dimensions.topVideosItemsPerRow,
           crossAxisSpacing: dimensions.screenMargin,
           mainAxisSpacing: dimensions.screenMargin,
-          mainAxisExtent: textHeight + imageHeight + 12,
+          mainAxisExtent: textHeight + imageHeight + 14,
         ),
         delegate: SliverChildBuilderDelegate(
           childCount: widget.list.length,

@@ -13,10 +13,10 @@ part 'home_state.g.dart';
 @CopyWith()
 class HomeState {
   final String? selectedGenre;
-  final List<Highlight> highlights;
+  final List<Highlight>? highlights;
   final List<Song> topCifras;
   final List<Artist> topArtists;
-  final List<VideoLesson> videoLessons;
+  final List<VideoLesson>? videoLessons;
   final List<News> blog;
   final List<Genre> genres;
   final User? user;

@@ -61,16 +61,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ProfileBottomSheet(
                 user: state.user!,
                 onOpenProfile: () => bloc.openProfilePage(),
-                onOpenMyLists: () {},
-                // TODO: verificar se vai permanecer esse icone, caso sim implementar a navegação
                 onLogout: () => bloc.logoutUser(),
               ).open(context);
             },
             height: dimensions.appBarHeight,
           ),
-          body: state.error is ConnectionError
-              ? const Center(child: ErrorDescriptionWidget(ErrorDescriptionWidgetType.connection))
-              : CustomScrollView(
+          body: Builder(
+            builder: (context) {
+              if (state.error != null) {
+                final errorType = state.error is ConnectionError
+                    ? ErrorDescriptionWidgetType.connection
+                    : ErrorDescriptionWidgetType.server;
+                return Center(
+                  child: ErrorDescriptionWidget(
+                    typeError: errorType,
+                    onClick: () => bloc.requestHomeData(genreUrl: state.selectedGenre),
+                  ),
+                );
+              } else {
+                return CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
                       child: Padding(
@@ -94,13 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SliverToBoxAdapter(
                         child: Center(child: CircularProgressIndicator()),
                       )
-                    else if (state.error is ServerError)
-                      const SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: ErrorDescriptionWidget(ErrorDescriptionWidgetType.server),
-                      )
                     else ...[
-                      Highlights(highlights: state.highlights),
+                      if (state.highlights != null) Highlights(highlights: state.highlights!),
+
                       //Cifras section
                       HomeTitle(
                         text: context.text.topSongs,
@@ -115,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         topSongs: state.topCifras,
                         onTap: (song) {},
                       ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       SliverToBoxAdapter(
                         child: CifraButton(
                           type: ButtonType.outline,
@@ -128,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(context.text.moreSongs),
                         ),
                       ),
+
                       //Artists section
                       HomeTitle(
                         text: context.text.topArtists,
@@ -137,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         artists: state.topArtists,
                         onTap: (artist) {},
                       ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       SliverToBoxAdapter(
                         child: CifraButton(
                           type: ButtonType.outline,
@@ -148,29 +156,34 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(context.text.moreArtists),
                         ),
                       ),
+
                       //Videolessons section
-
-                      HomeTitle(
-                          onClick: state.videoLessons.length >= 4 ? () {} : null,
-                          text: context.text.videos,
-                          horizontalPadding: dimensions.screenMargin),
-                      VideoLessons(
-                        list: state.videoLessons.take(4).toList(),
-                      ),
-                      if (state.videoLessons.length >= 4)
-                        SliverToBoxAdapter(
-                          key: const Key("videolessons more button"),
-                          child: CifraButton(
-                            type: ButtonType.outline,
-                            // coverage:ignore-start
-                            onPressed: () {},
-                            // coverage:ignore-end
-                            padding: EdgeInsets.only(
-                                left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
-                            child: Text(context.text.showMoreButton(context.text.videos.toLowerCase())),
-                          ),
+                      if (state.videoLessons != null) ...[
+                        HomeTitle(
+                            onClick: state.videoLessons!.length >= 4 ? () {} : null,
+                            text: context.text.videos,
+                            horizontalPadding: dimensions.screenMargin),
+                        VideoLessons(
+                          list: state.videoLessons!.take(4).toList(),
                         ),
+                        if (state.videoLessons!.length >= 4) ...[
+                          const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                          SliverToBoxAdapter(
+                            key: const Key("videolessons more button"),
+                            child: CifraButton(
+                              type: ButtonType.outline,
+                              // coverage:ignore-start
+                              onPressed: () {},
+                              // coverage:ignore-end
+                              padding: EdgeInsets.only(
+                                  left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
+                              child: Text(context.text.showMoreButton(context.text.videos.toLowerCase())),
+                            ),
+                          ),
+                        ],
+                      ],
 
+                      //News Section
                       HomeTitle(
                         text: context.text.homeNews,
                         horizontalPadding: dimensions.screenMargin,
@@ -179,6 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         list: state.blog,
                         onTap: (news) {},
                       ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       SliverToBoxAdapter(
                         child: CifraButton(
                           type: ButtonType.outline,
@@ -195,7 +209,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ]
                   ],
-                ),
+                );
+              }
+            },
+          ),
         );
       },
     );

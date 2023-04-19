@@ -39,6 +39,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme externalMarginWithoutConnection(double externalMarginWithoutConnection);
 
+  AppDimensionScheme rightMaginProfileIcon(double rightMaginProfileIcon);
+
   AppDimensionScheme appBarMargin(double appBarMargin);
 
   AppDimensionScheme verticalMarginAcademyInfo(double verticalMarginAcademyInfo);
@@ -72,6 +74,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? newsItemThumbPadding,
     double? newsItemTextPadding,
     double? externalMarginWithoutConnection,
+    double? rightMaginProfileIcon,
     double? appBarMargin,
     double? verticalMarginAcademyInfo,
     double? academyLogoHeight,
@@ -142,6 +145,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(externalMarginWithoutConnection: externalMarginWithoutConnection);
 
   @override
+  AppDimensionScheme rightMaginProfileIcon(double rightMaginProfileIcon) =>
+      this(rightMaginProfileIcon: rightMaginProfileIcon);
+
+  @override
   AppDimensionScheme appBarMargin(double appBarMargin) => this(appBarMargin: appBarMargin);
 
   @override
@@ -184,6 +191,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? newsItemThumbPadding = const $CopyWithPlaceholder(),
     Object? newsItemTextPadding = const $CopyWithPlaceholder(),
     Object? externalMarginWithoutConnection = const $CopyWithPlaceholder(),
+    Object? rightMaginProfileIcon = const $CopyWithPlaceholder(),
     Object? appBarMargin = const $CopyWithPlaceholder(),
     Object? verticalMarginAcademyInfo = const $CopyWithPlaceholder(),
     Object? academyLogoHeight = const $CopyWithPlaceholder(),
@@ -259,6 +267,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.externalMarginWithoutConnection
               // ignore: cast_nullable_to_non_nullable
               : externalMarginWithoutConnection as double,
+      rightMaginProfileIcon: rightMaginProfileIcon == const $CopyWithPlaceholder() || rightMaginProfileIcon == null
+          ? _value.rightMaginProfileIcon
+          // ignore: cast_nullable_to_non_nullable
+          : rightMaginProfileIcon as double,
       appBarMargin: appBarMargin == const $CopyWithPlaceholder() || appBarMargin == null
           ? _value.appBarMargin
           // ignore: cast_nullable_to_non_nullable

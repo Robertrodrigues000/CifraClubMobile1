@@ -82,29 +82,34 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
   }
 
   Future<void> requestHomeData({String? genreUrl = ""}) async {
-    emit(state.copyWith(isLoading: true));
+    emit(state.copyWith(isLoading: true, error: null));
     currentRequest?.cancel();
     currentRequest = _getHomeInfo(genreUrl);
 
     var result = await currentRequest!.valueOrCancellation(Err(RequestCancelled()));
 
     result?.when(
-        success: (homeInfo) => emit(state.copyWith(
-              highlights: homeInfo.highlights,
-              topArtists: homeInfo.artists,
-              topCifras: homeInfo.songs,
-              videoLessons: homeInfo.videoLessons,
-              blog: homeInfo.news?.take(4).toList(),
-              isLoading: false,
-            )),
-        failure: (error) {
-          if (error is! RequestCancelled) {
-            emit(state.copyWith(
+      success: (homeInfo) => emit(
+        state.copyWith(
+          highlights: homeInfo.highlights,
+          topArtists: homeInfo.artists,
+          topCifras: homeInfo.songs,
+          videoLessons: homeInfo.videoLessons,
+          blog: homeInfo.news?.take(4).toList(),
+          isLoading: false,
+        ),
+      ),
+      failure: (error) {
+        if (error is! RequestCancelled) {
+          emit(
+            state.copyWith(
               error: error,
               isLoading: false,
-            ));
-          }
-        });
+            ),
+          );
+        }
+      },
+    );
   }
 
   void openLoginPage() => _openLoginView();

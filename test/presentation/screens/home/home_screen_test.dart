@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
 import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -37,7 +38,7 @@ void main() {
     registerFallbackValue(_BuildContextMock());
     registerFallbackValue(getFakeGenre());
     bloc = _HomeBlocMock();
-    when(bloc.requestHomeData).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.requestHomeData(genreUrl: any(named: "genreUrl"))).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.insertGenre(any())).thenAnswer((_) => SynchronousFuture(null));
   });
@@ -120,6 +121,24 @@ void main() {
 
     expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
     expect(find.text("Connection failure"), findsOneWidget);
+  });
+
+  testWidgets("When show error widget and click to retry should retry request", (widgetTester) async {
+    bloc.mockStream(HomeState(error: ConnectionError()));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: HomeScreen(_GenreBottomSheetMock()),
+        ),
+      ),
+    );
+
+    await widgetTester.tap(find.byType(CifraButton));
+    await widgetTester.pumpAndSettle();
+
+    verify(() => bloc.requestHomeData(genreUrl: any(named: "genreUrl"))).called(greaterThanOrEqualTo(2));
   });
 
   testWidgets("When state isLoading is false and error is null should show home sections", (widgetTester) async {

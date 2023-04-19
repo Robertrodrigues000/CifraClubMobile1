@@ -5,19 +5,18 @@ import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cifraclub/presentation/widgets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileBottomSheet extends StatelessWidget {
   const ProfileBottomSheet({
     super.key,
     required this.user,
     required this.onOpenProfile,
-    required this.onOpenMyLists,
     required this.onLogout,
   });
 
   final User user;
   final VoidCallback onOpenProfile;
-  final VoidCallback onOpenMyLists;
   final VoidCallback onLogout;
 
   void open(BuildContext context) {
@@ -31,7 +30,6 @@ class ProfileBottomSheet extends StatelessWidget {
       child: ProfileBottomSheet(
         user: user,
         onOpenProfile: onOpenProfile,
-        onOpenMyLists: onOpenMyLists,
         onLogout: onLogout,
       ),
       context: context,
@@ -71,6 +69,14 @@ class ProfileBottomSheet extends StatelessWidget {
                       image: imageProvider,
                     ),
                   ),
+                ),
+                placeholder: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: SvgPicture.asset(AppSvgs.profilePlaceholderIcon),
                 ),
               ),
               const SizedBox(width: 16),
@@ -112,14 +118,6 @@ class ProfileBottomSheet extends StatelessWidget {
           },
           leadingIconAsset: AppSvgs.editIcon,
           text: context.text.editProfile,
-        ),
-        IconTextTile(
-          onClick: () {
-            onOpenMyLists();
-            DefaultBottomSheet.close(context);
-          },
-          leadingIconAsset: AppSvgs.playlistIcon,
-          text: context.text.myLists,
         ),
         IconTextTile(
           onClick: () {

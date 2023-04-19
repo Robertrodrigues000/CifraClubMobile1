@@ -7,13 +7,13 @@ part of 'home_state.dart';
 // **************************************************************************
 
 abstract class _$HomeStateCWProxy {
-  HomeState highlights(List<Highlight> highlights);
+  HomeState highlights(List<Highlight>? highlights);
 
   HomeState topCifras(List<Song> topCifras);
 
   HomeState topArtists(List<Artist> topArtists);
 
-  HomeState videoLessons(List<VideoLesson> videoLessons);
+  HomeState videoLessons(List<VideoLesson>? videoLessons);
 
   HomeState blog(List<News> blog);
 
@@ -57,7 +57,7 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   final HomeState _value;
 
   @override
-  HomeState highlights(List<Highlight> highlights) => this(highlights: highlights);
+  HomeState highlights(List<Highlight>? highlights) => this(highlights: highlights);
 
   @override
   HomeState topCifras(List<Song> topCifras) => this(topCifras: topCifras);
@@ -66,7 +66,7 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
   HomeState topArtists(List<Artist> topArtists) => this(topArtists: topArtists);
 
   @override
-  HomeState videoLessons(List<VideoLesson> videoLessons) => this(videoLessons: videoLessons);
+  HomeState videoLessons(List<VideoLesson>? videoLessons) => this(videoLessons: videoLessons);
 
   @override
   HomeState blog(List<News> blog) => this(blog: blog);
@@ -111,10 +111,10 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
     Object? error = const $CopyWithPlaceholder(),
   }) {
     return HomeState(
-      highlights: highlights == const $CopyWithPlaceholder() || highlights == null
+      highlights: highlights == const $CopyWithPlaceholder()
           ? _value.highlights
           // ignore: cast_nullable_to_non_nullable
-          : highlights as List<Highlight>,
+          : highlights as List<Highlight>?,
       topCifras: topCifras == const $CopyWithPlaceholder() || topCifras == null
           ? _value.topCifras
           // ignore: cast_nullable_to_non_nullable
@@ -123,10 +123,10 @@ class _$HomeStateCWProxyImpl implements _$HomeStateCWProxy {
           ? _value.topArtists
           // ignore: cast_nullable_to_non_nullable
           : topArtists as List<Artist>,
-      videoLessons: videoLessons == const $CopyWithPlaceholder() || videoLessons == null
+      videoLessons: videoLessons == const $CopyWithPlaceholder()
           ? _value.videoLessons
           // ignore: cast_nullable_to_non_nullable
-          : videoLessons as List<VideoLesson>,
+          : videoLessons as List<VideoLesson>?,
       blog: blog == const $CopyWithPlaceholder() || blog == null
           ? _value.blog
           // ignore: cast_nullable_to_non_nullable

@@ -18,4 +18,5 @@ VideoLessonsDto _$VideoLessonsDtoFromJson(Map<String, dynamic> json) => VideoLes
       song: json['song'] == null ? null : SongDto.fromJson(json['song'] as Map<String, dynamic>),
       artist: json['artist'] == null ? null : ArtistDto.fromJson(json['artist'] as Map<String, dynamic>),
       images: json['images'] == null ? null : VideoLessonsImageDto.fromJson(json['images'] as Map<String, dynamic>),
+      version: json['version'] == null ? null : VersionDto.fromJson(json['version'] as Map<String, dynamic>),
     );

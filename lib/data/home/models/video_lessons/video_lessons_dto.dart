@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/version_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_image_dto.dart';
 import 'package:cifraclub/data/song/models/song_dto.dart';
 import 'package:equatable/equatable.dart';
@@ -20,6 +21,7 @@ class VideoLessonsDto extends Equatable {
   final SongDto? song;
   final ArtistDto? artist;
   final VideoLessonsImageDto? images;
+  final VersionDto? version;
 
   VideoLesson toDomain() => VideoLesson(
         id: id,
@@ -33,6 +35,7 @@ class VideoLessonsDto extends Equatable {
         images: images!.toDomain(),
         song: song?.toDomain(),
         artist: artist?.toDomain(),
+        version: version?.toDomain(),
       );
 
   factory VideoLessonsDto.fromJson(Map<String, dynamic> json) => _$VideoLessonsDtoFromJson(json);
@@ -49,6 +52,7 @@ class VideoLessonsDto extends Equatable {
     this.song,
     this.artist,
     this.images,
+    this.version,
   });
 
   @override

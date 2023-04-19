@@ -16,7 +16,6 @@ void main() {
         child: ProfileBottomSheet(
           user: const User(email: email, name: name),
           onOpenProfile: () {},
-          onOpenMyLists: () {},
           onLogout: () {},
         ),
       ),
@@ -34,32 +33,12 @@ void main() {
         child: ProfileBottomSheet(
           user: const User(),
           onOpenProfile: completer.complete,
-          onOpenMyLists: () {},
           onLogout: () {},
         ),
       ),
     );
 
     await widgetTester.tap(find.text("Edit profile"));
-    expect(completer.isCompleted, isTrue);
-  });
-
-  testWidgets("When click in my lists should call callback action", (widgetTester) async {
-    final completer = Completer<void>();
-
-    await widgetTester.pumpWidget(
-      TestWrapper(
-        child: ProfileBottomSheet(
-          user: const User(),
-          onOpenProfile: () {},
-          onOpenMyLists: completer.complete,
-          onLogout: () {},
-        ),
-      ),
-    );
-
-    await widgetTester.tap(find.text("My lists"));
-
     expect(completer.isCompleted, isTrue);
   });
 
@@ -71,7 +50,6 @@ void main() {
         child: ProfileBottomSheet(
           user: const User(),
           onOpenProfile: () {},
-          onOpenMyLists: () {},
           onLogout: completer.complete,
         ),
       ),

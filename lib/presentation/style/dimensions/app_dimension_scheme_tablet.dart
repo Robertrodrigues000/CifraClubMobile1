@@ -19,6 +19,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   newsItemsPerRow: 2,
   newsItemThumbPadding: 10,
   newsItemTextPadding: 19,
+  rightMaginProfileIcon: 10,
 
   // Top cifras, Top artists
   topCellRankingWidth: 60,

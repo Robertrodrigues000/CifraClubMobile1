@@ -29,3 +29,12 @@ extension FormatStringDate on String {
     return formattedString;
   }
 }
+
+extension FormatString on String {
+  String formatString() {
+    String str = substring(0, 1).toUpperCase() + substring(1);
+    str = str.replaceAll(RegExp(r'[_-]'), ' ');
+
+    return str;
+  }
+}

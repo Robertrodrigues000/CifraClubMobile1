@@ -1,11 +1,14 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
+import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:flutter/widgets.dart';
 
 class ErrorDescriptionWidget extends StatelessWidget {
-  const ErrorDescriptionWidget(this._typeError, {super.key});
-  final ErrorDescriptionWidgetType _typeError;
+  const ErrorDescriptionWidget({super.key, required this.typeError, required this.onClick});
+  final ErrorDescriptionWidgetType typeError;
+  final VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +32,23 @@ class ErrorDescriptionWidget extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                _typeError.getTitle(context),
+                typeError.getTitle(context),
                 style: context.typography.title4.copyWith(color: context.colors.textPrimary),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
-                _typeError.getDescription(context),
+                typeError.getDescription(context),
                 style: context.typography.body10,
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 24),
+              CifraButton(
+                type: ButtonType.outline,
+                padding: EdgeInsets.zero,
+                onPressed: onClick,
+                child: Text(typeError.getButtonText(context)),
+              )
             ],
           ),
         ),

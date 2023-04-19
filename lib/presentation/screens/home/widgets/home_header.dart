@@ -1,9 +1,11 @@
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeHeader extends StatefulWidget implements PreferredSizeWidget {
   final User? user;
@@ -45,13 +47,39 @@ class _HomeHeaderState extends State<HomeHeader> {
             ),
           )
         else
-          InkWell(
-            key: const Key("Open profile"),
-            onTap: widget.openProfile,
+          Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: ClipOval(
-                child: RemoteImage(imageUrl: widget.user?.avatarUrl ?? ""),
+              padding: EdgeInsets.only(right: context.appDimensionScheme.rightMaginProfileIcon),
+              child: InkWell(
+                key: const Key("Open profile"),
+                onTap: widget.openProfile,
+                child: RemoteImage(
+                  imageUrl: widget.user?.avatarUrl,
+                  // coverage:ignore-start
+                  imageBuilder: (image, imageProvider) => Container(
+                    height: 56,
+                    width: 56,
+                    padding: const EdgeInsets.all(14.0),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // coverage:ignore-end
+                  placeholder: Container(
+                    height: 56,
+                    width: 56,
+                    padding: const EdgeInsets.all(14.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: SvgPicture.asset(AppSvgs.profilePlaceholderIcon),
+                  ),
+                ),
               ),
             ),
           )

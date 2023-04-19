@@ -10,6 +10,7 @@ import 'package:cifraclub/data/home/models/highlight/photo_dto.dart';
 import 'package:cifraclub/data/home/models/highlight/photos_dto.dart';
 import 'package:cifraclub/data/home/models/home_dto.dart';
 import 'package:cifraclub/data/home/models/news/news_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/version_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_dto.dart';
 import 'package:cifraclub/data/song/models/song_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -47,23 +48,24 @@ void main() {
     headline: "Aprenda 20 cifras simplificadas de Jorge e Mateus",
     publishDate: "2023-02-22 11:02:00",
   );
-  const videoLessonsDto = VideoLessonsDto(
-    id: 5583,
-    youtubeId: "tuFfT0ycVNA",
-    title: "COMO TOCAR I'LL BE THERE FOR YOU DO BON JOVI NA GUITARRA",
-    url: "bon-jovi-ill-be-there-for-you-aula-de-guitarra-completa",
-    views: 174,
-    duration: 508,
-    urlApi: "/bon-jovi/ill-be-there-for-you",
-    images: null,
-    instruments: ["electric-guitar"],
-  );
+  final versionDto = VersionDto(id: 755, type: 1, label: "principal");
+  final videoLessonsDto = VideoLessonsDto(
+      id: 5583,
+      youtubeId: "tuFfT0ycVNA",
+      title: "COMO TOCAR I'LL BE THERE FOR YOU DO BON JOVI NA GUITARRA",
+      url: "bon-jovi-ill-be-there-for-you-aula-de-guitarra-completa",
+      views: 174,
+      duration: 508,
+      urlApi: "/bon-jovi/ill-be-there-for-you",
+      images: null,
+      instruments: const ["electric-guitar"],
+      version: versionDto);
 
   final homeDto = HomeDto(
     highlights: HighlightsDto(highlights: [highlightDto]),
     songs: const [songDto],
     artists: const [artistDto],
-    videoLessons: const [videoLessonsDto],
+    videoLessons: [videoLessonsDto],
     news: const [newsDto],
   );
 

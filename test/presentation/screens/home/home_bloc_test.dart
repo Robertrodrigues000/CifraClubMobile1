@@ -206,9 +206,9 @@ void main() {
           isA<HomeState>().having((state) => state.isLoading, "is loading", true),
           isA<HomeState>()
               .having((state) => state.isLoading, "is loading", false)
-              .having((state) => state.highlights.length, "highlights", homeInfo.highlights!.length)
+              .having((state) => state.highlights!.length, "highlights", homeInfo.highlights!.length)
               .having((state) => state.topArtists.length, "topArtists", homeInfo.artists!.length)
-              .having((state) => state.videoLessons.length, "videlessons", homeInfo.videoLessons!.length)
+              .having((state) => state.videoLessons!.length, "videlessons", homeInfo.videoLessons!.length)
               .having((state) => state.blog.length, "blog", homeInfo.news!.length)
         ],
       );

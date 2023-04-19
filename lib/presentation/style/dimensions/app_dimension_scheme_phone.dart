@@ -19,6 +19,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   newsItemsPerRow: 1,
   newsItemThumbPadding: 8,
   newsItemTextPadding: 17,
+  rightMaginProfileIcon: 2,
 
   // Top cifras, Top artists
   topCellRankingWidth: 52,

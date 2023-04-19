@@ -22,4 +22,13 @@ enum ErrorDescriptionWidgetType {
         return context.text.serverErrorDescription;
     }
   }
+
+  String getButtonText(BuildContext context) {
+    switch (this) {
+      case connection:
+        return context.text.reload;
+      case server:
+        return context.text.tryAgain;
+    }
+  }
 }

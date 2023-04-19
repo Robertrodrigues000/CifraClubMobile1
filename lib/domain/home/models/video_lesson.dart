@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/home/models/home_image.dart';
+import 'package:cifraclub/domain/home/models/version.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:equatable/equatable.dart';
 
@@ -15,6 +16,7 @@ class VideoLesson extends Equatable {
   final Song? song;
   final Artist? artist;
   final HomeImage images;
+  final Version? version;
 
   const VideoLesson({
     required this.id,
@@ -27,6 +29,7 @@ class VideoLesson extends Equatable {
     required this.instrumentsId,
     this.song,
     this.artist,
+    this.version,
     required this.images,
   });
 

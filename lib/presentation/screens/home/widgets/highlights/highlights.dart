@@ -1,6 +1,6 @@
 import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlight_card.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlight_section.dart';
 import 'package:cifraclub/presentation/widgets/device_type_builder.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +38,7 @@ class Highlights extends StatelessWidget {
               return Padding(
                 padding:
                     EdgeInsets.only(left: dimensions.internalMargin, right: isLastItem ? dimensions.internalMargin : 0),
-                child: HighlightCard(
+                child: HighlightSection(
                   key: Key(highlights[index].title),
                   highlight: highlights[index],
                   size: highlightCardSize,
