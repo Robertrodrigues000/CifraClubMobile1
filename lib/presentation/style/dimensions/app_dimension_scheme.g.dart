@@ -51,6 +51,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme paddingBetweenInstructors(double paddingBetweenInstructors);
 
+  AppDimensionScheme rightPaddingCard(double rightPaddingCard);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -80,6 +82,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? academyLogoHeight,
     double? academyLogoBottomPadding,
     double? paddingBetweenInstructors,
+    double? rightPaddingCard,
   });
 }
 
@@ -167,6 +170,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(paddingBetweenInstructors: paddingBetweenInstructors);
 
   @override
+  AppDimensionScheme rightPaddingCard(double rightPaddingCard) => this(rightPaddingCard: rightPaddingCard);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -197,6 +203,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? academyLogoHeight = const $CopyWithPlaceholder(),
     Object? academyLogoBottomPadding = const $CopyWithPlaceholder(),
     Object? paddingBetweenInstructors = const $CopyWithPlaceholder(),
+    Object? rightPaddingCard = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -294,6 +301,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.paddingBetweenInstructors
               // ignore: cast_nullable_to_non_nullable
               : paddingBetweenInstructors as double,
+      rightPaddingCard: rightPaddingCard == const $CopyWithPlaceholder() || rightPaddingCard == null
+          ? _value.rightPaddingCard
+          // ignore: cast_nullable_to_non_nullable
+          : rightPaddingCard as double,
     );
   }
 }

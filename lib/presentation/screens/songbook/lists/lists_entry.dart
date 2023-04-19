@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ListsEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ListsBloc(),
+      create: (context) => ListsBloc(getIt(), getIt(), getIt(), getIt()),
       child: const ListsScreen(),
     );
   }

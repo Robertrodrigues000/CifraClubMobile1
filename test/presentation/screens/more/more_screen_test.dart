@@ -10,7 +10,7 @@ import 'package:cifraclub/presentation/screens/more/more_screen.dart';
 import 'package:cifraclub/presentation/screens/more/more_state.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/app_card.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/social_network_card.dart';
-import 'package:cifraclub/presentation/screens/more/widgets/user_card.dart';
+import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';

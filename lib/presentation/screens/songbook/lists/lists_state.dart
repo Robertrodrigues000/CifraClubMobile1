@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 
 part 'lists_state.g.dart';
@@ -7,9 +8,13 @@ part 'lists_state.g.dart';
 class ListsState {
   final List<String> userLists;
   final List<String> specialLists;
+  final bool isSyncing;
+  final User? user;
 
   ListsState({
     this.userLists = const [],
     this.specialLists = const [],
+    this.isSyncing = false,
+    this.user,
   });
 }

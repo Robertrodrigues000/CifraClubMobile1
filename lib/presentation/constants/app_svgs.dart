@@ -14,7 +14,8 @@ class AppSvgs {
   static const exitArrowIcon = "assets/images/exit_arrow_icon.svg";
   static const newsPlaceholder = "assets/images/news_placeholder.svg";
 
-  static const logoutIcon = "assets/images/logout.svg";
+  static const logoutIcon = "assets/images/logout_icon.svg";
+  static const refreshIcon = "assets/images/refresh_icon.svg";
   static const profilePlaceholderIcon = "assets/images/profile_placeholder_icon.svg";
   static const downloadIcon = "assets/images/download_icon.svg";
   static const openAppIcon = "assets/images/open_app_icon.svg";

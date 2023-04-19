@@ -10,6 +10,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   internalMargin: 24,
   widthBottomSheet: 532,
   appBarMargin: 12,
+  rightPaddingCard: 12,
 
   // Home
   topCifrasItemsPerRow: 2,

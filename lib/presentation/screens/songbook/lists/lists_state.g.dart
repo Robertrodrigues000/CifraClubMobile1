@@ -11,6 +11,10 @@ abstract class _$ListsStateCWProxy {
 
   ListsState specialLists(List<String> specialLists);
 
+  ListsState isSyncing(bool isSyncing);
+
+  ListsState user(User? user);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -20,6 +24,8 @@ abstract class _$ListsStateCWProxy {
   ListsState call({
     List<String>? userLists,
     List<String>? specialLists,
+    bool? isSyncing,
+    User? user,
   });
 }
 
@@ -36,6 +42,12 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
   ListsState specialLists(List<String> specialLists) => this(specialLists: specialLists);
 
   @override
+  ListsState isSyncing(bool isSyncing) => this(isSyncing: isSyncing);
+
+  @override
+  ListsState user(User? user) => this(user: user);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -46,6 +58,8 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
   ListsState call({
     Object? userLists = const $CopyWithPlaceholder(),
     Object? specialLists = const $CopyWithPlaceholder(),
+    Object? isSyncing = const $CopyWithPlaceholder(),
+    Object? user = const $CopyWithPlaceholder(),
   }) {
     return ListsState(
       userLists: userLists == const $CopyWithPlaceholder() || userLists == null
@@ -56,6 +70,14 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
           ? _value.specialLists
           // ignore: cast_nullable_to_non_nullable
           : specialLists as List<String>,
+      isSyncing: isSyncing == const $CopyWithPlaceholder() || isSyncing == null
+          ? _value.isSyncing
+          // ignore: cast_nullable_to_non_nullable
+          : isSyncing as bool,
+      user: user == const $CopyWithPlaceholder()
+          ? _value.user
+          // ignore: cast_nullable_to_non_nullable
+          : user as User?,
     );
   }
 }

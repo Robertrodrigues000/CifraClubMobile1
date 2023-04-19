@@ -28,6 +28,7 @@ class AppDimensionScheme {
   final double academyLogoHeight;
   final double academyLogoBottomPadding;
   final double paddingBetweenInstructors;
+  final double rightPaddingCard;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -52,5 +53,6 @@ class AppDimensionScheme {
     required this.academyLogoHeight,
     required this.academyLogoBottomPadding,
     required this.paddingBetweenInstructors,
+    required this.rightPaddingCard,
   });
 }

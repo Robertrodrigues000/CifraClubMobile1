@@ -1,6 +1,6 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/screens/more/widgets/user_card.dart';
+import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-// coverage:ignore-file
 class ListsScreen extends StatefulWidget {
   const ListsScreen({super.key});
 
@@ -31,6 +30,7 @@ class _ListsScreenState extends State<ListsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _bloc.getLists();
+    _bloc.init();
   }
 
   @override
@@ -67,9 +67,11 @@ class _ListsScreenState extends State<ListsScreen> {
                   bottom: 16,
                 ),
                 child: UserCard(
-                  user: null,
-                  onLogoutTap: () {},
-                  onTap: () {},
+                  user: state.user,
+                  onLogoutTap: _bloc.logout,
+                  onTap: () => state.user == null ? _bloc.openLoginPage() : _bloc.openUserProfilePage(),
+                  onSync: _bloc.syncList,
+                  isSyncing: state.isSyncing,
                 ),
               ),
             ),

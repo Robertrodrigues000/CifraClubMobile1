@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
 import 'package:cifraclub/presentation/screens/more/models/app_item.dart';
@@ -10,7 +8,7 @@ import 'package:cifraclub/presentation/screens/more/more_state.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/more_installed_apps.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/more_menu.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/more_social_networks.dart';
-import 'package:cifraclub/presentation/screens/more/widgets/user_card.dart';
+import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +32,7 @@ class MoreScreen extends StatefulWidget {
 
 class _MoreScreenState extends State<MoreScreen> {
   late final MoreBloc bloc;
-  Random random = Random();
+  var isSyncing = false;
 
   @override
   void initState() {
