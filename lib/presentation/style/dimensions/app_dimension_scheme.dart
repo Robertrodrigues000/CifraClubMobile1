@@ -17,7 +17,7 @@ class AppDimensionScheme {
   final int topArtistsItemsPerRow;
   final int topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
-  final double highlighCardBorderRadius;
+  final double highlightCardBorderRadius;
   final int newsItemsPerRow;
   final double newsItemThumbPadding;
   final double newsItemTextPadding;
@@ -29,6 +29,7 @@ class AppDimensionScheme {
   final double academyLogoBottomPadding;
   final double paddingBetweenInstructors;
   final double rightPaddingCard;
+  final double addCifraTileImageSize;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -42,7 +43,7 @@ class AppDimensionScheme {
     required this.topArtistsItemsPerRow,
     required this.topVideosItemsPerRow,
     required this.bottomSheetContentToBottom,
-    required this.highlighCardBorderRadius,
+    required this.highlightCardBorderRadius,
     required this.newsItemsPerRow,
     required this.newsItemThumbPadding,
     required this.newsItemTextPadding,
@@ -54,5 +55,6 @@ class AppDimensionScheme {
     required this.academyLogoBottomPadding,
     required this.paddingBetweenInstructors,
     required this.rightPaddingCard,
+    required this.addCifraTileImageSize,
   });
 }

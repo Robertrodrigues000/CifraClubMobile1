@@ -8,7 +8,7 @@ class ContainerWithRippleEffect extends StatelessWidget {
   final double? height;
   final double? width;
   final Alignment? alignment;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const ContainerWithRippleEffect({
     Key? key,
@@ -40,10 +40,12 @@ class ContainerWithRippleEffect extends StatelessWidget {
               borderRadius: decoration?.borderRadius?.resolve(null) ?? BorderRadius.zero,
               child: Material(
                 type: MaterialType.transparency,
-                child: InkWell(
-                  customBorder: decoration?.shape == BoxShape.circle ? const CircleBorder() : null,
-                  onTap: onTap,
-                ),
+                child: onTap != null
+                    ? InkWell(
+                        customBorder: decoration?.shape == BoxShape.circle ? const CircleBorder() : null,
+                        onTap: onTap,
+                      )
+                    : Container(),
               ),
             ),
           ),

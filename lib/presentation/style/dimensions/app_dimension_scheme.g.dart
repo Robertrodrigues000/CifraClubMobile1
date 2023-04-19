@@ -29,7 +29,7 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme bottomSheetContentToBottom(double bottomSheetContentToBottom);
 
-  AppDimensionScheme highlighCardBorderRadius(double highlighCardBorderRadius);
+  AppDimensionScheme highlightCardBorderRadius(double highlightCardBorderRadius);
 
   AppDimensionScheme newsItemsPerRow(int newsItemsPerRow);
 
@@ -53,6 +53,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme rightPaddingCard(double rightPaddingCard);
 
+  AppDimensionScheme addCifraTileImageSize(double addCifraTileImageSize);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -71,7 +73,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     int? topArtistsItemsPerRow,
     int? topVideosItemsPerRow,
     double? bottomSheetContentToBottom,
-    double? highlighCardBorderRadius,
+    double? highlightCardBorderRadius,
     int? newsItemsPerRow,
     double? newsItemThumbPadding,
     double? newsItemTextPadding,
@@ -83,6 +85,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? academyLogoBottomPadding,
     double? paddingBetweenInstructors,
     double? rightPaddingCard,
+    double? addCifraTileImageSize,
   });
 }
 
@@ -130,8 +133,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(bottomSheetContentToBottom: bottomSheetContentToBottom);
 
   @override
-  AppDimensionScheme highlighCardBorderRadius(double highlighCardBorderRadius) =>
-      this(highlighCardBorderRadius: highlighCardBorderRadius);
+  AppDimensionScheme highlightCardBorderRadius(double highlightCardBorderRadius) =>
+      this(highlightCardBorderRadius: highlightCardBorderRadius);
 
   @override
   AppDimensionScheme newsItemsPerRow(int newsItemsPerRow) => this(newsItemsPerRow: newsItemsPerRow);
@@ -173,6 +176,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme rightPaddingCard(double rightPaddingCard) => this(rightPaddingCard: rightPaddingCard);
 
   @override
+  AppDimensionScheme addCifraTileImageSize(double addCifraTileImageSize) =>
+      this(addCifraTileImageSize: addCifraTileImageSize);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -192,7 +199,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? topArtistsItemsPerRow = const $CopyWithPlaceholder(),
     Object? topVideosItemsPerRow = const $CopyWithPlaceholder(),
     Object? bottomSheetContentToBottom = const $CopyWithPlaceholder(),
-    Object? highlighCardBorderRadius = const $CopyWithPlaceholder(),
+    Object? highlightCardBorderRadius = const $CopyWithPlaceholder(),
     Object? newsItemsPerRow = const $CopyWithPlaceholder(),
     Object? newsItemThumbPadding = const $CopyWithPlaceholder(),
     Object? newsItemTextPadding = const $CopyWithPlaceholder(),
@@ -204,6 +211,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? academyLogoBottomPadding = const $CopyWithPlaceholder(),
     Object? paddingBetweenInstructors = const $CopyWithPlaceholder(),
     Object? rightPaddingCard = const $CopyWithPlaceholder(),
+    Object? addCifraTileImageSize = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -252,11 +260,11 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.bottomSheetContentToBottom
               // ignore: cast_nullable_to_non_nullable
               : bottomSheetContentToBottom as double,
-      highlighCardBorderRadius:
-          highlighCardBorderRadius == const $CopyWithPlaceholder() || highlighCardBorderRadius == null
-              ? _value.highlighCardBorderRadius
+      highlightCardBorderRadius:
+          highlightCardBorderRadius == const $CopyWithPlaceholder() || highlightCardBorderRadius == null
+              ? _value.highlightCardBorderRadius
               // ignore: cast_nullable_to_non_nullable
-              : highlighCardBorderRadius as double,
+              : highlightCardBorderRadius as double,
       newsItemsPerRow: newsItemsPerRow == const $CopyWithPlaceholder() || newsItemsPerRow == null
           ? _value.newsItemsPerRow
           // ignore: cast_nullable_to_non_nullable
@@ -305,6 +313,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.rightPaddingCard
           // ignore: cast_nullable_to_non_nullable
           : rightPaddingCard as double,
+      addCifraTileImageSize: addCifraTileImageSize == const $CopyWithPlaceholder() || addCifraTileImageSize == null
+          ? _value.addCifraTileImageSize
+          // ignore: cast_nullable_to_non_nullable
+          : addCifraTileImageSize as double,
     );
   }
 }

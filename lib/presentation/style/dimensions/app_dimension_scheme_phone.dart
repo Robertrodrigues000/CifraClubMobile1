@@ -16,7 +16,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   topCifrasItemsPerRow: 1,
   topArtistsItemsPerRow: 2,
   topVideosItemsPerRow: 2,
-  highlighCardBorderRadius: 8,
+  highlightCardBorderRadius: 8,
   newsItemsPerRow: 1,
   newsItemThumbPadding: 8,
   newsItemTextPadding: 17,
@@ -33,4 +33,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   academyLogoHeight: 60,
   academyLogoBottomPadding: 24,
   paddingBetweenInstructors: 8,
+
+  //Lists
+  addCifraTileImageSize: 40,
 );

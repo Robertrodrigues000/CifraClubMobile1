@@ -16,7 +16,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   topCifrasItemsPerRow: 2,
   topArtistsItemsPerRow: 4,
   topVideosItemsPerRow: 4,
-  highlighCardBorderRadius: 12,
+  highlightCardBorderRadius: 12,
   newsItemsPerRow: 2,
   newsItemThumbPadding: 10,
   newsItemTextPadding: 19,
@@ -33,4 +33,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   academyLogoHeight: 90,
   academyLogoBottomPadding: 24,
   paddingBetweenInstructors: 12,
+
+  //Lists
+  addCifraTileImageSize: 56,
 );

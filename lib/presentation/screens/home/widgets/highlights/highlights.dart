@@ -42,7 +42,7 @@ class Highlights extends StatelessWidget {
                   key: Key(highlights[index].title),
                   highlight: highlights[index],
                   size: highlightCardSize,
-                  borderRadius: dimensions.highlighCardBorderRadius,
+                  borderRadius: dimensions.highlightCardBorderRadius,
                   internalPadding: dimensions.internalMargin,
                 ),
               );
