@@ -35,6 +35,12 @@ class AppSvgs {
   static const videoPlaceholder = "assets/images/video_placeholder.svg";
 
   static const addIcon = "assets/images/add_icon.svg";
+
+  static const songbookFavoriteIcon = "assets/images/songbook_favorite_icon.svg";
+  static const songbookWillPlayIcon = "assets/images/songbook_will_play_icon.svg";
+  static const songbookDidPlayIcon = "assets/images/songbook_did_play_icon.svg";
+  static const songbookRecentsIcon = "assets/images/songbook_recents_icon.svg";
+
   static const imagePlaceholder = "assets/images/image_placeholder.svg";
   static const addCifraIcon = "assets/images/add_cifra_icon.svg";
   static const selectedCifraIcon = "assets/images/selected_cifra_icon.svg";

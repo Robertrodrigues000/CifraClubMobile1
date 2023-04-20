@@ -34,7 +34,6 @@ class InAppPurchaseRepositoryImpl extends ValueNotifier implements InAppPurchase
   InAppPurchaseRepositoryImpl(this._inAppPurchaseDataSource, this._postOrder, this._getOrders) : super(null) {
     _inAppPurchaseDataSource.ensureInitialized.then((value) {
       // coverage:ignore-start
-      assert(value, "Payment platform is not ready/available");
       if (!value) {
         logger?.sendNonFatalCrash(exception: Exception("Payment platform is not ready/available"));
       }
