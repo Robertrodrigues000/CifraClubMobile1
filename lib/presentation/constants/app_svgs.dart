@@ -44,4 +44,5 @@ class AppSvgs {
   static const imagePlaceholder = "assets/images/image_placeholder.svg";
   static const addCifraIcon = "assets/images/add_cifra_icon.svg";
   static const selectedCifraIcon = "assets/images/selected_cifra_icon.svg";
+  static const closeIcon = "assets/images/close_icon.svg";
 }

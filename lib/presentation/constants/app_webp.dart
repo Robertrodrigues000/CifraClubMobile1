@@ -38,4 +38,9 @@ class AppWebp {
   static const logoAcademy = "assets/images/logo_academy.webp";
   static const academyBg = "assets/images/academy_bg.webp";
   static const academyBgTablet = "assets/images/academy_bg_tablet.webp";
+
+  static const listLimitLight = "assets/images/list_limit_light.webp";
+  static const listLimitDark = "assets/images/list_limit_dark.webp";
+  static const listLimitProLight = "assets/images/list_limit_pro_light.webp";
+  static const listLimitProDark = "assets/images/list_limit_pro_dark.webp";
 }

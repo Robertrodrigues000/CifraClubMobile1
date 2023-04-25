@@ -6,7 +6,10 @@
     "tiktok",
     "twitter",
     "atCifraClub",
-    "slashCifraClub"
+    "slashCifraClub",
+    "tenTimes",
+    "hundredTimes",
+    "cifraClubProLimit"
   ],
 
   "pt": [
@@ -16,6 +19,9 @@
     "tiktok",
     "twitter",
     "atCifraClub",
-    "slashCifraClub"
+    "slashCifraClub",
+    "tenTimes",
+    "hundredTimes",
+    "cifraClubProLimit"
   ]
 }

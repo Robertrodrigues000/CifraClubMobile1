@@ -39,7 +39,6 @@
     "more": "More",
     "login": "Log in",
     "all" : "All",
-    "more" : "More",
     "videos": "Videos",
     "showMoreButton": "Show more {sectionName}",
     "@showMoreButton":{
@@ -96,5 +95,54 @@
     "downloadAcademy": "Download Cifra Club Academy",
     "openAcademy": "Open Cifra Club Academy",
     "portugueseOnly": "Content available in Portuguese only",
-    "onList": "On the list"
+    "onList": "On the list",
+    "gotIt": "Got it",
+    "notNow": "Not now",
+    "testPro": "Test 7 days free!",
+    "tabsLimitProTitle": "You have reached the limit of {limit} tabs in this list :\uFEFF(",
+    "@tabsLimitProTitle":{
+      "placeholders": {
+            "limit": {
+                "type": "int",
+                "example": "1000"
+            }
+        }  
+    },
+    "tabsLimitProDescription1": "Each list supports up to ",
+    "tabsLimitProDescription2": "tabs. To insert more, delete some of the existing ones or add to another list.",
+    "listLimitProTitle": "You have reached the limit of {limit} created lists :\ufeff(",
+    "@listLimitProTitle":{
+      "placeholders": {
+            "limit": {
+                "type": "int",
+                "example": "1000"
+            }
+        }  
+    },
+    "listLimitProDescription1": "You can create up to ",
+    "listLimitProDescription2": "lists. To create more, delete some of the existing ones.",
+    "tabsLimitTitle": "Get more space for your tabs!",
+    "tabsLimitDescription1": "You have reached the limit of {limit} tabs entered in this list. To insert up to ",
+    "@tabsLimitDescription1":{
+      "placeholders": {
+            "limit": {
+                "type": "int",
+                "example": "1000"
+            }
+        }  
+    },
+    "tenTimes": "10x ",
+    "hundredTimes": "100x ",
+    "cifraClubProLimit": "Cifra Club Pro!",
+    "listLimitTitle": "Get more space for your lists!",
+    "listLimitDescription1": "You have reached the limit of {limit} created lists. To create up to ",
+    "@listLimitDescription1":{
+      "placeholders": {
+            "limit": {
+                "type": "int",
+                "example": "1000"
+            }
+        }  
+    },
+    "listLimitDescription2": "more, be parte of "
 }

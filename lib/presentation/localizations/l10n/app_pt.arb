@@ -31,7 +31,6 @@
     "more": "Mais",
     "login" : "Entrar",
     "all" : "Todos",
-    "more" : "Mais",
     "videos": "Vídeos",
     "showMoreButton": "Mostrar mais {sectionName}",
     "@showMoreButton":{
@@ -81,5 +80,19 @@
     "downloadAcademy": "Baixar o app Cifra Club Academy",
     "openAcademy": "Abrir o app Cifra Club Academy",
     "portugueseOnly": "",
-    "onList": "Na lista"
+    "onList": "Na lista",
+    "gotIt": "Entendi",
+    "notNow": "Agora não",
+    "testPro": "Testar 7 dias grátis!",
+    "tabsLimitProTitle": "Você atingiu o limite de {limit} cifras nesta lista :\uFEFF(",
+    "tabsLimitProDescription1": "Cada lista suporta até ",
+    "tabsLimitProDescription2": "cifras. Para inserir mais, delete algumas das existentes ou adicione em uma outra lista.",
+    "listLimitProTitle": "Você atingiu o limite de {limit} listas criadas :\uFEFF(",
+    "listLimitProDescription1": "Você pode criar até ",
+    "listLimitProDescription2": "listas. Para criar mais, delete algumas das existentes.",
+    "tabsLimitTitle": "Adquira mais espaço para suas cifras!",
+    "tabsLimitDescription1": "Você atingiu o limite de {limit} cifras inseridas nesta lista. Para inserir até ",
+    "listLimitTitle": "Adquira mais espaço para suas listas!",
+    "listLimitDescription1": "Você atingiu o limite de {limit} listas criadas. Para criar até ",
+    "listLimitDescription2": "mais, faça parte do "
 }

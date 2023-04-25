@@ -70,7 +70,6 @@
     "appLetrasDescription" : "El sitio de letras más grande de Brasil",
     "loginSubtitle": "Inicie sesión en su cuenta para guardar listas",
     "all" : "Todo",
-    "more" : "Más",
     "musicalStyles" : "Estilos musicales",
     "reload": "Recargar",
     "lists": "Listas",
@@ -81,5 +80,19 @@
     "downloadAcademy": "Descargar Cifra Club Academy",
     "openAcademy": "Abrir Cifra Club Academy",
     "portugueseOnly": "Contenido disponible solo en portugués",
-    "onList": "En la lista"
+    "onList": "En la lista",
+    "gotIt": "Entendí",
+    "notNow": "Ahora no",
+    "testPro": "Prueba 7 días gratis!",
+    "tabsLimitProTitle": "Ha alcanzado el límite de {limit} cifrados en esta lista :\uFEFF(",
+    "tabsLimitProDescription1": "Cada lista admite hasta ",
+    "tabsLimitProDescription2": "cifrados. Para insertar más, elimine algunos de los existentes o agregue a otra lista.",
+    "listLimitProTitle": "Has alcanzado el límite de {limit} listas creadas :\uFEFF(",
+    "listLimitProDescription1": "Puedes crear hasta ",
+    "listLimitProDescription2": "listas. Para crear más, elimine algunos de los existentes..",
+    "tabsLimitTitle": "Consigue más espacio para tus cifrados!",
+    "tabsLimitDescription1": "Ha alcanzado el límite de {limit} cifras ingresadas en esta lista. Para insertar hasta ",
+    "listLimitTitle": "Consigue más espacio para tus listas!",
+    "listLimitDescription1": "Has alcanzado el límite de {limit} listas creadas. Para crear hasta ",
+    "listLimitDescription2": "más, únete al "
 }
