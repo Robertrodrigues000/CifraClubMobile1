@@ -6,23 +6,15 @@ import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';
 
 @injectable
-class InsertUserSongbook {
+class RefreshAllSongbooks {
   final SongbookRepository _songbookRepository;
   final UserSongbookRepository _userSongbookRepository;
 
-  InsertUserSongbook(this._songbookRepository, this._userSongbookRepository);
+  RefreshAllSongbooks(this._songbookRepository, this._userSongbookRepository);
 
-  Future<Result<Songbook, RequestError>> call({
-    required String name,
-    bool isPublic = true,
-    DateTime? createdAt,
-  }) async {
+  Future<Result<List<Songbook>, RequestError>> call() {
     return _songbookRepository
-        .insertSongbook(
-          name: name,
-          isPublic: isPublic,
-          createdAt: createdAt ?? DateTime.now(),
-        )
-        .then((result) => result.onSuccess(_userSongbookRepository.insertUserSongbook));
+        .getAllSongbooks()
+        .then((result) => result.onSuccess(_userSongbookRepository.setUserSongbooks));
   }
 }

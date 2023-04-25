@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_cifra_dto.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:isar/isar.dart';
 
@@ -22,12 +23,27 @@ class UserSongbookDto {
   final ListTypeDto type;
   final userCifras = IsarLinks<UserCifraDto>();
 
+  UserSongbookDto({
+    this.id = Isar.autoIncrement,
+    required this.createdAt,
+    required this.lastUpdated,
+    required this.name,
+    this.userName,
+    this.userId,
+    this.thumb,
+    required this.type,
+    required this.isPublic,
+    this.status,
+    required this.totalSongs,
+    this.timestamp,
+  });
+
   UserSongbookDto.fromDomain(Songbook songbook)
       : this(
           createdAt: songbook.createdAt,
           lastUpdated: songbook.lastUpdated,
           name: songbook.name,
-          id: songbook.id ?? Isar.autoIncrement,
+          id: _getDatabaseId(songbook),
           isPublic: songbook.isPublic,
           totalSongs: songbook.totalSongs,
           type: ListTypeDto.fromDomain(songbook.type),
@@ -53,19 +69,14 @@ class UserSongbookDto {
       totalSongs: totalSongs ?? 0,
     );
   }
+}
 
-  UserSongbookDto({
-    this.id = Isar.autoIncrement,
-    required this.createdAt,
-    required this.lastUpdated,
-    required this.name,
-    this.userName,
-    this.userId,
-    this.thumb,
-    required this.type,
-    required this.isPublic,
-    this.status,
-    required this.totalSongs,
-    this.timestamp,
-  });
+int _getDatabaseId(Songbook songbook) {
+  if (songbook.id != null) {
+    return songbook.id!;
+  }
+  if (songbook.type != ListType.user) {
+    return songbook.type.localId;
+  }
+  return Isar.autoIncrement;
 }

@@ -3,7 +3,10 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:typed_result/typed_result.dart';
 
 abstract class SongbookRepository {
-  Stream<List<Songbook>> getAllUserSongbooks();
-  Future<int> insertUserSongbook(Songbook songbook);
+  Future<Result<Songbook, RequestError>> insertSongbook({
+    required String name,
+    required bool isPublic,
+    required DateTime createdAt,
+  });
   Future<Result<List<Songbook>, RequestError>> getAllSongbooks();
 }

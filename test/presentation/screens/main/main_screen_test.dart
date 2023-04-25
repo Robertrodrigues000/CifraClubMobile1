@@ -32,7 +32,7 @@ void main() {
 
   group("When state is HomeInitialState", () {
     testWidgets("Show bottom navigation", (widgetTester) async {
-      bloc.mockStream(const MainInitialState(bottomNavigationNavs: [], selectedPage: BottomNavigationItem.home));
+      bloc.mockStream(const MainState(bottomNavigationNavs: [], selectedPage: BottomNavigationItem.home));
 
       await widgetTester.pumpWidget(
         TestWrapper(
@@ -52,7 +52,7 @@ void main() {
     testWidgets("Navigate when tapping ", (widgetTester) async {
       final pageController = PageController();
 
-      bloc.mockStream(MainInitialState(bottomNavigationNavs: [
+      bloc.mockStream(MainState(bottomNavigationNavs: [
         NavMock.getDummy(screens: [FakeScreenEntry("")]),
         NavMock.getDummy(screens: [FakeScreenEntry("")]),
         NavMock.getDummy(screens: [FakeScreenEntry("")])
@@ -94,7 +94,7 @@ void main() {
     );
 
     stream.add(
-      MainInitialState(
+      MainState(
         bottomNavigationNavs: [
           NavMock.getDummy(),
           NavMock.getDummy(),

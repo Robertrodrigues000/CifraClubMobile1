@@ -1,26 +1,28 @@
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
-import 'package:cifraclub/data/songbook/data_source/user_songbook_data_source.dart';
-import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
+import 'package:cifraclub/extensions/date_time_extension.dart';
 import 'package:typed_result/typed_result.dart';
 
 class SongbookRepositoryImpl extends SongbookRepository {
-  final UserSongbookDataSource _userSongbookDataSource;
   final SongbookDataSource _songbookDataSource;
-  SongbookRepositoryImpl(this._userSongbookDataSource, this._songbookDataSource);
+
+  SongbookRepositoryImpl(this._songbookDataSource);
 
   @override
-  Stream<List<Songbook>> getAllUserSongbooks() {
-    return _userSongbookDataSource
-        .getAll()
-        .map((songbookList) => songbookList.map((songbook) => songbook.toDomain()).toList());
-  }
-
-  @override
-  Future<int> insertUserSongbook(Songbook songbook) {
-    return _userSongbookDataSource.insert(UserSongbookDto.fromDomain(songbook));
+  Future<Result<Songbook, RequestError>> insertSongbook({
+    required String name,
+    required bool isPublic,
+    required DateTime createdAt,
+  }) async {
+    final input = SongbookInputDto(
+      name: name,
+      isPublic: isPublic,
+      timestamp: createdAt.format(apiDateTimeFormat),
+    );
+    return (await _songbookDataSource.insertSongbook(input)).map((e) => e.toDomain().copyWith(createdAt: createdAt));
   }
 
   @override

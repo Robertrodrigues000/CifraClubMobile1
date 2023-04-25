@@ -1,11 +1,12 @@
 enum ListType {
-  user("default"),
-  favorites("favorites"),
-  canPlay("canplay"),
-  cantPlay("cantplay"),
-  recents("recents");
+  user("default", 0),
+  recents("recents", 1),
+  favorites("favorites", 2),
+  canPlay("canplay", 3),
+  cantPlay("cantplay", 4);
 
   final String apiName;
+  final int localId;
 
-  const ListType(this.apiName);
+  const ListType(this.apiName, this.localId);
 }

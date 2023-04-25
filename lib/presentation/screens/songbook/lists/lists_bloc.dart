@@ -1,3 +1,10 @@
+import 'dart:async';
+
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -7,38 +14,59 @@ import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListsBloc extends Cubit<ListsState> {
-  ListsBloc(this._getCredentialStream, this._logout, this._openLoginPage, this._openUserProfilePage)
-      : super(ListsState());
   final GetCredentialStream _getCredentialStream;
   final Logout _logout;
   final OpenLoginPage _openLoginPage;
   final OpenUserProfilePage _openUserProfilePage;
+  final InsertUserSongbook _insertUserSongbook;
+  final RefreshAllSongbooks _refreshAllSongbooks;
+  final GetAllUserSongbooks _getAllUserSongbooks;
+  StreamSubscription<List<Songbook>>? _songbooksSubscription;
+  StreamSubscription<UserCredential>? _userSubscription;
+
+  ListsBloc(this._insertUserSongbook, this._refreshAllSongbooks, this._getAllUserSongbooks, this._getCredentialStream,
+      this._logout, this._openLoginPage, this._openUserProfilePage)
+      : super(ListsState());
 
   void init() {
-    _getCredentialStream().listen(_updateCredential);
+    _userSubscription = _getCredentialStream().listen(_updateCredential);
+    _songbooksSubscription = _getAllUserSongbooks().listen(_onSongbooksUpdated);
+
+    // TODO: Melhorar lógica (fazer automaticamente baseado no horario do ultimo refresh)
+    _refreshAllSongbooks();
+  }
+
+  @override
+  Future<void> close() {
+    _songbooksSubscription?.cancel();
+    _userSubscription?.cancel();
+    return super.close();
+  }
+
+  void _onSongbooksUpdated(List<Songbook> songbooks) {
+    emit(
+      state.copyWith(
+        userLists: songbooks.where((element) => element.type == ListType.user).toList(growable: false),
+        specialLists: songbooks.where((element) => element.type != ListType.user).toList(growable: false),
+      ),
+    );
   }
 
   void _updateCredential(UserCredential? userCredential) {
     emit(state.copyWith(user: userCredential?.user));
   }
 
-  void getLists() {
-    final userlists = List.generate(10, (index) => "UserList $index");
-    final specialLists = List.generate(4, (index) => "SpecialList $index");
+  void createNewSongbook(String name) => _insertUserSongbook(name: name);
 
-    emit(
-      state.copyWith(
-        userLists: userlists,
-        specialLists: specialLists,
-      ),
-    );
-  }
+  Future<void> syncList() async {
+    if (state.isSyncing) {
+      return;
+    }
 
-  // coverage:ignore-start
-  void syncList() {
-    emit(state.copyWith(isSyncing: !state.isSyncing));
+    emit(state.copyWith(isSyncing: true));
+    await _refreshAllSongbooks();
+    emit(state.copyWith(isSyncing: false));
   }
-  // coverage:ignore-end
 
   Future<void> logout() => _logout();
 

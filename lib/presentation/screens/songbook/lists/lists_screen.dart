@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
@@ -30,7 +32,6 @@ class _ListsScreenState extends State<ListsScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _bloc.getLists();
     _bloc.init();
   }
 
@@ -44,7 +45,10 @@ class _ListsScreenState extends State<ListsScreen> {
           automaticallyImplyLeading: false,
           actions: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Random random = Random();
+                _bloc.createNewSongbook("Lista aleatória ${random.nextInt(10000)}");
+              },
               child: SizedBox(
                 height: 48,
                 width: 48,
@@ -76,7 +80,7 @@ class _ListsScreenState extends State<ListsScreen> {
                 ),
               ),
             ),
-            SpecialLists(list: state.specialLists),
+            SpecialLists(lists: state.specialLists),
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
@@ -187,7 +191,7 @@ class _ListsScreenState extends State<ListsScreen> {
             SliverToBoxAdapter(
               child: SizedBox.fromSize(size: const Size.fromHeight(20)),
             ),
-            UserLists(list: state.userLists)
+            UserLists(lists: state.userLists)
           ],
         ),
       );

@@ -6,13 +6,7 @@ import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
-import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
-import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
-import 'package:cifraclub/presentation/screens/home/home_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/lists_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
-import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
-import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,52 +91,6 @@ class _DevScreenState extends State<DevScreen> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.music_note),
-            title: Text(context.text.genreScreen),
-            onTap: () {
-              Nav.of(context).push(
-                screenName: GenresEntry.name,
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.accessible),
-            title: const Text("Internal Genre"),
-            onTap: () {
-              Nav.of(context).push(
-                screenName: GenreEntry.name,
-                params: {GenreEntry.genreUrlParamKey: "mpb"},
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.house),
-            title: const Text("Home"),
-            onTap: () {
-              Nav.of(context).push(
-                screenName: HomeEntry.name,
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.people_outline),
-            title: const Text("Top Artists"),
-            onTap: () {
-              Nav.of(context).push(
-                screenName: TopArtistsEntry.name,
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.disc_full),
-            title: const Text("Top Songs"),
-            onTap: () {
-              Nav.of(context).push(
-                screenName: TopSongsEntry.name,
-              );
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.add_box_outlined),
             title: const Text("Bottom Sheet"),
             onTap: () async {
@@ -170,22 +118,6 @@ class _DevScreenState extends State<DevScreen> {
             title: const Text("Get orders"),
             onTap: () {
               _bloc.getOrders();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.list),
-            title: const Text("Get all listas"),
-            onTap: () {
-              _bloc.getSongBooks();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.list),
-            title: const Text("List"),
-            onTap: () {
-              Nav.of(context).push(
-                screenName: ListsEntry.name,
-              );
             },
           ),
         ],

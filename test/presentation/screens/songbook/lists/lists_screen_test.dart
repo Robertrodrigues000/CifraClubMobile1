@@ -7,6 +7,7 @@ import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -22,7 +23,6 @@ void main() {
   setUpAll(() {
     bloc = _ListsBlocMock();
     when(bloc.init).thenReturn(null);
-    when(bloc.getLists).thenReturn(null);
     when(bloc.openLoginPage).thenReturn(null);
     when(bloc.openUserProfilePage).thenReturn(null);
     when(bloc.logout).thenAnswer((_) => SynchronousFuture(null));
@@ -78,5 +78,27 @@ void main() {
     await widgetTester.tap(logoutFinder);
 
     verify(bloc.logout).called(1);
+  });
+
+  testWidgets("Tapping add icon should create a new songbook", (widgetTester) async {
+    bloc.mockStream(ListsState());
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<ListsBloc>.value(
+        value: bloc,
+        child: const ListsScreen(),
+      ),
+    );
+
+    final addIconFinder = find.byWidgetPredicate((widget) =>
+        widget is SvgPicture &&
+        widget.pictureProvider is ExactAssetPicture &&
+        (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon);
+    expect(addIconFinder, findsOneWidget);
+
+    await widgetTester.pumpAndSettle();
+    await widgetTester.tap(addIconFinder);
+
+    verify(() => bloc.createNewSongbook(any())).called(1);
   });
 }

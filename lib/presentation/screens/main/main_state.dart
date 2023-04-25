@@ -1,13 +1,11 @@
 import 'package:cifraclub/presentation/screens/main/bottom_navigation_item.dart';
 import 'package:nav/nav.dart';
 
-abstract class MainState {}
-
-class MainInitialState implements MainState {
+class MainState {
   final List<Nav> bottomNavigationNavs;
   final BottomNavigationItem selectedPage;
 
-  const MainInitialState({
+  const MainState({
     required this.bottomNavigationNavs,
     required this.selectedPage,
   });

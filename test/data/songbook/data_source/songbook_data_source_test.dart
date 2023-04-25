@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
+import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,6 +14,14 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(NetworkRequest<dynamic>(
+      parser: (_) => throw Exception(""),
+      path: "",
+      type: NetworkRequestType.get,
+    ));
+  });
+
   group("When getAll is called", () {
     test("and request is successful", () async {
       final networkService = NetworkServiceMock();
@@ -60,6 +71,35 @@ void main() {
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When insertSongbook is called", () {
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/songbook/data_source/new_songbook_mock_json_response.json").readAsString();
+      await networkService.mock<NewSongbookResponseDto>(response: mockResponse);
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name"));
+
+      expect(result.isSuccess, true);
+      final newSongbookResponse = result.getOrThrow();
+
+      expect(newSongbookResponse.id, 123);
+      expect(newSongbookResponse.name, "name");
+      expect(newSongbookResponse.isPublic, 1);
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<NewSongbookResponseDto>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name"));
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });
 }

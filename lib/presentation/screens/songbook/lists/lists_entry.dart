@@ -20,7 +20,7 @@ class ListsEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ListsBloc(getIt(), getIt(), getIt(), getIt()),
+      create: (context) => ListsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
       child: const ListsScreen(),
     );
   }

@@ -7,9 +7,9 @@ part of 'lists_state.dart';
 // **************************************************************************
 
 abstract class _$ListsStateCWProxy {
-  ListsState userLists(List<String> userLists);
+  ListsState userLists(List<Songbook> userLists);
 
-  ListsState specialLists(List<String> specialLists);
+  ListsState specialLists(List<Songbook> specialLists);
 
   ListsState isSyncing(bool isSyncing);
 
@@ -22,8 +22,8 @@ abstract class _$ListsStateCWProxy {
   /// ListsState(...).copyWith(id: 12, name: "My name")
   /// ````
   ListsState call({
-    List<String>? userLists,
-    List<String>? specialLists,
+    List<Songbook>? userLists,
+    List<Songbook>? specialLists,
     bool? isSyncing,
     User? user,
   });
@@ -36,10 +36,10 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
   final ListsState _value;
 
   @override
-  ListsState userLists(List<String> userLists) => this(userLists: userLists);
+  ListsState userLists(List<Songbook> userLists) => this(userLists: userLists);
 
   @override
-  ListsState specialLists(List<String> specialLists) => this(specialLists: specialLists);
+  ListsState specialLists(List<Songbook> specialLists) => this(specialLists: specialLists);
 
   @override
   ListsState isSyncing(bool isSyncing) => this(isSyncing: isSyncing);
@@ -65,11 +65,11 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
       userLists: userLists == const $CopyWithPlaceholder() || userLists == null
           ? _value.userLists
           // ignore: cast_nullable_to_non_nullable
-          : userLists as List<String>,
+          : userLists as List<Songbook>,
       specialLists: specialLists == const $CopyWithPlaceholder() || specialLists == null
           ? _value.specialLists
           // ignore: cast_nullable_to_non_nullable
-          : specialLists as List<String>,
+          : specialLists as List<Songbook>,
       isSyncing: isSyncing == const $CopyWithPlaceholder() || isSyncing == null
           ? _value.isSyncing
           // ignore: cast_nullable_to_non_nullable

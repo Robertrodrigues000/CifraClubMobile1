@@ -102,7 +102,7 @@ void main() {
       expect(insertedId, fakeUserSongBookDto.id);
     });
 
-    test("when songbook has no id, should return a new same id", () async {
+    test("when songbook has no id, should throw exception", () async {
       final fakeUserSongBookDto = UserSongbookDto(
           createdAt: faker.date.dateTime(),
           lastUpdated: faker.date.dateTime(),
@@ -111,11 +111,56 @@ void main() {
           isPublic: false,
           totalSongs: 0);
 
-      final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
+      expect(() async => userSongbookDataSource.insert(fakeUserSongBookDto), throwsException);
+    });
+  });
 
-      expect(insertedId, isNot(Isar.autoIncrement));
-      expect(insertedId, isNotNull);
-      expect(insertedId, isNot(0));
+  group("when setAll is called", () {
+    test("should clear and insert all songbooks from list", () async {
+      await isar.writeTxn(
+        () async {
+          await isar.userSongbookDtos.put(UserSongbookDto(
+            id: 1000,
+            createdAt: DateTime.now(),
+            lastUpdated: DateTime.now(),
+            name: "old",
+            type: ListTypeDto.user,
+            isPublic: false,
+            totalSongs: 0,
+          ));
+        },
+      );
+
+      final songbooks = [
+        UserSongbookDto(
+          id: 2000,
+          createdAt: DateTime.now(),
+          lastUpdated: DateTime.now(),
+          name: "new",
+          type: ListTypeDto.user,
+          isPublic: false,
+          totalSongs: 0,
+        )
+      ];
+
+      final ids = await userSongbookDataSource.setAll(songbooks);
+
+      expect(ids, [2000]);
+      expect(isar.userSongbookDtos.countSync(), 1);
+    });
+
+    test("when a songbook has no id, should throw exception", () async {
+      final songbooks = [
+        UserSongbookDto(
+          createdAt: DateTime.now(),
+          lastUpdated: DateTime.now(),
+          name: "new",
+          type: ListTypeDto.user,
+          isPublic: false,
+          totalSongs: 0,
+        )
+      ];
+      expect(() async => userSongbookDataSource.setAll(songbooks), throwsException);
     });
   });
 }

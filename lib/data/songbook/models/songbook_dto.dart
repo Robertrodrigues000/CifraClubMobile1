@@ -2,6 +2,7 @@ import 'package:cifraclub/data/songbook/models/songbook_cifra_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'songbook_dto.g.dart';
 
 @JsonSerializable()

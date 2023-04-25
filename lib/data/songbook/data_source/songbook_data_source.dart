@@ -1,6 +1,8 @@
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
+import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:typed_result/typed_result.dart';
 
@@ -17,6 +19,18 @@ class SongbookDataSource {
           return (data as List<dynamic>).map((e) => SongbookDto.fromJson(e as Map<String, dynamic>)).toList();
         });
 
+    return _networkService.execute(request: request);
+  }
+
+  Future<Result<NewSongbookResponseDto, RequestError>> insertSongbook(SongbookInputDto songbookInputDto) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/songbook",
+      data: songbookInputDto.toJson(),
+      parser: (data) {
+        return NewSongbookResponseDto.fromJson(data);
+      },
+    );
     return _networkService.execute(request: request);
   }
 }

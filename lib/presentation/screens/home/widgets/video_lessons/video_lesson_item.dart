@@ -2,7 +2,6 @@ import 'package:cifraclub/domain/home/models/video_lesson.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/extensions/string.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';

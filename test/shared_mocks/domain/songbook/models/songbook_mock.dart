@@ -7,7 +7,7 @@ Songbook getFakeSongbook() => Songbook(
       createdAt: faker.date.dateTime(),
       lastUpdated: faker.date.dateTime(),
       name: faker.animal.name(),
-      isPublic: false,
+      isPublic: faker.randomGenerator.boolean(),
       type: ListType.user,
       totalSongs: faker.randomGenerator.integer(10),
     );

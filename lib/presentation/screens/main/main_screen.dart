@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
 
     _blocStateSubscription?.cancel();
     _blocStateSubscription = bloc.stream.listen((event) {
-      if (event is MainInitialState && widget.pageController.page?.round() != event.selectedPage.index) {
+      if (widget.pageController.page?.round() != event.selectedPage.index) {
         widget.pageController.jumpToPage(event.selectedPage.index);
       }
     });
@@ -44,35 +44,29 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
-        if (state is MainInitialState) {
-          final safeAreaBottomOffset = MediaQuery.of(context).padding.bottom;
-          return WillPopScope(
-            onWillPop: bloc.onWillPop,
-            child: Scaffold(
-              body: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: widget.pageController,
-                children: List.generate(
-                  state.bottomNavigationNavs.length,
-                  (index) => widget.navFrameBuilder(state.bottomNavigationNavs[index]),
-                  growable: false,
-                ),
-              ),
-              bottomNavigationBar: MainBottomNavigation(
-                safeAreaBottomOffset: safeAreaBottomOffset,
-                currentItem: state.selectedPage,
-                onItemSelected: (selectedItem) {
-                  bloc.setSelectedItem(selectedItem);
-                  widget.pageController.jumpToPage(selectedItem.index);
-                },
+        final safeAreaBottomOffset = MediaQuery.of(context).padding.bottom;
+        return WillPopScope(
+          onWillPop: bloc.onWillPop,
+          child: Scaffold(
+            body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: widget.pageController,
+              children: List.generate(
+                state.bottomNavigationNavs.length,
+                (index) => widget.navFrameBuilder(state.bottomNavigationNavs[index]),
+                growable: false,
               ),
             ),
-          );
-        } else {
-          return const Center(
-            child: Text("Erro"),
-          );
-        }
+            bottomNavigationBar: MainBottomNavigation(
+              safeAreaBottomOffset: safeAreaBottomOffset,
+              currentItem: state.selectedPage,
+              onItemSelected: (selectedItem) {
+                bloc.setSelectedItem(selectedItem);
+                widget.pageController.jumpToPage(selectedItem.index);
+              },
+            ),
+          ),
+        );
       },
     );
   }

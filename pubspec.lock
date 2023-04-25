@@ -1288,10 +1288,10 @@ packages:
     dependency: "direct main"
     description:
       name: typed_result
-      sha256: b3d47a3fb38b4dd81e86d45555a5e5a5a3f55c0174e5cac2a28f07801b98ca8c
+      sha256: "3363ba2516010ad12b13583b6c472aa689278da00a689b48341efb34addc04b4"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "1.0.1"
   url_launcher:
     dependency: "direct main"
     description:

@@ -26,7 +26,7 @@ void main() {
 
   test("When bloc is created, expect state to be at initial state", () {
     final bloc = MainBloc([], FakeRestorableBottomNavigationItem());
-    expect(bloc.state, isA<MainInitialState>());
+    expect(bloc.state, isA<MainState>());
   });
 
   group("When verify can pop", () {
@@ -60,8 +60,8 @@ void main() {
         var result = await bloc.onWillPop();
 
         expect(result, false);
-        expect(bloc.state, isA<MainInitialState>());
-        expect((bloc.state as MainInitialState).selectedPage, BottomNavigationItem.home);
+        expect(bloc.state,
+            isA<MainState>().having((state) => state.selectedPage, "selectedPage", BottomNavigationItem.home));
       },
     );
   });
@@ -71,11 +71,8 @@ void main() {
       "change selected state",
       build: getBloc,
       act: (bloc) => bloc.setSelectedItem(BottomNavigationItem.songbook),
-      expect: () => [
-        predicate(
-          (state) => state is MainInitialState && state.selectedPage == BottomNavigationItem.songbook,
-        ),
-      ],
+      expect: () =>
+          [isA<MainState>().having((state) => state.selectedPage, "selectedPage", BottomNavigationItem.songbook)],
     );
 
     test("expect popUntil called with correct parameter", () async {

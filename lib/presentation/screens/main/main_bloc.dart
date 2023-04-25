@@ -10,7 +10,7 @@ class MainBloc extends Cubit<MainState> {
 
   MainBloc(this._navs, this._selectedItem)
       : super(
-          MainInitialState(
+          MainState(
             selectedPage: _selectedItem.value,
             bottomNavigationNavs: _navs,
           ),
@@ -28,7 +28,7 @@ class MainBloc extends Cubit<MainState> {
   Future<bool> onWillPop() {
     var state = this.state;
 
-    if (state is MainInitialState && _navs[state.selectedPage.index].canPop) {
+    if (_navs[state.selectedPage.index].canPop) {
       _navs[state.selectedPage.index].pop();
       return SynchronousFuture(false);
     } else {
@@ -43,25 +43,21 @@ class MainBloc extends Cubit<MainState> {
   }
 
   void setSelectedItem(BottomNavigationItem selectedItem, [bool isPopping = false]) {
-    var state = this.state;
-    if (state is MainInitialState) {
-      if (_selectedItem.value == selectedItem) {
-        final navigator = _navs[selectedItem.index];
-
-        navigator.popUntil(navigator.screens.first.screenName);
-      }
-
-      _selectedItem.value = selectedItem;
-      if (!isPopping) {
-        _pushToNavigatedItems(selectedItem);
-      }
-
-      emit(
-        MainInitialState(
-          bottomNavigationNavs: state.bottomNavigationNavs,
-          selectedPage: selectedItem,
-        ),
-      );
+    if (_selectedItem.value == selectedItem) {
+      final navigator = _navs[selectedItem.index];
+      navigator.popUntil(navigator.screens.first.screenName);
     }
+
+    _selectedItem.value = selectedItem;
+    if (!isPopping) {
+      _pushToNavigatedItems(selectedItem);
+    }
+
+    emit(
+      MainState(
+        bottomNavigationNavs: state.bottomNavigationNavs,
+        selectedPage: selectedItem,
+      ),
+    );
   }
 }

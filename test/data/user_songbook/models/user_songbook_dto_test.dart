@@ -4,6 +4,8 @@ import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
+
 void main() {
   test("When toDomain is called, should return correct domain entity", () {
     final userSongbookDto = UserSongbookDto(
@@ -45,5 +47,19 @@ void main() {
     expect(userSongbookDto.type, ListTypeDto.user);
     expect(userSongbookDto.isPublic, songbook.isPublic);
     expect(userSongbookDto.totalSongs, songbook.totalSongs);
+  });
+
+  test("When fromDomain is called from a special list, should use fixed id", () {
+    final songbook = getFakeSongbook();
+
+    final specialTypes = ListType.values.where((e) => e != ListType.user);
+    for (final listType in specialTypes) {
+      final userSongbookDto = UserSongbookDto.fromDomain(songbook.copyWith(
+        id: null,
+        type: listType,
+      ));
+      expect(userSongbookDto.id, listType.localId);
+      expect(userSongbookDto.type.toDomain(), listType);
+    }
   });
 }
