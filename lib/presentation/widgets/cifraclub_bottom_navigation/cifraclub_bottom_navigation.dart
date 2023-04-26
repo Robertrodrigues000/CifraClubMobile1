@@ -66,8 +66,8 @@ class _CifraclubBottomNavigationState extends State<CifraclubBottomNavigation> w
                       isSelected: index == widget.currentIndex,
                       selectedIconTheme: Theme.of(context).bottomNavigationBarTheme.selectedIconTheme!,
                       unselectedIconTheme: Theme.of(context).bottomNavigationBarTheme.unselectedIconTheme!,
-                      selectedLabelStyle: Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle!,
-                      unselectedLabelStyle: Theme.of(context).bottomNavigationBarTheme.unselectedLabelStyle!,
+                      selectedLabelStyle: context.typography.subtitle7.copyWith(color: context.colors.textPrimary),
+                      unselectedLabelStyle: context.typography.subtitle7,
                     ))
                 .toList(),
           ),

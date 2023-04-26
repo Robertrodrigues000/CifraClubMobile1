@@ -245,8 +245,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: ea47f93bf69ca653b416504b798380f8564e5bf2
-      resolved-ref: ea47f93bf69ca653b416504b798380f8564e5bf2
+      ref: c6e85db585e9ce30886e54ab1c546f8e8ddf6632
+      resolved-ref: c6e85db585e9ce30886e54ab1c546f8e8ddf6632
       url: "git@github.com:CifraClub/CosmosMobile.git"
     source: git
     version: "0.0.1"
@@ -590,6 +590,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  google_fonts:
+    dependency: transitive
+    description:
+      name: google_fonts
+      sha256: "927573f2e8a8d65c17931e21918ad0ab0666b1b636537de7c4932bdb487b190f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.3"
   graphs:
     dependency: transitive
     description:

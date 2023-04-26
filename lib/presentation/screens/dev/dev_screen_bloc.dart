@@ -26,7 +26,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._inAppPurchaseRepository,
     this._getOrders,
     this._postPurchaseOrder,
-  ) : super(const DevScreenState());
+  ) : super(const DevScreenState(isLoading: false));
 
   void initPurchaseStream() {
     // ignore: avoid_print
@@ -71,5 +71,9 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
     // ignore: avoid_print
     print(result);
+  }
+
+  void toggleIsLoading() {
+    emit(DevScreenState(isLoading: !state.isLoading));
   }
 }
