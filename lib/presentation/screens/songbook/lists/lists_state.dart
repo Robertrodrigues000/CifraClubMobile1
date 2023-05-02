@@ -12,7 +12,7 @@ class ListsState {
   final bool isSyncing;
   final User? user;
 
-  ListsState({
+  const ListsState({
     this.userLists = const [],
     this.specialLists = const [],
     this.isSyncing = false,

@@ -26,7 +26,7 @@ class ListsBloc extends Cubit<ListsState> {
 
   ListsBloc(this._insertUserSongbook, this._refreshAllSongbooks, this._getAllUserSongbooks, this._getCredentialStream,
       this._logout, this._openLoginPage, this._openUserProfilePage)
-      : super(ListsState());
+      : super(const ListsState());
 
   void init() {
     _userSubscription = _getCredentialStream().listen(_updateCredential);

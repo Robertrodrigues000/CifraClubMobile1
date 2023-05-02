@@ -30,12 +30,12 @@ void main() {
   });
 
   testWidgets("When user is logged out, should open login when tapping user card", (widgetTester) async {
-    bloc.mockStream(ListsState(user: null));
+    bloc.mockStream(const ListsState(user: null));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: const ListsScreen(),
+        child: ListsScreen(onTapSongbook: (_) {}),
       ),
     );
 
@@ -49,7 +49,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: const ListsScreen(),
+        child: ListsScreen(onTapSongbook: (_) {}),
       ),
     );
 
@@ -65,7 +65,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: const ListsScreen(),
+        child: ListsScreen(onTapSongbook: (_) {}),
       ),
     );
 
@@ -81,12 +81,14 @@ void main() {
   });
 
   testWidgets("Tapping add icon should create a new songbook", (widgetTester) async {
-    bloc.mockStream(ListsState());
+    bloc.mockStream(const ListsState());
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: const ListsScreen(),
+        child: ListsScreen(
+          onTapSongbook: (_) {},
+        ),
       ),
     );
 

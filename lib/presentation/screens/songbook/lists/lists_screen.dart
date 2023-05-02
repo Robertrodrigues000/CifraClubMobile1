@@ -1,3 +1,5 @@
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'dart:math';
 
 import 'package:cifraclub/extensions/build_context.dart';
@@ -14,7 +16,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ListsScreen extends StatefulWidget {
-  const ListsScreen({super.key});
+  const ListsScreen({super.key, required this.onTapSongbook});
+  final Function(Songbook) onTapSongbook;
 
   @override
   State<ListsScreen> createState() => _ListsScreenState();
@@ -40,15 +43,29 @@ class _ListsScreenState extends State<ListsScreen> {
     return BlocBuilder<ListsBloc, ListsState>(builder: (context, state) {
       return Scaffold(
         appBar: CosmosAppBar(
+          toolbarHeight: context.appDimensionScheme.appBarHeight,
           title: Text(context.text.lists, style: context.typography.title3),
           leading: null,
           automaticallyImplyLeading: false,
           actions: [
             InkWell(
+              // Por enquanto esse click é para testar
+              // coverage:ignore-start
               onTap: () {
+                widget.onTapSongbook(
+                  Songbook(
+                    name: "Segundo",
+                    isPublic: true,
+                    createdAt: DateTime.now(),
+                    totalSongs: 12,
+                    type: ListType.cantPlay,
+                  ),
+                );
+
                 Random random = Random();
                 _bloc.createNewSongbook("Lista aleatória ${random.nextInt(10000)}");
               },
+              // coverage:ignore-end
               child: SizedBox(
                 height: 48,
                 width: 48,

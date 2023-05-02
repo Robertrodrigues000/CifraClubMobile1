@@ -11,7 +11,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
 import 'package:cifraclub/presentation/screens/more/more_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/lists_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/songbook_entry.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -79,7 +79,7 @@ class CifraClub extends StatelessWidget {
               param1: NavConstructorParams(firstScreen: HomeEntry({}), restorationId: 'BottomNav1'),
             ),
             getIt(
-              param1: NavConstructorParams(firstScreen: ListsEntry({}), restorationId: 'BottomNav2'),
+              param1: NavConstructorParams(firstScreen: SongbookEntry({}), restorationId: 'BottomNav2'),
             ),
             getIt(
               param1: NavConstructorParams(firstScreen: DevScreenEntry({}), restorationId: 'BottomNav3'),
