@@ -24,8 +24,8 @@ void main() {
 
   group("when getAll is called", () {
     test("when user has no songbook should return empty list", () async {
-      final userSongbookDto = await userSongbookDataSource.getAll().first;
-      expect(userSongbookDto, isEmpty);
+      final totalSongbooks = await userSongbookDataSource.getAll().first;
+      expect(totalSongbooks, isEmpty);
     });
 
     test("when user has a songbook without cifras should return list of songbooks with empty cifra list", () async {
@@ -162,5 +162,93 @@ void main() {
       ];
       expect(() async => userSongbookDataSource.setAll(songbooks), throwsException);
     });
+  });
+
+  test("when insert is called, should return a songbookId", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+        id: faker.randomGenerator.integer(100),
+        createdAt: faker.date.dateTime(),
+        lastUpdated: faker.date.dateTime(),
+        name: faker.animal.name(),
+        type: ListTypeDto.user,
+        isPublic: false,
+        totalSongs: 0);
+
+    final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
+
+    expect(insertedId, fakeUserSongBookDto.id);
+  });
+
+  test("when getSongbookById is called, should return a songbook", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+        id: faker.randomGenerator.integer(1000),
+        createdAt: faker.date.dateTime(),
+        lastUpdated: faker.date.dateTime(),
+        name: faker.animal.name(),
+        type: ListTypeDto.user,
+        isPublic: false,
+        totalSongs: 0);
+
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      },
+    );
+
+    final songbook = await userSongbookDataSource.getSongbookById(fakeUserSongBookDto.id);
+    expect(songbook!.id, fakeUserSongBookDto.id);
+  });
+
+  test("when getTotalSongbooks is called should return total of list of songbooks from user", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+        id: faker.randomGenerator.integer(1000),
+        createdAt: faker.date.dateTime(),
+        lastUpdated: faker.date.dateTime(),
+        name: faker.animal.name(),
+        type: ListTypeDto.user,
+        isPublic: false,
+        totalSongs: 0);
+
+    final totalSongbooksStream = userSongbookDataSource.getTotalSongbooks();
+
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      },
+    );
+
+    expect(totalSongbooksStream, emitsInOrder([1]));
+  });
+
+  test("when getTotalSongbookCifras is called should return total of cifras in user's songbook", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+        id: faker.randomGenerator.integer(1000),
+        createdAt: faker.date.dateTime(),
+        lastUpdated: faker.date.dateTime(),
+        name: faker.animal.name(),
+        type: ListTypeDto.user,
+        isPublic: false,
+        totalSongs: 0);
+
+    final fakeUserCifraDto = UserCifraDto(
+      name: "Teste",
+      apiId: 1,
+      songUrl: "teste",
+      type: 1,
+    );
+
+    final totalSongbookCifrasStream = userSongbookDataSource.getTotalSongbookCifras(fakeUserSongBookDto.id);
+
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+        await isar.userCifraDtos.put(fakeUserCifraDto);
+        final songbookDto = await isar.userSongbookDtos.get(fakeUserSongBookDto.id);
+        songbookDto?.userCifras.add(fakeUserCifraDto);
+        await songbookDto?.userCifras.save();
+      },
+    );
+
+    expect(totalSongbookCifrasStream, emitsInOrder([1]));
   });
 }

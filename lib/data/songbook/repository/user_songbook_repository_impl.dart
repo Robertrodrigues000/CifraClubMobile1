@@ -24,4 +24,19 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   Future<List<int>> setUserSongbooks(List<Songbook> songbooks) {
     return _userSongbookDataSource.setAll(songbooks.map(UserSongbookDto.fromDomain).toList(growable: false));
   }
+
+  @override
+  Stream<int> getTotalSongbooks() {
+    return _userSongbookDataSource.getTotalSongbooks();
+  }
+
+  @override
+  Future<Songbook?> getSongbookById(int id) async {
+    return (await _userSongbookDataSource.getSongbookById(id))?.toDomain();
+  }
+
+  @override
+  Stream<int?> getTotalSongbookCifras(int songbookId) {
+    return _userSongbookDataSource.getTotalSongbookCifras(songbookId);
+  }
 }

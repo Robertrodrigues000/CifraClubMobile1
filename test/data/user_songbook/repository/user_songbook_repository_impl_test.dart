@@ -75,4 +75,41 @@ void main() {
     expect(ids, [songbook.id]);
     expect(userSongbookDtos.first.name, songbook.name);
   });
+
+  test("when getTotalSongbooks is called, should return the total of user songbooks", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+
+    when(userSongbookDataSource.getTotalSongbooks).thenAnswer((invocation) => Stream.value(10));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final totalSongbooks = await songbookRepository.getTotalSongbooks().first;
+
+    expect(totalSongbooks, 10);
+  });
+
+  test("when totalSongbookCifras is called, should return the total of cifras in songbook", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+
+    when(() => userSongbookDataSource.getTotalSongbookCifras(any())).thenAnswer((invocation) => Stream.value(10));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final totalSongbooks = await songbookRepository.getTotalSongbookCifras(10).first;
+
+    expect(totalSongbooks, 10);
+  });
+
+  test("when getSongbookById is called, should return the songbook with correct id", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+    final songbookDto = _UserSongbookDtoMock();
+    final songbook = getFakeSongbook();
+
+    when(songbookDto.toDomain).thenReturn(songbook);
+    when(() => userSongbookDataSource.getSongbookById(songbook.id!)).thenAnswer((_) => SynchronousFuture(songbookDto));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final result = await songbookRepository.getSongbookById(songbook.id!);
+
+    expect(result!.id, songbook.id);
+    expect(result.name, songbook.name);
+  });
 }

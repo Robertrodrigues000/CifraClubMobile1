@@ -15,6 +15,14 @@ abstract class _$ListsStateCWProxy {
 
   ListsState user(User? user);
 
+  ListsState isPro(bool isPro);
+
+  ListsState listCount(int listCount);
+
+  ListsState listLimit(int listLimit);
+
+  ListsState listState(ListLimitState listState);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -26,6 +34,10 @@ abstract class _$ListsStateCWProxy {
     List<Songbook>? specialLists,
     bool? isSyncing,
     User? user,
+    bool? isPro,
+    int? listCount,
+    int? listLimit,
+    ListLimitState? listState,
   });
 }
 
@@ -48,6 +60,18 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
   ListsState user(User? user) => this(user: user);
 
   @override
+  ListsState isPro(bool isPro) => this(isPro: isPro);
+
+  @override
+  ListsState listCount(int listCount) => this(listCount: listCount);
+
+  @override
+  ListsState listLimit(int listLimit) => this(listLimit: listLimit);
+
+  @override
+  ListsState listState(ListLimitState listState) => this(listState: listState);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -60,6 +84,10 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
     Object? specialLists = const $CopyWithPlaceholder(),
     Object? isSyncing = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
+    Object? isPro = const $CopyWithPlaceholder(),
+    Object? listCount = const $CopyWithPlaceholder(),
+    Object? listLimit = const $CopyWithPlaceholder(),
+    Object? listState = const $CopyWithPlaceholder(),
   }) {
     return ListsState(
       userLists: userLists == const $CopyWithPlaceholder() || userLists == null
@@ -78,6 +106,22 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
           ? _value.user
           // ignore: cast_nullable_to_non_nullable
           : user as User?,
+      isPro: isPro == const $CopyWithPlaceholder() || isPro == null
+          ? _value.isPro
+          // ignore: cast_nullable_to_non_nullable
+          : isPro as bool,
+      listCount: listCount == const $CopyWithPlaceholder() || listCount == null
+          ? _value.listCount
+          // ignore: cast_nullable_to_non_nullable
+          : listCount as int,
+      listLimit: listLimit == const $CopyWithPlaceholder() || listLimit == null
+          ? _value.listLimit
+          // ignore: cast_nullable_to_non_nullable
+          : listLimit as int,
+      listState: listState == const $CopyWithPlaceholder() || listState == null
+          ? _value.listState
+          // ignore: cast_nullable_to_non_nullable
+          : listState as ListLimitState,
     );
   }
 }

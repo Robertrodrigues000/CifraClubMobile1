@@ -27,6 +27,8 @@ void main() {
     when(bloc.openUserProfilePage).thenReturn(null);
     when(bloc.logout).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.createNewSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
   });
 
   testWidgets("When user is logged out, should open login when tapping user card", (widgetTester) async {

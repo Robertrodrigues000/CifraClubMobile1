@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
@@ -11,11 +12,19 @@ class ListsState {
   final List<Songbook> specialLists;
   final bool isSyncing;
   final User? user;
+  final bool isPro;
+  final int listCount;
+  final int listLimit;
+  final ListLimitState listState;
 
   const ListsState({
     this.userLists = const [],
     this.specialLists = const [],
     this.isSyncing = false,
     this.user,
+    this.isPro = false,
+    this.listCount = 0,
+    this.listLimit = 10,
+    this.listState = ListLimitState.withinLimit,
   });
 }

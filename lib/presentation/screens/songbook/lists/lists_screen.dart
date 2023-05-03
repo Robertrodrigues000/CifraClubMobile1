@@ -30,6 +30,7 @@ class _ListsScreenState extends State<ListsScreen> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<ListsBloc>(context);
+    _bloc.initListLimitStreams();
   }
 
   @override

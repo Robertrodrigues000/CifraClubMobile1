@@ -1,3 +1,4 @@
+import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
 import 'package:isar/isar.dart';
 
@@ -22,6 +23,21 @@ class UserSongbookDataSource {
         return _isar.userSongbookDtos.put(userSongbookDto);
       },
     );
+  }
+
+  Stream<int> getTotalSongbooks() {
+    Query<UserSongbookDto> query = _isar.userSongbookDtos.filter().typeEqualTo(ListTypeDto.user).build();
+    return query.watch(fireImmediately: true).map((songbookList) => songbookList.length);
+  }
+
+  Future<UserSongbookDto?> getSongbookById(int id) {
+    return _isar.userSongbookDtos.filter().idEqualTo(id).findFirst();
+  }
+
+  Stream<int> getTotalSongbookCifras(int id) {
+    return _isar.userSongbookDtos
+        .watchObject(id, fireImmediately: true)
+        .map((userSongbook) => userSongbook?.userCifras.countSync() ?? 0);
   }
 
   /// Remove all songbooks, then insert all songbooks from [userSongbookDtos]

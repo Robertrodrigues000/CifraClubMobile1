@@ -22,7 +22,9 @@ class SongbookEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => ListsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())),
+      BlocProvider(
+          create: (context) =>
+              ListsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())),
       BlocProvider(create: (context) => CifrasBloc()),
       BlocProvider(create: (context) => SongbookBloc()),
     ], child: const SongbookScreen());

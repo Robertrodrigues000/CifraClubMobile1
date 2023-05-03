@@ -1,9 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
+import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
-import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
@@ -69,8 +72,26 @@ class _GetCredentialStreamMock extends Mock implements GetCredentialStream {
   }
 }
 
+class _GetListLimitStateStreamMock extends Mock implements GetListLimitState {
+  static _GetListLimitStateStreamMock newDummy() {
+    final mock = _GetListLimitStateStreamMock();
+    when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(ListLimitState.withinLimit));
+    return mock;
+  }
+}
+
+class _GetTotalSongbooksStreamMock extends Mock implements GetTotalSongbooks {
+  static _GetTotalSongbooksStreamMock newDummy() {
+    final mock = _GetTotalSongbooksStreamMock();
+    when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(5));
+    return mock;
+  }
+}
+
 void main() {
   ListsBloc getBloc({
+    _GetListLimitStateStreamMock? getListLimitState,
+    _GetTotalSongbooksStreamMock? getTotalSongbooks,
     _InsertUserSongbookMock? insertUserSongbookMock,
     _RefreshAllSongbooksMock? refreshAllSongbooksMock,
     _GetAllUserSongbooksMock? getAllUserSongbooksMock,
@@ -87,6 +108,8 @@ void main() {
         logoutMock ?? _LogoutMock(),
         openLoginPageMock ?? _OpenLoginPageMock(),
         openUserProfileMock ?? _OpenUserProfileMock(),
+        getListLimitState ?? _GetListLimitStateStreamMock(),
+        getTotalSongbooks ?? _GetTotalSongbooksStreamMock(),
       );
 
   test("When logout should call 'Logout' use case", () async {
@@ -188,5 +211,20 @@ void main() {
         },
       );
     });
+  });
+
+  group("When initListLimitStreams is called", () {
+    final getTotalSongbooks = _GetTotalSongbooksStreamMock.newDummy();
+    final getListLimitState = _GetListLimitStateStreamMock.newDummy();
+
+    blocTest(
+      "should update listLimit and listCount state",
+      build: () => getBloc(getListLimitState: getListLimitState, getTotalSongbooks: getTotalSongbooks),
+      act: (bloc) => bloc.initListLimitStreams(),
+      expect: () => [
+        isA<ListsState>().having((state) => state.listState, "List State", ListLimitState.withinLimit),
+        isA<ListsState>().having((state) => state.listCount, "List Count", 5)
+      ],
+    );
   });
 }
