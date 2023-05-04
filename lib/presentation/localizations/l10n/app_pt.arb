@@ -94,5 +94,10 @@
     "tabsLimitDescription1": "Você atingiu o limite de {limit} cifras inseridas nesta lista. Para inserir até ",
     "listLimitTitle": "Adquira mais espaço para suas listas!",
     "listLimitDescription1": "Você atingiu o limite de {limit} listas criadas. Para criar até ",
-    "listLimitDescription2": "mais, faça parte do "
+    "listLimitDescription2": "mais, faça parte do ",
+    "songbookRecents":"Visto recentemente",
+    "songbookFavorites":"Cifras favoritas",
+    "songbookCanPlay":"Consegui tocar",
+    "songbookCantPlay":"Ainda vou tocar"
+
 }

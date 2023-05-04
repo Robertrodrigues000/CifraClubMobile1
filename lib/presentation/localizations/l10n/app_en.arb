@@ -144,5 +144,10 @@
             }
         }  
     },
-    "listLimitDescription2": "more, be parte of "
+    "listLimitDescription2": "more, be parte of ",
+    "songbookRecents":"Recently viewed",
+    "songbookFavorites":"Favorite tabs",
+    "songbookCanPlay":"I can play it",
+    "songbookCantPlay":"I'll play it soon"
+
 }
