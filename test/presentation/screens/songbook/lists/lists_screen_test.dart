@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 import '../../../../shared_mocks/domain/user/models/user_mock.dart';
 import '../../../../test_helpers/bloc_stream.dart';
 import '../../../../test_helpers/test_wrapper.dart';
@@ -25,6 +26,7 @@ void main() {
     when(bloc.init).thenReturn(null);
     when(bloc.openLoginPage).thenReturn(null);
     when(bloc.openUserProfilePage).thenReturn(null);
+    when(() => bloc.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.logout).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.createNewSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
@@ -104,5 +106,26 @@ void main() {
     await widgetTester.tap(addIconFinder);
 
     verify(() => bloc.createNewSongbook(any())).called(1);
+  });
+
+  testWidgets("Tapping songbook tile should call delete songbook", (widgetTester) async {
+    final songbook = getFakeSongbook();
+    bloc.mockStream(ListsState(userLists: [getFakeSongbook(), songbook]));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<ListsBloc>.value(
+        value: bloc,
+        child: ListsScreen(onTapSongbook: (_) {}),
+      ),
+    );
+
+    final songbookTile = find.text(songbook.name, skipOffstage: false);
+
+    expect(songbookTile, findsOneWidget);
+    await widgetTester.scrollUntilVisible(find.text(songbook.name), 100);
+    await widgetTester.pumpAndSettle();
+    await widgetTester.tap(songbookTile);
+
+    verify(() => bloc.deleteSongbook(songbook.id)).called(1);
   });
 }

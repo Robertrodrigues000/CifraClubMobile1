@@ -33,4 +33,13 @@ class SongbookDataSource {
     );
     return _networkService.execute(request: request);
   }
+
+  Future<Result<void, RequestError>> deleteSongbook(int songbookId) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/songbook/$songbookId/delete",
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
 }

@@ -53,4 +53,10 @@ class UserSongbookDataSource {
       },
     );
   }
+
+  Future<bool> deleteSongbook(int songbookId) async {
+    return _isar.writeTxn(() async {
+      return _isar.userSongbookDtos.delete(songbookId);
+    });
+  }
 }

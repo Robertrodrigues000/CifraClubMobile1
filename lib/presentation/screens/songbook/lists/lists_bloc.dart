@@ -1,13 +1,12 @@
-// coverage:ignore-file
 import 'dart:async';
 
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
-
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
@@ -17,6 +16,7 @@ import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:typed_result/typed_result.dart';
 
 class ListsBloc extends Cubit<ListsState> {
   final GetListLimitState _getListLimitState;
@@ -28,12 +28,22 @@ class ListsBloc extends Cubit<ListsState> {
   final InsertUserSongbook _insertUserSongbook;
   final RefreshAllSongbooks _refreshAllSongbooks;
   final GetAllUserSongbooks _getAllUserSongbooks;
+  final DeleteSongbook _deleteSongbook;
   StreamSubscription<List<Songbook>>? _songbooksSubscription;
   StreamSubscription<UserCredential>? _userSubscription;
 
-  ListsBloc(this._insertUserSongbook, this._refreshAllSongbooks, this._getAllUserSongbooks, this._getCredentialStream,
-      this._logout, this._openLoginPage, this._openUserProfilePage, this._getListLimitState, this._getTotalSongbooks)
-      : super(const ListsState());
+  ListsBloc(
+    this._insertUserSongbook,
+    this._refreshAllSongbooks,
+    this._getAllUserSongbooks,
+    this._getCredentialStream,
+    this._logout,
+    this._openLoginPage,
+    this._openUserProfilePage,
+    this._getListLimitState,
+    this._getTotalSongbooks,
+    this._deleteSongbook,
+  ) : super(const ListsState());
 
   StreamSubscription? _getCredentialStreamSubscription;
   StreamSubscription<ListLimitState>? _listLimitStateSubscription;
@@ -82,6 +92,17 @@ class ListsBloc extends Cubit<ListsState> {
     _totalSongbooksSubscription = _getTotalSongbooks().listen((total) {
       emit(state.copyWith(listCount: total));
     });
+  }
+
+  Future<void> deleteSongbook(int? songbookId) async {
+    final result = await _deleteSongbook(songbookId!);
+
+    result.when(
+      // ignore: avoid_print
+      success: (_) => print("DeleteSongbookSucess"),
+      // ignore: avoid_print
+      failure: (e) => print("Error delete songbook $e"),
+    );
   }
 
   Future<void> logout() => _logout();

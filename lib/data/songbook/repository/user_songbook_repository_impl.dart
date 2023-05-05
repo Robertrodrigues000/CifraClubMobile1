@@ -26,6 +26,11 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   }
 
   @override
+  Future<bool> deleteUserSongbook(int songbookId) {
+    return _userSongbookDataSource.deleteSongbook(songbookId);
+  }
+
+  @override
   Stream<int> getTotalSongbooks() {
     return _userSongbookDataSource.getTotalSongbooks();
   }

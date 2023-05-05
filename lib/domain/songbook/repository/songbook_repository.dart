@@ -9,4 +9,5 @@ abstract class SongbookRepository {
     required DateTime createdAt,
   });
   Future<Result<List<Songbook>, RequestError>> getAllSongbooks();
+  Future<Result<void, RequestError>> deleteSongbook(int songbookId);
 }

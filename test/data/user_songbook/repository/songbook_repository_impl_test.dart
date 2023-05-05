@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
@@ -53,5 +55,20 @@ void main() {
         name: songbook.name, isPublic: songbook.isPublic, createdAt: songbook.createdAt);
 
     expect(result.getOrThrow().id, songbook.id);
+  });
+
+  test("When deleteSongbook is called should delete a songbook", () async {
+    final songbookDataSource = _SongbookDataSourceMock();
+    when(() => songbookDataSource.deleteSongbook(captureAny())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final songbookRepository = SongbookRepositoryImpl(songbookDataSource);
+    final songbookId = Random().nextInt(1000);
+    final result = await songbookRepository.deleteSongbook(songbookId);
+
+    final requestParam = verify(() => songbookDataSource.deleteSongbook(captureAny())).captured.first;
+
+    expect(result.isSuccess, isTrue);
+
+    expect(requestParam, songbookId);
   });
 }

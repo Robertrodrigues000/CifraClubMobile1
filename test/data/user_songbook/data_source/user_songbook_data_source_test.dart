@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cifraclub/data/songbook/data_source/user_songbook_data_source.dart';
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_cifra_dto.dart';
@@ -161,6 +163,56 @@ void main() {
         )
       ];
       expect(() async => userSongbookDataSource.setAll(songbooks), throwsException);
+    });
+  });
+
+  group("When deleteSongbook is called ", () {
+    test("and have id in user songbook list should return true", () async {
+      final songbookId = Random().nextInt(1000);
+
+      await isar.writeTxn(
+        () async {
+          await isar.userSongbookDtos.put(
+            UserSongbookDto(
+              id: songbookId,
+              createdAt: DateTime.now(),
+              lastUpdated: DateTime.now(),
+              name: "old",
+              type: ListTypeDto.user,
+              isPublic: false,
+              totalSongs: 0,
+            ),
+          );
+        },
+      );
+
+      final result = await userSongbookDataSource.deleteSongbook(songbookId);
+
+      expect(result, isTrue);
+    });
+
+    test("and haven't id in user songbook list should return false", () async {
+      final songbookId = Random().nextInt(1000);
+
+      await isar.writeTxn(
+        () async {
+          await isar.userSongbookDtos.put(
+            UserSongbookDto(
+              id: 2000,
+              createdAt: DateTime.now(),
+              lastUpdated: DateTime.now(),
+              name: "old",
+              type: ListTypeDto.user,
+              isPublic: false,
+              totalSongs: 0,
+            ),
+          );
+        },
+      );
+
+      final result = await userSongbookDataSource.deleteSongbook(songbookId);
+
+      expect(result, isFalse);
     });
   });
 

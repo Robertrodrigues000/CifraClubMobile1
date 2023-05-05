@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
@@ -99,6 +100,43 @@ void main() {
       );
       final songbookDataSource = SongbookDataSource(networkService);
       final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name"));
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
+    });
+  });
+
+  group("When deleteSongbook is called", () {
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final songbookId = Random().nextInt(1000);
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      final result = await songbookDataSource.deleteSongbook(songbookId);
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(result.isSuccess, isTrue);
+
+      expect(request.type, NetworkRequestType.post);
+      expect(request.path, "/v3/songbook/$songbookId/delete");
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final songbookId = Random().nextInt(1000);
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      final result = await songbookDataSource.deleteSongbook(songbookId);
+
+      expect(result.isFailure, isTrue);
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });

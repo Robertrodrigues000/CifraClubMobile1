@@ -31,4 +31,9 @@ class SongbookRepositoryImpl extends SongbookRepository {
       (songbookList) => songbookList.map((songbook) => songbook.toDomain()).toList(),
     );
   }
+
+  @override
+  Future<Result<void, RequestError>> deleteSongbook(int songbookId) {
+    return _songbookDataSource.deleteSongbook(songbookId);
+  }
 }

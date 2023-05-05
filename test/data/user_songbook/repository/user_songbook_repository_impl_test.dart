@@ -76,6 +76,36 @@ void main() {
     expect(userSongbookDtos.first.name, songbook.name);
   });
 
+  group("when deleteSongbook is called", () {
+    test("and is sucess should return true", () async {
+      final userSongbookDataSource = _UserSongbookDataSourceMock();
+
+      when(() => userSongbookDataSource.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
+
+      final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+      final response = await songbookRepository.deleteUserSongbook(1000);
+
+      var id = verify(() => userSongbookDataSource.deleteSongbook(captureAny())).captured.first as int;
+
+      expect(response, isTrue);
+      expect(id, 1000);
+    });
+
+    test("and is fails should return false", () async {
+      final userSongbookDataSource = _UserSongbookDataSourceMock();
+
+      when(() => userSongbookDataSource.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(false));
+
+      final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+      final response = await songbookRepository.deleteUserSongbook(1000);
+
+      var id = verify(() => userSongbookDataSource.deleteSongbook(captureAny())).captured.first as int;
+
+      expect(response, isFalse);
+      expect(id, 1000);
+    });
+  });
+
   test("when getTotalSongbooks is called, should return the total of user songbooks", () async {
     final userSongbookDataSource = _UserSongbookDataSourceMock();
 

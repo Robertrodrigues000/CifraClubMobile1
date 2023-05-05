@@ -209,7 +209,12 @@ class _ListsScreenState extends State<ListsScreen> {
             SliverToBoxAdapter(
               child: SizedBox.fromSize(size: const Size.fromHeight(20)),
             ),
-            UserLists(lists: state.userLists)
+            UserLists(
+              lists: state.userLists,
+              onTap: (songbook) {
+                _bloc.deleteSongbook(songbook.id);
+              },
+            )
           ],
         ),
       );

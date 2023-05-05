@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
@@ -88,6 +89,8 @@ class _GetTotalSongbooksStreamMock extends Mock implements GetTotalSongbooks {
   }
 }
 
+class _DeleteSongbookMock extends Mock implements DeleteSongbook {}
+
 void main() {
   ListsBloc getBloc({
     _GetListLimitStateStreamMock? getListLimitState,
@@ -99,6 +102,7 @@ void main() {
     _GetCredentialStreamMock? getCredentialStreamMock,
     _OpenLoginPageMock? openLoginPageMock,
     _OpenUserProfileMock? openUserProfileMock,
+    _DeleteSongbookMock? deleteSongbookMock,
   }) =>
       ListsBloc(
         insertUserSongbookMock ?? _InsertUserSongbookMock(),
@@ -110,6 +114,7 @@ void main() {
         openUserProfileMock ?? _OpenUserProfileMock(),
         getListLimitState ?? _GetListLimitStateStreamMock(),
         getTotalSongbooks ?? _GetTotalSongbooksStreamMock(),
+        deleteSongbookMock ?? _DeleteSongbookMock(),
       );
 
   test("When logout should call 'Logout' use case", () async {
@@ -225,6 +230,20 @@ void main() {
         isA<ListsState>().having((state) => state.listState, "List State", ListLimitState.withinLimit),
         isA<ListsState>().having((state) => state.listCount, "List Count", 5)
       ],
+    );
+  });
+
+  group("when deleteSongbook", () {
+    final deleteSongbook = _DeleteSongbookMock();
+    when(() => deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    blocTest(
+      "should delete songbook",
+      build: () => getBloc(deleteSongbookMock: deleteSongbook),
+      act: (bloc) => bloc.deleteSongbook(1000),
+      verify: (bloc) {
+        verify(() => deleteSongbook(1000)).called(1);
+      },
     );
   });
 }
