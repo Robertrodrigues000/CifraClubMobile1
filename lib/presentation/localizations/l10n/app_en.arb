@@ -145,6 +145,7 @@
         }  
     },
     "listLimitDescription2": "more, be parte of ",
+    "emptyList":"Empty list",
     "songbookRecents":"Recently viewed",
     "songbookFavorites":"Favorite tabs",
     "songbookCanPlay":"I can play it",

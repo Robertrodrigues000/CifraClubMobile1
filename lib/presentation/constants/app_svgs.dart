@@ -40,6 +40,7 @@ class AppSvgs {
   static const songbookWillPlayIcon = "assets/images/songbook_will_play_icon.svg";
   static const songbookDidPlayIcon = "assets/images/songbook_did_play_icon.svg";
   static const songbookRecentsIcon = "assets/images/songbook_recents_icon.svg";
+  static const songbookOptionsIcon = "assets/images/songbook_options_icon.svg";
 
   static const imagePlaceholder = "assets/images/image_placeholder.svg";
   static const addCifraIcon = "assets/images/add_cifra_icon.svg";

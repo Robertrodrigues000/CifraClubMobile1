@@ -42,7 +42,7 @@ class _ImageGroup extends StatelessWidget {
                     child: SmallListImage(image: images[0])),
               ),
             ),
-            if (images.length == 4)
+            if (images.length >= 4)
               Align(
                 alignment: Alignment.topRight,
                 child: SmallListImage(image: images[3]),

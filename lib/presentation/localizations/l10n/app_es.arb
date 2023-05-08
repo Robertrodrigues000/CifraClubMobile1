@@ -95,6 +95,7 @@
     "listLimitTitle": "Consigue más espacio para tus listas!",
     "listLimitDescription1": "Has alcanzado el límite de {limit} listas creadas. Para crear hasta ",
     "listLimitDescription2": "más, únete al ",
+    "emptyList":"Lista vacía",
     "songbookRecents":"Visualizado recientemente",
     "songbookFavorites":"Cifrados favoritos",
     "songbookCanPlay":"Logré tocar",
