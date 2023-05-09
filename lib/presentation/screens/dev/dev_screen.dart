@@ -1,4 +1,6 @@
 // coverage:ignore-file
+// ignore_for_file: avoid_print
+
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -8,6 +10,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
@@ -119,7 +122,6 @@ class _DevScreenState extends State<DevScreen> {
                   title: const Text("Bottom Sheet"),
                   onTap: () async {
                     final result = await widget.devBottomSheet.open(context);
-                    // ignore: avoid_print
                     print(result);
                   },
                 ),
@@ -151,6 +153,37 @@ class _DevScreenState extends State<DevScreen> {
                   title: const Text("Get orders"),
                   onTap: () {
                     _bloc.getOrders();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.g_translate_rounded,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("List Option BS"),
+                  onTap: () {
+                    ListOptionsBottomSheet(
+                      onTap: (options) {
+                        switch (options) {
+                          case OptionsBottomSheet.clear:
+                            print("clear");
+                            break;
+                          case OptionsBottomSheet.delete:
+                            print("delete");
+                            break;
+                          case OptionsBottomSheet.rename:
+                            print("rename");
+                            break;
+                          case OptionsBottomSheet.privacy:
+                            print("privacy");
+                            break;
+                          case OptionsBottomSheet.share:
+                            print("share");
+                            break;
+                        }
+                      },
+                      isUserList: true,
+                    ).show(context);
                   },
                 ),
               ],

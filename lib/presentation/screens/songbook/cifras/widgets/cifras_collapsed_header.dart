@@ -121,7 +121,7 @@ class CifrasCollapsedHeaderDelegate extends SliverPersistentHeaderDelegate {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 4, bottom: 4),
                           child: SvgPicture.asset(
-                            AppSvgs.privacyIcon,
+                            AppSvgs.privacyJustMeIcon,
                             width: 16,
                             height: 16,
                             color: context.colors.textSecondary,

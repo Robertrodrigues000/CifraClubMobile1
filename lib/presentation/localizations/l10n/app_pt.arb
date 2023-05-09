@@ -99,6 +99,12 @@
     "songbookRecents":"Visto recentemente",
     "songbookFavorites":"Cifras favoritas",
     "songbookCanPlay":"Consegui tocar",
-    "songbookCantPlay":"Ainda vou tocar"
+    "songbookCantPlay":"Ainda vou tocar",
 
+    "renameList": "Renomear Lista",
+    "shareList": "Compartilhar",
+    "clearList": "Limpar Lista",
+    "deleteList": "Excluir Lista",
+    "privacyList": "Privacidade",
+    "listOptions": "Opções da cifra"
 }

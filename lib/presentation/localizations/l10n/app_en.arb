@@ -149,6 +149,12 @@
     "songbookRecents":"Recently viewed",
     "songbookFavorites":"Favorite tabs",
     "songbookCanPlay":"I can play it",
-    "songbookCantPlay":"I'll play it soon"
+    "songbookCantPlay":"I'll play it soon",
 
+    "renameList": "Rename List",
+    "shareList": "Share",
+    "clearList": "Clear List",
+    "deleteList": "Delete List",
+    "privacyList": "Privacy",
+    "listOptions": "List options"
 }

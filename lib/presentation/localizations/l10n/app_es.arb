@@ -99,5 +99,12 @@
     "songbookRecents":"Visualizado recientemente",
     "songbookFavorites":"Cifrados favoritos",
     "songbookCanPlay":"Logré tocar",
-    "songbookCantPlay":"Aún voy a tocar"
+    "songbookCantPlay":"Aún voy a tocar",
+
+    "renameList": "Renombrar Lista",
+    "shareList": "Compartir",
+    "clearList": "Limpiar Lista",
+    "deleteList": "Eliminar Lista",
+    "privacyList": "Privacidad",
+    "listOptions": "Opciones de la lista"
 }

@@ -48,6 +48,11 @@ class AppSvgs {
   static const shareIcon = "assets/images/share_icon.svg";
   static const overflowIcon = "assets/images/overflow_icon.svg";
   static const backArrowIcon = "assets/images/back_arrow_icon.svg";
-  static const privacyIcon = "assets/images/privacy_icon.svg";
+  static const privacyJustMeIcon = "assets/images/privacy_just_me_icon.svg";
   static const closeIcon = "assets/images/close_icon.svg";
+
+  static const privacyIcon = "assets/images/privacy_icon.svg";
+  static const musicalStylesIcon = "assets/images/musical_styles_icon.svg";
+  static const deleteIcon = "assets/images/delete_icon.svg";
+  static const clearIcon = "assets/images/clear_icon.svg";
 }
