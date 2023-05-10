@@ -7,16 +7,13 @@ part of 'songbook_input_dto.dart';
 // **************************************************************************
 
 SongbookInputDto _$SongbookInputDtoFromJson(Map<String, dynamic> json) => SongbookInputDto(
-      name: json['name'] as String,
-      isPublic: json['public'] as bool? ?? true,
+      name: json['name'] as String?,
+      isPublic: json['public'] as bool,
       timestamp: json['timestamp'] as String?,
     );
 
 Map<String, dynamic> _$SongbookInputDtoToJson(SongbookInputDto instance) {
-  final val = <String, dynamic>{
-    'name': instance.name,
-    'public': instance.isPublic,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -24,6 +21,8 @@ Map<String, dynamic> _$SongbookInputDtoToJson(SongbookInputDto instance) {
     }
   }
 
+  writeNotNull('name', instance.name);
+  val['public'] = instance.isPublic;
   writeNotNull('timestamp', instance.timestamp);
   return val;
 }

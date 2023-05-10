@@ -5,6 +5,7 @@ import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
 import 'package:cifraclub/data/songbook/repository/songbook_repository_impl.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -18,7 +19,7 @@ class _SongbookDtoMock extends Mock implements SongbookDto {}
 
 void main() {
   setUpAll(() {
-    registerFallbackValue(SongbookInputDto(name: "name"));
+    registerFallbackValue(SongbookInputDto(name: "name", isPublic: true));
   });
 
   test("When getAllSongbooks is called, should return songbook domain entity", () async {
@@ -70,5 +71,41 @@ void main() {
     expect(result.isSuccess, isTrue);
 
     expect(requestParam, songbookId);
+  });
+
+  group("When updateSongbookData is called", () {
+    test("and request is successful should update songbook on API", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+      when(() => songbookDataSource.updateSongbookData(any(), any()))
+          .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+      final songbookRepository = SongbookRepositoryImpl(songbookDataSource);
+      final result = await songbookRepository.updateSongbookData(
+        lastUpdated: DateTime.now(),
+        songbookId: 0,
+        name: "New Songbook",
+        isPublic: true,
+      );
+
+      expect(result.isSuccess, isTrue);
+    });
+
+    test("and request fails should return request error", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+      when(() => songbookDataSource.updateSongbookData(any(), any()))
+          .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+      final songbookRepository = SongbookRepositoryImpl(songbookDataSource);
+      final result = await songbookRepository.updateSongbookData(
+        lastUpdated: DateTime.now(),
+        songbookId: 0,
+        name: "New Songbook",
+        isPublic: true,
+      );
+
+      expect(result.isFailure, isTrue);
+      expect(result.getError(), isA<ServerError>());
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
   });
 }

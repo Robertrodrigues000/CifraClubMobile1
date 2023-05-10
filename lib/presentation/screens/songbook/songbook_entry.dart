@@ -34,6 +34,7 @@ class SongbookEntry extends ScreenEntry {
                 getIt(),
                 getIt(),
                 getIt(),
+                getIt(),
               )),
       BlocProvider(create: (context) => CifrasBloc()),
       BlocProvider(create: (context) => SongbookBloc()),

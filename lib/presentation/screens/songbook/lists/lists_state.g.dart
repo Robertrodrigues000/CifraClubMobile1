@@ -15,6 +15,8 @@ abstract class _$ListsStateCWProxy {
 
   ListsState user(User? user);
 
+  ListsState isError(bool? isError);
+
   ListsState isPro(bool isPro);
 
   ListsState listCount(int listCount);
@@ -34,6 +36,7 @@ abstract class _$ListsStateCWProxy {
     List<Songbook>? specialLists,
     bool? isSyncing,
     User? user,
+    bool? isError,
     bool? isPro,
     int? listCount,
     int? listLimit,
@@ -60,6 +63,9 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
   ListsState user(User? user) => this(user: user);
 
   @override
+  ListsState isError(bool? isError) => this(isError: isError);
+
+  @override
   ListsState isPro(bool isPro) => this(isPro: isPro);
 
   @override
@@ -84,6 +90,7 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
     Object? specialLists = const $CopyWithPlaceholder(),
     Object? isSyncing = const $CopyWithPlaceholder(),
     Object? user = const $CopyWithPlaceholder(),
+    Object? isError = const $CopyWithPlaceholder(),
     Object? isPro = const $CopyWithPlaceholder(),
     Object? listCount = const $CopyWithPlaceholder(),
     Object? listLimit = const $CopyWithPlaceholder(),
@@ -106,6 +113,10 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
           ? _value.user
           // ignore: cast_nullable_to_non_nullable
           : user as User?,
+      isError: isError == const $CopyWithPlaceholder()
+          ? _value.isError
+          // ignore: cast_nullable_to_non_nullable
+          : isError as bool?,
       isPro: isPro == const $CopyWithPlaceholder() || isPro == null
           ? _value.isPro
           // ignore: cast_nullable_to_non_nullable

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class UserLists extends StatelessWidget {
   const UserLists({super.key, required this.lists, required this.onTap});
   final List<Songbook> lists;
-  final Function(Songbook songbook) onTap;
+  final Function(Songbook) onTap;
 
   @override
   Widget build(BuildContext context) {

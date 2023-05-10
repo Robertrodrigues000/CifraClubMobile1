@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -91,6 +92,8 @@ class _GetTotalSongbooksStreamMock extends Mock implements GetTotalSongbooks {
 
 class _DeleteSongbookMock extends Mock implements DeleteSongbook {}
 
+class _UpdateSongbookDataMock extends Mock implements UpdateSongbookData {}
+
 void main() {
   ListsBloc getBloc({
     _GetListLimitStateStreamMock? getListLimitState,
@@ -103,6 +106,7 @@ void main() {
     _OpenLoginPageMock? openLoginPageMock,
     _OpenUserProfileMock? openUserProfileMock,
     _DeleteSongbookMock? deleteSongbookMock,
+    _UpdateSongbookDataMock? updateSongbookDataMock,
   }) =>
       ListsBloc(
         insertUserSongbookMock ?? _InsertUserSongbookMock(),
@@ -115,6 +119,7 @@ void main() {
         getListLimitState ?? _GetListLimitStateStreamMock(),
         getTotalSongbooks ?? _GetTotalSongbooksStreamMock(),
         deleteSongbookMock ?? _DeleteSongbookMock(),
+        updateSongbookDataMock ?? _UpdateSongbookDataMock(),
       );
 
   test("When logout should call 'Logout' use case", () async {
@@ -213,6 +218,51 @@ void main() {
         act: (bloc) => bloc.createNewSongbook("name"),
         verify: (bloc) {
           verify(() => insertUserSongbookMock(name: "name")).called(1);
+        },
+      );
+    });
+
+    group("When update a songbook and request is successful", () {
+      registerFallbackValue(getFakeSongbook());
+      final updateSongbookData = _UpdateSongbookDataMock();
+      when(
+        () => updateSongbookData(
+          songbook: any(named: "songbook"),
+          isPublic: any(named: "isPublic"),
+          name: any(named: "name"),
+        ),
+      ).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+      final songbook = getFakeSongbook();
+
+      blocTest(
+        "should call use case",
+        build: () => getBloc(updateSongbookDataMock: updateSongbookData),
+        act: (bloc) => bloc.updateSongbookData(songbook: songbook),
+        verify: (bloc) {
+          verify(() => updateSongbookData(songbook: songbook)).called(1);
+        },
+      );
+    });
+
+    group("When update a songbook and request fails", () {
+      registerFallbackValue(getFakeSongbook());
+      final updateSongbookData = _UpdateSongbookDataMock();
+      when(
+        () => updateSongbookData(
+          songbook: any(named: "songbook"),
+          isPublic: any(named: "isPublic"),
+          name: any(named: "name"),
+        ),
+      ).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+      final songbook = getFakeSongbook();
+
+      blocTest(
+        "should call use case",
+        build: () => getBloc(updateSongbookDataMock: updateSongbookData),
+        act: (bloc) => bloc.updateSongbookData(songbook: songbook),
+        expect: () => [isA<ListsState>().having((state) => state.isError, "rename erro", true)],
+        verify: (bloc) {
+          verify(() => updateSongbookData(songbook: songbook)).called(1);
         },
       );
     });

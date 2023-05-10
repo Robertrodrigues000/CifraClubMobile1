@@ -10,4 +10,10 @@ abstract class SongbookRepository {
   });
   Future<Result<List<Songbook>, RequestError>> getAllSongbooks();
   Future<Result<void, RequestError>> deleteSongbook(int songbookId);
+  Future<Result<void, RequestError>> updateSongbookData({
+    required int songbookId,
+    String? name,
+    required bool isPublic,
+    required DateTime lastUpdated,
+  });
 }

@@ -22,12 +22,18 @@ void main() {
   late ListsBloc bloc;
 
   setUpAll(() {
+    registerFallbackValue(getFakeSongbook());
+
     bloc = _ListsBlocMock();
     when(bloc.init).thenReturn(null);
     when(bloc.openLoginPage).thenReturn(null);
     when(bloc.openUserProfilePage).thenReturn(null);
     when(() => bloc.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.logout).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.updateSongbookData(
+        songbook: any(named: "songbook"),
+        isPublic: any(named: "isPublic"),
+        songbookName: any(named: "songbookName"))).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.createNewSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
@@ -108,7 +114,28 @@ void main() {
     verify(() => bloc.createNewSongbook(any())).called(1);
   });
 
-  testWidgets("Tapping songbook tile should call delete songbook", (widgetTester) async {
+  // testWidgets("Tapping songbook tile should call delete songbook", (widgetTester) async {
+  //   final songbook = getFakeSongbook();
+  //   bloc.mockStream(ListsState(userLists: [getFakeSongbook(), songbook]));
+
+  //   await widgetTester.pumpWidgetWithWrapper(
+  //     BlocProvider<ListsBloc>.value(
+  //       value: bloc,
+  //       child: ListsScreen(onTapSongbook: (_) {}),
+  //     ),
+  //   );
+
+  //   final songbookTile = find.text(songbook.name, skipOffstage: false);
+
+  //   expect(songbookTile, findsOneWidget);
+  //   await widgetTester.scrollUntilVisible(find.text(songbook.name), 100);
+  //   await widgetTester.pumpAndSettle();
+  //   await widgetTester.tap(songbookTile);
+
+  //   verify(() => bloc.deleteSongbook(songbook.id)).called(1);
+  // });
+
+  testWidgets("Tapping songbook tile should call update songbook", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(ListsState(userLists: [getFakeSongbook(), songbook]));
 
@@ -122,10 +149,13 @@ void main() {
     final songbookTile = find.text(songbook.name, skipOffstage: false);
 
     expect(songbookTile, findsOneWidget);
-    await widgetTester.scrollUntilVisible(find.text(songbook.name), 100);
+    await widgetTester.scrollUntilVisible(songbookTile, 100);
     await widgetTester.pumpAndSettle();
     await widgetTester.tap(songbookTile);
 
-    verify(() => bloc.deleteSongbook(songbook.id)).called(1);
+    verify(() => bloc.updateSongbookData(
+        songbook: any(named: "songbook"),
+        isPublic: any(named: "isPublic"),
+        songbookName: any(named: "songbookName"))).called(1);
   });
 }

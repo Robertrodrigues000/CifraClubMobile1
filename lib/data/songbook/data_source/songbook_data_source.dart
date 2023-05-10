@@ -42,4 +42,14 @@ class SongbookDataSource {
     );
     return _networkService.execute(request: request);
   }
+
+  Future<Result<void, RequestError>> updateSongbookData(int songbookId, SongbookInputDto songbookInputDto) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.put,
+      path: "/v3/songbook/$songbookId",
+      data: songbookInputDto.toJson(),
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
 }

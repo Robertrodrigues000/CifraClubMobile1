@@ -83,7 +83,7 @@ void main() {
       await networkService.mock<NewSongbookResponseDto>(response: mockResponse);
 
       final songbookDataSource = SongbookDataSource(networkService);
-      final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name"));
+      final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name", isPublic: true));
 
       expect(result.isSuccess, true);
       final newSongbookResponse = result.getOrThrow();
@@ -99,7 +99,7 @@ void main() {
         (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
       );
       final songbookDataSource = SongbookDataSource(networkService);
-      final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name"));
+      final result = await songbookDataSource.insertSongbook(SongbookInputDto(name: "name", isPublic: true));
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });
@@ -137,6 +137,42 @@ void main() {
       final result = await songbookDataSource.deleteSongbook(songbookId);
 
       expect(result.isFailure, isTrue);
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
+    });
+  });
+
+  group("When updateSongbookData is called", () {
+    const songbookId = 0;
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final result =
+          await songbookDataSource.updateSongbookData(songbookId, SongbookInputDto(name: "name", isPublic: false));
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/songbook/$songbookId");
+      expect(request.type, NetworkRequestType.put);
+
+      expect(result.isSuccess, true);
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result =
+          await songbookDataSource.updateSongbookData(songbookId, SongbookInputDto(name: "name", isPublic: false));
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });

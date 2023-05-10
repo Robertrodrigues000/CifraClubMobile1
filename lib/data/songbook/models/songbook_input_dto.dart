@@ -5,14 +5,14 @@ part 'songbook_input_dto.g.dart';
 
 @JsonSerializable(includeIfNull: false)
 class SongbookInputDto {
-  final String name;
+  final String? name;
   @JsonKey(name: "public")
   final bool isPublic;
   final String? timestamp;
 
   SongbookInputDto({
     required this.name,
-    this.isPublic = true,
+    required this.isPublic,
     this.timestamp,
   });
 

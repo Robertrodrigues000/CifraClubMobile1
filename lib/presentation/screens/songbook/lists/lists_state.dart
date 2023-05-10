@@ -12,6 +12,7 @@ class ListsState {
   final List<Songbook> specialLists;
   final bool isSyncing;
   final User? user;
+  final bool? isError;
   final bool isPro;
   final int listCount;
   final int listLimit;
@@ -22,6 +23,7 @@ class ListsState {
     this.specialLists = const [],
     this.isSyncing = false,
     this.user,
+    this.isError,
     this.isPro = false,
     this.listCount = 0,
     this.listLimit = 10,

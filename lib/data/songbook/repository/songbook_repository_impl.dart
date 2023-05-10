@@ -36,4 +36,19 @@ class SongbookRepositoryImpl extends SongbookRepository {
   Future<Result<void, RequestError>> deleteSongbook(int songbookId) {
     return _songbookDataSource.deleteSongbook(songbookId);
   }
+
+  @override
+  Future<Result<void, RequestError>> updateSongbookData({
+    required songbookId,
+    String? name,
+    required bool isPublic,
+    required DateTime lastUpdated,
+  }) {
+    final input = SongbookInputDto(
+      name: name,
+      isPublic: isPublic,
+      timestamp: lastUpdated.format(apiDateTimeFormat),
+    );
+    return _songbookDataSource.updateSongbookData(songbookId, input);
+  }
 }
