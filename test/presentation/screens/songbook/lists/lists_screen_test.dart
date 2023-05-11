@@ -49,7 +49,8 @@ void main() {
       ),
     );
 
-    await widgetTester.tap(find.byType(UserCard));
+    await widgetTester.pumpAndSettle();
+    await widgetTester.tap(find.byType(UserCard, skipOffstage: false));
     verify(bloc.openLoginPage).called(1);
   });
 

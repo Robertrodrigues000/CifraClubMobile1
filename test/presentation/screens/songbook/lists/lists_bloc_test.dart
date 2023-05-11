@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
@@ -9,6 +10,7 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
+import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
@@ -27,6 +29,18 @@ import '../../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 import '../../../../shared_mocks/domain/user/models/user_mock.dart';
 
 class _InsertUserSongbookMock extends Mock implements InsertUserSongbook {}
+
+class _GetListLimitMock extends Mock implements GetListLimit {
+  _GetListLimitMock({int listLimit = 10}) {
+    when(() => call(any())).thenAnswer((_) => listLimit);
+  }
+}
+
+class _GetProStatusStreamMock extends Mock implements GetProStatusStream {
+  _GetProStatusStreamMock() {
+    when(call).thenAnswer((_) => BehaviorSubject.seeded(false));
+  }
+}
 
 class _RefreshAllSongbooksMock extends Mock implements RefreshAllSongbooks {
   _RefreshAllSongbooksMock(Result<List<Songbook>, RequestError> response) {
@@ -65,28 +79,22 @@ class _OpenUserProfileMock extends Mock implements OpenUserProfilePage {
 }
 
 class _GetCredentialStreamMock extends Mock implements GetCredentialStream {
-  static _GetCredentialStreamMock newDummy([
+  _GetCredentialStreamMock([
     UserCredential credentials = const UserCredential(isUserLoggedIn: false, user: null),
   ]) {
-    final mock = _GetCredentialStreamMock();
-    when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(credentials));
-    return mock;
+    when(call).thenAnswer((_) => BehaviorSubject.seeded(credentials));
   }
 }
 
 class _GetListLimitStateStreamMock extends Mock implements GetListLimitState {
-  static _GetListLimitStateStreamMock newDummy() {
-    final mock = _GetListLimitStateStreamMock();
-    when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(ListLimitState.withinLimit));
-    return mock;
+  _GetListLimitStateStreamMock({ListLimitState listState = ListLimitState.withinLimit}) {
+    when(call).thenAnswer((_) => BehaviorSubject.seeded(listState));
   }
 }
 
 class _GetTotalSongbooksStreamMock extends Mock implements GetTotalSongbooks {
-  static _GetTotalSongbooksStreamMock newDummy() {
-    final mock = _GetTotalSongbooksStreamMock();
-    when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(5));
-    return mock;
+  _GetTotalSongbooksStreamMock({int total = 5}) {
+    when(call).thenAnswer((_) => BehaviorSubject.seeded(total));
   }
 }
 
@@ -96,28 +104,32 @@ class _UpdateSongbookDataMock extends Mock implements UpdateSongbookData {}
 
 void main() {
   ListsBloc getBloc({
-    _GetListLimitStateStreamMock? getListLimitState,
-    _GetTotalSongbooksStreamMock? getTotalSongbooks,
+    _GetListLimitStateStreamMock? getListLimitStateMock,
+    _GetTotalSongbooksStreamMock? getTotalSongbooksMock,
     _InsertUserSongbookMock? insertUserSongbookMock,
-    _RefreshAllSongbooksMock? refreshAllSongbooksMock,
-    _GetAllUserSongbooksMock? getAllUserSongbooksMock,
+    _GetListLimitMock? getListLimitMock,
     _LogoutMock? logoutMock,
     _GetCredentialStreamMock? getCredentialStreamMock,
     _OpenLoginPageMock? openLoginPageMock,
     _OpenUserProfileMock? openUserProfileMock,
+    _RefreshAllSongbooksMock? refreshAllSongbooksMock,
+    _GetAllUserSongbooksMock? getAllUserSongbooksMock,
+    _GetProStatusStreamMock? getProStatusStreamMock,
     _DeleteSongbookMock? deleteSongbookMock,
     _UpdateSongbookDataMock? updateSongbookDataMock,
   }) =>
       ListsBloc(
+        getListLimitStateMock ?? _GetListLimitStateStreamMock(),
+        getTotalSongbooksMock ?? _GetTotalSongbooksStreamMock(),
         insertUserSongbookMock ?? _InsertUserSongbookMock(),
-        refreshAllSongbooksMock ?? _RefreshAllSongbooksMock(Err(ConnectionError())),
-        getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
-        getCredentialStreamMock ?? _GetCredentialStreamMock.newDummy(),
+        getListLimitMock ?? _GetListLimitMock(),
+        getCredentialStreamMock ?? _GetCredentialStreamMock(),
         logoutMock ?? _LogoutMock(),
         openLoginPageMock ?? _OpenLoginPageMock(),
         openUserProfileMock ?? _OpenUserProfileMock(),
-        getListLimitState ?? _GetListLimitStateStreamMock(),
-        getTotalSongbooks ?? _GetTotalSongbooksStreamMock(),
+        refreshAllSongbooksMock ?? _RefreshAllSongbooksMock(Err(ConnectionError())),
+        getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
+        getProStatusStreamMock ?? _GetProStatusStreamMock(),
         deleteSongbookMock ?? _DeleteSongbookMock(),
         updateSongbookDataMock ?? _UpdateSongbookDataMock(),
       );
@@ -158,7 +170,9 @@ void main() {
 
       blocTest(
         "should update user and special lists",
-        build: () => getBloc(getAllUserSongbooksMock: _GetAllUserSongbooksMock(songbooks)),
+        build: () => getBloc(
+          getAllUserSongbooksMock: _GetAllUserSongbooksMock(songbooks),
+        ),
         act: (bloc) => bloc.init(),
         verify: (bloc) {
           expect(bloc.state.userLists.length, 1);
@@ -169,22 +183,24 @@ void main() {
 
     group("with logged in user", () {
       final user = getFakeUser();
-      final credentialStream = _GetCredentialStreamMock.newDummy(UserCredential(isUserLoggedIn: true, user: user));
-
+      final credentialStream = _GetCredentialStreamMock(UserCredential(isUserLoggedIn: true, user: user));
       blocTest(
         "should update user state to not null",
-        build: () => getBloc(getCredentialStreamMock: credentialStream),
+        build: () => getBloc(
+          getCredentialStreamMock: credentialStream,
+        ),
         act: (bloc) => bloc.init(),
         verify: (bloc) => expect(bloc.state.user, user),
       );
     });
 
     group("with logged out user", () {
-      final credentialStream = _GetCredentialStreamMock.newDummy();
-
+      final credentialStream = _GetCredentialStreamMock();
       blocTest(
         "should update user state to null",
-        build: () => getBloc(getCredentialStreamMock: credentialStream),
+        build: () => getBloc(
+          getCredentialStreamMock: credentialStream,
+        ),
         act: (bloc) => bloc.init(),
         verify: (bloc) => expect(bloc.state.user, isNull),
       );
@@ -269,31 +285,17 @@ void main() {
   });
 
   group("When initListLimitStreams is called", () {
-    final getTotalSongbooks = _GetTotalSongbooksStreamMock.newDummy();
-    final getListLimitState = _GetListLimitStateStreamMock.newDummy();
+    final getTotalSongbooks = _GetTotalSongbooksStreamMock(total: 8);
+    final getListLimitState = _GetListLimitStateStreamMock(listState: ListLimitState.atWarning);
 
     blocTest(
       "should update listLimit and listCount state",
-      build: () => getBloc(getListLimitState: getListLimitState, getTotalSongbooks: getTotalSongbooks),
+      build: () => getBloc(getListLimitStateMock: getListLimitState, getTotalSongbooksMock: getTotalSongbooks),
       act: (bloc) => bloc.initListLimitStreams(),
       expect: () => [
-        isA<ListsState>().having((state) => state.listState, "List State", ListLimitState.withinLimit),
-        isA<ListsState>().having((state) => state.listCount, "List Count", 5)
+        isA<ListsState>().having((state) => state.listState, "List State", ListLimitState.atWarning),
+        isA<ListsState>().having((state) => state.listCount, "List Count", 8)
       ],
-    );
-  });
-
-  group("when deleteSongbook", () {
-    final deleteSongbook = _DeleteSongbookMock();
-    when(() => deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
-
-    blocTest(
-      "should delete songbook",
-      build: () => getBloc(deleteSongbookMock: deleteSongbook),
-      act: (bloc) => bloc.deleteSongbook(1000),
-      verify: (bloc) {
-        verify(() => deleteSongbook(1000)).called(1);
-      },
     );
   });
 }

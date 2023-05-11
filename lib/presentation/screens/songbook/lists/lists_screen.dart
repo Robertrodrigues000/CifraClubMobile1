@@ -1,13 +1,15 @@
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'dart:math';
 
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit_card.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_lists.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,7 @@ class _ListsScreenState extends State<ListsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _bloc.init();
+    _bloc.initListLimitStreams();
   }
 
   @override
@@ -113,6 +116,20 @@ class _ListsScreenState extends State<ListsScreen> {
                   child: Text(
                     context.text.newlyCreated,
                     style: context.typography.title3,
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ListLimitCard(
+                    listCount: state.listCount,
+                    limit: state.listLimit,
+                    isPro: state.isPro,
+                    isWithinLimit: state.listState == ListLimitState.withinLimit,
+                    // coverage:ignore-start
+                    onTap: () {},
+                    // coverage:ignore-end
                   ),
                 ),
               ),
