@@ -6,12 +6,14 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
+import 'package:cifraclub/presentation/constants/app_urls.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
+import 'package:cifraclub/presentation/widgets/share_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -184,6 +186,21 @@ class _DevScreenState extends State<DevScreen> {
                       },
                       isUserList: true,
                     ).show(context);
+                  },
+                ),
+                ShareLinkBuilder(
+                  link: AppUrls.cifraListUrlFormat(549746031, 9992196),
+                  builder: (context, shareLink) {
+                    return ListTile(
+                      leading: Icon(
+                        Icons.share,
+                        color: context.colors.textPrimary,
+                      ),
+                      title: const Text("Share Test"),
+                      onTap: () async {
+                        await shareLink();
+                      },
+                    );
                   },
                 ),
               ],

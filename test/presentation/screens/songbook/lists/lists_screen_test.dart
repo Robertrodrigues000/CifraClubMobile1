@@ -23,7 +23,6 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(getFakeSongbook());
-
     bloc = _ListsBlocMock();
     when(bloc.init).thenReturn(null);
     when(bloc.openLoginPage).thenReturn(null);

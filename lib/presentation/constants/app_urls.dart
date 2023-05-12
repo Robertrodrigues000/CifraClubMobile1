@@ -9,4 +9,7 @@ class AppUrls {
   static const twitterUrl = "https://twitter.com/cifraclub";
   static const tiktokUrl = "https://www.tiktok.com/@cifraclub";
   static const instagramUrl = "https://www.instagram.com/cifraclub/";
+
+  static String cifraListUrlFormat(int ccid, int idCifraClub) =>
+      "https://m.cifraclub.com.br/musico/$ccid/repertorio/$idCifraClub/";
 }
