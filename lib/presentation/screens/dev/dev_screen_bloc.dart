@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
+import 'package:cifraclub/domain/preferences/use_case/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
@@ -18,6 +19,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final InAppPurchaseRepository _inAppPurchaseRepository;
   final GetOrders _getOrders;
   final PostPurchaseOrder _postPurchaseOrder;
+  final GetIsProPreference _getIsProPreference;
 
   DevScreenBloc(
     this._getProducts,
@@ -26,6 +28,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._inAppPurchaseRepository,
     this._getOrders,
     this._postPurchaseOrder,
+    this._getIsProPreference,
   ) : super(const DevScreenState(isLoading: false));
 
   void initPurchaseStream() {
@@ -73,7 +76,11 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     print(result);
   }
 
-  void toggleIsLoading() {
+  void toggleIsLoading() async {
+    final isPro = _getIsProPreference();
+    // ignore: avoid_print
+    print(isPro);
+
     emit(DevScreenState(isLoading: !state.isLoading));
   }
 }

@@ -59,7 +59,8 @@ dependencies:
   quiver: ^3.2.1
   rxdart: ^0.27.7
   scroll_loop_auto_scroll: ^0.0.5
-  share_plus: ^6.3.4
+  share_plus: ^7.0.0
+  shared_preferences: ^2.1.0
   typed_result: ^1.0.1
   url_launcher: ^6.1.10
 
