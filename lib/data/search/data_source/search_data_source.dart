@@ -22,4 +22,15 @@ class SearchDataSource {
         });
     return networkService.execute(request: request);
   }
+
+  Future<Result<SearchResponseDto, RequestError>> getSongs({required String query}) async {
+    var request = NetworkRequest(
+        type: NetworkRequestType.get,
+        path: "https://solr.sscdn.co/cc/c2/",
+        queryParams: {"q": query},
+        parser: (data) {
+          return SearchResponseDto.fromJson(jsonDecode(data) as Map<String, dynamic>);
+        });
+    return networkService.execute(request: request);
+  }
 }

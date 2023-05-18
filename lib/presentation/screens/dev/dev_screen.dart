@@ -188,6 +188,16 @@ class _DevScreenState extends State<DevScreen> {
                     ).show(context);
                   },
                 ),
+                ListTile(
+                  leading: Icon(
+                    Icons.add_chart_sharp,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Search Songs"),
+                  onTap: () {
+                    _bloc.getSongs();
+                  },
+                ),
                 ShareLinkBuilder(
                   link: AppUrls.cifraListUrlFormat(549746031, 9992196),
                   builder: (context, shareLink) {

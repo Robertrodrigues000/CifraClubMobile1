@@ -16,7 +16,7 @@ class _SearchDataSourceMock extends Mock implements SearchDataSource {}
 class _MockAllSearchDto extends Mock implements SearchListDto {}
 
 void main() {
-  group("When getAll() is Called", () {
+  group("When getAll() is called", () {
     test("Request successful", () async {
       final searchDataSource = _SearchDataSourceMock();
       final allSearchDto = _MockAllSearchDto();
@@ -52,6 +52,45 @@ void main() {
       expect(allGenres.isSuccess, false);
       expect(allGenres.getError(), isA<ServerError>());
       expect((allGenres.getError() as ServerError).statusCode, null);
+    });
+  });
+
+  group("When getSongs() is called", () {
+    test("Request successful", () async {
+      final searchDataSource = _SearchDataSourceMock();
+      final allSearchDto = _MockAllSearchDto();
+      final allSearch = AllSearch(search: [getFakeSongSearch(), getFakeSongSearch()]);
+
+      when(() => searchDataSource.getSongs(query: "ava"))
+          .thenAnswer((_) => SynchronousFuture(Ok(SearchResponseDto(response: allSearchDto))));
+
+      when(allSearchDto.toDomain).thenAnswer((_) => allSearch);
+
+      final repository = SearchRepositoryImpl(searchDataSource: searchDataSource);
+      final result = await repository.getSongs(query: "ava");
+
+      verify(allSearchDto.toDomain).called(1);
+      verify(() => searchDataSource.getSongs(query: "ava")).called(1);
+
+      expect(result.isSuccess, true);
+      expect(result.get(), allSearch.search);
+    });
+
+    test("Request failed", () async {
+      final searchDataSource = _SearchDataSourceMock();
+
+      when(() => searchDataSource.getSongs(query: "ava")).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
+        ),
+      );
+
+      final repository = SearchRepositoryImpl(searchDataSource: searchDataSource);
+      final allGenres = await repository.getSongs(query: "ava");
+
+      expect(allGenres.isSuccess, false);
+      expect(allGenres.getError(), isA<ServerError>());
+      expect((allGenres.getError() as ServerError).statusCode, 404);
     });
   });
 }

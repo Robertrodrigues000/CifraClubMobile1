@@ -1,0 +1,37 @@
+{
+    "response": {
+        "numFound": 4160,
+        "start": 0,
+        "maxScore": 37.64999,
+        "docs": [
+            {
+                "art": "FAMY",
+                "dns": "famy",
+                "txt": "Ava",
+                "url": "ava",
+                "url_inst": "/",
+                "img": "",
+                "imgm": "",
+                "score": 37.64999,
+                "tipo": "2",
+                "id_artist": 174027,
+                "id_song": 437376,
+                "b": 0
+            },
+            {
+                "art": "Harpa Cristã",
+                "dns": "harpa-crista",
+                "txt": "Avante Eu Vou",
+                "url": "avante-eu-vou",
+                "url_inst": "/",
+                "img": "3/0/8/3/3083b1621a661eee9c2eb4ef9d03daa5-tb.jpg",
+                "imgm": "https://akamai.sscdn.co/letras/250x250/fotos/3/0/8/3/3083b1621a661eee9c2eb4ef9d03daa5.jpg",
+                "score": 25.18894,
+                "tipo": "2",
+                "id_artist": 24399,
+                "id_song": 244155,
+                "b": 0
+            }
+        ]
+    }
+}

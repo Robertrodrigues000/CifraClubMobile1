@@ -303,4 +303,8 @@ void main() {
 
     expect(totalSongbookCifrasStream, emitsInOrder([1]));
   });
+
+  tearDown(() {
+    isar.close(deleteFromDisk: true);
+  });
 }
