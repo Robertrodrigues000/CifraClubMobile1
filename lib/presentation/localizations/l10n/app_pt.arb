@@ -98,7 +98,6 @@
     "listLimitTitle": "Adquira mais espaço para suas listas!",
     "listLimitDescription1": "Você atingiu o limite de {limit} listas criadas. Para criar até ",
     "listLimitDescription2": "mais, faça parte do ",
-    "emptyList":"Lista vazia",
     "songbookRecents":"Visto recentemente",
     "songbookFavorites":"Cifras favoritas",
     "songbookCanPlay":"Consegui tocar",
@@ -109,5 +108,8 @@
     "clearList": "Limpar Lista",
     "deleteList": "Excluir Lista",
     "privacyList": "Privacidade",
-    "listOptions": "Opções da cifra"
+    "listOptions": "Opções da cifra",
+    "privacyTitle": "Quem verá sua lista?",
+    "public": "Todos",
+    "private": "Apenas eu"
 }

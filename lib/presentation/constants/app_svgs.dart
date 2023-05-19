@@ -49,6 +49,7 @@ class AppSvgs {
   static const overflowIcon = "assets/images/overflow_icon.svg";
   static const backArrowIcon = "assets/images/back_arrow_icon.svg";
   static const privacyJustMeIcon = "assets/images/privacy_just_me_icon.svg";
+  static const privacyAllIcon = "assets/images/privacy_all_icon.svg";
   static const closeIcon = "assets/images/close_icon.svg";
 
   static const privacyIcon = "assets/images/privacy_icon.svg";

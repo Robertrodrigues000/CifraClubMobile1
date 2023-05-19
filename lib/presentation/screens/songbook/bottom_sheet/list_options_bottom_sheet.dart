@@ -48,8 +48,8 @@ class ListOptionsBottomSheet extends StatelessWidget {
               (e) {
                 return IconTextTile(
                   onClick: () {
-                    onTap(e);
                     DefaultBottomSheet.close(context);
+                    onTap(e);
                   },
                   text: e.getText(context),
                   leadingIconAsset: e.icon,

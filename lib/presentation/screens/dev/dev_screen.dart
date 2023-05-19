@@ -12,6 +12,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/privacy_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:cifraclub/presentation/widgets/share_builder.dart';
 import 'package:flutter/material.dart';
@@ -177,7 +178,19 @@ class _DevScreenState extends State<DevScreen> {
                             print("rename");
                             break;
                           case OptionsBottomSheet.privacy:
-                            print("privacy");
+                            PrivacyBottomSheet(
+                              isPublic: false,
+                              onTap: (privacy) {
+                                switch (privacy) {
+                                  case true:
+                                    print("public");
+                                    break;
+                                  case false:
+                                    print("private");
+                                    break;
+                                }
+                              },
+                            ).show(context);
                             break;
                           case OptionsBottomSheet.share:
                             print("share");

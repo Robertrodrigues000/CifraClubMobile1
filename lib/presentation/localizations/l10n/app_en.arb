@@ -148,7 +148,6 @@
         }  
     },
     "listLimitDescription2": "more, be parte of ",
-    "emptyList":"Empty list",
     "songbookRecents":"Recently viewed",
     "songbookFavorites":"Favorite tabs",
     "songbookCanPlay":"I can play it",
@@ -159,5 +158,8 @@
     "clearList": "Clear List",
     "deleteList": "Delete List",
     "privacyList": "Privacy",
-    "listOptions": "List options"
+    "listOptions": "List options",
+    "privacyTitle": "Who will see your list?",
+    "public": "All",
+    "private": "Just me"
 }
