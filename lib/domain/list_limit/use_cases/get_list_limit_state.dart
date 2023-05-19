@@ -1,7 +1,6 @@
-// coverage:ignore-file
-import 'package:cifraclub/domain/list_limit/models/limit_constants.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:injectable/injectable.dart';
@@ -12,9 +11,9 @@ class GetListLimitState {
   final GetTotalSongbooks _getTotalSongbooks;
   final GetProStatusStream _getProStatusStream;
   final GetListLimit _getListLimit;
-  final ListLimitConstants _listLimitConstants;
+  final GetListLimitConstants _getListLimitConstants;
 
-  GetListLimitState(this._getTotalSongbooks, this._getProStatusStream, this._getListLimit, this._listLimitConstants);
+  GetListLimitState(this._getTotalSongbooks, this._getProStatusStream, this._getListLimit, this._getListLimitConstants);
 
   Stream<ListLimitState> call() {
     return Rx.combineLatestList([_getTotalSongbooks(), _getProStatusStream()]).map((values) {
@@ -28,10 +27,11 @@ class GetListLimitState {
       }
 
       final diff = listLimit - currentListCount;
+      final listLimitConstants = _getListLimitConstants();
 
       if (diff <= 0) {
         return ListLimitState.reached;
-      } else if (diff >= 1 && diff <= _listLimitConstants.listWarningCountThreshold) {
+      } else if (diff >= 1 && diff <= listLimitConstants.listWarningCountThreshold) {
         return ListLimitState.atWarning;
       } else {
         return ListLimitState.withinLimit;

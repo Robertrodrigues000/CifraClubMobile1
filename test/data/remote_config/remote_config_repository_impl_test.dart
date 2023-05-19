@@ -1,5 +1,7 @@
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/list_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/tabs_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/time_between_interstitials_parameter.dart';
 import 'package:cifraclub/data/remote_config/remote_config_registered_parameters.dart';
 import 'package:cifraclub/data/remote_config/remote_config_repository_impl.dart';
@@ -101,6 +103,25 @@ void main() {
       final value = repository.getProductsIds();
       expect(value.first == remoteProductParameter.value.first.id, true);
       expect(value.last == remoteProductParameter.value.last.id, true);
+    });
+
+    test(" getListLimitConstants() called", () async {
+      final listLimitConstantsParameter = ListLimitConstantsParameter();
+      when(() => mockRemoteConfigParameters.listLimitConstants).thenAnswer((_) => listLimitConstantsParameter);
+      final value = repository.getListLimitConstants();
+      expect(value == listLimitConstantsParameter.value, true);
+      expect(value.maxListsForFree == listLimitConstantsParameter.value.maxListsForFree, true);
+      expect(value.maxListsForPro == listLimitConstantsParameter.value.maxListsForPro, true);
+      expect(value.listWarningCountThreshold == listLimitConstantsParameter.value.listWarningCountThreshold, true);
+    });
+
+    test(" getTabsLimitConstants() called", () async {
+      final tabsLimitConstantsParameter = TabsLimitConstantsParameter();
+      when(() => mockRemoteConfigParameters.tabsLimitConstants).thenAnswer((_) => tabsLimitConstantsParameter);
+      final value = repository.getTabsLimitConstants();
+      expect(value.maxTabsForFree == tabsLimitConstantsParameter.value.maxTabsForFree, true);
+      expect(value.maxTabsForPro == tabsLimitConstantsParameter.value.maxTabsForPro, true);
+      expect(value.tabsWarningCountThreshold == tabsLimitConstantsParameter.value.tabsWarningCountThreshold, true);
     });
   });
 }

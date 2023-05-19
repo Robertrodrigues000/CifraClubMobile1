@@ -1,4 +1,6 @@
 import 'package:cifraclub/data/remote_config/remote_config_registered_parameters.dart';
+import 'package:cifraclub/domain/list_limit/models/tabs_limit_constants.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_constants.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/remote_config/models/instrument_urls.dart';
 import 'package:cifraclub/domain/remote_config/models/remote_product.dart';
@@ -95,5 +97,15 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   @override
   List<String> getProductsIds() {
     return getProducts().map((remoteProduct) => remoteProduct.id).toList();
+  }
+
+  @override
+  ListLimitConstants getListLimitConstants() {
+    return remoteConfigParameters.listLimitConstants.value;
+  }
+
+  @override
+  TabsLimitConstants getTabsLimitConstants() {
+    return remoteConfigParameters.tabsLimitConstants.value;
   }
 }

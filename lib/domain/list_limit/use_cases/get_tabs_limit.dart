@@ -1,13 +1,13 @@
-// coverage:ignore-file
-import 'package:cifraclub/domain/list_limit/models/limit_constants.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_tabs_limit_constants.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class GetTabsLimit {
-  final ListLimitConstants _listLimitConstants;
-  GetTabsLimit(this._listLimitConstants);
+  final GetTabsLimitConstants _getTabsLimitConstants;
+  GetTabsLimit(this._getTabsLimitConstants);
 
   int call(bool isPro) {
-    return isPro ? _listLimitConstants.maxTabsForPro : _listLimitConstants.maxTabsForFree;
+    final tabsLimitConstants = _getTabsLimitConstants();
+    return isPro ? tabsLimitConstants.maxTabsForPro : tabsLimitConstants.maxTabsForFree;
   }
 }

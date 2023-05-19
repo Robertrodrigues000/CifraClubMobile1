@@ -1,13 +1,13 @@
-// coverage:ignore-file
-import 'package:cifraclub/domain/list_limit/models/limit_constants.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class GetListLimit {
-  final ListLimitConstants _listLimitConstants;
-  GetListLimit(this._listLimitConstants);
+  final GetListLimitConstants _getListLimitConstants;
+  GetListLimit(this._getListLimitConstants);
 
   int call(bool isPro) {
-    return isPro ? _listLimitConstants.maxListsForPro : _listLimitConstants.maxListsForFree;
+    final listLimitConstants = _getListLimitConstants();
+    return isPro ? listLimitConstants.maxListsForPro : listLimitConstants.maxListsForFree;
   }
 }
