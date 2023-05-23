@@ -55,6 +55,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme addCifraTileImageSize(double addCifraTileImageSize);
 
+  AppDimensionScheme listOperationDialogWidth(double? listOperationDialogWidth);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -86,6 +88,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? paddingBetweenInstructors,
     double? rightPaddingCard,
     double? addCifraTileImageSize,
+    double? listOperationDialogWidth,
   });
 }
 
@@ -180,6 +183,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(addCifraTileImageSize: addCifraTileImageSize);
 
   @override
+  AppDimensionScheme listOperationDialogWidth(double? listOperationDialogWidth) =>
+      this(listOperationDialogWidth: listOperationDialogWidth);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -212,6 +219,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? paddingBetweenInstructors = const $CopyWithPlaceholder(),
     Object? rightPaddingCard = const $CopyWithPlaceholder(),
     Object? addCifraTileImageSize = const $CopyWithPlaceholder(),
+    Object? listOperationDialogWidth = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -317,6 +325,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.addCifraTileImageSize
           // ignore: cast_nullable_to_non_nullable
           : addCifraTileImageSize as double,
+      listOperationDialogWidth: listOperationDialogWidth == const $CopyWithPlaceholder()
+          ? _value.listOperationDialogWidth
+          // ignore: cast_nullable_to_non_nullable
+          : listOperationDialogWidth as double?,
     );
   }
 }

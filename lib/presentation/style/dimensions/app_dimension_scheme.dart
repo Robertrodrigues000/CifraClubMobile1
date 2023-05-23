@@ -30,6 +30,7 @@ class AppDimensionScheme {
   final double paddingBetweenInstructors;
   final double rightPaddingCard;
   final double addCifraTileImageSize;
+  final double? listOperationDialogWidth;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -56,5 +57,6 @@ class AppDimensionScheme {
     required this.paddingBetweenInstructors,
     required this.rightPaddingCard,
     required this.addCifraTileImageSize,
+    required this.listOperationDialogWidth,
   });
 }

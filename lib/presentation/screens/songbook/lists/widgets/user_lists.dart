@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/edit_mode_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,13 @@ class UserLists extends StatelessWidget {
           return UserListItem(
             key: Key(lists[index].name),
             onTap: () => onTap(lists[index]),
-            onOptionsTap: () {},
+            // coverage:ignore-start
+            onOptionsTap: () async {
+              final result = await EditModeDialog.show(context);
+              // ignore: avoid_print
+              print(result);
+            },
+            // coverage:ignore-end
             songbook: lists[index],
             isSelected: index == 1,
           );
