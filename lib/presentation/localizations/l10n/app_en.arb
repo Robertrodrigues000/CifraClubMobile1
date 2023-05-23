@@ -169,6 +169,8 @@
     "deleteList": "Delete List",
     "privacyList": "Privacy",
     "listOptions": "List options",
+    "mostAccessed":"Most accessed",
+    "albums":"Albums",
     "privacyTitle": "Who will see your list?",
     "public": "All",
     "private": "Just me"

@@ -119,6 +119,8 @@
     "deleteList": "Eliminar Lista",
     "privacyList": "Privacidad",
     "listOptions": "Opciones de la lista",
+    "mostAccessed":"Más visitado",
+    "albums":"Álbumes",
     "privacyTitle": "¿Quién verá tu lista?",
     "public": "Todos",
     "private": "Solo yo"

@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
@@ -142,7 +143,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       HomeTopArtists(
                         artists: state.topArtists,
-                        onTap: (artist) {},
+                        // coverage:ignore-start
+                        onTap: (artist) {
+                          Nav.of(context).push(
+                            screenName: ArtistEntry.name,
+                          );
+                          // coverage:ignore-end
+                        },
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       SliverToBoxAdapter(

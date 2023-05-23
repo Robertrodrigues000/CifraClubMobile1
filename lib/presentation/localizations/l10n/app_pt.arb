@@ -119,6 +119,8 @@
     "deleteList": "Excluir Lista",
     "privacyList": "Privacidade",
     "listOptions": "Opções da cifra",
+    "mostAccessed":"Mais acessadas",
+    "albums":"Álbuns",
     "privacyTitle": "Quem verá sua lista?",
     "public": "Todos",
     "private": "Apenas eu"
