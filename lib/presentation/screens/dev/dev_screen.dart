@@ -13,6 +13,7 @@ import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bott
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/privacy_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:cifraclub/presentation/widgets/share_builder.dart';
 import 'package:flutter/material.dart';
@@ -175,7 +176,13 @@ class _DevScreenState extends State<DevScreen> {
                             print("delete");
                             break;
                           case OptionsBottomSheet.rename:
-                            print("rename");
+                            InputDialog.show(
+                                context: context,
+                                isNewList: false,
+                                listName: "Lista",
+                                onTap: (newName) {
+                                  print("rename: $newName");
+                                });
                             break;
                           case OptionsBottomSheet.privacy:
                             PrivacyBottomSheet(

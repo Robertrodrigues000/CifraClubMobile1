@@ -1,11 +1,11 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
-import 'dart:math';
 
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit_card.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
@@ -18,6 +18,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ListsScreen extends StatefulWidget {
   const ListsScreen({super.key, required this.onTapSongbook});
+
   final Function(Songbook) onTapSongbook;
 
   @override
@@ -71,8 +72,13 @@ class _ListsScreenState extends State<ListsScreen> {
                     ),
                   );
 
-                  Random random = Random();
-                  _bloc.createNewSongbook("Lista aleatória ${random.nextInt(10000)}");
+                  InputDialog.show(
+                    context: context,
+                    isNewList: true,
+                    onTap: (name) {
+                      _bloc.createNewSongbook(name);
+                    },
+                  );
                 },
                 // coverage:ignore-end
                 child: SizedBox(
@@ -140,7 +146,14 @@ class _ListsScreenState extends State<ListsScreen> {
                 lists: state.userLists,
                 onTap: (songbook) {
                   //_bloc.deleteSongbook(songbook.id);
-                  _bloc.updateSongbookData(songbook: songbook, songbookName: "Novo nome ${Random().nextInt(100)}");
+                  InputDialog.show(
+                    context: context,
+                    isNewList: false,
+                    listName: songbook.name,
+                    onTap: (newName) {
+                      _bloc.updateSongbookData(songbook: songbook, songbookName: newName);
+                    },
+                  );
                 },
               )
             ],

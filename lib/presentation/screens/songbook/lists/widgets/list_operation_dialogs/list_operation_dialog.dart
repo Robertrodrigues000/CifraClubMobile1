@@ -19,8 +19,8 @@ class ListOperationDialog extends StatelessWidget {
   final Widget description;
   final String firstButtonText;
   final String secondButtonText;
-  final VoidCallback onFirstButtonTap;
-  final VoidCallback onSecondButtonTap;
+  final VoidCallback? onFirstButtonTap;
+  final VoidCallback? onSecondButtonTap;
   final bool hasVerticalButtons;
 
   @override
@@ -29,42 +29,36 @@ class ListOperationDialog extends StatelessWidget {
       width: context.appDimensionScheme.listOperationDialogWidth,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16),
       hasCloseIcon: false,
-      title: Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: context.typography.title4.copyWith(color: context.colors.textPrimary),
-        ),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: context.typography.title4.copyWith(color: context.colors.textPrimary),
       ),
       description: description,
       buttons: hasVerticalButtons
-          ? SizedBox(
-              height: 120,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CifraButton(
-                    type: ButtonType.secondary,
-                    // coverage:ignore-start
-                    onPressed: onFirstButtonTap,
-                    // coverage:ignore-end
-                    padding: EdgeInsets.zero,
-                    child: Text(firstButtonText),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  CifraButton(
-                    type: ButtonType.outline,
-                    // coverage:ignore-start
-                    onPressed: onSecondButtonTap,
-                    // coverage:ignore-end
-                    padding: EdgeInsets.zero,
-                    child: Text(secondButtonText),
-                  ),
-                ],
-              ),
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CifraButton(
+                  type: ButtonType.secondary,
+                  // coverage:ignore-start
+                  onPressed: onFirstButtonTap,
+                  // coverage:ignore-end
+                  padding: EdgeInsets.zero,
+                  child: Text(firstButtonText),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                CifraButton(
+                  type: ButtonType.outline,
+                  // coverage:ignore-start
+                  onPressed: onSecondButtonTap,
+                  // coverage:ignore-end
+                  padding: EdgeInsets.zero,
+                  child: Text(secondButtonText),
+                ),
+              ],
             )
           : Row(
               children: [

@@ -173,5 +173,9 @@
     "albums":"Albums",
     "privacyTitle": "Who will see your list?",
     "public": "All",
-    "private": "Just me"
+    "private": "Just me",
+    "create": "Create",
+    "createList": "Create new list",
+    "inputDialogHint": "Ex.: Luau with friends",
+    "inputDialogLabel": "List name"
 }

@@ -9,8 +9,10 @@ class CifraButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget? child;
   final EdgeInsets padding;
+  final double? height;
 
-  const CifraButton({Key? key, required this.type, this.onPressed, this.child, required this.padding})
+  const CifraButton(
+      {Key? key, required this.type, this.onPressed, this.child, this.padding = EdgeInsets.zero, this.height = 48})
       : super(key: key);
 
   TextStyle _getTitleTextStyle(BuildContext context, CosmosColorScheme colorScheme, bool enabled) {
@@ -96,19 +98,22 @@ class CifraButton extends StatelessWidget {
     final colorScheme = CosmosColorScheme.of(context);
     return Padding(
       padding: padding,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: ButtonStyle(
-            overlayColor: MaterialStateProperty.resolveWith((states) {
-              return states.contains(MaterialState.pressed) ? _getOverlayColor(colorScheme) : null;
-            }),
-            backgroundColor:
-                MaterialStateProperty.resolveWith<Color>((states) => _getBackgroundColor(colorScheme, states)),
-            side: MaterialStateProperty.resolveWith<BorderSide>((states) => _getBorderColor(colorScheme, states)),
-            splashFactory: InkRipple.splashFactory),
-        child: child != null
-            ? DefaultTextStyle(style: _getTitleTextStyle(context, colorScheme, onPressed != null), child: child!)
-            : null,
+      child: SizedBox(
+        height: height,
+        child: OutlinedButton(
+          onPressed: onPressed,
+          style: ButtonStyle(
+              overlayColor: MaterialStateProperty.resolveWith((states) {
+                return states.contains(MaterialState.pressed) ? _getOverlayColor(colorScheme) : null;
+              }),
+              backgroundColor:
+                  MaterialStateProperty.resolveWith<Color>((states) => _getBackgroundColor(colorScheme, states)),
+              side: MaterialStateProperty.resolveWith<BorderSide>((states) => _getBorderColor(colorScheme, states)),
+              splashFactory: InkRipple.splashFactory),
+          child: child != null
+              ? DefaultTextStyle(style: _getTitleTextStyle(context, colorScheme, onPressed != null), child: child!)
+              : null,
+        ),
       ),
     );
   }

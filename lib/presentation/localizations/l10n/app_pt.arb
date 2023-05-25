@@ -123,5 +123,9 @@
     "albums":"Álbuns",
     "privacyTitle": "Quem verá sua lista?",
     "public": "Todos",
-    "private": "Apenas eu"
+    "private": "Apenas eu",
+    "create": "Criar",
+    "createList": "Criar nova lista",
+    "inputDialogHint": "Ex.: Luau com amigos",
+    "inputDialogLabel": "Nome da lista"
 }

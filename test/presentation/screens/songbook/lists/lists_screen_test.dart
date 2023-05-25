@@ -2,8 +2,11 @@ import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +16,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 import '../../../../shared_mocks/domain/user/models/user_mock.dart';
+import '../../../../test_helpers/app_localizations.dart';
 import '../../../../test_helpers/bloc_stream.dart';
 import '../../../../test_helpers/test_wrapper.dart';
 
@@ -90,8 +94,9 @@ void main() {
     verify(bloc.logout).called(1);
   });
 
-  testWidgets("Tapping add icon should create a new songbook", (widgetTester) async {
+  testWidgets("Tapping add icon should open InputDialog and create a new songbook", (widgetTester) async {
     bloc.mockStream(const ListsState());
+    var newSongbookName = "list";
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
@@ -111,7 +116,18 @@ void main() {
     await widgetTester.pumpAndSettle();
     await widgetTester.tap(addIconFinder);
 
-    verify(() => bloc.createNewSongbook(any())).called(1);
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(InputDialog), findsOneWidget);
+
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(CosmosInputField), findsOneWidget);
+    await widgetTester.enterText(find.byType(CosmosInputField), newSongbookName);
+
+    await widgetTester.pumpAndSettle();
+    expect(find.text(newSongbookName), findsOneWidget);
+
+    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.create));
+    verify(() => bloc.createNewSongbook(newSongbookName)).called(1);
   });
 
   // testWidgets("Tapping songbook tile should call delete songbook", (widgetTester) async {
@@ -135,7 +151,7 @@ void main() {
   //   verify(() => bloc.deleteSongbook(songbook.id)).called(1);
   // });
 
-  testWidgets("Tapping songbook tile should call update songbook", (widgetTester) async {
+  testWidgets("Tapping songbook tile should open InputDialog and call update songbook", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(ListsState(userLists: [getFakeSongbook(), songbook]));
 
@@ -152,6 +168,11 @@ void main() {
     await widgetTester.scrollUntilVisible(songbookTile, 100);
     await widgetTester.pumpAndSettle();
     await widgetTester.tap(songbookTile);
+
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(InputDialog), findsOneWidget);
+
+    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.save));
 
     verify(() => bloc.updateSongbookData(
         songbook: any(named: "songbook"),
