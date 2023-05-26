@@ -16,4 +16,5 @@ abstract class SongbookRepository {
     required bool isPublic,
     required DateTime lastUpdated,
   });
+  Future<Result<void, RequestError>> deleteCifras({required int songbookId, required List<int> cifrasIds});
 }

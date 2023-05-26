@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
+import 'package:cifraclub/data/songbook/models/delete_songs_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
@@ -48,6 +49,16 @@ class SongbookDataSource {
       type: NetworkRequestType.put,
       path: "/v3/songbook/$songbookId",
       data: songbookInputDto.toJson(),
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
+
+  Future<Result<void, RequestError>> deleteCifras(int songbookId, DeleteCifrasInputDto deleteCifrasInputDto) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/songbook/$songbookId/songs/delete",
+      data: deleteCifrasInputDto.toJson(),
       parser: (_) => null, // coverage:ignore-line
     );
     return _networkService.execute(request: request);

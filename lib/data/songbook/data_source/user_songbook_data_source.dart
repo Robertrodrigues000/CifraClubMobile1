@@ -59,4 +59,18 @@ class UserSongbookDataSource {
       return _isar.userSongbookDtos.delete(songbookId);
     });
   }
+
+  Future<int?> deleteCifras(int songbookId) async {
+    return _isar.writeTxn(() async {
+      final songbook = await _isar.userSongbookDtos.filter().idEqualTo(songbookId).findFirst();
+      return songbook?.userCifras.filter().deleteAll();
+    });
+  }
+
+  Future<List<int>?> getCifrasIds(int songbookId) async {
+    return _isar.writeTxn(() async {
+      final songbook = await _isar.userSongbookDtos.filter().idEqualTo(songbookId).findFirst();
+      return (await songbook?.userCifras.filter().findAll())?.map((e) => e.apiId).toList();
+    });
+  }
 }

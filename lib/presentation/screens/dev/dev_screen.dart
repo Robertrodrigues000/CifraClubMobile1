@@ -218,6 +218,16 @@ class _DevScreenState extends State<DevScreen> {
                     _bloc.getSongs();
                   },
                 ),
+                ListTile(
+                  leading: Icon(
+                    Icons.delete,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Delete cifras"),
+                  onTap: () {
+                    _bloc.deleteCifrasTest();
+                  },
+                ),
                 ShareLinkBuilder(
                   link: AppUrls.cifraListUrlFormat(549746031, 9992196),
                   builder: (context, shareLink) {

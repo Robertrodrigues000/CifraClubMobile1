@@ -142,4 +142,28 @@ void main() {
     expect(result!.id, songbook.id);
     expect(result.name, songbook.name);
   });
+
+  test("when deleteCifras is called, should return number of cifras deleted", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+    final songbook = getFakeSongbook();
+
+    when(() => userSongbookDataSource.deleteCifras(songbook.id!)).thenAnswer((_) => SynchronousFuture(2));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final result = await songbookRepository.deleteCifras(songbook.id!);
+
+    expect(result!, 2);
+  });
+
+  test("when getCifrasIds is called, should return list of ids", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+    final songbook = getFakeSongbook();
+
+    when(() => userSongbookDataSource.getCifrasIds(songbook.id!)).thenAnswer((_) => SynchronousFuture([1, 2, 3]));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final result = await songbookRepository.getCifrasIds(songbook.id!);
+
+    expect(result!, [1, 2, 3]);
+  });
 }

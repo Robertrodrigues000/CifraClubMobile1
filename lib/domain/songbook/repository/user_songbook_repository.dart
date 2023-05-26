@@ -8,4 +8,6 @@ abstract class UserSongbookRepository {
   Stream<int> getTotalSongbooks();
   Stream<int?> getTotalSongbookCifras(int songbookId);
   Future<Songbook?> getSongbookById(int id);
+  Future<int?> deleteCifras(int songbookId);
+  Future<List<int>?> getCifrasIds(int songbookId);
 }

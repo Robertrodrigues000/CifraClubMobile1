@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
+import 'package:cifraclub/data/songbook/models/delete_songs_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
@@ -173,6 +174,41 @@ void main() {
       final songbookDataSource = SongbookDataSource(networkService);
       final result =
           await songbookDataSource.updateSongbookData(songbookId, SongbookInputDto(name: "name", isPublic: false));
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
+    });
+  });
+
+  group("When deleteCifras is called", () {
+    const songbookId = 0;
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final result = await songbookDataSource.deleteCifras(songbookId, const DeleteCifrasInputDto([0]));
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/songbook/$songbookId/songs/delete");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result = await songbookDataSource.deleteCifras(songbookId, const DeleteCifrasInputDto([0]));
+
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });

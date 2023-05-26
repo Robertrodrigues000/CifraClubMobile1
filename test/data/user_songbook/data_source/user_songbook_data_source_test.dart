@@ -304,6 +304,86 @@ void main() {
     expect(totalSongbookCifrasStream, emitsInOrder([1]));
   });
 
+  test("When deleteCifras is called should return number of cifras deleted", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+      id: faker.randomGenerator.integer(1000),
+      createdAt: faker.date.dateTime(),
+      lastUpdated: faker.date.dateTime(),
+      name: faker.animal.name(),
+      type: ListTypeDto.user,
+      isPublic: false,
+      totalSongs: 0,
+    );
+
+    final fakeUserCifraDto = UserCifraDto(
+      name: faker.animal.name(),
+      apiId: faker.randomGenerator.integer(1000),
+      songUrl: faker.internet.httpUrl(),
+      type: 1,
+    );
+
+    await isar.writeTxn(() async {
+      await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      await isar.userCifraDtos.put(fakeUserCifraDto);
+      final songbookDto = await isar.userSongbookDtos.get(fakeUserSongBookDto.id);
+      songbookDto?.userCifras.add(fakeUserCifraDto);
+      await songbookDto?.userCifras.save();
+    });
+
+    var totalCifras =
+        isar.userSongbookDtos.filter().idEqualTo(fakeUserSongBookDto.id).findFirstSync()?.userCifras.countSync();
+    expect(totalCifras, 1);
+
+    //return number of ids deleted
+    final deletedIds = await userSongbookDataSource.deleteCifras(fakeUserSongBookDto.id);
+
+    totalCifras =
+        isar.userSongbookDtos.filter().idEqualTo(fakeUserSongBookDto.id).findFirstSync()?.userCifras.countSync();
+    expect(totalCifras, 0);
+    expect(deletedIds, 1);
+  });
+
+  test("When deleteCifras is called and songbook don't exist should return null", () async {
+    final deletedIds = await userSongbookDataSource.deleteCifras(1);
+    expect(deletedIds, null);
+  });
+
+  test("When getCifrasIds is called should return list of ids", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+      id: faker.randomGenerator.integer(1000),
+      createdAt: faker.date.dateTime(),
+      lastUpdated: faker.date.dateTime(),
+      name: faker.animal.name(),
+      type: ListTypeDto.user,
+      isPublic: false,
+      totalSongs: 0,
+    );
+
+    final fakeUserCifraDto = UserCifraDto(
+      name: faker.animal.name(),
+      apiId: faker.randomGenerator.integer(1000),
+      songUrl: faker.internet.httpUrl(),
+      type: 1,
+    );
+
+    await isar.writeTxn(() async {
+      await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      await isar.userCifraDtos.put(fakeUserCifraDto);
+      final songbookDto = await isar.userSongbookDtos.get(fakeUserSongBookDto.id);
+      songbookDto?.userCifras.add(fakeUserCifraDto);
+      await songbookDto?.userCifras.save();
+    });
+
+    final cifrasIds = await userSongbookDataSource.getCifrasIds(fakeUserSongBookDto.id);
+
+    expect(cifrasIds, [fakeUserCifraDto.apiId]);
+  });
+
+  test("When getCifrasIds is called and songbook don't exist should return null", () async {
+    final cifrasIds = await userSongbookDataSource.getCifrasIds(1);
+    expect(cifrasIds, null);
+  });
+
   tearDown(() {
     isar.close(deleteFromDisk: true);
   });

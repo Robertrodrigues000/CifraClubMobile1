@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
+import 'package:cifraclub/data/songbook/models/delete_songs_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
@@ -20,6 +21,7 @@ class _SongbookDtoMock extends Mock implements SongbookDto {}
 void main() {
   setUpAll(() {
     registerFallbackValue(SongbookInputDto(name: "name", isPublic: true));
+    registerFallbackValue(const DeleteCifrasInputDto([0]));
   });
 
   test("When getAllSongbooks is called, should return songbook domain entity", () async {
@@ -106,6 +108,36 @@ void main() {
       expect(result.isFailure, isTrue);
       expect(result.getError(), isA<ServerError>());
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When deleteCifras is called", () {
+    const songbookId = 0;
+
+    test("and request is sucessful should return sucess", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+
+      when(() => songbookDataSource.deleteCifras(any(), any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+
+      final result = await songbookRepositoryImpl.deleteCifras(songbookId: songbookId, cifrasIds: [0]);
+
+      expect(result.isSuccess, isTrue);
+    });
+
+    test("and request fails should return request error", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+
+      when(() => songbookDataSource.deleteCifras(any(), any()))
+          .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+
+      final result = await songbookRepositoryImpl.deleteCifras(songbookId: songbookId, cifrasIds: [0]);
+
+      expect(result.isFailure, isTrue);
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
     });
   });
 }
