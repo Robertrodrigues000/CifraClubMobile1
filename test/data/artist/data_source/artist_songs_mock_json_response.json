@@ -1,0 +1,43 @@
+{
+    "songs": [
+        {
+            "id": 3098382,
+            "lyricsId": 3737491,
+            "name": "Me Atraiu",
+            "url": "me-atraiu",
+            "guitar": 2,
+            "bass": 0,
+            "harmonica": 0,
+            "drums": 0,
+            "lyrics": 1,
+            "guitarpro": 0,
+            "sheet": 1,
+            "verified": true,
+            "hits": 169308,
+            "videoLessons": 0,
+            "videoLessonsInstruments": [
+                1
+            ]
+        },
+        {
+            "id": 433812,
+            "lyricsId": 2957796,
+            "name": "Lugar Secreto",
+            "url": "lugar-secreto",
+            "guitar": 4,
+            "bass": 0,
+            "harmonica": 0,
+            "drums": 0,
+            "lyrics": 1,
+            "guitarpro": 0,
+            "sheet": 6,
+            "verified": true,
+            "hits": 30380,
+            "videoLessons": 4,
+            "videoLessonsInstruments": [
+                5,
+                1
+            ]
+        }
+    ]
+}

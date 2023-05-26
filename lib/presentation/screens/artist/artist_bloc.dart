@@ -1,16 +1,28 @@
-// coverage:ignore-file
+import 'package:async/async.dart' hide Result;
+import 'package:cifraclub/domain/artist/models/artist_song.dart';
+import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
+import 'package:cifraclub/domain/artist/use_cases/get_artist_songs.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:typed_result/typed_result.dart';
 
 class ArtistBloc extends Cubit<ArtistState> {
-  ArtistBloc() : super(const ArtistState());
-  final songs = List.generate(10, (index) => index + 1);
+  final GetArtistSongs _getArtistSongs;
+  ArtistBloc(this._getArtistSongs) : super(const ArtistState());
+
   final albuns = List.generate(10, (index) => index + 1);
 
-  Future<void> getArtistInfo() async {
+  CancelableOperation<Result<List<ArtistSong>, RequestError>>? currentRequest;
+
+  Future<void> getArtistSongs() async {
+    currentRequest?.cancel();
+    currentRequest = _getArtistSongs(artistUrl: "legiao-urbana", filter: ArtistSongFilter.cifra);
+    var songsResult = (await currentRequest!.valueOrCancellation(Err(RequestCancelled())))!;
+
     emit(
       state.copyWith(
-        songs: songs,
+        songs: songsResult.isSuccess ? songsResult.get()! : const [],
         albuns: albuns,
       ),
     );

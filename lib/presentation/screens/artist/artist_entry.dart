@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ArtistEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ArtistBloc(),
+      create: (context) => ArtistBloc(getIt()),
       child: const ArtistScreen(),
     );
   }

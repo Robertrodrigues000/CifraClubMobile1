@@ -7,7 +7,7 @@ part of 'artist_state.dart';
 // **************************************************************************
 
 abstract class _$ArtistStateCWProxy {
-  ArtistState songs(List<int> songs);
+  ArtistState songs(List<ArtistSong> songs);
 
   ArtistState albuns(List<int> albuns);
 
@@ -18,7 +18,7 @@ abstract class _$ArtistStateCWProxy {
   /// ArtistState(...).copyWith(id: 12, name: "My name")
   /// ````
   ArtistState call({
-    List<int>? songs,
+    List<ArtistSong>? songs,
     List<int>? albuns,
   });
 }
@@ -30,7 +30,7 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
   final ArtistState _value;
 
   @override
-  ArtistState songs(List<int> songs) => this(songs: songs);
+  ArtistState songs(List<ArtistSong> songs) => this(songs: songs);
 
   @override
   ArtistState albuns(List<int> albuns) => this(albuns: albuns);
@@ -51,7 +51,7 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
       songs: songs == const $CopyWithPlaceholder() || songs == null
           ? _value.songs
           // ignore: cast_nullable_to_non_nullable
-          : songs as List<int>,
+          : songs as List<ArtistSong>,
       albuns: albuns == const $CopyWithPlaceholder() || albuns == null
           ? _value.albuns
           // ignore: cast_nullable_to_non_nullable

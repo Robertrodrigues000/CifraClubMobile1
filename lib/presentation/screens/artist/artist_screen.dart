@@ -19,8 +19,6 @@ class ArtistScreen extends StatefulWidget {
 
 class _ArtistScreenState extends State<ArtistScreen> {
   late ArtistBloc _bloc;
-  final scrollController = ScrollController();
-  var isScrolledUnder = false;
 
   @override
   void initState() {
@@ -31,7 +29,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _bloc.getArtistInfo();
+    _bloc.getArtistSongs();
   }
 
   @override
@@ -63,7 +61,6 @@ class _ArtistScreenState extends State<ArtistScreen> {
             ),
           ),
           body: CustomScrollView(
-            controller: scrollController,
             slivers: [
               ArtistTitle(
                 title: context.text.mostAccessed,
@@ -73,7 +70,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                 delegate: SliverChildBuilderDelegate(
                   childCount: state.songs.length,
                   (context, index) => ListTile(
-                    title: Text("Artist -- ${state.songs[index]}"),
+                    title: Text(state.songs[index].name),
                   ),
                 ),
               ),
