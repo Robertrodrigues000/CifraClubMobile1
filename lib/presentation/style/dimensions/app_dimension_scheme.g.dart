@@ -57,6 +57,12 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme listOperationDialogWidth(double? listOperationDialogWidth);
 
+  AppDimensionScheme searchInputHeight(double searchInputHeight);
+
+  AppDimensionScheme bottomPaddingCounter(double bottomPaddingCounter);
+
+  AppDimensionScheme topPaddingCounter(double topPaddingCounter);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -89,6 +95,9 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? rightPaddingCard,
     double? addCifraTileImageSize,
     double? listOperationDialogWidth,
+    double? searchInputHeight,
+    double? bottomPaddingCounter,
+    double? topPaddingCounter,
   });
 }
 
@@ -187,6 +196,16 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(listOperationDialogWidth: listOperationDialogWidth);
 
   @override
+  AppDimensionScheme searchInputHeight(double searchInputHeight) => this(searchInputHeight: searchInputHeight);
+
+  @override
+  AppDimensionScheme bottomPaddingCounter(double bottomPaddingCounter) =>
+      this(bottomPaddingCounter: bottomPaddingCounter);
+
+  @override
+  AppDimensionScheme topPaddingCounter(double topPaddingCounter) => this(topPaddingCounter: topPaddingCounter);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -220,6 +239,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? rightPaddingCard = const $CopyWithPlaceholder(),
     Object? addCifraTileImageSize = const $CopyWithPlaceholder(),
     Object? listOperationDialogWidth = const $CopyWithPlaceholder(),
+    Object? searchInputHeight = const $CopyWithPlaceholder(),
+    Object? bottomPaddingCounter = const $CopyWithPlaceholder(),
+    Object? topPaddingCounter = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -329,6 +351,18 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.listOperationDialogWidth
           // ignore: cast_nullable_to_non_nullable
           : listOperationDialogWidth as double?,
+      searchInputHeight: searchInputHeight == const $CopyWithPlaceholder() || searchInputHeight == null
+          ? _value.searchInputHeight
+          // ignore: cast_nullable_to_non_nullable
+          : searchInputHeight as double,
+      bottomPaddingCounter: bottomPaddingCounter == const $CopyWithPlaceholder() || bottomPaddingCounter == null
+          ? _value.bottomPaddingCounter
+          // ignore: cast_nullable_to_non_nullable
+          : bottomPaddingCounter as double,
+      topPaddingCounter: topPaddingCounter == const $CopyWithPlaceholder() || topPaddingCounter == null
+          ? _value.topPaddingCounter
+          // ignore: cast_nullable_to_non_nullable
+          : topPaddingCounter as double,
     );
   }
 }

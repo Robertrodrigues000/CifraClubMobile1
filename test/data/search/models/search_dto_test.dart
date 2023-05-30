@@ -14,7 +14,7 @@ void main() {
           idArtist: 2843,
           art: "Lifehouse",
           dns: "lifehouse",
-          img: "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg");
+          imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg");
       final search = searchDto.toDomain();
 
       expect(search, isA<ArtistSearch>());
@@ -22,7 +22,7 @@ void main() {
 
       expect(search.id, searchDto.idArtist);
       expect(search.url, searchDto.dns);
-      expect(search.imageUrl, searchDto.img);
+      expect(search.imageUrl, searchDto.imgm);
       expect(search.name, searchDto.art);
     });
 
@@ -35,7 +35,7 @@ void main() {
           idArtist: 2843,
           art: "Lifehouse",
           dns: "lifehouse",
-          img: "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg");
+          imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg");
       final search = searchDto.toDomain();
 
       expect(search, isA<SongSearch>());
@@ -47,7 +47,7 @@ void main() {
       expect(search.artistId, searchDto.idArtist);
       expect(search.artistName, searchDto.art);
       expect(search.artistUrl, searchDto.dns);
-      expect(search.artistImage, searchDto.img);
+      expect(search.artistImage, searchDto.imgm);
     });
   });
 }

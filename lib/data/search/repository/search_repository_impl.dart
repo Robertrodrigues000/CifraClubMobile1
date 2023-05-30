@@ -1,3 +1,4 @@
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/search/data_source/search_data_source.dart';
 import 'package:cifraclub/domain/search/models/search.dart';
 import 'package:cifraclub/domain/search/models/song_search.dart';
@@ -16,9 +17,9 @@ class SearchRepositoryImpl extends SearchRepository {
   }
 
   @override
-  Future<Result<List<SongSearch>, RequestError>> getSongs({required String query}) async {
-    return (await searchDataSource.getSongs(query: query)).map(
-      (data) => data.response.toDomain().search.whereType<SongSearch>().toList(),
-    );
+  CancelableOperation<Result<List<SongSearch>, RequestError>> getSongs({required String query}) {
+    return searchDataSource
+        .getSongs(query: query)
+        .then((result) => result.map((data) => data.response.toDomain().search.whereType<SongSearch>().toList()));
   }
 }

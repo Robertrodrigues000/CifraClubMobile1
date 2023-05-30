@@ -1,12 +1,12 @@
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/widgets/add_cifra_tile/add_cifra_tile.dart';
-import 'package:cifraclub/presentation/widgets/add_cifra_tile/song_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/widgets/add_cifra_tile/add_cifra_tile.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/widgets/add_cifra_tile/song_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../test_helpers/app_localizations.dart';
-import '../../../test_helpers/test_wrapper.dart';
+import '../../../../../../test_helpers/app_localizations.dart';
+import '../../../../../../test_helpers/test_wrapper.dart';
 
 void main() {
   testWidgets("When tapping a tile, should call onTap", (tester) async {

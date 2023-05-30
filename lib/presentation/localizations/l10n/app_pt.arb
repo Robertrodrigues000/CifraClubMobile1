@@ -127,5 +127,17 @@
     "create": "Criar",
     "createList": "Criar nova lista",
     "inputDialogHint": "Ex.: Luau com amigos",
-    "inputDialogLabel": "Nome da lista"
+    "inputDialogLabel": "Nome da lista",
+    "searchSongs" : "Buscar músicas",
+    "save" : "Salvar",
+
+    "tabsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
+    "@tabsCount":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    }
 }

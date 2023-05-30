@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/search/data_source/search_data_source.dart';
 import 'package:cifraclub/data/search/models/search_list_dto.dart';
@@ -46,7 +47,7 @@ void main() {
                 idArtist: 2843,
                 art: "Lifehouse",
                 dns: "lifehouse",
-                img: "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg"),
+                imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg"),
             SearchDto(
                 idSong: 27161,
                 tipo: "2",
@@ -55,7 +56,7 @@ void main() {
                 idArtist: 2843,
                 art: "Lifehouse",
                 dns: "lifehouse",
-                img: "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg")
+                imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg")
           ],
         ),
       );
@@ -93,11 +94,12 @@ void main() {
       await networkService.mock<SearchResponseDto>(contentType: Headers.textPlainContentType, response: mockResponse);
 
       final searchDataSource = SearchDataSource(networkService: networkService);
-      final result = await searchDataSource.getSongs(query: "ava");
+      final result = await searchDataSource.getSongs(query: "ava").value;
 
-      final request = verify(() => networkService.execute<SearchResponseDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<SearchResponseDto>;
+      final request =
+          verify(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<SearchResponseDto>;
 
       expect(request.path, "https://solr.sscdn.co/cc/c2/");
       expect(request.queryParams, {"q": "ava"});
@@ -107,7 +109,15 @@ void main() {
         response: SearchListDto(
           docs: [
             SearchDto(
-                idSong: 437376, tipo: "2", txt: "Ava", url: "ava", idArtist: 174027, art: "FAMY", dns: "famy", img: ""),
+              idSong: 437376,
+              tipo: "2",
+              txt: "Ava",
+              url: "ava",
+              idArtist: 174027,
+              art: "FAMY",
+              dns: "famy",
+              imgm: "",
+            ),
             SearchDto(
                 idSong: 244155,
                 tipo: "2",
@@ -116,7 +126,7 @@ void main() {
                 idArtist: 24399,
                 art: "Harpa Cristã",
                 dns: "harpa-crista",
-                img: "3/0/8/3/3083b1621a661eee9c2eb4ef9d03daa5-tb.jpg")
+                imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/0/8/3/3083b1621a661eee9c2eb4ef9d03daa5.jpg")
           ],
         ),
       );
@@ -128,14 +138,15 @@ void main() {
     test("and request fail should return request error", () async {
       final networkService = NetworkServiceMock();
 
-      when(() => networkService.execute<SearchResponseDto>(request: captureAny(named: "request")))
-          .thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
+      when(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
 
       final genresDataSource = SearchDataSource(networkService: networkService);
-      final result = await genresDataSource.getSongs(query: "ava");
-      final request = verify(() => networkService.execute<SearchResponseDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<SearchResponseDto>;
+      final result = await genresDataSource.getSongs(query: "ava").value;
+      final request =
+          verify(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<SearchResponseDto>;
 
       expect(request.path, "https://solr.sscdn.co/cc/c2/");
       expect(request.queryParams, {"q": "ava"});

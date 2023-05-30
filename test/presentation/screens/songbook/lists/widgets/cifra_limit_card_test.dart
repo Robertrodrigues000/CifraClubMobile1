@@ -9,7 +9,7 @@ void main() {
     await widgetTester.pumpWidget(
       TestWrapper(
           child: CifraLimitCard(
-        listCount: 5,
+        tabsCount: 5,
         limit: 10,
         isPro: false,
         isWithinLimit: true,

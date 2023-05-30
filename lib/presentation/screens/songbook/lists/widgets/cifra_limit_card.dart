@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class CifraLimitCard extends StatelessWidget {
   const CifraLimitCard({
     super.key,
-    required this.listCount,
+    required this.tabsCount,
     required this.limit,
     required this.isPro,
     required this.isWithinLimit,
@@ -13,7 +13,7 @@ class CifraLimitCard extends StatelessWidget {
     this.hasBackground = false,
   });
 
-  final int listCount;
+  final int tabsCount;
   final int limit;
   final bool isPro;
   final bool isWithinLimit;
@@ -22,15 +22,16 @@ class CifraLimitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContainerWithRippleEffect(
-      onTap: isPro || listCount == 0 ? null : onTap,
+      onTap: isPro || tabsCount == 0 ? null : onTap,
       decoration: hasBackground
-          ? BoxDecoration(color: context.colors.neutralSecondary)
+          ? null
           : BoxDecoration(
               border: Border.all(
                 width: 1,
                 color: context.colors.neutralTertiary,
               ),
               borderRadius: BorderRadius.circular(8),
+              color: context.colors.neutralPrimary,
             ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -42,7 +43,7 @@ class CifraLimitCard extends StatelessWidget {
                 style: context.typography.subtitle5,
                 children: [
                   TextSpan(
-                    text: "$listCount",
+                    text: "$tabsCount",
                     style: context.typography.subtitle4
                         .copyWith(color: isWithinLimit ? context.colors.textSecondary : context.colors.errorPrimary),
                   ),

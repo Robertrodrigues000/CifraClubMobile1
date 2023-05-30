@@ -31,6 +31,9 @@ class AppDimensionScheme {
   final double rightPaddingCard;
   final double addCifraTileImageSize;
   final double? listOperationDialogWidth;
+  final double searchInputHeight;
+  final double bottomPaddingCounter;
+  final double topPaddingCounter;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -58,5 +61,8 @@ class AppDimensionScheme {
     required this.rightPaddingCard,
     required this.addCifraTileImageSize,
     required this.listOperationDialogWidth,
+    required this.searchInputHeight,
+    required this.bottomPaddingCounter,
+    required this.topPaddingCounter,
   });
 }

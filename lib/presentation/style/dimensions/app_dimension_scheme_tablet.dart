@@ -37,4 +37,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   //Lists
   addCifraTileImageSize: 56,
   listOperationDialogWidth: 400,
+  searchInputHeight: 72,
+  bottomPaddingCounter: 16,
+  topPaddingCounter: 8,
 );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
 import 'package:cifraclub/data/search/models/search_response_dto.dart';
@@ -23,7 +24,7 @@ class SearchDataSource {
     return networkService.execute(request: request);
   }
 
-  Future<Result<SearchResponseDto, RequestError>> getSongs({required String query}) async {
+  CancelableOperation<Result<SearchResponseDto, RequestError>> getSongs({required String query}) {
     var request = NetworkRequest(
         type: NetworkRequestType.get,
         path: "https://solr.sscdn.co/cc/c2/",
@@ -31,6 +32,6 @@ class SearchDataSource {
         parser: (data) {
           return SearchResponseDto.fromJson(jsonDecode(data) as Map<String, dynamic>);
         });
-    return networkService.execute(request: request);
+    return networkService.cancelableExecute(request: request);
   }
 }

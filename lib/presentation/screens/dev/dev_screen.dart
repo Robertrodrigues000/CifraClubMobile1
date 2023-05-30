@@ -11,6 +11,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/add_cifras_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/privacy_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
@@ -161,6 +162,16 @@ class _DevScreenState extends State<DevScreen> {
                 ),
                 ListTile(
                   leading: Icon(
+                    Icons.add_chart_sharp,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Add cifras to List"),
+                  onTap: () {
+                    Nav.of(context).push(screenName: AddCifrasToListEntry.name);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
                     Icons.g_translate_rounded,
                     color: context.colors.textPrimary,
                   ),
@@ -206,16 +217,6 @@ class _DevScreenState extends State<DevScreen> {
                       },
                       isUserList: true,
                     ).show(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.add_chart_sharp,
-                    color: context.colors.textPrimary,
-                  ),
-                  title: const Text("Search Songs"),
-                  onTap: () {
-                    _bloc.getSongs();
                   },
                 ),
                 ListTile(

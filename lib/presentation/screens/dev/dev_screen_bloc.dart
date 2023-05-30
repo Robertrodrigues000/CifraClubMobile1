@@ -2,7 +2,6 @@
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_case/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
-import 'package:cifraclub/domain/search/use_case/search_songs.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_all_cifras.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
@@ -21,7 +20,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final InAppPurchaseRepository _inAppPurchaseRepository;
   final GetOrders _getOrders;
   final PostPurchaseOrder _postPurchaseOrder;
-  final SearchSongs _searchSongs;
   final GetIsProPreference _getIsProPreference;
   final DeleteAllCifras _deleteAllCifras;
 
@@ -33,7 +31,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._getOrders,
     this._postPurchaseOrder,
     this._getIsProPreference,
-    this._searchSongs,
     this._deleteAllCifras,
   ) : super(const DevScreenState(isLoading: false));
 
@@ -92,18 +89,5 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
   Future<void> deleteCifrasTest() async {
     await _deleteAllCifras(10027132);
-  }
-
-  void getSongs() async {
-    final result = await _searchSongs(query: "ava");
-
-    result.onSuccess((value) {
-      for (var element in value) {
-        // ignore: avoid_print
-        print(element.songName);
-      }
-      // ignore: avoid_print
-      print(value.length);
-    });
   }
 }

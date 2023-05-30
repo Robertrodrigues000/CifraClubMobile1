@@ -37,4 +37,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   //Lists
   addCifraTileImageSize: 40,
   listOperationDialogWidth: null,
+  searchInputHeight: 56,
+  bottomPaddingCounter: 12,
+  topPaddingCounter: 4,
 );

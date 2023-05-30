@@ -17,7 +17,7 @@ class SearchDto extends Equatable {
   final int? idArtist;
   final String? art;
   final String? dns;
-  final String? img;
+  final String? imgm;
 
   const SearchDto(
       {required this.idSong,
@@ -27,7 +27,7 @@ class SearchDto extends Equatable {
       required this.idArtist,
       required this.art,
       required this.dns,
-      required this.img});
+      required this.imgm});
 
   factory SearchDto.fromJson(Map<String, dynamic> json) => _$SearchDtoFromJson(json);
 
@@ -37,7 +37,7 @@ class SearchDto extends Equatable {
             id: idArtist!,
             name: art!,
             url: dns!,
-            imageUrl: img,
+            imageUrl: imgm,
           )
         : SongSearch(
             songId: idSong!,
@@ -46,10 +46,10 @@ class SearchDto extends Equatable {
             artistId: idArtist!,
             artistName: art!,
             artistUrl: dns!,
-            artistImage: img,
+            artistImage: imgm,
           );
   }
 
   @override
-  List<Object?> get props => [idSong, tipo, txt, url, idArtist, art, dns, img];
+  List<Object?> get props => [idSong, tipo, txt, url, idArtist, art, dns, imgm];
 }

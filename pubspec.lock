@@ -245,8 +245,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "29fefbad0d3456d1782c4db6420dfd4a313de11a"
-      resolved-ref: "29fefbad0d3456d1782c4db6420dfd4a313de11a"
+      ref: e9a0218d77563e1fdaf7d59bc16c85cc87da323a
+      resolved-ref: e9a0218d77563e1fdaf7d59bc16c85cc87da323a
       url: "git@github.com:CifraClub/CosmosMobile.git"
     source: git
     version: "0.0.1"
@@ -547,10 +547,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_keyboard_visibility
-      sha256: be41db80ab7156d893878ca48a7520d667075c4841a0435d5544fd836197b55a
+      sha256: "4983655c26ab5b959252ee204c2fffa4afeb4413cd030455194ec0caa3b8e7cb"
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.3"
+    version: "5.4.1"
   flutter_keyboard_visibility_linux:
     dependency: transitive
     description:

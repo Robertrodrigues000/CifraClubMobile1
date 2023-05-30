@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/add_cifras_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_entry.dart';
 import 'package:cifraclub/presentation/screens/more/more_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
@@ -61,5 +62,9 @@ final List<NavRoute> routes = [
   NavRoute(
     ArtistEntry.name,
     (params, _) => ArtistEntry(params),
+  ),
+  NavRoute(
+    AddCifrasToListEntry.name,
+    (params, _) => AddCifrasToListEntry(params),
   ),
 ];

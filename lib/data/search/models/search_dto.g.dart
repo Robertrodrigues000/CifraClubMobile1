@@ -14,5 +14,5 @@ SearchDto _$SearchDtoFromJson(Map<String, dynamic> json) => SearchDto(
       idArtist: json['id_artist'] as int?,
       art: json['art'] as String?,
       dns: json['dns'] as String?,
-      img: json['img'] as String?,
+      imgm: json['imgm'] as String?,
     );

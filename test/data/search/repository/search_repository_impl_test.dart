@@ -1,3 +1,4 @@
+import 'package:async/async.dart';
 import 'package:cifraclub/data/search/data_source/search_data_source.dart';
 import 'package:cifraclub/data/search/models/search_list_dto.dart';
 import 'package:cifraclub/data/search/models/search_response_dto.dart';
@@ -61,13 +62,13 @@ void main() {
       final allSearchDto = _MockAllSearchDto();
       final allSearch = AllSearch(search: [getFakeSongSearch(), getFakeSongSearch()]);
 
-      when(() => searchDataSource.getSongs(query: "ava"))
-          .thenAnswer((_) => SynchronousFuture(Ok(SearchResponseDto(response: allSearchDto))));
+      when(() => searchDataSource.getSongs(query: "ava")).thenAnswer(
+          (_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(SearchResponseDto(response: allSearchDto)))));
 
       when(allSearchDto.toDomain).thenAnswer((_) => allSearch);
 
       final repository = SearchRepositoryImpl(searchDataSource: searchDataSource);
-      final result = await repository.getSongs(query: "ava");
+      final result = await repository.getSongs(query: "ava").value;
 
       verify(allSearchDto.toDomain).called(1);
       verify(() => searchDataSource.getSongs(query: "ava")).called(1);
@@ -80,13 +81,13 @@ void main() {
       final searchDataSource = _SearchDataSourceMock();
 
       when(() => searchDataSource.getSongs(query: "ava")).thenAnswer(
-        (_) => SynchronousFuture(
-          Err(ServerError(statusCode: 404)),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(Err(ServerError(statusCode: 404))),
         ),
       );
 
       final repository = SearchRepositoryImpl(searchDataSource: searchDataSource);
-      final allGenres = await repository.getSongs(query: "ava");
+      final allGenres = await repository.getSongs(query: "ava").value;
 
       expect(allGenres.isSuccess, false);
       expect(allGenres.getError(), isA<ServerError>());
