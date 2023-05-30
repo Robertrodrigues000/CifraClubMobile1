@@ -6,8 +6,10 @@ part 'cifras_state.g.dart';
 @CopyWith()
 class CifrasState {
   final List<Cifra> cifras;
+  final bool isPublic;
 
   const CifrasState({
     this.cifras = const [],
+    required this.isPublic,
   });
 }

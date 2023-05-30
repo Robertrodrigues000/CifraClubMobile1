@@ -10,6 +10,7 @@ import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_state.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
+import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
@@ -51,118 +53,138 @@ void main() {
     when(listsBloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
 
     cifrasBloc = _CifrasBlocMock();
-    when(() => cifrasBloc.getCifras(any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => cifrasBloc.getSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
     when(cifrasBloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
-  testWidgets("When start songbook screen in a phone should show lists screen", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    binding.window.devicePixelRatioTestValue = 1.0;
+  group("When start songbook screen", () {
+    testWidgets("and user is not logged, should show error description", (widgetTester) async {
+      bloc.mockStream(const SongbookState(isUserLoggedIn: false));
 
-    bloc.mockStream(const SongbookState(selectedSongbook: null));
-    listsBloc.mockStream(const ListsState());
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<SongbookBloc>.value(
+            value: bloc,
+            child: const SongbookScreen(),
+          ),
+        ),
+      );
 
-    await widgetTester.pumpWidgetWithWrapper(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<SongbookBloc>.value(value: bloc),
-          BlocProvider<ListsBloc>.value(value: listsBloc),
-        ],
-        child: const SongbookScreen(),
-      ),
-    );
+      expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+      expect(find.text(appTextEn.loggedOutListErrorDescription), findsOneWidget);
+    });
 
-    //expect(find.byType(ListsScreen), findsOneWidget);
-    expect(find.byType(CifrasScreen), findsNothing);
-  });
+    group("in a phone", () {
+      testWidgets("should show lists screen", (widgetTester) async {
+        binding.window.physicalSizeTestValue = const Size(460, 800);
+        binding.window.devicePixelRatioTestValue = 1.0;
 
-  testWidgets("When start songbook screen in a phone and click in a songbook should push to a new cifras screen",
-      (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    binding.window.devicePixelRatioTestValue = 1.0;
+        bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
+        listsBloc.mockStream(const ListsState());
 
-    bloc.mockStream(const SongbookState(selectedSongbook: null));
-    listsBloc.mockStream(const ListsState());
+        await widgetTester.pumpWidgetWithWrapper(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<SongbookBloc>.value(value: bloc),
+              BlocProvider<ListsBloc>.value(value: listsBloc),
+            ],
+            child: const SongbookScreen(),
+          ),
+        );
 
-    final nav = NavMock.getDummy();
+        //expect(find.byType(ListsScreen), findsOneWidget);
+        expect(find.byType(CifrasScreen), findsNothing);
+      });
 
-    await widgetTester.pumpWidgetWithWrapper(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<SongbookBloc>.value(value: bloc),
-          BlocProvider<ListsBloc>.value(value: listsBloc),
-        ],
-        child: const SongbookScreen(),
-      ),
-      nav: nav,
-    );
+      testWidgets("and click in a songbook should push to a new cifras screen", (widgetTester) async {
+        binding.window.physicalSizeTestValue = const Size(460, 800);
+        binding.window.devicePixelRatioTestValue = 1.0;
 
-    final finder = find.byWidgetPredicate(
-      (Widget widget) =>
-          widget is SvgPicture &&
-          widget.pictureProvider is ExactAssetPicture &&
-          (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
-      description: 'widget with add icon',
-    ); //TODO: Mudar essa teste quando tiver as listas do usuario
+        bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
+        listsBloc.mockStream(const ListsState());
 
-    await widgetTester.tap(finder);
-    verify(() => nav.push(screenName: CifrasEntry.name)).called(1);
-  });
+        final nav = NavMock.getDummy();
 
-  testWidgets("When start songbook screen in a tablet should show lists and cifra screen", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(850, 1000);
-    binding.window.devicePixelRatioTestValue = 1.0;
+        await widgetTester.pumpWidgetWithWrapper(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<SongbookBloc>.value(value: bloc),
+              BlocProvider<ListsBloc>.value(value: listsBloc),
+            ],
+            child: const SongbookScreen(),
+          ),
+          nav: nav,
+        );
 
-    bloc.mockStream(const SongbookState(selectedSongbook: null));
-    listsBloc.mockStream(const ListsState());
-    cifrasBloc.mockStream(const CifrasState());
-
-    await widgetTester.pumpWidgetWithWrapper(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<SongbookBloc>.value(value: bloc),
-          BlocProvider<ListsBloc>.value(value: listsBloc),
-          BlocProvider<CifrasBloc>.value(value: cifrasBloc),
-        ],
-        child: const SongbookScreen(),
-      ),
-    );
-
-    expect(find.byType(ListsScreen), findsOneWidget);
-    expect(find.byType(CifrasScreen), findsOneWidget);
-  });
-
-  testWidgets("When start songbook screen in a tablet and click in a songbook should emit new songbook",
-      (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(850, 1000);
-    binding.window.devicePixelRatioTestValue = 1.0;
-
-    bloc.mockStream(const SongbookState(selectedSongbook: null));
-    listsBloc.mockStream(const ListsState());
-    cifrasBloc.mockStream(const CifrasState());
-
-    await widgetTester.pumpWidgetWithWrapper(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<SongbookBloc>.value(value: bloc),
-          BlocProvider<ListsBloc>.value(value: listsBloc),
-          BlocProvider<CifrasBloc>.value(value: cifrasBloc),
-        ],
-        child: const SongbookScreen(),
-      ),
-    );
-
-    final finder = find
-        .byWidgetPredicate(
+        final finder = find.byWidgetPredicate(
           (Widget widget) =>
               widget is SvgPicture &&
               widget.pictureProvider is ExactAssetPicture &&
               (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
           description: 'widget with add icon',
-        )
-        .first; //TODO: Mudar essa teste quando tiver as listas do usuario
+        ); //TODO: Mudar essa teste quando tiver as listas do usuario
 
-    await widgetTester.tap(finder);
-    verify(() => bloc.onSelectSongbook(any())).called(1);
+        await widgetTester.tap(finder);
+        verify(() => nav.push(screenName: CifrasEntry.name)).called(1);
+      });
+    });
+
+    group("in a tablet", () {
+      testWidgets("should show lists and cifra screen", (widgetTester) async {
+        binding.window.physicalSizeTestValue = const Size(850, 1000);
+        binding.window.devicePixelRatioTestValue = 1.0;
+
+        bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
+        listsBloc.mockStream(const ListsState());
+        cifrasBloc.mockStream(const CifrasState(isPublic: true));
+
+        await widgetTester.pumpWidgetWithWrapper(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<SongbookBloc>.value(value: bloc),
+              BlocProvider<ListsBloc>.value(value: listsBloc),
+              BlocProvider<CifrasBloc>.value(value: cifrasBloc),
+            ],
+            child: const SongbookScreen(),
+          ),
+        );
+
+        expect(find.byType(ListsScreen), findsOneWidget);
+        expect(find.byType(CifrasScreen), findsOneWidget);
+      });
+
+      testWidgets("and click in a songbook should emit new songbook", (widgetTester) async {
+        binding.window.physicalSizeTestValue = const Size(850, 1000);
+        binding.window.devicePixelRatioTestValue = 1.0;
+
+        bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
+        listsBloc.mockStream(const ListsState());
+        cifrasBloc.mockStream(const CifrasState(isPublic: true));
+
+        await widgetTester.pumpWidgetWithWrapper(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<SongbookBloc>.value(value: bloc),
+              BlocProvider<ListsBloc>.value(value: listsBloc),
+              BlocProvider<CifrasBloc>.value(value: cifrasBloc),
+            ],
+            child: const SongbookScreen(),
+          ),
+        );
+
+        final finder = find
+            .byWidgetPredicate(
+              (Widget widget) =>
+                  widget is SvgPicture &&
+                  widget.pictureProvider is ExactAssetPicture &&
+                  (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
+              description: 'widget with add icon',
+            )
+            .first; //TODO: Mudar essa teste quando tiver as listas do usuario
+
+        await widgetTester.tap(finder);
+        verify(() => bloc.onSelectSongbook(any())).called(1);
+      });
+    });
   });
 }

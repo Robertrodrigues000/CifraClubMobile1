@@ -9,6 +9,8 @@ part of 'songbook_state.dart';
 abstract class _$SongbookStateCWProxy {
   SongbookState selectedSongbook(Songbook? selectedSongbook);
 
+  SongbookState isUserLoggedIn(bool isUserLoggedIn);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SongbookState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -17,6 +19,7 @@ abstract class _$SongbookStateCWProxy {
   /// ````
   SongbookState call({
     Songbook? selectedSongbook,
+    bool? isUserLoggedIn,
   });
 }
 
@@ -30,6 +33,9 @@ class _$SongbookStateCWProxyImpl implements _$SongbookStateCWProxy {
   SongbookState selectedSongbook(Songbook? selectedSongbook) => this(selectedSongbook: selectedSongbook);
 
   @override
+  SongbookState isUserLoggedIn(bool isUserLoggedIn) => this(isUserLoggedIn: isUserLoggedIn);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SongbookState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -39,12 +45,17 @@ class _$SongbookStateCWProxyImpl implements _$SongbookStateCWProxy {
   /// ````
   SongbookState call({
     Object? selectedSongbook = const $CopyWithPlaceholder(),
+    Object? isUserLoggedIn = const $CopyWithPlaceholder(),
   }) {
     return SongbookState(
       selectedSongbook: selectedSongbook == const $CopyWithPlaceholder()
           ? _value.selectedSongbook
           // ignore: cast_nullable_to_non_nullable
           : selectedSongbook as Songbook?,
+      isUserLoggedIn: isUserLoggedIn == const $CopyWithPlaceholder() || isUserLoggedIn == null
+          ? _value.isUserLoggedIn
+          // ignore: cast_nullable_to_non_nullable
+          : isUserLoggedIn as bool,
     );
   }
 }

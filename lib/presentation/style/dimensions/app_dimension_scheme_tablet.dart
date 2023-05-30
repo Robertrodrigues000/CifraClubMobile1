@@ -26,7 +26,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   topCellRankingWidth: 60,
 
   //Error Description
-  externalMarginWithoutConnection: 72,
+  externalMarginWithoutConnection: 127,
 
   //Academy
   verticalMarginAcademyInfo: 24,
@@ -40,4 +40,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   searchInputHeight: 72,
   bottomPaddingCounter: 16,
   topPaddingCounter: 8,
+
+  //Error widget space between text and button
+  errorWidgetButtonSpace: 32,
 );

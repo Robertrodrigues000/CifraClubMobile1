@@ -65,7 +65,7 @@ class _ListsScreenState extends State<ListsScreen> {
                   widget.onTapSongbook(
                     Songbook(
                       name: "Segundo",
-                      isPublic: true,
+                      isPublic: false,
                       createdAt: DateTime.now(),
                       totalSongs: 12,
                       type: ListType.cantPlay,

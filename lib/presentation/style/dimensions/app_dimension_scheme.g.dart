@@ -63,6 +63,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme topPaddingCounter(double topPaddingCounter);
 
+  AppDimensionScheme errorWidgetButtonSpace(double errorWidgetButtonSpace);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -98,6 +100,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? searchInputHeight,
     double? bottomPaddingCounter,
     double? topPaddingCounter,
+    double? errorWidgetButtonSpace,
   });
 }
 
@@ -206,6 +209,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme topPaddingCounter(double topPaddingCounter) => this(topPaddingCounter: topPaddingCounter);
 
   @override
+  AppDimensionScheme errorWidgetButtonSpace(double errorWidgetButtonSpace) =>
+      this(errorWidgetButtonSpace: errorWidgetButtonSpace);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -242,6 +249,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? searchInputHeight = const $CopyWithPlaceholder(),
     Object? bottomPaddingCounter = const $CopyWithPlaceholder(),
     Object? topPaddingCounter = const $CopyWithPlaceholder(),
+    Object? errorWidgetButtonSpace = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -363,6 +371,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.topPaddingCounter
           // ignore: cast_nullable_to_non_nullable
           : topPaddingCounter as double,
+      errorWidgetButtonSpace: errorWidgetButtonSpace == const $CopyWithPlaceholder() || errorWidgetButtonSpace == null
+          ? _value.errorWidgetButtonSpace
+          // ignore: cast_nullable_to_non_nullable
+          : errorWidgetButtonSpace as double,
     );
   }
 }

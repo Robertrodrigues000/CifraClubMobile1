@@ -192,5 +192,11 @@
     },
 
     "savingToList": "Saving to list",
-    "loadingSongs": "Loading songs..."
+    "loadingSongs": "Loading songs...",
+    "privateListErrorTitle": "You don't have access to this private list",
+    "privateListErrorDescription": "This list is set to private. Contact its creator and request access!",
+    "privateListErrorButtonText": "Back to lists",
+    "loggedOutListErrorTitle": "Oops",
+    "loggedOutListErrorDescription": "Sign in to access your lists",
+    "loggedOutListErrorButtonText": "Log in"
 }

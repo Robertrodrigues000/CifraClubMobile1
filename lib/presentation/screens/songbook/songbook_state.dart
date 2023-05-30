@@ -6,6 +6,7 @@ part 'songbook_state.g.dart';
 @CopyWith()
 class SongbookState {
   final Songbook? selectedSongbook;
+  final bool isUserLoggedIn;
 
-  const SongbookState({this.selectedSongbook});
+  const SongbookState({this.selectedSongbook, required this.isUserLoggedIn});
 }

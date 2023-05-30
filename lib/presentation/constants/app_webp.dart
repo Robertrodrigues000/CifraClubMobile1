@@ -43,4 +43,10 @@ class AppWebp {
   static const listLimitDark = "assets/images/list_limit_dark.webp";
   static const listLimitProLight = "assets/images/list_limit_pro_light.webp";
   static const listLimitProDark = "assets/images/list_limit_pro_dark.webp";
+
+  static const privateListErrorLight = "assets/images/private_list_error_light.webp";
+  static const loggedOutListErrorLight = "assets/images/logged_out_list_error_light.webp";
+
+  static const privateListErrorDark = "assets/images/private_list_error_dark.webp";
+  static const loggedOutListErrorDark = "assets/images/logged_out_list_error_dark.webp";
 }

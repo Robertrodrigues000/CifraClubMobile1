@@ -1,5 +1,9 @@
 {
   "es": [
+    "premium",
+    "academy",
+    "appPalco",
+    "appLetras",
     "instagram",
     "facebook",
     "youtube",
@@ -9,10 +13,15 @@
     "slashCifraClub",
     "tenTimes",
     "hundredTimes",
-    "cifraClubProLimit"
+    "cifraClubProLimit",
+    "loggedOutListErrorTitle"
   ],
 
   "pt": [
+    "premium",
+    "academy",
+    "appPalco",
+    "appLetras",
     "instagram",
     "facebook",
     "youtube",
@@ -22,6 +31,7 @@
     "slashCifraClub",
     "tenTimes",
     "hundredTimes",
-    "cifraClubProLimit"
+    "cifraClubProLimit",
+    "loggedOutListErrorTitle"
   ]
 }

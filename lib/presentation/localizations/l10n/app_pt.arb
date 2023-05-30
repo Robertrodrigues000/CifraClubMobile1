@@ -23,11 +23,9 @@
     "termsOfUse": "Termos de Uso",
     "privacyPolicy": "Política de Privacidade",
     "support": "Fale Conosco",
-    "premium": "Premium",
     "home": "Início",
     "songbook": "Listas",
     "search": "Buscar",
-    "academy": "Academy",
     "more": "Mais",
     "login" : "Entrar",
     "all" : "Todos",
@@ -65,9 +63,7 @@
     "appMetronomeDescription" : "Toque no ritmo",
     "appTheLostPick" : "A Palheta Perdida",
     "appTheLostPickDescription" : "Aprenda os acordes jogando",
-    "appPalco" : "Palco MP3",
     "appPalcoDescription" : "Maior app de música independente",
-    "appLetras" : "Letras",
     "appLetrasDescription" : "Maior site de Letras do Brasil",
     "loginSubtitle": "Acesse sua conta para salvar listas",
     "musicalStyles" : "Estilos musicais",
@@ -142,5 +138,10 @@
     },
 
     "savingToList": "Salvando à lista",
-    "loadingSongs": "Carregando músicas..."
+    "loadingSongs": "Carregando músicas...",
+    "privateListErrorTitle": "Você não possui acesso a esta lista privada",
+    "privateListErrorDescription": "Esta lista está configurada como privada. Entre em contato com o criador da mesma e solicite o acesso!",
+    "privateListErrorButtonText": "Voltar para listas",
+    "loggedOutListErrorDescription": "Faça login para ter acesso as suas listas",
+    "loggedOutListErrorButtonText": "Fazer login"
 }

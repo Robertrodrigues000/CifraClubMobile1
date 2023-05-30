@@ -23,11 +23,9 @@
     "termsOfUse": "Terminos de Uso",
     "privacyPolicy": "Política de Privacidad",
     "support": "Hable con Nosotros",
-    "premium": "Premium",
     "home": "Principio",
     "songbook": "Listas",
     "search": "Buscar",
-    "academy": "Academy",
     "more": "Más",
     "login": "Iniciar Sesión",
     "videos": "Vídeos",
@@ -64,9 +62,7 @@
     "appMetronomeDescription" : "Manten tu ritmo musical",
     "appTheLostPick" : "La Púa Perdida",
     "appTheLostPickDescription" : "Aprende los acordes jugando",
-    "appPalco" : "Palco MP3",
     "appPalcoDescription" : "Mayor app de música independiente",
-    "appLetras" : "Letras",
     "appLetrasDescription" : "El sitio de letras más grande de Brasil",
     "loginSubtitle": "Inicie sesión en su cuenta para guardar listas",
     "all" : "Todo",
@@ -142,5 +138,10 @@
     },
 
     "savingToList": "Guardando en la lista",
-    "loadingSongs": "Cargando canciones..."
+    "loadingSongs": "Cargando canciones...",
+    "privateListErrorTitle": "No tienes acceso a esta lista privada",
+    "privateListErrorDescription": "Esta lista está configurada como privada. ¡Contacta con el creador de la misma y solicita el acceso!",
+    "privateListErrorButtonText": "Volver a las listas",
+    "loggedOutListErrorDescription": "Inicia sesión para acceder a tus listas",
+    "loggedOutListErrorButtonText": "Iniciar Sesión"
 }

@@ -1,5 +1,4 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
 import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -13,46 +12,40 @@ class ErrorDescriptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final imageHeight = (screenWidth - (context.appDimensionScheme.externalMarginWithoutConnection * 2)) * 0.4;
+    final dimensions = context.appDimensionScheme;
+    final imageHeight = (screenWidth - (dimensions.externalMarginWithoutConnection * 2)) * 0.35;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.externalMarginWithoutConnection),
-          child: Image.asset(
-            context.isDarkMode ? AppWebp.withoutConnectionDark : AppWebp.withoutConnectionLight,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: dimensions.externalMarginWithoutConnection),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            context.isDarkMode ? typeError.getImageDark() : typeError.getImageLight(),
             height: imageHeight,
             fit: BoxFit.fitHeight,
           ),
-        ),
-        const SizedBox(height: 24),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
-          child: Column(
-            children: [
-              Text(
-                typeError.getTitle(context),
-                style: context.typography.title4.copyWith(color: context.colors.textPrimary),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                typeError.getDescription(context),
-                style: context.typography.body10,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              CifraButton(
-                type: ButtonType.outline,
-                padding: EdgeInsets.zero,
-                onPressed: onClick,
-                child: Text(typeError.getButtonText(context)),
-              )
-            ],
+          const SizedBox(height: 16),
+          Text(
+            typeError.getTitle(context),
+            style: context.typography.title5,
+            textAlign: TextAlign.center,
           ),
-        ),
-      ],
+          const SizedBox(height: 8),
+          Text(
+            typeError.getDescription(context),
+            style: context.typography.body10,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: dimensions.errorWidgetButtonSpace),
+          CifraButton(
+            type: ButtonType.outline,
+            padding: EdgeInsets.zero,
+            onPressed: onClick,
+            child: Text(typeError.getButtonText(context)),
+          )
+        ],
+      ),
     );
   }
 }

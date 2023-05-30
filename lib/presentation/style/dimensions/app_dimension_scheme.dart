@@ -34,6 +34,7 @@ class AppDimensionScheme {
   final double searchInputHeight;
   final double bottomPaddingCounter;
   final double topPaddingCounter;
+  final double errorWidgetButtonSpace;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -64,5 +65,6 @@ class AppDimensionScheme {
     required this.searchInputHeight,
     required this.bottomPaddingCounter,
     required this.topPaddingCounter,
+    required this.errorWidgetButtonSpace,
   });
 }

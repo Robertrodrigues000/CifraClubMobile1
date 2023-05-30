@@ -7,7 +7,7 @@ void main() {
   test("When call 'getCifras' show emit list of cifras", () async {
     final bloc = CifrasBloc();
 
-    await bloc.getCifras(getFakeSongbook());
+    await bloc.getSongbook(getFakeSongbook());
 
     expect(bloc.state.cifras, isNotNull);
   });

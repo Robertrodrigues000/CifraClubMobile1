@@ -39,7 +39,7 @@ class SongbookEntry extends ScreenEntry {
                 getIt(),
               )),
       BlocProvider(create: (context) => CifrasBloc()),
-      BlocProvider(create: (context) => SongbookBloc()),
+      BlocProvider(create: (context) => SongbookBloc(getIt(), getIt())),
     ], child: const SongbookScreen());
   }
 }

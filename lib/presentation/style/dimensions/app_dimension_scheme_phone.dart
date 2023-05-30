@@ -26,7 +26,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   topCellRankingWidth: 52,
 
   //Error Description
-  externalMarginWithoutConnection: 36,
+  externalMarginWithoutConnection: 16,
 
   //Academy
   verticalMarginAcademyInfo: 24,
@@ -40,4 +40,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   searchInputHeight: 56,
   bottomPaddingCounter: 12,
   topPaddingCounter: 4,
+
+  //Error widget space between text and button
+  errorWidgetButtonSpace: 24,
 );

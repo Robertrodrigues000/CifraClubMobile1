@@ -24,12 +24,12 @@ void main() {
 
   setUpAll(() {
     bloc = _CifrasBlocMock();
-    when(() => bloc.getCifras(any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.getSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
   testWidgets('When start should load screen correctly', (widgetTester) async {
-    bloc.mockStream(const CifrasState());
+    bloc.mockStream(const CifrasState(isPublic: true));
     final songbook = getFakeSongbook();
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -49,7 +49,7 @@ void main() {
   testWidgets('When is phone as click to back should call pop', (widgetTester) async {
     binding.window.physicalSizeTestValue = const Size(460, 800);
     binding.window.devicePixelRatioTestValue = 1.0;
-    bloc.mockStream(const CifrasState());
+    bloc.mockStream(const CifrasState(isPublic: true));
 
     final songbook = getFakeSongbook();
     final nav = NavMock.getDummy();
