@@ -7,6 +7,7 @@ import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/presentation/constants/app_urls.dart';
+import 'package:cifraclub/presentation/dialogs/save_cifras_in_list_dialog.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
@@ -217,6 +218,16 @@ class _DevScreenState extends State<DevScreen> {
                       },
                       isUserList: true,
                     ).show(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.save_alt,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Save Cifras Dialog"),
+                  onTap: () {
+                    SaveCifrasInListDialog.show(context: context, totalCifras: 14, count: 10);
                   },
                 ),
                 ListTile(

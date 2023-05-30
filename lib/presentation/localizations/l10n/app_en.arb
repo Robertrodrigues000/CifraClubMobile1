@@ -189,5 +189,8 @@
                 "example": "1"
             }
         }
-    }
+    },
+
+    "savingToList": "Saving to list",
+    "loadingSongs": "Loading songs..."
 }

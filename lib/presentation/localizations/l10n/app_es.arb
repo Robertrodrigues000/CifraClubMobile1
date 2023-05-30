@@ -139,5 +139,8 @@
                 "example": "1"
             }
         }
-    }
+    },
+
+    "savingToList": "Guardando en la lista",
+    "loadingSongs": "Cargando canciones..."
 }
