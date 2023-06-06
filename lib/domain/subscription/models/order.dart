@@ -27,8 +27,6 @@ enum OrderStatus {
   statusMoved,
   statusDeletedUser;
 
-  // coverage:ignore-start
   bool get isValid =>
       this == OrderStatus.statusActive || this == OrderStatus.statusTrial || this == OrderStatus.statusCancelled;
-  // coverage:ignore-end
 }

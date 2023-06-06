@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'dart:developer' as developer;
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
 typedef LogCondition = bool Function(String tag, Level level);
@@ -38,6 +39,9 @@ class LogRepositoryImpl extends LogRepository {
   @override
   Future<void> sendNonFatalCrash(
       {required exception, StackTrace? stack, reason, Iterable<String> information = const [], bool fatal = false}) {
+    if (kDebugMode) {
+      log(tag: runtimeType.toString(), message: exception.toString(), level: Level.WARNING);
+    }
     return crashlytics.recordError(
       Error.safeToString(exception),
       stack ?? StackTrace.current,

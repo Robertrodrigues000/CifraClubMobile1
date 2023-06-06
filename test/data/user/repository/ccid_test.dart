@@ -21,15 +21,31 @@ void main() {
       expect(channel.calls.first.method, "initializeCcid");
     });
 
-    test("emit a new credential`", () async {
-      UserCredential? credentials;
+    test("When there is no logged user, emit a credential with isUserLoggedIn false`", () async {
       final channel = FakeMethodChannel(answers: {"initializeCcid": true});
       final ccid = Ccid(channel);
-      ccid.credential.listen((newCredential) => credentials = newCredential);
-
       await ccid.init();
 
-      expect(credentials, isNotNull);
+      expect(
+          ccid.credential,
+          emitsInOrder([
+            equals(const UserCredential(isUserLoggedIn: false)),
+          ]));
+    });
+
+    test("When there is a logged user, emit a credential with isUserLoggedIn true`", () async {
+      final channel = FakeMethodChannel(answers: {
+        "initializeCcid": true,
+        "isUserLoggedIn": true,
+      });
+      final ccid = Ccid(channel);
+      await ccid.init();
+
+      expect(
+          ccid.credential,
+          emitsInOrder([
+            equals(const UserCredential(isUserLoggedIn: true)),
+          ]));
     });
   });
 

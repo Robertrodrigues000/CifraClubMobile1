@@ -138,7 +138,7 @@ class _DevScreenState extends State<DevScreen> {
                   ),
                   title: const Text("Compra"),
                   onTap: () {
-                    _bloc.getProducts();
+                    _bloc.purchase();
                   },
                 ),
                 ListTile(

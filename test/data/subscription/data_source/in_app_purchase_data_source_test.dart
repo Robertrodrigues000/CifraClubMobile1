@@ -11,6 +11,17 @@ import 'package:typed_result/typed_result.dart';
 class _InAppPurchaseMock extends Mock implements InAppPurchase {}
 
 void main() {
+  final productDetails = ProductDetails(
+      id: faker.animal.name(),
+      title: faker.company.name(),
+      description: faker.lorem.sentence(),
+      price: faker.randomGenerator.string(50),
+      rawPrice: faker.randomGenerator.decimal(),
+      currencyCode: faker.currency.code());
+
+  setUpAll(() {
+    registerFallbackValue(PurchaseParam(productDetails: productDetails));
+  });
   test('When ensureInitialized is called, it should return the InAppPurchase lib isAvailable status', () async {
     final inAppPurchase = _InAppPurchaseMock();
     final completer = Completer<bool>();
@@ -38,14 +49,6 @@ void main() {
   test('When getProducts is called should return a list of products', () async {
     final inAppPurchase = _InAppPurchaseMock();
 
-    final productDetails = ProductDetails(
-        id: faker.animal.name(),
-        title: faker.company.name(),
-        description: faker.lorem.sentence(),
-        price: faker.randomGenerator.string(50),
-        rawPrice: faker.randomGenerator.decimal(),
-        currencyCode: faker.currency.code());
-
     final productDetailsResponse = ProductDetailsResponse(notFoundIDs: [], productDetails: [productDetails]);
 
     when(() => inAppPurchase.queryProductDetails(any())).thenAnswer((_) => SynchronousFuture(productDetailsResponse));
@@ -72,5 +75,16 @@ void main() {
     final result = await dataSource.getProducts({""});
 
     expect(result.getError()!.toString(), iAPError.toString());
+  });
+
+  test('When purchaseProduct is called should call the lib method', () async {
+    final inAppPurchase = _InAppPurchaseMock();
+
+    when(() => inAppPurchase.buyNonConsumable(purchaseParam: any(named: "purchaseParam")))
+        .thenAnswer((_) => SynchronousFuture(true));
+
+    final dataSource = InAppPurchaseDataSource(inAppPurchase: inAppPurchase);
+    await dataSource.purchaseProduct(productDetails);
+    verify(() => inAppPurchase.buyNonConsumable(purchaseParam: any(named: "purchaseParam"))).called(1);
   });
 }

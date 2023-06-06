@@ -9,7 +9,7 @@ class GetIsProPreference {
 
   const GetIsProPreference(this._preferencesRepository);
 
-  bool? call() {
+  bool call() {
     return _preferencesRepository.getBool(SharedPreferencesKeys.pro) ?? false;
   }
 }

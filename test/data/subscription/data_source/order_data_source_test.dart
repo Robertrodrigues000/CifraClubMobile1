@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/subscription/data_source/order_data_source.dart';
 import 'package:cifraclub/data/subscription/models/order_dto.dart';
-import 'package:cifraclub/data/subscription/models/purchase_result.dart';
+import 'package:cifraclub/data/subscription/models/purchase_result_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -107,7 +107,7 @@ void main() {
       expect(request.path, "/v3/orders");
       expect(request.type, NetworkRequestType.post);
 
-      expect(result, PurchaseResult.success);
+      expect(result, PurchaseResultDto.success);
     });
 
     test("When send app store order", () async {
@@ -142,7 +142,7 @@ void main() {
       expect(request.path, "/v3/orders");
       expect(request.type, NetworkRequestType.post);
 
-      expect(result, PurchaseResult.success);
+      expect(result, PurchaseResultDto.success);
     });
 
     test("When request fail", () async {
@@ -163,14 +163,14 @@ void main() {
       ];
 
       final expextResult = [
-        PurchaseResult.requestError,
-        PurchaseResult.success,
-        PurchaseResult.invalidParams,
-        PurchaseResult.userNotLogged,
-        PurchaseResult.tokenAlreadyValidated,
-        PurchaseResult.paymentError,
-        PurchaseResult.serverError,
-        PurchaseResult.unknown,
+        PurchaseResultDto.requestError,
+        PurchaseResultDto.success,
+        PurchaseResultDto.invalidParams,
+        PurchaseResultDto.userNotLogged,
+        PurchaseResultDto.tokenAlreadyValidated,
+        PurchaseResultDto.paymentError,
+        PurchaseResultDto.serverError,
+        PurchaseResultDto.unknown,
       ];
 
       for (var i = 0; i < erros.length; i++) {

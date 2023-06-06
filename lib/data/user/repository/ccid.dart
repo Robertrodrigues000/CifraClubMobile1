@@ -24,15 +24,14 @@ class Ccid implements AuthenticationRepository {
     assert(!isInitialized.isCompleted, "init must be called only once");
     channel.setMethodCallHandler(_handleMethod);
     isInitialized.complete(await channel.invokeMethod('initializeCcid'));
-    updateCredentials();
+    await updateCredentials();
     return isInitialized.future;
   }
 
   // ignore_for_file: close_sinks
   // ignoring rule because Ccid is a singleton
   @override
-  BehaviorSubject<UserCredential> credential =
-      BehaviorSubject<UserCredential>.seeded(const UserCredential(isUserLoggedIn: false));
+  BehaviorSubject<UserCredential> credential = BehaviorSubject<UserCredential>();
 
   Future<void> updateCredentials() async {
     final isUserLoggedIn = await this.isUserLoggedIn();
@@ -43,13 +42,17 @@ class Ccid implements AuthenticationRepository {
     } else {
       user = null;
     }
-    credential.add(
-      UserCredential(
-        isUserLoggedIn: isUserLoggedIn,
-        user: user,
-        jwt: jwt,
-      ),
+
+    final currentCredential = UserCredential(
+      isUserLoggedIn: isUserLoggedIn,
+      user: user,
+      jwt: jwt,
     );
+
+    if (currentCredential == credential.valueOrNull) {
+      return;
+    }
+    credential.add(currentCredential);
   }
 
   Future<T?> invokeMethodSerialized<T>(String method, [dynamic args]) async {

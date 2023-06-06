@@ -32,7 +32,7 @@ class AuthorizationInterceptor extends Interceptor {
     String authorization = _getAuthorizationHeader(path: path, expireTime: expireTime);
     options.headers["Authorization"] = authorization;
     options.headers["X-Expires"] = expireTime.toString();
-    final jwt = getCredential().jwt;
+    final jwt = getCredential()?.jwt;
     if (jwt != null) {
       options.headers["X-Authorization"] = "Bearer $jwt";
     }

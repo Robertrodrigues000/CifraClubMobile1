@@ -1,4 +1,6 @@
-class User {
+import 'package:equatable/equatable.dart';
+
+class User extends Equatable {
   final String? name;
   final String? email;
   final String? avatarUrl;
@@ -18,4 +20,9 @@ class User {
     this.country,
     this.id,
   });
+
+  // coverage:ignore-start
+  @override
+  List<Object?> get props => [name, email, avatarUrl, city, stateInitials, state, country, id];
+  // coverage:ignore-end
 }

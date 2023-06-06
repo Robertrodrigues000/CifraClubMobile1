@@ -2,7 +2,7 @@ import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
 import 'package:cifraclub/data/subscription/models/order_dto.dart';
 import 'package:cifraclub/data/subscription/models/post_order.dart';
-import 'package:cifraclub/data/subscription/models/purchase_result.dart';
+import 'package:cifraclub/data/subscription/models/purchase_result_dto.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -25,11 +25,11 @@ class OrderDataSource {
     return networkService.execute(request: request);
   }
 
-  Future<PurchaseResult> postOrder(PurchaseDetails purchaseDetails, {bool replaceCcidAccount = false}) async {
+  Future<PurchaseResultDto> postOrder(PurchaseDetails purchaseDetails, {bool replaceCcidAccount = false}) async {
     final orderJson = PostOrder.fromPurchase(purchaseDetails, replaceCcidAccount: replaceCcidAccount)?.toJson();
 
     if (orderJson == null) {
-      return PurchaseResult.unknown;
+      return PurchaseResultDto.unknown;
     }
 
     var request = NetworkRequest(
@@ -41,17 +41,17 @@ class OrderDataSource {
     final result = await networkService.execute(request: request);
 
     if (result.isSuccess) {
-      return PurchaseResult.success;
+      return PurchaseResultDto.success;
     } else {
       if (result.getError()! is ConnectionError) {
-        return PurchaseResult.requestError;
+        return PurchaseResultDto.requestError;
       }
 
       if (result.getError()! is ServerError) {
         final serverError = result.getError()! as ServerError;
-        final purchaseResult = _intToPurchaseResult(serverError.statusCode);
+        final purchaseResultDto = _intToPurchaseResultDto(serverError.statusCode);
 
-        if (purchaseResult == null) {
+        if (purchaseResultDto == null) {
           // coverage:ignore-start
           logger?.sendNonFatalCrash(
             exception: "Unknown purchase validate result",
@@ -59,7 +59,7 @@ class OrderDataSource {
           );
           // coverage:ignore-end
         }
-        return purchaseResult ?? PurchaseResult.unknown;
+        return purchaseResultDto ?? PurchaseResultDto.unknown;
       }
 
       // coverage:ignore-start
@@ -68,31 +68,31 @@ class OrderDataSource {
         information: [result.getError()!.toString()],
       );
       // coverage:ignore-end
-      return PurchaseResult.unknown;
+      return PurchaseResultDto.unknown;
     }
   }
 
-  PurchaseResult? _intToPurchaseResult(int? value) {
+  PurchaseResultDto? _intToPurchaseResultDto(int? value) {
     if (value == null) {
       return null;
     }
     if (value == 204) {
-      return PurchaseResult.success;
+      return PurchaseResultDto.success;
     }
     if (value == 400) {
-      return PurchaseResult.invalidParams;
+      return PurchaseResultDto.invalidParams;
     }
     if (value == 401) {
-      return PurchaseResult.userNotLogged;
+      return PurchaseResultDto.userNotLogged;
     }
     if (value == 409) {
-      return PurchaseResult.tokenAlreadyValidated;
+      return PurchaseResultDto.tokenAlreadyValidated;
     }
     if (value == 424) {
-      return PurchaseResult.paymentError;
+      return PurchaseResultDto.paymentError;
     }
     if (value >= 500) {
-      return PurchaseResult.serverError;
+      return PurchaseResultDto.serverError;
     }
     return null;
   }

@@ -1,6 +1,7 @@
 import 'package:cifraclub/data/subscription/data_source/order_data_source.dart';
 import 'package:cifraclub/data/subscription/models/order_dto.dart';
-import 'package:cifraclub/data/subscription/models/purchase_result.dart';
+import 'package:cifraclub/data/subscription/models/purchase_result_dto.dart';
+import 'package:cifraclub/domain/subscription/models/purchase_result.dart';
 import 'package:cifraclub/data/subscription/repository/order_repository_impl.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
@@ -63,7 +64,7 @@ void main() {
       final repository = OrderRepositoryImpl(dataSource: dataSource);
       final purchase = getFakePurchase();
 
-      when(() => dataSource.postOrder(captureAny())).thenAnswer((_) => SynchronousFuture(PurchaseResult.success));
+      when(() => dataSource.postOrder(captureAny())).thenAnswer((_) => SynchronousFuture(PurchaseResultDto.success));
 
       final result = await repository.postOrder(purchase);
 
@@ -71,7 +72,7 @@ void main() {
           verify(() => dataSource.postOrder(captureAny(), replaceCcidAccount: captureAny(named: "replaceCcidAccount")))
               .captured;
 
-      expect(result, PurchaseResult.success);
+      expect(result, PurchaseResult.valid);
       expect(params.first, purchase.purchaseDto);
       expect(params.last, false);
     });
@@ -81,11 +82,12 @@ void main() {
       final repository = OrderRepositoryImpl(dataSource: dataSource);
       final purchase = getFakePurchase();
 
-      when(() => dataSource.postOrder(captureAny())).thenAnswer((_) => SynchronousFuture(PurchaseResult.serverError));
+      when(() => dataSource.postOrder(captureAny()))
+          .thenAnswer((_) => SynchronousFuture(PurchaseResultDto.serverError));
 
       final result = await repository.postOrder(purchase);
 
-      expect(result, PurchaseResult.serverError);
+      expect(result, PurchaseResult.unknown);
     });
 
     test("When post with success and change replace account value should return success", () async {
@@ -95,7 +97,7 @@ void main() {
       const replace = true;
 
       when(() => dataSource.postOrder(captureAny(), replaceCcidAccount: captureAny(named: "replaceCcidAccount")))
-          .thenAnswer((_) => SynchronousFuture(PurchaseResult.success));
+          .thenAnswer((_) => SynchronousFuture(PurchaseResultDto.success));
 
       final result = await repository.postOrder(purchase, replaceCcidAccount: replace);
 
@@ -103,7 +105,7 @@ void main() {
           verify(() => dataSource.postOrder(captureAny(), replaceCcidAccount: captureAny(named: "replaceCcidAccount")))
               .captured;
 
-      expect(result, PurchaseResult.success);
+      expect(result, PurchaseResult.valid);
       expect(params.first, purchase.purchaseDto);
       expect(params.last, replace);
     });

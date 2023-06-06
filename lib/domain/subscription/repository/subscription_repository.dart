@@ -1,4 +1,6 @@
+import 'package:rxdart/rxdart.dart';
+
 abstract class SubscriptionRepository {
-  Future<bool> get ensureInitialized;
-  Stream<bool> getProStatusStream();
+  void updateProStatus({bool? remoteProStatus, bool? storeProStatus});
+  BehaviorSubject<bool> getProStatusStream();
 }

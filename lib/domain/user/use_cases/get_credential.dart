@@ -9,5 +9,5 @@ class GetCredential {
 
   const GetCredential(this.authenticationRepository);
 
-  UserCredential call() => authenticationRepository.credential.value;
+  UserCredential? call() => authenticationRepository.credential.valueOrNull;
 }

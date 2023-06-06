@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/di/navigator_module.dart';
+import 'package:cifraclub/domain/subscription/use_cases/watch_for_purchases.dart';
+import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.dart';
 import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
@@ -25,6 +27,16 @@ Future<void> initializeCcid() {
   return ccid.init();
 }
 
+void initializeWatchForSubscriptions() {
+  final watchForSubscriptions = getIt<WatchForSubscriptions>();
+  watchForSubscriptions();
+}
+
+void initializeWatchForPurchases() {
+  final watchForPurchases = getIt<WatchForPurchases>();
+  watchForPurchases();
+}
+
 /// Fix SSL certificate problems with Android 7.1.1 and below
 Future<void> applyLeHttp() async {
   if (Platform.isAndroid) {
@@ -40,7 +52,9 @@ void main() async {
 
   await configureDependencies();
   await applyLeHttp();
-  initializeCcid();
+  await initializeCcid();
+  initializeWatchForPurchases();
+  initializeWatchForSubscriptions();
 
   runApp(const CifraClub());
 }

@@ -8,7 +8,9 @@
 // @Failure 503 {object} http.ResponseWriter "Erro ao inserir usuário no banco de dados"
 // @Router /v3/orders/ [post]
 
-enum PurchaseResult {
+import 'package:cifraclub/domain/subscription/models/purchase_result.dart';
+
+enum PurchaseResultDto {
   success,
   invalidParams,
   userNotLogged,
@@ -16,5 +18,25 @@ enum PurchaseResult {
   paymentError,
   serverError,
   requestError,
-  unknown,
+  unknown;
+
+  PurchaseResult toDomain() {
+    switch (this) {
+      case PurchaseResultDto.success:
+        return PurchaseResult.valid;
+
+      case PurchaseResultDto.invalidParams:
+      case PurchaseResultDto.userNotLogged:
+      case PurchaseResultDto.paymentError:
+        return PurchaseResult.invalid;
+
+      case PurchaseResultDto.tokenAlreadyValidated:
+        return PurchaseResult.tokenAlreadyValidated;
+
+      case PurchaseResultDto.serverError:
+      case PurchaseResultDto.requestError:
+      case PurchaseResultDto.unknown:
+        return PurchaseResult.unknown;
+    }
+  }
 }

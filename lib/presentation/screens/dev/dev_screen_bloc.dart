@@ -34,23 +34,13 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._deleteAllCifras,
   ) : super(const DevScreenState(isLoading: false));
 
-  void initPurchaseStream() {
-    // ignore: avoid_print
-    print("Starting purchase stream");
-    // ignore: avoid_print
-    _inAppPurchaseRepository.getPurchaseStream().listen(print);
-  }
-
   Future<void> restorePurchases() {
     return _inAppPurchaseRepository.restorePurchases();
   }
 
-  Future<void> getProducts() async {
-    initPurchaseStream();
-    await getOrders();
+  Future<void> purchase() async {
     final productIds = _getRemoteProductsIds();
     final products = await _getProducts(productIds.toSet());
-    await _inAppPurchaseRepository.cleanIosTransactions();
 
     products.onSuccess(
       (products) {
