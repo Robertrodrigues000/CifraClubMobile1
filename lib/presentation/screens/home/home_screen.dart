@@ -145,9 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         artists: state.topArtists,
                         // coverage:ignore-start
                         onTap: (artist) {
-                          Nav.of(context).push(
-                            screenName: ArtistEntry.name,
-                          );
+                          Nav.of(context)
+                              .push(screenName: ArtistEntry.name, params: {'url': artist.url, 'name': artist.name});
                           // coverage:ignore-end
                         },
                       ),

@@ -9,7 +9,11 @@ import 'package:typed_result/typed_result.dart';
 
 class ArtistBloc extends Cubit<ArtistState> {
   final GetArtistSongs _getArtistSongs;
-  ArtistBloc(this._getArtistSongs) : super(const ArtistState());
+  final String artistUrl;
+  ArtistBloc(
+    this.artistUrl,
+    this._getArtistSongs,
+  ) : super(const ArtistState());
 
   final albuns = List.generate(10, (index) => index + 1);
 
@@ -17,8 +21,12 @@ class ArtistBloc extends Cubit<ArtistState> {
 
   Future<void> getArtistSongs() async {
     currentRequest?.cancel();
-    currentRequest = _getArtistSongs(artistUrl: "legiao-urbana", filter: ArtistSongFilter.cifra);
+    currentRequest = _getArtistSongs(artistUrl: artistUrl, filter: ArtistSongFilter.cifra);
+
     var songsResult = (await currentRequest!.valueOrCancellation(Err(RequestCancelled())))!;
+    if (songsResult.getError() is RequestCancelled) {
+      return;
+    }
 
     emit(
       state.copyWith(

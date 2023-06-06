@@ -174,6 +174,7 @@
     "privacyTitle": "Who will see your list?",
     "public": "All",
     "private": "Just me",
+    "videoLesson":"Video lesson",
     "create": "Create",
     "createList": "Create new list",
     "inputDialogHint": "Ex.: Luau with friends",

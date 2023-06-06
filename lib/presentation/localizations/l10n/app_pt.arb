@@ -120,6 +120,7 @@
     "privacyTitle": "Quem verá sua lista?",
     "public": "Todos",
     "private": "Apenas eu",
+    "videoLesson":"Videoaula",
     "create": "Criar",
     "createList": "Criar nova lista",
     "inputDialogHint": "Ex.: Luau com amigos",

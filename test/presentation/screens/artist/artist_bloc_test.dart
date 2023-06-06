@@ -32,7 +32,7 @@ void main() {
 
       blocTest(
         "should emit state with artist songs from use case",
-        build: () => ArtistBloc(getArtistSongs),
+        build: () => ArtistBloc("", getArtistSongs),
         act: (bloc) => bloc.getArtistSongs(),
         expect: () => [
           isA<ArtistState>().having((state) => state.songs, "songs", artistSongs),

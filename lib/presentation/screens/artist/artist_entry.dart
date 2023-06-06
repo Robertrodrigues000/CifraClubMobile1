@@ -20,8 +20,13 @@ class ArtistEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ArtistBloc(getIt()),
-      child: const ArtistScreen(),
+      create: (context) => ArtistBloc(
+        params['url'] as String,
+        getIt(),
+      ),
+      child: ArtistScreen(
+        name: params['name'] as String,
+      ),
     );
   }
 }
