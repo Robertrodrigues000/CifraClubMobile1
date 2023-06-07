@@ -2,6 +2,7 @@ import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_image_dto.dart';
+import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_song_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
@@ -9,6 +10,7 @@ import 'package:cifraclub/data/artist/repository/artist_repository_impl.dart';
 import 'package:cifraclub/data/genre/models/genre_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/artist/models/artist_image.dart';
+import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -96,6 +98,57 @@ void main() {
     });
   });
 
+  group("When getArtistInfo() is Called", () {
+    test("Request successful", () async {
+      var artistDataSource = _MockArtistDataSource();
+
+      var artistInfoDto = const ArtistInfoDto(
+        id: 1,
+        name: "Legiao Urbana",
+        url: "legiao-urbana",
+        hitsCount: 123,
+        genre: GenreDto(
+          name: "Rock",
+          url: "rock",
+        ),
+      );
+
+      when(() => artistDataSource.getArtistInfo(any())).thenAnswer((_) => SynchronousFuture(
+            Ok(artistInfoDto),
+          ));
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final artistInfo = await repository.getArtistInfo(artistUrl: "legiao-urbana");
+
+      expect(artistInfo.isSuccess, true);
+      expect(
+        artistInfo.get(),
+        const ArtistInfo(
+          id: 1,
+          name: "Legiao Urbana",
+          url: "legiao-urbana",
+          hitsCount: 123,
+          genre: Genre(
+            name: "Rock",
+            url: "rock",
+          ),
+        ),
+      );
+    });
+    test("Request failed", () async {
+      final artistDataSource = _MockArtistDataSource();
+
+      when(() => artistDataSource.getArtistInfo(any())).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError())),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final artistInfo = await repository.getArtistInfo(artistUrl: "legiao-urbana");
+
+      expect(artistInfo.isFailure, true);
+      expect(artistInfo.getError().runtimeType, ServerError);
+      expect((artistInfo.getError() as ServerError).statusCode, null);
+    });
+  });
   group("When getArtistSongs() is Called", () {
     const artistUrl = "legiao-urbana";
     test("Request successful", () async {

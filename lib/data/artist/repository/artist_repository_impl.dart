@@ -1,4 +1,5 @@
 import 'package:async/async.dart' hide Result;
+import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
 import 'package:typed_result/typed_result.dart';
@@ -23,6 +24,12 @@ class ArtistRepositoryImpl extends ArtistRepository {
         .getTopArtists(genreUrl: genreUrl, limit: limit, offset: offset)
         .then((result) => result.map((topArtistsDto) => topArtistsDto.toDomain()));
   }
+
+  @override
+  Future<Result<ArtistInfo, RequestError>> getArtistInfo({required String artistUrl}) async =>
+      (await artistDataSource.getArtistInfo(artistUrl)).map(
+        (artistInfoDto) => artistInfoDto.toDomain(),
+      );
 
   @override
   CancelableOperation<Result<List<ArtistSong>, RequestError>> getArtistSongs(

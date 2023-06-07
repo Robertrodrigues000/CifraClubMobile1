@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
+import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
@@ -117,6 +118,45 @@ void main() {
     });
   });
 
+  group("When getArtistInfo is called", () {
+    const artistUrl = "bruno-e-marrone";
+    test("When request is successful ", () async {
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/artist/data_source/artist_info_mock_json_response.json").readAsString();
+      await networkService.mock<ArtistInfoDto>(response: mockResponse);
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getArtistInfo(artistUrl);
+
+      final request = verify(() => networkService.execute<ArtistInfoDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<ArtistInfoDto>;
+
+      expect(request.path, "/v3/artist/$artistUrl/info");
+      expect(request.type, NetworkRequestType.get);
+      expect(result.isSuccess, true);
+      final artistInfo = result.get()!;
+
+      expect(artistInfo.id, 6908);
+      expect(artistInfo.name, "Bruno e Marrone");
+      expect(artistInfo.url, "bruno-e-marrone");
+      expect(artistInfo.hitsCount, 174581162);
+    });
+    test("When request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<ArtistInfoDto>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(
+                Err(ServerError(statusCode: 404)),
+              ));
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getArtistInfo(artistUrl);
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
   group("When getArtistSongs is called", () {
     test("When request is successful with params", () async {
       const artistDns = "gabriela-rocha";
@@ -159,6 +199,7 @@ void main() {
 
     test("When request fails", () async {
       final networkService = NetworkServiceMock();
+
       when(() => networkService.cancelableExecute<ArtistSongsDto>(request: captureAny(named: "request"))).thenAnswer(
         (invocation) => CancelableOperation.fromFuture(
           SynchronousFuture(

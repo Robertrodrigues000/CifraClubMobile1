@@ -23,6 +23,7 @@ class ArtistEntry extends ScreenEntry {
       create: (context) => ArtistBloc(
         params['url'] as String,
         getIt(),
+        getIt(),
       ),
       child: ArtistScreen(
         name: params['name'] as String,

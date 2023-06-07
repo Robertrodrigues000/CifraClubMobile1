@@ -1,0 +1,24 @@
+{
+    "id": 6908,
+    "name": "Bruno e Marrone",
+    "url": "bruno-e-marrone",
+    "hits": 174581162,
+    "totalPhotos": 16,
+    "genre": {
+        "id": 9,
+        "name": "Sertanejo",
+        "url": "sertanejo"
+    },
+    "image": {
+        "50": "https://akamai.sscdn.co/letras/50x50/fotos/e/4/a/7/e4a7eca99c8f6d5c4b7a1ea61dfe2899-tb2.jpg",
+        "162": "https://akamai.sscdn.co/letras/162x162/fotos/e/4/a/7/e4a7eca99c8f6d5c4b7a1ea61dfe2899.jpg",
+        "250": "https://akamai.sscdn.co/letras/250x250/fotos/e/4/a/7/e4a7eca99c8f6d5c4b7a1ea61dfe2899.jpg",
+        "color": "#C43A3A"
+    },
+    "headImage": {
+        "original": "https://akamai.sscdn.co/uploadfile/letras/fotos/e/c/d/7/ecd7400297ab81acfda5b9e5abbe2e53.jpg",
+        "color": "#7249B8",
+        "width": 1600,
+        "height": 1067
+    }
+}

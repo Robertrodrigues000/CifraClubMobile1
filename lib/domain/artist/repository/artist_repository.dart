@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/artist/models/artist.dart';
+import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
@@ -11,6 +12,9 @@ abstract class ArtistRepository {
     String? genreUrl,
     required int limit,
     required int offset,
+  });
+  Future<Result<ArtistInfo, RequestError>> getArtistInfo({
+    required String artistUrl,
   });
 
   CancelableOperation<Result<List<ArtistSong>, RequestError>> getArtistSongs(

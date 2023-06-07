@@ -1,4 +1,5 @@
 import 'package:async/async.dart' hide Result;
+import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
@@ -33,6 +34,15 @@ class ArtistDataSource {
       parser: (data) => TopArtistsDto.fromJson(data as Map<String, dynamic>),
     );
     return networkService.cancelableExecute(request: request);
+  }
+
+  Future<Result<ArtistInfoDto, RequestError>> getArtistInfo(String artistUrl) async {
+    var request = NetworkRequest(
+        type: NetworkRequestType.get,
+        path: "/v3/artist/$artistUrl/info",
+        parser: (data) => ArtistInfoDto.fromJson(data as Map<String, dynamic>));
+    var artistInfo = await networkService.execute(request: request);
+    return artistInfo;
   }
 
   CancelableOperation<Result<ArtistSongsDto, RequestError>> getArtistSongs({
