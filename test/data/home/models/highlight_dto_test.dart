@@ -3,7 +3,7 @@ import 'package:cifraclub/data/home/models/highlight/photos_dto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../shared_mocks/domain/home/models/home_image_mock.dart';
+import '../../../shared_mocks/domain/home/models/images_size_mock.dart';
 
 class _PhotosDtoMock extends Mock implements PhotosDto {}
 

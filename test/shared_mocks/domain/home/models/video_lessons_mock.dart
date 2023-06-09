@@ -2,7 +2,7 @@ import 'package:cifraclub/domain/home/models/video_lesson.dart';
 import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
-import 'home_image_mock.dart';
+import 'images_size_mock.dart';
 import 'version_mock.dart';
 
 VideoLesson getFakeVideoLessons() => VideoLesson(

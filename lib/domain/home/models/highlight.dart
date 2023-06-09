@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/home/models/home_image.dart';
+import 'package:cifraclub/domain/home/models/images_size.dart';
 import 'package:equatable/equatable.dart';
 
 class Highlight extends Equatable {
@@ -8,7 +8,7 @@ class Highlight extends Equatable {
   final String icon;
   final String description;
   final String contentDescription;
-  final HomeImage images;
+  final ImagesSize images;
 
   const Highlight({
     required this.url,

@@ -2,6 +2,7 @@ import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
+import 'package:cifraclub/domain/home/models/video_lesson.dart';
 import 'package:typed_result/typed_result.dart';
 
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
@@ -37,5 +38,11 @@ class ArtistRepositoryImpl extends ArtistRepository {
     return artistDataSource
         .getArtistSongs(artistUrl: artistUrl, limit: limit, filter: filter)
         .then((result) => result.map((artistSongDto) => artistSongDto.toDomain()));
+  }
+
+  @override
+  Future<Result<List<VideoLesson>, RequestError>> getArtistVideoLessons(String artistDns) async {
+    return (await artistDataSource.getVideoLessons(dns: artistDns))
+        .map((value) => value.map((e) => e.toDomain()).toList());
   }
 }

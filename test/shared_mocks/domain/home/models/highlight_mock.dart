@@ -1,7 +1,7 @@
 import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:faker/faker.dart';
 
-import 'home_image_mock.dart';
+import 'images_size_mock.dart';
 
 Highlight getFakeHighlight() => Highlight(
       url: faker.internet.httpUrl(),

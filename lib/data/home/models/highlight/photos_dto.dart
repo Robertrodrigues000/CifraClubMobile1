@@ -1,5 +1,5 @@
 import 'package:cifraclub/data/home/models/highlight/photo_dto.dart';
-import 'package:cifraclub/domain/home/models/home_image.dart';
+import 'package:cifraclub/domain/home/models/images_size.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'photos_dto.g.dart';
@@ -8,7 +8,7 @@ part 'photos_dto.g.dart';
 class PhotosDto {
   final PhotoDto app;
 
-  HomeImage toDomain() => app.toDomain();
+  ImagesSize toDomain() => app.toDomain();
 
   factory PhotosDto.fromJson(Map<String, dynamic> json) => _$PhotosDtoFromJson(json);
 

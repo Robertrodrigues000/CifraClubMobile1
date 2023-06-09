@@ -1,0 +1,134 @@
+[
+    {
+        "id": 5299,
+        "youtubeId": "GxCFTKpk6Rc",
+        "title": "COMO TOCAR SOMETHING DOS BEATLES NO BAIXO",
+        "url": "the-beatles-something-aula-de-baixo",
+        "views": 390,
+        "duration": 492,
+        "type": "musica",
+        "subTypeId": 1,
+        "subType": "musicas",
+        "instruments": [
+            "bass"
+        ],
+        "teachers": [
+            60
+        ],
+        "level": 3,
+        "date": "2022-04-18 17:54:23",
+        "cc": false,
+        "images": {
+            "img": "https://i3.ytimg.com/vi/GxCFTKpk6Rc/default.jpg",
+            "imgmq": "https://i3.ytimg.com/vi/GxCFTKpk6Rc/mqdefault.jpg",
+            "imgsd": "https://i3.ytimg.com/vi/GxCFTKpk6Rc/sddefault.jpg"
+        },
+        "version": {
+            "id": 12,
+            "type": 2,
+            "label": "principal"
+        },
+        "song": {
+            "id": 469,
+            "name": "Something",
+            "url": "something",
+            "hits": {
+                "week": 3433,
+                "month": 15496,
+                "all": 2091587
+            },
+            "artist": {
+                "id": 57,
+                "name": "The Beatles",
+                "url": "the-beatles"
+            }
+        },
+        "artist": {
+            "id": 57,
+            "name": "The Beatles",
+            "url": "the-beatles"
+        },
+        "genre": {
+            "id": 3,
+            "name": "Rock and Roll",
+            "url": "rock-roll",
+            "icons": {
+                "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-light.svg",
+                "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-inactive-light.svg",
+                "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-dark.svg",
+                "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-inactive-dark.svg"
+            }
+        },
+        "captions": null,
+        "urlApi": "/the-beatles/something/tabs-baixo",
+        "urlSite": "/the-beatles/something/tabs-baixo/",
+        "apiURL": "/the-beatles/something/tabs-baixo",
+        "videolessonURL": "/the-beatles/something/tabs-baixo/"
+    },
+    {
+        "id": 5216,
+        "youtubeId": "N3rgCw915Oc",
+        "title": "COMO TOCAR YESTERDAY DOS BEATLES NO VIOLÃO: VERSÃO COMPLETA",
+        "url": "the-beatles-yesterday-aula-de-violao-completa-2",
+        "views": 10377,
+        "duration": 1099,
+        "type": "musica",
+        "subTypeId": 1,
+        "subType": "musicas",
+        "instruments": [
+            "guitar"
+        ],
+        "teachers": [
+            55
+        ],
+        "level": 3,
+        "date": "2021-12-22 16:52:25",
+        "cc": false,
+        "images": {
+            "img": "https://i3.ytimg.com/vi/N3rgCw915Oc/default.jpg",
+            "imgmq": "https://i3.ytimg.com/vi/N3rgCw915Oc/mqdefault.jpg",
+            "imgsd": "https://i3.ytimg.com/vi/N3rgCw915Oc/sddefault.jpg"
+        },
+        "version": {
+            "id": 355320,
+            "type": 1,
+            "label": "aula-completa"
+        },
+        "song": {
+            "id": 463,
+            "name": "Yesterday",
+            "url": "yesterday",
+            "hits": {
+                "week": 8502,
+                "month": 37169,
+                "all": 4235847
+            },
+            "artist": {
+                "id": 57,
+                "name": "The Beatles",
+                "url": "the-beatles"
+            }
+        },
+        "artist": {
+            "id": 57,
+            "name": "The Beatles",
+            "url": "the-beatles"
+        },
+        "genre": {
+            "id": 3,
+            "name": "Rock and Roll",
+            "url": "rock-roll",
+            "icons": {
+                "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-light.svg",
+                "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-inactive-light.svg",
+                "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-dark.svg",
+                "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/rock-roll-inactive-dark.svg"
+            }
+        },
+        "captions": null,
+        "urlApi": "/the-beatles/yesterday/version/aula-completa",
+        "urlSite": "/the-beatles/yesterday/aula-completa.html",
+        "apiURL": "/the-beatles/yesterday/version/aula-completa",
+        "videolessonURL": "/the-beatles/yesterday/aula-completa.html"
+    }
+]

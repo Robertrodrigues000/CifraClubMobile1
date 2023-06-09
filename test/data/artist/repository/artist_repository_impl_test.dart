@@ -8,6 +8,7 @@ import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
 import 'package:cifraclub/data/artist/repository/artist_repository_impl.dart';
 import 'package:cifraclub/data/genre/models/genre_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/video_lessons_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/artist/models/artist_image.dart';
 import 'package:cifraclub/domain/artist/models/artist_info.dart';
@@ -19,12 +20,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
-class _MockArtistDataSource extends Mock implements ArtistDataSource {}
+import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
+
+class _ArtistDataSourceMock extends Mock implements ArtistDataSource {}
+
+class _VideoLessonsDtoMock extends Mock implements VideoLessonsDto {}
 
 void main() {
   group("When getTopArtists() is Called", () {
     test("Request successful", () async {
-      var artistDataSource = _MockArtistDataSource();
+      var artistDataSource = _ArtistDataSourceMock();
 
       var topArtistsDto = const TopArtistsDto(moreResults: true, artists: [
         ArtistDto(
@@ -79,7 +84,7 @@ void main() {
     });
 
     test("Request failed", () async {
-      final artistDataSource = _MockArtistDataSource();
+      final artistDataSource = _ArtistDataSourceMock();
 
       when(() => artistDataSource.getTopArtists(limit: 3, offset: 0)).thenAnswer(
         (_) => CancelableOperation.fromFuture(
@@ -100,7 +105,7 @@ void main() {
 
   group("When getArtistInfo() is Called", () {
     test("Request successful", () async {
-      var artistDataSource = _MockArtistDataSource();
+      var artistDataSource = _ArtistDataSourceMock();
 
       var artistInfoDto = const ArtistInfoDto(
         id: 1,
@@ -135,7 +140,7 @@ void main() {
       );
     });
     test("Request failed", () async {
-      final artistDataSource = _MockArtistDataSource();
+      final artistDataSource = _ArtistDataSourceMock();
 
       when(() => artistDataSource.getArtistInfo(any())).thenAnswer(
         (_) => SynchronousFuture(Err(ServerError())),
@@ -152,7 +157,7 @@ void main() {
   group("When getArtistSongs() is Called", () {
     const artistUrl = "legiao-urbana";
     test("Request successful", () async {
-      var artistDataSource = _MockArtistDataSource();
+      var artistDataSource = _ArtistDataSourceMock();
 
       var artistsSongsDto = const ArtistSongsDto(songs: [
         ArtistSongDto(
@@ -205,7 +210,7 @@ void main() {
     });
 
     test("Request failed", () async {
-      final artistDataSource = _MockArtistDataSource();
+      final artistDataSource = _ArtistDataSourceMock();
 
       when(() => artistDataSource.getArtistSongs(limit: 3, artistUrl: artistUrl)).thenAnswer(
         (_) => CancelableOperation.fromFuture(
@@ -221,6 +226,47 @@ void main() {
       expect(artistSongs.isFailure, true);
       expect(artistSongs.getError().runtimeType, ServerError);
       expect((artistSongs.getError() as ServerError).statusCode, null);
+    });
+  });
+
+  group("When `getArtistVideoLessons` is called", () {
+    const artistDns = "the-beatles";
+    test("and request is sucessful", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+      final videoLessonsDto = _VideoLessonsDtoMock();
+      final videoLesson = getFakeVideoLessons();
+      when(videoLessonsDto.toDomain).thenReturn(videoLesson);
+
+      when(() => artistDataSource.getVideoLessons(dns: artistDns)).thenAnswer(
+        (_) => SynchronousFuture(
+          Ok([videoLessonsDto]),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final result = await repository.getArtistVideoLessons(artistDns);
+
+      verify(videoLessonsDto.toDomain).called(1);
+      expect(result.isSuccess, isTrue);
+      expect(result.get()?.length, 1);
+      expect(result.get()?.first, videoLesson);
+    });
+
+    test("and request fail", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.getVideoLessons(dns: artistDns)).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final result = await repository.getArtistVideoLessons(artistDns);
+
+      expect(result.isFailure, isTrue);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
     });
   });
 }

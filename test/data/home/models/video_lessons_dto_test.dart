@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
-import '../../../shared_mocks/domain/home/models/home_image_mock.dart';
+import '../../../shared_mocks/domain/home/models/images_size_mock.dart';
 import '../../../shared_mocks/domain/song/models/song_mock.dart';
 
 class _SongDtoMock extends Mock implements SongDto {}

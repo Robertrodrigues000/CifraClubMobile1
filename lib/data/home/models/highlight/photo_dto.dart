@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/home/models/home_image.dart';
+import 'package:cifraclub/domain/home/models/images_size.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,7 +13,7 @@ class PhotoDto extends Equatable {
   @JsonKey(name: "x3")
   final String? large;
 
-  HomeImage toDomain() => HomeImage(small: small, medium: medium, large: large);
+  ImagesSize toDomain() => ImagesSize(small: small, medium: medium, large: large);
 
   factory PhotoDto.fromJson(Map<String, dynamic> json) => _$PhotoDtoFromJson(json);
 

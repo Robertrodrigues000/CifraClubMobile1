@@ -1,10 +1,10 @@
-import 'package:cifraclub/domain/home/models/home_image.dart';
+import 'package:cifraclub/domain/home/models/images_size.dart';
 import 'package:equatable/equatable.dart';
 
 class News extends Equatable {
   final String url;
   final String image;
-  final HomeImage? thumb;
+  final ImagesSize? thumb;
   final String headline;
   final String publishDate;
 

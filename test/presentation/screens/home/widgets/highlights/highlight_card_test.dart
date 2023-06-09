@@ -5,7 +5,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../../shared_mocks/domain/home/models/highlight_mock.dart';
-import '../../../../../shared_mocks/domain/home/models/home_image_mock.dart';
+import '../../../../../shared_mocks/domain/home/models/images_size_mock.dart';
 import '../../../../../test_helpers/test_wrapper.dart';
 
 void main() {

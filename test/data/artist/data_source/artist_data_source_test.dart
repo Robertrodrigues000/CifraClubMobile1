@@ -6,6 +6,9 @@ import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
+import 'package:cifraclub/data/home/models/video_lessons/version_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/video_lessons_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/video_lessons_image_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
@@ -215,6 +218,75 @@ void main() {
             artistUrl: "legiao-urbana",
           )
           .value;
+
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When `getVideoLessons` is called", () {
+    test("When request is successful with params", () async {
+      const artistDns = "the-beatles";
+
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/artist/data_source/artist_video_lessons_mock_json_response.json").readAsString();
+      await networkService.mock<List<VideoLessonsDto>>(response: mockResponse);
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getVideoLessons(dns: artistDns);
+
+      final request = verify(() => networkService.execute<List<VideoLessonsDto>>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<List<VideoLessonsDto>>;
+      expect(request.path, "/v3/artist/$artistDns/video-lessons");
+      expect(request.type, NetworkRequestType.get);
+
+      expect(result.isSuccess, true);
+      final videoLessons = result.get()!;
+
+      final versionDto = VersionDto(id: 12, type: 2, label: "principal");
+      final videoLessonsDto = VideoLessonsDto(
+        id: 5299,
+        youtubeId: "GxCFTKpk6Rc",
+        title: "COMO TOCAR SOMETHING DOS BEATLES NO BAIXO",
+        url: "the-beatles-something-aula-de-baixo",
+        views: 390,
+        duration: 492,
+        urlApi: "/the-beatles/something/tabs-baixo",
+        images: VideoLessonsImageDto(
+          image: "https://i3.ytimg.com/vi/GxCFTKpk6Rc/default.jpg",
+          imagemq: "https://i3.ytimg.com/vi/GxCFTKpk6Rc/mqdefault.jpg",
+          imagesd: "https://i3.ytimg.com/vi/GxCFTKpk6Rc/sddefault.jpg",
+        ),
+        instruments: const ["bass"],
+        version: versionDto,
+      );
+
+      expect(videoLessons.length, 2);
+      expect(videoLessons.first, videoLessonsDto);
+    });
+
+    test("When request fails", () async {
+      const artistDns = "the-beatles";
+
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<List<VideoLessonsDto>>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
+        ),
+      );
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+
+      final result = await artistDataSource.getVideoLessons(dns: artistDns);
+
+      final request = verify(() => networkService.execute<List<VideoLessonsDto>>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<List<VideoLessonsDto>>;
+      expect(request.path, "/v3/artist/$artistDns/video-lessons");
+      expect(request.type, NetworkRequestType.get);
 
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);

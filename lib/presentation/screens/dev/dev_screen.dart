@@ -173,6 +173,16 @@ class _DevScreenState extends State<DevScreen> {
                 ),
                 ListTile(
                   leading: Icon(
+                    Icons.video_camera_back,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Artist Video Lessons"),
+                  onTap: () {
+                    _bloc.getArtistVideoLessons();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
                     Icons.g_translate_rounded,
                     color: context.colors.textPrimary,
                   ),
