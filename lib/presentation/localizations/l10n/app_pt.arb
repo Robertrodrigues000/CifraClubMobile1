@@ -126,7 +126,6 @@
     "inputDialogHint": "Ex.: Luau com amigos",
     "inputDialogLabel": "Nome da lista",
     "searchSongs" : "Buscar músicas",
-    "save" : "Salvar",
 
     "tabsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
     "@tabsCount":{
@@ -144,5 +143,14 @@
     "privateListErrorDescription": "Esta lista está configurada como privada. Entre em contato com o criador da mesma e solicite o acesso!",
     "privateListErrorButtonText": "Voltar para listas",
     "loggedOutListErrorDescription": "Faça login para ter acesso as suas listas",
-    "loggedOutListErrorButtonText": "Fazer login"
+    "loggedOutListErrorButtonText": "Fazer login",
+    "tabTone": "・Tom: {tone}",
+    "@tabTone": {
+        "placeholders": {
+            "tone": {
+                "type": "String",
+                "example": "A"
+            }
+        }
+    }
 }

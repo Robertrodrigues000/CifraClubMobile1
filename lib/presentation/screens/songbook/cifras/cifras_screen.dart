@@ -6,6 +6,7 @@ import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_bloc.dart'
 import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/widgets/cifras_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/widgets/cifras_fixed_header.dart';
+import 'package:cifraclub/presentation/screens/songbook/cifras/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -167,9 +168,20 @@ class _CifrasScreenState extends State<CifrasScreen> {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: state.cifras.length,
-                    (context, index) => ListTile(
-                      title: Text("Cifra numero $index -- ${state.cifras[index]}"),
-                    ),
+                    (context, index) {
+                      final item = state.cifras[index];
+                      return VersionTile(
+                        song: item.name,
+                        artist: "Legião Urbana",
+                        type: "Violão",
+                        tone: item.tone ?? "",
+                        onOptionsTap: () {},
+                        onVersionTap: () {},
+                        onDeleteTap: () {},
+                        onDragTap: () {},
+                        editable: false,
+                      );
+                    },
                   ),
                 )
               ],

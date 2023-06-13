@@ -180,7 +180,6 @@
     "inputDialogHint": "Ex.: Luau with friends",
     "inputDialogLabel": "List name",
     "searchSongs" : "Search songs",
-    "save" : "Save",
 
     "tabsCount": "{count} selected",
     "@tabsCount": {
@@ -199,5 +198,14 @@
     "privateListErrorButtonText": "Back to lists",
     "loggedOutListErrorTitle": "Oops",
     "loggedOutListErrorDescription": "Sign in to access your lists",
-    "loggedOutListErrorButtonText": "Log in"
+    "loggedOutListErrorButtonText": "Log in",
+    "tabTone": "・Tone: {tone}",
+    "@tabTone": {
+        "placeholders": {
+            "tone": {
+                "type": "String",
+                "example": "A"
+            }
+        }
+    }
 }
