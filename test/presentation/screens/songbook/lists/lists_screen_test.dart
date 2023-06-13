@@ -1,4 +1,5 @@
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
@@ -73,7 +74,7 @@ void main() {
     verify(bloc.openUserProfilePage).called(1);
   });
 
-  testWidgets("When user is logged in and logout button is tapped, should logout user", (widgetTester) async {
+  testWidgets("When user is logged in and logout button is tapped, should open LogoutDialog", (widgetTester) async {
     bloc.mockStream(ListsState(user: getFakeUser()));
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -91,7 +92,11 @@ void main() {
     await widgetTester.pumpAndSettle();
     await widgetTester.tap(logoutFinder);
 
-    verify(bloc.logout).called(1);
+    await widgetTester.pumpAndSettle();
+    expect(find.byType(LogoutDialog), findsOneWidget);
+
+    await widgetTester.tap(find.widgetWithText(CifraButton, "Log out"));
+    verify(() => bloc.logout()).called(1);
   });
 
   testWidgets("Tapping add icon should open InputDialog and create a new songbook", (widgetTester) async {

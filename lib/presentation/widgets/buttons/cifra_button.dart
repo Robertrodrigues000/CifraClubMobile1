@@ -9,43 +9,50 @@ class CifraButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget? child;
   final EdgeInsets padding;
-  final double? height;
+  final double height;
+  final double? width;
 
   const CifraButton(
-      {Key? key, required this.type, this.onPressed, this.child, this.padding = EdgeInsets.zero, this.height = 48})
+      {Key? key,
+      required this.type,
+      this.onPressed,
+      this.child,
+      this.padding = EdgeInsets.zero,
+      this.height = 48,
+      this.width})
       : super(key: key);
 
   TextStyle _getTitleTextStyle(BuildContext context, CosmosColorScheme colorScheme, bool enabled) {
     final label = AppTypographyScheme.of(context).body9;
     switch (type) {
-      case ButtonType.primary:
-      case ButtonType.secondary:
+      case ButtonType.solidOrange:
+      case ButtonType.solidBlack:
         return label.copyWith(color: enabled ? colorScheme.textPrimaryInverse : colorScheme.disabled);
-      case ButtonType.tertiary:
+      case ButtonType.solidGreen:
         return label.copyWith(color: enabled ? colorScheme.textPrimaryInverse : colorScheme.successTertiary);
       case ButtonType.outline:
-      case ButtonType.ghost:
+      case ButtonType.ghostWhite:
         return label.copyWith(color: enabled ? colorScheme.textPrimary : colorScheme.disabled);
     }
   }
 
   Color _getBackgroundColor(CosmosColorScheme colorScheme, Set<MaterialState> states) {
     switch (type) {
-      case ButtonType.primary:
+      case ButtonType.solidOrange:
         if (states.contains(MaterialState.disabled)) {
           return colorScheme.neutralSecondary;
         }
         return colorScheme.primary;
-      case ButtonType.secondary:
+      case ButtonType.solidBlack:
         if (states.contains(MaterialState.disabled)) {
           return colorScheme.neutralSecondary;
         }
         return colorScheme.textPrimary;
-      case ButtonType.tertiary:
+      case ButtonType.solidGreen:
         return colorScheme.successPrimary;
       case ButtonType.outline:
         return CosmosColors.transparent;
-      case ButtonType.ghost:
+      case ButtonType.ghostWhite:
         if (states.contains(MaterialState.disabled)) {
           return colorScheme.neutralSecondary;
         }
@@ -55,15 +62,15 @@ class CifraButton extends StatelessWidget {
 
   Color _getOverlayColor(CosmosColorScheme colorScheme) {
     switch (type) {
-      case ButtonType.primary:
+      case ButtonType.solidOrange:
         return colorScheme.tertiary;
-      case ButtonType.secondary:
+      case ButtonType.solidBlack:
         return colorScheme.neutralTenth;
-      case ButtonType.tertiary:
+      case ButtonType.solidGreen:
         return colorScheme.successTertiary;
       case ButtonType.outline:
         return colorScheme.neutralTertiary;
-      case ButtonType.ghost:
+      case ButtonType.ghostWhite:
         return colorScheme.neutralTertiary;
     }
   }
@@ -71,10 +78,10 @@ class CifraButton extends StatelessWidget {
   BorderSide _getBorderColor(CosmosColorScheme colorScheme, Set<MaterialState> states) {
     final Color color;
     switch (type) {
-      case ButtonType.primary:
-      case ButtonType.secondary:
-      case ButtonType.tertiary:
-      case ButtonType.ghost:
+      case ButtonType.solidOrange:
+      case ButtonType.solidBlack:
+      case ButtonType.solidGreen:
+      case ButtonType.ghostWhite:
         color = CosmosColors.transparent;
         break;
       case ButtonType.outline:
@@ -100,16 +107,19 @@ class CifraButton extends StatelessWidget {
       padding: padding,
       child: SizedBox(
         height: height,
+        width: width,
         child: OutlinedButton(
           onPressed: onPressed,
           style: ButtonStyle(
-              overlayColor: MaterialStateProperty.resolveWith((states) {
-                return states.contains(MaterialState.pressed) ? _getOverlayColor(colorScheme) : null;
-              }),
-              backgroundColor:
-                  MaterialStateProperty.resolveWith<Color>((states) => _getBackgroundColor(colorScheme, states)),
-              side: MaterialStateProperty.resolveWith<BorderSide>((states) => _getBorderColor(colorScheme, states)),
-              splashFactory: InkRipple.splashFactory),
+            overlayColor: MaterialStateProperty.resolveWith((states) {
+              return states.contains(MaterialState.pressed) ? _getOverlayColor(colorScheme) : null;
+            }),
+            backgroundColor:
+                MaterialStateProperty.resolveWith<Color>((states) => _getBackgroundColor(colorScheme, states)),
+            side: MaterialStateProperty.resolveWith<BorderSide>((states) => _getBorderColor(colorScheme, states)),
+            splashFactory: InkRipple.splashFactory,
+            minimumSize: MaterialStateProperty.resolveWith((states) => const Size(162, 32)),
+          ),
           child: child != null
               ? DefaultTextStyle(style: _getTitleTextStyle(context, colorScheme, onPressed != null), child: child!)
               : null,

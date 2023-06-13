@@ -40,10 +40,10 @@ class ErrorDescriptionWidget extends StatelessWidget {
           SizedBox(height: dimensions.errorWidgetButtonSpace),
           CifraButton(
             type: ButtonType.outline,
-            padding: EdgeInsets.zero,
+            width: dimensions.errorWidgetButtonWidth,
             onPressed: onClick,
             child: Text(typeError.getButtonText(context)),
-          )
+          ),
         ],
       ),
     );

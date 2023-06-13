@@ -30,31 +30,32 @@ class ListLimitProDialog extends StatelessWidget {
     final colorScheme = CosmosColorScheme.of(context);
     final typography = context.typography;
     return DefaultDialog(
-        hasCloseIcon: true,
-        image: context.isDarkMode ? AppWebp.listLimitProDark : AppWebp.listLimitProLight,
-        title: Text(
-          isTabLimit ? context.text.tabsLimitProTitle(limitCount) : context.text.listLimitProTitle(limitCount),
-          style: typography.title4.copyWith(color: colorScheme.textPrimary),
-          textAlign: TextAlign.center,
+      hasCloseIcon: true,
+      image: context.isDarkMode ? AppWebp.listLimitProDark : AppWebp.listLimitProLight,
+      title: Text(
+        isTabLimit ? context.text.tabsLimitProTitle(limitCount) : context.text.listLimitProTitle(limitCount),
+        style: typography.title4.copyWith(color: colorScheme.textPrimary),
+        textAlign: TextAlign.center,
+      ),
+      description: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          text: isTabLimit ? context.text.tabsLimitProDescription1 : context.text.listLimitProDescription1,
+          style: typography.body10,
+          children: <TextSpan>[
+            TextSpan(text: "$limitCount ", style: typography.body10.copyWith(fontWeight: FontWeight.w700)),
+            TextSpan(
+              text: isTabLimit ? context.text.tabsLimitProDescription2 : context.text.listLimitProDescription2,
+            ),
+          ],
         ),
-        description: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: isTabLimit ? context.text.tabsLimitProDescription1 : context.text.listLimitProDescription1,
-            style: typography.body10,
-            children: <TextSpan>[
-              TextSpan(text: "$limitCount ", style: typography.body10.copyWith(fontWeight: FontWeight.w700)),
-              TextSpan(
-                text: isTabLimit ? context.text.tabsLimitProDescription2 : context.text.listLimitProDescription2,
-              ),
-            ],
-          ),
-        ),
-        buttons: CifraButton(
-          type: ButtonType.outline,
-          padding: EdgeInsets.zero,
-          child: Text(context.text.gotIt),
-          onPressed: () => Navigator.pop(context),
-        ));
+      ),
+      buttons: CifraButton(
+        width: double.infinity,
+        type: ButtonType.outline,
+        child: Text(context.text.gotIt),
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
   }
 }

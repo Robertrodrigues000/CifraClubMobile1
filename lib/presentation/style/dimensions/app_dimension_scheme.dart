@@ -35,6 +35,7 @@ class AppDimensionScheme {
   final double bottomPaddingCounter;
   final double topPaddingCounter;
   final double errorWidgetButtonSpace;
+  final double? errorWidgetButtonWidth;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -66,5 +67,6 @@ class AppDimensionScheme {
     required this.bottomPaddingCounter,
     required this.topPaddingCounter,
     required this.errorWidgetButtonSpace,
+    required this.errorWidgetButtonWidth,
   });
 }

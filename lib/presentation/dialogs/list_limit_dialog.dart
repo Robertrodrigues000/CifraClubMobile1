@@ -57,10 +57,10 @@ class ListLimitDialog extends StatelessWidget {
           ),
         ),
         buttons: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CifraButton(
-              type: ButtonType.tertiary,
-              padding: EdgeInsets.zero,
+              type: ButtonType.solidGreen,
               child: Text(context.text.testPro),
               //TODO: direct to pro screen
             ),
@@ -68,8 +68,7 @@ class ListLimitDialog extends StatelessWidget {
               height: 16,
             ),
             CifraButton(
-              type: ButtonType.ghost,
-              padding: EdgeInsets.zero,
+              type: ButtonType.ghostWhite,
               child: Text(context.text.notNow),
               onPressed: () => Navigator.pop(context),
             )

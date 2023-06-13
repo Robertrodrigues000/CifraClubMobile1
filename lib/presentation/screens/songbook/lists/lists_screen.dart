@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
@@ -105,7 +106,12 @@ class _ListsScreenState extends State<ListsScreen> {
                   ),
                   child: UserCard(
                     user: state.user,
-                    onLogoutTap: _bloc.logout,
+                    onLogoutTap: () async {
+                      await LogoutDialog.show(
+                        context: context,
+                        onLogout: _bloc.logout,
+                      );
+                    },
                     onTap: () => state.user == null ? _bloc.openLoginPage() : _bloc.openUserProfilePage(),
                     onSync: _bloc.syncList,
                     isSyncing: state.isSyncing,

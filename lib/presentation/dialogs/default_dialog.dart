@@ -9,7 +9,7 @@ class DefaultDialog extends StatelessWidget {
   final Widget? description;
   final Widget? buttons;
   final bool hasCloseIcon;
-  final EdgeInsets? insetPadding;
+  final EdgeInsets insetPadding;
   final double? width;
   const DefaultDialog(
       {Key? key,
@@ -17,8 +17,8 @@ class DefaultDialog extends StatelessWidget {
       required this.title,
       this.description,
       this.buttons,
-      required this.hasCloseIcon,
-      this.insetPadding,
+      this.hasCloseIcon = false,
+      this.insetPadding = const EdgeInsets.symmetric(horizontal: 16),
       this.width})
       : super(key: key);
 

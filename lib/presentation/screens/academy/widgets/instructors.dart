@@ -21,7 +21,7 @@ class Instructors extends StatelessWidget {
       enableScrollInput: false,
       gap: 0,
       duplicateChild: 2,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 30),
       delay: Duration.zero,
       child: Transform.translate(
         offset: Offset(offset, 0),

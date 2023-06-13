@@ -38,13 +38,13 @@ class ListOperationDialog extends StatelessWidget {
       buttons: hasVerticalButtons
           ? Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CifraButton(
-                  type: ButtonType.secondary,
+                  type: ButtonType.solidBlack,
                   // coverage:ignore-start
                   onPressed: onFirstButtonTap,
                   // coverage:ignore-end
-                  padding: EdgeInsets.zero,
                   child: Text(firstButtonText),
                 ),
                 const SizedBox(
@@ -55,7 +55,6 @@ class ListOperationDialog extends StatelessWidget {
                   // coverage:ignore-start
                   onPressed: onSecondButtonTap,
                   // coverage:ignore-end
-                  padding: EdgeInsets.zero,
                   child: Text(secondButtonText),
                 ),
               ],
@@ -68,7 +67,6 @@ class ListOperationDialog extends StatelessWidget {
                     // coverage:ignore-start
                     onPressed: onSecondButtonTap,
                     // coverage:ignore-end
-                    padding: EdgeInsets.zero,
                     child: Text(secondButtonText),
                   ),
                 ),
@@ -77,11 +75,10 @@ class ListOperationDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: CifraButton(
-                    type: ButtonType.secondary,
+                    type: ButtonType.solidBlack,
                     // coverage:ignore-start
                     onPressed: onFirstButtonTap,
                     // coverage:ignore-end
-                    padding: EdgeInsets.zero,
                     child: Text(firstButtonText),
                   ),
                 ),

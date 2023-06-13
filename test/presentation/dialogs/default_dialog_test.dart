@@ -39,7 +39,7 @@ void main() {
       const DefaultDialog(
         hasCloseIcon: false,
         title: Text("Default Dialog"),
-        buttons: CifraButton(type: ButtonType.tertiary, padding: EdgeInsets.all(8)),
+        buttons: CifraButton(type: ButtonType.solidGreen, padding: EdgeInsets.all(8)),
       ),
     );
 

@@ -1,7 +1,7 @@
 enum ButtonType {
-  primary,
-  secondary,
-  tertiary,
+  solidOrange,
+  solidBlack,
+  solidGreen,
   outline,
-  ghost;
+  ghostWhite;
 }

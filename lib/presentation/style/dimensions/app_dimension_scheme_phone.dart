@@ -43,4 +43,5 @@ const appDimensionSchemePhone = AppDimensionScheme(
 
   //Error widget space between text and button
   errorWidgetButtonSpace: 24,
+  errorWidgetButtonWidth: double.infinity,
 );

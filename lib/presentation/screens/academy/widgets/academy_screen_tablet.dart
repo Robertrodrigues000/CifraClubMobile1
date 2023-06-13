@@ -73,8 +73,7 @@ class AcademyScreenTablet extends StatelessWidget {
                       const SizedBox(height: 8),
                     ],
                     CifraButton(
-                      type: ButtonType.secondary,
-                      padding: EdgeInsets.zero,
+                      type: ButtonType.solidBlack,
                       onPressed: openAppOrStore,
                       child: Text(isAcademyInstalled ? context.text.openAcademy : context.text.downloadAcademy),
                     ),
