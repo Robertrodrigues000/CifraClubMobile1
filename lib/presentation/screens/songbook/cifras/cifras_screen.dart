@@ -39,9 +39,11 @@ class _CifrasScreenState extends State<CifrasScreen> {
 
   void _onScroll() {
     final currentOffset = scrollController.offset;
-    setState(() {
-      isScrolledUnder = currentOffset > 0 ? true : false;
-    });
+    final oldScrolledUnder = isScrolledUnder;
+    isScrolledUnder = currentOffset > 0 ? true : false;
+    if (oldScrolledUnder != isScrolledUnder) {
+      setState(() {});
+    }
   }
 
   @override
