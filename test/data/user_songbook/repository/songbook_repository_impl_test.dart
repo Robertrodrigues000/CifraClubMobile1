@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
+import '../../../shared_mocks/domain/songbook/models/songbook_cifras_mock.dart';
 import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
 class _SongbookDataSourceMock extends Mock implements SongbookDataSource {}
@@ -28,7 +29,7 @@ void main() {
     final songbookDataSource = _SongbookDataSourceMock();
     final songbookDto = _SongbookDtoMock();
     final songbookDtoList = [songbookDto];
-    final songbook = getFakeSongbook();
+    final songbook = getFakeSongbookCifras();
 
     when(songbookDto.toDomain).thenReturn(songbook);
     when(songbookDataSource.getAll).thenAnswer((invocation) => SynchronousFuture(Ok(songbookDtoList)));

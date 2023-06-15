@@ -1,11 +1,12 @@
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
-import 'package:cifraclub/data/songbook/models/user_cifra_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:isar/isar.dart';
 
 part 'user_songbook_dto.g.dart';
 
+@CopyWith()
 @collection
 class UserSongbookDto {
   final Id id;
@@ -21,7 +22,7 @@ class UserSongbookDto {
   final DateTime? lastUpdated;
   @enumerated
   final ListTypeDto type;
-  final userCifras = IsarLinks<UserCifraDto>();
+  final List<String?> preview;
 
   UserSongbookDto({
     this.id = Isar.autoIncrement,
@@ -36,6 +37,7 @@ class UserSongbookDto {
     this.status,
     required this.totalSongs,
     this.timestamp,
+    required this.preview,
   });
 
   UserSongbookDto.fromDomain(Songbook songbook)
@@ -51,6 +53,7 @@ class UserSongbookDto {
           status: songbook.status,
           userId: songbook.userId,
           userName: songbook.userName,
+          preview: songbook.preview,
         );
 
   Songbook toDomain() {
@@ -65,8 +68,8 @@ class UserSongbookDto {
       lastUpdated: lastUpdated,
       name: name,
       type: type.toDomain(),
-      cifras: null,
       totalSongs: totalSongs ?? 0,
+      preview: preview,
     );
   }
 }

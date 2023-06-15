@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/songbook/models/songbook_cifra_dto.dart';
+import 'package:cifraclub/domain/cifra/models/cifra.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -24,36 +25,40 @@ class SongbookDto {
   @JsonKey(name: "songs")
   final List<SongbookCifraDto>? cifras;
 
-  SongbookDto(
-      {this.id,
-      this.name,
-      this.userName,
-      this.userId,
-      this.thumb,
-      this.type,
-      this.isPublic,
-      this.status,
-      this.totalSongs,
-      this.createdAt,
-      this.lastUpdated,
-      this.timestamp,
-      this.cifras});
+  SongbookDto({
+    this.id,
+    this.name,
+    this.userName,
+    this.userId,
+    this.thumb,
+    this.type,
+    this.isPublic,
+    this.status,
+    this.totalSongs,
+    this.createdAt,
+    this.lastUpdated,
+    this.timestamp,
+    this.cifras,
+  });
 
   factory SongbookDto.fromJson(Map<String, dynamic> json) => _$SongbookDtoFromJson(json);
 
-  Songbook toDomain() => Songbook(
-        id: id,
-        userId: userId,
-        userName: userName,
-        thumb: thumb,
-        isPublic: isPublic ?? true,
-        status: status,
-        createdAt: DateTime.parse(createdAt ?? ""),
-        lastUpdated: DateTime.tryParse(lastUpdated ?? ""),
-        name: name ?? "",
-        type: _getListType(type ?? ""),
-        cifras: cifras?.map((e) => e.toDomain()).toList(),
-        totalSongs: totalSongs ?? 0,
+  ({Songbook songbook, List<Cifra> cifras}) toDomain() => (
+        songbook: Songbook(
+          id: id,
+          userId: userId,
+          userName: userName,
+          thumb: thumb,
+          isPublic: isPublic ?? true,
+          status: status,
+          createdAt: DateTime.parse(createdAt ?? ""),
+          lastUpdated: DateTime.tryParse(lastUpdated ?? ""),
+          name: name ?? "",
+          type: _getListType(type ?? ""),
+          totalSongs: totalSongs ?? 0,
+          preview: const [],
+        ),
+        cifras: cifras?.map((e) => e.toDomain()).toList() ?? [],
       );
 
   ListType _getListType(String type) {

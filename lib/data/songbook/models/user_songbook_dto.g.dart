@@ -3,11 +3,196 @@
 part of 'user_songbook_dto.dart';
 
 // **************************************************************************
+// CopyWithGenerator
+// **************************************************************************
+
+abstract class _$UserSongbookDtoCWProxy {
+  UserSongbookDto id(int id);
+
+  UserSongbookDto createdAt(DateTime createdAt);
+
+  UserSongbookDto lastUpdated(DateTime? lastUpdated);
+
+  UserSongbookDto name(String name);
+
+  UserSongbookDto userName(String? userName);
+
+  UserSongbookDto userId(int? userId);
+
+  UserSongbookDto thumb(String? thumb);
+
+  UserSongbookDto type(ListTypeDto type);
+
+  UserSongbookDto isPublic(bool isPublic);
+
+  UserSongbookDto status(int? status);
+
+  UserSongbookDto totalSongs(int? totalSongs);
+
+  UserSongbookDto timestamp(int? timestamp);
+
+  UserSongbookDto preview(List<String?> preview);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserSongbookDto(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// UserSongbookDto(...).copyWith(id: 12, name: "My name")
+  /// ````
+  UserSongbookDto call({
+    int? id,
+    DateTime? createdAt,
+    DateTime? lastUpdated,
+    String? name,
+    String? userName,
+    int? userId,
+    String? thumb,
+    ListTypeDto? type,
+    bool? isPublic,
+    int? status,
+    int? totalSongs,
+    int? timestamp,
+    List<String?>? preview,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfUserSongbookDto.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfUserSongbookDto.copyWith.fieldName(...)`
+class _$UserSongbookDtoCWProxyImpl implements _$UserSongbookDtoCWProxy {
+  const _$UserSongbookDtoCWProxyImpl(this._value);
+
+  final UserSongbookDto _value;
+
+  @override
+  UserSongbookDto id(int id) => this(id: id);
+
+  @override
+  UserSongbookDto createdAt(DateTime createdAt) => this(createdAt: createdAt);
+
+  @override
+  UserSongbookDto lastUpdated(DateTime? lastUpdated) => this(lastUpdated: lastUpdated);
+
+  @override
+  UserSongbookDto name(String name) => this(name: name);
+
+  @override
+  UserSongbookDto userName(String? userName) => this(userName: userName);
+
+  @override
+  UserSongbookDto userId(int? userId) => this(userId: userId);
+
+  @override
+  UserSongbookDto thumb(String? thumb) => this(thumb: thumb);
+
+  @override
+  UserSongbookDto type(ListTypeDto type) => this(type: type);
+
+  @override
+  UserSongbookDto isPublic(bool isPublic) => this(isPublic: isPublic);
+
+  @override
+  UserSongbookDto status(int? status) => this(status: status);
+
+  @override
+  UserSongbookDto totalSongs(int? totalSongs) => this(totalSongs: totalSongs);
+
+  @override
+  UserSongbookDto timestamp(int? timestamp) => this(timestamp: timestamp);
+
+  @override
+  UserSongbookDto preview(List<String?> preview) => this(preview: preview);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserSongbookDto(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// UserSongbookDto(...).copyWith(id: 12, name: "My name")
+  /// ````
+  UserSongbookDto call({
+    Object? id = const $CopyWithPlaceholder(),
+    Object? createdAt = const $CopyWithPlaceholder(),
+    Object? lastUpdated = const $CopyWithPlaceholder(),
+    Object? name = const $CopyWithPlaceholder(),
+    Object? userName = const $CopyWithPlaceholder(),
+    Object? userId = const $CopyWithPlaceholder(),
+    Object? thumb = const $CopyWithPlaceholder(),
+    Object? type = const $CopyWithPlaceholder(),
+    Object? isPublic = const $CopyWithPlaceholder(),
+    Object? status = const $CopyWithPlaceholder(),
+    Object? totalSongs = const $CopyWithPlaceholder(),
+    Object? timestamp = const $CopyWithPlaceholder(),
+    Object? preview = const $CopyWithPlaceholder(),
+  }) {
+    return UserSongbookDto(
+      id: id == const $CopyWithPlaceholder() || id == null
+          ? _value.id
+          // ignore: cast_nullable_to_non_nullable
+          : id as int,
+      createdAt: createdAt == const $CopyWithPlaceholder() || createdAt == null
+          ? _value.createdAt
+          // ignore: cast_nullable_to_non_nullable
+          : createdAt as DateTime,
+      lastUpdated: lastUpdated == const $CopyWithPlaceholder()
+          ? _value.lastUpdated
+          // ignore: cast_nullable_to_non_nullable
+          : lastUpdated as DateTime?,
+      name: name == const $CopyWithPlaceholder() || name == null
+          ? _value.name
+          // ignore: cast_nullable_to_non_nullable
+          : name as String,
+      userName: userName == const $CopyWithPlaceholder()
+          ? _value.userName
+          // ignore: cast_nullable_to_non_nullable
+          : userName as String?,
+      userId: userId == const $CopyWithPlaceholder()
+          ? _value.userId
+          // ignore: cast_nullable_to_non_nullable
+          : userId as int?,
+      thumb: thumb == const $CopyWithPlaceholder()
+          ? _value.thumb
+          // ignore: cast_nullable_to_non_nullable
+          : thumb as String?,
+      type: type == const $CopyWithPlaceholder() || type == null
+          ? _value.type
+          // ignore: cast_nullable_to_non_nullable
+          : type as ListTypeDto,
+      isPublic: isPublic == const $CopyWithPlaceholder() || isPublic == null
+          ? _value.isPublic
+          // ignore: cast_nullable_to_non_nullable
+          : isPublic as bool,
+      status: status == const $CopyWithPlaceholder()
+          ? _value.status
+          // ignore: cast_nullable_to_non_nullable
+          : status as int?,
+      totalSongs: totalSongs == const $CopyWithPlaceholder()
+          ? _value.totalSongs
+          // ignore: cast_nullable_to_non_nullable
+          : totalSongs as int?,
+      timestamp: timestamp == const $CopyWithPlaceholder()
+          ? _value.timestamp
+          // ignore: cast_nullable_to_non_nullable
+          : timestamp as int?,
+      preview: preview == const $CopyWithPlaceholder() || preview == null
+          ? _value.preview
+          // ignore: cast_nullable_to_non_nullable
+          : preview as List<String?>,
+    );
+  }
+}
+
+extension $UserSongbookDtoCopyWith on UserSongbookDto {
+  /// Returns a callable class that can be used as follows: `instanceOfUserSongbookDto.copyWith(...)` or like so:`instanceOfUserSongbookDto.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$UserSongbookDtoCWProxy get copyWith => _$UserSongbookDtoCWProxyImpl(this);
+}
+
+// **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
 extension GetUserSongbookDtoCollection on Isar {
   IsarCollection<UserSongbookDto> get userSongbookDtos => this.collection();
@@ -37,39 +222,44 @@ const UserSongbookDtoSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'status': PropertySchema(
+    r'preview': PropertySchema(
       id: 4,
+      name: r'preview',
+      type: IsarType.stringList,
+    ),
+    r'status': PropertySchema(
+      id: 5,
       name: r'status',
       type: IsarType.long,
     ),
     r'thumb': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'thumb',
       type: IsarType.string,
     ),
     r'timestamp': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'timestamp',
       type: IsarType.long,
     ),
     r'totalSongs': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'totalSongs',
       type: IsarType.long,
     ),
     r'type': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'type',
       type: IsarType.byte,
       enumMap: _UserSongbookDtotypeEnumValueMap,
     ),
     r'userId': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'userId',
       type: IsarType.long,
     ),
     r'userName': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'userName',
       type: IsarType.string,
     )
@@ -80,19 +270,12 @@ const UserSongbookDtoSchema = CollectionSchema(
   deserializeProp: _userSongbookDtoDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {
-    r'userCifras': LinkSchema(
-      id: -7126813685769103529,
-      name: r'userCifras',
-      target: r'UserCifraDto',
-      single: false,
-    )
-  },
+  links: {},
   embeddedSchemas: {},
   getId: _userSongbookDtoGetId,
   getLinks: _userSongbookDtoGetLinks,
   attach: _userSongbookDtoAttach,
-  version: '3.0.5',
+  version: '3.1.0+1',
 );
 
 int _userSongbookDtoEstimateSize(
@@ -102,6 +285,15 @@ int _userSongbookDtoEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.preview.length * 3;
+  {
+    for (var i = 0; i < object.preview.length; i++) {
+      final value = object.preview[i];
+      if (value != null) {
+        bytesCount += value.length * 3;
+      }
+    }
+  }
   {
     final value = object.thumb;
     if (value != null) {
@@ -127,13 +319,14 @@ void _userSongbookDtoSerialize(
   writer.writeBool(offsets[1], object.isPublic);
   writer.writeDateTime(offsets[2], object.lastUpdated);
   writer.writeString(offsets[3], object.name);
-  writer.writeLong(offsets[4], object.status);
-  writer.writeString(offsets[5], object.thumb);
-  writer.writeLong(offsets[6], object.timestamp);
-  writer.writeLong(offsets[7], object.totalSongs);
-  writer.writeByte(offsets[8], object.type.index);
-  writer.writeLong(offsets[9], object.userId);
-  writer.writeString(offsets[10], object.userName);
+  writer.writeStringList(offsets[4], object.preview);
+  writer.writeLong(offsets[5], object.status);
+  writer.writeString(offsets[6], object.thumb);
+  writer.writeLong(offsets[7], object.timestamp);
+  writer.writeLong(offsets[8], object.totalSongs);
+  writer.writeByte(offsets[9], object.type.index);
+  writer.writeLong(offsets[10], object.userId);
+  writer.writeString(offsets[11], object.userName);
 }
 
 UserSongbookDto _userSongbookDtoDeserialize(
@@ -148,13 +341,14 @@ UserSongbookDto _userSongbookDtoDeserialize(
     isPublic: reader.readBool(offsets[1]),
     lastUpdated: reader.readDateTimeOrNull(offsets[2]),
     name: reader.readString(offsets[3]),
-    status: reader.readLongOrNull(offsets[4]),
-    thumb: reader.readStringOrNull(offsets[5]),
-    timestamp: reader.readLongOrNull(offsets[6]),
-    totalSongs: reader.readLongOrNull(offsets[7]),
-    type: _UserSongbookDtotypeValueEnumMap[reader.readByteOrNull(offsets[8])] ?? ListTypeDto.user,
-    userId: reader.readLongOrNull(offsets[9]),
-    userName: reader.readStringOrNull(offsets[10]),
+    preview: reader.readStringOrNullList(offsets[4]) ?? [],
+    status: reader.readLongOrNull(offsets[5]),
+    thumb: reader.readStringOrNull(offsets[6]),
+    timestamp: reader.readLongOrNull(offsets[7]),
+    totalSongs: reader.readLongOrNull(offsets[8]),
+    type: _UserSongbookDtotypeValueEnumMap[reader.readByteOrNull(offsets[9])] ?? ListTypeDto.user,
+    userId: reader.readLongOrNull(offsets[10]),
+    userName: reader.readStringOrNull(offsets[11]),
   );
   return object;
 }
@@ -175,18 +369,20 @@ P _userSongbookDtoDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNullList(offset) ?? []) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
       return (reader.readLongOrNull(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
       return (reader.readLongOrNull(offset)) as P;
     case 8:
-      return (_UserSongbookDtotypeValueEnumMap[reader.readByteOrNull(offset)] ?? ListTypeDto.user) as P;
-    case 9:
       return (reader.readLongOrNull(offset)) as P;
+    case 9:
+      return (_UserSongbookDtotypeValueEnumMap[reader.readByteOrNull(offset)] ?? ListTypeDto.user) as P;
     case 10:
+      return (reader.readLongOrNull(offset)) as P;
+    case 11:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -213,12 +409,10 @@ Id _userSongbookDtoGetId(UserSongbookDto object) {
 }
 
 List<IsarLinkBase<dynamic>> _userSongbookDtoGetLinks(UserSongbookDto object) {
-  return [object.userCifras];
+  return [];
 }
 
-void _userSongbookDtoAttach(IsarCollection<dynamic> col, Id id, UserSongbookDto object) {
-  object.userCifras.attach(col, col.isar.collection<UserCifraDto>(), r'userCifras', id);
-}
+void _userSongbookDtoAttach(IsarCollection<dynamic> col, Id id, UserSongbookDto object) {}
 
 extension UserSongbookDtoQueryWhereSort on QueryBuilder<UserSongbookDto, UserSongbookDto, QWhere> {
   QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterWhere> anyId() {
@@ -600,6 +794,233 @@ extension UserSongbookDtoQueryFilter on QueryBuilder<UserSongbookDto, UserSongbo
         property: r'name',
         value: '',
       ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.elementIsNull(
+        property: r'preview',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.elementIsNotNull(
+        property: r'preview',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'preview',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'preview',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'preview',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'preview',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'preview',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'preview',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'preview',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'preview',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'preview',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'preview',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'preview',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'preview',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'preview',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'preview',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'preview',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> previewLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'preview',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 
@@ -1218,60 +1639,7 @@ extension UserSongbookDtoQueryFilter on QueryBuilder<UserSongbookDto, UserSongbo
 
 extension UserSongbookDtoQueryObject on QueryBuilder<UserSongbookDto, UserSongbookDto, QFilterCondition> {}
 
-extension UserSongbookDtoQueryLinks on QueryBuilder<UserSongbookDto, UserSongbookDto, QFilterCondition> {
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifras(FilterQuery<UserCifraDto> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'userCifras');
-    });
-  }
-
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifrasLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'userCifras', length, true, length, true);
-    });
-  }
-
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifrasIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'userCifras', 0, true, 0, true);
-    });
-  }
-
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifrasIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'userCifras', 0, false, 999999, true);
-    });
-  }
-
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifrasLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'userCifras', 0, true, length, include);
-    });
-  }
-
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifrasLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'userCifras', length, include, 999999, true);
-    });
-  }
-
-  QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterFilterCondition> userCifrasLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'userCifras', lower, includeLower, upper, includeUpper);
-    });
-  }
-}
+extension UserSongbookDtoQueryLinks on QueryBuilder<UserSongbookDto, UserSongbookDto, QFilterCondition> {}
 
 extension UserSongbookDtoQuerySortBy on QueryBuilder<UserSongbookDto, UserSongbookDto, QSortBy> {
   QueryBuilder<UserSongbookDto, UserSongbookDto, QAfterSortBy> sortByCreatedAt() {
@@ -1578,6 +1946,12 @@ extension UserSongbookDtoQueryWhereDistinct on QueryBuilder<UserSongbookDto, Use
     });
   }
 
+  QueryBuilder<UserSongbookDto, UserSongbookDto, QDistinct> distinctByPreview() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'preview');
+    });
+  }
+
   QueryBuilder<UserSongbookDto, UserSongbookDto, QDistinct> distinctByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'status');
@@ -1649,6 +2023,12 @@ extension UserSongbookDtoQueryProperty on QueryBuilder<UserSongbookDto, UserSong
   QueryBuilder<UserSongbookDto, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<UserSongbookDto, List<String?>, QQueryOperations> previewProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'preview');
     });
   }
 

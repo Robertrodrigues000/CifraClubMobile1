@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 
 class UserSongbookDataSource {
@@ -34,12 +35,6 @@ class UserSongbookDataSource {
     return _isar.userSongbookDtos.filter().idEqualTo(id).findFirst();
   }
 
-  Stream<int> getTotalSongbookCifras(int id) {
-    return _isar.userSongbookDtos
-        .watchObject(id, fireImmediately: true)
-        .map((userSongbook) => userSongbook?.userCifras.countSync() ?? 0);
-  }
-
   /// Remove all songbooks, then insert all songbooks from [userSongbookDtos]
   Future<List<int>> setAll(List<UserSongbookDto> userSongbookDtos) async {
     if (userSongbookDtos.any((element) => element.id == Isar.autoIncrement)) {
@@ -60,17 +55,14 @@ class UserSongbookDataSource {
     });
   }
 
-  Future<int?> deleteCifras(int songbookId) async {
+  Future<int?> updatePreview(int songbookId, List<String?> preview) async {
     return _isar.writeTxn(() async {
-      final songbook = await _isar.userSongbookDtos.filter().idEqualTo(songbookId).findFirst();
-      return songbook?.userCifras.filter().deleteAll();
-    });
-  }
-
-  Future<List<int>?> getCifrasIds(int songbookId) async {
-    return _isar.writeTxn(() async {
-      final songbook = await _isar.userSongbookDtos.filter().idEqualTo(songbookId).findFirst();
-      return (await songbook?.userCifras.filter().findAll())?.map((e) => e.apiId).toList();
+      final songbook = await _isar.userSongbookDtos.where().idEqualTo(songbookId).findFirst();
+      final updatedSongbook = songbook?.copyWith(preview: preview);
+      if (updatedSongbook == null) {
+        return SynchronousFuture(null);
+      }
+      return _isar.userSongbookDtos.put(updatedSongbook);
     });
   }
 }

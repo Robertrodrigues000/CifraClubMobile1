@@ -22,6 +22,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
+      preview: [],
     ));
   });
 
@@ -117,17 +118,6 @@ void main() {
     expect(totalSongbooks, 10);
   });
 
-  test("when totalSongbookCifras is called, should return the total of cifras in songbook", () async {
-    final userSongbookDataSource = _UserSongbookDataSourceMock();
-
-    when(() => userSongbookDataSource.getTotalSongbookCifras(any())).thenAnswer((invocation) => Stream.value(10));
-
-    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
-    final totalSongbooks = await songbookRepository.getTotalSongbookCifras(10).first;
-
-    expect(totalSongbooks, 10);
-  });
-
   test("when getSongbookById is called, should return the songbook with correct id", () async {
     final userSongbookDataSource = _UserSongbookDataSourceMock();
     final songbookDto = _UserSongbookDtoMock();
@@ -143,27 +133,16 @@ void main() {
     expect(result.name, songbook.name);
   });
 
-  test("when deleteCifras is called, should return number of cifras deleted", () async {
+  test("when updateSongbookPreview is called, should return id of songbook updated", () async {
     final userSongbookDataSource = _UserSongbookDataSourceMock();
     final songbook = getFakeSongbook();
 
-    when(() => userSongbookDataSource.deleteCifras(songbook.id!)).thenAnswer((_) => SynchronousFuture(2));
+    when(() => userSongbookDataSource.updatePreview(songbook.id!, ["image1"]))
+        .thenAnswer((_) => SynchronousFuture(songbook.id!));
 
     final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
-    final result = await songbookRepository.deleteCifras(songbook.id!);
+    final result = await songbookRepository.updateSongbookPreview(songbook.id!, ["image1"]);
 
-    expect(result!, 2);
-  });
-
-  test("when getCifrasIds is called, should return list of ids", () async {
-    final userSongbookDataSource = _UserSongbookDataSourceMock();
-    final songbook = getFakeSongbook();
-
-    when(() => userSongbookDataSource.getCifrasIds(songbook.id!)).thenAnswer((_) => SynchronousFuture([1, 2, 3]));
-
-    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
-    final result = await songbookRepository.getCifrasIds(songbook.id!);
-
-    expect(result!, [1, 2, 3]);
+    expect(result, songbook.id);
   });
 }

@@ -1,14 +1,14 @@
 // coverage:ignore-file
-import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
+import 'package:cifraclub/domain/cifra/repository/user_cifra_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class GetTotalSongbookCifras {
-  final UserSongbookRepository _userSongbookRepository;
+  final UserCifraRepository _userCifraRepository;
 
-  GetTotalSongbookCifras(this._userSongbookRepository);
+  GetTotalSongbookCifras(this._userCifraRepository);
 
   Stream<int?> call(int songbookId) {
-    return _userSongbookRepository.getTotalSongbookCifras(songbookId);
+    return _userCifraRepository.getTotalSongbookCifras(songbookId);
   }
 }

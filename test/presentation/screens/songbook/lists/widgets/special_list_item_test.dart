@@ -19,6 +19,7 @@ void main() {
       isPublic: faker.randomGenerator.boolean(),
       type: ListType.cantPlay,
       totalSongs: faker.randomGenerator.integer(10),
+      preview: const [],
     );
 
     await widgetTester.pumpWidget(

@@ -1,6 +1,4 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cifraclub/domain/songbook/models/list_type.dart';
-import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
@@ -10,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
+import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
 class _OpenLoginPageMock extends Mock implements OpenLoginPage {}
 
@@ -62,13 +61,7 @@ void main() {
       _GetCredentialStreamMock(),
       _OpenLoginPageMock(),
     );
-    final songbook = Songbook(
-      name: "Terceiro",
-      isPublic: false,
-      createdAt: DateTime.now(),
-      totalSongs: 12,
-      type: ListType.cantPlay,
-    );
+    final songbook = getFakeSongbook();
 
     blocTest("should emit a new songbook",
         build: () => bloc,

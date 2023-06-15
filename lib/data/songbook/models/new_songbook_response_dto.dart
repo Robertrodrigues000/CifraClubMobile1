@@ -29,6 +29,7 @@ class NewSongbookResponseDto {
       type: ListType.user,
       totalSongs: 0,
       createdAt: DateTime.now(),
+      preview: const [],
     );
   }
 }

@@ -6,8 +6,6 @@ abstract class UserSongbookRepository {
   Future<List<int>> setUserSongbooks(List<Songbook> songbooks);
   Future<bool> deleteUserSongbook(int songbookId);
   Stream<int> getTotalSongbooks();
-  Stream<int?> getTotalSongbookCifras(int songbookId);
   Future<Songbook?> getSongbookById(int id);
-  Future<int?> deleteCifras(int songbookId);
-  Future<List<int>?> getCifrasIds(int songbookId);
+  Future<int?> updateSongbookPreview(int songbookId, List<String?> preview);
 }

@@ -9,13 +9,15 @@ import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 void main() {
   test("When toDomain is called, should return correct domain entity", () {
     final userSongbookDto = UserSongbookDto(
-        id: 42,
-        createdAt: DateTime.now(),
-        lastUpdated: DateTime.now(),
-        name: "songbook Name",
-        type: ListTypeDto.user,
-        isPublic: false,
-        totalSongs: 0);
+      id: 42,
+      createdAt: DateTime.now(),
+      lastUpdated: DateTime.now(),
+      name: "songbook Name",
+      type: ListTypeDto.user,
+      isPublic: false,
+      totalSongs: 0,
+      preview: ["https"],
+    );
 
     final songbook = userSongbookDto.toDomain();
 
@@ -26,17 +28,20 @@ void main() {
     expect(songbook.type, ListType.user);
     expect(songbook.isPublic, userSongbookDto.isPublic);
     expect(songbook.totalSongs, userSongbookDto.totalSongs);
+    expect(songbook.preview, ["https"]);
   });
 
   test("When fromDomain is called, should return correct dto entity", () {
     final songbook = Songbook(
-        createdAt: DateTime.now(),
-        lastUpdated: DateTime.now(),
-        name: "Marilia Mendonça",
-        id: 1,
-        type: ListType.user,
-        isPublic: false,
-        totalSongs: 0);
+      createdAt: DateTime.now(),
+      lastUpdated: DateTime.now(),
+      name: "Marilia Mendonça",
+      id: 1,
+      type: ListType.user,
+      isPublic: false,
+      totalSongs: 0,
+      preview: const ["https"],
+    );
 
     final userSongbookDto = UserSongbookDto.fromDomain(songbook);
 
@@ -47,6 +52,7 @@ void main() {
     expect(userSongbookDto.type, ListTypeDto.user);
     expect(userSongbookDto.isPublic, songbook.isPublic);
     expect(userSongbookDto.totalSongs, songbook.totalSongs);
+    expect(userSongbookDto.preview, songbook.preview);
   });
 
   test("When fromDomain is called from a special list, should use fixed id", () {

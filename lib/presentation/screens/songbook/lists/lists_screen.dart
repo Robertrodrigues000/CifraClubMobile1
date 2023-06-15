@@ -70,6 +70,7 @@ class _ListsScreenState extends State<ListsScreen> {
                       createdAt: DateTime.now(),
                       totalSongs: 12,
                       type: ListType.cantPlay,
+                      preview: const [],
                     ),
                   );
 

@@ -41,17 +41,7 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   }
 
   @override
-  Stream<int?> getTotalSongbookCifras(int songbookId) {
-    return _userSongbookDataSource.getTotalSongbookCifras(songbookId);
-  }
-
-  @override
-  Future<int?> deleteCifras(int songbookId) {
-    return _userSongbookDataSource.deleteCifras(songbookId);
-  }
-
-  @override
-  Future<List<int>?> getCifrasIds(int songbookId) {
-    return _userSongbookDataSource.getCifrasIds(songbookId);
+  Future<int?> updateSongbookPreview(int songbookId, List<String?> preview) {
+    return _userSongbookDataSource.updatePreview(songbookId, preview);
   }
 }

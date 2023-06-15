@@ -11,8 +11,9 @@ class IsarTestModule {
     return '${random}_tmp';
   }
 
-  static Future<Isar> getIsar() {
+  static Future<Isar> getIsar() async {
     return Isar.open(
+      directory: ".",
       isarAppSchemas,
       name: getRandomName(),
       inspector: false,

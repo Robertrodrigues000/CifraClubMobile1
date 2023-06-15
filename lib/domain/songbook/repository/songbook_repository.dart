@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/cifra/models/cifra.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:typed_result/typed_result.dart';
@@ -8,7 +9,7 @@ abstract class SongbookRepository {
     required bool isPublic,
     required DateTime createdAt,
   });
-  Future<Result<List<Songbook>, RequestError>> getAllSongbooks();
+  Future<Result<List<({Songbook songbook, List<Cifra> cifras})>, RequestError>> getAllSongbooks();
   Future<Result<void, RequestError>> deleteSongbook(int songbookId);
   Future<Result<void, RequestError>> updateSongbookData({
     required int songbookId,

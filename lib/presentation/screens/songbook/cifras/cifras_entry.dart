@@ -30,6 +30,7 @@ class CifrasEntry extends ScreenEntry {
           createdAt: DateTime(12),
           totalSongs: 1,
           type: ListType.user,
+          preview: const [],
         ),
       ),
     );

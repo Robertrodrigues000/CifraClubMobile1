@@ -47,12 +47,12 @@ void main() {
       expect(songbooks.first.status, 1);
       expect(songbooks.first.totalSongs, 2);
       expect(songbooks.first.cifras?.length, 2);
-      expect(songbooks.first.cifras?.first.id, 122674888);
+      expect(songbooks.first.cifras?.first.remoteDatabaseID, 122674888);
       expect(songbooks.first.cifras?.first.songUrl, "lindo-testemunho");
       expect(songbooks.first.cifras?.first.type, 1);
       expect(songbooks.first.cifras?.first.tone, "F");
       expect(songbooks.first.cifras?.first.name, "Lindo Testemunho");
-      expect(songbooks.first.cifras?.last.id, 128668178);
+      expect(songbooks.first.cifras?.last.remoteDatabaseID, 128668178);
       expect(songbooks.first.cifras?.last.songUrl, "we-are-the-world");
       expect(songbooks.first.cifras?.last.type, 1);
       expect(songbooks.first.cifras?.last.tone, "E");

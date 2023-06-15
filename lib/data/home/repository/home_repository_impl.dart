@@ -11,6 +11,6 @@ class HomeRepositoryImpl extends HomeRepository {
 
   @override
   CancelableOperation<Result<HomeInfo, RequestError>> getHomeInfos(String? genreUrl) {
-    return (_homeDataSource.getHomeInfos(genreUrl)).then((result) => result.map((homeDto) => homeDto.toDomain()));
+    return _homeDataSource.getHomeInfos(genreUrl).then((result) => result.map((homeDto) => homeDto.toDomain()));
   }
 }

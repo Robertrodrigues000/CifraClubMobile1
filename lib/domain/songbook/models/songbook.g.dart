@@ -25,11 +25,11 @@ abstract class _$SongbookCWProxy {
 
   Songbook lastUpdated(DateTime? lastUpdated);
 
-  Songbook cifras(List<Cifra>? cifras);
-
   Songbook totalSongs(int totalSongs);
 
   Songbook type(ListType type);
+
+  Songbook preview(List<String?> preview);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Songbook(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -47,9 +47,9 @@ abstract class _$SongbookCWProxy {
     int? status,
     DateTime? createdAt,
     DateTime? lastUpdated,
-    List<Cifra>? cifras,
     int? totalSongs,
     ListType? type,
+    List<String?>? preview,
   });
 }
 
@@ -87,13 +87,13 @@ class _$SongbookCWProxyImpl implements _$SongbookCWProxy {
   Songbook lastUpdated(DateTime? lastUpdated) => this(lastUpdated: lastUpdated);
 
   @override
-  Songbook cifras(List<Cifra>? cifras) => this(cifras: cifras);
-
-  @override
   Songbook totalSongs(int totalSongs) => this(totalSongs: totalSongs);
 
   @override
   Songbook type(ListType type) => this(type: type);
+
+  @override
+  Songbook preview(List<String?> preview) => this(preview: preview);
 
   @override
 
@@ -113,9 +113,9 @@ class _$SongbookCWProxyImpl implements _$SongbookCWProxy {
     Object? status = const $CopyWithPlaceholder(),
     Object? createdAt = const $CopyWithPlaceholder(),
     Object? lastUpdated = const $CopyWithPlaceholder(),
-    Object? cifras = const $CopyWithPlaceholder(),
     Object? totalSongs = const $CopyWithPlaceholder(),
     Object? type = const $CopyWithPlaceholder(),
+    Object? preview = const $CopyWithPlaceholder(),
   }) {
     return Songbook(
       id: id == const $CopyWithPlaceholder()
@@ -154,10 +154,6 @@ class _$SongbookCWProxyImpl implements _$SongbookCWProxy {
           ? _value.lastUpdated
           // ignore: cast_nullable_to_non_nullable
           : lastUpdated as DateTime?,
-      cifras: cifras == const $CopyWithPlaceholder()
-          ? _value.cifras
-          // ignore: cast_nullable_to_non_nullable
-          : cifras as List<Cifra>?,
       totalSongs: totalSongs == const $CopyWithPlaceholder() || totalSongs == null
           ? _value.totalSongs
           // ignore: cast_nullable_to_non_nullable
@@ -166,6 +162,10 @@ class _$SongbookCWProxyImpl implements _$SongbookCWProxy {
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
           : type as ListType,
+      preview: preview == const $CopyWithPlaceholder() || preview == null
+          ? _value.preview
+          // ignore: cast_nullable_to_non_nullable
+          : preview as List<String?>,
     );
   }
 }

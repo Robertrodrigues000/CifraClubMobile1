@@ -11,7 +11,7 @@ void main() {
   final List<MethodCall> logs = <MethodCall>[];
 
   setUpAll(() {
-    TestDefaultBinaryMessengerBinding.instance?.defaultBinaryMessenger.setMockMethodCallHandler(channel, (call) {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (call) {
       bool shouldPass = call.arguments?['url'] != "fail";
       logs.add(call);
       return SynchronousFuture(shouldPass);
@@ -21,7 +21,7 @@ void main() {
   tearDown(logs.clear);
 
   tearDownAll(() {
-    TestDefaultBinaryMessengerBinding.instance?.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
   });
 
   group("When handleUrl is called", () {

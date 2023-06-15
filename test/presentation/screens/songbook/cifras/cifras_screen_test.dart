@@ -47,7 +47,9 @@ void main() {
   });
 
   testWidgets('When is phone as click to back should call pop', (widgetTester) async {
+    // ignore: deprecated_member_use
     binding.window.physicalSizeTestValue = const Size(460, 800);
+    // ignore: deprecated_member_use
     binding.window.devicePixelRatioTestValue = 1.0;
     bloc.mockStream(const CifrasState(isPublic: true));
 

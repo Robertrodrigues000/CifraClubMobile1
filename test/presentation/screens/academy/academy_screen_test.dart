@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/screens/academy/academy_bloc.dart';
 import 'package:cifraclub/presentation/screens/academy/academy_screen.dart';

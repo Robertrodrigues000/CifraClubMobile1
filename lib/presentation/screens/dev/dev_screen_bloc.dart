@@ -87,6 +87,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   }
 
   Future<void> deleteCifrasTest() async {
-    await _deleteAllCifras(10027132);
+    await _deleteAllCifras(10093245);
   }
 }

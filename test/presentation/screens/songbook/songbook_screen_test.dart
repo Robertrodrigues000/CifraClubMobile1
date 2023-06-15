@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_bloc.dart';

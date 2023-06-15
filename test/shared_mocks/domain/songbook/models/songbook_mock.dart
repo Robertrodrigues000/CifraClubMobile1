@@ -10,4 +10,5 @@ Songbook getFakeSongbook({ListType listType = ListType.user}) => Songbook(
       isPublic: faker.randomGenerator.boolean(),
       type: listType,
       totalSongs: faker.randomGenerator.integer(10),
+      preview: [faker.animal.name()],
     );
