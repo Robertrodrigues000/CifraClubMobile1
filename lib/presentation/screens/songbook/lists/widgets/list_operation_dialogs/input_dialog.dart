@@ -4,22 +4,41 @@ import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class InputDialog extends StatefulWidget {
-  const InputDialog({Key? key, required this.isNewList, this.listName, required this.onTap}) : super(key: key);
+  const InputDialog({Key? key, required this.isNewList, this.listName, required this.onSave}) : super(key: key);
   final bool isNewList;
   final String? listName;
-  final Function(String) onTap;
+  final Function(BuildContext, String) onSave;
 
-  static Future<T?> show<T>(
-      {required BuildContext context, required bool isNewList, String? listName, required Function(String) onTap}) {
+  static Future<T?> show<T>({
+    required BuildContext context,
+    required bool isNewList,
+    String? listName,
+    required Function(BuildContext, String) onSave,
+  }) {
     return showDialog(
         context: context,
         builder: (context) {
-          return InputDialog(
-            isNewList: isNewList,
-            listName: listName,
-            onTap: onTap,
+          return ScaffoldMessenger(
+            child: Stack(alignment: Alignment.center, children: [
+              GestureDetector(
+                onTap: () => close(context),
+                behavior: HitTestBehavior.translucent,
+                child: const Scaffold(
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
+              InputDialog(
+                isNewList: isNewList,
+                listName: listName,
+                onSave: onSave,
+              ),
+            ]),
           );
         });
+  }
+
+  static void close(BuildContext context) {
+    Navigator.of(context, rootNavigator: true).pop();
   }
 
   @override
@@ -61,14 +80,11 @@ class _InputDialogState extends State<InputDialog> {
       ),
       secondButtonText: context.text.cancel,
       firstButtonText: widget.isNewList ? context.text.create : context.text.save,
-      // coverage:ignore-start
       onSecondButtonTap: () => Navigator.pop(context),
-      // coverage:ignore-end
-      onFirstButtonTap: _textEditingController.text.isEmpty
+      onFirstButtonTap: _textEditingController.text.isEmpty || _textEditingController.text.trim().isEmpty
           ? null
           : () {
-              widget.onTap(_textEditingController.text);
-              Navigator.pop(context);
+              widget.onSave(context, _textEditingController.text);
             },
     );
   }

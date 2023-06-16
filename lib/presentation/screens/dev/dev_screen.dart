@@ -6,18 +6,13 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
-import 'package:cifraclub/presentation/constants/app_urls.dart';
 import 'package:cifraclub/presentation/dialogs/save_cifras_in_list_dialog.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/add_cifras_to_list_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
-import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/privacy_bottom_sheet.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
-import 'package:cifraclub/presentation/widgets/share_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -183,55 +178,6 @@ class _DevScreenState extends State<DevScreen> {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.g_translate_rounded,
-                    color: context.colors.textPrimary,
-                  ),
-                  title: const Text("List Option BS"),
-                  onTap: () {
-                    ListOptionsBottomSheet(
-                      onTap: (options) {
-                        switch (options) {
-                          case OptionsBottomSheet.clear:
-                            print("clear");
-                            break;
-                          case OptionsBottomSheet.delete:
-                            print("delete");
-                            break;
-                          case OptionsBottomSheet.rename:
-                            InputDialog.show(
-                                context: context,
-                                isNewList: false,
-                                listName: "Lista",
-                                onTap: (newName) {
-                                  print("rename: $newName");
-                                });
-                            break;
-                          case OptionsBottomSheet.privacy:
-                            PrivacyBottomSheet(
-                              isPublic: false,
-                              onTap: (privacy) {
-                                switch (privacy) {
-                                  case true:
-                                    print("public");
-                                    break;
-                                  case false:
-                                    print("private");
-                                    break;
-                                }
-                              },
-                            ).show(context);
-                            break;
-                          case OptionsBottomSheet.share:
-                            print("share");
-                            break;
-                        }
-                      },
-                      isUserList: true,
-                    ).show(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
                     Icons.save_alt,
                     color: context.colors.textPrimary,
                   ),
@@ -248,21 +194,6 @@ class _DevScreenState extends State<DevScreen> {
                   title: const Text("Delete cifras"),
                   onTap: () {
                     _bloc.deleteCifrasTest();
-                  },
-                ),
-                ShareLinkBuilder(
-                  link: AppUrls.cifraListUrlFormat(549746031, 9992196),
-                  builder: (context, shareLink) {
-                    return ListTile(
-                      leading: Icon(
-                        Icons.share,
-                        color: context.colors.textPrimary,
-                      ),
-                      title: const Text("Share Test"),
-                      onTap: () async {
-                        await shareLink();
-                      },
-                    );
                   },
                 ),
               ],

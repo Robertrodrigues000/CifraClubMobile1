@@ -152,5 +152,7 @@
                 "example": "A"
             }
         }
-    }
+    },
+    "listUsedName": "Ya existe una lista con este nombre. Por favor, introduce otro.",
+    "listServerError": "No se puede acceder al servidor"
 }

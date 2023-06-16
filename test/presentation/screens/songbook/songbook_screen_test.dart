@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
-import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_screen.dart';
@@ -9,6 +8,7 @@ import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_state.dart
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_list_item.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_state.dart';
@@ -16,10 +16,10 @@ import 'package:cifraclub/presentation/widgets/error_description/error_descripti
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
 import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
@@ -53,6 +53,7 @@ void main() {
     when(listsBloc.logout).thenAnswer((_) => SynchronousFuture(null));
     when(listsBloc.close).thenAnswer((_) => SynchronousFuture(null));
     when(listsBloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
+    when(() => listsBloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
 
     cifrasBloc = _CifrasBlocMock();
     when(() => cifrasBloc.getSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
@@ -94,7 +95,6 @@ void main() {
           ),
         );
 
-        //expect(find.byType(ListsScreen), findsOneWidget);
         expect(find.byType(CifrasScreen), findsNothing);
       });
 
@@ -103,7 +103,7 @@ void main() {
         binding.window.devicePixelRatioTestValue = 1.0;
 
         bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
-        listsBloc.mockStream(const ListsState());
+        listsBloc.mockStream(ListsState(userLists: [getFakeSongbook()]));
 
         final nav = NavMock.getDummy();
 
@@ -118,13 +118,7 @@ void main() {
           nav: nav,
         );
 
-        final finder = find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is SvgPicture &&
-              widget.pictureProvider is ExactAssetPicture &&
-              (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
-          description: 'widget with add icon',
-        ); //TODO: Mudar essa teste quando tiver as listas do usuario
+        final finder = find.byType(UserListItem).first;
 
         await widgetTester.tap(finder);
         verify(() => nav.push(screenName: CifrasEntry.name)).called(1);
@@ -160,7 +154,7 @@ void main() {
         binding.window.devicePixelRatioTestValue = 1.0;
 
         bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
-        listsBloc.mockStream(const ListsState());
+        listsBloc.mockStream(ListsState(userLists: [getFakeSongbook()]));
         cifrasBloc.mockStream(const CifrasState(isPublic: true));
 
         await widgetTester.pumpWidgetWithWrapper(
@@ -174,15 +168,7 @@ void main() {
           ),
         );
 
-        final finder = find
-            .byWidgetPredicate(
-              (Widget widget) =>
-                  widget is SvgPicture &&
-                  widget.pictureProvider is ExactAssetPicture &&
-                  (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
-              description: 'widget with add icon',
-            )
-            .first; //TODO: Mudar essa teste quando tiver as listas do usuario
+        final finder = find.byType(UserListItem).first;
 
         await widgetTester.tap(finder);
         verify(() => bloc.onSelectSongbook(any())).called(1);

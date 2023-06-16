@@ -1,11 +1,15 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
-import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
-
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/constants/app_urls.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/add_cifras_to_list_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/privacy_bottom_sheet.dart';
 import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit_card.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/clear_dialog.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
@@ -16,6 +20,8 @@ import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nav/nav.dart';
+import 'package:typed_result/typed_result.dart';
 
 class ListsScreen extends StatefulWidget {
   const ListsScreen({super.key, required this.onTapSongbook});
@@ -45,13 +51,8 @@ class _ListsScreenState extends State<ListsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ListsBloc, ListsState>(
-      listener: (context, state) {
-        if (state.isError == true) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Rename Error")));
-        }
-      },
-      child: BlocBuilder<ListsBloc, ListsState>(builder: (context, state) {
+    return BlocBuilder<ListsBloc, ListsState>(
+      builder: (context, state) {
         return Scaffold(
           appBar: CosmosAppBar(
             toolbarHeight: context.appDimensionScheme.appBarHeight,
@@ -60,29 +61,39 @@ class _ListsScreenState extends State<ListsScreen> {
             automaticallyImplyLeading: false,
             actions: [
               InkWell(
-                // Por enquanto esse click é para testar
-                // coverage:ignore-start
                 onTap: () {
-                  widget.onTapSongbook(
-                    Songbook(
-                      name: "Segundo",
-                      isPublic: false,
-                      createdAt: DateTime.now(),
-                      totalSongs: 12,
-                      type: ListType.cantPlay,
-                      preview: const [],
-                    ),
-                  );
-
                   InputDialog.show(
                     context: context,
                     isNewList: true,
-                    onTap: (name) {
-                      _bloc.createNewSongbook(name);
+                    onSave: (widgetContext, name) async {
+                      final isValidInput = await _bloc.isValidSongbookName(name);
+
+                      switch (isValidInput) {
+                        case true:
+                          (await _bloc.createNewSongbook(name)).when(
+                            success: (songbook) {
+                              InputDialog.close(context);
+                              Nav.of(context).push(
+                                screenName: AddCifrasToListEntry.name,
+                                params: AddCifrasToListEntry.declareParams(songbook.id!),
+                              );
+                            },
+                            failure: (_) {
+                              ScaffoldMessenger.of(widgetContext)
+                                  .showSnackBar(SnackBar(content: Text(context.text.listServerError)));
+                            },
+                          );
+                          break;
+                        case false:
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(widgetContext)
+                                .showSnackBar(SnackBar(content: Text(context.text.listUsedName)));
+                          }
+                          break;
+                      }
                     },
                   );
                 },
-                // coverage:ignore-end
                 child: SizedBox(
                   height: 48,
                   width: 48,
@@ -152,21 +163,92 @@ class _ListsScreenState extends State<ListsScreen> {
               UserLists(
                 lists: state.userLists,
                 onTap: (songbook) {
-                  //_bloc.deleteSongbook(songbook.id);
-                  InputDialog.show(
-                    context: context,
-                    isNewList: false,
-                    listName: songbook.name,
-                    onTap: (newName) {
-                      _bloc.updateSongbookData(songbook: songbook, songbookName: newName);
+                  widget.onTapSongbook(songbook);
+                },
+                onOptionsTap: (songbook) {
+                  ListOptionsBottomSheet(
+                    ccid: state.user?.id,
+                    songbookId: songbook.id,
+                    isPublic: songbook.isPublic,
+                    isUserList: true,
+                    onTap: (options, [rect]) async {
+                      switch (options) {
+                        case ListOptionsBottomSheetItem.clear:
+                          final clearDialog = await ClearDialog.show(context);
+                          if (clearDialog) {
+                            _bloc.clearList(songbook.id);
+                          }
+                          break;
+                        case ListOptionsBottomSheetItem.delete:
+                          final result = await DeleteDialog.show(context);
+                          if (result) {
+                            await _bloc.deleteSongbook(songbook.id);
+                          }
+                          break;
+                        case ListOptionsBottomSheetItem.rename:
+                          InputDialog.show(
+                            context: context,
+                            isNewList: false,
+                            listName: songbook.name,
+                            onSave: (widgetContext, newName) async {
+                              final isValidInput = await _bloc.isValidSongbookName(newName);
+
+                              switch (isValidInput) {
+                                case true:
+                                  (await _bloc.updateSongbookData(songbook: songbook, songbookName: newName)).when(
+                                    success: (_) {
+                                      InputDialog.close(context);
+                                    },
+                                    failure: (_) {
+                                      ScaffoldMessenger.of(widgetContext).showSnackBar(
+                                        SnackBar(content: Text(context.text.listServerError)),
+                                      );
+                                    },
+                                  );
+                                  break;
+                                case false:
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(widgetContext).showSnackBar(
+                                      SnackBar(content: Text(context.text.listUsedName)),
+                                    );
+                                  }
+                                  break;
+                              }
+                            },
+                          );
+                          break;
+                        // coverage:ignore-start
+                        case ListOptionsBottomSheetItem.privacy:
+                          PrivacyBottomSheet(
+                            isPublic: false,
+                            onTap: (privacy) {
+                              switch (privacy) {
+                                case true:
+                                  // ignore: avoid_print
+                                  print("public");
+                                  break;
+                                case false:
+                                  // ignore: avoid_print
+                                  print("private");
+                                  break;
+                              }
+                            },
+                          ).show(context);
+                          break;
+                        case ListOptionsBottomSheetItem.share:
+                          final link = AppUrls.cifraListUrlFormat(state.user!.id!, songbook.id!);
+                          _bloc.shareLink(link, rect);
+                          break;
+                        // coverage:ignore-end
+                      }
                     },
-                  );
+                  ).show(context);
                 },
               )
             ],
           ),
         );
-      }),
+      },
     );
   }
 }

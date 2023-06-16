@@ -14,23 +14,36 @@ void main() {
     final songbook = getFakeSongbook();
 
     when(userSongbookRepository.getAllUserSongbooks)
-        .thenAnswer((invocation) => BehaviorSubject.seeded([getFakeSongbook(), songbook]));
+        .thenAnswer((invocation) => BehaviorSubject.seeded([getFakeSongbook(name: "New Songbook"), songbook]));
 
     final valiteSongbookNameUseCase = ValidateSongbookName(userSongbookRepository);
-    test("and input is empty should return invalidInput", () async {
-      final result = await valiteSongbookNameUseCase("");
-
-      expect(result, SongbookNameValidation.invalidInput);
-    });
-
-    test("and input have just blank space should return invalidInput", () async {
-      final result = await valiteSongbookNameUseCase("   ");
-
-      expect(result, SongbookNameValidation.invalidInput);
-    });
 
     test("and input have on songbook list should return existingName", () async {
       final result = await valiteSongbookNameUseCase(songbook.name);
+
+      expect(result, SongbookNameValidation.existingName);
+    });
+
+    test("and the name passed exists and have blank spaces", () async {
+      final result = await valiteSongbookNameUseCase("  New Songbook  ");
+
+      expect(result, SongbookNameValidation.existingName);
+    });
+
+    test("and the name passed exists and have blank sapce in final of string", () async {
+      final result = await valiteSongbookNameUseCase("New Songbook  ");
+
+      expect(result, SongbookNameValidation.existingName);
+    });
+
+    test("and the name passed exists and have blank spaces in start of string", () async {
+      final result = await valiteSongbookNameUseCase("  New Songbook");
+
+      expect(result, SongbookNameValidation.existingName);
+    });
+
+    test("and the name passed exists and have different cases", () async {
+      final result = await valiteSongbookNameUseCase("NEW SONGBOOK");
 
       expect(result, SongbookNameValidation.existingName);
     });

@@ -1,15 +1,21 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
+import 'package:cifraclub/domain/log/repository/log_repository.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_all_cifras.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
@@ -35,6 +41,9 @@ class ListsBloc extends Cubit<ListsState> {
   final GetProStatusStream _getProStatusStream;
   final DeleteSongbook _deleteSongbook;
   final UpdateSongbookData _updateSongbookData;
+  final ValidateSongbookName _validateSongbookName;
+  final DeleteAllCifras _deleteAllCifras;
+  final ShareLink _shareLink;
 
   ListsBloc(
     this._getListLimitState,
@@ -50,6 +59,9 @@ class ListsBloc extends Cubit<ListsState> {
     this._getProStatusStream,
     this._deleteSongbook,
     this._updateSongbookData,
+    this._validateSongbookName,
+    this._deleteAllCifras,
+    this._shareLink,
   ) : super(const ListsState());
 
   StreamSubscription<List<Songbook>>? _songbooksSubscription;
@@ -86,7 +98,7 @@ class ListsBloc extends Cubit<ListsState> {
     emit(state.copyWith(listLimit: listLimit, isPro: isPro));
   }
 
-  void createNewSongbook(String name) => _insertUserSongbook(name: name);
+  Future<Result<Songbook, RequestError>> createNewSongbook(String name) => _insertUserSongbook(name: name);
 
   Future<void> syncList() async {
     if (state.isSyncing) {
@@ -124,16 +136,35 @@ class ListsBloc extends Cubit<ListsState> {
 
   void openUserProfilePage() => _openUserProfilePage();
 
-  Future<void> updateSongbookData({required Songbook songbook, String? songbookName, bool? isPublic}) async {
-    final result = await _updateSongbookData(songbook: songbook, name: songbookName, isPublic: isPublic);
+  Future<Result<void, RequestError>> updateSongbookData({
+    required Songbook songbook,
+    String? songbookName,
+    bool? isPublic,
+  }) async {
+    return _updateSongbookData(songbook: songbook, name: songbookName, isPublic: isPublic);
+  }
 
-    result.onFailure(
-      (error) async {
-        emit(state.copyWith(isError: true));
-        await Future.delayed(const Duration(milliseconds: 100));
-        emit(state.copyWith(isError: false));
-      },
-    );
+  Future<bool> isValidSongbookName(String name) async {
+    final status = await _validateSongbookName(name);
+
+    switch (status) {
+      case SongbookNameValidation.existingName:
+        return false;
+      case SongbookNameValidation.validInput:
+        return true;
+    }
+  }
+
+  Future<void> clearList(int? songbookId) async {
+    if (songbookId == null) {
+      logger?.sendNonFatalCrash(exception: "Clear songbook with null Id"); // coverage:ignore-line
+    } else {
+      await _deleteAllCifras(songbookId);
+    }
+  }
+
+  Future<void> shareLink(String link, Rect? rect) async {
+    await _shareLink(link: link, sharePositionOrigin: rect);
   }
 
   @override

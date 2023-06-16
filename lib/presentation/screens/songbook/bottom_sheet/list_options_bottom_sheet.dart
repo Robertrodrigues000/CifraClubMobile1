@@ -5,11 +5,22 @@ import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:flutter/material.dart';
 
 class ListOptionsBottomSheet extends StatelessWidget {
-  final Function(OptionsBottomSheet) onTap;
+  final Function(ListOptionsBottomSheetItem, [Rect?]) onTap;
   final bool isUserList;
+  final int? ccid;
+  final int? songbookId;
+  final bool isPublic;
   final ScrollController? scrollController;
 
-  const ListOptionsBottomSheet({super.key, required this.isUserList, required this.onTap, this.scrollController});
+  const ListOptionsBottomSheet({
+    super.key,
+    required this.isUserList,
+    required this.onTap,
+    required this.isPublic,
+    this.scrollController,
+    this.ccid,
+    this.songbookId,
+  });
 
   void show(BuildContext context) {
     final controller = ScrollController();
@@ -19,6 +30,9 @@ class ListOptionsBottomSheet extends StatelessWidget {
         isUserList: isUserList,
         onTap: onTap,
         scrollController: controller,
+        ccid: ccid,
+        songbookId: songbookId,
+        isPublic: isPublic,
       ),
       context: context,
       scrollController: controller,
@@ -27,6 +41,11 @@ class ListOptionsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final options = List<ListOptionsBottomSheetItem>.from(ListOptionsBottomSheetItem.values);
+    if (songbookId == null || ccid == null || !isPublic) {
+      options.removeWhere((element) => element == ListOptionsBottomSheetItem.share);
+    }
+
     return SingleChildScrollView(
       controller: scrollController,
       child: Column(
@@ -44,26 +63,39 @@ class ListOptionsBottomSheet extends StatelessWidget {
             height: 16,
           ),
           if (isUserList)
-            ...OptionsBottomSheet.values.map(
+            ...options.map(
               (e) {
-                return IconTextTile(
-                  onClick: () {
-                    DefaultBottomSheet.close(context);
-                    onTap(e);
-                  },
-                  text: e.getText(context),
-                  leadingIconAsset: e.icon,
-                );
+                if (e == ListOptionsBottomSheetItem.share) {
+                  return IconTextTile(
+                    onClick: () {
+                      final box = context.findRenderObject() as RenderBox?;
+                      final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
+                      DefaultBottomSheet.close(context);
+                      onTap(e, rect);
+                    },
+                    text: e.getText(context),
+                    leadingIconAsset: e.icon,
+                  );
+                } else {
+                  return IconTextTile(
+                    onClick: () {
+                      DefaultBottomSheet.close(context);
+                      onTap(e);
+                    },
+                    text: e.getText(context),
+                    leadingIconAsset: e.icon,
+                  );
+                }
               },
             )
           else
             IconTextTile(
               onClick: () {
-                onTap(OptionsBottomSheet.clear);
+                onTap(ListOptionsBottomSheetItem.clear);
                 DefaultBottomSheet.close(context);
               },
-              text: OptionsBottomSheet.clear.getText(context),
-              leadingIconAsset: OptionsBottomSheet.clear.icon,
+              text: ListOptionsBottomSheetItem.clear.getText(context),
+              leadingIconAsset: ListOptionsBottomSheetItem.clear.icon,
             ),
           const SizedBox(height: 16)
         ],
@@ -72,7 +104,7 @@ class ListOptionsBottomSheet extends StatelessWidget {
   }
 }
 
-enum OptionsBottomSheet {
+enum ListOptionsBottomSheetItem {
   share(AppSvgs.shareIcon),
   rename(AppSvgs.musicalStylesIcon),
   clear(AppSvgs.clearIcon),
@@ -81,19 +113,19 @@ enum OptionsBottomSheet {
 
   final String icon;
 
-  const OptionsBottomSheet(this.icon);
+  const ListOptionsBottomSheetItem(this.icon);
 
   String getText(BuildContext context) {
     switch (this) {
-      case OptionsBottomSheet.share:
+      case ListOptionsBottomSheetItem.share:
         return context.text.shareList;
-      case OptionsBottomSheet.rename:
+      case ListOptionsBottomSheetItem.rename:
         return context.text.renameList;
-      case OptionsBottomSheet.clear:
+      case ListOptionsBottomSheetItem.clear:
         return context.text.clearList;
-      case OptionsBottomSheet.delete:
+      case ListOptionsBottomSheetItem.delete:
         return context.text.deleteList;
-      case OptionsBottomSheet.privacy:
+      case ListOptionsBottomSheetItem.privacy:
         return context.text.privacyList;
     }
   }

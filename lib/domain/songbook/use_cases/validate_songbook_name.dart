@@ -9,12 +9,12 @@ class ValidateSongbookName {
   ValidateSongbookName(this._userSongbookRepository);
 
   Future<SongbookNameValidation> call(String songbookName) async {
-    if (songbookName.isEmpty || songbookName.trim().isEmpty) {
-      return SongbookNameValidation.invalidInput;
-    }
-
     final songbooks = await _userSongbookRepository.getAllUserSongbooks().first;
-    final haveSameName = songbooks.any((element) => element.type == ListType.user && element.name == songbookName);
+    final treatedName = songbookName.toLowerCase().trim();
+    final haveSameName = songbooks.any(
+      (element) => element.type == ListType.user && element.name.toLowerCase().trim() == treatedName,
+    );
+
     if (haveSameName) {
       return SongbookNameValidation.existingName;
     }
@@ -24,7 +24,6 @@ class ValidateSongbookName {
 }
 
 enum SongbookNameValidation {
-  invalidInput,
   existingName,
   validInput;
 }

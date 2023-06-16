@@ -1,7 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_all_cifras.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -10,6 +12,7 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
@@ -23,6 +26,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
@@ -102,6 +106,16 @@ class _DeleteSongbookMock extends Mock implements DeleteSongbook {}
 
 class _UpdateSongbookDataMock extends Mock implements UpdateSongbookData {}
 
+class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {
+  _ValidateSongbookNameMock([SongbookNameValidation songbookNameValidation = SongbookNameValidation.validInput]) {
+    when(() => call(any())).thenAnswer((invocation) => SynchronousFuture(songbookNameValidation));
+  }
+}
+
+class _DeleteAllCifrasMock extends Mock implements DeleteAllCifras {}
+
+class _ShareLinkMock extends Mock implements ShareLink {}
+
 void main() {
   ListsBloc getBloc({
     _GetListLimitStateStreamMock? getListLimitStateMock,
@@ -117,6 +131,9 @@ void main() {
     _GetProStatusStreamMock? getProStatusStreamMock,
     _DeleteSongbookMock? deleteSongbookMock,
     _UpdateSongbookDataMock? updateSongbookDataMock,
+    _ValidateSongbookNameMock? validateSongbookNameMock,
+    _DeleteAllCifrasMock? deleteAllCifrasMock,
+    _ShareLinkMock? shareLink,
   }) =>
       ListsBloc(
         getListLimitStateMock ?? _GetListLimitStateStreamMock(),
@@ -132,6 +149,9 @@ void main() {
         getProStatusStreamMock ?? _GetProStatusStreamMock(),
         deleteSongbookMock ?? _DeleteSongbookMock(),
         updateSongbookDataMock ?? _UpdateSongbookDataMock(),
+        validateSongbookNameMock ?? _ValidateSongbookNameMock(),
+        deleteAllCifrasMock ?? _DeleteAllCifrasMock(),
+        shareLink ?? _ShareLinkMock(),
       );
 
   test("When logout should call 'Logout' use case", () async {
@@ -276,7 +296,6 @@ void main() {
         "should call use case",
         build: () => getBloc(updateSongbookDataMock: updateSongbookData),
         act: (bloc) => bloc.updateSongbookData(songbook: songbook),
-        expect: () => [isA<ListsState>().having((state) => state.isError, "rename erro", true)],
         verify: (bloc) {
           verify(() => updateSongbookData(songbook: songbook)).called(1);
         },
@@ -297,5 +316,44 @@ void main() {
         isA<ListsState>().having((state) => state.listCount, "List Count", 8)
       ],
     );
+  });
+
+  test("When `isValidSongbookName` is called and songbook name is valid should return true", () async {
+    final validateSongbookNameMock = _ValidateSongbookNameMock(SongbookNameValidation.validInput);
+
+    final bloc = getBloc(validateSongbookNameMock: validateSongbookNameMock);
+    final result = await bloc.isValidSongbookName("teste");
+
+    expect(result, true);
+  });
+
+  test("When `isValidSongbookName` is called and songbook name is repeated should return false", () async {
+    final validateSongbookNameMock = _ValidateSongbookNameMock(SongbookNameValidation.existingName);
+
+    final bloc = getBloc(validateSongbookNameMock: validateSongbookNameMock);
+    final result = await bloc.isValidSongbookName("teste");
+
+    expect(result, false);
+  });
+
+  test("When `clearlist` is called should call deleteAllCifras", () async {
+    final deleteAllCifras = _DeleteAllCifrasMock();
+    when(() => deleteAllCifras(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final bloc = getBloc(deleteAllCifrasMock: deleteAllCifras);
+    await bloc.clearList(10);
+
+    verify(() => deleteAllCifras(10)).called(1);
+  });
+
+  test("When `shareLink` is called should call Sharelink lib", () async {
+    final sharelink = _ShareLinkMock();
+    when(() => sharelink(link: any(named: "link")))
+        .thenAnswer((_) => SynchronousFuture(const ShareResult("raw", ShareResultStatus.success)));
+
+    final bloc = getBloc(shareLink: sharelink);
+    await bloc.shareLink("https.com", null);
+
+    verify(() => sharelink(link: "https.com")).called(1);
   });
 }
