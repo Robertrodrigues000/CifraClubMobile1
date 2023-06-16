@@ -46,6 +46,7 @@ void main() {
       ),
     ));
 
+    await widgetTester.pumpAndSettle();
     await widgetTester.tap(find.text(songs.name));
 
     expect(completer.isCompleted, isTrue);

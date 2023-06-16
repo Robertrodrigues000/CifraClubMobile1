@@ -1,8 +1,10 @@
 import 'package:cifraclub/domain/home/models/news.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/extensions/text_style.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/list_animation.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/news/news_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Blog extends StatefulWidget {
   const Blog({
@@ -32,20 +34,29 @@ class _BlogState extends State<Blog> {
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: EdgeInsets.symmetric(vertical: context.appDimensionScheme.screenMargin),
-      sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: context.appDimensionScheme.newsItemsPerRow,
-            mainAxisExtent: textHeight + 2 * context.appDimensionScheme.newsItemTextPadding + 4),
-        delegate: SliverChildBuilderDelegate(
-          childCount: widget.list.length,
-          (context, index) {
-            final news = widget.list[index];
-            return NewsItem(
-              key: Key(news.headline),
-              news: news,
-              onTap: () => widget.onTap(news),
-            );
-          },
+      sliver: AnimationLimiter(
+        child: SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: context.appDimensionScheme.newsItemsPerRow,
+              mainAxisExtent: textHeight + 2 * context.appDimensionScheme.newsItemTextPadding + 4),
+          delegate: SliverChildBuilderDelegate(
+            childCount: widget.list.length,
+            (context, index) {
+              final news = widget.list[index];
+              return AnimationConfiguration.staggeredGrid(
+                duration: ListAnimation.duration,
+                position: index,
+                columnCount: context.appDimensionScheme.topVideosItemsPerRow,
+                child: ListAnimation(
+                  child: NewsItem(
+                    key: Key(news.headline),
+                    news: news,
+                    onTap: () => widget.onTap(news),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

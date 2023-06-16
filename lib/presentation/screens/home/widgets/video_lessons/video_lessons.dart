@@ -1,8 +1,10 @@
 import 'package:cifraclub/domain/home/models/video_lesson.dart';
 import 'package:cifraclub/extensions/text_style.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/list_animation.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lesson_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class VideoLessons extends StatefulWidget {
   final List<VideoLesson> list;
@@ -36,25 +38,34 @@ class _VideoLessonsState extends State<VideoLessons> {
 
     return SliverPadding(
       padding: EdgeInsets.all(dimensions.screenMargin),
-      sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: dimensions.topVideosItemsPerRow,
-          crossAxisSpacing: dimensions.screenMargin,
-          mainAxisSpacing: dimensions.screenMargin,
-          mainAxisExtent: textHeight + imageHeight + 14,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          childCount: widget.list.length,
-          (context, index) {
-            return VideoLessonItem(
-              videolesson: widget.list[index],
-              // coverage:ignore-start
-              onTap: () {},
-              // coverage:ignore-end
-              width: imageWidth,
-              height: imageHeight,
-            );
-          },
+      sliver: AnimationLimiter(
+        child: SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: dimensions.topVideosItemsPerRow,
+            crossAxisSpacing: dimensions.screenMargin,
+            mainAxisSpacing: dimensions.screenMargin,
+            mainAxisExtent: textHeight + imageHeight + 14,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            childCount: widget.list.length,
+            (context, index) {
+              return AnimationConfiguration.staggeredGrid(
+                duration: ListAnimation.duration,
+                position: index,
+                columnCount: dimensions.topVideosItemsPerRow,
+                child: ListAnimation(
+                  child: VideoLessonItem(
+                    videolesson: widget.list[index],
+                    // coverage:ignore-start
+                    onTap: () {},
+                    // coverage:ignore-end
+                    width: imageWidth,
+                    height: imageHeight,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

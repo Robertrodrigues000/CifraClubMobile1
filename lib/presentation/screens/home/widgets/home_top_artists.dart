@@ -2,12 +2,14 @@ import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/extensions/color.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/list_animation.dart';
 import 'package:cifraclub/presentation/widgets/color_approximator.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cifraclub/presentation/widgets/pick_shaped_image.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeTopArtists extends StatelessWidget {
@@ -20,15 +22,22 @@ class HomeTopArtists extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverPadding(
       padding: EdgeInsets.all(context.appDimensionScheme.screenMargin),
-      sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: context.appDimensionScheme.topArtistsItemsPerRow,
-          crossAxisSpacing: context.appDimensionScheme.internalMargin,
-          mainAxisSpacing: context.appDimensionScheme.internalMargin,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          childCount: artists.length,
-          (context, index) => _ArtistCard(artists[index], onTap),
+      sliver: AnimationLimiter(
+        child: SliverGrid(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: context.appDimensionScheme.topArtistsItemsPerRow,
+            crossAxisSpacing: context.appDimensionScheme.internalMargin,
+            mainAxisSpacing: context.appDimensionScheme.internalMargin,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            childCount: artists.length,
+            (context, index) => AnimationConfiguration.staggeredGrid(
+              duration: ListAnimation.duration,
+              position: index,
+              columnCount: context.appDimensionScheme.topArtistsItemsPerRow,
+              child: ListAnimation(child: _ArtistCard(artists[index], onTap)),
+            ),
+          ),
         ),
       ),
     );

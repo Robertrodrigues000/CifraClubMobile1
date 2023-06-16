@@ -37,6 +37,7 @@ void main() {
       ),
     ));
 
+    await widgetTester.pumpAndSettle();
     await widgetTester.tap(find.text(artists.name));
 
     expect(completer.isCompleted, isTrue);
