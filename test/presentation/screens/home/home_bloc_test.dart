@@ -100,6 +100,10 @@ class _GetHomeInfoMock extends Mock implements GetHomeInfo {
 }
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(getFakeGenre());
+  });
+
   HomeBloc getHomeBloc({
     _GetUserGenresAsStreamMock? getUserGenresAsStream,
     _InsertUserGenreMock? insertUserGenreMock,
@@ -110,7 +114,7 @@ void main() {
     _GetHomeInfoMock? getHomeInfo,
   }) =>
       HomeBloc(
-        getUserGenresAsStream ?? _GetUserGenresAsStreamMock(),
+        getUserGenresAsStream ?? _GetUserGenresAsStreamMock.newDummy(),
         insertUserGenreMock ?? _InsertUserGenreMock(),
         getCredentialStream ?? _GetCredentialStreamMock.newDummy(),
         openLoginPage ?? _OpenLoginPageMock.newDummy(),
@@ -118,10 +122,6 @@ void main() {
         logout ?? _LogoutMock.newDummy(),
         getHomeInfo ?? _GetHomeInfoMock.newDummy(),
       );
-
-  setUpAll(() {
-    registerFallbackValue(getFakeGenre());
-  });
 
   test("When user action is openLoginPage should call openLoginPage use case", () async {
     final openLoginPage = _OpenLoginPageMock.newDummy();
@@ -156,19 +156,19 @@ void main() {
     blocTest(
       "if user is logged out should emit null user",
       build: getHomeBloc,
-      act: (bloc) => bloc.getUserInfo(),
-      expect: () => [
-        isA<HomeState>().having((state) => state.user, "user null", null),
-      ],
+      act: (bloc) => bloc.init(),
+      verify: (bloc) {
+        expect(bloc.state.user, null);
+      },
     );
 
     blocTest(
       "if user is logged in should emit user infos",
       build: () => bloc,
-      act: (bloc) => bloc.getUserInfo(),
-      expect: () => [
-        isA<HomeState>().having((state) => state.user, "user credentials", userCredential.user),
-      ],
+      act: (bloc) => bloc.init(),
+      verify: (bloc) {
+        expect(bloc.state.user, userCredential.user);
+      },
     );
   });
 

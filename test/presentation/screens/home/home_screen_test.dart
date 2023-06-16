@@ -135,10 +135,11 @@ void main() {
       ),
     );
 
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
     await widgetTester.tap(find.byType(CifraButton));
     await widgetTester.pumpAndSettle();
 
-    verify(() => bloc.requestHomeData(genreUrl: any(named: "genreUrl"))).called(greaterThanOrEqualTo(2));
+    verify(() => bloc.requestHomeData(genreUrl: any(named: "genreUrl"))).called(1);
   });
 
   testWidgets("When state isLoading is false and error is null should show home sections", (widgetTester) async {

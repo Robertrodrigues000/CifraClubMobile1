@@ -42,6 +42,13 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
     this._getHomeInfo,
   ) : super(const HomeState(user: null, isPro: false));
 
+  void init() {
+    _credentialStreamSubscription = _getCredentialsStream().listen(_updateStateWithNewCredential);
+    initGenres();
+
+    requestHomeData(genreUrl: state.selectedGenre);
+  }
+
   @override
   void emitGenres(List<Genre> genres) async {
     emit(state.copyWith(genres: genres));
@@ -62,15 +69,6 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
       emit(state.copyWith(selectedGenre: genreUrl));
       await requestHomeData(genreUrl: genreUrl);
     }
-  }
-
-  void getUserInfo() async {
-    final credentialStream = _getCredentialsStream();
-    _subscribeToCredentialsStream(credentialStream);
-  }
-
-  void _subscribeToCredentialsStream(Stream<UserCredential> credentialsStream) {
-    _credentialStreamSubscription = credentialsStream.listen(_updateStateWithNewCredential);
   }
 
   void _updateStateWithNewCredential(UserCredential credential) {
