@@ -20,6 +20,9 @@ HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods
 
 # Install CocoaPods dependencies.
-cd ios && pod install # run `pod install` in the `ios` directory.
+# cd ios && pod install # run `pod install` in the `ios` directory.
+
+# Workaround Flutter 3.10 - https://stackoverflow.com/a/76349926
+cd ios && pod deintegrate && pod update 
 
 exit 0
