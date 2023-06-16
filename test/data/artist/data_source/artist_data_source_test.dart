@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
+import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
@@ -162,7 +163,7 @@ void main() {
   });
   group("When getArtistSongs is called", () {
     test("When request is successful with params", () async {
-      const artistDns = "gabriela-rocha";
+      const artistUrl = "gabriela-rocha";
       final queryParams = {
         'limit': 2,
         'filter': ArtistSongFilter.cifra.name,
@@ -176,7 +177,7 @@ void main() {
       final artistDataSource = ArtistDataSource(networkService: networkService);
       final result = await artistDataSource
           .getArtistSongs(
-            artistUrl: artistDns,
+            artistUrl: artistUrl,
             limit: queryParams['limit'] as int,
             filter: ArtistSongFilter.cifra,
           )
@@ -186,7 +187,7 @@ void main() {
           verify(() => networkService.cancelableExecute<ArtistSongsDto>(request: captureAny(named: "request")))
               .captured
               .first as NetworkRequest<ArtistSongsDto>;
-      expect(request.path, "/v3/artist/$artistDns/songs?exclude=lyrics+files");
+      expect(request.path, "/v3/artist/$artistUrl/songs?exclude=lyrics+files");
       expect(request.type, NetworkRequestType.get);
       expect(request.queryParams, queryParams);
 
@@ -227,7 +228,7 @@ void main() {
 
   group("When `getVideoLessons` is called", () {
     test("When request is successful with params", () async {
-      const artistDns = "the-beatles";
+      const artistUrl = "the-beatles";
 
       final networkService = NetworkServiceMock();
       final mockResponse =
@@ -235,12 +236,12 @@ void main() {
       await networkService.mock<List<VideoLessonsDto>>(response: mockResponse);
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
-      final result = await artistDataSource.getVideoLessons(dns: artistDns);
+      final result = await artistDataSource.getVideoLessons(artistUrl: artistUrl);
 
       final request = verify(() => networkService.execute<List<VideoLessonsDto>>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<List<VideoLessonsDto>>;
-      expect(request.path, "/v3/artist/$artistDns/video-lessons");
+      expect(request.path, "/v3/artist/$artistUrl/video-lessons");
       expect(request.type, NetworkRequestType.get);
 
       expect(result.isSuccess, true);
@@ -269,7 +270,7 @@ void main() {
     });
 
     test("When request fails", () async {
-      const artistDns = "the-beatles";
+      const artistUrl = "the-beatles";
 
       final networkService = NetworkServiceMock();
       when(() => networkService.execute<List<VideoLessonsDto>>(request: captureAny(named: "request"))).thenAnswer(
@@ -280,13 +281,63 @@ void main() {
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
 
-      final result = await artistDataSource.getVideoLessons(dns: artistDns);
+      final result = await artistDataSource.getVideoLessons(artistUrl: artistUrl);
 
       final request = verify(() => networkService.execute<List<VideoLessonsDto>>(request: captureAny(named: "request")))
           .captured
           .first as NetworkRequest<List<VideoLessonsDto>>;
-      expect(request.path, "/v3/artist/$artistDns/video-lessons");
+      expect(request.path, "/v3/artist/$artistUrl/video-lessons");
       expect(request.type, NetworkRequestType.get);
+
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When getAlbums is called", () {
+    test("When request is successful", () async {
+      const artistUrl = "gabriela-rocha";
+
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/artist/data_source/artist_albums_mock_json_response.json").readAsString();
+      await networkService.mock<AlbumsDto>(response: mockResponse);
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getAlbums(
+        artistUrl: artistUrl,
+      );
+
+      final request = verify(() => networkService.execute<AlbumsDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<AlbumsDto>;
+      expect(request.path, "/v3/artist/$artistUrl/albums");
+      expect(request.type, NetworkRequestType.get);
+
+      expect(result.isSuccess, true);
+      final albums = result.get()!.albums;
+
+      expect(albums.length, 2);
+      expect(albums.first.id, 70487);
+      expect(albums.first.albumUrl, "studio-bar-ao-vivo-2019");
+      expect(albums.last.id, 75976);
+      expect(albums.last.albumUrl, "studio-bar-vol-2-ao-vivo-2019");
+    });
+
+    test("When request fails", () async {
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<AlbumsDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
+        ),
+      );
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getAlbums(
+        artistUrl: "legiao-urbana",
+      );
 
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);

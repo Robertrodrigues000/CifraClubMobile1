@@ -31,6 +31,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _bloc.getArtistSongs();
+    _bloc.getAlbums();
   }
 
   @override
@@ -87,9 +88,10 @@ class _ArtistScreenState extends State<ArtistScreen> {
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: state.albuns.length,
+                  childCount: state.albums.length,
                   (context, index) => ListTile(
-                    title: Text("Albuns -- ${state.albuns[index]}"),
+                    key: Key(state.albums[index].albumUrl),
+                    title: Text(state.albums[index].title),
                   ),
                 ),
               ),

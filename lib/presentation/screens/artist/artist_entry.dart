@@ -24,6 +24,7 @@ class ArtistEntry extends ScreenEntry {
         params['url'] as String,
         getIt(),
         getIt(),
+        getIt(),
       ),
       child: ArtistScreen(
         name: params['name'] as String,

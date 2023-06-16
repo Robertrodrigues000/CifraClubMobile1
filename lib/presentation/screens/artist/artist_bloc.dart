@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/artist/use_cases/get_albums.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_artist_info.dart';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
@@ -12,20 +13,31 @@ class ArtistBloc extends Cubit<ArtistState> {
   final String artistUrl;
   final GetArtistInfo _getArtistInfo;
   final GetArtistSongs _getArtistSongs;
+  final GetAlbums _getAlbums;
   ArtistBloc(
     this.artistUrl,
     this._getArtistSongs,
     this._getArtistInfo,
+    this._getAlbums,
   ) : super(const ArtistState());
 
   CancelableOperation<Result<List<ArtistSong>, RequestError>>? currentRequest;
   final albuns = List.generate(10, (index) => index + 1);
 
+  Future<void> getAlbums() async {
+    final albunsResult = await _getAlbums(artistUrl);
+
+    emit(
+      state.copyWith(
+        albums: albunsResult.isSuccess ? albunsResult.get() : const [],
+      ),
+    );
+  }
+
   Future<void> getArtistInfo() async {
     final artistInfoResult = await _getArtistInfo(artistUrl);
     emit(
       state.copyWith(
-        albuns: albuns,
         artistInfo: artistInfoResult.isSuccess ? artistInfoResult.get() : null,
       ),
     );
@@ -43,7 +55,6 @@ class ArtistBloc extends Cubit<ArtistState> {
     emit(
       state.copyWith(
         songs: songsResult.isSuccess ? songsResult.get()! : const [],
-        albuns: albuns,
       ),
     );
   }

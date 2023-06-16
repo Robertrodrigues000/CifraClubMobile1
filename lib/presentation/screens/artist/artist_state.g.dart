@@ -11,7 +11,7 @@ abstract class _$ArtistStateCWProxy {
 
   ArtistState songs(List<ArtistSong> songs);
 
-  ArtistState albuns(List<int> albuns);
+  ArtistState albums(List<Album> albums);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ArtistState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -22,7 +22,7 @@ abstract class _$ArtistStateCWProxy {
   ArtistState call({
     ArtistInfo? artistInfo,
     List<ArtistSong>? songs,
-    List<int>? albuns,
+    List<Album>? albums,
   });
 }
 
@@ -39,7 +39,7 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
   ArtistState songs(List<ArtistSong> songs) => this(songs: songs);
 
   @override
-  ArtistState albuns(List<int> albuns) => this(albuns: albuns);
+  ArtistState albums(List<Album> albums) => this(albums: albums);
 
   @override
 
@@ -52,7 +52,7 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
   ArtistState call({
     Object? artistInfo = const $CopyWithPlaceholder(),
     Object? songs = const $CopyWithPlaceholder(),
-    Object? albuns = const $CopyWithPlaceholder(),
+    Object? albums = const $CopyWithPlaceholder(),
   }) {
     return ArtistState(
       artistInfo: artistInfo == const $CopyWithPlaceholder()
@@ -63,10 +63,10 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
           ? _value.songs
           // ignore: cast_nullable_to_non_nullable
           : songs as List<ArtistSong>,
-      albuns: albuns == const $CopyWithPlaceholder() || albuns == null
-          ? _value.albuns
+      albums: albums == const $CopyWithPlaceholder() || albums == null
+          ? _value.albums
           // ignore: cast_nullable_to_non_nullable
-          : albuns as List<int>,
+          : albums as List<Album>,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
+import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_image_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
@@ -20,11 +21,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
+import '../../../shared_mocks/domain/artist/models/album_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
 
 class _ArtistDataSourceMock extends Mock implements ArtistDataSource {}
 
 class _VideoLessonsDtoMock extends Mock implements VideoLessonsDto {}
+
+class _AlbumsDtoMock extends Mock implements AlbumsDto {}
 
 void main() {
   group("When getTopArtists() is Called", () {
@@ -230,21 +234,21 @@ void main() {
   });
 
   group("When `getArtistVideoLessons` is called", () {
-    const artistDns = "the-beatles";
+    const artistUrl = "the-beatles";
     test("and request is sucessful", () async {
       var artistDataSource = _ArtistDataSourceMock();
       final videoLessonsDto = _VideoLessonsDtoMock();
       final videoLesson = getFakeVideoLessons();
       when(videoLessonsDto.toDomain).thenReturn(videoLesson);
 
-      when(() => artistDataSource.getVideoLessons(dns: artistDns)).thenAnswer(
+      when(() => artistDataSource.getVideoLessons(artistUrl: artistUrl)).thenAnswer(
         (_) => SynchronousFuture(
           Ok([videoLessonsDto]),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final result = await repository.getArtistVideoLessons(artistDns);
+      final result = await repository.getArtistVideoLessons(artistUrl);
 
       verify(videoLessonsDto.toDomain).called(1);
       expect(result.isSuccess, isTrue);
@@ -255,18 +259,59 @@ void main() {
     test("and request fail", () async {
       var artistDataSource = _ArtistDataSourceMock();
 
-      when(() => artistDataSource.getVideoLessons(dns: artistDns)).thenAnswer(
+      when(() => artistDataSource.getVideoLessons(artistUrl: artistUrl)).thenAnswer(
         (_) => SynchronousFuture(
           Err(ServerError(statusCode: 404)),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final result = await repository.getArtistVideoLessons(artistDns);
+      final result = await repository.getArtistVideoLessons(artistUrl);
 
       expect(result.isFailure, isTrue);
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When getAlbums() is Called if ", () {
+    const artistUrl = "legiao-urbana";
+    test("Request is successful", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+      final album = getFakeAlbum();
+      final albumsDto = _AlbumsDtoMock();
+      when(albumsDto.toDomain).thenReturn([album]);
+
+      when(() => artistDataSource.getAlbums(artistUrl: artistUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          Ok(albumsDto),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final artistAlbums = await repository.getAlbums(artistUrl: artistUrl);
+
+      verify(albumsDto.toDomain).called(1);
+      expect(artistAlbums.isSuccess, true);
+      expect(artistAlbums.get()!.length, 1);
+      expect(artistAlbums.get()!.first, album);
+    });
+
+    test("Request failed", () async {
+      final artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.getAlbums(artistUrl: artistUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError()),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final artistAlbums = await repository.getAlbums(artistUrl: artistUrl);
+
+      expect(artistAlbums.isFailure, true);
+      expect(artistAlbums.getError().runtimeType, ServerError);
+      expect((artistAlbums.getError() as ServerError).statusCode, null);
     });
   });
 }

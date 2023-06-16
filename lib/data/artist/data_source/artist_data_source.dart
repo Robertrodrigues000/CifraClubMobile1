@@ -1,4 +1,5 @@
 import 'package:async/async.dart' hide Result;
+import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
@@ -65,12 +66,21 @@ class ArtistDataSource {
     return networkService.cancelableExecute(request: request);
   }
 
-  Future<Result<List<VideoLessonsDto>, RequestError>> getVideoLessons({required String dns}) {
+  Future<Result<List<VideoLessonsDto>, RequestError>> getVideoLessons({required String artistUrl}) {
     var request = NetworkRequest(
       type: NetworkRequestType.get,
-      path: "/v3/artist/$dns/video-lessons",
+      path: "/v3/artist/$artistUrl/video-lessons",
       parser: (data) =>
           (data as List<dynamic>).map((e) => VideoLessonsDto.fromJson(e as Map<String, dynamic>)).toList(),
+    );
+    return networkService.execute(request: request);
+  }
+
+  Future<Result<AlbumsDto, RequestError>> getAlbums({required String artistUrl}) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.get,
+      path: "/v3/artist/$artistUrl/albums",
+      parser: (data) => AlbumsDto.fromJson(data as Map<String, dynamic>),
     );
     return networkService.execute(request: request);
   }

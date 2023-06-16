@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../shared_mocks/domain/artist/models/album_mock.dart';
 import '../../../shared_mocks/domain/artist/models/artist_song_mock.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
@@ -19,6 +20,7 @@ void main() {
   setUpAll(() {
     bloc = _MockArtistBloc();
     when(bloc.getArtistSongs).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.getAlbums).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
@@ -54,5 +56,24 @@ void main() {
     );
 
     expect(find.byType(ArtistSongItem), findsNWidgets(2));
+  });
+
+  testWidgets("When state has albums, should display albuns list", (widgetTester) async {
+    final albums = [getFakeAlbum(), getFakeAlbum()];
+    bloc.mockStream(ArtistState(albums: albums));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<ArtistBloc>.value(
+          value: bloc,
+          child: const ArtistScreen(
+            name: "Legiao Urbana",
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byKey(Key(albums.first.albumUrl)), findsOneWidget);
+    expect(find.byKey(Key(albums.last.albumUrl)), findsOneWidget);
   });
 }
