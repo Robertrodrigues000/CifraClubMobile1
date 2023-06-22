@@ -22,14 +22,13 @@ class ArtistBloc extends Cubit<ArtistState> {
   ) : super(const ArtistState());
 
   CancelableOperation<Result<List<ArtistSong>, RequestError>>? currentRequest;
-  final albuns = List.generate(10, (index) => index + 1);
 
   Future<void> getAlbums() async {
-    final albunsResult = await _getAlbums(artistUrl);
+    final albumsResult = await _getAlbums(artistUrl);
 
     emit(
       state.copyWith(
-        albums: albunsResult.isSuccess ? albunsResult.get() : const [],
+        albums: albumsResult.isSuccess ? albumsResult.get()?.take(4).toList() : const [],
       ),
     );
   }
@@ -54,7 +53,7 @@ class ArtistBloc extends Cubit<ArtistState> {
 
     emit(
       state.copyWith(
-        songs: songsResult.isSuccess ? songsResult.get()! : const [],
+        songs: songsResult.isSuccess ? songsResult.get()?.take(10).toList() : const [],
       ),
     );
   }

@@ -6,15 +6,22 @@ class ArtistTitle extends StatelessWidget {
   const ArtistTitle({
     super.key,
     required this.title,
-    required this.verticalPadding,
+    this.top,
+    this.bottom,
   });
   final String title;
-  final double verticalPadding;
+  final double? top;
+  final double? bottom;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: verticalPadding),
+        padding: EdgeInsets.only(
+          left: context.appDimensionScheme.screenMargin,
+          right: context.appDimensionScheme.screenMargin,
+          top: top ?? 0,
+          bottom: bottom ?? 0,
+        ),
         child: Text(
           title,
           style: context.typography.title5,

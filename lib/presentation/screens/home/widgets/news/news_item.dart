@@ -2,10 +2,9 @@ import 'package:cifraclub/domain/home/models/news.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
+import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NewsItem extends StatelessWidget {
   const NewsItem({super.key, required this.news, required this.onTap});
@@ -37,28 +36,11 @@ class NewsItem extends StatelessWidget {
                   ),
                 ),
                 // coverage:ignore-end
-                placeholder: Container(
+                placeholder: const DefaultPlaceholder(
                   height: 80,
                   width: 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: CosmosColors.grey90,
-                  ),
-                  child: Center(
-                    child: Container(
-                      height: 56,
-                      width: 56,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: CosmosColors.white,
-                      ),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          AppSvgs.newsPlaceholder,
-                        ),
-                      ),
-                    ),
-                  ),
+                  svgIcon: AppSvgs.newsPlaceholder,
+                  isLarge: true,
                 ),
               ),
             ),

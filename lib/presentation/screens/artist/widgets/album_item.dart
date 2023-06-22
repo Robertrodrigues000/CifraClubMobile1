@@ -1,30 +1,27 @@
-import 'package:cifraclub/domain/home/models/video_lesson.dart';
+import 'package:cifraclub/domain/artist/models/album.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/extensions/string.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
 import 'package:cifraclub/presentation/widgets/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
-class VideoLessonItem extends StatefulWidget {
-  final VideoLesson videolesson;
-  final double width;
-  final double height;
+class AlbumItem extends StatefulWidget {
+  final Album album;
   final VoidCallback onTap;
-  const VideoLessonItem({
+  final double size;
+  const AlbumItem({
     super.key,
-    required this.videolesson,
-    required this.width,
-    required this.height,
+    required this.album,
     required this.onTap,
+    required this.size,
   });
 
   @override
-  State<VideoLessonItem> createState() => _VideoLessonItemState();
+  State<AlbumItem> createState() => _AlbumItemState();
 }
 
-class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProviderStateMixin {
+class _AlbumItemState extends State<AlbumItem> with SingleTickerProviderStateMixin {
   bool isPressing = false;
   final animationDurationMs = const Duration(milliseconds: 200);
   late final AnimationController fadeAnimationController = AnimationController(
@@ -66,20 +63,24 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
         fadeAnimationController.forward();
       },
       onTapUp: (details) {
+        // coverage:ignore-start
         isPressing = false;
         if (fadeAnimationController.isCompleted) {
           fadeAnimationController.reverse();
         } else {
           fadeAnimationController.value = 1;
         }
+        // coverage:ignore-end
         widget.onTap();
       },
+      // coverage:ignore-start
       onTapCancel: () {
         isPressing = false;
         if (fadeAnimationController.isCompleted) {
           fadeAnimationController.reverse();
         }
       },
+      // coverage:ignore-end
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,11 +102,11 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
             },
             child: RemoteImage(
               // coverage:ignore-start
-              imageUrl: widget.videolesson.images.medium,
+              imageUrl: widget.album.image?.image,
               imageBuilder: (context, imageProvider) {
                 return Container(
-                  width: widget.width,
-                  height: widget.height,
+                  width: widget.size,
+                  height: widget.size,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
@@ -117,9 +118,9 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
               },
               // coverage:ignore-end
               placeholder: DefaultPlaceholder(
-                height: widget.height,
-                width: widget.width,
-                svgIcon: AppSvgs.videoPlaceholder,
+                height: widget.size,
+                width: widget.size,
+                svgIcon: AppSvgs.albumPlaceholder,
                 isLarge: true,
               ),
             ),
@@ -133,27 +134,19 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
                   Text(
-                    widget.videolesson.title,
-                    style: styles.subtitle4,
+                    widget.album.title,
+                    style: styles.subtitle3,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                    maxLines: 1,
                   ),
-                  const SizedBox(height: 4),
-                  if (widget.videolesson.artist != null)
-                    Text(
-                      key: const Key("videolesson artist name"),
-                      widget.videolesson.artist!.name,
-                      style: styles.subtitle4.copyWith(
-                        color: context.colors.primary,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
                   const SizedBox(height: 2),
                   Text(
-                    widget.videolesson.version?.label.formatString() ?? "",
+                    key: const Key("album artist name"),
+                    widget.album.artistName,
                     style: styles.subtitle5,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],

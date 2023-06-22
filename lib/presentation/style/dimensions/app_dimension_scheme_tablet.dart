@@ -44,4 +44,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   //Error widget space between text and button
   errorWidgetButtonSpace: 32,
   errorWidgetButtonWidth: null,
+
+  //Artist
+  albumsPerRow: 4,
 );

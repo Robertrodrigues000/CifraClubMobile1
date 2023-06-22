@@ -144,6 +144,8 @@
     "privateListErrorButtonText": "Voltar para listas",
     "loggedOutListErrorDescription": "Faça login para ter acesso as suas listas",
     "loggedOutListErrorButtonText": "Fazer login",
+    "artistMoreSongs":"Mostrar mais músicas",
+    "moreAlbums":"Mostrar mais álbuns",
     "tabTone": "・Tom: {tone}",
     "@tabTone": {
         "placeholders": {

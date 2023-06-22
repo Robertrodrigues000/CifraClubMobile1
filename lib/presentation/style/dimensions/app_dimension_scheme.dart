@@ -36,7 +36,7 @@ class AppDimensionScheme {
   final double topPaddingCounter;
   final double errorWidgetButtonSpace;
   final double? errorWidgetButtonWidth;
-
+  final int albumsPerRow;
   const AppDimensionScheme({
     required this.appBarHeight,
     required this.topCellRankingWidth,
@@ -68,5 +68,6 @@ class AppDimensionScheme {
     required this.topPaddingCounter,
     required this.errorWidgetButtonSpace,
     required this.errorWidgetButtonWidth,
+    required this.albumsPerRow,
   });
 }

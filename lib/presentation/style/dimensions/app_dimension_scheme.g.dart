@@ -67,6 +67,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme errorWidgetButtonWidth(double? errorWidgetButtonWidth);
 
+  AppDimensionScheme albumsPerRow(int albumsPerRow);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -104,6 +106,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? topPaddingCounter,
     double? errorWidgetButtonSpace,
     double? errorWidgetButtonWidth,
+    int? albumsPerRow,
   });
 }
 
@@ -220,6 +223,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(errorWidgetButtonWidth: errorWidgetButtonWidth);
 
   @override
+  AppDimensionScheme albumsPerRow(int albumsPerRow) => this(albumsPerRow: albumsPerRow);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -258,6 +264,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? topPaddingCounter = const $CopyWithPlaceholder(),
     Object? errorWidgetButtonSpace = const $CopyWithPlaceholder(),
     Object? errorWidgetButtonWidth = const $CopyWithPlaceholder(),
+    Object? albumsPerRow = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -387,6 +394,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.errorWidgetButtonWidth
           // ignore: cast_nullable_to_non_nullable
           : errorWidgetButtonWidth as double?,
+      albumsPerRow: albumsPerRow == const $CopyWithPlaceholder() || albumsPerRow == null
+          ? _value.albumsPerRow
+          // ignore: cast_nullable_to_non_nullable
+          : albumsPerRow as int,
     );
   }
 }

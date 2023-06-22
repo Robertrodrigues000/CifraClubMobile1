@@ -3,8 +3,11 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
+import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
+import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
+import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,7 +70,8 @@ class _ArtistScreenState extends State<ArtistScreen> {
             slivers: [
               ArtistTitle(
                 title: context.text.mostAccessed,
-                verticalPadding: context.appDimensionScheme.screenMargin,
+                top: context.appDimensionScheme.screenMargin,
+                bottom: context.appDimensionScheme.screenMargin,
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
@@ -82,19 +86,43 @@ class _ArtistScreenState extends State<ArtistScreen> {
                   ),
                 ),
               ),
-              ArtistTitle(
-                title: context.text.albums,
-                verticalPadding: context.appDimensionScheme.screenMargin,
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: state.albums.length,
-                  (context, index) => ListTile(
-                    key: Key(state.albums[index].albumUrl),
-                    title: Text(state.albums[index].title),
+              SliverToBoxAdapter(
+                child: CifraButton(
+                  type: ButtonType.outline,
+                  // coverage:ignore-start
+                  onPressed: () {},
+                  // coverage:ignore-end
+                  padding: EdgeInsets.only(
+                    left: context.appDimensionScheme.screenMargin,
+                    right: context.appDimensionScheme.screenMargin,
+                    top: 16,
+                    bottom: 32,
                   ),
+                  child: Text(context.text.artistMoreSongs),
                 ),
               ),
+              if (state.albums.isNotEmpty) ...[
+                ArtistTitle(
+                  title: context.text.albums,
+                  bottom: context.appDimensionScheme.screenMargin,
+                ),
+                Albums(albums: state.albums),
+                SliverToBoxAdapter(
+                  child: CifraButton(
+                    type: ButtonType.outline,
+                    // coverage:ignore-start
+                    onPressed: () {},
+                    // coverage:ignore-end
+                    padding: EdgeInsets.only(
+                      left: context.appDimensionScheme.screenMargin,
+                      right: context.appDimensionScheme.screenMargin,
+                      top: context.appDimensionScheme.screenMargin,
+                      bottom: 32,
+                    ),
+                    child: Text(context.text.moreAlbums),
+                  ),
+                )
+              ],
             ],
           ),
         );

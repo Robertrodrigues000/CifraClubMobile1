@@ -34,7 +34,7 @@ class AppSvgs {
 
   static const genresInactive = "assets/images/genres_inactive.svg";
   static const videoPlaceholder = "assets/images/video_placeholder.svg";
-
+  static const albumPlaceholder = "assets/images/album_placeholder.svg";
   static const addIcon = "assets/images/add_icon.svg";
   static const dragIcon = "assets/images/drag_icon.svg";
 

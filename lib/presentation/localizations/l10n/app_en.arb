@@ -199,6 +199,8 @@
     "loggedOutListErrorTitle": "Oops",
     "loggedOutListErrorDescription": "Sign in to access your lists",
     "loggedOutListErrorButtonText": "Log in",
+    "artistMoreSongs":"Show more songs",
+    "moreAlbums":"Show more albums",
     "tabTone": "・Tone: {tone}",
     "@tabTone": {
         "placeholders": {
