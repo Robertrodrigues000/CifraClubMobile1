@@ -36,6 +36,9 @@ class AppDimensionScheme {
   final double topPaddingCounter;
   final double errorWidgetButtonSpace;
   final double? errorWidgetButtonWidth;
+  final double artistHeaderHeight;
+  final double appBarLeadingWidth;
+
   final int albumsPerRow;
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -68,6 +71,8 @@ class AppDimensionScheme {
     required this.topPaddingCounter,
     required this.errorWidgetButtonSpace,
     required this.errorWidgetButtonWidth,
+    required this.artistHeaderHeight,
+    required this.appBarLeadingWidth,
     required this.albumsPerRow,
   });
 }

@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:cifraclub/data/artist/models/artist_head_image_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_image_dto.dart';
 import 'package:cifraclub/data/genre/models/genre_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist_info.dart';
@@ -27,7 +28,7 @@ class ArtistInfoDto {
   final ArtistImageDto? imagesDto;
 
   @JsonKey(name: "headImage")
-  final ArtistImageDto? headImageDto;
+  final ArtistHeadImageDto? headImageDto;
 
   const ArtistInfoDto({
     required this.id,

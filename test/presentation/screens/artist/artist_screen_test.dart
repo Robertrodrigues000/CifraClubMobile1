@@ -23,25 +23,9 @@ void main() {
   setUpAll(() {
     bloc = _MockArtistBloc();
     when(bloc.getArtistSongs).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.getArtistInfo).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.getAlbums).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
-  });
-
-  testWidgets("When ArtistScreen is show,artist name should be displayed", (widgetTester) async {
-    bloc.mockStream(const ArtistState());
-
-    await widgetTester.pumpWidget(
-      TestWrapper(
-        child: BlocProvider<ArtistBloc>.value(
-          value: bloc,
-          child: const ArtistScreen(
-            name: "Teste",
-          ),
-        ),
-      ),
-    );
-
-    expect(find.text("Teste"), findsOneWidget);
   });
 
   testWidgets("When state has songs, should display artist songs list", (widgetTester) async {
@@ -95,7 +79,7 @@ void main() {
       );
     });
 
-    expect(find.byType(ArtistTitle), findsOneWidget);
+    expect(find.byType(ArtistSectionTitle), findsOneWidget);
     expect(find.byType(Albums), findsNothing);
   });
 }

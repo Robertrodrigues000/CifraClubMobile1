@@ -11,6 +11,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   widthBottomSheet: double.infinity,
   appBarMargin: 4,
   rightPaddingCard: 4,
+  appBarLeadingWidth: 56,
 
   // Home
   topCifrasItemsPerRow: 1,
@@ -46,5 +47,6 @@ const appDimensionSchemePhone = AppDimensionScheme(
   errorWidgetButtonWidth: double.infinity,
 
   //Artist
+  artistHeaderHeight: 180,
   albumsPerRow: 2,
 );

@@ -7,6 +7,8 @@ part of 'artist_state.dart';
 // **************************************************************************
 
 abstract class _$ArtistStateCWProxy {
+  ArtistState isLoading(bool isLoading);
+
   ArtistState artistInfo(ArtistInfo? artistInfo);
 
   ArtistState songs(List<ArtistSong> songs);
@@ -20,6 +22,7 @@ abstract class _$ArtistStateCWProxy {
   /// ArtistState(...).copyWith(id: 12, name: "My name")
   /// ````
   ArtistState call({
+    bool? isLoading,
     ArtistInfo? artistInfo,
     List<ArtistSong>? songs,
     List<Album>? albums,
@@ -31,6 +34,9 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
   const _$ArtistStateCWProxyImpl(this._value);
 
   final ArtistState _value;
+
+  @override
+  ArtistState isLoading(bool isLoading) => this(isLoading: isLoading);
 
   @override
   ArtistState artistInfo(ArtistInfo? artistInfo) => this(artistInfo: artistInfo);
@@ -50,11 +56,16 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
   /// ArtistState(...).copyWith(id: 12, name: "My name")
   /// ````
   ArtistState call({
+    Object? isLoading = const $CopyWithPlaceholder(),
     Object? artistInfo = const $CopyWithPlaceholder(),
     Object? songs = const $CopyWithPlaceholder(),
     Object? albums = const $CopyWithPlaceholder(),
   }) {
     return ArtistState(
+      isLoading: isLoading == const $CopyWithPlaceholder() || isLoading == null
+          ? _value.isLoading
+          // ignore: cast_nullable_to_non_nullable
+          : isLoading as bool,
       artistInfo: artistInfo == const $CopyWithPlaceholder()
           ? _value.artistInfo
           // ignore: cast_nullable_to_non_nullable

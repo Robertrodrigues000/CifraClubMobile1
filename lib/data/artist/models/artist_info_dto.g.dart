@@ -14,5 +14,5 @@ ArtistInfoDto _$ArtistInfoDtoFromJson(Map<String, dynamic> json) => ArtistInfoDt
       genre: GenreDto.fromJson(json['genre'] as Map<String, dynamic>),
       imagesDto: json['image'] == null ? null : ArtistImageDto.fromJson(json['image'] as Map<String, dynamic>),
       headImageDto:
-          json['headImage'] == null ? null : ArtistImageDto.fromJson(json['headImage'] as Map<String, dynamic>),
+          json['headImage'] == null ? null : ArtistHeadImageDto.fromJson(json['headImage'] as Map<String, dynamic>),
     );

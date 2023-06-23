@@ -67,6 +67,10 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme errorWidgetButtonWidth(double? errorWidgetButtonWidth);
 
+  AppDimensionScheme artistHeaderHeight(double artistHeaderHeight);
+
+  AppDimensionScheme appBarLeadingWidth(double appBarLeadingWidth);
+
   AppDimensionScheme albumsPerRow(int albumsPerRow);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -106,6 +110,8 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? topPaddingCounter,
     double? errorWidgetButtonSpace,
     double? errorWidgetButtonWidth,
+    double? artistHeaderHeight,
+    double? appBarLeadingWidth,
     int? albumsPerRow,
   });
 }
@@ -223,6 +229,12 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(errorWidgetButtonWidth: errorWidgetButtonWidth);
 
   @override
+  AppDimensionScheme artistHeaderHeight(double artistHeaderHeight) => this(artistHeaderHeight: artistHeaderHeight);
+
+  @override
+  AppDimensionScheme appBarLeadingWidth(double appBarLeadingWidth) => this(appBarLeadingWidth: appBarLeadingWidth);
+
+  @override
   AppDimensionScheme albumsPerRow(int albumsPerRow) => this(albumsPerRow: albumsPerRow);
 
   @override
@@ -264,6 +276,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? topPaddingCounter = const $CopyWithPlaceholder(),
     Object? errorWidgetButtonSpace = const $CopyWithPlaceholder(),
     Object? errorWidgetButtonWidth = const $CopyWithPlaceholder(),
+    Object? artistHeaderHeight = const $CopyWithPlaceholder(),
+    Object? appBarLeadingWidth = const $CopyWithPlaceholder(),
     Object? albumsPerRow = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
@@ -394,6 +408,14 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.errorWidgetButtonWidth
           // ignore: cast_nullable_to_non_nullable
           : errorWidgetButtonWidth as double?,
+      artistHeaderHeight: artistHeaderHeight == const $CopyWithPlaceholder() || artistHeaderHeight == null
+          ? _value.artistHeaderHeight
+          // ignore: cast_nullable_to_non_nullable
+          : artistHeaderHeight as double,
+      appBarLeadingWidth: appBarLeadingWidth == const $CopyWithPlaceholder() || appBarLeadingWidth == null
+          ? _value.appBarLeadingWidth
+          // ignore: cast_nullable_to_non_nullable
+          : appBarLeadingWidth as double,
       albumsPerRow: albumsPerRow == const $CopyWithPlaceholder() || albumsPerRow == null
           ? _value.albumsPerRow
           // ignore: cast_nullable_to_non_nullable

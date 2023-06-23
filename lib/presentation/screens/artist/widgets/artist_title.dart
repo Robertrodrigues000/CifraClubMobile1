@@ -2,8 +2,8 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
-class ArtistTitle extends StatelessWidget {
-  const ArtistTitle({
+class ArtistSectionTitle extends StatelessWidget {
+  const ArtistSectionTitle({
     super.key,
     required this.title,
     this.top,

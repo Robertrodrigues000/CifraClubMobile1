@@ -77,6 +77,7 @@ void main() {
         build: () => getArtistBloc(getArtistInfo: getArtistInfo),
         act: (bloc) => bloc.getArtistInfo(),
         expect: () => [
+          isA<ArtistState>().having((state) => state.isLoading, "isLoading", true),
           isA<ArtistState>().having((state) => state.artistInfo, "artist info", artistInfo),
         ],
       );

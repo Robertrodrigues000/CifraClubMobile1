@@ -1,4 +1,5 @@
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_bloc.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_state/top_artists_state.dart';
 import 'package:cifraclub/presentation/screens/top_artists/widgets/top_artists.dart';
@@ -7,6 +8,7 @@ import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nav/nav.dart';
 
 class TopArtistsScreen extends StatefulWidget {
   const TopArtistsScreen(this._genreBottomSheet, {super.key});
@@ -72,8 +74,14 @@ class _TopArtistsScreenState extends State<TopArtistsScreen> {
                   } else {
                     return TopArtists(
                       topArtists: state.topArtists,
-                      onTap: (artist) {},
-                      //TODO navegar para tela de cifra,
+                      // coverage:ignore-start
+                      onTap: (artist) {
+                        Nav.of(context).push(
+                          screenName: ArtistEntry.name,
+                          params: {'url': artist.url, 'name': artist.name},
+                        );
+                        // coverage:ignore-end
+                      },
                       selectedGenre: state.selectedGenre,
                     );
                   }

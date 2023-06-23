@@ -11,6 +11,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   widthBottomSheet: 532,
   appBarMargin: 12,
   rightPaddingCard: 12,
+  appBarLeadingWidth: 64,
 
   // Home
   topCifrasItemsPerRow: 2,
@@ -46,5 +47,6 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   errorWidgetButtonWidth: null,
 
   //Artist
+  artistHeaderHeight: 288,
   albumsPerRow: 4,
 );

@@ -5,8 +5,8 @@ class AppWebp {
   static const bassBadge = "assets/images/bass_badge.webp";
   static const guitarBadge = "assets/images/guitar_badge.webp";
   static const cavacoBadge = "assets/images/cavaco_badge.webp";
-  static const highlightPlaceholder = "assets/images/highlight_placeholder.webp";
-
+  static const largePlaceholder = "assets/images/large_placeholder.webp";
+  static const artistPlaceholder = "assets/images/artist_placeholder.webp";
   static const appLetras = "assets/images/app_letras.webp";
   static const appMetronome = "assets/images/app_metronomo.webp";
   static const appPalco = "assets/images/app_palco.webp";

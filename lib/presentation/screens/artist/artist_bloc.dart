@@ -34,10 +34,12 @@ class ArtistBloc extends Cubit<ArtistState> {
   }
 
   Future<void> getArtistInfo() async {
+    emit(state.copyWith(isLoading: true));
     final artistInfoResult = await _getArtistInfo(artistUrl);
     emit(
       state.copyWith(
         artistInfo: artistInfoResult.isSuccess ? artistInfoResult.get() : null,
+        isLoading: false,
       ),
     );
   }

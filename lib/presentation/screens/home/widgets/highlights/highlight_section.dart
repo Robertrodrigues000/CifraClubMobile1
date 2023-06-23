@@ -27,7 +27,7 @@ class HighlightSection extends StatelessWidget {
         width: size,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
-            image: const DecorationImage(image: AssetImage(AppWebp.highlightPlaceholder), fit: BoxFit.cover)),
+            image: const DecorationImage(image: AssetImage(AppWebp.largePlaceholder), fit: BoxFit.cover)),
       ),
       // coverage:ignore-start
       imageBuilder: (context, imageProvider) => HighlightCard(

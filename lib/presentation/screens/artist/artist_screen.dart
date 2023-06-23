@@ -1,18 +1,15 @@
 // coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/artist/widgets/artist_header.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
+import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
 import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
 import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
-import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nav/nav.dart';
 
 class ArtistScreen extends StatefulWidget {
   const ArtistScreen({super.key, required this.name});
@@ -23,7 +20,7 @@ class ArtistScreen extends StatefulWidget {
 
 class _ArtistScreenState extends State<ArtistScreen> {
   late ArtistBloc _bloc;
-
+  final _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -34,41 +31,31 @@ class _ArtistScreenState extends State<ArtistScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _bloc.getArtistSongs();
+    _bloc.getArtistInfo();
     _bloc.getAlbums();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ArtistBloc, ArtistState>(
+      bloc: _bloc,
       builder: (context, state) {
         return Scaffold(
-          appBar: CosmosAppBar(
-            title: Text(widget.name, style: context.typography.title3),
-            toolbarHeight: context.appDimensionScheme.appBarHeight,
-            automaticallyImplyLeading: false,
-            //TODO: implementar title spacing no cosmos e depois adicionar aqui
-            leading: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(width: context.appDimensionScheme.appBarMargin),
-                InkWell(
-                  onTap: () => Nav.of(context).pop(),
-                  child: SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: SvgPicture.asset(
-                      AppSvgs.backArrowIcon,
-                      fit: BoxFit.none,
-                      color: context.colors.textPrimary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           body: CustomScrollView(
+            controller: _scrollController,
             slivers: [
-              ArtistTitle(
+              ArtistHeader(
+                scrollController: _scrollController,
+                maxOffset: context.appDimensionScheme.artistHeaderHeight - 56,
+                isLoading: _bloc.state.isLoading,
+                onFavorite: () {},
+                onShare: () {},
+                genreName: state.artistInfo?.genre.name ?? "",
+                artistName: state.artistInfo?.name ?? "",
+                image: state.artistInfo?.headImageDto?.image ?? state.artistInfo?.imagesDto?.size250 ?? "",
+                color: state.artistInfo?.headImageDto?.color ?? state.artistInfo?.imagesDto?.color ?? "",
+              ),
+              ArtistSectionTitle(
                 title: context.text.mostAccessed,
                 top: context.appDimensionScheme.screenMargin,
                 bottom: context.appDimensionScheme.screenMargin,
@@ -102,7 +89,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                 ),
               ),
               if (state.albums.isNotEmpty) ...[
-                ArtistTitle(
+                ArtistSectionTitle(
                   title: context.text.albums,
                   bottom: context.appDimensionScheme.screenMargin,
                 ),
@@ -132,6 +119,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
 
   @override
   void dispose() {
+    _scrollController.dispose();
     super.dispose();
   }
 }
