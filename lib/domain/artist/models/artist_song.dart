@@ -9,7 +9,7 @@ class ArtistSong extends Equatable {
   final String url;
   final bool verified;
   final int videoLessons;
-  final List<int> videoLessonsInstruments;
+  final List<int>? videoLessonsInstruments;
 
   const ArtistSong(
       {required this.id,
@@ -20,7 +20,7 @@ class ArtistSong extends Equatable {
       required this.url,
       required this.verified,
       required this.videoLessons,
-      required this.videoLessonsInstruments});
+      this.videoLessonsInstruments});
 
   @override
   List<Object?> get props => [id, lyricsId, url, name];

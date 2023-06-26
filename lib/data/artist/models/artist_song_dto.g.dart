@@ -21,5 +21,5 @@ ArtistSongDto _$ArtistSongDtoFromJson(Map<String, dynamic> json) => ArtistSongDt
       url: json['url'] as String,
       verified: json['verified'] as bool,
       videoLessons: json['videoLessons'] as int,
-      videoLessonsInstruments: (json['videoLessonsInstruments'] as List<dynamic>).map((e) => e as int).toList(),
+      videoLessonsInstruments: (json['videoLessonsInstruments'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );

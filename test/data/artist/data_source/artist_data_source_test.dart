@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
+import 'package:cifraclub/data/artist/models/album_detail_dto.dart';
 import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
@@ -337,6 +338,63 @@ void main() {
       final artistDataSource = ArtistDataSource(networkService: networkService);
       final result = await artistDataSource.getAlbums(
         artistUrl: "legiao-urbana",
+      );
+
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When getAlbumDetail is called", () {
+    test("When request is successful", () async {
+      const artistUrl = "bruno-e-marrone";
+      const albumUrl = "studio-bar-ao-vivo-2019";
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/artist/data_source/artist_album_detail_mock_json_response.json").readAsString();
+      await networkService.mock<AlbumDetailDto>(response: mockResponse);
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getAlbumDetail(
+        artistUrl: artistUrl,
+        albumUrl: albumUrl,
+      );
+
+      final request = verify(() => networkService.execute<AlbumDetailDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<AlbumDetailDto>;
+      expect(request.path, "/v3/album/$artistUrl/$albumUrl");
+      expect(request.type, NetworkRequestType.get);
+
+      expect(result.isSuccess, true);
+      final albumDetail = result.get()!;
+
+      expect(albumDetail.id, 70487);
+      expect(albumDetail.discs.length, 1);
+      expect(albumDetail.albumUrl, albumUrl);
+      expect(albumDetail.artistUrl, artistUrl);
+      expect(albumDetail.title, "Studio Bar (Ao Vivo)");
+      expect(albumDetail.artistName, "Bruno e Marrone");
+      expect(albumDetail.discs.first.songs.first.id, 471241);
+      expect(albumDetail.discs.first.songs.first.name, "Gostinho de Cerveja");
+    });
+
+    test("When request fails", () async {
+      const artistUrl = "bruno-e-marrone";
+      const albumUrl = "studio-bar-ao-vivo-2019";
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<AlbumDetailDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
+        ),
+      );
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getAlbumDetail(
+        artistUrl: artistUrl,
+        albumUrl: albumUrl,
       );
 
       expect(result.isFailure, true);

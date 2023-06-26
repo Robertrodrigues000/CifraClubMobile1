@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
+import 'package:cifraclub/data/artist/models/album_detail_dto.dart';
 import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_image_dto.dart';
@@ -21,6 +22,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
+import '../../../shared_mocks/domain/artist/models/album_detail_mock.dart';
 import '../../../shared_mocks/domain/artist/models/album_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
 
@@ -29,6 +31,8 @@ class _ArtistDataSourceMock extends Mock implements ArtistDataSource {}
 class _VideoLessonsDtoMock extends Mock implements VideoLessonsDto {}
 
 class _AlbumsDtoMock extends Mock implements AlbumsDto {}
+
+class _AlbumDetailDtoMock extends Mock implements AlbumDetailDto {}
 
 void main() {
   group("When getTopArtists() is Called", () {
@@ -308,6 +312,48 @@ void main() {
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
       final artistAlbums = await repository.getAlbums(artistUrl: artistUrl);
+
+      expect(artistAlbums.isFailure, true);
+      expect(artistAlbums.getError().runtimeType, ServerError);
+      expect((artistAlbums.getError() as ServerError).statusCode, null);
+    });
+  });
+
+  group("When getAlbumDetail() is Called if ", () {
+    const artistUrl = "bruno-e-marrone";
+    const albumUrl = "studio-bar-ao-vivo-2019";
+    test("Request is successful", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+      final albumDetail = getFakeAlbumDetail();
+      final albumDetailDto = _AlbumDetailDtoMock();
+      when(albumDetailDto.toDomain).thenReturn(albumDetail);
+
+      when(() => artistDataSource.getAlbumDetail(artistUrl: artistUrl, albumUrl: albumUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          Ok(albumDetailDto),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final albumDetailResult = await repository.getAlbumDetail(artistUrl: artistUrl, albumUrl: albumUrl);
+
+      verify(albumDetailDto.toDomain).called(1);
+      expect(albumDetailResult.isSuccess, true);
+
+      expect(albumDetailResult.get()!, albumDetail);
+    });
+
+    test("Request failed", () async {
+      final artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.getAlbumDetail(artistUrl: artistUrl, albumUrl: albumUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError()),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final artistAlbums = await repository.getAlbumDetail(artistUrl: artistUrl, albumUrl: albumUrl);
 
       expect(artistAlbums.isFailure, true);
       expect(artistAlbums.getError().runtimeType, ServerError);

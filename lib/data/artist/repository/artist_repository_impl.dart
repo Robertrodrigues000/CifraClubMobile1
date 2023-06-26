@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/artist/models/album.dart';
+import 'package:cifraclub/domain/artist/models/album_detail.dart';
 import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
@@ -50,4 +51,13 @@ class ArtistRepositoryImpl extends ArtistRepository {
   @override
   Future<Result<List<Album>, RequestError>> getAlbums({required String artistUrl}) async =>
       (await artistDataSource.getAlbums(artistUrl: artistUrl)).map((value) => value.toDomain());
+
+  @override
+  Future<Result<AlbumDetail, RequestError>> getAlbumDetail(
+          {required String artistUrl, required String albumUrl}) async =>
+      (await artistDataSource.getAlbumDetail(
+        artistUrl: artistUrl,
+        albumUrl: albumUrl,
+      ))
+          .map((value) => value.toDomain());
 }

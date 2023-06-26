@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/artist/models/album.dart';
+import 'package:cifraclub/domain/artist/models/album_detail.dart';
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
@@ -25,4 +26,6 @@ abstract class ArtistRepository {
   Future<Result<List<VideoLesson>, RequestError>> getArtistVideoLessons(String artistUrl);
 
   Future<Result<List<Album>, RequestError>> getAlbums({required String artistUrl});
+
+  Future<Result<AlbumDetail, RequestError>> getAlbumDetail({required String artistUrl, required String albumUrl});
 }

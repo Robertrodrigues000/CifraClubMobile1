@@ -1,4 +1,5 @@
 import 'package:async/async.dart' hide Result;
+import 'package:cifraclub/data/artist/models/album_detail_dto.dart';
 import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
@@ -81,6 +82,15 @@ class ArtistDataSource {
       type: NetworkRequestType.get,
       path: "/v3/artist/$artistUrl/albums",
       parser: (data) => AlbumsDto.fromJson(data as Map<String, dynamic>),
+    );
+    return networkService.execute(request: request);
+  }
+
+  Future<Result<AlbumDetailDto, RequestError>> getAlbumDetail({required String artistUrl, required albumUrl}) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.get,
+      path: "/v3/album/$artistUrl/$albumUrl",
+      parser: (data) => AlbumDetailDto.fromJson(data as Map<String, dynamic>),
     );
     return networkService.execute(request: request);
   }

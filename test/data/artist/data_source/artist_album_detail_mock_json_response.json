@@ -1,0 +1,48 @@
+{
+    "id": 70487,
+    "title": "Studio Bar (Ao Vivo)",
+    "url": "studio-bar-ao-vivo-2019",
+    "artistName": "Bruno e Marrone",
+    "dns": "bruno-e-marrone",
+    "releaseYear": 2019,
+    "totalSongsRelated": 10,
+    "totalSongs": 10,
+    "image": {
+        "image": "https://akamai.sscdn.co/uploadfile/letras/albuns/2/d/c/6/704871552326355.jpg",
+        "imageHQ": "https://akamai.sscdn.co/uploadfile/letras/albuns_high/70487_20190312080103.jpg",
+        "color": "#C43A3A",
+        "thumb": "https://akamai.sscdn.co/uploadfile/letras/albuns/2/d/c/6/704871552326355-tb_180.jpg",
+        "width": 500,
+        "height": 500
+    },
+    "recordCompany": "Universal Music",
+    "discs": [
+        {
+            "songs": [
+                {
+                    "id": 471241,
+                    "name": "Gostinho de Cerveja",
+                    "disk": 1,
+                    "order": 1,
+                    "song": {
+                        "id": 471241,
+                        "lyricsId": 3124753,
+                        "name": "Gostinho de Cerveja",
+                        "url": "gostinho-de-cerveja",
+                        "guitar": 1,
+                        "bass": 0,
+                        "harmonica": 0,
+                        "drums": 0,
+                        "lyrics": 1,
+                        "guitarpro": 0,
+                        "sheet": 0,
+                        "verified": false,
+                        "hits": 8013,
+                        "videoLessons": 0,
+                        "videoLessonsInstruments": null
+                    }
+                }
+            ]
+        }
+    ]
+}

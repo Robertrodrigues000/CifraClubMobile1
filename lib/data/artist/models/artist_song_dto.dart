@@ -18,7 +18,7 @@ class ArtistSongDto {
   final String url;
   final bool verified;
   final int videoLessons;
-  final List<int> videoLessonsInstruments;
+  final List<int>? videoLessonsInstruments;
 
   const ArtistSongDto(
       {required this.bass,
@@ -35,7 +35,7 @@ class ArtistSongDto {
       required this.url,
       required this.verified,
       required this.videoLessons,
-      required this.videoLessonsInstruments});
+      this.videoLessonsInstruments});
 
   ArtistSong toDomain() => ArtistSong(
         id: id,
