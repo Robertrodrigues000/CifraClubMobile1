@@ -2,7 +2,7 @@ import 'package:cifraclub/domain/artist/models/album.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
-import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 

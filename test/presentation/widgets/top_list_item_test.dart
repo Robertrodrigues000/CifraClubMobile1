@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("When tapping an item, show call onTap", (widgetTester) async {
+  testWidgets("When tapping an item, should call onTap", (widgetTester) async {
     final completer = Completer();
     await widgetTester.pumpWidget(TestWrapper(
       child: TopListItem(
@@ -22,7 +22,7 @@ void main() {
     expect(completer.isCompleted, isTrue);
   });
 
-  testWidgets("when trailing is not nul should show trailing", (widgetTester) async {
+  testWidgets("when trailing is not null should show trailing", (widgetTester) async {
     await widgetTester.pumpWidget(TestWrapper(
       child: TopListItem(
         key: const Key('artista'),

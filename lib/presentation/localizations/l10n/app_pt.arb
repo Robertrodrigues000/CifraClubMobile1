@@ -16,7 +16,7 @@
     "genreHeaderAll": "Todos",
     "topSongs": "Top Cifras",
     "genres": "Estilos Musicais",
-    "sendNewCifra": "Enviar Cifra",
+    "sendNewVersion": "Enviar Cifra",
     "cifraClubStore": "Cifra Club Store",
     "manageSubscription": "Gerenciar Assinatura",
     "cifraClubPro": "Cifra Club Pro",
@@ -76,21 +76,21 @@
     "downloadAcademy": "Baixar o app Cifra Club Academy",
     "openAcademy": "Abrir o app Cifra Club Academy",
     "portugueseOnly": "",
-    "cifras":"cifras",
+    "versions":"cifras",
     "increaseLimit": "Aumentar limite",
     "emptyLists":"Você ainda não criou uma lista",
     "onList": "Na lista",
     "gotIt": "Entendi",
     "notNow": "Agora não",
     "testPro": "Testar 7 dias grátis!",
-    "tabsLimitProTitle": "Você atingiu o limite de {limit} cifras nesta lista :\uFEFF(",
-    "tabsLimitProDescription1": "Cada lista suporta até ",
-    "tabsLimitProDescription2": "cifras. Para inserir mais, delete algumas das existentes ou adicione em uma outra lista.",
+    "versionsLimitProTitle": "Você atingiu o limite de {limit} cifras nesta lista :\uFEFF(",
+    "versionsLimitProDescription1": "Cada lista suporta até ",
+    "versionsLimitProDescription2": "cifras. Para inserir mais, delete algumas das existentes ou adicione em uma outra lista.",
     "listLimitProTitle": "Você atingiu o limite de {limit} listas criadas :\uFEFF(",
     "listLimitProDescription1": "Você pode criar até ",
     "listLimitProDescription2": "listas. Para criar mais, delete algumas das existentes.",
-    "tabsLimitTitle": "Adquira mais espaço para suas cifras!",
-    "tabsLimitDescription1": "Você atingiu o limite de {limit} cifras inseridas nesta lista. Para inserir até ",
+    "versionsLimitTitle": "Adquira mais espaço para suas cifras!",
+    "versionsLimitDescription1": "Você atingiu o limite de {limit} cifras inseridas nesta lista. Para inserir até ",
     "listLimitTitle": "Adquira mais espaço para suas listas!",
     "listLimitDescription1": "Você atingiu o limite de {limit} listas criadas. Para criar até ",
     "listLimitDescription2": "mais, faça parte do ",
@@ -127,8 +127,8 @@
     "inputDialogLabel": "Nome da lista",
     "searchSongs" : "Buscar músicas",
 
-    "tabsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
-    "@tabsCount":{
+    "versionsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
+    "@versionsCount":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -146,8 +146,8 @@
     "loggedOutListErrorButtonText": "Fazer login",
     "artistMoreSongs":"Mostrar mais músicas",
     "moreAlbums":"Mostrar mais álbuns",
-    "tabTone": "・Tom: {tone}",
-    "@tabTone": {
+    "versionTone": "・Tom: {tone}",
+    "@versionTone": {
         "placeholders": {
             "tone": {
                 "type": "String",

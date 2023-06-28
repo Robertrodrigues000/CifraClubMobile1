@@ -21,7 +21,7 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme scrollContentToBottom(double scrollContentToBottom);
 
-  AppDimensionScheme topCifrasItemsPerRow(int topCifrasItemsPerRow);
+  AppDimensionScheme topSongsItemsPerRow(int topSongsItemsPerRow);
 
   AppDimensionScheme topArtistsItemsPerRow(int topArtistsItemsPerRow);
 
@@ -39,7 +39,7 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme externalMarginWithoutConnection(double externalMarginWithoutConnection);
 
-  AppDimensionScheme rightMaginProfileIcon(double rightMaginProfileIcon);
+  AppDimensionScheme rightMarginProfileIcon(double rightMarginProfileIcon);
 
   AppDimensionScheme appBarMargin(double appBarMargin);
 
@@ -53,7 +53,7 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme rightPaddingCard(double rightPaddingCard);
 
-  AppDimensionScheme addCifraTileImageSize(double addCifraTileImageSize);
+  AppDimensionScheme addVersionTileImageSize(double addVersionTileImageSize);
 
   AppDimensionScheme listOperationDialogWidth(double? listOperationDialogWidth);
 
@@ -87,7 +87,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? widthBottomSheet,
     double? sectionHeaderToFirstElement,
     double? scrollContentToBottom,
-    int? topCifrasItemsPerRow,
+    int? topSongsItemsPerRow,
     int? topArtistsItemsPerRow,
     int? topVideosItemsPerRow,
     double? bottomSheetContentToBottom,
@@ -96,14 +96,14 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? newsItemThumbPadding,
     double? newsItemTextPadding,
     double? externalMarginWithoutConnection,
-    double? rightMaginProfileIcon,
+    double? rightMarginProfileIcon,
     double? appBarMargin,
     double? verticalMarginAcademyInfo,
     double? academyLogoHeight,
     double? academyLogoBottomPadding,
     double? paddingBetweenInstructors,
     double? rightPaddingCard,
-    double? addCifraTileImageSize,
+    double? addVersionTileImageSize,
     double? listOperationDialogWidth,
     double? searchInputHeight,
     double? bottomPaddingCounter,
@@ -146,7 +146,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(scrollContentToBottom: scrollContentToBottom);
 
   @override
-  AppDimensionScheme topCifrasItemsPerRow(int topCifrasItemsPerRow) => this(topCifrasItemsPerRow: topCifrasItemsPerRow);
+  AppDimensionScheme topSongsItemsPerRow(int topSongsItemsPerRow) => this(topSongsItemsPerRow: topSongsItemsPerRow);
 
   @override
   AppDimensionScheme topArtistsItemsPerRow(int topArtistsItemsPerRow) =>
@@ -178,8 +178,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(externalMarginWithoutConnection: externalMarginWithoutConnection);
 
   @override
-  AppDimensionScheme rightMaginProfileIcon(double rightMaginProfileIcon) =>
-      this(rightMaginProfileIcon: rightMaginProfileIcon);
+  AppDimensionScheme rightMarginProfileIcon(double rightMarginProfileIcon) =>
+      this(rightMarginProfileIcon: rightMarginProfileIcon);
 
   @override
   AppDimensionScheme appBarMargin(double appBarMargin) => this(appBarMargin: appBarMargin);
@@ -203,8 +203,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme rightPaddingCard(double rightPaddingCard) => this(rightPaddingCard: rightPaddingCard);
 
   @override
-  AppDimensionScheme addCifraTileImageSize(double addCifraTileImageSize) =>
-      this(addCifraTileImageSize: addCifraTileImageSize);
+  AppDimensionScheme addVersionTileImageSize(double addVersionTileImageSize) =>
+      this(addVersionTileImageSize: addVersionTileImageSize);
 
   @override
   AppDimensionScheme listOperationDialogWidth(double? listOperationDialogWidth) =>
@@ -253,7 +253,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? widthBottomSheet = const $CopyWithPlaceholder(),
     Object? sectionHeaderToFirstElement = const $CopyWithPlaceholder(),
     Object? scrollContentToBottom = const $CopyWithPlaceholder(),
-    Object? topCifrasItemsPerRow = const $CopyWithPlaceholder(),
+    Object? topSongsItemsPerRow = const $CopyWithPlaceholder(),
     Object? topArtistsItemsPerRow = const $CopyWithPlaceholder(),
     Object? topVideosItemsPerRow = const $CopyWithPlaceholder(),
     Object? bottomSheetContentToBottom = const $CopyWithPlaceholder(),
@@ -262,14 +262,14 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? newsItemThumbPadding = const $CopyWithPlaceholder(),
     Object? newsItemTextPadding = const $CopyWithPlaceholder(),
     Object? externalMarginWithoutConnection = const $CopyWithPlaceholder(),
-    Object? rightMaginProfileIcon = const $CopyWithPlaceholder(),
+    Object? rightMarginProfileIcon = const $CopyWithPlaceholder(),
     Object? appBarMargin = const $CopyWithPlaceholder(),
     Object? verticalMarginAcademyInfo = const $CopyWithPlaceholder(),
     Object? academyLogoHeight = const $CopyWithPlaceholder(),
     Object? academyLogoBottomPadding = const $CopyWithPlaceholder(),
     Object? paddingBetweenInstructors = const $CopyWithPlaceholder(),
     Object? rightPaddingCard = const $CopyWithPlaceholder(),
-    Object? addCifraTileImageSize = const $CopyWithPlaceholder(),
+    Object? addVersionTileImageSize = const $CopyWithPlaceholder(),
     Object? listOperationDialogWidth = const $CopyWithPlaceholder(),
     Object? searchInputHeight = const $CopyWithPlaceholder(),
     Object? bottomPaddingCounter = const $CopyWithPlaceholder(),
@@ -310,10 +310,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.scrollContentToBottom
           // ignore: cast_nullable_to_non_nullable
           : scrollContentToBottom as double,
-      topCifrasItemsPerRow: topCifrasItemsPerRow == const $CopyWithPlaceholder() || topCifrasItemsPerRow == null
-          ? _value.topCifrasItemsPerRow
+      topSongsItemsPerRow: topSongsItemsPerRow == const $CopyWithPlaceholder() || topSongsItemsPerRow == null
+          ? _value.topSongsItemsPerRow
           // ignore: cast_nullable_to_non_nullable
-          : topCifrasItemsPerRow as int,
+          : topSongsItemsPerRow as int,
       topArtistsItemsPerRow: topArtistsItemsPerRow == const $CopyWithPlaceholder() || topArtistsItemsPerRow == null
           ? _value.topArtistsItemsPerRow
           // ignore: cast_nullable_to_non_nullable
@@ -349,10 +349,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.externalMarginWithoutConnection
               // ignore: cast_nullable_to_non_nullable
               : externalMarginWithoutConnection as double,
-      rightMaginProfileIcon: rightMaginProfileIcon == const $CopyWithPlaceholder() || rightMaginProfileIcon == null
-          ? _value.rightMaginProfileIcon
+      rightMarginProfileIcon: rightMarginProfileIcon == const $CopyWithPlaceholder() || rightMarginProfileIcon == null
+          ? _value.rightMarginProfileIcon
           // ignore: cast_nullable_to_non_nullable
-          : rightMaginProfileIcon as double,
+          : rightMarginProfileIcon as double,
       appBarMargin: appBarMargin == const $CopyWithPlaceholder() || appBarMargin == null
           ? _value.appBarMargin
           // ignore: cast_nullable_to_non_nullable
@@ -380,10 +380,11 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.rightPaddingCard
           // ignore: cast_nullable_to_non_nullable
           : rightPaddingCard as double,
-      addCifraTileImageSize: addCifraTileImageSize == const $CopyWithPlaceholder() || addCifraTileImageSize == null
-          ? _value.addCifraTileImageSize
-          // ignore: cast_nullable_to_non_nullable
-          : addCifraTileImageSize as double,
+      addVersionTileImageSize:
+          addVersionTileImageSize == const $CopyWithPlaceholder() || addVersionTileImageSize == null
+              ? _value.addVersionTileImageSize
+              // ignore: cast_nullable_to_non_nullable
+              : addVersionTileImageSize as double,
       listOperationDialogWidth: listOperationDialogWidth == const $CopyWithPlaceholder()
           ? _value.listOperationDialogWidth
           // ignore: cast_nullable_to_non_nullable

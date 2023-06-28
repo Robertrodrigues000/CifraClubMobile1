@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cifraclub/data/user/models/user_data_dto.dart';
-import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
+import 'package:cifraclub/domain/user/repository/authentication_repository.dart';
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:flutter/foundation.dart';

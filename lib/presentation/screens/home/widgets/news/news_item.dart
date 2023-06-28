@@ -3,7 +3,7 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
-import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 
 class NewsItem extends StatelessWidget {

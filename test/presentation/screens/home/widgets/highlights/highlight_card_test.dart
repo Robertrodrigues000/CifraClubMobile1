@@ -9,7 +9,7 @@ import '../../../../../shared_mocks/domain/home/models/images_size_mock.dart';
 import '../../../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("When highlight have description and icon not empty should show badge in card", (widgetTester) async {
+  testWidgets("When highlight has description and icon should show badge in card", (widgetTester) async {
     final highlight = getFakeHighlight();
     await widgetTester.pumpWidget(
       TestWrapper(
@@ -28,7 +28,7 @@ void main() {
     expect(find.text(highlight.description), findsOneWidget);
   });
 
-  testWidgets("When highlight have description and icon empty should not show the badge", (widgetTester) async {
+  testWidgets("When highlight has empty description and icon should not show the badge", (widgetTester) async {
     final highlight = Highlight(
       url: faker.internet.httpUrl(),
       title: faker.company.position(),

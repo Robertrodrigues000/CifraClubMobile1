@@ -1,4 +1,4 @@
-import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 
 class SmallListImage extends StatelessWidget {

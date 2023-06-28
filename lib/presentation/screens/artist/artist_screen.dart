@@ -6,8 +6,8 @@ import 'package:cifraclub/presentation/screens/artist/widgets/artist_header.dart
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
-import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -69,12 +69,12 @@ class _ArtistScreenState extends State<ArtistScreen> {
                     name: state.songs[index].name,
                     ranking: index + 1,
                     isVerified: state.songs[index].verified,
-                    hasVideolessons: state.songs[index].videoLessons > 0,
+                    hasVideoLessons: state.songs[index].videoLessons > 0,
                   ),
                 ),
               ),
               SliverToBoxAdapter(
-                child: CifraButton(
+                child: CifraClubButton(
                   type: ButtonType.outline,
                   // coverage:ignore-start
                   onPressed: () {},
@@ -95,7 +95,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                 ),
                 Albums(albums: state.albums),
                 SliverToBoxAdapter(
-                  child: CifraButton(
+                  child: CifraClubButton(
                     type: ButtonType.outline,
                     // coverage:ignore-start
                     onPressed: () {},

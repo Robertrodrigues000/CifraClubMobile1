@@ -5,24 +5,25 @@ import '../../test_helpers/app_localizations.dart';
 import '../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("When isTabLimit is true, should show pro limit dialog for number of tabs in a list", (tester) async {
+  testWidgets("When isVersionLimit is true, should show pro limit dialog for number of versions in a list",
+      (tester) async {
     const limitCount = 1000;
     await tester.pumpWidgetWithWrapper(const ListLimitProDialog(
-      isTabLimit: true,
+      isVersionLimit: true,
       limitCount: limitCount,
     ));
 
     await tester.pumpAndSettle();
-    final richText = "${appTextEn.tabsLimitProDescription1}$limitCount ${appTextEn.tabsLimitProDescription2}";
+    final richText = "${appTextEn.versionsLimitProDescription1}$limitCount ${appTextEn.versionsLimitProDescription2}";
 
-    expect(find.text(appTextEn.tabsLimitProTitle(limitCount)), findsOneWidget);
+    expect(find.text(appTextEn.versionsLimitProTitle(limitCount)), findsOneWidget);
     expect(find.text(richText, findRichText: true), findsOneWidget);
   });
 
-  testWidgets("When isTabLimit is false, should show pro limit dialog for number of lists created", (tester) async {
+  testWidgets("When isVersionLimit is false, should show pro limit dialog for number of lists created", (tester) async {
     const limitCount = 1000;
     await tester.pumpWidgetWithWrapper(const ListLimitProDialog(
-      isTabLimit: false,
+      isVersionLimit: false,
       limitCount: limitCount,
     ));
 
@@ -35,7 +36,7 @@ void main() {
 
   testWidgets("when gotIt button is pressed, should close dialog", (tester) async {
     const limitCount = 1000;
-    await tester.pumpWidgetWithWrapper(const ListLimitProDialog(isTabLimit: false, limitCount: limitCount));
+    await tester.pumpWidgetWithWrapper(const ListLimitProDialog(isVersionLimit: false, limitCount: limitCount));
 
     await tester.pumpAndSettle();
     await tester.tap(find.text(appTextEn.gotIt));

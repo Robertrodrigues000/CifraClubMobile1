@@ -12,6 +12,6 @@ class GetHomeInfo {
   GetHomeInfo(this._homeRepository);
 
   CancelableOperation<Result<HomeInfo, RequestError>> call([String? genreUrl]) {
-    return _homeRepository.getHomeInfos(genreUrl);
+    return _homeRepository.getHomeInfo(genreUrl);
   }
 }

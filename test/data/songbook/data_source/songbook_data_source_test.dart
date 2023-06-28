@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
-import 'package:cifraclub/data/songbook/models/delete_songs_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
@@ -46,17 +46,17 @@ void main() {
       expect(songbooks.first.isPublic, false);
       expect(songbooks.first.status, 1);
       expect(songbooks.first.totalSongs, 2);
-      expect(songbooks.first.cifras?.length, 2);
-      expect(songbooks.first.cifras?.first.remoteDatabaseID, 122674888);
-      expect(songbooks.first.cifras?.first.songUrl, "lindo-testemunho");
-      expect(songbooks.first.cifras?.first.type, 1);
-      expect(songbooks.first.cifras?.first.tone, "F");
-      expect(songbooks.first.cifras?.first.name, "Lindo Testemunho");
-      expect(songbooks.first.cifras?.last.remoteDatabaseID, 128668178);
-      expect(songbooks.first.cifras?.last.songUrl, "we-are-the-world");
-      expect(songbooks.first.cifras?.last.type, 1);
-      expect(songbooks.first.cifras?.last.tone, "E");
-      expect(songbooks.first.cifras?.last.name, "We Are The World");
+      expect(songbooks.first.versions?.length, 2);
+      expect(songbooks.first.versions?.first.remoteDatabaseID, 122674888);
+      expect(songbooks.first.versions?.first.songUrl, "lindo-testemunho");
+      expect(songbooks.first.versions?.first.type, 1);
+      expect(songbooks.first.versions?.first.tone, "F");
+      expect(songbooks.first.versions?.first.name, "Lindo Testemunho");
+      expect(songbooks.first.versions?.last.remoteDatabaseID, 128668178);
+      expect(songbooks.first.versions?.last.songUrl, "we-are-the-world");
+      expect(songbooks.first.versions?.last.type, 1);
+      expect(songbooks.first.versions?.last.tone, "E");
+      expect(songbooks.first.versions?.last.name, "We Are The World");
     });
 
     test("and request fails", () async {
@@ -178,7 +178,7 @@ void main() {
     });
   });
 
-  group("When deleteCifras is called", () {
+  group("When deleteVersions is called", () {
     const songbookId = 0;
     test("and request is successful", () async {
       final networkService = NetworkServiceMock();
@@ -188,7 +188,7 @@ void main() {
         (_) => SynchronousFuture(const Ok(null)),
       );
 
-      final result = await songbookDataSource.deleteCifras(songbookId, const DeleteCifrasInputDto([0]));
+      final result = await songbookDataSource.deleteVersions(songbookId, const DeleteVersionsInputDto([0]));
 
       final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
           as NetworkRequest<void>;
@@ -207,7 +207,7 @@ void main() {
       );
 
       final songbookDataSource = SongbookDataSource(networkService);
-      final result = await songbookDataSource.deleteCifras(songbookId, const DeleteCifrasInputDto([0]));
+      final result = await songbookDataSource.deleteVersions(songbookId, const DeleteVersionsInputDto([0]));
 
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });

@@ -19,14 +19,14 @@ import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
-class _MockMainBloc extends Mock implements MainBloc {}
+class _MainBlocMock extends Mock implements MainBloc {}
 
 void main() {
   late MainBloc bloc;
   Widget fakeNavFrameBuilder(Nav nav) => const SizedBox();
 
   setUpAll(() {
-    bloc = _MockMainBloc();
+    bloc = _MainBlocMock();
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 

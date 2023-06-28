@@ -6,15 +6,15 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 
-class _MockGenreDto extends Mock implements GenreDto {}
+class _GenreDtoMock extends Mock implements GenreDto {}
 
 void main() {
   test("when `toDomain` is called, should correctly convert to AllGenres", () {
-    final topGenreDto = _MockGenreDto();
+    final topGenreDto = _GenreDtoMock();
     final topGenreDomain = getFakeGenre();
     when(topGenreDto.toDomain).thenReturn(topGenreDomain);
 
-    final allGenreDto = _MockGenreDto();
+    final allGenreDto = _GenreDtoMock();
     final allGenreDomain = getFakeGenre();
     when(allGenreDto.toDomain).thenReturn(allGenreDomain);
 

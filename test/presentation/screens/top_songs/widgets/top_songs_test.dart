@@ -8,7 +8,7 @@ import '../../../../shared_mocks/domain/song/models/song_mock.dart';
 import '../../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("when TopSong item is tap, should call onTap callback", (widgetTester) async {
+  testWidgets("when TopSong item is tapped, should call onTap callback", (widgetTester) async {
     final completer = Completer<void>();
     final topSongs = [getFakeSong(), getFakeSong()];
     await widgetTester.pumpWidget(

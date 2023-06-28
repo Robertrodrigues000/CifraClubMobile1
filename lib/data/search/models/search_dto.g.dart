@@ -8,7 +8,7 @@ part of 'search_dto.dart';
 
 SearchDto _$SearchDtoFromJson(Map<String, dynamic> json) => SearchDto(
       idSong: json['id_song'] as int?,
-      tipo: json['tipo'] as String?,
+      type: json['tipo'] as String?,
       txt: json['txt'] as String?,
       url: json['url'] as String?,
       idArtist: json['id_artist'] as int?,

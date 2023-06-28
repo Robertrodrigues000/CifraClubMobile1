@@ -13,20 +13,20 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 
-class _MockGenresDataSource extends Mock implements GenresDataSource {}
+class _GenresDataSourceMock extends Mock implements GenresDataSource {}
 
-class _MockUserGenreDataSource extends Mock implements UserGenreDataSource {}
+class _UserGenreDataSourceMock extends Mock implements UserGenreDataSource {}
 
-class _MockAllGenresDto extends Mock implements AllGenresDto {}
+class _AllGenresDtoMock extends Mock implements AllGenresDto {}
 
-class _MockUserGenresDto extends Mock implements UserGenresDto {}
+class _UserGenresDtoMock extends Mock implements UserGenresDto {}
 
 void main() {
   group("When getGenres is Called", () {
     test("Request successful", () async {
-      final genresDataSource = _MockGenresDataSource();
-      final userGenreDataSource = _MockUserGenreDataSource();
-      final allGenresDto = _MockAllGenresDto();
+      final genresDataSource = _GenresDataSourceMock();
+      final userGenreDataSource = _UserGenreDataSourceMock();
+      final allGenresDto = _AllGenresDtoMock();
       final allGenres = AllGenres(top: [getFakeGenre()], all: [getFakeGenre()]);
 
       when(genresDataSource.getGenres).thenAnswer((_) => SynchronousFuture(Ok(allGenresDto)));
@@ -44,8 +44,8 @@ void main() {
     });
 
     test("Request failed", () async {
-      final genresDataSource = _MockGenresDataSource();
-      final userGenreDataSource = _MockUserGenreDataSource();
+      final genresDataSource = _GenresDataSourceMock();
+      final userGenreDataSource = _UserGenreDataSourceMock();
       when(genresDataSource.getGenres).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
 
       final repository =
@@ -60,9 +60,9 @@ void main() {
 
   group("when getUserGenres is called", () {
     test("when user has genres should return list", () async {
-      final genresDataSource = _MockGenresDataSource();
-      final userGenreDataSource = _MockUserGenreDataSource();
-      final userGenresDto = _MockUserGenresDto();
+      final genresDataSource = _GenresDataSourceMock();
+      final userGenreDataSource = _UserGenreDataSourceMock();
+      final userGenresDto = _UserGenresDtoMock();
       final genres = [getFakeGenre(), getFakeGenre()];
 
       when(userGenreDataSource.getAll).thenAnswer((_) => Stream.value(userGenresDto));
@@ -79,9 +79,9 @@ void main() {
       expect(genreList, genres);
     });
 
-    test("when user dont have genres should return null", () async {
-      final genresDataSource = _MockGenresDataSource();
-      final userGenreDataSource = _MockUserGenreDataSource();
+    test("when user do not have genres should return null", () async {
+      final genresDataSource = _GenresDataSourceMock();
+      final userGenreDataSource = _UserGenreDataSourceMock();
 
       when(userGenreDataSource.getAll).thenAnswer((_) => Stream.value(null));
 
@@ -98,8 +98,8 @@ void main() {
 
   group("When setUserGenre is Called", () {
     test("when save new user genre", () {
-      final genresDataSource = _MockGenresDataSource();
-      final userGenreDataSource = _MockUserGenreDataSource();
+      final genresDataSource = _GenresDataSourceMock();
+      final userGenreDataSource = _UserGenreDataSourceMock();
       final genres = [getFakeGenre(), getFakeGenre()];
       when(() => userGenreDataSource.setAll(any())).thenAnswer((_) => SynchronousFuture(null));
 

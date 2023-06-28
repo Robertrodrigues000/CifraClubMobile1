@@ -1,10 +1,10 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
+import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_bloc.dart';
-import 'package:cifraclub/presentation/screens/top_artists/top_artists_state/top_artists_state.dart';
+import 'package:cifraclub/presentation/screens/top_artists/top_artists_state.dart';
 import 'package:cifraclub/presentation/screens/top_artists/widgets/top_artists.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
-import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

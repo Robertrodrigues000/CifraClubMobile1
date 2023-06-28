@@ -1,13 +1,13 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/user/models/user.dart';
+import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
-import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/bottom_sheets/profile_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/home/home_state.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
-import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ void main() {
     when(() => bloc.insertGenre(any())).thenAnswer((_) => SynchronousFuture(null));
   });
 
-  testWidgets("When user is not logged shoud show Log in option", (widgetTester) async {
+  testWidgets("When user is not logged should show Log in option", (widgetTester) async {
     bloc.mockStream(const HomeState(user: null, isPro: false));
 
     await widgetTester.pumpWidget(
@@ -136,7 +136,7 @@ void main() {
     );
 
     expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
-    await widgetTester.tap(find.byType(CifraButton));
+    await widgetTester.tap(find.byType(CifraClubButton));
     await widgetTester.pumpAndSettle();
 
     verify(() => bloc.requestHomeData(genreUrl: any(named: "genreUrl"))).called(1);
@@ -149,7 +149,7 @@ void main() {
         isLoading: false,
         highlights: [getFakeHighlight()],
         topArtists: [getFakeArtist()],
-        topCifras: [getFakeSong()],
+        topSongs: [getFakeSong()],
         videoLessons: [getFakeVideoLessons()],
         blog: [getFakeNews()]));
 
@@ -165,13 +165,13 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     expect(find.byKey(const Key("highlights"), skipOffstage: false), findsOneWidget);
-    expect(find.byKey(const Key("top cifras"), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(const Key("top songs"), skipOffstage: false), findsOneWidget);
     expect(find.byKey(const Key("home top artists"), skipOffstage: false), findsOneWidget);
-    expect(find.byKey(const Key("videolessons"), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(const Key("video lessons"), skipOffstage: false), findsOneWidget);
     expect(find.byKey(const Key("blog"), skipOffstage: false), findsOneWidget);
   });
 
-  testWidgets("When state videolessons has more than 3 itens, should show more button", (widgetTester) async {
+  testWidgets("When state video lessons has more than 3 items, should show more button", (widgetTester) async {
     bloc.mockStream(
       HomeState(
           selectedGenre: "",
@@ -179,7 +179,7 @@ void main() {
           isLoading: false,
           highlights: [],
           topArtists: [],
-          topCifras: [],
+          topSongs: [],
           videoLessons: [getFakeVideoLessons(), getFakeVideoLessons(), getFakeVideoLessons(), getFakeVideoLessons()],
           blog: []),
     );
@@ -195,7 +195,7 @@ void main() {
 
     await widgetTester.pumpAndSettle();
 
-    expect(find.byKey(const Key("videolessons more button"), skipOffstage: false), findsOneWidget);
+    expect(find.byKey(const Key("video lessons more button"), skipOffstage: false), findsOneWidget);
   });
   testWidgets("When user is log in and tap in profile photo should open bottom sheet", (widgetTester) async {
     bloc.mockStream(const HomeState(user: User()));

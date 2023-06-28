@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/add_cifras_to_list_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/bottom_sheet/list_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/clear_dialog.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/delete_dialog.dart';
-import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_operation_dialogs/input_dialog.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/clear_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cosmos/cosmos.dart';
@@ -106,7 +106,7 @@ void main() {
     await widgetTester.pumpAndSettle();
     expect(find.byType(LogoutDialog), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, "Log out"));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, "Log out"));
     verify(() => bloc.logout()).called(1);
   });
 
@@ -144,11 +144,11 @@ void main() {
 
     expect(find.text(newSongbookName), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.create));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.create));
     verify(() => bloc.createNewSongbook(newSongbookName)).called(1);
     verify(() => nav.push(
-          screenName: AddCifrasToListEntry.name,
-          params: AddCifrasToListEntry.declareParams(songbookFake.id!),
+          screenName: AddVersionsToListEntry.name,
+          params: AddVersionsToListEntry.declareParams(songbookFake.id!),
         )).called(1);
   });
 
@@ -183,7 +183,7 @@ void main() {
 
     expect(find.text(newSongbookName), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.create));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.create));
     await widgetTester.pump();
 
     expect(find.text(appTextEn.listUsedName), findsOneWidget);
@@ -223,7 +223,7 @@ void main() {
 
     expect(find.text(newSongbookName), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.create));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.create));
     await widgetTester.pumpAndSettle();
 
     expect(find.text(appTextEn.listServerError), findsOneWidget);
@@ -291,11 +291,11 @@ void main() {
 
     expect(find.text(newSongbookName), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.save));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.save));
     verify(() => bloc.updateSongbookData(songbook: songbook, songbookName: newSongbookName)).called(1);
   });
 
-  testWidgets("When tap on renameList option and name is repetead should show snackbar message", (widgetTester) async {
+  testWidgets("When tap on renameList option and name is repeated should show snackbar message", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(ListsState(userLists: [songbook]));
     when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(false));
@@ -333,7 +333,7 @@ void main() {
 
     expect(find.text(newSongbookName), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.save));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.save));
     await widgetTester.pump();
 
     expect(find.text(appTextEn.listUsedName), findsOneWidget);
@@ -380,7 +380,7 @@ void main() {
 
     expect(find.text(newSongbookName), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.save));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.save));
     await widgetTester.pumpAndSettle();
 
     expect(find.text(appTextEn.listServerError), findsOneWidget);
@@ -419,7 +419,7 @@ void main() {
 
     expect(find.byType(DeleteDialog), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.yes));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.yes));
     await widgetTester.pump();
 
     verify(() => bloc.deleteSongbook(songbook.id)).called(1);
@@ -457,7 +457,7 @@ void main() {
 
     expect(find.byType(ClearDialog), findsOneWidget);
 
-    await widgetTester.tap(find.widgetWithText(CifraButton, appTextEn.yes));
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.yes));
     await widgetTester.pump();
 
     verify(() => bloc.clearList(songbook.id)).called(1);

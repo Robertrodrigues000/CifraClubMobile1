@@ -1,5 +1,5 @@
 import 'package:cifraclub/data/remote_config/remote_config_registered_parameters.dart';
-import 'package:cifraclub/domain/list_limit/models/tabs_limit_constants.dart';
+import 'package:cifraclub/domain/list_limit/models/versions_limit_constants.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_constants.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/remote_config/models/instrument_urls.dart';
@@ -15,7 +15,7 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   bool _valuesReceived = false;
 
   @override
-  bool get wasValuesfetched => _valuesReceived;
+  bool get wasValuesFetched => _valuesReceived;
 
   final Map<Type, Object> parametersMap = {};
 
@@ -105,7 +105,7 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   }
 
   @override
-  TabsLimitConstants getTabsLimitConstants() {
+  VersionsLimitConstants getVersionsLimitConstants() {
     return remoteConfigParameters.tabsLimitConstants.value;
   }
 }

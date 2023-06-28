@@ -3,8 +3,8 @@
 import 'dart:async';
 
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
-import 'package:cifraclub/domain/preferences/use_case/get_is_pro_preference.dart';
-import 'package:cifraclub/domain/preferences/use_case/set_is_pro_preference.dart';
+import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
+import 'package:cifraclub/domain/preferences/use_cases/set_is_pro_preference.dart';
 import 'package:cifraclub/domain/subscription/repository/subscription_repository.dart';
 import 'package:cifraclub/domain/subscription/use_cases/verify_pro_status.dart';
 import 'package:rxdart/rxdart.dart';

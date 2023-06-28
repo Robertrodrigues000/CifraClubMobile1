@@ -7,7 +7,7 @@ import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_bloc.dart';
-import 'package:cifraclub/presentation/screens/top_artists/top_artists_state/top_artists_state.dart';
+import 'package:cifraclub/presentation/screens/top_artists/top_artists_state.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';

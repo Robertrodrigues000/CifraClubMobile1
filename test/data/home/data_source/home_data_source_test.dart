@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
-import 'package:cifraclub/data/home/data_souce/home_data_source.dart';
+import 'package:cifraclub/data/home/data_source/home_data_source.dart';
 import 'package:cifraclub/data/home/models/highlight/highlight_dto.dart';
 import 'package:cifraclub/data/home/models/highlight/highlights_dto.dart';
 import 'package:cifraclub/data/home/models/highlight/photo_dto.dart';
 import 'package:cifraclub/data/home/models/highlight/photos_dto.dart';
 import 'package:cifraclub/data/home/models/home_dto.dart';
 import 'package:cifraclub/data/home/models/news/news_dto.dart';
-import 'package:cifraclub/data/home/models/video_lessons/version_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/video_lesson_version_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_dto.dart';
 import 'package:cifraclub/data/song/models/song_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -48,7 +48,7 @@ void main() {
     headline: "Aprenda 20 cifras simplificadas de Jorge e Mateus",
     publishDate: "2023-02-22 11:02:00",
   );
-  final versionDto = VersionDto(id: 755, type: 1, label: "principal");
+  final videoLessonVersionDto = VideoLessonVersionDto(id: 755, type: 1, label: "principal");
   final videoLessonsDto = VideoLessonsDto(
       id: 5583,
       youtubeId: "tuFfT0ycVNA",
@@ -59,7 +59,7 @@ void main() {
       urlApi: "/bon-jovi/ill-be-there-for-you",
       images: null,
       instruments: const ["electric-guitar"],
-      version: versionDto);
+      version: videoLessonVersionDto);
 
   final homeDto = HomeDto(
     highlights: HighlightsDto(highlights: [highlightDto]),
@@ -69,14 +69,14 @@ void main() {
     news: const [newsDto],
   );
 
-  group("When `getHomeInfos` is called", () {
+  group("When `getHomeInfo` is called", () {
     test("When request is success without param, should return HomeDto", () async {
       final networkService = NetworkServiceMock();
       final mockResponse = await File("test/data/home/data_source/home_mock_json_response.json").readAsString();
       await networkService.mock<HomeDto>(response: mockResponse);
 
       final dataSource = HomeDataSource(networkService);
-      final result = await dataSource.getHomeInfos(null).value;
+      final result = await dataSource.getHomeInfo(null).value;
 
       final request = verify(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request")))
           .captured
@@ -97,7 +97,7 @@ void main() {
       await networkService.mock<HomeDto>(response: mockResponse);
 
       final dataSource = HomeDataSource(networkService);
-      final result = await dataSource.getHomeInfos(dns).value;
+      final result = await dataSource.getHomeInfo(dns).value;
 
       final request = verify(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request")))
           .captured
@@ -120,7 +120,7 @@ void main() {
       );
 
       final dataSource = HomeDataSource(networkService);
-      final result = await dataSource.getHomeInfos(null).value;
+      final result = await dataSource.getHomeInfo(null).value;
 
       final request = verify(() => networkService.cancelableExecute<HomeDto>(request: captureAny(named: "request")))
           .captured

@@ -1,7 +1,7 @@
 import 'package:cifraclub/domain/home/models/highlight.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlight_card.dart';
-import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 
 class HighlightSection extends StatelessWidget {

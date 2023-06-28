@@ -12,13 +12,13 @@ import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
-class _MockGenreBloc extends Mock implements GenreBloc {}
+class _GenreBlocMock extends Mock implements GenreBloc {}
 
 void main() {
   late GenreBloc bloc;
 
   setUpAll(() {
-    bloc = _MockGenreBloc();
+    bloc = _GenreBlocMock();
     when(bloc.requestTopArtists).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });

@@ -5,23 +5,23 @@ import '../../test_helpers/app_localizations.dart';
 import '../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("When isTabLimit is true, should show limit dialog for number of tabs in a list", (tester) async {
+  testWidgets("When isVersionLimit is true, should show limit dialog for number of versions in a list", (tester) async {
     const limitCount = 100;
-    await tester.pumpWidgetWithWrapper(const ListLimitDialog(isTabLimit: true, limitCount: limitCount));
+    await tester.pumpWidgetWithWrapper(const ListLimitDialog(isVersionLimit: true, limitCount: limitCount));
 
     await tester.pumpAndSettle();
-    final richText = appTextEn.tabsLimitDescription1(limitCount) +
+    final richText = appTextEn.versionsLimitDescription1(limitCount) +
         appTextEn.tenTimes +
         appTextEn.listLimitDescription2 +
         appTextEn.cifraClubProLimit;
 
-    expect(find.text(appTextEn.tabsLimitTitle), findsOneWidget);
+    expect(find.text(appTextEn.versionsLimitTitle), findsOneWidget);
     expect(find.text(richText, findRichText: true), findsOneWidget);
   });
 
-  testWidgets("When isTabLimit is false, should show limit dialog for number of lists created", (tester) async {
+  testWidgets("When isVersionLimit is false, should show limit dialog for number of lists created", (tester) async {
     const limitCount = 10;
-    await tester.pumpWidgetWithWrapper(const ListLimitDialog(isTabLimit: false, limitCount: limitCount));
+    await tester.pumpWidgetWithWrapper(const ListLimitDialog(isVersionLimit: false, limitCount: limitCount));
 
     await tester.pumpAndSettle();
     final richText = appTextEn.listLimitDescription1(limitCount) +
@@ -35,7 +35,7 @@ void main() {
 
   testWidgets("when notNow button is pressed, should close dialog", (tester) async {
     const limitCount = 100;
-    await tester.pumpWidgetWithWrapper(const ListLimitDialog(isTabLimit: false, limitCount: limitCount));
+    await tester.pumpWidgetWithWrapper(const ListLimitDialog(isVersionLimit: false, limitCount: limitCount));
 
     await tester.pumpAndSettle();
     await tester.tap(find.text(appTextEn.notNow));

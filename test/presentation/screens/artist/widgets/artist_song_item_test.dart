@@ -18,7 +18,7 @@ void main() {
         ranking: 1,
         onTap: completer.complete,
         onOptionsTap: () {},
-        hasVideolessons: false,
+        hasVideoLessons: false,
         isVerified: false,
       ),
     ));
@@ -26,7 +26,7 @@ void main() {
     expect(completer.isCompleted, isTrue);
   });
 
-  testWidgets("when hasVideolessons is true should show subtitle", (widgetTester) async {
+  testWidgets("when hasVideoLessons is true should show subtitle", (widgetTester) async {
     await widgetTester.pumpWidget(TestWrapper(
       child: ArtistSongItem(
         key: const Key('artist-song'),
@@ -34,7 +34,7 @@ void main() {
         ranking: 1,
         onTap: () {},
         onOptionsTap: () {},
-        hasVideolessons: true,
+        hasVideoLessons: true,
         isVerified: false,
       ),
     ));
@@ -45,9 +45,9 @@ void main() {
           (Widget widget) {
             return widget is SvgPicture &&
                 widget.pictureProvider is ExactAssetPicture &&
-                (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.videolessonIcon;
+                (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.videoLessonIcon;
           },
-          description: 'videolesson icon',
+          description: 'video lesson icon',
         ),
         findsOneWidget);
   });
@@ -60,7 +60,7 @@ void main() {
         ranking: 1,
         onTap: () {},
         onOptionsTap: () {},
-        hasVideolessons: false,
+        hasVideoLessons: false,
         isVerified: true,
       ),
     ));

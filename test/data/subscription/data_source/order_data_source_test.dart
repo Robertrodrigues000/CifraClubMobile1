@@ -17,12 +17,12 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
 // ignore: prefer_void_to_null
-class _NetworkdRequestMock extends Fake implements NetworkRequest<Null> {}
+class _NetworkRequestMock extends Fake implements NetworkRequest<Null> {}
 
 void main() {
   group("When called `getUserOrders`", () {
     setUpAll(() {
-      registerFallbackValue(_NetworkdRequestMock());
+      registerFallbackValue(_NetworkRequestMock());
     });
 
     test("When request is success should return list orderDto", () async {
@@ -71,7 +71,7 @@ void main() {
       final networkService = NetworkServiceMock();
       final dataSource = OrderDataSource(networkService: networkService);
 
-      registerFallbackValue(_NetworkdRequestMock());
+      registerFallbackValue(_NetworkRequestMock());
 
       // ignore: prefer_void_to_null
       when(() => networkService.execute<Null>(request: captureAny(named: "request"))).thenAnswer(
@@ -114,7 +114,7 @@ void main() {
       final networkService = NetworkServiceMock();
       final dataSource = OrderDataSource(networkService: networkService);
 
-      registerFallbackValue(_NetworkdRequestMock());
+      registerFallbackValue(_NetworkRequestMock());
 
       // ignore: prefer_void_to_null
       when(() => networkService.execute<Null>(request: captureAny(named: "request"))).thenAnswer(
@@ -149,9 +149,9 @@ void main() {
       final networkService = NetworkServiceMock();
       final dataSource = OrderDataSource(networkService: networkService);
 
-      registerFallbackValue(_NetworkdRequestMock());
+      registerFallbackValue(_NetworkRequestMock());
 
-      final erros = [
+      final errors = [
         ConnectionError(),
         ServerError(statusCode: 204),
         ServerError(statusCode: 400),
@@ -162,7 +162,7 @@ void main() {
         ServerError(),
       ];
 
-      final expextResult = [
+      final expectedResult = [
         PurchaseResultDto.requestError,
         PurchaseResultDto.success,
         PurchaseResultDto.invalidParams,
@@ -173,10 +173,10 @@ void main() {
         PurchaseResultDto.unknown,
       ];
 
-      for (var i = 0; i < erros.length; i++) {
+      for (var i = 0; i < errors.length; i++) {
         // ignore: prefer_void_to_null
         when(() => networkService.execute<Null>(request: captureAny(named: "request"))).thenAnswer(
-          (_) => SynchronousFuture(Err(erros[i])),
+          (_) => SynchronousFuture(Err(errors[i])),
         );
 
         final order = AppStorePurchaseDetails(
@@ -191,7 +191,7 @@ void main() {
 
         final result = await dataSource.postOrder(order);
 
-        expect(result, expextResult[i]);
+        expect(result, expectedResult[i]);
       }
     });
   });

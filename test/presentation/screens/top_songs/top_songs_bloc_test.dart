@@ -7,7 +7,7 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_bloc.dart';
-import 'package:cifraclub/presentation/screens/top_songs/top_songs_state/top_songs_state.dart';
+import 'package:cifraclub/presentation/screens/top_songs/top_songs_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -70,7 +70,7 @@ void main() {
   });
 
   group("When requestTopSongs is called", () {
-    group("when request is successful", () {
+    group("and request is successful", () {
       final getTopSongs = _GetTopSongsMock.newDummy();
       final topSongs = [getFakeSong(), getFakeSong()];
       final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
@@ -95,7 +95,7 @@ void main() {
       );
     });
 
-    group("When request fails", () {
+    group("and request fails", () {
       final getTopSongs = _GetTopSongsMock.newDummy();
       final bloc = getTopSongsBloc(getTopSongs: getTopSongs);
       when(() => getTopSongs.call(

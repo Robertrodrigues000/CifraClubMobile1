@@ -8,7 +8,7 @@ import '../../../../shared_mocks/domain/artist/models/artist_mock.dart';
 import '../../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("when TopArtist is tap, should call onTap callback", (widgetTester) async {
+  testWidgets("when TopArtist is tapped, should call onTap callback", (widgetTester) async {
     final completer = Completer<void>();
     final topArtists = [getFakeArtist(), getFakeArtist()];
 

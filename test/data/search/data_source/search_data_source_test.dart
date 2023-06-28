@@ -20,7 +20,7 @@ void main() {
     test("Request successful", () async {
       final networkService = NetworkServiceMock();
       final mockResponse =
-          await File("test/data/search/data_source/get_all_search_mock_json_reponse.json").readAsString();
+          await File("test/data/search/data_source/get_all_search_mock_json_response.json").readAsString();
       await networkService.mock<SearchResponseDto>(contentType: Headers.textPlainContentType, response: mockResponse);
 
       final searchDataSource = SearchDataSource(networkService: networkService);
@@ -41,7 +41,7 @@ void main() {
           docs: [
             SearchDto(
                 idSong: null,
-                tipo: "1",
+                type: "1",
                 txt: "Lifehouse",
                 url: null,
                 idArtist: 2843,
@@ -50,7 +50,7 @@ void main() {
                 imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg"),
             SearchDto(
                 idSong: 27161,
-                tipo: "2",
+                type: "2",
                 txt: "You And Me",
                 url: "you-and-me",
                 idArtist: 2843,
@@ -110,7 +110,7 @@ void main() {
           docs: [
             SearchDto(
               idSong: 437376,
-              tipo: "2",
+              type: "2",
               txt: "Ava",
               url: "ava",
               idArtist: 174027,
@@ -120,7 +120,7 @@ void main() {
             ),
             SearchDto(
                 idSong: 244155,
-                tipo: "2",
+                type: "2",
                 txt: "Avante Eu Vou",
                 url: "avante-eu-vou",
                 idArtist: 24399,

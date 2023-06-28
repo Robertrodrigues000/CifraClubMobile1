@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
-import 'package:cifraclub/presentation/widgets/remote_image_cache_manager.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,7 +21,7 @@ void main() {
     PaintingBinding.instance.imageCache.clearLiveImages();
   });
 
-  testWidgets("When tapping an item should show call onTap", (widgetTester) async {
+  testWidgets("When tapping an item should call onTap", (widgetTester) async {
     final completer = Completer();
     final artists = getFakeArtist();
 

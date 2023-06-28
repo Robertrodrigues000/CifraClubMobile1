@@ -1,8 +1,8 @@
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/dialogs/default_dialog.dart';
-import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -39,11 +39,11 @@ void main() {
       const DefaultDialog(
         hasCloseIcon: false,
         title: Text("Default Dialog"),
-        buttons: CifraButton(type: ButtonType.solidGreen, padding: EdgeInsets.all(8)),
+        buttons: CifraClubButton(type: ButtonType.solidGreen, padding: EdgeInsets.all(8)),
       ),
     );
 
-    expect(find.byType(CifraButton), findsOneWidget);
+    expect(find.byType(CifraClubButton), findsOneWidget);
   });
 
   testWidgets("when image is not null, should show image asset", (tester) async {

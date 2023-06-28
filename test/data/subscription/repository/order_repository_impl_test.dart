@@ -77,7 +77,7 @@ void main() {
       expect(params.last, false);
     });
 
-    test("When post is failure should return pruchaseResult error", () async {
+    test("When post is failure should return purchaseResult error", () async {
       final dataSource = _OrderDataSourceMock();
       final repository = OrderRepositoryImpl(dataSource: dataSource);
       final purchase = getFakePurchase();

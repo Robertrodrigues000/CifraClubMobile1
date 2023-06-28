@@ -10,7 +10,7 @@ class VideoLessons extends StatefulWidget {
   final List<VideoLesson> list;
 
   const VideoLessons({
-    super.key = const Key("videolessons"),
+    super.key = const Key("video lessons"),
     required this.list,
   });
 

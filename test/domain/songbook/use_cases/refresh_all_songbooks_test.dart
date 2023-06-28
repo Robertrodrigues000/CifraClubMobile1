@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/cifra/repository/user_cifra_repository.dart';
+import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
@@ -10,14 +10,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
-import '../../../shared_mocks/domain/songbook/models/songbook_cifras_mock.dart';
+import '../../../shared_mocks/domain/songbook/models/songbook_versions_mock.dart';
 import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
 class _SongbookRepositoryMock extends Mock implements SongbookRepository {}
 
 class _UserSongbookRepositoryMock extends Mock implements UserSongbookRepository {}
 
-class _UserCifraRepositoryMock extends Mock implements UserCifraRepository {}
+class _UserVersionRepositoryMock extends Mock implements UserVersionRepository {}
 
 class _UpdateSongbookPreviewMock extends Mock implements UpdateSongbookPreview {}
 
@@ -28,42 +28,43 @@ void main() {
     test("should replicate to local repository", () async {
       final songbookRepository = _SongbookRepositoryMock();
       final userSongbookRepository = _UserSongbookRepositoryMock();
-      final userCifraRepository = _UserCifraRepositoryMock();
+      final userVersionRepository = _UserVersionRepositoryMock();
       final updateSongbookPreview = _UpdateSongbookPreviewMock();
-      final songbookCifra = [
-        getFakeSongbookCifras(),
-        getFakeSongbookCifras(),
-        getFakeSongbookCifras(listType: ListType.cantPlay)
+      final songbookVersion = [
+        getFakeSongbookVersions(),
+        getFakeSongbookVersions(),
+        getFakeSongbookVersions(listType: ListType.cantPlay)
       ];
-      final songbooks = songbookCifra.map((e) => e.songbook).toList();
+      final songbooks = songbookVersion.map((e) => e.songbook).toList();
 
-      when(songbookRepository.getAllSongbooks).thenAnswer((_) => SynchronousFuture(Ok(songbookCifra)));
+      when(songbookRepository.getAllSongbooks).thenAnswer((_) => SynchronousFuture(Ok(songbookVersion)));
       when(() => userSongbookRepository.setUserSongbooks(songbooks))
           .thenAnswer((_) => SynchronousFuture(songbooks.map((e) => e.id!).toList(growable: false)));
-      when(() => userCifraRepository.addCifrasToSongbook(captureAny(), captureAny()))
+      when(() => userVersionRepository.addVersionToSongbook(captureAny(), captureAny()))
           .thenAnswer((_) => SynchronousFuture([]));
-      when(userCifraRepository.clearAllCifras).thenAnswer((_) => SynchronousFuture(null));
+      when(userVersionRepository.clearAllVersions).thenAnswer((_) => SynchronousFuture(null));
       when(() => updateSongbookPreview(any())).thenAnswer((_) => SynchronousFuture(1));
 
       final result = await RefreshAllSongbooks(
-          songbookRepository, userSongbookRepository, userCifraRepository, updateSongbookPreview)();
+          songbookRepository, userSongbookRepository, userVersionRepository, updateSongbookPreview)();
 
       expect(result.isSuccess, isTrue);
 
       expect(result.getOrThrow(), songbooks);
       verify(() => userSongbookRepository.setUserSongbooks(songbooks)).called(1);
-      verify(userCifraRepository.clearAllCifras).called(1);
+      verify(userVersionRepository.clearAllVersions).called(1);
       verify(() => updateSongbookPreview(any())).called(2);
 
-      final songbookParams = verify(() => userCifraRepository.addCifrasToSongbook(captureAny(), captureAny())).captured;
+      final songbookParams =
+          verify(() => userVersionRepository.addVersionToSongbook(captureAny(), captureAny())).captured;
 
       expect(songbookParams, [
-        songbookCifra[0].cifras,
-        songbookCifra[0].songbook.id,
-        songbookCifra[1].cifras,
-        songbookCifra[1].songbook.id,
-        songbookCifra[2].cifras,
-        songbookCifra[2].songbook.type.localId,
+        songbookVersion[0].versions,
+        songbookVersion[0].songbook.id,
+        songbookVersion[1].versions,
+        songbookVersion[1].songbook.id,
+        songbookVersion[2].versions,
+        songbookVersion[2].songbook.type.localId,
       ]);
     });
   });
@@ -72,13 +73,13 @@ void main() {
     test("should not replicate to local repository", () async {
       final songbookRepository = _SongbookRepositoryMock();
       final userSongbookRepository = _UserSongbookRepositoryMock();
-      final userCifraRepository = _UserCifraRepositoryMock();
+      final userVersionRepository = _UserVersionRepositoryMock();
       final updateSongbookPreview = _UpdateSongbookPreviewMock();
 
       when(songbookRepository.getAllSongbooks).thenAnswer((_) => SynchronousFuture(Err(ConnectionError())));
 
       final result = await RefreshAllSongbooks(
-          songbookRepository, userSongbookRepository, userCifraRepository, updateSongbookPreview)();
+          songbookRepository, userSongbookRepository, userVersionRepository, updateSongbookPreview)();
 
       expect(result.isFailure, isTrue);
       verifyNever(() => userSongbookRepository.setUserSongbooks(any()));

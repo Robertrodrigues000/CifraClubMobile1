@@ -6,15 +6,15 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/domain/search/models/search_mock.dart';
 
-class _MockSearchDto extends Mock implements SearchDto {}
+class _SearchDtoMock extends Mock implements SearchDto {}
 
 void main() {
   test("when `toDomain` is called, should correctly convert to AllSearch", () {
-    final searchDtoArtist = _MockSearchDto();
+    final searchDtoArtist = _SearchDtoMock();
     final fakeSearchArtist = getFakeArtistSearch();
     when(searchDtoArtist.toDomain).thenReturn(fakeSearchArtist);
 
-    final searchDtoSong = _MockSearchDto();
+    final searchDtoSong = _SearchDtoMock();
     final fakeSearchSong = getFakeSongSearch();
     when(searchDtoSong.toDomain).thenReturn(fakeSearchSong);
 

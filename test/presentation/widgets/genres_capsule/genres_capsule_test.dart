@@ -24,7 +24,7 @@ void main() {
     expect(finder.style?.color, Colors.white);
   });
 
-  testWidgets("When tap in first capsule should return correctly empty string", (widgetTester) async {
+  testWidgets("When tap first capsule should return correctly empty string", (widgetTester) async {
     String? genreUrl;
     final genres = [getFakeGenre(), getFakeGenre()];
 
@@ -47,7 +47,7 @@ void main() {
     expect(genreUrl, isNull);
   });
 
-  testWidgets("When tap should return correctly genreUrl", (widgetTester) async {
+  testWidgets("When tap a genre capsule should return correctly genreUrl", (widgetTester) async {
     String? genreUrl;
     final genres = [getFakeGenre(), getFakeGenre()];
 
@@ -70,7 +70,7 @@ void main() {
     expect(genreUrl, genres.first.url);
   });
 
-  testWidgets("When tap in more should scroll to init", (widgetTester) async {
+  testWidgets("When tap more should scroll to init", (widgetTester) async {
     final genres = [
       getFakeGenre(),
       getFakeGenre(),

@@ -19,8 +19,9 @@ SongbookDto _$SongbookDtoFromJson(Map<String, dynamic> json) => SongbookDto(
       createdAt: json['createdAt'] as String?,
       lastUpdated: json['lastUpdate'] as String?,
       timestamp: json['timestamp'] as int?,
-      cifras:
-          (json['songs'] as List<dynamic>?)?.map((e) => SongbookCifraDto.fromJson(e as Map<String, dynamic>)).toList(),
+      versions: (json['songs'] as List<dynamic>?)
+          ?.map((e) => SongbookVersionDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$SongbookDtoToJson(SongbookDto instance) => <String, dynamic>{
@@ -36,5 +37,5 @@ Map<String, dynamic> _$SongbookDtoToJson(SongbookDto instance) => <String, dynam
       'createdAt': instance.createdAt,
       'lastUpdate': instance.lastUpdated,
       'timestamp': instance.timestamp,
-      'songs': instance.cifras,
+      'songs': instance.versions,
     };

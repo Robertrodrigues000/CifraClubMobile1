@@ -1,10 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_bloc.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_screen.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
@@ -29,7 +29,7 @@ class _SongbookBlocMock extends Mock implements SongbookBloc {}
 
 class _ListsBlocMock extends Mock implements ListsBloc {}
 
-class _CifrasBlocMock extends Mock implements CifrasBloc {}
+class _VersionsBlocMock extends Mock implements VersionsBloc {}
 
 class _SongbookFake extends Fake implements Songbook {}
 
@@ -37,7 +37,7 @@ void main() {
   final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
   late SongbookBloc bloc;
   late ListsBloc listsBloc;
-  late CifrasBloc cifrasBloc;
+  late VersionsBloc versionsBloc;
 
   setUpAll(() {
     registerFallbackValue(_SongbookFake());
@@ -55,9 +55,9 @@ void main() {
     when(listsBloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
     when(() => listsBloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
 
-    cifrasBloc = _CifrasBlocMock();
-    when(() => cifrasBloc.getSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
-    when(cifrasBloc.close).thenAnswer((_) => SynchronousFuture(null));
+    versionsBloc = _VersionsBlocMock();
+    when(() => versionsBloc.getSongbook(any())).thenAnswer((_) => SynchronousFuture(null));
+    when(versionsBloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
   group("When start songbook screen", () {
@@ -95,10 +95,10 @@ void main() {
           ),
         );
 
-        expect(find.byType(CifrasScreen), findsNothing);
+        expect(find.byType(VersionsScreen), findsNothing);
       });
 
-      testWidgets("and click in a songbook should push to a new cifras screen", (widgetTester) async {
+      testWidgets("and click in a songbook should push to a new versions screen", (widgetTester) async {
         binding.window.physicalSizeTestValue = const Size(460, 800);
         binding.window.devicePixelRatioTestValue = 1.0;
 
@@ -121,32 +121,32 @@ void main() {
         final finder = find.byType(UserListItem).first;
 
         await widgetTester.tap(finder);
-        verify(() => nav.push(screenName: CifrasEntry.name)).called(1);
+        verify(() => nav.push(screenName: VersionsEntry.name)).called(1);
       });
     });
 
     group("in a tablet", () {
-      testWidgets("should show lists and cifra screen", (widgetTester) async {
+      testWidgets("should show lists and version screen", (widgetTester) async {
         binding.window.physicalSizeTestValue = const Size(850, 1000);
         binding.window.devicePixelRatioTestValue = 1.0;
 
         bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
         listsBloc.mockStream(const ListsState());
-        cifrasBloc.mockStream(const CifrasState(isPublic: true));
+        versionsBloc.mockStream(const VersionsState(isPublic: true));
 
         await widgetTester.pumpWidgetWithWrapper(
           MultiBlocProvider(
             providers: [
               BlocProvider<SongbookBloc>.value(value: bloc),
               BlocProvider<ListsBloc>.value(value: listsBloc),
-              BlocProvider<CifrasBloc>.value(value: cifrasBloc),
+              BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
             child: const SongbookScreen(),
           ),
         );
 
         expect(find.byType(ListsScreen), findsOneWidget);
-        expect(find.byType(CifrasScreen), findsOneWidget);
+        expect(find.byType(VersionsScreen), findsOneWidget);
       });
 
       testWidgets("and click in a songbook should emit new songbook", (widgetTester) async {
@@ -155,14 +155,14 @@ void main() {
 
         bloc.mockStream(const SongbookState(selectedSongbook: null, isUserLoggedIn: true));
         listsBloc.mockStream(ListsState(userLists: [getFakeSongbook()]));
-        cifrasBloc.mockStream(const CifrasState(isPublic: true));
+        versionsBloc.mockStream(const VersionsState(isPublic: true));
 
         await widgetTester.pumpWidgetWithWrapper(
           MultiBlocProvider(
             providers: [
               BlocProvider<SongbookBloc>.value(value: bloc),
               BlocProvider<ListsBloc>.value(value: listsBloc),
-              BlocProvider<CifrasBloc>.value(value: cifrasBloc),
+              BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
             child: const SongbookScreen(),
           ),

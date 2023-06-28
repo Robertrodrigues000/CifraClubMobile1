@@ -1,9 +1,9 @@
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_bloc.dart';
-import 'package:cifraclub/presentation/screens/top_songs/top_songs_state/top_songs_state.dart';
+import 'package:cifraclub/presentation/screens/top_songs/top_songs_state.dart';
 import 'package:cifraclub/presentation/screens/top_songs/widgets/top_songs.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
-import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

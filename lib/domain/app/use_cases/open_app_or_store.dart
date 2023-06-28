@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/app/model/app.dart';
+import 'package:cifraclub/domain/app/models/app.dart';
 import 'package:cifraclub/domain/app/use_cases/is_app_installed.dart';
 import 'package:cifraclub/domain/app/use_cases/open_app.dart';
 import 'package:cifraclub/domain/device/operating_system/models/operating_system.dart';

@@ -1,21 +1,21 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
-import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
+import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/highlights/highlights.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_button.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_header.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/home_top_artists.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/home_top_cifras.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_top_songs.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/news/blog.dart';
-import 'package:cifraclub/presentation/screens/home/widgets/profile_bottom_sheet/profile_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
-import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         // coverage:ignore-end
                       ),
-                      HomeTopCifras(
-                        topSongs: state.topCifras,
+                      HomeTopSongs(
+                        topSongs: state.topSongs,
                         onTap: (song) {},
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () {},
                       ),
 
-                      //Videolessons section
+                      //Video lessons section
                       if (state.videoLessons != null) ...[
                         HomeTitle(
                             onClick: state.videoLessons!.length >= 4 ? () {} : null,
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (state.videoLessons!.length >= 4) ...[
                           const SliverToBoxAdapter(child: SizedBox(height: 8)),
                           HomeButton(
-                            key: const Key("videolessons more button"),
+                            key: const Key("video lessons more button"),
                             text: context.text.showMoreButton(context.text.videos.toLowerCase()),
                             onTap: () {},
                           ),

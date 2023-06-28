@@ -1,10 +1,10 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_constants.dart';
-import 'package:cifraclub/domain/list_limit/models/tabs_limit_constants.dart';
+import 'package:cifraclub/domain/list_limit/models/versions_limit_constants.dart';
 import 'package:cifraclub/domain/remote_config/models/instrument_urls.dart';
 import 'package:cifraclub/domain/remote_config/models/remote_product.dart';
 
 abstract class RemoteConfigRepository {
-  bool get wasValuesfetched;
+  bool get wasValuesFetched;
 
   Future<bool> fetch();
 
@@ -18,5 +18,5 @@ abstract class RemoteConfigRepository {
 
   ListLimitConstants getListLimitConstants();
 
-  TabsLimitConstants getTabsLimitConstants();
+  VersionsLimitConstants getVersionsLimitConstants();
 }

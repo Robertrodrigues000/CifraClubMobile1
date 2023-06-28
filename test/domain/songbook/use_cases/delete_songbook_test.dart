@@ -9,13 +9,13 @@ import 'package:typed_result/typed_result.dart';
 
 class _SongbookRepositoryMock extends Mock implements SongbookRepository {}
 
-class _UserSongbookRepository extends Mock implements UserSongbookRepository {}
+class _UserSongbookRepositoryMock extends Mock implements UserSongbookRepository {}
 
 void main() {
-  group("When usecase is called", () {
+  group("When DeleteSongbook is called", () {
     test("and request is successful should delete local songbook", () async {
       final songbookRepository = _SongbookRepositoryMock();
-      final userSongbookRepository = _UserSongbookRepository();
+      final userSongbookRepository = _UserSongbookRepositoryMock();
 
       when(() => songbookRepository.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
       when(() => userSongbookRepository.deleteUserSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
@@ -27,9 +27,9 @@ void main() {
       verify(() => userSongbookRepository.deleteUserSongbook(any())).called(1);
     });
 
-    test("and request is fails should return request error", () async {
+    test("and request fails should return request error", () async {
       final songbookRepository = _SongbookRepositoryMock();
-      final userSongbookRepository = _UserSongbookRepository();
+      final userSongbookRepository = _UserSongbookRepositoryMock();
 
       when(() => songbookRepository.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(Err(ConnectionError())));
       when(() => userSongbookRepository.deleteUserSongbook(any())).thenAnswer((_) => SynchronousFuture(true));

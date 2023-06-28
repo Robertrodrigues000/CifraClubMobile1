@@ -8,7 +8,7 @@ void main() {
     test("Should correctly convert to Artist", () async {
       const searchDto = SearchDto(
           idSong: null,
-          tipo: "1",
+          type: "1",
           txt: "Lifehouse",
           url: null,
           idArtist: 2843,
@@ -29,7 +29,7 @@ void main() {
     test("Should correctly convert to Song", () async {
       const searchDto = SearchDto(
           idSong: 27161,
-          tipo: "2",
+          type: "2",
           txt: "You And Me",
           url: "you-and-me",
           idArtist: 2843,

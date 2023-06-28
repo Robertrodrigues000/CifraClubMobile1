@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lesson_item.dart';
-import 'package:cifraclub/presentation/widgets/remote_image_cache_manager.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,17 +21,17 @@ void main() {
     PaintingBinding.instance.imageCache.clear();
     PaintingBinding.instance.imageCache.clearLiveImages();
   });
-  testWidgets("when videolesson item title is tap, should trigger onTap callback", (widgetTester) async {
-    final videolesson = getFakeVideoLessons();
+  testWidgets("when video lesson item title is tapped, should trigger onTap callback", (widgetTester) async {
+    final videoLesson = getFakeVideoLessons();
     final completer = Completer();
-    cacheManager.returns(videolesson.images.medium, kTransparentImage);
+    cacheManager.returns(videoLesson.images.medium, kTransparentImage);
 
     await widgetTester.pumpWidget(
       TestWrapper(
         child: Scaffold(
           body: RemoteImageCacheManager(
             cacheManager: cacheManager,
-            child: VideoLessonItem(videolesson: videolesson, width: 100, height: 100, onTap: completer.complete),
+            child: VideoLessonItem(videolesson: videoLesson, width: 100, height: 100, onTap: completer.complete),
           ),
         ),
       ),
@@ -41,7 +41,7 @@ void main() {
 
     await widgetTester.tap(
       find.text(
-        videolesson.title,
+        videoLesson.title,
       ),
     );
     expect(completer.isCompleted, isTrue);

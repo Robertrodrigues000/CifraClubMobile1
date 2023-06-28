@@ -16,7 +16,7 @@
     "genreHeaderAll": "Todos",
     "topSongs": "Top cifrados",
     "genres": "Géneros musicales",
-    "sendNewCifra": "Enviar Cifrado",
+    "sendNewVersion": "Enviar Cifrado",
     "cifraClubStore": "Cifra Club Store",
     "manageSubscription": "Administrar suscripción",
     "cifraClubPro": "Cifra Club Pro",
@@ -76,21 +76,21 @@
     "downloadAcademy": "Descargar Cifra Club Academy",
     "openAcademy": "Abrir Cifra Club Academy",
     "portugueseOnly": "Contenido disponible solo en portugués",
-    "cifras":"cifrados",
+    "versions":"cifrados",
     "increaseLimit": "Aumentar el Límite",
     "emptyLists":"Aún no has creado una lista",
     "onList": "En la lista",
     "gotIt": "Entendí",
     "notNow": "Ahora no",
     "testPro": "Prueba 7 días gratis!",
-    "tabsLimitProTitle": "Ha alcanzado el límite de {limit} cifrados en esta lista :\uFEFF(",
-    "tabsLimitProDescription1": "Cada lista admite hasta ",
-    "tabsLimitProDescription2": "cifrados. Para insertar más, elimine algunos de los existentes o agregue a otra lista.",
+    "versionsLimitProTitle": "Ha alcanzado el límite de {limit} cifrados en esta lista :\uFEFF(",
+    "versionsLimitProDescription1": "Cada lista admite hasta ",
+    "versionsLimitProDescription2": "cifrados. Para insertar más, elimine algunos de los existentes o agregue a otra lista.",
     "listLimitProTitle": "Has alcanzado el límite de {limit} listas creadas :\uFEFF(",
     "listLimitProDescription1": "Puedes crear hasta ",
     "listLimitProDescription2": "listas. Para crear más, elimine algunos de los existentes..",
-    "tabsLimitTitle": "Consigue más espacio para tus cifrados!",
-    "tabsLimitDescription1": "Ha alcanzado el límite de {limit} cifras ingresadas en esta lista. Para insertar hasta ",
+    "versionsLimitTitle": "Consigue más espacio para tus cifrados!",
+    "versionsLimitDescription1": "Ha alcanzado el límite de {limit} cifras ingresadas en esta lista. Para insertar hasta ",
     "listLimitTitle": "Consigue más espacio para tus listas!",
     "listLimitDescription1": "Has alcanzado el límite de {limit} listas creadas. Para crear hasta ",
     "listLimitDescription2": "más, únete al ",
@@ -127,8 +127,8 @@
     "inputDialogLabel": "Nombre da lista",
     "searchSongs" : "Buscar musica",
 
-    "tabsCount": "{count} {count,plural, =1{seleccionado}other{seleccionados}}",
-    "@tabsCount":{
+    "versionsCount": "{count} {count,plural, =1{seleccionado}other{seleccionados}}",
+    "@versionsCount":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -146,8 +146,8 @@
     "loggedOutListErrorButtonText": "Iniciar Sesión",
     "artistMoreSongs":"Mostrar más canciones",
     "moreAlbums":"Mostrar más álbumes",
-    "tabTone": "・Tono: {tone}",
-    "@tabTone": {
+    "versionTone": "・Tono: {tone}",
+    "@versionTone": {
         "placeholders": {
             "tone": {
                 "type": "String",

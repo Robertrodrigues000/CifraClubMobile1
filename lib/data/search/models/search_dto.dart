@@ -10,7 +10,8 @@ part 'search_dto.g.dart';
 class SearchDto extends Equatable {
   @JsonKey(name: "id_song")
   final int? idSong;
-  final String? tipo;
+  @JsonKey(name: "tipo")
+  final String? type;
   final String? txt;
   final String? url;
   @JsonKey(name: "id_artist")
@@ -21,7 +22,7 @@ class SearchDto extends Equatable {
 
   const SearchDto(
       {required this.idSong,
-      required this.tipo,
+      required this.type,
       required this.txt,
       required this.url,
       required this.idArtist,
@@ -51,5 +52,5 @@ class SearchDto extends Equatable {
   }
 
   @override
-  List<Object?> get props => [idSong, tipo, txt, url, idArtist, art, dns, imgm];
+  List<Object?> get props => [idSong, type, txt, url, idArtist, art, dns, imgm];
 }

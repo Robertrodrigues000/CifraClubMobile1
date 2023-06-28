@@ -4,8 +4,8 @@ import 'package:cifraclub/presentation/screens/academy/widgets/instructors_secti
 import 'package:flutter/material.dart';
 
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 
 class AcademyScreenPhone extends StatelessWidget {
   const AcademyScreenPhone({
@@ -75,7 +75,7 @@ class AcademyScreenPhone extends StatelessWidget {
                     Text(context.text.portugueseOnly, style: context.typography.subtitle7),
                     const SizedBox(height: 8),
                   ],
-                  CifraButton(
+                  CifraClubButton(
                     width: double.infinity,
                     type: ButtonType.solidBlack,
                     onPressed: openAppOrStore,

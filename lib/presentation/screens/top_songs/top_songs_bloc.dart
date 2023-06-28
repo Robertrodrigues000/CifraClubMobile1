@@ -7,7 +7,7 @@ import 'package:cifraclub/domain/shared/paginated_list.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart';
-import 'package:cifraclub/presentation/screens/top_songs/top_songs_state/top_songs_state.dart';
+import 'package:cifraclub/presentation/screens/top_songs/top_songs_state.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule_mixin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';

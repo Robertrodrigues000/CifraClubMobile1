@@ -14,14 +14,14 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   appBarLeadingWidth: 64,
 
   // Home
-  topCifrasItemsPerRow: 2,
+  topSongsItemsPerRow: 2,
   topArtistsItemsPerRow: 4,
   topVideosItemsPerRow: 4,
   highlightCardBorderRadius: 12,
   newsItemsPerRow: 2,
   newsItemThumbPadding: 10,
   newsItemTextPadding: 19,
-  rightMaginProfileIcon: 10,
+  rightMarginProfileIcon: 10,
 
   // Top cifras, Top artists
   topCellRankingWidth: 60,
@@ -36,7 +36,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   paddingBetweenInstructors: 12,
 
   //Lists
-  addCifraTileImageSize: 56,
+  addVersionTileImageSize: 56,
   listOperationDialogWidth: 400,
   searchInputHeight: 72,
   bottomPaddingCounter: 16,

@@ -14,13 +14,13 @@ import '../../../shared_mocks/domain/search/models/search_mock.dart';
 
 class _SearchDataSourceMock extends Mock implements SearchDataSource {}
 
-class _MockAllSearchDto extends Mock implements SearchListDto {}
+class _AllSearchDtoMock extends Mock implements SearchListDto {}
 
 void main() {
   group("When getAll() is called", () {
     test("Request successful", () async {
       final searchDataSource = _SearchDataSourceMock();
-      final allSearchDto = _MockAllSearchDto();
+      final allSearchDto = _AllSearchDtoMock();
       final allSearch = AllSearch(search: [getFakeArtistSearch(), getFakeSongSearch()]);
 
       when(() => searchDataSource.getAll(query: "lifehouse"))
@@ -59,7 +59,7 @@ void main() {
   group("When getSongs() is called", () {
     test("Request successful", () async {
       final searchDataSource = _SearchDataSourceMock();
-      final allSearchDto = _MockAllSearchDto();
+      final allSearchDto = _AllSearchDtoMock();
       final allSearch = AllSearch(search: [getFakeSongSearch(), getFakeSongSearch()]);
 
       when(() => searchDataSource.getSongs(query: "ava")).thenAnswer(

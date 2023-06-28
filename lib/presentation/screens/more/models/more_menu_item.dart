@@ -43,7 +43,7 @@ class MoreMenuItem {
         destination: GenresEntry.name,
       ),
       MoreMenuItem(
-        title: context.text.sendNewCifra,
+        title: context.text.sendNewVersion,
         imageAsset: AppSvgs.moreContribIcon,
         destination: DevScreenEntry.name,
       ),

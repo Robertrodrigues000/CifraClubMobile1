@@ -6,12 +6,12 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
-import 'package:cifraclub/presentation/dialogs/save_cifras_in_list_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/save_versions_in_list_dialog.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
-import 'package:cifraclub/presentation/screens/dev/widgets/bottom_sheet/dev_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_cifras_to_list/add_cifras_to_list_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
@@ -163,7 +163,7 @@ class _DevScreenState extends State<DevScreen> {
                   ),
                   title: const Text("Add cifras to List"),
                   onTap: () {
-                    Nav.of(context).push(screenName: AddCifrasToListEntry.name);
+                    Nav.of(context).push(screenName: AddVersionsToListEntry.name);
                   },
                 ),
                 ListTile(
@@ -183,7 +183,7 @@ class _DevScreenState extends State<DevScreen> {
                   ),
                   title: const Text("Save Cifras Dialog"),
                   onTap: () {
-                    SaveCifrasInListDialog.show(context: context, totalCifras: 14, count: 10);
+                    SaveVersionsInListDialog.show(context: context, totalVersions: 14, count: 10);
                   },
                 ),
                 ListTile(

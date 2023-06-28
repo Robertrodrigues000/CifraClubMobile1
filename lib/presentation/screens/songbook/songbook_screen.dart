@@ -1,6 +1,6 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_screen.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_state.dart';
@@ -77,7 +77,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
                             color: context.colors.neutralTertiary,
                           ),
                           Expanded(
-                            child: CifrasScreen(
+                            child: VersionsScreen(
                               isTablet: true,
                               songbook: state.selectedSongbook,
                             ),
@@ -90,7 +90,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
               } else {
                 return ListsScreen(
                   onTapSongbook: (songbook) {
-                    Nav.of(context).push(screenName: CifrasEntry.name);
+                    Nav.of(context).push(screenName: VersionsEntry.name);
                   },
                 );
               }

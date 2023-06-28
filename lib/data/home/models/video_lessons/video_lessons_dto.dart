@@ -1,5 +1,5 @@
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
-import 'package:cifraclub/data/home/models/video_lessons/version_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/video_lesson_version_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_image_dto.dart';
 import 'package:cifraclub/data/song/models/song_dto.dart';
 import 'package:equatable/equatable.dart';
@@ -21,7 +21,7 @@ class VideoLessonsDto extends Equatable {
   final SongDto? song;
   final ArtistDto? artist;
   final VideoLessonsImageDto? images;
-  final VersionDto? version;
+  final VideoLessonVersionDto? version;
 
   VideoLesson toDomain() => VideoLesson(
         id: id,

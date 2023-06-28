@@ -12,7 +12,7 @@ import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/domain/home/use_cases/get_home_info.dart';
-import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
+import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule_mixin.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';
@@ -91,7 +91,7 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
         state.copyWith(
           highlights: homeInfo.highlights,
           topArtists: homeInfo.artists,
-          topCifras: homeInfo.songs,
+          topSongs: homeInfo.songs,
           videoLessons: homeInfo.videoLessons,
           blog: homeInfo.news?.take(4).toList(),
           isLoading: false,

@@ -7,15 +7,15 @@ import '../../../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
 import '../../../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("when videolessons list is not empty, should show videolesson items", (widgetTester) async {
-    final videolessons = [getFakeVideoLessons(), getFakeVideoLessons()];
+  testWidgets("when video lessons list is not empty, should show video lesson items", (widgetTester) async {
+    final videoLessons = [getFakeVideoLessons(), getFakeVideoLessons()];
     await widgetTester.pumpWidget(
       TestWrapper(
         child: Scaffold(
           body: CustomScrollView(
             slivers: [
               VideoLessons(
-                list: videolessons,
+                list: videoLessons,
               )
             ],
           ),

@@ -13,7 +13,7 @@ class AppDimensionScheme {
   final double widthBottomSheet;
   final double sectionHeaderToFirstElement;
   final double scrollContentToBottom;
-  final int topCifrasItemsPerRow;
+  final int topSongsItemsPerRow;
   final int topArtistsItemsPerRow;
   final int topVideosItemsPerRow;
   final double bottomSheetContentToBottom;
@@ -22,14 +22,14 @@ class AppDimensionScheme {
   final double newsItemThumbPadding;
   final double newsItemTextPadding;
   final double externalMarginWithoutConnection;
-  final double rightMaginProfileIcon;
+  final double rightMarginProfileIcon;
   final double appBarMargin;
   final double verticalMarginAcademyInfo;
   final double academyLogoHeight;
   final double academyLogoBottomPadding;
   final double paddingBetweenInstructors;
   final double rightPaddingCard;
-  final double addCifraTileImageSize;
+  final double addVersionTileImageSize;
   final double? listOperationDialogWidth;
   final double searchInputHeight;
   final double bottomPaddingCounter;
@@ -48,7 +48,7 @@ class AppDimensionScheme {
     required this.widthBottomSheet,
     required this.sectionHeaderToFirstElement,
     required this.scrollContentToBottom,
-    required this.topCifrasItemsPerRow,
+    required this.topSongsItemsPerRow,
     required this.topArtistsItemsPerRow,
     required this.topVideosItemsPerRow,
     required this.bottomSheetContentToBottom,
@@ -57,14 +57,14 @@ class AppDimensionScheme {
     required this.newsItemThumbPadding,
     required this.newsItemTextPadding,
     required this.externalMarginWithoutConnection,
-    required this.rightMaginProfileIcon,
+    required this.rightMarginProfileIcon,
     required this.appBarMargin,
     required this.verticalMarginAcademyInfo,
     required this.academyLogoHeight,
     required this.academyLogoBottomPadding,
     required this.paddingBetweenInstructors,
     required this.rightPaddingCard,
-    required this.addCifraTileImageSize,
+    required this.addVersionTileImageSize,
     required this.listOperationDialogWidth,
     required this.searchInputHeight,
     required this.bottomPaddingCounter,

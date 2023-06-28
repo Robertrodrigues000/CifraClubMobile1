@@ -14,14 +14,14 @@ const appDimensionSchemePhone = AppDimensionScheme(
   appBarLeadingWidth: 56,
 
   // Home
-  topCifrasItemsPerRow: 1,
+  topSongsItemsPerRow: 1,
   topArtistsItemsPerRow: 2,
   topVideosItemsPerRow: 2,
   highlightCardBorderRadius: 8,
   newsItemsPerRow: 1,
   newsItemThumbPadding: 8,
   newsItemTextPadding: 17,
-  rightMaginProfileIcon: 2,
+  rightMarginProfileIcon: 2,
 
   // Top cifras, Top artists
   topCellRankingWidth: 52,
@@ -36,7 +36,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   paddingBetweenInstructors: 8,
 
   //Lists
-  addCifraTileImageSize: 40,
+  addVersionTileImageSize: 40,
   listOperationDialogWidth: null,
   searchInputHeight: 56,
   bottomPaddingCounter: 12,

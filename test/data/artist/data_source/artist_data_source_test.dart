@@ -8,7 +8,7 @@ import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
-import 'package:cifraclub/data/home/models/video_lessons/version_dto.dart';
+import 'package:cifraclub/data/home/models/video_lessons/video_lesson_version_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_image_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
@@ -248,7 +248,7 @@ void main() {
       expect(result.isSuccess, true);
       final videoLessons = result.get()!;
 
-      final versionDto = VersionDto(id: 12, type: 2, label: "principal");
+      final versionDto = VideoLessonVersionDto(id: 12, type: 2, label: "principal");
       final videoLessonsDto = VideoLessonsDto(
         id: 5299,
         youtubeId: "GxCFTKpk6Rc",

@@ -5,11 +5,11 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
 
-class _MockArtistDto extends Mock implements ArtistDto {}
+class _ArtistDtoMock extends Mock implements ArtistDto {}
 
 void main() {
   test("when `toDomain` is called, should correctly convert to Song", () async {
-    final artistDto = _MockArtistDto();
+    final artistDto = _ArtistDtoMock();
     final artist = getFakeArtist();
 
     when(artistDto.toDomain).thenReturn(artist);

@@ -1,6 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
-import 'package:cifraclub/presentation/screens/songbook/cifras/cifras_bloc.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_screen.dart';
@@ -41,7 +41,7 @@ class SongbookEntry extends ScreenEntry {
                 getIt(),
                 getIt(),
               )),
-      BlocProvider(create: (context) => CifrasBloc()),
+      BlocProvider(create: (context) => VersionsBloc()),
       BlocProvider(create: (context) => SongbookBloc(getIt(), getIt())),
     ], child: const SongbookScreen());
   }

@@ -5,11 +5,11 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/domain/song/models/song_mock.dart';
 
-class _MockSongDto extends Mock implements SongDto {}
+class _SongDtoMock extends Mock implements SongDto {}
 
 void main() {
   test("when `toDomain` is called, should correctly convert to PaginatedList<Song>", () async {
-    final songDto = _MockSongDto();
+    final songDto = _SongDtoMock();
     final song = getFakeSong();
 
     when(songDto.toDomain).thenReturn(song);

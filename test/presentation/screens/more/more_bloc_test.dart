@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cifraclub/domain/app/model/app.dart';
+import 'package:cifraclub/domain/app/models/app.dart';
 import 'package:cifraclub/domain/app/use_cases/is_app_installed.dart';
 import 'package:cifraclub/domain/app/use_cases/open_app_or_store.dart';
 import 'package:cifraclub/domain/device/url_launcher/use_cases/open_url.dart';
@@ -20,30 +20,30 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/user/models/user_mock.dart';
 
-class _MockLogout extends Mock implements Logout {}
+class _LogoutMock extends Mock implements Logout {}
 
-class _MockGetCredentialStream extends Mock implements GetCredentialStream {}
+class _GetCredentialStreamMock extends Mock implements GetCredentialStream {}
 
-class _MockOpenAppOrStore extends Mock implements OpenAppOrStore {}
+class _OpenAppOrStoreMock extends Mock implements OpenAppOrStore {}
 
-class _MockIsAppInstalled extends Mock implements IsAppInstalled {}
+class _IsAppInstalledMock extends Mock implements IsAppInstalled {}
 
-class _MockOpenUrl extends Mock implements OpenUrl {}
+class _OpenUrlMock extends Mock implements OpenUrl {}
 
-class _MockOpenLoginPage extends Mock implements OpenLoginPage {}
+class _OpenLoginPageMock extends Mock implements OpenLoginPage {}
 
-class _MockOpenUserProfilePage extends Mock implements OpenUserProfilePage {}
+class _OpenUserProfilePageMock extends Mock implements OpenUserProfilePage {}
 
 void main() {
   test("When bloc is created, expect user to be null", () {
     final bloc = MoreBloc(
-      _MockGetCredentialStream(),
-      _MockOpenAppOrStore(),
-      _MockLogout(),
-      _MockIsAppInstalled(),
-      _MockOpenUrl(),
-      _MockOpenLoginPage(),
-      _MockOpenUserProfilePage(),
+      _GetCredentialStreamMock(),
+      _OpenAppOrStoreMock(),
+      _LogoutMock(),
+      _IsAppInstalledMock(),
+      _OpenUrlMock(),
+      _OpenLoginPageMock(),
+      _OpenUserProfilePageMock(),
     );
     expect(bloc.state, isA<MoreState>().having((state) => state.user, "user", isNull));
   });
@@ -55,19 +55,19 @@ void main() {
           BehaviorSubject.seeded(const UserCredential(isUserLoggedIn: false));
       final user = getFakeUser();
 
-      GetCredentialStream getCredentialStream = _MockGetCredentialStream();
+      GetCredentialStream getCredentialStream = _GetCredentialStreamMock();
       when(() => getCredentialStream()).thenAnswer((_) => credentialStream);
 
       blocTest(
         "should update state with user from use case",
         build: () => MoreBloc(
           getCredentialStream,
-          _MockOpenAppOrStore(),
-          _MockLogout(),
-          _MockIsAppInstalled(),
-          _MockOpenUrl(),
-          _MockOpenLoginPage(),
-          _MockOpenUserProfilePage(),
+          _OpenAppOrStoreMock(),
+          _LogoutMock(),
+          _IsAppInstalledMock(),
+          _OpenUrlMock(),
+          _OpenLoginPageMock(),
+          _OpenUserProfilePageMock(),
         ),
         act: (bloc) {
           bloc.init([]);
@@ -82,7 +82,7 @@ void main() {
       BehaviorSubject<UserCredential> credentialStream =
           BehaviorSubject.seeded(const UserCredential(isUserLoggedIn: false));
 
-      GetCredentialStream getCredentialStream = _MockGetCredentialStream();
+      GetCredentialStream getCredentialStream = _GetCredentialStreamMock();
       when(() => getCredentialStream()).thenAnswer((_) => credentialStream);
 
       AppItem item = const AppItem(
@@ -92,19 +92,19 @@ void main() {
         app: App.afinador,
       );
 
-      IsAppInstalled isAppInstalled = _MockIsAppInstalled();
+      IsAppInstalled isAppInstalled = _IsAppInstalledMock();
       when(() => isAppInstalled(item.app)).thenAnswer((_) => SynchronousFuture(true));
 
       blocTest(
         "should update state with verified installed apps",
         build: () => MoreBloc(
           getCredentialStream,
-          _MockOpenAppOrStore(),
-          _MockLogout(),
+          _OpenAppOrStoreMock(),
+          _LogoutMock(),
           isAppInstalled,
-          _MockOpenUrl(),
-          _MockOpenLoginPage(),
-          _MockOpenUserProfilePage(),
+          _OpenUrlMock(),
+          _OpenLoginPageMock(),
+          _OpenUserProfilePageMock(),
         ),
         act: (bloc) {
           bloc.init([item]);
@@ -115,18 +115,18 @@ void main() {
   });
 
   group("When logout is called", () {
-    _MockLogout logout = _MockLogout();
+    _LogoutMock logout = _LogoutMock();
     when(() => logout.call()).thenAnswer((invocation) => SynchronousFuture(null));
     blocTest(
       "should call logout use case",
       build: () => MoreBloc(
-        _MockGetCredentialStream(),
-        _MockOpenAppOrStore(),
+        _GetCredentialStreamMock(),
+        _OpenAppOrStoreMock(),
         logout,
-        _MockIsAppInstalled(),
-        _MockOpenUrl(),
-        _MockOpenLoginPage(),
-        _MockOpenUserProfilePage(),
+        _IsAppInstalledMock(),
+        _OpenUrlMock(),
+        _OpenLoginPageMock(),
+        _OpenUserProfilePageMock(),
       ),
       act: (bloc) {
         bloc.logout();
@@ -138,20 +138,20 @@ void main() {
   });
 
   group("When open app or store is called", () {
-    OpenAppOrStore openAppOrStore = _MockOpenAppOrStore();
+    OpenAppOrStore openAppOrStore = _OpenAppOrStoreMock();
     const App app = App.cifraClub;
     when(() => openAppOrStore.call(app)).thenAnswer((invocation) => SynchronousFuture(null));
 
     blocTest(
       "should call open app or store use case",
       build: () => MoreBloc(
-        _MockGetCredentialStream(),
+        _GetCredentialStreamMock(),
         openAppOrStore,
-        _MockLogout(),
-        _MockIsAppInstalled(),
-        _MockOpenUrl(),
-        _MockOpenLoginPage(),
-        _MockOpenUserProfilePage(),
+        _LogoutMock(),
+        _IsAppInstalledMock(),
+        _OpenUrlMock(),
+        _OpenLoginPageMock(),
+        _OpenUserProfilePageMock(),
       ),
       act: (bloc) {
         bloc.openAppOrStore(app);
@@ -163,20 +163,20 @@ void main() {
   });
 
   group("When open url is called", () {
-    OpenUrl openUrl = _MockOpenUrl();
+    OpenUrl openUrl = _OpenUrlMock();
     String url = "https://stackoverflow.com/";
     when(() => openUrl.call(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
     blocTest(
       "should call open url use case",
       build: () => MoreBloc(
-        _MockGetCredentialStream(),
-        _MockOpenAppOrStore(),
-        _MockLogout(),
-        _MockIsAppInstalled(),
+        _GetCredentialStreamMock(),
+        _OpenAppOrStoreMock(),
+        _LogoutMock(),
+        _IsAppInstalledMock(),
         openUrl,
-        _MockOpenLoginPage(),
-        _MockOpenUserProfilePage(),
+        _OpenLoginPageMock(),
+        _OpenUserProfilePageMock(),
       ),
       act: (bloc) {
         bloc.openUrl(url);
@@ -188,20 +188,20 @@ void main() {
   });
 
   group("When open login page is called", () {
-    OpenLoginPage openLoginPage = _MockOpenLoginPage();
+    OpenLoginPage openLoginPage = _OpenLoginPageMock();
 
     when(() => openLoginPage.call()).thenAnswer((_) => SynchronousFuture(null));
 
     blocTest(
       "should call open login page use case",
       build: () => MoreBloc(
-        _MockGetCredentialStream(),
-        _MockOpenAppOrStore(),
-        _MockLogout(),
-        _MockIsAppInstalled(),
-        _MockOpenUrl(),
+        _GetCredentialStreamMock(),
+        _OpenAppOrStoreMock(),
+        _LogoutMock(),
+        _IsAppInstalledMock(),
+        _OpenUrlMock(),
         openLoginPage,
-        _MockOpenUserProfilePage(),
+        _OpenUserProfilePageMock(),
       ),
       act: (bloc) {
         bloc.openLoginPage();
@@ -213,18 +213,18 @@ void main() {
   });
 
   group("When open user profile page is called", () {
-    OpenUserProfilePage openUserProfilePage = _MockOpenUserProfilePage();
+    OpenUserProfilePage openUserProfilePage = _OpenUserProfilePageMock();
     when(() => openUserProfilePage.call()).thenAnswer((_) => SynchronousFuture(null));
 
     blocTest(
       "should call open user profile page use case",
       build: () => MoreBloc(
-        _MockGetCredentialStream(),
-        _MockOpenAppOrStore(),
-        _MockLogout(),
-        _MockIsAppInstalled(),
-        _MockOpenUrl(),
-        _MockOpenLoginPage(),
+        _GetCredentialStreamMock(),
+        _OpenAppOrStoreMock(),
+        _LogoutMock(),
+        _IsAppInstalledMock(),
+        _OpenUrlMock(),
+        _OpenLoginPageMock(),
         openUserProfilePage,
       ),
       act: (bloc) {

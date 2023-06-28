@@ -7,7 +7,7 @@ class AppSvgs {
 
   static const acousticGuitarBadge = "assets/images/acoustic_guitar_badge.svg";
   static const verifiedIcon = "assets/images/verified_icon.svg";
-  static const videolessonIcon = "assets/images/videolesson_icon.svg";
+  static const videoLessonIcon = "assets/images/video_lesson_icon.svg";
   static const artistsAvatarPlaceHolder = "assets/images/artist_avatar_placeholder.svg";
   static const dropdownIcon = "assets/images/dropdown_icon.svg";
   static const editIcon = "assets/images/edit_icon.svg";
@@ -45,8 +45,8 @@ class AppSvgs {
   static const songbookOptionsIcon = "assets/images/songbook_options_icon.svg";
 
   static const imagePlaceholder = "assets/images/image_placeholder.svg";
-  static const addCifraIcon = "assets/images/add_cifra_icon.svg";
-  static const selectedCifraIcon = "assets/images/selected_cifra_icon.svg";
+  static const addVersionIcon = "assets/images/add_version_icon.svg";
+  static const selectedVersionIcon = "assets/images/selected_version_icon.svg";
   static const shareIcon = "assets/images/share_icon.svg";
   static const overflowIcon = "assets/images/overflow_icon.svg";
   static const backArrowIcon = "assets/images/back_arrow_icon.svg";

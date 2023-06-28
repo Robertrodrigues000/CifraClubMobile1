@@ -1,6 +1,6 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:flutter/widgets.dart';
 
@@ -38,7 +38,7 @@ class ErrorDescriptionWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: dimensions.errorWidgetButtonSpace),
-          CifraButton(
+          CifraClubButton(
             type: ButtonType.outline,
             width: dimensions.errorWidgetButtonWidth,
             onPressed: onClick,

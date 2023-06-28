@@ -1,7 +1,7 @@
-import 'package:cifraclub/data/songbook/models/songbook_cifra_dto.dart';
-import 'package:cifraclub/domain/cifra/models/cifra.dart';
+import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'songbook_dto.g.dart';
@@ -23,7 +23,7 @@ class SongbookDto {
   final String? lastUpdated;
   final int? timestamp;
   @JsonKey(name: "songs")
-  final List<SongbookCifraDto>? cifras;
+  final List<SongbookVersionDto>? versions;
 
   SongbookDto({
     this.id,
@@ -38,12 +38,12 @@ class SongbookDto {
     this.createdAt,
     this.lastUpdated,
     this.timestamp,
-    this.cifras,
+    this.versions,
   });
 
   factory SongbookDto.fromJson(Map<String, dynamic> json) => _$SongbookDtoFromJson(json);
 
-  ({Songbook songbook, List<Cifra> cifras}) toDomain() => (
+  ({Songbook songbook, List<Version> versions}) toDomain() => (
         songbook: Songbook(
           id: id,
           userId: userId,
@@ -58,7 +58,7 @@ class SongbookDto {
           totalSongs: totalSongs ?? 0,
           preview: const [],
         ),
-        cifras: cifras?.map((e) => e.toDomain()).toList() ?? [],
+        versions: versions?.map((e) => e.toDomain()).toList() ?? [],
       );
 
   ListType _getListType(String type) {

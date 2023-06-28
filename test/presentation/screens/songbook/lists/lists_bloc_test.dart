@@ -3,7 +3,7 @@ import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_all_cifras.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_all_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -112,7 +112,7 @@ class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {
   }
 }
 
-class _DeleteAllCifrasMock extends Mock implements DeleteAllCifras {}
+class _DeleteAllCifrasMock extends Mock implements DeleteAllVersions {}
 
 class _ShareLinkMock extends Mock implements ShareLink {}
 

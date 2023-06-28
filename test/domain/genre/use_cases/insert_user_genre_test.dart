@@ -14,7 +14,7 @@ class _SetUserGenresMock extends Mock implements SetUserGenres {}
 
 void main() {
   group("When use case is called", () {
-    test("when genre dont exists should insert in the user list", () async {
+    test("when genre do not exists should insert in the user list", () async {
       final getUserGenresAsStream = _GetUserGenreAsStreamMock();
       final setUserGenres = _SetUserGenresMock();
 

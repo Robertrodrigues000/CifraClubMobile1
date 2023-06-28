@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cifraclub/domain/app/model/app.dart';
+import 'package:cifraclub/domain/app/models/app.dart';
 import 'package:cifraclub/domain/app/use_cases/is_app_installed.dart';
 import 'package:cifraclub/domain/app/use_cases/open_app_or_store.dart';
 import 'package:cifraclub/domain/device/url_launcher/use_cases/open_url.dart';

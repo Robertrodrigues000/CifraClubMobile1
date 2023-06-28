@@ -1,6 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/data/user/repository/ccid.dart';
-import 'package:cifraclub/domain/user/repository/autentication_repository.dart';
+import 'package:cifraclub/domain/user/repository/authentication_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @module

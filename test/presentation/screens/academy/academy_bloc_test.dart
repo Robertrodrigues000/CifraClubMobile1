@@ -1,5 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:cifraclub/domain/app/model/app.dart';
+import 'package:cifraclub/domain/app/models/app.dart';
 import 'package:cifraclub/domain/app/use_cases/is_app_installed.dart';
 import 'package:cifraclub/domain/app/use_cases/open_app_or_store.dart';
 import 'package:cifraclub/presentation/screens/academy/academy_bloc.dart';

@@ -17,7 +17,7 @@ class _SongDtoMock extends Mock implements SongDto {}
 
 class _ArtistDtoMock extends Mock implements ArtistDto {}
 
-class _VideoLessosDtoMock extends Mock implements VideoLessonsDto {}
+class _VideoLessonsDtoMock extends Mock implements VideoLessonsDto {}
 
 class _NewsDtoMock extends Mock implements NewsDto {}
 
@@ -33,7 +33,7 @@ void main() {
     final artist = getFakeArtist();
     when(artistDto.toDomain).thenReturn(artist);
 
-    final videoLessonsDto = _VideoLessosDtoMock();
+    final videoLessonsDto = _VideoLessonsDtoMock();
     final videoLessons = getFakeVideoLessons();
     when(videoLessonsDto.toDomain).thenReturn(videoLessons);
 

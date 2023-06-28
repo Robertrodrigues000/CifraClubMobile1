@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/app/model/app.dart';
+import 'package:cifraclub/domain/app/models/app.dart';
 import 'package:cifraclub/presentation/screens/more/models/app_item.dart';
 import 'package:cifraclub/presentation/screens/more/widgets/app_card.dart';
 import 'package:flutter/material.dart';

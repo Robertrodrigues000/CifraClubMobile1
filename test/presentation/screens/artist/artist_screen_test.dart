@@ -15,13 +15,13 @@ import '../../../shared_mocks/domain/artist/models/artist_song_mock.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
-class _MockArtistBloc extends Mock implements ArtistBloc {}
+class _ArtistBlocMock extends Mock implements ArtistBloc {}
 
 void main() {
   late ArtistBloc bloc;
 
   setUpAll(() {
-    bloc = _MockArtistBloc();
+    bloc = _ArtistBlocMock();
     when(bloc.getArtistSongs).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.getArtistInfo).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.getAlbums).thenAnswer((_) => SynchronousFuture(null));

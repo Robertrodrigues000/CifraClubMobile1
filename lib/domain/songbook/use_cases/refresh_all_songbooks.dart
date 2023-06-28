@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/cifra/repository/user_cifra_repository.dart';
+import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
@@ -13,20 +13,20 @@ import 'package:typed_result/typed_result.dart';
 class RefreshAllSongbooks {
   final SongbookRepository _songbookRepository;
   final UserSongbookRepository _userSongbookRepository;
-  final UserCifraRepository _userCifraRepository;
+  final UserVersionRepository _userVersionRepository;
   final UpdateSongbookPreview _updateSongbookPreview;
 
   RefreshAllSongbooks(
     this._songbookRepository,
     this._userSongbookRepository,
-    this._userCifraRepository,
+    this._userVersionRepository,
     this._updateSongbookPreview,
   );
 
   Future<Result<List<Songbook>, RequestError>> call() {
     return _songbookRepository.getAllSongbooks().then(
           (result) => result.onSuccess((response) async {
-            await _userCifraRepository.clearAllCifras();
+            await _userVersionRepository.clearAllVersions();
             final songbooks = response.map((e) => e.songbook).toList();
 
             await _userSongbookRepository.setUserSongbooks(songbooks);
@@ -34,7 +34,7 @@ class RefreshAllSongbooks {
             for (var element in response) {
               final id = element.songbook.type == ListType.user ? element.songbook.id : element.songbook.type.localId;
               if (id != null) {
-                await _userCifraRepository.addCifrasToSongbook(element.cifras, id);
+                await _userVersionRepository.addVersionToSongbook(element.versions, id);
                 if (element.songbook.type == ListType.user) {
                   await _updateSongbookPreview(id);
                 }

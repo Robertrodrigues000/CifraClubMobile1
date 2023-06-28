@@ -12,16 +12,16 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/song/models/song_mock.dart';
 
-class _MockSongDataSource extends Mock implements SongDataSource {}
+class _SongDataSourceMock extends Mock implements SongDataSource {}
 
-class _MockTopSongsDto extends Mock implements TopSongsDto {}
+class _TopSongsDtoMock extends Mock implements TopSongsDto {}
 
 void main() {
-  group("When getTopSongs() is Called", () {
+  group("When getTopSongs() is called", () {
     test("Request successful", () async {
-      final songDataSource = _MockSongDataSource();
+      final songDataSource = _SongDataSourceMock();
       final paginatedList = PaginatedList<Song>(items: [getFakeSong()], hasMoreResults: true);
-      final topSongsDto = _MockTopSongsDto();
+      final topSongsDto = _TopSongsDtoMock();
 
       when(topSongsDto.toDomain).thenReturn(paginatedList);
 
@@ -45,7 +45,7 @@ void main() {
     });
 
     test("Request failed", () async {
-      final songDataSource = _MockSongDataSource();
+      final songDataSource = _SongDataSourceMock();
 
       when(() => songDataSource.getTopSongs(limit: 2, offset: 0)).thenAnswer(
         (_) => CancelableOperation.fromFuture(

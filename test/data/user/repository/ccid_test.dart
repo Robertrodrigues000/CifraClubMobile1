@@ -33,7 +33,7 @@ void main() {
           ]));
     });
 
-    test("When there is a logged user, emit a credential with isUserLoggedIn true`", () async {
+    test("When there is a logged user, emit a credential with isUserLoggedIn true", () async {
       final channel = FakeMethodChannel(answers: {
         "initializeCcid": true,
         "isUserLoggedIn": true,

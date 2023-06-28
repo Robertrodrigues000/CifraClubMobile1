@@ -10,7 +10,7 @@ class ArtistSongItem extends StatelessWidget {
   final String name;
   final int ranking;
   final bool isVerified;
-  final bool hasVideolessons;
+  final bool hasVideoLessons;
 
   const ArtistSongItem({
     super.key,
@@ -19,7 +19,7 @@ class ArtistSongItem extends StatelessWidget {
     required this.name,
     required this.ranking,
     required this.isVerified,
-    required this.hasVideolessons,
+    required this.hasVideoLessons,
   });
 
   @override
@@ -30,7 +30,7 @@ class ArtistSongItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: context.appDimensionScheme.screenMargin),
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: hasVideolessons ? CrossAxisAlignment.baseline : CrossAxisAlignment.center,
+          crossAxisAlignment: hasVideoLessons ? CrossAxisAlignment.baseline : CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           textBaseline: TextBaseline.alphabetic,
           children: [
@@ -73,10 +73,10 @@ class ArtistSongItem extends StatelessWidget {
                   const SizedBox(
                     height: 2,
                   ),
-                  if (hasVideolessons)
+                  if (hasVideoLessons)
                     Row(
                       children: [
-                        SvgPicture.asset(AppSvgs.videolessonIcon),
+                        SvgPicture.asset(AppSvgs.videoLessonIcon),
                         const SizedBox(
                           width: 8,
                         ),

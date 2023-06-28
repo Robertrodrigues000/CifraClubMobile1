@@ -3,7 +3,7 @@ import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
 import 'images_size_mock.dart';
-import 'version_mock.dart';
+import 'video_lesson_version_mock.dart';
 
 VideoLesson getFakeVideoLessons() => VideoLesson(
     id: faker.randomGenerator.integer(1000),
@@ -16,4 +16,4 @@ VideoLesson getFakeVideoLessons() => VideoLesson(
     images: getFakeHomeImage(),
     instrumentsId: [faker.food.cuisine()],
     artist: getFakeArtist(),
-    version: getFakeVersion());
+    version: getFakeVideoLessonVersion());

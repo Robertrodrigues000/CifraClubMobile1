@@ -1,6 +1,6 @@
 import 'package:cifraclub/data/subscription/repository/subscription_repository_impl.dart';
-import 'package:cifraclub/domain/preferences/use_case/get_is_pro_preference.dart';
-import 'package:cifraclub/domain/preferences/use_case/set_is_pro_preference.dart';
+import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
+import 'package:cifraclub/domain/preferences/use_cases/set_is_pro_preference.dart';
 import 'package:cifraclub/domain/subscription/use_cases/verify_pro_status.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';

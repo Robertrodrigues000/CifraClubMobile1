@@ -3,7 +3,7 @@
 // which we can't override in unit tests
 
 import 'package:appcheck/appcheck.dart';
-import 'package:cifraclub/domain/app/model/app.dart';
+import 'package:cifraclub/domain/app/models/app.dart';
 import 'package:cifraclub/domain/app/repository/installed_app_repository.dart';
 import 'package:cifraclub/domain/device/operating_system/models/operating_system.dart';
 

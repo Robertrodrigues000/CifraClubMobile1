@@ -13,7 +13,7 @@ import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
-import 'package:cifraclub/presentation/screens/home/home_state/home_state.dart';
+import 'package:cifraclub/presentation/screens/home/home_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -163,7 +163,7 @@ void main() {
     );
 
     blocTest(
-      "if user is logged in should emit user infos",
+      "if user is logged in should emit user info",
       build: () => bloc,
       act: (bloc) => bloc.init(),
       verify: (bloc) {
@@ -187,7 +187,7 @@ void main() {
   });
 
   group("when requestHomeInfo", () {
-    group("is succesful", () {
+    group("is successful", () {
       final homeInfo = HomeInfo(
         highlights: [getFakeHighlight(), getFakeHighlight()],
         songs: [getFakeSong(), getFakeSong()],
@@ -208,7 +208,7 @@ void main() {
               .having((state) => state.isLoading, "is loading", false)
               .having((state) => state.highlights!.length, "highlights", homeInfo.highlights!.length)
               .having((state) => state.topArtists.length, "topArtists", homeInfo.artists!.length)
-              .having((state) => state.videoLessons!.length, "videlessons", homeInfo.videoLessons!.length)
+              .having((state) => state.videoLessons!.length, "videLessons", homeInfo.videoLessons!.length)
               .having((state) => state.blog.length, "blog", homeInfo.news!.length)
         ],
       );

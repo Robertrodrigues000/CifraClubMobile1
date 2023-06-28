@@ -1,7 +1,8 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/list_animation.dart';
-import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -18,11 +19,11 @@ class HomeButton extends StatelessWidget {
         child: AnimationConfiguration.synchronized(
           duration: ListAnimation.duration,
           child: ListAnimation(
-            child: CifraButton(
+            child: CifraClubButton(
               type: ButtonType.outline,
               onPressed: onTap,
               padding: EdgeInsets.only(left: dimensions.screenMargin, right: dimensions.screenMargin, bottom: 32),
-              child: Text(context.text.moreSongs),
+              child: Text(text),
             ),
           ),
         ),

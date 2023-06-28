@@ -10,20 +10,20 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
-class _UserSongbookRepository extends Mock implements UserSongbookRepository {}
+class _UserSongbookRepositoryMock extends Mock implements UserSongbookRepository {}
 
-class _SongbookRepository extends Mock implements SongbookRepository {}
+class _SongbookRepositoryMock extends Mock implements SongbookRepository {}
 
 void main() {
-  group("When use case is called", () {
-    final userSongbookRepository = _UserSongbookRepository();
+  group("When UpdateSongbookData is called", () {
+    final userSongbookRepository = _UserSongbookRepositoryMock();
     final songbook = getFakeSongbook();
     registerFallbackValue(songbook);
 
     when(() => userSongbookRepository.insertUserSongbook(captureAny()))
         .thenAnswer((_) => SynchronousFuture(songbook.id!));
 
-    final songbookRepository = _SongbookRepository();
+    final songbookRepository = _SongbookRepositoryMock();
 
     when(() => songbookRepository.updateSongbookData(
           songbookId: captureAny(named: "songbookId"),

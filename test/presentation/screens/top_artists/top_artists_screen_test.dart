@@ -1,9 +1,9 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_bloc.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_screen.dart';
-import 'package:cifraclub/presentation/screens/top_artists/top_artists_state/top_artists_state.dart';
+import 'package:cifraclub/presentation/screens/top_artists/top_artists_state.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
-import 'package:cifraclub/presentation/widgets/genres_bottom_sheet/genre_bottom_sheet.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +105,7 @@ void main() {
     });
   });
 
-  testWidgets("when genre is selected should call onGenreleSelected from bloc with the genreUrl", (widgetTester) async {
+  testWidgets("when genre is selected should call onGenreSelected from bloc with the genreUrl", (widgetTester) async {
     final genres = [getFakeGenre(), getFakeGenre()];
     bloc.mockStream(
       TopArtistsState(genres: genres, selectedGenre: "", topArtists: []),

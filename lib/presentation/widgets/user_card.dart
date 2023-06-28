@@ -2,7 +2,7 @@ import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
-import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

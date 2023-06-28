@@ -15,13 +15,13 @@ import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
-class _MockGenresBloc extends Mock implements GenresBloc {}
+class _GenresBlocMock extends Mock implements GenresBloc {}
 
 void main() {
   late GenresBloc bloc;
 
   setUpAll(() {
-    bloc = _MockGenresBloc();
+    bloc = _GenresBlocMock();
     when(bloc.requestGenres).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });

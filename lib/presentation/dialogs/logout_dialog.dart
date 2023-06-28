@@ -1,7 +1,7 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/dialogs/default_dialog.dart';
-import 'package:cifraclub/presentation/widgets/buttons/button_type.dart';
-import 'package:cifraclub/presentation/widgets/buttons/cifra_button.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/material.dart';
 
 class LogoutDialog extends StatelessWidget {
@@ -33,7 +33,7 @@ class LogoutDialog extends StatelessWidget {
       buttons: Row(
         children: [
           Expanded(
-            child: CifraButton(
+            child: CifraClubButton(
               type: ButtonType.outline,
               // coverage:ignore-start
               onPressed: () => Navigator.pop(context),
@@ -45,7 +45,7 @@ class LogoutDialog extends StatelessWidget {
             width: 16,
           ),
           Expanded(
-            child: CifraButton(
+            child: CifraClubButton(
               type: ButtonType.solidOrange,
               // coverage:ignore-start
               onPressed: () {

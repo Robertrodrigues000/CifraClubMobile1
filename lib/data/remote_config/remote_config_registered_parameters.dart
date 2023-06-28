@@ -1,7 +1,7 @@
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/list_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
-import 'package:cifraclub/data/remote_config/parameters/tabs_limit_constants_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/versions_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/time_between_interstitials_parameter.dart';
 import 'package:cifraclub/data/remote_config/remote_config_parameter.dart';
 
@@ -19,5 +19,5 @@ class RemoteConfigRegisteredParameters {
   final TimeBetweenIntersitialsParameter timeBetweenInterstitials = TimeBetweenIntersitialsParameter();
   final RemoteProductParameter products = RemoteProductParameter();
   final ListLimitConstantsParameter listLimitConstants = ListLimitConstantsParameter();
-  final TabsLimitConstantsParameter tabsLimitConstants = TabsLimitConstantsParameter();
+  final VersionsLimitConstantsParameter tabsLimitConstants = VersionsLimitConstantsParameter();
 }

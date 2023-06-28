@@ -5,7 +5,7 @@ import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_header_placeholder.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_header_tag.dart';
 import 'package:cifraclub/presentation/widgets/color_approximator.dart';
-import 'package:cifraclub/presentation/widgets/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/default_list_image.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_image_group.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/small_list_image.dart';
-import 'package:cifraclub/presentation/widgets/remote_image_cache_manager.dart';
+import 'package:cifraclub/presentation/widgets/remote_image/remote_image_cache_manager.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../../test_helpers/fake_cache_manager.dart';
@@ -30,7 +30,7 @@ void main() {
     expect(find.byType(DefaultListImage), findsOneWidget);
   });
 
-  testWidgets("When images lenght is 2 should shouw two small images", (widgetTester) async {
+  testWidgets("When images length is 2 should show two small images", (widgetTester) async {
     await widgetTester.pumpWidget(
       RemoteImageCacheManager(
         cacheManager: cacheManager,
@@ -45,7 +45,7 @@ void main() {
     expect(find.byType(SmallListImage), findsNWidgets(2));
   });
 
-  testWidgets("When images lenght is 3 should shouw three small images", (widgetTester) async {
+  testWidgets("When images length is 3 should show three small images", (widgetTester) async {
     await widgetTester.pumpWidget(
       RemoteImageCacheManager(
         cacheManager: cacheManager,
@@ -60,7 +60,7 @@ void main() {
     expect(find.byType(SmallListImage), findsNWidgets(3));
   });
 
-  testWidgets("When images lenght is 4 or more should shouw four small images", (widgetTester) async {
+  testWidgets("When images length is 4 or more should show four small images", (widgetTester) async {
     await widgetTester.pumpWidget(
       RemoteImageCacheManager(
         cacheManager: cacheManager,

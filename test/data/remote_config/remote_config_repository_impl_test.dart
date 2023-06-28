@@ -1,7 +1,7 @@
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/list_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
-import 'package:cifraclub/data/remote_config/parameters/tabs_limit_constants_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/versions_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/time_between_interstitials_parameter.dart';
 import 'package:cifraclub/data/remote_config/remote_config_registered_parameters.dart';
 import 'package:cifraclub/data/remote_config/remote_config_repository_impl.dart';
@@ -16,7 +16,7 @@ import '../../shared_mocks/data/remote_config/int_test_param.dart';
 class _RemoteConfigRegisteredParametersMock extends Mock implements RemoteConfigRegisteredParameters {}
 
 void main() {
-  late RemoteConfigRegisteredParameters mockRemoteConfigParameters;
+  late RemoteConfigRegisteredParameters remoteConfigParametersMock;
   late FirebaseRemoteConfig mockFirebaseRemoteConfig;
 
   late RemoteConfigRepository repository;
@@ -29,18 +29,18 @@ void main() {
       remoteValues: testRemoteConfigParams,
     );
 
-    mockRemoteConfigParameters = _RemoteConfigRegisteredParametersMock();
+    remoteConfigParametersMock = _RemoteConfigRegisteredParametersMock();
 
-    when(() => mockRemoteConfigParameters.registeredParams).thenReturn(remoteParams);
+    when(() => remoteConfigParametersMock.registeredParams).thenReturn(remoteParams);
 
     repository = RemoteConfigRepositoryImpl(
       remoteConfig: mockFirebaseRemoteConfig,
-      remoteConfigParameters: mockRemoteConfigParameters,
+      remoteConfigParameters: remoteConfigParametersMock,
     );
   });
 
   test("When created, wasValuesFetched must be false", () {
-    expect(repository.wasValuesfetched, isFalse);
+    expect(repository.wasValuesFetched, isFalse);
   });
 
   group("When fetching", () {
@@ -58,7 +58,7 @@ void main() {
 
     test("set wasValuesFetched to true", () async {
       await repository.fetch();
-      expect(repository.wasValuesfetched, isTrue);
+      expect(repository.wasValuesFetched, isTrue);
     });
 
     test("call plugin's fetchAndActivate()", () async {
@@ -77,14 +77,14 @@ void main() {
   group("check for correct value returned when", () {
     test(" getInstrumentUrls() called", () async {
       final instrumentUrlsParameter = InstrumentUrlsParameter();
-      when(() => mockRemoteConfigParameters.instrumentUrls).thenAnswer((_) => instrumentUrlsParameter);
+      when(() => remoteConfigParametersMock.instrumentUrls).thenAnswer((_) => instrumentUrlsParameter);
       final value = repository.getInstrumentUrls();
       expect(value == instrumentUrlsParameter.value, true);
     });
 
     test(" getTimeBetweenInterstitials() called", () async {
       final timeBetweenInterstitialParameter = TimeBetweenIntersitialsParameter();
-      when(() => mockRemoteConfigParameters.timeBetweenInterstitials)
+      when(() => remoteConfigParametersMock.timeBetweenInterstitials)
           .thenAnswer((realInvocation) => timeBetweenInterstitialParameter);
       final value = repository.getTimeBetweenInterstitials();
       expect(value == timeBetweenInterstitialParameter.value, true);
@@ -92,14 +92,14 @@ void main() {
 
     test(" getRemoteProducts() called", () async {
       final remoteProductParameter = RemoteProductParameter();
-      when(() => mockRemoteConfigParameters.products).thenAnswer((realInvocation) => remoteProductParameter);
+      when(() => remoteConfigParametersMock.products).thenAnswer((realInvocation) => remoteProductParameter);
       final value = repository.getProducts();
       expect(value == remoteProductParameter.value, true);
     });
 
     test(" getRemoteProductsIds() called", () async {
       final remoteProductParameter = RemoteProductParameter();
-      when(() => mockRemoteConfigParameters.products).thenAnswer((realInvocation) => remoteProductParameter);
+      when(() => remoteConfigParametersMock.products).thenAnswer((realInvocation) => remoteProductParameter);
       final value = repository.getProductsIds();
       expect(value.first == remoteProductParameter.value.first.id, true);
       expect(value.last == remoteProductParameter.value.last.id, true);
@@ -107,7 +107,7 @@ void main() {
 
     test(" getListLimitConstants() called", () async {
       final listLimitConstantsParameter = ListLimitConstantsParameter();
-      when(() => mockRemoteConfigParameters.listLimitConstants).thenAnswer((_) => listLimitConstantsParameter);
+      when(() => remoteConfigParametersMock.listLimitConstants).thenAnswer((_) => listLimitConstantsParameter);
       final value = repository.getListLimitConstants();
       expect(value == listLimitConstantsParameter.value, true);
       expect(value.maxListsForFree == listLimitConstantsParameter.value.maxListsForFree, true);
@@ -115,13 +115,14 @@ void main() {
       expect(value.listWarningCountThreshold == listLimitConstantsParameter.value.listWarningCountThreshold, true);
     });
 
-    test(" getTabsLimitConstants() called", () async {
-      final tabsLimitConstantsParameter = TabsLimitConstantsParameter();
-      when(() => mockRemoteConfigParameters.tabsLimitConstants).thenAnswer((_) => tabsLimitConstantsParameter);
-      final value = repository.getTabsLimitConstants();
-      expect(value.maxTabsForFree == tabsLimitConstantsParameter.value.maxTabsForFree, true);
-      expect(value.maxTabsForPro == tabsLimitConstantsParameter.value.maxTabsForPro, true);
-      expect(value.tabsWarningCountThreshold == tabsLimitConstantsParameter.value.tabsWarningCountThreshold, true);
+    test(" getVersionsLimitConstants() called", () async {
+      final versionsLimitConstantsParameter = VersionsLimitConstantsParameter();
+      when(() => remoteConfigParametersMock.tabsLimitConstants).thenAnswer((_) => versionsLimitConstantsParameter);
+      final value = repository.getVersionsLimitConstants();
+      expect(value.maxVersionsForFree == versionsLimitConstantsParameter.value.maxVersionsForFree, true);
+      expect(value.maxVersionsForPro == versionsLimitConstantsParameter.value.maxVersionsForPro, true);
+      expect(value.versionsWarningCountThreshold == versionsLimitConstantsParameter.value.versionsWarningCountThreshold,
+          true);
     });
   });
 }

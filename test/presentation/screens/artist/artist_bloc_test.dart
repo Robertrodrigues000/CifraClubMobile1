@@ -34,7 +34,7 @@ void main() {
         getAlbums ?? _GetAlbumsMock(),
       );
   group("When getArtistSongs is called", () {
-    group("when request is successful", () {
+    group("and request is successful", () {
       final getArtistSongs = _GetArtistSongsMock();
       final artistSongs = [
         getFakeArtistSong(),
@@ -62,7 +62,7 @@ void main() {
   });
 
   group("When getArtistInfo is called", () {
-    group("when request is successful", () {
+    group("and request is successful", () {
       final getArtistInfo = _GetArtistInfoMock();
       final artistInfo = getFakeArtistInfo();
 

@@ -1,9 +1,9 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/artist/use_cases/get_artist_video_lessons.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
-import 'package:cifraclub/domain/preferences/use_case/get_is_pro_preference.dart';
+import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_all_cifras.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_all_versions.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
@@ -22,7 +22,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final GetOrders _getOrders;
   final PostPurchaseOrder _postPurchaseOrder;
   final GetIsProPreference _getIsProPreference;
-  final DeleteAllCifras _deleteAllCifras;
+  final DeleteAllVersions _deleteAllVersions;
   final GetArtistVideoLessons _getArtistVideoLessons;
 
   DevScreenBloc(
@@ -33,7 +33,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._getOrders,
     this._postPurchaseOrder,
     this._getIsProPreference,
-    this._deleteAllCifras,
+    this._deleteAllVersions,
     this._getArtistVideoLessons,
   ) : super(const DevScreenState(isLoading: false));
 
@@ -87,6 +87,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   }
 
   Future<void> deleteCifrasTest() async {
-    await _deleteAllCifras(10093245);
+    await _deleteAllVersions(10093245);
   }
 }
