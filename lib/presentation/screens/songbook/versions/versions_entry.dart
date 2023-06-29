@@ -26,7 +26,7 @@ class VersionsEntry extends ScreenEntry {
         isTablet: false,
         songbook: Songbook(
           name: "fds.afd,m.sa fm,n.d sddd ss efdsr a",
-          isPublic: false,
+          isPublic: true,
           createdAt: DateTime(12),
           totalSongs: 1,
           type: ListType.user,

@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/dialogs/default_dialog.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
@@ -42,9 +41,7 @@ class ListOperationDialog extends StatelessWidget {
               children: [
                 CifraClubButton(
                   type: ButtonType.solidBlack,
-                  // coverage:ignore-start
                   onPressed: onFirstButtonTap,
-                  // coverage:ignore-end
                   child: Text(firstButtonText),
                 ),
                 const SizedBox(
@@ -52,9 +49,7 @@ class ListOperationDialog extends StatelessWidget {
                 ),
                 CifraClubButton(
                   type: ButtonType.outline,
-                  // coverage:ignore-start
                   onPressed: onSecondButtonTap,
-                  // coverage:ignore-end
                   child: Text(secondButtonText),
                 ),
               ],
@@ -64,9 +59,7 @@ class ListOperationDialog extends StatelessWidget {
                 Expanded(
                   child: CifraClubButton(
                     type: ButtonType.outline,
-                    // coverage:ignore-start
                     onPressed: onSecondButtonTap,
-                    // coverage:ignore-end
                     child: Text(secondButtonText),
                   ),
                 ),
@@ -76,9 +69,7 @@ class ListOperationDialog extends StatelessWidget {
                 Expanded(
                   child: CifraClubButton(
                     type: ButtonType.solidBlack,
-                    // coverage:ignore-start
                     onPressed: onFirstButtonTap,
-                    // coverage:ignore-end
                     child: Text(firstButtonText),
                   ),
                 ),

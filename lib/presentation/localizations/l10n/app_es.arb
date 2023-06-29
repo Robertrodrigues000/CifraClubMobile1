@@ -156,5 +156,8 @@
         }
     },
     "listUsedName": "Ya existe una lista con este nombre. Por favor, introduce otro.",
-    "listServerError": "No se puede acceder al servidor"
+    "listServerError": "No se puede acceder al servidor",
+    "deleteVersionOption": "Eliminar cifrado",
+    "versionOptionsBottomSheet": "Opciones de cifrado",
+    "deleteVersionDialogDescription": "¿Seguro que quieres eliminar este cifrado?"
 }

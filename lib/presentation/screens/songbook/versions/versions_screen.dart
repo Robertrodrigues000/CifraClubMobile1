@@ -1,12 +1,14 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
+import 'package:cifraclub/presentation/dialogs/delete_version_dialog.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -177,7 +179,15 @@ class _VersionsScreenState extends State<VersionsScreen> {
                         artist: "Legião Urbana",
                         type: "Violão",
                         tone: item.tone ?? "",
-                        onOptionsTap: () {},
+                        onOptionsTap: () async {
+                          ListVersionOptionsBottomSheet(onTap: () async {
+                            final shouldDeleteVersion =
+                                await DeleteVersionDialog.show(context: context, versionName: item.name);
+                            if (shouldDeleteVersion) {
+                              // todo: delete version from songbook
+                            }
+                          }).show(context);
+                        },
                         onVersionTap: () {},
                         onDeleteTap: () {},
                         onDragTap: () {},

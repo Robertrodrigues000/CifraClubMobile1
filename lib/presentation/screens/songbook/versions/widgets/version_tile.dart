@@ -100,7 +100,7 @@ class VersionTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right: 4.0),
                 child: IconButton(
-                  onPressed: onDragTap,
+                  onPressed: editable ? onDragTap : onOptionsTap,
                   padding: const EdgeInsets.all(12),
                   highlightColor: Theme.of(context).splashColor,
                   icon: SvgImage(
