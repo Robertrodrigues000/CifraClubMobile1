@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -29,7 +30,12 @@ void main() {
   });
 
   testWidgets("When state has songs, should display artist songs list", (widgetTester) async {
-    bloc.mockStream(ArtistState(songs: [getFakeArtistSong(), getFakeArtistSong()]));
+    bloc.mockStream(ArtistState(
+      songs: [
+        getFakeArtistSong(),
+        getFakeArtistSong(),
+      ],
+    ));
 
     await widgetTester.pumpWidget(
       TestWrapper(
@@ -46,7 +52,10 @@ void main() {
   });
 
   testWidgets("When state has albums, should display albums list", (widgetTester) async {
-    final albums = [getFakeAlbum(), getFakeAlbum()];
+    final albums = [
+      getFakeAlbum(),
+      getFakeAlbum(),
+    ];
     bloc.mockStream(ArtistState(albums: albums));
     await mockNetworkImagesFor(() async {
       await widgetTester.pumpWidget(
@@ -80,6 +89,26 @@ void main() {
     });
 
     expect(find.byType(ArtistSectionTitle), findsOneWidget);
+    expect(find.byType(Albums), findsNothing);
+  });
+
+  testWidgets("When state isLoading, should display loading circle", (widgetTester) async {
+    bloc.mockStream(const ArtistState(isLoading: true));
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<ArtistBloc>.value(
+            value: bloc,
+            child: const ArtistScreen(
+              name: "Legiao Urbana",
+            ),
+          ),
+        ),
+      );
+    });
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(ArtistSectionTitle), findsNothing);
+    expect(find.byType(ArtistSongItem), findsNothing);
     expect(find.byType(Albums), findsNothing);
   });
 }

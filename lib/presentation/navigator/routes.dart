@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
+import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
@@ -66,5 +67,9 @@ final List<NavRoute> routes = [
   NavRoute(
     AddVersionsToListEntry.name,
     (params, _) => AddVersionsToListEntry(params),
+  ),
+  NavRoute(
+    AlbumsEntry.name,
+    (params, _) => AlbumsEntry(params),
   ),
 ];

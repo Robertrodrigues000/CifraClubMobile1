@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_header.dart';
@@ -10,6 +11,7 @@ import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nav/nav.dart';
 
 class ArtistScreen extends StatefulWidget {
   const ArtistScreen({super.key, required this.name});
@@ -55,45 +57,38 @@ class _ArtistScreenState extends State<ArtistScreen> {
                 image: state.artistInfo?.headImageDto?.image ?? state.artistInfo?.imagesDto?.size250 ?? "",
                 color: state.artistInfo?.headImageDto?.color ?? state.artistInfo?.imagesDto?.color ?? "",
               ),
-              ArtistSectionTitle(
-                title: context.text.mostAccessed,
-                top: context.appDimensionScheme.screenMargin,
-                bottom: context.appDimensionScheme.screenMargin,
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: state.songs.length,
-                  (context, index) => ArtistSongItem(
-                    onTap: () {},
-                    onOptionsTap: () {},
-                    name: state.songs[index].name,
-                    ranking: index + 1,
-                    isVerified: state.songs[index].verified,
-                    hasVideoLessons: state.songs[index].videoLessons > 0,
+              if (state.isLoading)
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(
+                        height: context.appDimensionScheme.screenMargin,
+                      ),
+                      const Center(child: CircularProgressIndicator())
+                    ],
                   ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CifraClubButton(
-                  type: ButtonType.outline,
-                  // coverage:ignore-start
-                  onPressed: () {},
-                  // coverage:ignore-end
-                  padding: EdgeInsets.only(
-                    left: context.appDimensionScheme.screenMargin,
-                    right: context.appDimensionScheme.screenMargin,
-                    top: 16,
-                    bottom: 32,
-                  ),
-                  child: Text(context.text.artistMoreSongs),
-                ),
-              ),
-              if (state.albums.isNotEmpty) ...[
+                )
+              else ...[
                 ArtistSectionTitle(
-                  title: context.text.albums,
+                  title: context.text.mostAccessed,
+                  top: context.appDimensionScheme.screenMargin,
                   bottom: context.appDimensionScheme.screenMargin,
                 ),
-                Albums(albums: state.albums),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: state.songs.length,
+                    (context, index) => ArtistSongItem(
+                      onTap: () {},
+                      onOptionsTap: () {},
+                      name: state.songs[index].name,
+                      ranking: index + 1,
+                      isVerified: state.songs[index].verified,
+                      hasVideoLessons: state.songs[index].videoLessons > 0,
+                    ),
+                  ),
+                ),
                 SliverToBoxAdapter(
                   child: CifraClubButton(
                     type: ButtonType.outline,
@@ -103,13 +98,39 @@ class _ArtistScreenState extends State<ArtistScreen> {
                     padding: EdgeInsets.only(
                       left: context.appDimensionScheme.screenMargin,
                       right: context.appDimensionScheme.screenMargin,
-                      top: context.appDimensionScheme.screenMargin,
+                      top: 16,
                       bottom: 32,
                     ),
-                    child: Text(context.text.moreAlbums),
+                    child: Text(context.text.artistMoreSongs),
                   ),
-                )
-              ],
+                ),
+                if (state.albums.isNotEmpty) ...[
+                  ArtistSectionTitle(
+                    title: context.text.albums,
+                    bottom: context.appDimensionScheme.screenMargin,
+                  ),
+                  Albums(albums: state.albums.take(4).toList()),
+                  SliverToBoxAdapter(
+                    child: CifraClubButton(
+                      type: ButtonType.outline,
+                      // coverage:ignore-start
+                      onPressed: () => Nav.of(context).push(screenName: AlbumsEntry.name, params: {
+                        'url': state.artistInfo!.url,
+                        'name': state.artistInfo!.name,
+                        'totalAlbums': state.albums.length.toString(),
+                      }),
+                      // coverage:ignore-end
+                      padding: EdgeInsets.only(
+                        left: context.appDimensionScheme.screenMargin,
+                        right: context.appDimensionScheme.screenMargin,
+                        top: context.appDimensionScheme.screenMargin,
+                        bottom: 32,
+                      ),
+                      child: Text(context.text.moreAlbums),
+                    ),
+                  )
+                ],
+              ]
             ],
           ),
         );

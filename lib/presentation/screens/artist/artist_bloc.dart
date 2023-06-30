@@ -28,7 +28,7 @@ class ArtistBloc extends Cubit<ArtistState> {
 
     emit(
       state.copyWith(
-        albums: albumsResult.isSuccess ? albumsResult.get()?.take(4).toList() : const [],
+        albums: albumsResult.isSuccess ? albumsResult.get() : const [],
       ),
     );
   }

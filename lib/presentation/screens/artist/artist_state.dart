@@ -12,7 +12,7 @@ class ArtistState {
   final ArtistInfo? artistInfo;
   final bool isLoading;
   const ArtistState({
-    this.isLoading = true,
+    this.isLoading = false,
     this.artistInfo,
     this.songs = const [],
     this.albums = const [],
