@@ -159,5 +159,11 @@
     "listServerError": "No se puede acceder al servidor",
     "deleteVersionOption": "Eliminar cifrado",
     "versionOptionsBottomSheet": "Opciones de cifrado",
-    "deleteVersionDialogDescription": "¿Seguro que quieres eliminar este cifrado?"
+    "deleteVersionDialogDescription": "¿Seguro que quieres eliminar este cifrado?",
+
+    "instrumentGuitar" : "Guitarra",
+    "instrumentKeyboard" : "Teclado",
+    "instrumentBass" : "Bajo",
+    "instrumentDrums" : "Batería",
+    "instrumentHarmonica" : "Armónica"
 }

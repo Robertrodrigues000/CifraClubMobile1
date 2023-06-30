@@ -4,6 +4,8 @@ import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_songs_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:typed_result/typed_result.dart';
 
@@ -60,6 +62,18 @@ class SongbookDataSource {
       path: "/v3/songbook/$songbookId/songs/delete",
       data: deleteVersionsInputDto.toJson(),
       parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
+
+  Future<Result<List<SongbookVersionDto>, RequestError>> addSongsToSongbook(
+      int songbookId, SongbookSongsInputDto songbookSongsInputDto) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/songbook/$songbookId/songs",
+      data: songbookSongsInputDto.toJson(),
+      parser: (data) =>
+          (data as List<dynamic>).map((e) => SongbookVersionDto.fromJson(e as Map<String, dynamic>)).toList(),
     );
     return _networkService.execute(request: request);
   }

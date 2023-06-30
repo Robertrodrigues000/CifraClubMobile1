@@ -159,5 +159,11 @@
     "listServerError": "Não foi possível acessar o servidor",
     "deleteVersionOption": "Excluir cifra",
     "versionOptionsBottomSheet": "Opções da cifra",
-    "deleteVersionDialogDescription": "Tem certeza que deseja excluir esta cifra?"
+    "deleteVersionDialogDescription": "Tem certeza que deseja excluir esta cifra?",
+
+    "instrumentGuitar" : "Violão & Guitarra",
+    "instrumentKeyboard" : "Teclado",
+    "instrumentBass" : "Baixo",
+    "instrumentDrums" : "Bateria",
+    "instrumentHarmonica" : "Gaita"
 }

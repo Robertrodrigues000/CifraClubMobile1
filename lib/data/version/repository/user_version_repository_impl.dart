@@ -39,4 +39,9 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   Future<int?> deleteVersionsBySongbookId(int songbookId) {
     return _userVersionDataSource.deleteVersions(songbookId);
   }
+
+  @override
+  Future<int?> deleteVersionsById(List<int> songsId) {
+    return _userVersionDataSource.deleteVersionsById(songsId);
+  }
 }

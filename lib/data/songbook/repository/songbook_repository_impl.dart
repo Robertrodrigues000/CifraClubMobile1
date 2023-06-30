@@ -1,6 +1,7 @@
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
 import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_songs_input_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
@@ -59,5 +60,14 @@ class SongbookRepositoryImpl extends SongbookRepository {
     final input = DeleteVersionsInputDto(versionsId);
 
     return _songbookDataSource.deleteVersions(songbookId, input);
+  }
+
+  @override
+  Future<Result<List<Version>, RequestError>> addSongsToSongbook({
+    required int songbookId,
+    required List<Version> songs,
+  }) async {
+    return (await _songbookDataSource.addSongsToSongbook(songbookId, SongbookSongsInputDto.fromDomain(songs)))
+        .map((value) => value.map((e) => e.toDomain()).toList());
   }
 }

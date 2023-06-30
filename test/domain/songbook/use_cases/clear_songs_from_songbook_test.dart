@@ -1,5 +1,5 @@
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_all_versions.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:flutter/foundation.dart';
@@ -36,7 +36,7 @@ void main() {
         )).thenAnswer((_) => SynchronousFuture(const Ok(null)));
     when(() => updateSongbookPreview(100)).thenAnswer((invocation) => SynchronousFuture(100));
 
-    final result = await DeleteAllVersions(songbookRepository, userVersionRepository, updateSongbookPreview)(100);
+    final result = await ClearSongsFromSongbook(songbookRepository, userVersionRepository, updateSongbookPreview)(100);
 
     expect(result.isSuccess, isTrue);
     verify(() => updateSongbookPreview(100)).called(1);

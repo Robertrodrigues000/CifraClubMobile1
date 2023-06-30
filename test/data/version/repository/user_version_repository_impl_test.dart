@@ -91,4 +91,15 @@ void main() {
     expect(countVersionsDeleted, 2);
     verify(() => userVersionDataSource.deleteVersions(4)).called(1);
   });
+
+  test("When `deleteSongsById` is called should return quantity of deleted songs", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.deleteVersionsById([1, 2])).thenAnswer((_) => SynchronousFuture(2));
+
+    final userCifraRepository = UserVersionRepositoryImpl(userVersionDataSource);
+    final countCifrasDeleted = await userCifraRepository.deleteVersionsById([1, 2]);
+
+    expect(countCifrasDeleted, 2);
+    verify(() => userVersionDataSource.deleteVersionsById([1, 2])).called(1);
+  });
 }

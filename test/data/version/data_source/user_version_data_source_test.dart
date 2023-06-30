@@ -173,4 +173,24 @@ void main() {
 
     expect(numberVersionsDeleted, 3);
   });
+
+  test("When `deleteSongsById` is called should delete songs from songbook", () async {
+    final cifras = [
+      getUserVersionDto(),
+      getUserVersionDto(),
+      getUserVersionDto(),
+      getUserVersionDto(),
+    ];
+
+    await isar.writeTxn(
+      () async {
+        await isar.userVersionDtos.putAll(cifras);
+      },
+    );
+
+    final numberCifrasDeleted =
+        await userVersionDataSource.deleteVersionsById(cifras.map((e) => e.localDatabaseID).toList());
+
+    expect(numberCifrasDeleted, 4);
+  });
 }

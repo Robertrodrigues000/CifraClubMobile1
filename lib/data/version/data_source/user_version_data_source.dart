@@ -56,4 +56,10 @@ class UserVersionDataSource {
       return _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).deleteAll();
     });
   }
+
+  Future<int?> deleteVersionsById(List<int> ids) async {
+    return _isar.writeTxn(() async {
+      return _isar.userVersionDtos.deleteAll(ids);
+    });
+  }
 }

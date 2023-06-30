@@ -9,7 +9,7 @@ import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_all_versions.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
@@ -42,7 +42,7 @@ class ListsBloc extends Cubit<ListsState> {
   final DeleteSongbook _deleteSongbook;
   final UpdateSongbookData _updateSongbookData;
   final ValidateSongbookName _validateSongbookName;
-  final DeleteAllVersions _deleteAllVersions;
+  final ClearSongsFromSongbook _clearSongsFromSongbook;
   final ShareLink _shareLink;
 
   ListsBloc(
@@ -60,7 +60,7 @@ class ListsBloc extends Cubit<ListsState> {
     this._deleteSongbook,
     this._updateSongbookData,
     this._validateSongbookName,
-    this._deleteAllVersions,
+    this._clearSongsFromSongbook,
     this._shareLink,
   ) : super(const ListsState());
 
@@ -159,7 +159,7 @@ class ListsBloc extends Cubit<ListsState> {
     if (songbookId == null) {
       logger?.sendNonFatalCrash(exception: "Clear songbook with null Id"); // coverage:ignore-line
     } else {
-      await _deleteAllVersions(songbookId);
+      await _clearSongsFromSongbook(songbookId);
     }
   }
 

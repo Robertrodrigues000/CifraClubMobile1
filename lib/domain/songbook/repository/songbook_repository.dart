@@ -18,4 +18,8 @@ abstract class SongbookRepository {
     required DateTime lastUpdated,
   });
   Future<Result<void, RequestError>> deleteVersions({required int songbookId, required List<int> versionsId});
+  Future<Result<List<Version>, RequestError>> addSongsToSongbook({
+    required int songbookId,
+    required List<Version> songs,
+  });
 }

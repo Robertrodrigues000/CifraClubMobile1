@@ -14,7 +14,10 @@
     "tenTimes",
     "hundredTimes",
     "cifraClubProLimit",
-    "loggedOutListErrorTitle"
+    "loggedOutListErrorTitle",
+    "instrumentUkulele",
+    "instrumentCavaco",
+    "instrumentViola"
   ],
 
   "pt": [
@@ -32,6 +35,9 @@
     "tenTimes",
     "hundredTimes",
     "cifraClubProLimit",
-    "loggedOutListErrorTitle"
+    "loggedOutListErrorTitle",
+    "instrumentUkulele",
+    "instrumentCavaco",
+    "instrumentViola"
   ]
 }

@@ -7,4 +7,5 @@ abstract class UserVersionRepository {
   Stream<int> getTotalSongbookVersions(int songbookId);
   Future<List<String?>> getImagesPreview(int songbookId);
   Future<int?> deleteVersionsBySongbookId(int songbookId);
+  Future<int?> deleteVersionsById(List<int> songsId);
 }

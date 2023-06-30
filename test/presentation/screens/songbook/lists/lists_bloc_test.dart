@@ -3,7 +3,7 @@ import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_all_versions.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -112,7 +112,7 @@ class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {
   }
 }
 
-class _DeleteAllCifrasMock extends Mock implements DeleteAllVersions {}
+class _ClearSongsFromSongbookMock extends Mock implements ClearSongsFromSongbook {}
 
 class _ShareLinkMock extends Mock implements ShareLink {}
 
@@ -132,7 +132,7 @@ void main() {
     _DeleteSongbookMock? deleteSongbookMock,
     _UpdateSongbookDataMock? updateSongbookDataMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
-    _DeleteAllCifrasMock? deleteAllCifrasMock,
+    _ClearSongsFromSongbookMock? clearSongsFromSongbookMock,
     _ShareLinkMock? shareLink,
   }) =>
       ListsBloc(
@@ -150,7 +150,7 @@ void main() {
         deleteSongbookMock ?? _DeleteSongbookMock(),
         updateSongbookDataMock ?? _UpdateSongbookDataMock(),
         validateSongbookNameMock ?? _ValidateSongbookNameMock(),
-        deleteAllCifrasMock ?? _DeleteAllCifrasMock(),
+        clearSongsFromSongbookMock ?? _ClearSongsFromSongbookMock(),
         shareLink ?? _ShareLinkMock(),
       );
 
@@ -337,10 +337,10 @@ void main() {
   });
 
   test("When `clearlist` is called should call deleteAllCifras", () async {
-    final deleteAllCifras = _DeleteAllCifrasMock();
+    final deleteAllCifras = _ClearSongsFromSongbookMock();
     when(() => deleteAllCifras(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
-    final bloc = getBloc(deleteAllCifrasMock: deleteAllCifras);
+    final bloc = getBloc(clearSongsFromSongbookMock: deleteAllCifras);
     await bloc.clearList(10);
 
     verify(() => deleteAllCifras(10)).called(1);

@@ -1,0 +1,27 @@
+[
+    {
+        "cifraId": 151908,
+        "songId": 150216,
+        "type": 1,
+        "name": "Rappers Delight",
+        "artist": {
+            "id": 75423,
+            "name": "The Sugarhill Gang",
+            "url": "the-sugarhill-gang",
+            "image": "4/7/f/a/47fae13d62a76a1446301bb25f12e093.jpg",
+            "color": "#BDBDBD"
+        },
+        "siteUrl": "/the-sugarhill-gang/rappers-delight/#instrument=guitar",
+        "apiUrl": "/the-sugarhill-gang/rappers-delight",
+        "songUrl": "rappers-delight",
+        "tone": "G",
+        "stdTone": "G",
+        "capo": 0,
+        "tuning": "E A D G B E",
+        "id": 140207195,
+        "uuid": "0fdc1274-2869-4a56-9a00-309379a9f104",
+        "isMinorScale": false,
+        "lastUpdate": "2023-06-19 08:26:18",
+        "info": "success"
+    }
+]

@@ -6,6 +6,7 @@ import '../../artist/models/artist_mock.dart';
 Version getFakeVersion() {
   return Version(
     localDatabaseID: faker.randomGenerator.integer(100),
+    remoteDatabaseID: faker.randomGenerator.integer(100),
     name: faker.animal.name(),
     songUrl: faker.address.city(),
     tone: faker.vehicle.model(),
