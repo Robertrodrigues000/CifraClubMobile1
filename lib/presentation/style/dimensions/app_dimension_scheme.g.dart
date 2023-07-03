@@ -73,6 +73,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme albumsPerRow(int albumsPerRow);
 
+  AppDimensionScheme iconTileSpace(double iconTileSpace);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -113,6 +115,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? artistHeaderHeight,
     double? appBarLeadingWidth,
     int? albumsPerRow,
+    double? iconTileSpace,
   });
 }
 
@@ -238,6 +241,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme albumsPerRow(int albumsPerRow) => this(albumsPerRow: albumsPerRow);
 
   @override
+  AppDimensionScheme iconTileSpace(double iconTileSpace) => this(iconTileSpace: iconTileSpace);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -279,6 +285,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? artistHeaderHeight = const $CopyWithPlaceholder(),
     Object? appBarLeadingWidth = const $CopyWithPlaceholder(),
     Object? albumsPerRow = const $CopyWithPlaceholder(),
+    Object? iconTileSpace = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -421,6 +428,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.albumsPerRow
           // ignore: cast_nullable_to_non_nullable
           : albumsPerRow as int,
+      iconTileSpace: iconTileSpace == const $CopyWithPlaceholder() || iconTileSpace == null
+          ? _value.iconTileSpace
+          // ignore: cast_nullable_to_non_nullable
+          : iconTileSpace as double,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,8 @@ import '../../../../test_helpers/bloc_stream.dart';
 import '../../../../test_helpers/test_wrapper.dart';
 
 class _VersionsBlocMock extends Mock implements VersionsBloc {}
+
+class _EditListScreenBuilderMock extends Mock implements EditListScreenBuilder {}
 
 void main() {
   late VersionsBloc bloc;
@@ -38,6 +41,7 @@ void main() {
         child: VersionsScreen(
           isTablet: true,
           songbook: songbook,
+          editListScreenBuilder: _EditListScreenBuilderMock(),
         ),
       ),
     );
@@ -62,6 +66,7 @@ void main() {
         child: VersionsScreen(
           isTablet: false,
           songbook: songbook,
+          editListScreenBuilder: _EditListScreenBuilderMock(),
         ),
       ),
       nav: nav,

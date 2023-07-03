@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // ignore_for_file: avoid_print
-
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -25,14 +24,14 @@ class DevScreen extends StatefulWidget {
   final Logout logout;
   final DevBottomSheet devBottomSheet;
 
-  const DevScreen(
-      {Key? key,
-      required this.getCredentialsStream,
-      required this.openLoginView,
-      required this.openUserProfilePage,
-      required this.logout,
-      required this.devBottomSheet})
-      : super(key: key);
+  const DevScreen({
+    Key? key,
+    required this.getCredentialsStream,
+    required this.openLoginView,
+    required this.openUserProfilePage,
+    required this.logout,
+    required this.devBottomSheet,
+  }) : super(key: key);
 
   @override
   State<DevScreen> createState() => _DevScreenState();

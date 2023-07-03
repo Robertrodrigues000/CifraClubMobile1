@@ -49,4 +49,6 @@ const appDimensionSchemePhone = AppDimensionScheme(
   //Artist
   artistHeaderHeight: 180,
   albumsPerRow: 2,
+
+  iconTileSpace: 4,
 );

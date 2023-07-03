@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.d
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
@@ -32,6 +33,8 @@ class _ListsBlocMock extends Mock implements ListsBloc {}
 class _VersionsBlocMock extends Mock implements VersionsBloc {}
 
 class _SongbookFake extends Fake implements Songbook {}
+
+class _EditListScreenBuilderMock extends Mock implements EditListScreenBuilder {}
 
 void main() {
   final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
@@ -68,7 +71,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<SongbookBloc>.value(
             value: bloc,
-            child: const SongbookScreen(),
+            child: SongbookScreen(
+              editListScreenBuilder: _EditListScreenBuilderMock(),
+            ),
           ),
         ),
       );
@@ -91,7 +96,9 @@ void main() {
               BlocProvider<SongbookBloc>.value(value: bloc),
               BlocProvider<ListsBloc>.value(value: listsBloc),
             ],
-            child: const SongbookScreen(),
+            child: SongbookScreen(
+              editListScreenBuilder: _EditListScreenBuilderMock(),
+            ),
           ),
         );
 
@@ -113,7 +120,9 @@ void main() {
               BlocProvider<SongbookBloc>.value(value: bloc),
               BlocProvider<ListsBloc>.value(value: listsBloc),
             ],
-            child: const SongbookScreen(),
+            child: SongbookScreen(
+              editListScreenBuilder: _EditListScreenBuilderMock(),
+            ),
           ),
           nav: nav,
         );
@@ -141,7 +150,9 @@ void main() {
               BlocProvider<ListsBloc>.value(value: listsBloc),
               BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
-            child: const SongbookScreen(),
+            child: SongbookScreen(
+              editListScreenBuilder: _EditListScreenBuilderMock(),
+            ),
           ),
         );
 
@@ -164,7 +175,9 @@ void main() {
               BlocProvider<ListsBloc>.value(value: listsBloc),
               BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
-            child: const SongbookScreen(),
+            child: SongbookScreen(
+              editListScreenBuilder: _EditListScreenBuilderMock(),
+            ),
           ),
         );
 

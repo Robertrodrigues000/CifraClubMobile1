@@ -49,4 +49,6 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   //Artist
   artistHeaderHeight: 288,
   albumsPerRow: 4,
+
+  iconTileSpace: 12,
 );

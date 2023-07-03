@@ -8,6 +8,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/dialogs/delete_version_dialog.dart';
 import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -18,10 +19,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
 
 class VersionsScreen extends StatefulWidget {
-  const VersionsScreen({super.key, required this.isTablet, required this.songbook});
+  const VersionsScreen(
+      {super.key, required this.isTablet, required this.songbook, required this.editListScreenBuilder});
 
   final bool isTablet;
   final Songbook? songbook;
+  final EditListScreenBuilder editListScreenBuilder;
 
   @override
   State<VersionsScreen> createState() => _VersionsScreenState();
@@ -120,7 +123,10 @@ class _VersionsScreenState extends State<VersionsScreen> {
                     ),
               actions: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await widget.editListScreenBuilder
+                        .push(context, state.versions, widget.songbook?.name ?? "", widget.songbook?.id ?? 0);
+                  },
                   child: SizedBox(
                     height: 48,
                     width: 48,
@@ -176,9 +182,9 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       final item = state.versions[index];
                       return VersionTile(
                         song: item.name,
-                        artist: "Legião Urbana",
+                        artist: item.artist.name,
                         type: "Violão",
-                        tone: item.tone ?? "",
+                        tone: item.tone,
                         onOptionsTap: () async {
                           ListVersionOptionsBottomSheet(onTap: () async {
                             final shouldDeleteVersion =
@@ -189,8 +195,6 @@ class _VersionsScreenState extends State<VersionsScreen> {
                           }).show(context);
                         },
                         onVersionTap: () {},
-                        onDeleteTap: () {},
-                        onDragTap: () {},
                         editable: false,
                       );
                     },

@@ -49,7 +49,7 @@ void main() {
                   widget.pictureProvider is ExactAssetPicture &&
                   (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addVersionIcon;
             },
-            description: 'widget with add cifra icon',
+            description: 'widget with add version icon',
           ),
           findsOneWidget);
     });
@@ -88,7 +88,7 @@ void main() {
                   widget.pictureProvider is ExactAssetPicture &&
                   (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.selectedVersionIcon;
             },
-            description: 'widget with selected cifra icon',
+            description: 'widget with selected version icon',
           ),
           findsOneWidget);
     });

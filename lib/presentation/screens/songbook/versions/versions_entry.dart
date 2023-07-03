@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
@@ -21,17 +22,19 @@ class VersionsEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => VersionsBloc(),
+      create: (context) => VersionsBloc(getIt()),
       child: VersionsScreen(
         isTablet: false,
         songbook: Songbook(
-          name: "fds.afd,m.sa fm,n.d sddd ss efdsr a",
+          id: 10031583,
+          name: "Aquelas",
           isPublic: true,
           createdAt: DateTime(12),
           totalSongs: 1,
           type: ListType.user,
           preview: const [],
         ),
+        editListScreenBuilder: getIt(),
       ),
     );
   }

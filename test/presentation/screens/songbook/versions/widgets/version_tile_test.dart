@@ -11,29 +11,25 @@ import '../../../../../test_helpers/test_wrapper.dart';
 void main() {
   testWidgets("When tapping a tab item, should call onVersionTap", (widgetTester) async {
     final completer = Completer();
-    await widgetTester.pumpWidgetWithWrapper(VersionTile(
+    await widgetTester.pumpWidgetWithWrapper(
+      VersionTile(
         song: "Tempo Perdido",
         artist: "Legião Urbana",
         type: "Violão",
         tone: "A",
-        onOptionsTap: () {},
         onVersionTap: completer.complete,
-        onDeleteTap: () {},
-        onDragTap: () {}));
+      ),
+    );
     await widgetTester.tap(find.text("Tempo Perdido"));
     expect(completer.isCompleted, isTrue);
   });
 
-  group("When draggable is true", () {
-    final tab = VersionTile(
+  group("When editable is true", () {
+    const tab = VersionTile(
       song: "Tempo Perdido",
       artist: "Legião Urbana",
       type: "Violão",
       tone: "A",
-      onOptionsTap: () {},
-      onVersionTap: () {},
-      onDeleteTap: () {},
-      onDragTap: () {},
       editable: true,
     );
 

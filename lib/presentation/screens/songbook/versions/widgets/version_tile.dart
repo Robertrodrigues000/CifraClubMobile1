@@ -11,20 +11,20 @@ class VersionTile extends StatelessWidget {
       required this.type,
       required this.tone,
       this.editable = false,
-      required this.onOptionsTap,
-      required this.onVersionTap,
-      required this.onDeleteTap,
-      required this.onDragTap})
+      this.onOptionsTap,
+      this.onVersionTap,
+      this.onDeleteTap,
+      this.index})
       : super(key: key);
   final String song;
   final String artist;
   final String type;
-  final String tone;
+  final String? tone;
   final bool editable;
-  final VoidCallback onOptionsTap;
-  final VoidCallback onVersionTap;
-  final VoidCallback onDeleteTap;
-  final VoidCallback onDragTap;
+  final VoidCallback? onOptionsTap;
+  final VoidCallback? onVersionTap;
+  final VoidCallback? onDeleteTap;
+  final int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +36,22 @@ class VersionTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             if (editable) ...[
-              IconButton(
-                onPressed: onDeleteTap,
-                padding: const EdgeInsets.all(12),
-                highlightColor: Theme.of(context).splashColor,
-                icon: Icon(
-                  Icons.remove_circle,
-                  color: context.colors.errorTertiary,
+              Padding(
+                padding: EdgeInsets.only(left: context.appDimensionScheme.iconTileSpace, right: 4),
+                child: IconButton(
+                  onPressed: onDeleteTap,
+                  padding: const EdgeInsets.all(12),
+                  highlightColor: Theme.of(context).splashColor,
+                  icon: Icon(
+                    Icons.remove_circle,
+                    color: context.colors.errorTertiary,
+                  ),
                 ),
               ),
-              const SizedBox(
-                width: 4,
+            ] else
+              SizedBox(
+                width: context.appDimensionScheme.internalMargin,
               ),
-            ] else ...[
-              const SizedBox(
-                width: 16,
-              ),
-            ],
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -84,12 +83,13 @@ class VersionTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                      Text(
-                        context.text.versionTone(tone),
-                        style: context.typography.subtitle5,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      )
+                      if (tone != null)
+                        Text(
+                          context.text.versionTone(tone!),
+                          style: context.typography.subtitle5,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                     ],
                   )
                 ],
@@ -98,18 +98,35 @@ class VersionTile extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: const EdgeInsets.only(right: 4.0),
-                child: IconButton(
-                  onPressed: editable ? onDragTap : onOptionsTap,
-                  padding: const EdgeInsets.all(12),
-                  highlightColor: Theme.of(context).splashColor,
-                  icon: SvgImage(
-                    assetPath: editable ? AppSvgs.dragIcon : AppSvgs.songbookOptionsIcon,
-                    color: context.colors.textPrimary,
-                    height: 24,
-                    width: 24,
-                  ),
-                ),
+                padding: EdgeInsets.only(right: context.appDimensionScheme.iconTileSpace),
+                child: editable
+                    ? ReorderableDragStartListener(
+                        index: index ?? 0,
+                        child: IconButton(
+                          // coverage:ignore-start
+                          onPressed: () {},
+                          // coverage:ignore-end
+                          padding: const EdgeInsets.all(12),
+                          highlightColor: Theme.of(context).splashColor,
+                          icon: SvgImage(
+                            assetPath: AppSvgs.dragIcon,
+                            color: context.colors.textPrimary,
+                            height: 24,
+                            width: 24,
+                          ),
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: onOptionsTap,
+                        padding: const EdgeInsets.all(12),
+                        highlightColor: Theme.of(context).splashColor,
+                        icon: SvgImage(
+                          assetPath: AppSvgs.songbookOptionsIcon,
+                          color: context.colors.textPrimary,
+                          height: 24,
+                          width: 24,
+                        ),
+                      ),
               ),
             ),
           ],

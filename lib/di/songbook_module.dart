@@ -6,6 +6,7 @@ import 'package:cifraclub/data/songbook/repository/songbook_repository_impl.dart
 import 'package:cifraclub/data/songbook/repository/user_songbook_repository_impl.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 
@@ -26,4 +27,6 @@ abstract class SongbookModule {
   UserSongbookRepository getUserSongbookRepository(UserSongbookDataSource userSongbookDataSource) {
     return UserSongbookRepositoryImpl(userSongbookDataSource);
   }
+
+  EditListScreenBuilder getEditListScreenBuilder() => EditListScreenBuilder();
 }

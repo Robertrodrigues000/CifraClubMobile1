@@ -3,7 +3,7 @@ import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
 
-Version getFakeVersion() {
+Version getFakeVersion({int? versionId}) {
   return Version(
     localDatabaseID: faker.randomGenerator.integer(100),
     remoteDatabaseID: faker.randomGenerator.integer(100),
@@ -16,6 +16,6 @@ Version getFakeVersion() {
     stdTone: faker.food.restaurant(),
     tuning: faker.food.restaurant(),
     artist: getFakeArtist(),
-    versionId: faker.randomGenerator.integer(10000),
+    versionId: versionId ?? faker.randomGenerator.integer(10000),
   );
 }

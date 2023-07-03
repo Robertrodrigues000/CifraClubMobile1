@@ -26,8 +26,8 @@ class EditModeDialog extends StatelessWidget {
       ),
       firstButtonText: context.text.editListDialogPrimaryButton,
       secondButtonText: context.text.exit,
-      onFirstButtonTap: () => Navigator.pop(context, true),
-      onSecondButtonTap: () => Navigator.pop(context, false),
+      onFirstButtonTap: () => Navigator.pop(context, false),
+      onSecondButtonTap: () => Navigator.pop(context, true),
     );
   }
 }

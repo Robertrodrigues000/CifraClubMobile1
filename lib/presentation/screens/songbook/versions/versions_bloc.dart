@@ -1,29 +1,18 @@
-import 'dart:math';
-
-import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
-import 'package:cifraclub/domain/version/models/version.dart';
+import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbook.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VersionsBloc extends Cubit<VersionsState> {
-  VersionsBloc() : super(const VersionsState(isPublic: true));
+  final GetAllVersionsFromSongbook _getAllVersionsFromSongbook;
+
+  VersionsBloc(this._getAllVersionsFromSongbook) : super(const VersionsState(isPublic: true));
 
   Future<void> getSongbook(Songbook? songbook) async {
+    final result = await _getAllVersionsFromSongbook(songbook?.id ?? 0);
     emit(
       state.copyWith(
-        versions: List.generate(
-          Random().nextInt(30),
-          (index) => Version(
-            name: "Cifra",
-            localDatabaseID: index,
-            type: 1,
-            artist: const Artist(url: "url", image: null, name: "name", id: 1),
-            songId: 1,
-            songUrl: '',
-            versionId: 10,
-          ),
-        ),
+        versions: result,
         isPublic: songbook?.isPublic,
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_state.dart';
@@ -13,7 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class SongbookScreen extends StatefulWidget {
-  const SongbookScreen({super.key});
+  const SongbookScreen({super.key, required this.editListScreenBuilder});
+  final EditListScreenBuilder editListScreenBuilder;
 
   @override
   State<SongbookScreen> createState() => _SongbookScreenState();
@@ -80,6 +82,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
                             child: VersionsScreen(
                               isTablet: true,
                               songbook: state.selectedSongbook,
+                              editListScreenBuilder: widget.editListScreenBuilder,
                             ),
                           ),
                         ],
