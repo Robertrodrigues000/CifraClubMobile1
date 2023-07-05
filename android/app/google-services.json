@@ -208,6 +208,42 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1046541148461:android:25851732fcbe5e47b6b3a4",
+        "android_client_info": {
+          "package_name": "com.studiosol.cifraclub.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046541148461-h3peolc2vtgf020mu7g6it9jaf62ft3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV1DDuUKpjakXHn2y-Kbt6tu5sp846eiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046541148461-0820jtjk076js6nepl31klkgbn0i1l6j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.studiosol.CifraClub"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1046541148461:android:1784700f7baeeba8",
         "android_client_info": {
           "package_name": "com.studiosol.metronomo"

@@ -6,6 +6,7 @@ environment:
   PUB_CACHE: /pub-cache
   COVERAGE_EXCLUDE_FILES: lib/di/di_setup.config.dart
   COVERAGE_EXCLUDE_FILES_SUFFIX: .g.dart
+  FIREBASE_APP_ID: "1:1046541148461:android:25851732fcbe5e47b6b3a4"
   GOOGLE_APPLICATION_CREDENTIALS: "/workspace/CifraClub/cifraclub_secret_file.json"
 
 workspace:
