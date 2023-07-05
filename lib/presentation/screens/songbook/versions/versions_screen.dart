@@ -3,8 +3,10 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/widgets/empty_list_empty_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
@@ -166,6 +168,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
             ),
             body: CustomScrollView(
               controller: scrollController,
+              physics: state.versions.isEmpty ? const NeverScrollableScrollPhysics() : null,
               slivers: [
                 VersionsCollapsedHeader(
                   isScrolledUnder: isScrolledUnder,
@@ -175,31 +178,42 @@ class _VersionsScreenState extends State<VersionsScreen> {
                 VersionsFixedHeader(
                   isScrolledUnder: isScrolledUnder,
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    childCount: state.versions.length,
-                    (context, index) {
-                      final item = state.versions[index];
-                      return VersionTile(
-                        song: item.name,
-                        artist: item.artist.name,
-                        type: "Violão",
-                        tone: item.tone,
-                        onOptionsTap: () async {
-                          ListVersionOptionsBottomSheet(onTap: () async {
-                            final shouldDeleteVersion =
-                                await DeleteVersionDialog.show(context: context, versionName: item.name);
-                            if (shouldDeleteVersion) {
-                              // todo: delete version from songbook
-                            }
-                          }).show(context);
-                        },
-                        onVersionTap: () {},
-                        editable: false,
-                      );
-                    },
-                  ),
-                )
+                if (state.versions.isEmpty)
+                  SliverFillRemaining(
+                    child: EmptyListEmptyState(
+                      onClick: () {
+                        Nav.of(context).push(
+                            screenName: AddVersionsToListEntry.name,
+                            params: AddVersionsToListEntry.declareParams(widget.songbook?.id ?? 0));
+                      },
+                    ),
+                  )
+                else
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      childCount: state.versions.length,
+                      (context, index) {
+                        final item = state.versions[index];
+                        return VersionTile(
+                          song: item.name,
+                          artist: item.artist.name,
+                          type: "Violão",
+                          tone: item.tone,
+                          onOptionsTap: () async {
+                            ListVersionOptionsBottomSheet(onTap: () async {
+                              final shouldDeleteVersion =
+                                  await DeleteVersionDialog.show(context: context, versionName: item.name);
+                              if (shouldDeleteVersion) {
+                                // todo: delete version from songbook
+                              }
+                            }).show(context);
+                          },
+                          onVersionTap: () {},
+                          editable: false,
+                        );
+                      },
+                    ),
+                  )
               ],
             ),
           );

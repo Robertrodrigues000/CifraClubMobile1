@@ -165,5 +165,7 @@
     "instrumentKeyboard" : "Teclado",
     "instrumentBass" : "Baixo",
     "instrumentDrums" : "Bateria",
-    "instrumentHarmonica" : "Gaita"
+    "instrumentHarmonica" : "Gaita",
+    "emptyListTitle": "Sem músicas",
+    "emptyListDescription": "Faça uma busca para adicionar músicas\na essa lista."
 }

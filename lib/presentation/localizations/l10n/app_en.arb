@@ -222,5 +222,7 @@
     "instrumentViola" : "Viola",
     "instrumentBass" : "Bass",
     "instrumentDrums" : "Drums",
-    "instrumentHarmonica" : "Harmonica"
+    "instrumentHarmonica" : "Harmonica",
+    "emptyListTitle": "No songs",
+    "emptyListDescription": "Search to add songs to this list."
 }

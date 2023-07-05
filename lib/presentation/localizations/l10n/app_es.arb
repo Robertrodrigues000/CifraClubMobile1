@@ -165,5 +165,7 @@
     "instrumentKeyboard" : "Teclado",
     "instrumentBass" : "Bajo",
     "instrumentDrums" : "Batería",
-    "instrumentHarmonica" : "Armónica"
+    "instrumentHarmonica" : "Armónica",
+    "emptyListTitle": "Sin canciones",
+    "emptyListDescription": "Buscar para agregar canciones\na esta lista."
 }
