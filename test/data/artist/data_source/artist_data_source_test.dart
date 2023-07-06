@@ -176,18 +176,15 @@ void main() {
       await networkService.mock<ArtistSongsDto>(response: mockResponse);
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
-      final result = await artistDataSource
-          .getArtistSongs(
-            artistUrl: artistUrl,
-            limit: queryParams['limit'] as int,
-            filter: ArtistSongFilter.cifra,
-          )
-          .value;
+      final result = await artistDataSource.getArtistSongs(
+        artistUrl: artistUrl,
+        limit: queryParams['limit'] as int,
+        filter: ArtistSongFilter.cifra,
+      );
 
-      final request =
-          verify(() => networkService.cancelableExecute<ArtistSongsDto>(request: captureAny(named: "request")))
-              .captured
-              .first as NetworkRequest<ArtistSongsDto>;
+      final request = verify(() => networkService.execute<ArtistSongsDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<ArtistSongsDto>;
       expect(request.path, "/v3/artist/$artistUrl/songs?exclude=lyrics+files");
       expect(request.type, NetworkRequestType.get);
       expect(request.queryParams, queryParams);
@@ -205,21 +202,17 @@ void main() {
     test("When request fails", () async {
       final networkService = NetworkServiceMock();
 
-      when(() => networkService.cancelableExecute<ArtistSongsDto>(request: captureAny(named: "request"))).thenAnswer(
-        (invocation) => CancelableOperation.fromFuture(
-          SynchronousFuture(
-            Err(ServerError(statusCode: 404)),
-          ),
+      when(() => networkService.execute<ArtistSongsDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
         ),
       );
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
-      final result = await artistDataSource
-          .getArtistSongs(
-            limit: 10,
-            artistUrl: "legiao-urbana",
-          )
-          .value;
+      final result = await artistDataSource.getArtistSongs(
+        limit: 10,
+        artistUrl: "legiao-urbana",
+      );
 
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);

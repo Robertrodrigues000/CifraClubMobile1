@@ -189,15 +189,13 @@ void main() {
 
       when(() => artistDataSource.getArtistSongs(
           limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
-        (_) => CancelableOperation.fromFuture(
-          SynchronousFuture(
-            Ok(artistsSongsDto),
-          ),
+        (_) => SynchronousFuture(
+          Ok(artistsSongsDto),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final artistSongs = await repository.getArtistSongs(limit: 3, artistUrl: artistUrl).value;
+      final artistSongs = await repository.getArtistSongs(limit: 3, artistUrl: artistUrl);
 
       expect(artistSongs.isSuccess, true);
       expect(artistSongs.get()!.length, 1);
@@ -207,6 +205,11 @@ void main() {
           id: 2142,
           lyrics: 0,
           lyricsId: 454,
+          bass: 2,
+          drums: 2,
+          guitar: 4,
+          harmonica: 5,
+          guitarpro: 4,
           name: "Me Atraiu",
           sheet: 1,
           url: "me-atraiu",
@@ -221,15 +224,13 @@ void main() {
       final artistDataSource = _ArtistDataSourceMock();
 
       when(() => artistDataSource.getArtistSongs(limit: 3, artistUrl: artistUrl)).thenAnswer(
-        (_) => CancelableOperation.fromFuture(
-          SynchronousFuture(
-            Err(ServerError()),
-          ),
+        (_) => SynchronousFuture(
+          Err(ServerError()),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final artistSongs = await repository.getArtistSongs(limit: 3, artistUrl: artistUrl).value;
+      final artistSongs = await repository.getArtistSongs(limit: 3, artistUrl: artistUrl);
 
       expect(artistSongs.isFailure, true);
       expect(artistSongs.getError().runtimeType, ServerError);

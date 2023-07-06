@@ -42,11 +42,15 @@ class ArtistSongDto {
         lyrics: lyrics,
         lyricsId: lyricsId,
         name: name,
+        bass: bass,
+        drums: drums,
+        guitar: guitar,
+        guitarpro: guitarpro,
+        harmonica: harmonica,
         sheet: sheet,
         url: url,
         verified: verified,
         videoLessons: videoLessons,
-        videoLessonsInstruments: videoLessonsInstruments,
       );
 
   factory ArtistSongDto.fromJson(Map<String, dynamic> json) => _$ArtistSongDtoFromJson(json);

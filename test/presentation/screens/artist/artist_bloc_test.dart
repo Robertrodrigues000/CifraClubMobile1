@@ -1,8 +1,10 @@
-import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_albums.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_artist_info.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_artist_songs.dart';
+import 'package:cifraclub/domain/artist/use_cases/get_default_instruments.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
 import 'package:flutter/foundation.dart';
@@ -20,89 +22,150 @@ class _GetArtistInfoMock extends Mock implements GetArtistInfo {}
 
 class _GetAlbumsMock extends Mock implements GetAlbums {}
 
+class _GetDefaultInstrumentsMock extends Mock implements GetDefaultInstruments {}
+
 void main() {
   ArtistBloc getArtistBloc({
     String? artistUrl,
     _GetArtistInfoMock? getArtistInfo,
     _GetArtistSongsMock? getArtistSongs,
     _GetAlbumsMock? getAlbums,
+    _GetDefaultInstrumentsMock? getDefaultInstruments,
   }) =>
       ArtistBloc(
         artistUrl ?? "",
         getArtistSongs ?? _GetArtistSongsMock(),
         getArtistInfo ?? _GetArtistInfoMock(),
         getAlbums ?? _GetAlbumsMock(),
+        getDefaultInstruments ?? _GetDefaultInstrumentsMock(),
       );
-  group("When getArtistSongs is called", () {
-    group("and request is successful", () {
+
+  group("When init is called", () {
+    group("when request getArtistInfo and getArtistSongs is successful", () {
+      final getArtistAlbums = _GetAlbumsMock();
+      final getArtistInfo = _GetArtistInfoMock();
+      final artistInfo = getFakeArtistInfo();
       final getArtistSongs = _GetArtistSongsMock();
       final artistSongs = [
         getFakeArtistSong(),
         getFakeArtistSong(),
       ];
+      final getDefaultInstruments = _GetDefaultInstrumentsMock();
+      final defaultInstruments = [Instrument.bass, Instrument.cavaco];
 
-      when(() => getArtistSongs.call(
-          limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
-        (_) => CancelableOperation.fromFuture(
-          SynchronousFuture(
-            Ok(artistSongs),
-          ),
-        ),
-      );
-
-      blocTest(
-        "should emit state with artist songs from use case",
-        build: () => getArtistBloc(getArtistSongs: getArtistSongs),
-        act: (bloc) => bloc.getArtistSongs(),
-        expect: () => [
-          isA<ArtistState>().having((state) => state.songs, "songs", artistSongs),
-        ],
-      );
-    });
-  });
-
-  group("When getArtistInfo is called", () {
-    group("and request is successful", () {
-      final getArtistInfo = _GetArtistInfoMock();
-      final artistInfo = getFakeArtistInfo();
-
-      when(() => getArtistInfo.call(any())).thenAnswer(
+      when(() => getDefaultInstruments.call(any())).thenAnswer(
         (_) => SynchronousFuture(
-          Ok(artistInfo),
+          defaultInstruments,
         ),
       );
 
-      blocTest(
-        "should emit state with artist info from use case",
-        build: () => getArtistBloc(getArtistInfo: getArtistInfo),
-        act: (bloc) => bloc.getArtistInfo(),
-        expect: () => [
-          isA<ArtistState>().having((state) => state.isLoading, "isLoading", true),
-          isA<ArtistState>().having((state) => state.artistInfo, "artist info", artistInfo),
-        ],
+      when(() => getArtistInfo(any())).thenAnswer(
+        (_) {
+          return Future.value(
+            Ok(artistInfo),
+          );
+        },
       );
-    });
-  });
 
-  group("When getArtistAlbums is called", () {
-    group("when request is successful", () {
-      final getArtistAlbums = _GetAlbumsMock();
-      final albums = [getFakeAlbum(), getFakeAlbum()];
+      when(() => getArtistSongs(
+          limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
+        (_) {
+          return Future.value(
+            Ok(artistSongs),
+          );
+        },
+      );
 
       when(() => getArtistAlbums.call(any())).thenAnswer(
-        (_) => SynchronousFuture(
+        (_) => Future.value(
+          Err(ServerError()),
+        ),
+      );
+
+      blocTest(
+        "should emit state with songs and artist info from use case",
+        build: () => getArtistBloc(
+            getAlbums: getArtistAlbums,
+            getArtistInfo: getArtistInfo,
+            getArtistSongs: getArtistSongs,
+            getDefaultInstruments: getDefaultInstruments),
+        act: (bloc) => bloc.init(),
+        expect: () => [
+          isA<ArtistState>().having((state) => state.isLoading, "isLoading", true),
+          isA<ArtistState>()
+              .having((state) => state.songs, "artist songs", artistSongs)
+              .having((state) => state.artistInfo, "artist info", artistInfo)
+              .having((state) => state.instruments, "instruments", defaultInstruments)
+              .having((state) => state.isLoading, "isLoading", false)
+        ],
+      );
+    });
+
+    group("when request getArtistInfo  or getArtistSongs fails", () {
+      final error = ServerError(statusCode: 404);
+
+      final getArtistAlbums = _GetAlbumsMock();
+      final albums = [getFakeAlbum(), getFakeAlbum()];
+      final getArtistInfo = _GetArtistInfoMock();
+      final getArtistSongs = _GetArtistSongsMock();
+      final artistSongs = [
+        getFakeArtistSong(),
+        getFakeArtistSong(),
+      ];
+      final getDefaultInstruments = _GetDefaultInstrumentsMock();
+      final defaultInstruments = [Instrument.bass, Instrument.cavaco];
+
+      when(() => getArtistAlbums.call(any())).thenAnswer(
+        (_) => Future.value(
           Ok(albums),
         ),
       );
 
+      when(() => getArtistInfo.call(any())).thenAnswer(
+        (_) => Future.value(
+          Err(error),
+        ),
+      );
+
+      when(() => getArtistSongs.call(
+          limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
+        (_) => Future.value(
+          Ok(artistSongs),
+        ),
+      );
+
+      when(() => getDefaultInstruments.call(any())).thenAnswer(
+        (_) => Future.value(
+          defaultInstruments,
+        ),
+      );
+
       blocTest(
-        "should emit state with albums from use case",
-        build: () => getArtistBloc(getAlbums: getArtistAlbums),
-        act: (bloc) => bloc.getAlbums(),
+        "should emit state with error from the use case that failed",
+        build: () => getArtistBloc(
+            getAlbums: getArtistAlbums,
+            getArtistInfo: getArtistInfo,
+            getArtistSongs: getArtistSongs,
+            getDefaultInstruments: getDefaultInstruments),
+        act: (bloc) => bloc.init(),
         expect: () => [
-          isA<ArtistState>().having((state) => state.albums, "albums", albums),
+          isA<ArtistState>().having((state) => state.isLoading, "isLoading", true),
+          isA<ArtistState>()
+              .having((state) => state.error, "error", error)
+              .having((state) => state.isLoading, "isLoading", false)
         ],
       );
     });
+  });
+
+  group("when onInstrumentSelected is called", () {
+    blocTest(
+      "should emit state with selected instrument",
+      build: getArtistBloc,
+      act: (bloc) => bloc.onInstrumentSelected(Instrument.bass),
+      expect: () => [
+        isA<ArtistState>().having((state) => state.selectedInstrument, "selected instrument", Instrument.bass),
+      ],
+    );
   });
 }

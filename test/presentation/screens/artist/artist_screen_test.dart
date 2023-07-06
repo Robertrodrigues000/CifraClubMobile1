@@ -1,9 +1,13 @@
+import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_screen.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +27,7 @@ void main() {
 
   setUpAll(() {
     bloc = _ArtistBlocMock();
-    when(bloc.getArtistSongs).thenAnswer((_) => SynchronousFuture(null));
-    when(bloc.getArtistInfo).thenAnswer((_) => SynchronousFuture(null));
-    when(bloc.getAlbums).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.init).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
@@ -110,5 +112,45 @@ void main() {
     expect(find.byType(ArtistSectionTitle), findsNothing);
     expect(find.byType(ArtistSongItem), findsNothing);
     expect(find.byType(Albums), findsNothing);
+  });
+
+  testWidgets("When state error is not null, should display error widget", (widgetTester) async {
+    bloc.mockStream(ArtistState(error: ServerError()));
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<ArtistBloc>.value(
+            value: bloc,
+            child: const ArtistScreen(
+              name: "Legiao Urbana",
+            ),
+          ),
+        ),
+      );
+    });
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+  });
+
+  testWidgets("When state has instruments, should display filter capsules", (widgetTester) async {
+    bloc.mockStream(const ArtistState(
+      instruments: [
+        Instrument.bass,
+        Instrument.cavaco,
+      ],
+    ));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<ArtistBloc>.value(
+          value: bloc,
+          child: const ArtistScreen(
+            name: "Legiao Urbana",
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(FilterCapsuleList), findsOneWidget);
   });
 }

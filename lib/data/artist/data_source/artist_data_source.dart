@@ -48,7 +48,7 @@ class ArtistDataSource {
     return artistInfo;
   }
 
-  CancelableOperation<Result<ArtistSongsDto, RequestError>> getArtistSongs({
+  Future<Result<ArtistSongsDto, RequestError>> getArtistSongs({
     required String artistUrl,
     required int limit,
     ArtistSongFilter? filter,
@@ -64,7 +64,7 @@ class ArtistDataSource {
       queryParams: queryParams,
       parser: (data) => ArtistSongsDto.fromJson(data as Map<String, dynamic>),
     );
-    return networkService.cancelableExecute(request: request);
+    return networkService.execute(request: request);
   }
 
   Future<Result<List<VideoLessonsDto>, RequestError>> getVideoLessons({required String artistUrl}) {

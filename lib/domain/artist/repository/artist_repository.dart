@@ -20,7 +20,7 @@ abstract class ArtistRepository {
     required String artistUrl,
   });
 
-  CancelableOperation<Result<List<ArtistSong>, RequestError>> getArtistSongs(
+  Future<Result<List<ArtistSong>, RequestError>> getArtistSongs(
       {required String artistUrl, required int limit, ArtistSongFilter? filter});
 
   Future<Result<List<VideoLesson>, RequestError>> getArtistVideoLessons(String artistUrl);

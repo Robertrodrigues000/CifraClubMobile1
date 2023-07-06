@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
@@ -9,6 +10,10 @@ import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart'
 import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
@@ -32,9 +37,6 @@ class _ArtistScreenState extends State<ArtistScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _bloc.getArtistSongs();
-    _bloc.getArtistInfo();
-    _bloc.getAlbums();
   }
 
   @override
@@ -70,10 +72,50 @@ class _ArtistScreenState extends State<ArtistScreen> {
                     ],
                   ),
                 )
+              else if (state.error != null)
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      ErrorDescriptionWidget(
+                        typeError: state.error is ConnectionError
+                            ? ErrorDescriptionWidgetType.connection
+                            : ErrorDescriptionWidgetType.server,
+                        // coverage:ignore-start
+                        onClick: () => _bloc.init(),
+                        // coverage:ignore-end
+                      ),
+                    ],
+                  ),
+                )
               else ...[
+                SliverToBoxAdapter(
+                  child: FilterCapsuleList(
+                    capsulePadding: EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: context.appDimensionScheme.screenMargin,
+                    ),
+                    filters: [
+                      Filter(
+                        label: context.text.all,
+                        onTap: () => _bloc.onInstrumentSelected(null),
+                        isSelected: state.selectedInstrument == null,
+                      ),
+                      ...state.instruments
+                          .map((instrument) => Filter(
+                                label: instrument.getInstrumentName(context),
+                                onTap: () => _bloc.onInstrumentSelected(instrument),
+                                isSelected: instrument == state.selectedInstrument,
+                              ))
+                          .toList()
+                    ],
+                  ),
+                ),
                 ArtistSectionTitle(
                   title: context.text.mostAccessed,
-                  top: context.appDimensionScheme.screenMargin,
                   bottom: context.appDimensionScheme.screenMargin,
                 ),
                 SliverList(

@@ -9,6 +9,7 @@ import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
 
@@ -69,6 +70,7 @@ class _ArtistHeaderState extends State<ArtistHeader> {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
       expandedHeight: context.appDimensionScheme.artistHeaderHeight,
       leadingWidth: context.appDimensionScheme.appBarLeadingWidth,
       automaticallyImplyLeading: false,

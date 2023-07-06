@@ -35,11 +35,10 @@ class ArtistRepositoryImpl extends ArtistRepository {
       );
 
   @override
-  CancelableOperation<Result<List<ArtistSong>, RequestError>> getArtistSongs(
-      {required String artistUrl, required int limit, ArtistSongFilter? filter}) {
-    return artistDataSource
-        .getArtistSongs(artistUrl: artistUrl, limit: limit, filter: filter)
-        .then((result) => result.map((artistSongDto) => artistSongDto.toDomain()));
+  Future<Result<List<ArtistSong>, RequestError>> getArtistSongs(
+      {required String artistUrl, required int limit, ArtistSongFilter? filter}) async {
+    return (await artistDataSource.getArtistSongs(artistUrl: artistUrl, limit: limit, filter: filter))
+        .map((artistSongDto) => artistSongDto.toDomain().toList());
   }
 
   @override

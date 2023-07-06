@@ -9,6 +9,12 @@ part of 'artist_state.dart';
 abstract class _$ArtistStateCWProxy {
   ArtistState isLoading(bool isLoading);
 
+  ArtistState error(RequestError? error);
+
+  ArtistState selectedInstrument(Instrument? selectedInstrument);
+
+  ArtistState instruments(List<Instrument> instruments);
+
   ArtistState artistInfo(ArtistInfo? artistInfo);
 
   ArtistState songs(List<ArtistSong> songs);
@@ -23,6 +29,9 @@ abstract class _$ArtistStateCWProxy {
   /// ````
   ArtistState call({
     bool? isLoading,
+    RequestError? error,
+    Instrument? selectedInstrument,
+    List<Instrument>? instruments,
     ArtistInfo? artistInfo,
     List<ArtistSong>? songs,
     List<Album>? albums,
@@ -37,6 +46,15 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
 
   @override
   ArtistState isLoading(bool isLoading) => this(isLoading: isLoading);
+
+  @override
+  ArtistState error(RequestError? error) => this(error: error);
+
+  @override
+  ArtistState selectedInstrument(Instrument? selectedInstrument) => this(selectedInstrument: selectedInstrument);
+
+  @override
+  ArtistState instruments(List<Instrument> instruments) => this(instruments: instruments);
 
   @override
   ArtistState artistInfo(ArtistInfo? artistInfo) => this(artistInfo: artistInfo);
@@ -57,6 +75,9 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
   /// ````
   ArtistState call({
     Object? isLoading = const $CopyWithPlaceholder(),
+    Object? error = const $CopyWithPlaceholder(),
+    Object? selectedInstrument = const $CopyWithPlaceholder(),
+    Object? instruments = const $CopyWithPlaceholder(),
     Object? artistInfo = const $CopyWithPlaceholder(),
     Object? songs = const $CopyWithPlaceholder(),
     Object? albums = const $CopyWithPlaceholder(),
@@ -66,6 +87,18 @@ class _$ArtistStateCWProxyImpl implements _$ArtistStateCWProxy {
           ? _value.isLoading
           // ignore: cast_nullable_to_non_nullable
           : isLoading as bool,
+      error: error == const $CopyWithPlaceholder()
+          ? _value.error
+          // ignore: cast_nullable_to_non_nullable
+          : error as RequestError?,
+      selectedInstrument: selectedInstrument == const $CopyWithPlaceholder()
+          ? _value.selectedInstrument
+          // ignore: cast_nullable_to_non_nullable
+          : selectedInstrument as Instrument?,
+      instruments: instruments == const $CopyWithPlaceholder() || instruments == null
+          ? _value.instruments
+          // ignore: cast_nullable_to_non_nullable
+          : instruments as List<Instrument>,
       artistInfo: artistInfo == const $CopyWithPlaceholder()
           ? _value.artistInfo
           // ignore: cast_nullable_to_non_nullable
