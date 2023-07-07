@@ -8,6 +8,7 @@ import 'package:cifraclub/presentation/screens/artist/widgets/artist_header.dart
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -135,7 +136,9 @@ class _ArtistScreenState extends State<ArtistScreen> {
                   child: CifraClubButton(
                     type: ButtonType.outline,
                     // coverage:ignore-start
-                    onPressed: () {},
+                    onPressed: () {
+                      Nav.of(context).push(screenName: ArtistSongsEntry.name, params: {});
+                    },
                     // coverage:ignore-end
                     padding: EdgeInsets.only(
                       left: context.appDimensionScheme.screenMargin,

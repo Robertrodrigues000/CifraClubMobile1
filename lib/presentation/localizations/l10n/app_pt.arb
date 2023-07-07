@@ -166,6 +166,11 @@
     "instrumentBass" : "Baixo",
     "instrumentDrums" : "Bateria",
     "instrumentHarmonica" : "Gaita",
+
+    "songs" : "Músicas",
+    "alphabeticalOrder" : "Ordem alfabética",
+    "videoLessons" : "Videoaulas",
+    
     "emptyListTitle": "Sem músicas",
     "emptyListDescription": "Faça uma busca para adicionar músicas\na essa lista."
 }

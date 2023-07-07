@@ -2,6 +2,7 @@
 import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
@@ -71,5 +72,9 @@ final List<NavRoute> routes = [
   NavRoute(
     AlbumsEntry.name,
     (params, _) => AlbumsEntry(params),
+  ),
+  NavRoute(
+    ArtistSongsEntry.name,
+    (params, _) => ArtistSongsEntry(params),
   ),
 ];

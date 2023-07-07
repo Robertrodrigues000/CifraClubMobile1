@@ -223,6 +223,11 @@
     "instrumentBass" : "Bass",
     "instrumentDrums" : "Drums",
     "instrumentHarmonica" : "Harmonica",
+
+    "songs" : "Songs",
+    "alphabeticalOrder" : "Alphabetical order",
+    "videoLessons" : "Video lessons",
+    
     "emptyListTitle": "No songs",
     "emptyListDescription": "Search to add songs to this list."
 }
