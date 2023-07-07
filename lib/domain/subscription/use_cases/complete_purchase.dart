@@ -2,7 +2,9 @@
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class CompletePurchase {
   final InAppPurchaseRepository _inAppPurchaseRepository;
 

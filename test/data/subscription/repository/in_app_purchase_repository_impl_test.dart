@@ -63,7 +63,7 @@ void main() {
           purchaseTime: 12,
           purchaseToken: "",
           signature: "",
-          skus: [],
+          products: [],
           isAutoRenewing: true,
           originalJson: "",
           isAcknowledged: true,

@@ -101,7 +101,7 @@ void main() {
     expect(logoutFinder, findsOneWidget);
 
     await widgetTester.pumpAndSettle();
-    await widgetTester.tap(logoutFinder);
+    await widgetTester.tap(logoutFinder, warnIfMissed: false);
 
     await widgetTester.pumpAndSettle();
     expect(find.byType(LogoutDialog), findsOneWidget);

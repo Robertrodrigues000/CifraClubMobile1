@@ -78,10 +78,12 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byWidgetPredicate(
-        (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.logoutIcon,
-        description: 'widget with logout icon',
-      ));
+      await tester.tap(
+          find.byWidgetPredicate(
+            (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.logoutIcon,
+            description: 'widget with logout icon',
+          ),
+          warnIfMissed: false);
       await tester.pumpAndSettle();
       expect(find.byType(LogoutDialog), findsOneWidget);
 

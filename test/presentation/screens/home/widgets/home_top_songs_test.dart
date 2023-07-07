@@ -47,7 +47,7 @@ void main() {
     ));
 
     await widgetTester.pumpAndSettle();
-    await widgetTester.tap(find.text(songs.name));
+    await widgetTester.tap(find.text(songs.name), warnIfMissed: false);
 
     expect(completer.isCompleted, isTrue);
   });

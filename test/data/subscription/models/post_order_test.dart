@@ -18,7 +18,7 @@ void main() {
         purchaseTime: 12,
         purchaseToken: "a8w74-dew2q-fdsf2",
         signature: "",
-        skus: [],
+        products: [],
         isAutoRenewing: true,
         originalJson: "",
         isAcknowledged: true,

@@ -81,7 +81,7 @@ void main() {
     );
     expect(finder, findsOneWidget);
 
-    await widgetTester.tap(finder);
+    await widgetTester.tap(finder, warnIfMissed: false);
     await widgetTester.pumpAndSettle();
 
     verify(nav.pop).called(1);

@@ -82,7 +82,7 @@ void main() {
         );
 
         expect(logoutFinder, findsOneWidget);
-        await tester.tap(logoutFinder);
+        await tester.tap(logoutFinder, warnIfMissed: false);
         expect(isLogoutTapped, true);
       });
 
@@ -109,7 +109,7 @@ void main() {
         );
 
         expect(logoutFinder, findsOneWidget);
-        await widgetTester.tap(logoutFinder);
+        await widgetTester.tap(logoutFinder, warnIfMissed: false);
 
         expect(completer.isCompleted, isTrue);
       });

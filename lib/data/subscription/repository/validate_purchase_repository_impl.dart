@@ -3,13 +3,16 @@ import 'package:cifraclub/data/subscription/models/validate_purchase_input_dto.d
 import 'package:cifraclub/domain/device/operating_system/models/operating_system.dart';
 import 'package:cifraclub/domain/device/operating_system/use_cases/get_operating_system.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
+import 'package:cifraclub/domain/subscription/models/persisted_purchase.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/models/validate_purchase_response.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/subscription/repository/validate_purchase_repository.dart';
 import 'package:flutter/foundation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';
 
+@Injectable(as: ValidatePurchaseRepository)
 class ValidatePurchaseRepositoryImpl implements ValidatePurchaseRepository {
   final GetOperatingSystem getOperatingSystem;
   final ValidatePurchaseDataSource validatePurchaseDataSource;
@@ -26,6 +29,18 @@ class ValidatePurchaseRepositoryImpl implements ValidatePurchaseRepository {
       productId: purchase.productId,
       packageName: purchase.packageName,
       confirmed: (!purchase.pendingCompletePurchase).toString(),
+    );
+    return (await validatePurchaseDataSource.postValidatePurchase(validatePurchaseInputDto)).map((e) => e.toDomain());
+  }
+
+  @override
+  Future<Result<ValidatePurchaseResponse, RequestError>> postValidatePersistedPurchase(
+      {required PersistedPurchase purchase}) async {
+    final validatePurchaseInputDto = _getValidatePurchaseInput(
+      receipt: purchase.token ?? "",
+      productId: purchase.productId ?? "",
+      packageName: purchase.packageName,
+      confirmed: (!(purchase.pendingCompletePurchase ?? true)).toString(),
     );
     return (await validatePurchaseDataSource.postValidatePurchase(validatePurchaseInputDto)).map((e) => e.toDomain());
   }

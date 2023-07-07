@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
 import 'package:cifraclub/domain/subscription/repository/subscription_repository.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_remote_pro_status.dart';
+import 'package:cifraclub/domain/subscription/use_cases/validate_persisted_purchase.dart';
 import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
@@ -17,21 +17,15 @@ class _SubscriptionRepositoryMock extends Mock implements SubscriptionRepository
 
 class _GetRemoteProStatusMock extends Mock implements GetRemoteProStatus {}
 
-class _Notifier extends ValueNotifier {
-  _Notifier() : super(null);
-}
-
-class _InAppPurchaseRepositoryMock extends Mock implements InAppPurchaseRepository {
-  final internalNotifier = _Notifier();
-}
+class _ValidatePersistedPurchaseMock extends Mock implements ValidatePersistedPurchase {}
 
 void main() {
   // ignore: close_sinks
   var credentialStream = BehaviorSubject<UserCredential>();
   var getCredentialStream = _GetCredentialStreamMock();
   var subscriptionRepository = _SubscriptionRepositoryMock();
-  var inAppPurchaseRepository = _InAppPurchaseRepositoryMock();
   var getRemoteProStatus = _GetRemoteProStatusMock();
+  var validatePersistedPurchase = _ValidatePersistedPurchaseMock();
   WatchForSubscriptions? watchForSubscriptions;
 
   setUpAll(() async {
@@ -39,14 +33,6 @@ void main() {
   });
 
   setUp(() {
-    clearInteractions(inAppPurchaseRepository);
-    when(inAppPurchaseRepository.cleanIosTransactions).thenAnswer((_) => SynchronousFuture(null));
-    when(inAppPurchaseRepository.restorePurchases).thenAnswer((_) {
-      return SynchronousFuture(null);
-    });
-    when(() => inAppPurchaseRepository.ensureInitialized).thenAnswer((_) => SynchronousFuture(true));
-    when(inAppPurchaseRepository.getPurchaseStream).thenAnswer((_) => const Stream.empty());
-
     when(() => subscriptionRepository.updateProStatus(
           remoteProStatus: any(named: "remoteProStatus"),
           storeProStatus: any(named: "storeProStatus"),
@@ -54,15 +40,13 @@ void main() {
 
     when(getCredentialStream.call).thenAnswer((_) => credentialStream);
 
+    when(validatePersistedPurchase.call).thenAnswer((_) => SynchronousFuture(null));
+
     if (watchForSubscriptions == null) {
       watchForSubscriptions = WatchForSubscriptions(
-          getCredentialStream, subscriptionRepository, inAppPurchaseRepository, getRemoteProStatus);
+          getCredentialStream, subscriptionRepository, getRemoteProStatus, validatePersistedPurchase);
       watchForSubscriptions!();
     }
-  });
-
-  test("When `WatchForSubscriptions` is called, it should wait for the InAppPurchaseRepository to start", () async {
-    verify(() => inAppPurchaseRepository.ensureInitialized).called(1);
   });
 
   group("When user login/logout", () {
@@ -71,7 +55,6 @@ void main() {
 
       await _addToCredentialStream(credentialStream);
 
-      verifyNever(inAppPurchaseRepository.restorePurchases);
       _expectUpdateProStatus(subscriptionRepository, remoteProStatus: true);
     });
 
@@ -80,17 +63,7 @@ void main() {
 
       await _addToCredentialStream(credentialStream);
 
-      verify(inAppPurchaseRepository.restorePurchases).called(1);
       _expectUpdateProStatus(subscriptionRepository, remoteProStatus: false);
-    });
-
-    test("and get orders fails, should not change PRO status and should look for purchases on store", () async {
-      when(() => getRemoteProStatus(any())).thenAnswer((_) => SynchronousFuture(null));
-
-      await _addToCredentialStream(credentialStream);
-
-      verify(inAppPurchaseRepository.restorePurchases).called(1);
-      _expectUpdateProStatus(subscriptionRepository, remoteProStatus: null);
     });
   });
 }

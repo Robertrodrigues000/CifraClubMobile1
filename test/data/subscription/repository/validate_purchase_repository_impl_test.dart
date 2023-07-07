@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
+import '../../../shared_mocks/domain/subscription/models/persisted_purchase_mock.dart';
 import '../../../shared_mocks/domain/subscription/models/purchase_mock.dart';
 
 class _GetOperatingSystemMock extends Mock implements GetOperatingSystem {}
@@ -84,5 +85,35 @@ void main() {
       expect(response.isSuccess, true);
       expect(input.platform, "android");
     }
+  });
+
+  test("When postValidatePersistedPurchase is called, the data source method should be called.", () async {
+    var getOperatingSystem = _GetOperatingSystemMock();
+    when(getOperatingSystem.call).thenAnswer((_) => OperatingSystem.android);
+
+    var validatePurchaseResponse = ValidatePurchaseResponseDto(
+      isValid: true,
+      responseCode: 0,
+      isInGracePeriod: false,
+      expirationDate: "expirationDate",
+      purchaseDate: "purchaseDate",
+      app: "app",
+      productID: "productID",
+    );
+
+    var validatePurchaseDataSource = _ValidatePurchaseDataSourceMock();
+    when(() => validatePurchaseDataSource.postValidatePurchase(any()))
+        .thenAnswer((invocation) => SynchronousFuture(Ok(validatePurchaseResponse)));
+
+    var repository = ValidatePurchaseRepositoryImpl(
+      getOperatingSystem: getOperatingSystem,
+      validatePurchaseDataSource: validatePurchaseDataSource,
+    );
+
+    var response = await repository.postValidatePersistedPurchase(purchase: getFakePersistedPurchase());
+
+    verify(() => validatePurchaseDataSource.postValidatePurchase(captureAny())).called(1);
+
+    expect(response.isSuccess, true);
   });
 }

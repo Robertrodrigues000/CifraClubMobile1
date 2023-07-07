@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/subscription/data_source/order_data_source.dart';
 import 'package:cifraclub/data/subscription/models/order_dto.dart';
+import 'package:cifraclub/data/subscription/models/persisted_purchase_dto.dart';
 import 'package:cifraclub/data/subscription/models/purchase_result_dto.dart';
 import 'package:cifraclub/domain/subscription/models/purchase_result.dart';
 import 'package:cifraclub/data/subscription/repository/order_repository_impl.dart';
@@ -11,6 +12,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/subscription/models/order_mock.dart';
+import '../../../shared_mocks/domain/subscription/models/persisted_purchase_mock.dart';
 import '../../../shared_mocks/domain/subscription/models/purchase_mock.dart';
 
 class _OrderDataSourceMock extends Mock implements OrderDataSource {}
@@ -22,6 +24,8 @@ class _PurchaseDetailsMock extends Mock implements PurchaseDetails {}
 void main() {
   setUpAll(() {
     registerFallbackValue(_PurchaseDetailsMock());
+    registerFallbackValue(getFakePersistedPurchase());
+    registerFallbackValue(PersistedPurchaseDto.fromDomain(getFakePersistedPurchase()));
   });
 
   group("When call `getUserOrders`", () {
@@ -107,6 +111,59 @@ void main() {
 
       expect(result, PurchaseResult.valid);
       expect(params.first, purchase.purchaseDto);
+      expect(params.last, replace);
+    });
+  });
+
+  group("When `postOrderFromPersistedPurchase` is called", () {
+    test("When post with success should return success", () async {
+      final dataSource = _OrderDataSourceMock();
+      final repository = OrderRepositoryImpl(dataSource: dataSource);
+      final purchase = getFakePersistedPurchase();
+
+      when(() => dataSource.postOrderFromPersistedPurchase(captureAny()))
+          .thenAnswer((_) => SynchronousFuture(PurchaseResultDto.success));
+
+      final result = await repository.postOrderFromPersistedPurchase(purchase);
+
+      final params = verify(() => dataSource.postOrderFromPersistedPurchase(captureAny(),
+          replaceCcidAccount: captureAny(named: "replaceCcidAccount"))).captured;
+
+      expect(result, PurchaseResult.valid);
+      expect(params.first, purchase);
+      expect(params.last, false);
+    });
+
+    test("When post is failure should return pruchaseResult error", () async {
+      final dataSource = _OrderDataSourceMock();
+      final repository = OrderRepositoryImpl(dataSource: dataSource);
+      final purchase = getFakePersistedPurchase();
+
+      when(() => dataSource.postOrderFromPersistedPurchase(captureAny()))
+          .thenAnswer((_) => SynchronousFuture(PurchaseResultDto.serverError));
+
+      final result = await repository.postOrderFromPersistedPurchase(purchase);
+
+      expect(result, PurchaseResult.unknown);
+    });
+
+    test("When post with success and change replace account value should return success", () async {
+      final dataSource = _OrderDataSourceMock();
+      final repository = OrderRepositoryImpl(dataSource: dataSource);
+      final purchase = getFakePersistedPurchase();
+      const replace = true;
+
+      when(() => dataSource.postOrderFromPersistedPurchase(captureAny(),
+              replaceCcidAccount: captureAny(named: "replaceCcidAccount")))
+          .thenAnswer((_) => SynchronousFuture(PurchaseResultDto.success));
+
+      final result = await repository.postOrderFromPersistedPurchase(purchase, replaceCcidAccount: replace);
+
+      final params = verify(() => dataSource.postOrderFromPersistedPurchase(captureAny(),
+          replaceCcidAccount: captureAny(named: "replaceCcidAccount"))).captured;
+
+      expect(result, PurchaseResult.valid);
+      expect(params.first, purchase);
       expect(params.last, replace);
     });
   });
