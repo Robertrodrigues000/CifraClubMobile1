@@ -143,8 +143,7 @@ class _AlbumItemState extends State<AlbumItem> with SingleTickerProviderStateMix
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    key: const Key("album artist name"),
-                    widget.album.artistName,
+                    "${widget.album.totalSongs} ${context.text.songs(widget.album.totalSongs ?? 0)} • ${widget.album.releaseYear}",
                     style: styles.subtitle5,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

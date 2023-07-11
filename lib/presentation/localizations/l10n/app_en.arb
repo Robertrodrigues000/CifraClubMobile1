@@ -224,7 +224,15 @@
     "instrumentDrums" : "Drums",
     "instrumentHarmonica" : "Harmonica",
 
-    "songs" : "Songs",
+    "songs": "{count,plural, =1{Song}other{Songs}}",
+    "@versionsCount":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
     "alphabeticalOrder" : "Alphabetical order",
     "videoLessons" : "Video lessons",
     

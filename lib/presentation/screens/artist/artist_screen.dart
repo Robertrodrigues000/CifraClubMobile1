@@ -1,5 +1,7 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
@@ -29,6 +31,8 @@ class ArtistScreen extends StatefulWidget {
 class _ArtistScreenState extends State<ArtistScreen> {
   late ArtistBloc _bloc;
   final _scrollController = ScrollController();
+  static const maxSongs = 10;
+  static const maxAlbums = 4;
   @override
   void initState() {
     super.initState();
@@ -121,59 +125,64 @@ class _ArtistScreenState extends State<ArtistScreen> {
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    childCount: state.songs.length,
+                    childCount: state.songs.take(maxSongs).length,
                     (context, index) => ArtistSongItem(
                       onTap: () {},
                       onOptionsTap: () {},
                       name: state.songs[index].name,
                       ranking: index + 1,
                       isVerified: state.songs[index].verified,
-                      hasVideoLessons: state.songs[index].videoLessons > 0,
+                      hasVideoLessons: hasInstrumentVideoLesson(
+                        state.selectedInstrument,
+                        state.songs[index],
+                      ),
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: CifraClubButton(
-                    type: ButtonType.outline,
-                    // coverage:ignore-start
-                    onPressed: () {
-                      Nav.of(context).push(screenName: ArtistSongsEntry.name, params: {});
-                    },
-                    // coverage:ignore-end
-                    padding: EdgeInsets.only(
-                      left: context.appDimensionScheme.screenMargin,
-                      right: context.appDimensionScheme.screenMargin,
-                      top: 16,
-                      bottom: 32,
+                if (state.songs.length > maxSongs)
+                  SliverToBoxAdapter(
+                    child: CifraClubButton(
+                      type: ButtonType.outline,
+                      // coverage:ignore-start
+                      onPressed: () {
+                        Nav.of(context).push(screenName: ArtistSongsEntry.name);
+                      },
+                      // coverage:ignore-end
+                      padding: EdgeInsets.only(
+                        left: context.appDimensionScheme.screenMargin,
+                        right: context.appDimensionScheme.screenMargin,
+                        top: 16,
+                        bottom: 32,
+                      ),
+                      child: Text(context.text.artistMoreSongs),
                     ),
-                    child: Text(context.text.artistMoreSongs),
                   ),
-                ),
                 if (state.albums.isNotEmpty) ...[
                   ArtistSectionTitle(
                     title: context.text.albums,
                     bottom: context.appDimensionScheme.screenMargin,
                   ),
-                  Albums(albums: state.albums.take(4).toList()),
-                  SliverToBoxAdapter(
-                    child: CifraClubButton(
-                      type: ButtonType.outline,
-                      // coverage:ignore-start
-                      onPressed: () => Nav.of(context).push(screenName: AlbumsEntry.name, params: {
-                        'url': state.artistInfo!.url,
-                        'name': state.artistInfo!.name,
-                        'totalAlbums': state.albums.length.toString(),
-                      }),
-                      // coverage:ignore-end
-                      padding: EdgeInsets.only(
-                        left: context.appDimensionScheme.screenMargin,
-                        right: context.appDimensionScheme.screenMargin,
-                        top: context.appDimensionScheme.screenMargin,
-                        bottom: 32,
+                  Albums(albums: state.albums.take(maxAlbums).toList()),
+                  if (state.albums.length > maxAlbums)
+                    SliverToBoxAdapter(
+                      child: CifraClubButton(
+                        type: ButtonType.outline,
+                        // coverage:ignore-start
+                        onPressed: () => Nav.of(context).push(screenName: AlbumsEntry.name, params: {
+                          'url': state.artistInfo!.url,
+                          'name': state.artistInfo!.name,
+                          'totalAlbums': state.albums.length.toString(),
+                        }),
+                        // coverage:ignore-end
+                        padding: EdgeInsets.only(
+                          left: context.appDimensionScheme.screenMargin,
+                          right: context.appDimensionScheme.screenMargin,
+                          top: context.appDimensionScheme.screenMargin,
+                          bottom: 32,
+                        ),
+                        child: Text(context.text.moreAlbums),
                       ),
-                      child: Text(context.text.moreAlbums),
-                    ),
-                  )
+                    )
                 ],
               ]
             ],
@@ -181,6 +190,14 @@ class _ArtistScreenState extends State<ArtistScreen> {
         );
       },
     );
+  }
+
+  bool hasInstrumentVideoLesson(Instrument? instrument, ArtistSong song) {
+    if (instrument == null && song.videoLessons > 0) {
+      return true;
+    } else {
+      return song.videoLessonsInstruments?.contains(instrument) ?? false;
+    }
   }
 
   @override

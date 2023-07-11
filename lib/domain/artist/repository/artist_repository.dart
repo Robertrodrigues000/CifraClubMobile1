@@ -20,8 +20,7 @@ abstract class ArtistRepository {
     required String artistUrl,
   });
 
-  Future<Result<List<ArtistSong>, RequestError>> getArtistSongs(
-      {required String artistUrl, required int limit, ArtistSongFilter? filter});
+  Future<Result<List<ArtistSong>, RequestError>> getArtistSongs({required String artistUrl, ArtistSongFilter? filter});
 
   Future<Result<List<VideoLesson>, RequestError>> getArtistVideoLessons(String artistUrl);
 

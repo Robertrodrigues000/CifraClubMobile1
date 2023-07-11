@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:equatable/equatable.dart';
 
 class ArtistSong extends Equatable {
@@ -14,7 +15,7 @@ class ArtistSong extends Equatable {
   final String url;
   final bool verified;
   final int videoLessons;
-  final List<int>? videoLessonsInstruments;
+  final List<Instrument>? videoLessonsInstruments;
 
   const ArtistSong(
       {required this.id,

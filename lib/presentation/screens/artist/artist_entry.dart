@@ -26,6 +26,7 @@ class ArtistEntry extends ScreenEntry {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       )..init(),
       child: ArtistScreen(
         name: params['name'] as String,

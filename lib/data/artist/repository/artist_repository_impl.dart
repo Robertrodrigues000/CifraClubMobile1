@@ -36,8 +36,8 @@ class ArtistRepositoryImpl extends ArtistRepository {
 
   @override
   Future<Result<List<ArtistSong>, RequestError>> getArtistSongs(
-      {required String artistUrl, required int limit, ArtistSongFilter? filter}) async {
-    return (await artistDataSource.getArtistSongs(artistUrl: artistUrl, limit: limit, filter: filter))
+      {required String artistUrl, ArtistSongFilter? filter}) async {
+    return (await artistDataSource.getArtistSongs(artistUrl: artistUrl, filter: filter))
         .map((artistSongDto) => artistSongDto.toDomain().toList());
   }
 

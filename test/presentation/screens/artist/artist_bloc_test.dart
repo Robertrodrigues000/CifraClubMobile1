@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/artist/use_cases/get_albums.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_artist_info.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_artist_songs.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_default_instruments.dart';
+import 'package:cifraclub/domain/artist/use_cases/get_filtered_artist_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
@@ -24,6 +25,8 @@ class _GetAlbumsMock extends Mock implements GetAlbums {}
 
 class _GetDefaultInstrumentsMock extends Mock implements GetDefaultInstruments {}
 
+class _GetFilteredArtistSongsMock extends Mock implements GetFilteredArtistSongs {}
+
 void main() {
   ArtistBloc getArtistBloc({
     String? artistUrl,
@@ -31,6 +34,7 @@ void main() {
     _GetArtistSongsMock? getArtistSongs,
     _GetAlbumsMock? getAlbums,
     _GetDefaultInstrumentsMock? getDefaultInstruments,
+    _GetFilteredArtistSongsMock? getFilteredArtistSongs,
   }) =>
       ArtistBloc(
         artistUrl ?? "",
@@ -38,6 +42,7 @@ void main() {
         getArtistInfo ?? _GetArtistInfoMock(),
         getAlbums ?? _GetAlbumsMock(),
         getDefaultInstruments ?? _GetDefaultInstrumentsMock(),
+        getFilteredArtistSongs ?? _GetFilteredArtistSongsMock(),
       );
 
   group("When init is called", () {
@@ -67,8 +72,7 @@ void main() {
         },
       );
 
-      when(() => getArtistSongs(
-          limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
+      when(() => getArtistSongs(artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
         (_) {
           return Future.value(
             Ok(artistSongs),
@@ -127,8 +131,7 @@ void main() {
         ),
       );
 
-      when(() => getArtistSongs.call(
-          limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
+      when(() => getArtistSongs.call(artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
         (_) => Future.value(
           Ok(artistSongs),
         ),
@@ -159,12 +162,20 @@ void main() {
   });
 
   group("when onInstrumentSelected is called", () {
+    final getFilteredArtistSongs = _GetFilteredArtistSongsMock();
+    final artistSongs = [getFakeArtistSong(), getFakeArtistSong()];
+
+    when(() => getFilteredArtistSongs.call([], Instrument.bass)).thenAnswer(
+      (invocation) => SynchronousFuture(artistSongs),
+    );
+
     blocTest(
-      "should emit state with selected instrument",
-      build: getArtistBloc,
+      "should emit state with selected instrument and fetch filtered songs",
+      build: () => getArtistBloc(getFilteredArtistSongs: getFilteredArtistSongs),
       act: (bloc) => bloc.onInstrumentSelected(Instrument.bass),
       expect: () => [
         isA<ArtistState>().having((state) => state.selectedInstrument, "selected instrument", Instrument.bass),
+        isA<ArtistState>().having((state) => state.songs, "filtered songs", artistSongs),
       ],
     );
   });

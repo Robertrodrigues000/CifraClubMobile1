@@ -167,7 +167,15 @@
     "instrumentDrums" : "Bateria",
     "instrumentHarmonica" : "Gaita",
 
-    "songs" : "Músicas",
+    "songs": "{count,plural, =1{Música}other{Músicas}}",
+    "@versionsCount":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
     "alphabeticalOrder" : "Ordem alfabética",
     "videoLessons" : "Videoaulas",
     

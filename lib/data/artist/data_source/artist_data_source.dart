@@ -50,10 +50,9 @@ class ArtistDataSource {
 
   Future<Result<ArtistSongsDto, RequestError>> getArtistSongs({
     required String artistUrl,
-    required int limit,
     ArtistSongFilter? filter,
   }) {
-    final Map<String, dynamic> queryParams = {'limit': limit};
+    final Map<String, dynamic> queryParams = {};
 
     if (filter != null) {
       queryParams['filter'] = filter.name;

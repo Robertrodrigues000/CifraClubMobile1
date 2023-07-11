@@ -38,7 +38,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
         return Scaffold(
           appBar: CosmosAppBar(
             title: Text(
-              context.text.songs,
+              context.text.songs(200),
               style: context.typography.title4.copyWith(color: context.colors.textPrimary),
             ),
           ),

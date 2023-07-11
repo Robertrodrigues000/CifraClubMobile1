@@ -167,7 +167,15 @@
     "instrumentDrums" : "Batería",
     "instrumentHarmonica" : "Armónica",
 
-    "songs" : "Musicas",
+    "songs": "{count,plural, =1{Musica}other{Musicas}}",
+    "@versionsCount":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
     "alphabeticalOrder" : "Orden alfabética",
     "videoLessons" : "Vídeo lecciones",
     

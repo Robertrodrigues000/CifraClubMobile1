@@ -17,6 +17,7 @@ import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -183,19 +184,19 @@ void main() {
           url: "me-atraiu",
           verified: true,
           videoLessons: 1,
-          videoLessonsInstruments: [1, 2, 3],
+          videoLessonsInstruments: [3],
         ),
       ]);
 
-      when(() => artistDataSource.getArtistSongs(
-          limit: any(named: "limit"), artistUrl: any(named: "artistUrl"), filter: any(named: "filter"))).thenAnswer(
+      when(() => artistDataSource.getArtistSongs(artistUrl: any(named: "artistUrl"), filter: any(named: "filter")))
+          .thenAnswer(
         (_) => SynchronousFuture(
           Ok(artistsSongsDto),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final artistSongs = await repository.getArtistSongs(limit: 3, artistUrl: artistUrl);
+      final artistSongs = await repository.getArtistSongs(artistUrl: artistUrl);
 
       expect(artistSongs.isSuccess, true);
       expect(artistSongs.get()!.length, 1);
@@ -215,7 +216,7 @@ void main() {
           url: "me-atraiu",
           verified: true,
           videoLessons: 1,
-          videoLessonsInstruments: [1, 2, 3],
+          videoLessonsInstruments: [Instrument.bass],
         ),
       );
     });
@@ -223,14 +224,14 @@ void main() {
     test("Request failed", () async {
       final artistDataSource = _ArtistDataSourceMock();
 
-      when(() => artistDataSource.getArtistSongs(limit: 3, artistUrl: artistUrl)).thenAnswer(
+      when(() => artistDataSource.getArtistSongs(artistUrl: artistUrl)).thenAnswer(
         (_) => SynchronousFuture(
           Err(ServerError()),
         ),
       );
 
       final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
-      final artistSongs = await repository.getArtistSongs(limit: 3, artistUrl: artistUrl);
+      final artistSongs = await repository.getArtistSongs(artistUrl: artistUrl);
 
       expect(artistSongs.isFailure, true);
       expect(artistSongs.getError().runtimeType, ServerError);

@@ -166,7 +166,6 @@ void main() {
     test("When request is successful with params", () async {
       const artistUrl = "gabriela-rocha";
       final queryParams = {
-        'limit': 2,
         'filter': ArtistSongFilter.cifra.name,
       };
 
@@ -178,7 +177,6 @@ void main() {
       final artistDataSource = ArtistDataSource(networkService: networkService);
       final result = await artistDataSource.getArtistSongs(
         artistUrl: artistUrl,
-        limit: queryParams['limit'] as int,
         filter: ArtistSongFilter.cifra,
       );
 
@@ -210,7 +208,6 @@ void main() {
 
       final artistDataSource = ArtistDataSource(networkService: networkService);
       final result = await artistDataSource.getArtistSongs(
-        limit: 10,
         artistUrl: "legiao-urbana",
       );
 

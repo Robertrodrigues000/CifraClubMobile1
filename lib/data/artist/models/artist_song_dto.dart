@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'artist_song_dto.g.dart';
 
@@ -51,6 +52,7 @@ class ArtistSongDto {
         url: url,
         verified: verified,
         videoLessons: videoLessons,
+        videoLessonsInstruments: videoLessonsInstruments?.map(Instrument.getInstrumentByVideoLessonId).toList(),
       );
 
   factory ArtistSongDto.fromJson(Map<String, dynamic> json) => _$ArtistSongDtoFromJson(json);

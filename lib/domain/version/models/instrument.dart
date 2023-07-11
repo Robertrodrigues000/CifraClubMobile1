@@ -3,21 +3,19 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
 enum Instrument {
-  guitar("", 1),
-  ukulele("ukulele", 12),
-  keyboard("keyboard", 9),
-  cavaco("cavaco", 10),
-  violaCaipira("viola", 13),
-  bass("tabs-baixo", 2),
-  drums("tabs-bateria", 3),
-  harmonica("tabs-gaita", 5);
+  guitar("", 1, [1, 2]),
+  ukulele("ukulele", 12, [11]),
+  keyboard("keyboard", 9, [5]),
+  cavaco("cavaco", 10, [10]),
+  violaCaipira("viola", 13, [9]),
+  bass("tabs-baixo", 2, [3]),
+  drums("tabs-bateria", 3, [4]),
+  harmonica("tabs-gaita", 5, []);
 
   final String instrumentUrl;
   final int apiType;
-
-  const Instrument(this.instrumentUrl, this.apiType);
-
-  bool get isCifraInstrument => this != Instrument.bass || this != Instrument.drums || this != Instrument.harmonica;
+  final List<int> videoLessonInstrumentIds;
+  const Instrument(this.instrumentUrl, this.apiType, this.videoLessonInstrumentIds);
 
   String getInstrumentName(BuildContext context) {
     switch (this) {
@@ -42,5 +40,10 @@ enum Instrument {
 
   static Instrument getInstrumentByType(int? apiType) {
     return Instrument.values.singleWhere((element) => element.apiType == apiType, orElse: () => Instrument.guitar);
+  }
+
+  static Instrument getInstrumentByVideoLessonId(int? instrumentId) {
+    return Instrument.values.singleWhere((element) => element.videoLessonInstrumentIds.contains(instrumentId),
+        orElse: () => Instrument.guitar);
   }
 }

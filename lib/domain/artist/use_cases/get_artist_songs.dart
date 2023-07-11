@@ -14,7 +14,6 @@ class GetArtistSongs {
     required this.artistRepository,
   });
 
-  Future<Result<List<ArtistSong>, RequestError>> call(
-          {required String artistUrl, int limit = 20, ArtistSongFilter? filter}) =>
-      artistRepository.getArtistSongs(artistUrl: artistUrl, limit: limit, filter: filter);
+  Future<Result<List<ArtistSong>, RequestError>> call({required String artistUrl, ArtistSongFilter? filter}) =>
+      artistRepository.getArtistSongs(artistUrl: artistUrl, filter: filter);
 }
