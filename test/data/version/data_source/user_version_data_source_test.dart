@@ -175,7 +175,7 @@ void main() {
   });
 
   test("When `deleteSongsById` is called should delete songs from songbook", () async {
-    final cifras = [
+    final versions = [
       getUserVersionDto(),
       getUserVersionDto(),
       getUserVersionDto(),
@@ -184,13 +184,41 @@ void main() {
 
     await isar.writeTxn(
       () async {
-        await isar.userVersionDtos.putAll(cifras);
+        await isar.userVersionDtos.putAll(versions);
       },
     );
 
-    final numberCifrasDeleted =
-        await userVersionDataSource.deleteVersionsById(cifras.map((e) => e.localDatabaseID).toList());
+    final numberVersionsDeleted =
+        await userVersionDataSource.deleteVersionsById(versions.map((e) => e.localDatabaseID).toList());
 
-    expect(numberCifrasDeleted, 4);
+    expect(numberVersionsDeleted, 4);
+  });
+
+  group("when getVersionsStreamFromSongbook is called", () {
+    test("when user has versions on songbook should return version list", () async {
+      final fakeSongbookId = faker.randomGenerator.integer(1000);
+
+      final versions = [
+        getUserVersionDto(songbookId: fakeSongbookId),
+      ];
+
+      await isar.writeTxn(
+        () async {
+          await isar.userVersionDtos.putAll(versions);
+        },
+      );
+
+      final result = userVersionDataSource.getVersionsStreamFromSongbook(fakeSongbookId);
+
+      expect(result, emits(versions));
+    });
+
+    test("when user hasn't versions on songbook should return version list", () async {
+      final fakeSongbookId = faker.randomGenerator.integer(1000);
+
+      final result = userVersionDataSource.getVersionsStreamFromSongbook(fakeSongbookId);
+
+      expect(result, emits([]));
+    });
   });
 }

@@ -2,13 +2,14 @@ import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 
 part 'user_songbook_dto.g.dart';
 
 @CopyWith()
-@collection
-class UserSongbookDto {
+@Collection(inheritance: false)
+class UserSongbookDto extends Equatable {
   final Id id;
   final String name;
   final String? userName;
@@ -24,7 +25,7 @@ class UserSongbookDto {
   final ListTypeDto type;
   final List<String?> preview;
 
-  UserSongbookDto({
+  const UserSongbookDto({
     this.id = Isar.autoIncrement,
     required this.createdAt,
     required this.lastUpdated,
@@ -72,6 +73,21 @@ class UserSongbookDto {
       preview: preview,
     );
   }
+
+  @ignore
+  @override
+  List<Object?> get props => [
+        id,
+        userId,
+        userName,
+        isPublic,
+        status,
+        createdAt,
+        lastUpdated,
+        name,
+        totalSongs,
+        preview,
+      ];
 }
 
 int _getDatabaseId(Songbook songbook) {

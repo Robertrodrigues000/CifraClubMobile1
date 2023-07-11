@@ -2,7 +2,7 @@ import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_bloc.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_state.dart';
 import 'package:cifraclub/presentation/screens/genres/widgets/genres_list.dart';
-import 'package:cifraclub/presentation/widgets/cosmos_app_bar.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

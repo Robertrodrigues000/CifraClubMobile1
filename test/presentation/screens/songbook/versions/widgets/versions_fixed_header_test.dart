@@ -1,9 +1,10 @@
 // ignore_for_file: deprecated_member_use
-
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../../../test_helpers/app_localizations.dart';
 import '../../../../../test_helpers/test_wrapper.dart';
 
 void main() {
@@ -15,6 +16,10 @@ void main() {
         slivers: [
           const VersionsFixedHeader(
             isScrolledUnder: true,
+            isPro: true,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -48,29 +53,10 @@ void main() {
         slivers: [
           VersionsFixedHeader(
             isScrolledUnder: true,
-          ),
-        ],
-      ),
-    );
-
-    await widgetTester.pump(const Duration(seconds: 1));
-
-    final widgetFinder = find.byType(Container).first;
-    expect(widgetFinder, findsOneWidget);
-
-    final widgetSize = widgetTester.getSize(widgetFinder);
-    expect(widgetSize.height, 154);
-  });
-
-  testWidgets("When device is phone, should show screen size for phone", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    binding.window.devicePixelRatioTestValue = 1.0;
-
-    await widgetTester.pumpWidgetWithWrapper(
-      const CustomScrollView(
-        slivers: [
-          VersionsFixedHeader(
-            isScrolledUnder: true,
+            isPro: true,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
           ),
         ],
       ),
@@ -83,6 +69,33 @@ void main() {
 
     final widgetSize = widgetTester.getSize(widgetFinder);
     expect(widgetSize.height, 130);
+  });
+
+  testWidgets("When device is phone, should show screen size for phone", (widgetTester) async {
+    binding.window.physicalSizeTestValue = const Size(460, 800);
+    binding.window.devicePixelRatioTestValue = 1.0;
+
+    await widgetTester.pumpWidgetWithWrapper(
+      const CustomScrollView(
+        slivers: [
+          VersionsFixedHeader(
+            isScrolledUnder: true,
+            isPro: true,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
+          ),
+        ],
+      ),
+    );
+
+    await widgetTester.pump(const Duration(seconds: 1));
+
+    final widgetFinder = find.byType(Container).first;
+    expect(widgetFinder, findsOneWidget);
+
+    final widgetSize = widgetTester.getSize(widgetFinder);
+    expect(widgetSize.height, 114);
   });
 
   group("When `shouldRebuild` is called", () {
@@ -119,5 +132,24 @@ void main() {
 
       expect(delegate1.shouldRebuild(delegate2), true);
     });
+  });
+
+  testWidgets("When init counter informations should show correctly", (widgetTester) async {
+    await widgetTester.pumpWidgetWithWrapper(
+      const CustomScrollView(
+        slivers: [
+          VersionsFixedHeader(
+            isScrolledUnder: true,
+            isPro: false,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
+          ),
+        ],
+      ),
+    );
+
+    expect(find.text(appTextEn.increaseLimit), findsOneWidget);
+    expect(find.textContaining("100/100", findRichText: true), findsOneWidget);
   });
 }

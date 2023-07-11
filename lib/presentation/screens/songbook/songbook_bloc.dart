@@ -11,7 +11,7 @@ class SongbookBloc extends Cubit<SongbookState> {
   final GetCredentialStream _getCredentialStream;
   final OpenLoginPage _openLoginView;
 
-  SongbookBloc(this._getCredentialStream, this._openLoginView) : super(const SongbookState(isUserLoggedIn: false));
+  SongbookBloc(this._getCredentialStream, this._openLoginView) : super(const SongbookState());
 
   StreamSubscription<UserCredential>? _userSubscription;
 
@@ -20,10 +20,10 @@ class SongbookBloc extends Cubit<SongbookState> {
   }
 
   void _updateCredential(UserCredential? userCredential) {
-    emit(state.copyWith(isUserLoggedIn: userCredential?.isUserLoggedIn));
+    emit(state.copyWith(userCredential: userCredential));
   }
 
-  void onSelectSongbook(Songbook songbook) {
+  void onSelectSongbook(Songbook? songbook) {
     emit(state.copyWith(selectedSongbook: songbook));
   }
 

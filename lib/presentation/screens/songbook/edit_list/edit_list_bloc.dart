@@ -1,9 +1,18 @@
+import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbook.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditListBloc extends Cubit<EditListState> {
-  EditListBloc({required EditListState initialState}) : super(initialState);
+  final int _songbookId;
+  final GetAllVersionsFromSongbook _getAllVersionsFromSongbook;
+
+  EditListBloc(this._songbookId, this._getAllVersionsFromSongbook) : super(EditListState(songbookId: _songbookId));
+
+  Future<void> init() async {
+    final versions = await _getAllVersionsFromSongbook(_songbookId);
+    emit(state.copyWith(versions: versions));
+  }
 
   void deleteVersion(int index) {
     final versions = List<Version>.from(state.versions, growable: true);

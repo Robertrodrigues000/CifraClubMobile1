@@ -110,6 +110,7 @@
     "yes":"Sim",
     "exit":"Sair",
     "renameList": "Renomear Lista",
+    "editTabsList": "Editar Lista",
     "shareList": "Compartilhar",
     "clearList": "Limpar Lista",
     "deleteList": "Excluir Lista",
@@ -180,5 +181,5 @@
     "videoLessons" : "Videoaulas",
     
     "emptyListTitle": "Sem músicas",
-    "emptyListDescription": "Faça uma busca para adicionar músicas\na essa lista."
+    "emptyListDescription": "Faça uma busca para adicionar músicas a essa lista."
 }

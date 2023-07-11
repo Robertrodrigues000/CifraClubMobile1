@@ -44,4 +44,11 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   Future<int?> deleteVersionsById(List<int> songsId) {
     return _userVersionDataSource.deleteVersionsById(songsId);
   }
+
+  @override
+  Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId) {
+    return _userVersionDataSource
+        .getVersionsStreamFromSongbook(songbookId)
+        .map((event) => event.map((e) => e.toDomain()).toList());
+  }
 }

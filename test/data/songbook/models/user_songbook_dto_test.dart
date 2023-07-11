@@ -16,7 +16,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
-      preview: ["https"],
+      preview: const ["https"],
     );
 
     final songbook = userSongbookDto.toDomain();

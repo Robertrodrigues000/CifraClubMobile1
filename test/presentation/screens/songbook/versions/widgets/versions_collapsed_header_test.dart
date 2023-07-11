@@ -17,6 +17,7 @@ void main() {
             isScrolledUnder: true,
             isPublic: false,
             songbookName: "Songbook name",
+            isTablet: true,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -53,6 +54,7 @@ void main() {
             isPublic: false,
             songbookName:
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+            isTablet: true,
           ),
         ],
       ),
@@ -83,6 +85,7 @@ void main() {
             isScrolledUnder: true,
             isPublic: false,
             songbookName: "1500s",
+            isTablet: true,
           ),
         ],
       ),
@@ -114,6 +117,7 @@ void main() {
             isPublic: false,
             songbookName:
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+            isTablet: false,
           ),
         ],
       ),
@@ -144,6 +148,7 @@ void main() {
             isScrolledUnder: true,
             isPublic: true,
             songbookName: "1500s",
+            isTablet: false,
           ),
         ],
       ),
@@ -164,38 +169,24 @@ void main() {
   });
 
   group("When `shouldRebuild` is called", () {
-    test("return false if all elements are the same", () {
-      final delegate1 = VersionsCollapsedHeaderDelegate(
-        isScrolledUnder: true,
-        isPublic: true,
-        maxExtend: 250,
-        songbookName: 'Teste',
-      );
+    Widget getContainer({required Color color}) => Container(color: color, key: const Key('testContainer'));
 
-      final delegate2 = VersionsCollapsedHeaderDelegate(
-        isScrolledUnder: true,
-        isPublic: true,
-        maxExtend: 250,
-        songbookName: 'Teste',
-      );
+    test("return false if all elements are the same", () {
+      final container = getContainer(color: Colors.black);
+
+      final delegate1 = VersionsCollapsedHeaderDelegate(isScrolledUnder: true, maxExtend: 250, child: container);
+
+      final delegate2 = VersionsCollapsedHeaderDelegate(isScrolledUnder: true, maxExtend: 250, child: container);
 
       expect(delegate1.shouldRebuild(delegate2), false);
     });
 
     test("return true if not all elements are the same", () {
-      final delegate1 = VersionsCollapsedHeaderDelegate(
-        isScrolledUnder: true,
-        isPublic: true,
-        maxExtend: 250,
-        songbookName: 'Teste',
-      );
+      final container = getContainer(color: Colors.black);
 
-      final delegate2 = VersionsCollapsedHeaderDelegate(
-        isScrolledUnder: true,
-        isPublic: false,
-        maxExtend: 250,
-        songbookName: 'Teste',
-      );
+      final delegate1 = VersionsCollapsedHeaderDelegate(isScrolledUnder: true, maxExtend: 250, child: container);
+
+      final delegate2 = VersionsCollapsedHeaderDelegate(isScrolledUnder: false, maxExtend: 250, child: container);
 
       expect(delegate1.shouldRebuild(delegate2), true);
     });

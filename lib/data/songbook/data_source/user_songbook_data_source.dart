@@ -1,7 +1,9 @@
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
+import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
+import 'package:rxdart/rxdart.dart';
 
 class UserSongbookDataSource {
   final Isar _isar;
@@ -33,6 +35,15 @@ class UserSongbookDataSource {
 
   Future<UserSongbookDto?> getSongbookById(int id) {
     return _isar.userSongbookDtos.filter().idEqualTo(id).findFirst();
+  }
+
+  Stream<UserSongbookDto?> getSongbookStreamById(int? id) {
+    if (id == null) {
+      logger?.log(tag: runtimeType.toString(), message: "Songbook Id is null"); // coverage:ignore-line
+      return BehaviorSubject.seeded(null);
+    }
+
+    return _isar.userSongbookDtos.where().idEqualTo(id).watch(fireImmediately: true).map((event) => event.first);
   }
 
   /// Remove all songbooks, then insert all songbooks from [userSongbookDtos]

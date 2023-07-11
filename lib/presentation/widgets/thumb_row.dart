@@ -27,11 +27,18 @@ class ThumbRow extends StatelessWidget {
   const ThumbRow({super.key, required this.elements});
   final List<ThumbRowElement> elements;
 
-  factory ThumbRow.forCommonList(
-      {key, required List<String> imageUrls, required String placeholder, required BuildContext context}) {
+  factory ThumbRow.forCommonList({
+    key,
+    required List<String> imageUrls,
+    required String placeholder,
+    required BuildContext context,
+  }) {
     if (imageUrls.isEmpty) {
       return ThumbRow.forSpecialList(
-          imagePath: AppSvgs.playlistIcon, backgroundColor: context.colors.neutralSextenary, context: context);
+        imagePath: AppSvgs.playlistIcon,
+        backgroundColor: context.colors.neutralSextenary,
+        context: context,
+      );
     }
     return ThumbRow(
       key: key,

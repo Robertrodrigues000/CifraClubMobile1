@@ -110,6 +110,7 @@
     "yes":"Sí",
     "exit":"Salir",
     "renameList": "Renombrar Lista",
+    "editTabsList": "Editar Lista",
     "shareList": "Compartir",
     "clearList": "Limpiar Lista",
     "deleteList": "Eliminar Lista",
@@ -180,5 +181,5 @@
     "videoLessons" : "Vídeo lecciones",
     
     "emptyListTitle": "Sin canciones",
-    "emptyListDescription": "Buscar para agregar canciones\na esta lista."
+    "emptyListDescription": "Buscar para agregar canciones a esta lista."
 }

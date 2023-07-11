@@ -1,16 +1,12 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/constants/app_urls.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
-import 'package:cifraclub/presentation/bottom_sheets/privacy_bottom_sheet.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit_card.dart';
-import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/clear_dialog.dart';
-import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
@@ -24,9 +20,18 @@ import 'package:nav/nav.dart';
 import 'package:typed_result/typed_result.dart';
 
 class ListsScreen extends StatefulWidget {
-  const ListsScreen({super.key, required this.onTapSongbook});
+  const ListsScreen({
+    super.key,
+    required this.onTapSongbook,
+    this.selectedSongbookId,
+    required this.listOptionsbottomSheet,
+    required this.isTablet,
+  });
 
+  final ListOptionsBottomSheet listOptionsbottomSheet;
   final Function(Songbook) onTapSongbook;
+  final int? selectedSongbookId;
+  final bool isTablet;
 
   @override
   State<ListsScreen> createState() => _ListsScreenState();
@@ -130,7 +135,10 @@ class _ListsScreenState extends State<ListsScreen> {
                   ),
                 ),
               ),
-              SpecialLists(lists: state.specialLists),
+              SpecialLists(
+                lists: state.specialLists,
+                selectedSongbookId: widget.selectedSongbookId,
+              ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -162,87 +170,22 @@ class _ListsScreenState extends State<ListsScreen> {
               ),
               UserLists(
                 lists: state.userLists,
+                selectedSongbookId: widget.selectedSongbookId,
                 onTap: (songbook) {
                   widget.onTapSongbook(songbook);
                 },
-                onOptionsTap: (songbook) {
-                  ListOptionsBottomSheet(
-                    ccid: state.user?.id,
-                    songbookId: songbook.id,
-                    isPublic: songbook.isPublic,
+                onOptionsTap: (songbook) async {
+                  await widget.listOptionsbottomSheet.open(
+                    context: context,
                     isUserList: true,
-                    onTap: (options, [rect]) async {
-                      switch (options) {
-                        case ListOptionsBottomSheetItem.clear:
-                          final clearDialog = await ClearDialog.show(context);
-                          if (clearDialog) {
-                            _bloc.clearList(songbook.id);
-                          }
-                          break;
-                        case ListOptionsBottomSheetItem.delete:
-                          final result = await DeleteDialog.show(context);
-                          if (result) {
-                            await _bloc.deleteSongbook(songbook.id);
-                          }
-                          break;
-                        case ListOptionsBottomSheetItem.rename:
-                          InputDialog.show(
-                            context: context,
-                            isNewList: false,
-                            listName: songbook.name,
-                            onSave: (widgetContext, newName) async {
-                              final isValidInput = await _bloc.isValidSongbookName(newName);
-
-                              switch (isValidInput) {
-                                case true:
-                                  (await _bloc.updateSongbookData(songbook: songbook, songbookName: newName)).when(
-                                    success: (_) {
-                                      InputDialog.close(context);
-                                    },
-                                    failure: (_) {
-                                      ScaffoldMessenger.of(widgetContext).showSnackBar(
-                                        SnackBar(content: Text(context.text.listServerError)),
-                                      );
-                                    },
-                                  );
-                                  break;
-                                case false:
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(widgetContext).showSnackBar(
-                                      SnackBar(content: Text(context.text.listUsedName)),
-                                    );
-                                  }
-                                  break;
-                              }
-                            },
-                          );
-                          break;
-                        // coverage:ignore-start
-                        case ListOptionsBottomSheetItem.privacy:
-                          PrivacyBottomSheet(
-                            isPublic: false,
-                            onTap: (privacy) {
-                              switch (privacy) {
-                                case true:
-                                  // ignore: avoid_print
-                                  print("public");
-                                  break;
-                                case false:
-                                  // ignore: avoid_print
-                                  print("private");
-                                  break;
-                              }
-                            },
-                          ).show(context);
-                          break;
-                        case ListOptionsBottomSheetItem.share:
-                          final link = AppUrls.songbookUrlFormat(state.user!.id!, songbook.id!);
-                          _bloc.shareLink(link, rect);
-                          break;
-                        // coverage:ignore-end
+                    ccid: state.user?.id,
+                    songbook: songbook,
+                    onDeleteSongbook: () {
+                      if (widget.isTablet && widget.selectedSongbookId == songbook.id) {
+                        widget.onTapSongbook(state.specialLists.first);
                       }
                     },
-                  ).show(context);
+                  );
                 },
               )
             ],

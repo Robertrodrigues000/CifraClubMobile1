@@ -38,7 +38,7 @@ void main() {
         type: ListTypeDto.user,
         isPublic: false,
         totalSongs: 0,
-        preview: [],
+        preview: const [],
       );
 
       await isar.writeTxn(
@@ -67,7 +67,7 @@ void main() {
         type: ListTypeDto.user,
         isPublic: false,
         totalSongs: 0,
-        preview: [],
+        preview: const [],
       );
 
       final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
@@ -83,7 +83,7 @@ void main() {
         type: ListTypeDto.user,
         isPublic: false,
         totalSongs: 0,
-        preview: [],
+        preview: const [],
       );
 
       expect(() async => userSongbookDataSource.insert(fakeUserSongBookDto), throwsException);
@@ -102,7 +102,7 @@ void main() {
             type: ListTypeDto.user,
             isPublic: false,
             totalSongs: 0,
-            preview: [],
+            preview: const [],
           ));
         },
       );
@@ -116,7 +116,7 @@ void main() {
           type: ListTypeDto.user,
           isPublic: false,
           totalSongs: 0,
-          preview: [],
+          preview: const [],
         )
       ];
 
@@ -135,7 +135,7 @@ void main() {
           type: ListTypeDto.user,
           isPublic: false,
           totalSongs: 0,
-          preview: [],
+          preview: const [],
         )
       ];
       expect(() async => userSongbookDataSource.setAll(songbooks), throwsException);
@@ -157,7 +157,7 @@ void main() {
               type: ListTypeDto.user,
               isPublic: false,
               totalSongs: 0,
-              preview: [],
+              preview: const [],
             ),
           );
         },
@@ -182,7 +182,7 @@ void main() {
               type: ListTypeDto.user,
               isPublic: false,
               totalSongs: 0,
-              preview: [],
+              preview: const [],
             ),
           );
         },
@@ -203,7 +203,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
-      preview: [],
+      preview: const [],
     );
 
     final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
@@ -220,7 +220,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
-      preview: [],
+      preview: const [],
     );
 
     await isar.writeTxn(
@@ -230,7 +230,34 @@ void main() {
     );
 
     final songbook = await userSongbookDataSource.getSongbookById(fakeUserSongBookDto.id);
-    expect(songbook!.id, fakeUserSongBookDto.id);
+    expect(songbook, fakeUserSongBookDto);
+  });
+
+  test("when getSongbookStreamById is called, should return a songbook", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+      id: faker.randomGenerator.integer(1000),
+      createdAt: faker.date.dateTime(),
+      lastUpdated: faker.date.dateTime(),
+      name: faker.animal.name(),
+      type: ListTypeDto.user,
+      isPublic: false,
+      totalSongs: 0,
+      preview: const [],
+    );
+
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      },
+    );
+
+    final songbook = userSongbookDataSource.getSongbookStreamById(fakeUserSongBookDto.id);
+    expect(songbook, emits(fakeUserSongBookDto));
+  });
+
+  test("when getSongbookStreamById is called and songbook id is null, should return null", () async {
+    final songbook = userSongbookDataSource.getSongbookStreamById(null);
+    expect(songbook, emits(null));
   });
 
   test("when getTotalSongbooks is called should return total of list of songbooks from user", () async {
@@ -242,7 +269,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
-      preview: [],
+      preview: const [],
     );
 
     final totalSongbooksStream = userSongbookDataSource.getTotalSongbooks();
@@ -265,7 +292,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
-      preview: [],
+      preview: const [],
     );
 
     await isar.writeTxn(

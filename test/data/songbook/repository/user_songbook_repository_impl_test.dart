@@ -5,6 +5,7 @@ import 'package:cifraclub/data/songbook/repository/user_songbook_repository_impl
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
@@ -22,7 +23,7 @@ void main() {
       type: ListTypeDto.user,
       isPublic: false,
       totalSongs: 0,
-      preview: [],
+      preview: const [],
     ));
   });
 
@@ -129,8 +130,24 @@ void main() {
     final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
     final result = await songbookRepository.getSongbookById(songbook.id!);
 
+    verify(songbookDto.toDomain).called(1);
     expect(result!.id, songbook.id);
     expect(result.name, songbook.name);
+  });
+
+  test("when getSongbookStreamById is called, should return the songbook with correct id", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+    final songbookDto = _UserSongbookDtoMock();
+    final songbook = getFakeSongbook();
+
+    when(songbookDto.toDomain).thenReturn(songbook);
+    when(() => userSongbookDataSource.getSongbookStreamById(songbook.id!))
+        .thenAnswer((_) => BehaviorSubject.seeded(songbookDto));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final result = songbookRepository.getSongbookStreamById(songbook.id!);
+
+    expect(result, emits(songbook));
   });
 
   test("when updateSongbookPreview is called, should return id of songbook updated", () async {

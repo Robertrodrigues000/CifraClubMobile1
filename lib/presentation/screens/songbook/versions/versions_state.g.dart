@@ -9,7 +9,15 @@ part of 'versions_state.dart';
 abstract class _$VersionsStateCWProxy {
   VersionsState versions(List<Version> versions);
 
-  VersionsState isPublic(bool isPublic);
+  VersionsState songbook(Songbook? songbook);
+
+  VersionsState versionLimitState(ListLimitState versionLimitState);
+
+  VersionsState isPro(bool isPro);
+
+  VersionsState versionsLimit(int versionsLimit);
+
+  VersionsState versionsCount(int versionsCount);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -19,7 +27,11 @@ abstract class _$VersionsStateCWProxy {
   /// ````
   VersionsState call({
     List<Version>? versions,
-    bool? isPublic,
+    Songbook? songbook,
+    ListLimitState? versionLimitState,
+    bool? isPro,
+    int? versionsLimit,
+    int? versionsCount,
   });
 }
 
@@ -33,7 +45,19 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
   VersionsState versions(List<Version> versions) => this(versions: versions);
 
   @override
-  VersionsState isPublic(bool isPublic) => this(isPublic: isPublic);
+  VersionsState songbook(Songbook? songbook) => this(songbook: songbook);
+
+  @override
+  VersionsState versionLimitState(ListLimitState versionLimitState) => this(versionLimitState: versionLimitState);
+
+  @override
+  VersionsState isPro(bool isPro) => this(isPro: isPro);
+
+  @override
+  VersionsState versionsLimit(int versionsLimit) => this(versionsLimit: versionsLimit);
+
+  @override
+  VersionsState versionsCount(int versionsCount) => this(versionsCount: versionsCount);
 
   @override
 
@@ -45,17 +69,37 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
   /// ````
   VersionsState call({
     Object? versions = const $CopyWithPlaceholder(),
-    Object? isPublic = const $CopyWithPlaceholder(),
+    Object? songbook = const $CopyWithPlaceholder(),
+    Object? versionLimitState = const $CopyWithPlaceholder(),
+    Object? isPro = const $CopyWithPlaceholder(),
+    Object? versionsLimit = const $CopyWithPlaceholder(),
+    Object? versionsCount = const $CopyWithPlaceholder(),
   }) {
     return VersionsState(
       versions: versions == const $CopyWithPlaceholder() || versions == null
           ? _value.versions
           // ignore: cast_nullable_to_non_nullable
           : versions as List<Version>,
-      isPublic: isPublic == const $CopyWithPlaceholder() || isPublic == null
-          ? _value.isPublic
+      songbook: songbook == const $CopyWithPlaceholder()
+          ? _value.songbook
           // ignore: cast_nullable_to_non_nullable
-          : isPublic as bool,
+          : songbook as Songbook?,
+      versionLimitState: versionLimitState == const $CopyWithPlaceholder() || versionLimitState == null
+          ? _value.versionLimitState
+          // ignore: cast_nullable_to_non_nullable
+          : versionLimitState as ListLimitState,
+      isPro: isPro == const $CopyWithPlaceholder() || isPro == null
+          ? _value.isPro
+          // ignore: cast_nullable_to_non_nullable
+          : isPro as bool,
+      versionsLimit: versionsLimit == const $CopyWithPlaceholder() || versionsLimit == null
+          ? _value.versionsLimit
+          // ignore: cast_nullable_to_non_nullable
+          : versionsLimit as int,
+      versionsCount: versionsCount == const $CopyWithPlaceholder() || versionsCount == null
+          ? _value.versionsCount
+          // ignore: cast_nullable_to_non_nullable
+          : versionsCount as int,
     );
   }
 }

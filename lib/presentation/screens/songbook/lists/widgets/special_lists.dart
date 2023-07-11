@@ -3,8 +3,9 @@ import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_li
 import 'package:flutter/material.dart';
 
 class SpecialLists extends StatelessWidget {
-  const SpecialLists({super.key, required this.lists});
+  const SpecialLists({super.key, required this.lists, this.selectedSongbookId});
   final List<Songbook> lists;
+  final int? selectedSongbookId;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class SpecialLists extends StatelessWidget {
             // coverage:ignore-start
             onTap: () {}, // TODO: Navigate to the special list selected
             // coverage:ignore-end
-            isSelected: index == 1,
+            isSelected: lists[index].id == selectedSongbookId,
           );
         },
         childCount: lists.length,

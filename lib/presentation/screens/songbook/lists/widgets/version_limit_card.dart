@@ -22,7 +22,7 @@ class VersionLimitCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContainerWithRippleEffect(
-      onTap: isPro || versionsCount == 0 ? null : onTap,
+      onTap: isPro ? null : onTap,
       decoration: hasBackground
           ? null
           : BoxDecoration(

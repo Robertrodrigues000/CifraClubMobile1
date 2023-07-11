@@ -4,10 +4,17 @@ import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_list_
 import 'package:flutter/material.dart';
 
 class UserLists extends StatelessWidget {
-  const UserLists({super.key, required this.lists, required this.onTap, required this.onOptionsTap});
+  const UserLists({
+    super.key,
+    required this.lists,
+    required this.onTap,
+    required this.onOptionsTap,
+    this.selectedSongbookId,
+  });
   final List<Songbook> lists;
   final Function(Songbook) onTap;
   final Function(Songbook) onOptionsTap;
+  final int? selectedSongbookId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,7 @@ class UserLists extends StatelessWidget {
             onOptionsTap: () => onOptionsTap(lists[index]),
             // coverage:ignore-end
             songbook: lists[index],
-            isSelected: index == 1,
+            isSelected: lists[index].id == selectedSongbookId,
           );
         },
         childCount: lists.length,

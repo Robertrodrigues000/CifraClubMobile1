@@ -62,4 +62,8 @@ class UserVersionDataSource {
       return _isar.userVersionDtos.deleteAll(ids);
     });
   }
+
+  Stream<List<UserVersionDto>> getVersionsStreamFromSongbook(int songbookId) {
+    return _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).watch(fireImmediately: true);
+  }
 }

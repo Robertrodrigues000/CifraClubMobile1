@@ -1,9 +1,22 @@
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/version_limit_card.dart';
 import 'package:flutter/material.dart';
 
 class VersionsFixedHeader extends StatefulWidget {
-  const VersionsFixedHeader({super.key, required this.isScrolledUnder});
+  const VersionsFixedHeader({
+    super.key,
+    required this.isScrolledUnder,
+    required this.isPro,
+    required this.tabsLimitState,
+    required this.tabsCount,
+    required this.tabsLimit,
+  });
   final bool isScrolledUnder;
+  final bool isPro;
+  final ListLimitState tabsLimitState;
+  final int tabsCount;
+  final int tabsLimit;
 
   @override
   State<VersionsFixedHeader> createState() => _VersionsFixedHeaderState();
@@ -15,7 +28,7 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    heightFixedHeader = 50 + 32 + (3 * context.appDimensionScheme.screenMargin);
+    heightFixedHeader = 50 + 32 + (2 * context.appDimensionScheme.screenMargin);
   }
 
   @override
@@ -26,12 +39,23 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
       delegate: VersionFixedHeaderDelegate(
         maxExtend: heightFixedHeader,
         child: Padding(
-          padding: EdgeInsets.all(context.appDimensionScheme.screenMargin),
+          padding: EdgeInsets.only(
+            bottom: context.appDimensionScheme.screenMargin,
+            left: context.appDimensionScheme.screenMargin,
+            right: context.appDimensionScheme.screenMargin,
+          ),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 height: 50,
-                color: Colors.amber,
+                child: VersionLimitCard(
+                  isPro: widget.isPro,
+                  isWithinLimit: widget.tabsLimitState == ListLimitState.withinLimit,
+                  limit: widget.tabsLimit,
+                  versionsCount: widget.tabsCount,
+                  hasBackground: widget.isPro ? true : false,
+                  onTap: () {}, // coverage:ignore-line
+                ),
               ),
               SizedBox(height: context.appDimensionScheme.screenMargin),
               Container(

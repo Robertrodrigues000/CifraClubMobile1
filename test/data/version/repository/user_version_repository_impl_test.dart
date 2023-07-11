@@ -92,14 +92,31 @@ void main() {
     verify(() => userVersionDataSource.deleteVersions(4)).called(1);
   });
 
-  test("When `deleteSongsById` is called should return quantity of deleted songs", () async {
+  test("When `deleteVersionsById` is called should return quantity of deleted songs", () async {
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(() => userVersionDataSource.deleteVersionsById([1, 2])).thenAnswer((_) => SynchronousFuture(2));
 
-    final userCifraRepository = UserVersionRepositoryImpl(userVersionDataSource);
-    final countCifrasDeleted = await userCifraRepository.deleteVersionsById([1, 2]);
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+    final countVersionsDeleted = await userVersionRepository.deleteVersionsById([1, 2]);
 
-    expect(countCifrasDeleted, 2);
+    expect(countVersionsDeleted, 2);
     verify(() => userVersionDataSource.deleteVersionsById([1, 2])).called(1);
+  });
+
+  test("When `getUserVersionStreamFromSongbook` is called should return list of cifras", () async {
+    final userCifraDto = _UserVersionDtoMock();
+    final fakeVersion = getFakeVersion();
+    when(userCifraDto.toDomain).thenReturn(fakeVersion);
+
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.getVersionsStreamFromSongbook(1))
+        .thenAnswer((_) => BehaviorSubject.seeded([userCifraDto]));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    final versions = userVersionRepository.getVersionsStreamFromSongbook(1);
+
+    expect(versions, emits([fakeVersion]));
+    verify(() => userVersionDataSource.getVersionsStreamFromSongbook(1)).called(1);
   });
 }

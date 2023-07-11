@@ -44,4 +44,9 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   Future<int?> updateSongbookPreview(int songbookId, List<String?> preview) {
     return _userSongbookDataSource.updatePreview(songbookId, preview);
   }
+
+  @override
+  Stream<Songbook?> getSongbookStreamById(int? id) {
+    return _userSongbookDataSource.getSongbookStreamById(id).map((songbook) => songbook?.toDomain());
+  }
 }

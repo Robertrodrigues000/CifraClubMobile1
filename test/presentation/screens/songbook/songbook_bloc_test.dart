@@ -32,7 +32,7 @@ void main() {
         bloc.init();
         credentialStream.add(const UserCredential(isUserLoggedIn: true));
       },
-      verify: (bloc) => expect(bloc.state.isUserLoggedIn, true),
+      verify: (bloc) => expect(bloc.state.userCredential?.isUserLoggedIn, true),
     );
   });
 

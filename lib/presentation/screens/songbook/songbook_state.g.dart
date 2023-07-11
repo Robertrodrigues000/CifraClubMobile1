@@ -9,7 +9,7 @@ part of 'songbook_state.dart';
 abstract class _$SongbookStateCWProxy {
   SongbookState selectedSongbook(Songbook? selectedSongbook);
 
-  SongbookState isUserLoggedIn(bool isUserLoggedIn);
+  SongbookState userCredential(UserCredential? userCredential);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SongbookState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -19,7 +19,7 @@ abstract class _$SongbookStateCWProxy {
   /// ````
   SongbookState call({
     Songbook? selectedSongbook,
-    bool? isUserLoggedIn,
+    UserCredential? userCredential,
   });
 }
 
@@ -33,7 +33,7 @@ class _$SongbookStateCWProxyImpl implements _$SongbookStateCWProxy {
   SongbookState selectedSongbook(Songbook? selectedSongbook) => this(selectedSongbook: selectedSongbook);
 
   @override
-  SongbookState isUserLoggedIn(bool isUserLoggedIn) => this(isUserLoggedIn: isUserLoggedIn);
+  SongbookState userCredential(UserCredential? userCredential) => this(userCredential: userCredential);
 
   @override
 
@@ -45,17 +45,17 @@ class _$SongbookStateCWProxyImpl implements _$SongbookStateCWProxy {
   /// ````
   SongbookState call({
     Object? selectedSongbook = const $CopyWithPlaceholder(),
-    Object? isUserLoggedIn = const $CopyWithPlaceholder(),
+    Object? userCredential = const $CopyWithPlaceholder(),
   }) {
     return SongbookState(
       selectedSongbook: selectedSongbook == const $CopyWithPlaceholder()
           ? _value.selectedSongbook
           // ignore: cast_nullable_to_non_nullable
           : selectedSongbook as Songbook?,
-      isUserLoggedIn: isUserLoggedIn == const $CopyWithPlaceholder() || isUserLoggedIn == null
-          ? _value.isUserLoggedIn
+      userCredential: userCredential == const $CopyWithPlaceholder()
+          ? _value.userCredential
           // ignore: cast_nullable_to_non_nullable
-          : isUserLoggedIn as bool,
+          : userCredential as UserCredential?,
     );
   }
 }

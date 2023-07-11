@@ -8,4 +8,5 @@ abstract class UserVersionRepository {
   Future<List<String?>> getImagesPreview(int songbookId);
   Future<int?> deleteVersionsBySongbookId(int songbookId);
   Future<int?> deleteVersionsById(List<int> songsId);
+  Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId);
 }
