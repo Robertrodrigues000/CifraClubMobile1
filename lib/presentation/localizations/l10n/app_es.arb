@@ -127,7 +127,6 @@
     "inputDialogHint": "Ex.: Luau con amigos",
     "inputDialogLabel": "Nombre da lista",
     "searchSongs" : "Buscar musica",
-
     "versionsCount": "{count} {count,plural, =1{seleccionado}other{seleccionados}}",
     "@versionsCount":{
       "placeholders": {
@@ -137,7 +136,32 @@
             }
         }
     },
-
+    "savedListSongs": "{count} {count, plural, =1{cifrado añadido}other{cifrados añadidos}}",
+    "@savedListSongs":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
+    "errorsListSongs": "{count, plural, =1{Ocurrió un error al descargar la canción {songName} - {artistName}. La canción no estará disponible en modo offline.}other{Ocurrió un error al descargar {count} de las canciones. No estarán disponibles en modo offline.}}",
+    "@errorsListSongs":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            },
+            "songName": {
+                "type": "String",
+                "example": "Vídeos"
+            },
+            "artistName": {
+                "type": "String",
+                "example": "Vídeos"
+            }
+        }
+    },
     "savingToList": "Guardando en la lista",
     "loadingSongs": "Cargando canciones...",
     "privateListErrorTitle": "No tienes acceso a esta lista privada",
@@ -167,6 +191,9 @@
     "instrumentBass" : "Bajo",
     "instrumentDrums" : "Batería",
     "instrumentHarmonica" : "Armónica",
+    "searchNotFound" : "No encontramos nada aquí :(",
+    "searchNewTerm" : "Intente buscar un término nuevo.",
+
     "songs": "{count,plural, =1{Musica}other{Musicas}}",
     "@songs":{
       "placeholders": {

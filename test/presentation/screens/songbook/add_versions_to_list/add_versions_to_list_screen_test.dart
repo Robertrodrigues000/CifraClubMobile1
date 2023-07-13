@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../shared_mocks/domain/search/models/search_mock.dart';
+import '../../../../test_helpers/app_localizations.dart';
 import '../../../../test_helpers/bloc_stream.dart';
 import '../../../../test_helpers/test_wrapper.dart';
 
@@ -25,7 +26,7 @@ void main() {
     bloc = _AddVersionsToListScreenBlocMock();
     registerFallbackValue(getFakeSongSearch());
 
-    when(() => bloc.init(any())).thenReturn(null);
+    when(() => bloc.init(any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.addOrRemoveVersion(any())).thenReturn(null);
     when(bloc.clearCount).thenReturn(null);
     when(() => bloc.getSongState(any())).thenReturn(SongState.selected);
@@ -34,7 +35,7 @@ void main() {
   });
 
   testWidgets("When start screen should show limit card with correctly information", (widgetTester) async {
-    bloc.mockStream(const AddVersionsToListState(versionsCount: 100, versionsLimit: 1000));
+    bloc.mockStream(const AddVersionsToListState(songsCount: 100, versionsLimit: 1000, songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -48,7 +49,8 @@ void main() {
   });
 
   testWidgets("When search songs should show a list of songs", (widgetTester) async {
-    bloc.mockStream(AddVersionsToListState(songs: [getFakeSongSearch(), getFakeSongSearch(), getFakeSongSearch()]));
+    bloc.mockStream(
+        AddVersionsToListState(songs: [getFakeSongSearch(), getFakeSongSearch(), getFakeSongSearch()], songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -65,7 +67,7 @@ void main() {
   testWidgets("When click in a song should change to new status", (widgetTester) async {
     final song = getFakeSongSearch();
 
-    bloc.mockStream(AddVersionsToListState(songs: [song]));
+    bloc.mockStream(AddVersionsToListState(songs: [song], songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -82,7 +84,7 @@ void main() {
   testWidgets("When select songs should show bottom count bar", (widgetTester) async {
     final song = getFakeSongSearch();
 
-    bloc.mockStream(AddVersionsToListState(selectedVersions: [song]));
+    bloc.mockStream(AddVersionsToListState(selectedSongs: [song], songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -99,7 +101,7 @@ void main() {
   testWidgets("When click in clear list button should clear selected songs", (widgetTester) async {
     final song = getFakeSongSearch();
 
-    bloc.mockStream(AddVersionsToListState(selectedVersions: [song]));
+    bloc.mockStream(AddVersionsToListState(selectedSongs: [song], songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -114,7 +116,7 @@ void main() {
   });
 
   testWidgets("When emit loading should show loading", (widgetTester) async {
-    bloc.mockStream(const AddVersionsToListState(isLoading: true));
+    bloc.mockStream(const AddVersionsToListState(isLoading: true, songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -129,7 +131,7 @@ void main() {
   });
 
   testWidgets("When type on text field should search song of the query", (widgetTester) async {
-    bloc.mockStream(const AddVersionsToListState());
+    bloc.mockStream(const AddVersionsToListState(songbookId: 1));
 
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<AddVersionsToListBloc>.value(
@@ -143,5 +145,57 @@ void main() {
     await widgetTester.enterText(textField, "adele");
 
     verify(() => bloc.searchSongs("adele")).called(1);
+  });
+
+  group("When click on save button", () {
+    testWidgets("and requests is successful should show snackbar with count of songs saved", (widgetTester) async {
+      bloc.mockStream(AddVersionsToListState(songbookId: 10, selectedSongs: [getFakeSongSearch()]));
+      when(() => bloc.addSongsToSongbook())
+          .thenAnswer((_) => SynchronousFuture((songsSaved: 1, errorCount: 0, lastSongError: null)));
+
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AddVersionsToListBloc>.value(
+          value: bloc,
+          child: const AddVersionsToListScreen(),
+        ),
+      );
+
+      await widgetTester.tap(find.byKey(const Key("onSaveTap")));
+      await widgetTester.pump();
+
+      expect(find.text(appTextEn.savedListSongs(1)), findsOneWidget);
+    });
+
+    testWidgets("and requests fails should show snackbar with count of errors", (widgetTester) async {
+      bloc.mockStream(AddVersionsToListState(songbookId: 10, selectedSongs: [getFakeSongSearch()]));
+      when(() => bloc.addSongsToSongbook())
+          .thenAnswer((_) => SynchronousFuture((songsSaved: 0, errorCount: 5, lastSongError: getFakeSongSearch())));
+
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AddVersionsToListBloc>.value(
+          value: bloc,
+          child: const AddVersionsToListScreen(),
+        ),
+      );
+
+      await widgetTester.tap(find.byKey(const Key("onSaveTap")));
+      await widgetTester.pump();
+
+      expect(find.text(appTextEn.errorsListSongs(5, "", "")), findsOneWidget);
+    });
+  });
+
+  testWidgets("When search don't found result should show not found search message", (widgetTester) async {
+    bloc.mockStream(const AddVersionsToListState(isHistory: false, songs: [], songbookId: 10));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<AddVersionsToListBloc>.value(
+        value: bloc,
+        child: const AddVersionsToListScreen(),
+      ),
+    );
+
+    expect(find.text(appTextEn.searchNotFound), findsOneWidget);
+    expect(find.text(appTextEn.searchNewTerm), findsOneWidget);
   });
 }

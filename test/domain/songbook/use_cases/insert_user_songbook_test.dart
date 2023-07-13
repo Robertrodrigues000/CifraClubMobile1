@@ -22,7 +22,7 @@ void main() {
       final userSongbookRepository = _UserSongbookRepositoryMock();
       final songbook = getFakeSongbook();
 
-      when(() => songbookRepository.insertSongbook(
+      when(() => songbookRepository.addSongbook(
             name: songbook.name,
             isPublic: songbook.isPublic,
             createdAt: songbook.createdAt,
@@ -47,7 +47,7 @@ void main() {
       final songbookRepository = _SongbookRepositoryMock();
       final userSongbookRepository = _UserSongbookRepositoryMock();
 
-      when(() => songbookRepository.insertSongbook(
+      when(() => songbookRepository.addSongbook(
             name: "new",
             isPublic: true,
             createdAt: any(named: "createdAt"),

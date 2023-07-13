@@ -1,0 +1,25 @@
+{
+    "cifraId": 2498,
+    "songId": 2498,
+    "type": 1,
+    "name": "S.O.S",
+    "artist": {
+        "id": 52,
+        "name": "Raul Seixas",
+        "url": "raul-seixas",
+        "image": "2/b/f/f/2bffb38ff274a89069f0b98bb8cf1335.jpg",
+        "color": "#BDBDBD"
+    },
+    "siteUrl": "/raul-seixas/sos/#instrument=guitar",
+    "apiUrl": "/raul-seixas/sos",
+    "songUrl": "sos",
+    "tone": "G",
+    "stdTone": "G",
+    "capo": 0,
+    "tuning": "E A D G B E",
+    "id": 141322313,
+    "uuid": "e25776e8-5b61-4660-8263-464f0be99a42",
+    "isMinorScale": false,
+    "lastUpdate": "2023-07-04 07:33:51",
+    "info": "success"
+}

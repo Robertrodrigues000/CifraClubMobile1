@@ -1,10 +1,12 @@
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
 import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
-import 'package:cifraclub/data/songbook/models/songbook_songs_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_version_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
+import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/extensions/date_time_extension.dart';
 import 'package:typed_result/typed_result.dart';
@@ -15,7 +17,7 @@ class SongbookRepositoryImpl extends SongbookRepository {
   SongbookRepositoryImpl(this._songbookDataSource);
 
   @override
-  Future<Result<Songbook, RequestError>> insertSongbook({
+  Future<Result<Songbook, RequestError>> addSongbook({
     required String name,
     required bool isPublic,
     required DateTime createdAt,
@@ -25,7 +27,7 @@ class SongbookRepositoryImpl extends SongbookRepository {
       isPublic: isPublic,
       timestamp: createdAt.format(apiDateTimeFormat),
     );
-    return (await _songbookDataSource.insertSongbook(input)).map((e) => e.toDomain().copyWith(createdAt: createdAt));
+    return (await _songbookDataSource.addSongbook(input)).map((e) => e.toDomain().copyWith(createdAt: createdAt));
   }
 
   @override
@@ -63,11 +65,22 @@ class SongbookRepositoryImpl extends SongbookRepository {
   }
 
   @override
-  Future<Result<List<Version>, RequestError>> addSongsToSongbook({
+  Future<Result<List<Version>, RequestError>> addVersionsToSongbook({
     required int songbookId,
-    required List<Version> songs,
+    required List<SongbookVersionInput> versionsInput,
   }) async {
-    return (await _songbookDataSource.addSongsToSongbook(songbookId, SongbookSongsInputDto.fromDomain(songs)))
+    return (await _songbookDataSource.addVersionsToSongbook(
+            songbookId, SongbookVersionsInputDto.fromDomain(versionsInput)))
         .map((value) => value.map((e) => e.toDomain()).toList());
+  }
+
+  @override
+  Future<Result<Version, RequestError>> addVersionToSongbook({
+    required int songbookId,
+    required SongbookVersionInput versionInput,
+  }) async {
+    return (await _songbookDataSource.addVersionToSongbook(
+            songbookId, SongbookVersionInputDto.fromDomain(versionInput)))
+        .map((value) => value.toDomain());
   }
 }

@@ -190,7 +190,32 @@
             }
         }
     },
-
+    "savedListSongs": "{count} {count, plural, =1{chord}other{chords}} added",
+    "@savedListSongs":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
+    "errorsListSongs": "{count, plural, =1{There was error downloading the song {songName} - {artistName}. It is not available in offline mode.}other{There was an error downloading {count} songs. They are not available in offline mode.}}",
+    "@errorsListSongs":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            },
+            "songName": {
+                "type": "String",
+                "example": "Vídeos"
+            },
+            "artistName": {
+                "type": "String",
+                "example": "Vídeos"
+            }
+        }
+    },
     "savingToList": "Saving to list",
     "loadingSongs": "Loading songs...",
     "privateListErrorTitle": "You don't have access to this private list",
@@ -224,6 +249,9 @@
     "instrumentBass" : "Bass",
     "instrumentDrums" : "Drums",
     "instrumentHarmonica" : "Harmonica",
+    "searchNotFound" : "We didn't find anything around here :(",
+    "searchNewTerm" : "Try searching for a new term",
+
     "songs": "{count,plural, =1{Song}other{Songs}}",
     "@songs":{
       "placeholders": {

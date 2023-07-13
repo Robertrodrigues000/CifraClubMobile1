@@ -5,7 +5,6 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
-import 'package:cifraclub/presentation/dialogs/save_versions_in_list_dialog.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
@@ -173,16 +172,6 @@ class _DevScreenState extends State<DevScreen> {
                   title: const Text("Artist Video Lessons"),
                   onTap: () {
                     _bloc.getArtistVideoLessons();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.save_alt,
-                    color: context.colors.textPrimary,
-                  ),
-                  title: const Text("Save Cifras Dialog"),
-                  onTap: () {
-                    SaveVersionsInListDialog.show(context: context, totalVersions: 14, count: 10);
                   },
                 ),
                 ListTile(

@@ -1,23 +1,49 @@
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_bloc.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SaveVersionsInListDialog extends StatelessWidget {
-  final int totalVersions;
+  final int totalSongs;
   final int count;
 
-  const SaveVersionsInListDialog({super.key, required this.totalVersions, required this.count});
+  const SaveVersionsInListDialog({super.key, required this.totalSongs, required this.count});
 
   // coverage:ignore-start
-  static Future<T?> show<T>({required BuildContext context, required int totalVersions, required int count}) {
+  static Future<T?> show<T>({
+    required BuildContext context,
+    required int totalSongs,
+    required AddVersionsToListBloc bloc,
+  }) {
     return showDialog(
-        context: context,
-        barrierColor: Colors.transparent,
-        builder: (context) {
-          return SaveVersionsInListDialog(
-            count: count,
-            totalVersions: totalVersions,
-          );
-        });
+      context: context,
+      barrierColor: Colors.transparent,
+      barrierDismissible: false,
+      builder: (context) {
+        return BlocProvider.value(
+          value: bloc,
+          child: BlocBuilder<AddVersionsToListBloc, AddVersionsToListState>(
+            builder: (context, state) {
+              return SaveVersionsInListDialog(
+                count: state.savedSongsCount,
+                totalSongs: totalSongs,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  static void close(BuildContext context) {
+    Navigator.of(context, rootNavigator: true).pop();
+
+    //Prevent keyboard open after close this dialog
+    final currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+    }
   }
   // coverage:ignore-end
 
@@ -49,7 +75,7 @@ class SaveVersionsInListDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(2),
               child: LinearProgressIndicator(
                 minHeight: 4,
-                value: count / totalVersions,
+                value: count / totalSongs,
                 color: context.colors.primary,
                 backgroundColor: context.colors.neutralTertiary,
               ),
@@ -63,10 +89,9 @@ class SaveVersionsInListDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("${((count / totalVersions) * 100).round()}%",
+                Text("${((count / totalSongs) * 100).round()}%",
                     style: context.typography.body6.copyWith(color: context.colors.textPrimary)),
-                Text("$count/$totalVersions",
-                    style: context.typography.body6.copyWith(color: context.colors.textPrimary)),
+                Text("$count/$totalSongs", style: context.typography.body6.copyWith(color: context.colors.textPrimary)),
               ],
             ),
           ),

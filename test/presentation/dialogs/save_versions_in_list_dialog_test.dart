@@ -5,7 +5,7 @@ import '../../test_helpers/test_wrapper.dart';
 
 void main() {
   testWidgets("When show dialog should show correctly text and calculate the percentage", (widgetTester) async {
-    await widgetTester.pumpWidgetWithWrapper(const SaveVersionsInListDialog(totalVersions: 10, count: 3));
+    await widgetTester.pumpWidgetWithWrapper(const SaveVersionsInListDialog(totalSongs: 10, count: 3));
 
     expect(find.text("30%"), findsOneWidget);
     expect(find.text("3/10"), findsOneWidget);

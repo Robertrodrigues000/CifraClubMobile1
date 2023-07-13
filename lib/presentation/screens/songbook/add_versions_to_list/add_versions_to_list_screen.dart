@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/dialogs/save_versions_in_list_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/count_selected_versions.dart';
@@ -69,7 +70,7 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                                 isPro: state.isPro,
                                 isWithinLimit: state.limitState == ListLimitState.withinLimit,
                                 limit: state.versionsLimit,
-                                versionsCount: state.versionsCount,
+                                versionsCount: state.songsCount,
                                 onTap: () {}, // coverage:ignore-line
                               ),
                             ),
@@ -78,6 +79,18 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                       );
                     },
                   ),
+                  if (state.songs.isEmpty && !state.isHistory)
+                    Padding(
+                      padding: EdgeInsets.all(context.appDimensionScheme.screenMargin),
+                      child: Column(
+                        children: [
+                          Text(context.text.searchNotFound,
+                              style: context.typography.title4.copyWith(color: context.colors.textPrimary)),
+                          const SizedBox(height: 8),
+                          Text(context.text.searchNewTerm, style: context.typography.subtitle7),
+                        ],
+                      ),
+                    ),
                   Expanded(
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -94,11 +107,40 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                       },
                     ),
                   ),
-                  if (state.selectedVersions.isNotEmpty)
+                  if (state.selectedSongs.isNotEmpty)
                     CountSelectedVersions(
-                      versionsCount: state.selectedVersions.length,
+                      versionsCount: state.selectedSongs.length,
                       onClear: () => _bloc.clearCount(),
-                      onSave: () {}, // coverage:ignore-line
+                      onSave: () async {
+                        SaveVersionsInListDialog.show(
+                          context: context,
+                          bloc: _bloc,
+                          totalSongs: state.selectedSongs.length,
+                        );
+
+                        await _bloc.addSongsToSongbook().then((params) {
+                          SaveVersionsInListDialog.close(context);
+
+                          if (params.songsSaved > 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(context.text.savedListSongs(params.songsSaved))),
+                            );
+                          }
+
+                          if (params.errorCount > 0 && params.lastSongError != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: const Duration(seconds: 3),
+                                content: Text(context.text.errorsListSongs(
+                                  params.errorCount,
+                                  params.lastSongError!.songName,
+                                  params.lastSongError!.artistName,
+                                )),
+                              ),
+                            );
+                          }
+                        });
+                      }, // coverage:ignore-line
                     ),
                 ],
               ),

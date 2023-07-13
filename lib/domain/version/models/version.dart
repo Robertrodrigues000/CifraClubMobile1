@@ -32,7 +32,19 @@ class Version extends Equatable {
 
   // coverage:ignore-start
   @override
-  List<Object?> get props =>
-      [localDatabaseID, remoteDatabaseID, songId, versionId, type, name, songUrl, tone, stdTone, capo, tuning, artist];
+  List<Object?> get props => [
+        localDatabaseID,
+        remoteDatabaseID,
+        songId,
+        versionId,
+        type,
+        name,
+        songUrl,
+        tone,
+        stdTone,
+        capo,
+        tuning,
+        artist,
+      ];
   // coverage:ignore-end
 }

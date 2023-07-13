@@ -1,6 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
-import 'package:cifraclub/domain/songbook/use_cases/add_songs_to_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/insert_versions_to_songbook.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,10 +27,11 @@ void main() {
     when(() => userCifraRepository.deleteVersionsBySongbookId(1)).thenAnswer((_) => SynchronousFuture(1));
     when(() => userCifraRepository.addVersionToSongbook(songs, 1))
         .thenAnswer((_) => SynchronousFuture([songs.first.localDatabaseID!]));
-    when(() => songbookRepository.addSongsToSongbook(songs: songs, songbookId: 1))
+    when(() => songbookRepository.addVersionsToSongbook(versionsInput: any(named: "versionsInput"), songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Ok(songs)));
 
-    final result = await AddSongsToSongbook(songbookRepository, userCifraRepository)(songbookId: 1, songs: songs);
+    final result =
+        await InsertVersionsToSongbook(songbookRepository, userCifraRepository)(songbookId: 1, versions: songs);
 
     expect(result.get(), songs);
 
@@ -40,10 +41,11 @@ void main() {
 
   test("When call use case and request fails should return request error", () async {
     final songs = [getFakeVersion()];
-    when(() => songbookRepository.addSongsToSongbook(songs: songs, songbookId: 1))
+    when(() => songbookRepository.addVersionsToSongbook(versionsInput: any(named: "versionsInput"), songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
-    final result = await AddSongsToSongbook(songbookRepository, userCifraRepository)(songbookId: 1, songs: songs);
+    final result =
+        await InsertVersionsToSongbook(songbookRepository, userCifraRepository)(songbookId: 1, versions: songs);
 
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
 

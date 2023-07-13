@@ -7,19 +7,27 @@ part of 'add_versions_to_list_state.dart';
 // **************************************************************************
 
 abstract class _$AddVersionsToListStateCWProxy {
+  AddVersionsToListState songbookId(int songbookId);
+
   AddVersionsToListState songs(List<SongSearch> songs);
 
   AddVersionsToListState isPro(bool isPro);
 
   AddVersionsToListState versionsLimit(int versionsLimit);
 
-  AddVersionsToListState versionsCount(int versionsCount);
+  AddVersionsToListState songsCount(int songsCount);
+
+  AddVersionsToListState savedSongsCount(int savedSongsCount);
 
   AddVersionsToListState limitState(ListLimitState limitState);
 
-  AddVersionsToListState selectedVersions(List<SongSearch> selectedVersions);
+  AddVersionsToListState selectedSongs(List<SongSearch> selectedSongs);
 
   AddVersionsToListState isLoading(bool isLoading);
+
+  AddVersionsToListState songsId(List<int?> songsId);
+
+  AddVersionsToListState isHistory(bool isHistory);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AddVersionsToListState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -28,13 +36,17 @@ abstract class _$AddVersionsToListStateCWProxy {
   /// AddVersionsToListState(...).copyWith(id: 12, name: "My name")
   /// ````
   AddVersionsToListState call({
+    int? songbookId,
     List<SongSearch>? songs,
     bool? isPro,
     int? versionsLimit,
-    int? versionsCount,
+    int? songsCount,
+    int? savedSongsCount,
     ListLimitState? limitState,
-    List<SongSearch>? selectedVersions,
+    List<SongSearch>? selectedSongs,
     bool? isLoading,
+    List<int?>? songsId,
+    bool? isHistory,
   });
 }
 
@@ -43,6 +55,9 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
   const _$AddVersionsToListStateCWProxyImpl(this._value);
 
   final AddVersionsToListState _value;
+
+  @override
+  AddVersionsToListState songbookId(int songbookId) => this(songbookId: songbookId);
 
   @override
   AddVersionsToListState songs(List<SongSearch> songs) => this(songs: songs);
@@ -54,17 +69,25 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
   AddVersionsToListState versionsLimit(int versionsLimit) => this(versionsLimit: versionsLimit);
 
   @override
-  AddVersionsToListState versionsCount(int versionsCount) => this(versionsCount: versionsCount);
+  AddVersionsToListState songsCount(int songsCount) => this(songsCount: songsCount);
+
+  @override
+  AddVersionsToListState savedSongsCount(int savedSongsCount) => this(savedSongsCount: savedSongsCount);
 
   @override
   AddVersionsToListState limitState(ListLimitState limitState) => this(limitState: limitState);
 
   @override
-  AddVersionsToListState selectedVersions(List<SongSearch> selectedVersions) =>
-      this(selectedVersions: selectedVersions);
+  AddVersionsToListState selectedSongs(List<SongSearch> selectedSongs) => this(selectedSongs: selectedSongs);
 
   @override
   AddVersionsToListState isLoading(bool isLoading) => this(isLoading: isLoading);
+
+  @override
+  AddVersionsToListState songsId(List<int?> songsId) => this(songsId: songsId);
+
+  @override
+  AddVersionsToListState isHistory(bool isHistory) => this(isHistory: isHistory);
 
   @override
 
@@ -75,15 +98,23 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
   /// AddVersionsToListState(...).copyWith(id: 12, name: "My name")
   /// ````
   AddVersionsToListState call({
+    Object? songbookId = const $CopyWithPlaceholder(),
     Object? songs = const $CopyWithPlaceholder(),
     Object? isPro = const $CopyWithPlaceholder(),
     Object? versionsLimit = const $CopyWithPlaceholder(),
-    Object? versionsCount = const $CopyWithPlaceholder(),
+    Object? songsCount = const $CopyWithPlaceholder(),
+    Object? savedSongsCount = const $CopyWithPlaceholder(),
     Object? limitState = const $CopyWithPlaceholder(),
-    Object? selectedVersions = const $CopyWithPlaceholder(),
+    Object? selectedSongs = const $CopyWithPlaceholder(),
     Object? isLoading = const $CopyWithPlaceholder(),
+    Object? songsId = const $CopyWithPlaceholder(),
+    Object? isHistory = const $CopyWithPlaceholder(),
   }) {
     return AddVersionsToListState(
+      songbookId: songbookId == const $CopyWithPlaceholder() || songbookId == null
+          ? _value.songbookId
+          // ignore: cast_nullable_to_non_nullable
+          : songbookId as int,
       songs: songs == const $CopyWithPlaceholder() || songs == null
           ? _value.songs
           // ignore: cast_nullable_to_non_nullable
@@ -96,22 +127,34 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
           ? _value.versionsLimit
           // ignore: cast_nullable_to_non_nullable
           : versionsLimit as int,
-      versionsCount: versionsCount == const $CopyWithPlaceholder() || versionsCount == null
-          ? _value.versionsCount
+      songsCount: songsCount == const $CopyWithPlaceholder() || songsCount == null
+          ? _value.songsCount
           // ignore: cast_nullable_to_non_nullable
-          : versionsCount as int,
+          : songsCount as int,
+      savedSongsCount: savedSongsCount == const $CopyWithPlaceholder() || savedSongsCount == null
+          ? _value.savedSongsCount
+          // ignore: cast_nullable_to_non_nullable
+          : savedSongsCount as int,
       limitState: limitState == const $CopyWithPlaceholder() || limitState == null
           ? _value.limitState
           // ignore: cast_nullable_to_non_nullable
           : limitState as ListLimitState,
-      selectedVersions: selectedVersions == const $CopyWithPlaceholder() || selectedVersions == null
-          ? _value.selectedVersions
+      selectedSongs: selectedSongs == const $CopyWithPlaceholder() || selectedSongs == null
+          ? _value.selectedSongs
           // ignore: cast_nullable_to_non_nullable
-          : selectedVersions as List<SongSearch>,
+          : selectedSongs as List<SongSearch>,
       isLoading: isLoading == const $CopyWithPlaceholder() || isLoading == null
           ? _value.isLoading
           // ignore: cast_nullable_to_non_nullable
           : isLoading as bool,
+      songsId: songsId == const $CopyWithPlaceholder() || songsId == null
+          ? _value.songsId
+          // ignore: cast_nullable_to_non_nullable
+          : songsId as List<int?>,
+      isHistory: isHistory == const $CopyWithPlaceholder() || isHistory == null
+          ? _value.isHistory
+          // ignore: cast_nullable_to_non_nullable
+          : isHistory as bool,
     );
   }
 }

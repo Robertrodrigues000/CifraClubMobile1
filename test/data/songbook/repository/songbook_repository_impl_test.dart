@@ -5,7 +5,8 @@ import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
-import 'package:cifraclub/data/songbook/models/songbook_songs_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_version_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/data/songbook/repository/songbook_repository_impl.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -15,6 +16,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
+import '../../../shared_mocks/domain/songbook/models/songbook_version_input_mock.dart';
 import '../../../shared_mocks/domain/songbook/models/songbook_versions_mock.dart';
 import '../../../shared_mocks/domain/version/models/version_mock.dart';
 
@@ -22,15 +24,18 @@ class _SongbookDataSourceMock extends Mock implements SongbookDataSource {}
 
 class _SongbookDtoMock extends Mock implements SongbookDto {}
 
-class _SongbookCifraDtoMock extends Mock implements SongbookVersionDto {}
+class _SongbookVersionDtoMock extends Mock implements SongbookVersionDto {}
 
-class _SongbookSongsInputFake extends Fake implements SongbookSongsInputDto {}
+class _SongbookSongsInputFake extends Fake implements SongbookVersionsInputDto {}
+
+class _SongbookSongInputFake extends Fake implements SongbookVersionInputDto {}
 
 void main() {
   setUpAll(() {
     registerFallbackValue(SongbookInputDto(name: "name", isPublic: true));
     registerFallbackValue(const DeleteVersionsInputDto([0]));
     registerFallbackValue(_SongbookSongsInputFake());
+    registerFallbackValue(_SongbookSongInputFake());
   });
 
   test("When getAllSongbooks is called, should return songbook domain entity", () async {
@@ -52,7 +57,7 @@ void main() {
     expect(result.get()!.first, songbook);
   });
 
-  test("when insertUserSongbook is called, should return the id of inserted songbook", () async {
+  test("when addSongbook is called, should return the id of inserted songbook", () async {
     final songbookDataSource = _SongbookDataSourceMock();
     final songbook = getFakeSongbook();
     final response = NewSongbookResponseDto(
@@ -60,10 +65,10 @@ void main() {
       name: songbook.name,
       isPublic: songbook.isPublic ? 1 : 0,
     );
-    when(() => songbookDataSource.insertSongbook(any())).thenAnswer((_) => SynchronousFuture(Ok(response)));
+    when(() => songbookDataSource.addSongbook(any())).thenAnswer((_) => SynchronousFuture(Ok(response)));
 
     final songbookRepository = SongbookRepositoryImpl(songbookDataSource);
-    final result = await songbookRepository.insertSongbook(
+    final result = await songbookRepository.addSongbook(
         name: songbook.name, isPublic: songbook.isPublic, createdAt: songbook.createdAt);
 
     expect(result.getOrThrow().id, songbook.id);
@@ -150,36 +155,73 @@ void main() {
     });
   });
 
-  group("When 'addCifrasToSongbook' is called", () {
+  group("When 'addVersionsToSongbook' is called", () {
     test("and request is sucessful should return song list", () async {
       final songbookDataSource = _SongbookDataSourceMock();
-      final songDto = _SongbookCifraDtoMock();
+      final songDto = _SongbookVersionDtoMock();
       final songsDto = [songDto];
-      final song = getFakeVersion();
+      final version = getFakeVersion();
+      final versionInput = getFakeSongbookVersionInput();
 
-      when(() => songbookDataSource.addSongsToSongbook(any(), any()))
+      when(() => songbookDataSource.addVersionsToSongbook(any(), any()))
           .thenAnswer((_) => SynchronousFuture(Ok(songsDto)));
-      when(songDto.toDomain).thenReturn(song);
+      when(songDto.toDomain).thenReturn(version);
 
       final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
-      final result = await songbookRepositoryImpl.addSongsToSongbook(songbookId: 1, songs: [song]);
+      final result = await songbookRepositoryImpl.addVersionsToSongbook(songbookId: 1, versionsInput: [versionInput]);
 
       verify(songDto.toDomain).called(1);
 
       expect(result.isSuccess, isTrue);
-      expect(result.get(), [song]);
+      expect(result.get(), [version]);
     });
 
     test("and request fails should return request error", () async {
       final songbookDataSource = _SongbookDataSourceMock();
-      final song = getFakeVersion();
+      final song = getFakeSongbookVersionInput();
 
-      when(() => songbookDataSource.addSongsToSongbook(any(), any()))
+      when(() => songbookDataSource.addVersionsToSongbook(any(), any()))
           .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
       final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
 
-      final result = await songbookRepositoryImpl.addSongsToSongbook(songbookId: 10, songs: [song]);
+      final result = await songbookRepositoryImpl.addVersionsToSongbook(songbookId: 10, versionsInput: [song]);
+
+      expect(result.isFailure, isTrue);
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
+    });
+  });
+
+  group("When 'addVersionToSongbook' is called", () {
+    test("and request is sucessful should return song", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+      final versionDto = _SongbookVersionDtoMock();
+      final versionInput = getFakeSongbookVersionInput();
+      final version = getFakeVersion();
+
+      when(() => songbookDataSource.addVersionToSongbook(any(), any()))
+          .thenAnswer((_) => SynchronousFuture(Ok(versionDto)));
+      when(versionDto.toDomain).thenReturn(version);
+
+      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+      final result = await songbookRepositoryImpl.addVersionToSongbook(songbookId: 1, versionInput: versionInput);
+
+      verify(versionDto.toDomain).called(1);
+
+      expect(result.isSuccess, isTrue);
+      expect(result.get(), version);
+    });
+
+    test("and request fails should return request error", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+      final versionInput = getFakeSongbookVersionInput();
+
+      when(() => songbookDataSource.addVersionToSongbook(any(), any()))
+          .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+
+      final result = await songbookRepositoryImpl.addVersionToSongbook(songbookId: 10, versionInput: versionInput);
 
       expect(result.isFailure, isTrue);
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));

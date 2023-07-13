@@ -18,7 +18,7 @@ class InsertUserSongbook {
     DateTime? createdAt,
   }) async {
     return _songbookRepository
-        .insertSongbook(
+        .addSongbook(
           name: name,
           isPublic: isPublic,
           createdAt: createdAt ?? DateTime.now(),

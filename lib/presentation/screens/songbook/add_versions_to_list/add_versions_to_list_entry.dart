@@ -27,7 +27,15 @@ class AddVersionsToListEntry extends ScreenEntry {
     final songbookId = int.parse(params[songbookIdKey] ?? "0");
 
     return BlocProvider(
-      create: (context) => AddVersionsToListBloc(getIt(), getIt(), getIt(), getIt(), getIt())..init(songbookId),
+      create: (context) => AddVersionsToListBloc(
+        songbookId,
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      )..init(songbookId),
       child: const AddVersionsToListScreen(),
     );
   }

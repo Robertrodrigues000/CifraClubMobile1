@@ -4,7 +4,8 @@ import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
-import 'package:cifraclub/data/songbook/models/songbook_songs_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_version_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:typed_result/typed_result.dart';
@@ -25,7 +26,7 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  Future<Result<NewSongbookResponseDto, RequestError>> insertSongbook(SongbookInputDto songbookInputDto) {
+  Future<Result<NewSongbookResponseDto, RequestError>> addSongbook(SongbookInputDto songbookInputDto) {
     var request = NetworkRequest(
       type: NetworkRequestType.post,
       path: "/v3/songbook",
@@ -66,14 +67,29 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  Future<Result<List<SongbookVersionDto>, RequestError>> addSongsToSongbook(
-      int songbookId, SongbookSongsInputDto songbookSongsInputDto) {
+  Future<Result<List<SongbookVersionDto>, RequestError>> addVersionsToSongbook(
+      int songbookId, SongbookVersionsInputDto songbookSongsInputDto) {
     var request = NetworkRequest(
       type: NetworkRequestType.post,
       path: "/v3/songbook/$songbookId/songs",
       data: songbookSongsInputDto.toJson(),
       parser: (data) =>
           (data as List<dynamic>).map((e) => SongbookVersionDto.fromJson(e as Map<String, dynamic>)).toList(),
+    );
+    return _networkService.execute(request: request);
+  }
+
+  Future<Result<SongbookVersionDto, RequestError>> addVersionToSongbook(
+    int songbookId,
+    SongbookVersionInputDto songbookSongInputDto,
+  ) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/songbook/$songbookId/song",
+      data: songbookSongInputDto.toJson(),
+      parser: (data) {
+        return SongbookVersionDto.fromJson(data);
+      },
     );
     return _networkService.execute(request: request);
   }

@@ -5,7 +5,9 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart';
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/domain/songbook/use_cases/get_total_songbook_versions.dart';
+import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
+import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
@@ -17,6 +19,7 @@ import 'package:rxdart/subjects.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../../shared_mocks/domain/search/models/search_mock.dart';
+import '../../../../shared_mocks/domain/version/models/version_mock.dart';
 
 class _GetProStatusStreamMock extends Mock implements GetProStatusStream {}
 
@@ -24,29 +27,35 @@ class _SearchSongsMock extends Mock implements SearchSongs {}
 
 class _GetVersionsLimitMock extends Mock implements GetVersionsLimit {}
 
-class _GetTotalSongbookVersionsMock extends Mock implements GetTotalSongbookVersions {}
+class _InsertVersionToSongbookMock extends Mock implements InsertVersionToSongbook {}
 
 class _GetVersionLimitStateByCountMock extends Mock implements GetVersionLimitStateByCount {}
+
+class _GetAllVersionsFromSongbookMock extends Mock implements GetAllVersionsFromSongbook {}
 
 void main() {
   AddVersionsToListBloc getBloc({
     _GetProStatusStreamMock? getProStatusStream,
     _SearchSongsMock? searchSongs,
     _GetVersionsLimitMock? getVersionsLimit,
-    _GetTotalSongbookVersionsMock? getVersionsLimitState,
+    _InsertVersionToSongbookMock? insertVersionToSongbook,
     _GetVersionLimitStateByCountMock? getVersionLimitStateByCount,
+    _GetAllVersionsFromSongbookMock? getAllVersionsFromSongbook,
   }) =>
       AddVersionsToListBloc(
+        10,
         searchSongs ?? _SearchSongsMock(),
         getProStatusStream ?? _GetProStatusStreamMock(),
         getVersionsLimit ?? _GetVersionsLimitMock(),
-        getVersionsLimitState ?? _GetTotalSongbookVersionsMock(),
         getVersionLimitStateByCount ?? _GetVersionLimitStateByCountMock(),
+        insertVersionToSongbook ?? _InsertVersionToSongbookMock(),
+        getAllVersionsFromSongbook ?? _GetAllVersionsFromSongbookMock(),
       );
 
   group("When init bloc", () {
-    final getVersionsLimitState = _GetTotalSongbookVersionsMock();
-    when(() => getVersionsLimitState(10)).thenAnswer((_) => BehaviorSubject.seeded(99));
+    final version = getFakeVersion();
+    final getAllVersionsFromSongbook = _GetAllVersionsFromSongbookMock();
+    when(() => getAllVersionsFromSongbook(10)).thenAnswer((_) => SynchronousFuture([version]));
 
     final getProStatusStream = _GetProStatusStreamMock();
     when(getProStatusStream).thenAnswer((_) => BehaviorSubject.seeded(false));
@@ -60,7 +69,7 @@ void main() {
     blocTest(
       "should load correctly all started info",
       build: () => getBloc(
-        getVersionsLimitState: getVersionsLimitState,
+        getAllVersionsFromSongbook: getAllVersionsFromSongbook,
         getProStatusStream: getProStatusStream,
         getVersionsLimit: getVersionsLimit,
         getVersionLimitStateByCount: getVersionLimitStateByCount,
@@ -70,6 +79,8 @@ void main() {
         expect(bloc.state.limitState, ListLimitState.atWarning);
         expect(bloc.state.isPro, false);
         expect(bloc.state.versionsLimit, 100);
+        expect(bloc.state.songsCount, 1);
+        expect(bloc.state.songsId, [version.songId]);
       },
     );
   });
@@ -90,12 +101,12 @@ void main() {
       expect: () => [
         isA<AddVersionsToListState>()
             .having((state) => state.limitState, "limit state", ListLimitState.withinLimit)
-            .having((state) => state.versionsCount, "add 1 to count", 1)
-            .having((state) => state.selectedVersions, "add song to list", [songSearch]),
+            .having((state) => state.songsCount, "add 1 to count", 1)
+            .having((state) => state.selectedSongs, "add song to list", [songSearch]),
         isA<AddVersionsToListState>()
             .having((state) => state.limitState, "limit state", ListLimitState.withinLimit)
-            .having((state) => state.versionsCount, "remove 1 to count", 0)
-            .having((state) => state.selectedVersions, "remove song to list", []),
+            .having((state) => state.songsCount, "remove 1 to count", 0)
+            .having((state) => state.selectedSongs, "remove song to list", []),
       ],
     );
   });
@@ -109,13 +120,13 @@ void main() {
       build: () => getBloc(getVersionLimitStateByCount: getVersionsLimitStateByCount),
       act: (bloc) {
         //Emit a state with list of select versions and tabs count before call function
-        bloc.emit(
-            AddVersionsToListState(selectedVersions: [getFakeSongSearch(), getFakeSongSearch()], versionsCount: 2));
+        bloc.emit(AddVersionsToListState(
+            selectedSongs: [getFakeSongSearch(), getFakeSongSearch()], songsCount: 2, songbookId: 10));
         bloc.clearCount();
       },
       verify: (bloc) {
-        expect(bloc.state.versionsCount, 0);
-        expect(bloc.state.selectedVersions, List.empty());
+        expect(bloc.state.songsCount, 0);
+        expect(bloc.state.selectedSongs, List.empty());
       },
     );
   });
@@ -126,7 +137,7 @@ void main() {
       build: getBloc,
       act: (bloc) {
         //Emit a state with songs before call function
-        bloc.emit(AddVersionsToListState(songs: [getFakeSongSearch(), getFakeSongSearch()]));
+        bloc.emit(AddVersionsToListState(songs: [getFakeSongSearch(), getFakeSongSearch()], songbookId: 10));
         bloc.clearList();
       },
       verify: (bloc) {
@@ -147,7 +158,7 @@ void main() {
 
     test("and song is in localDB and not included in remote should return selected state", () {
       final song = getFakeSongSearch();
-      bloc.emit(AddVersionsToListState(selectedVersions: [song]));
+      bloc.emit(AddVersionsToListState(selectedSongs: [song], songbookId: 10));
 
       final result = bloc.getSongState(song);
       expect(result, SongState.selected);
@@ -155,9 +166,7 @@ void main() {
 
     test("and song is not in localDB and included in remote should return added state", () {
       final song = getFakeSongSearch();
-
-      //Mudar isso para o mock do useCase que pega a lista de ids de um songbook
-      bloc.mockedList.add(song.songId);
+      bloc.emit(AddVersionsToListState(songbookId: 10, songsId: [song.songId]));
 
       final result = bloc.getSongState(song);
       expect(result, SongState.added);
@@ -182,8 +191,9 @@ void main() {
   });
 
   group("When init bloc and request search stream is called", () {
-    final getVersionsLimitState = _GetTotalSongbookVersionsMock();
-    when(() => getVersionsLimitState(10)).thenAnswer((_) => BehaviorSubject.seeded(99));
+    final version = getFakeVersion();
+    final getAllVersionsFromSongbook = _GetAllVersionsFromSongbookMock();
+    when(() => getAllVersionsFromSongbook(10)).thenAnswer((_) => SynchronousFuture([version]));
 
     final getProStatusStream = _GetProStatusStreamMock();
     when(getProStatusStream).thenAnswer((_) => BehaviorSubject.seeded(false));
@@ -204,7 +214,7 @@ void main() {
       blocTest(
         "should show loading and return list of songs",
         build: () => getBloc(
-            getVersionsLimitState: getVersionsLimitState,
+            getAllVersionsFromSongbook: getAllVersionsFromSongbook,
             getProStatusStream: getProStatusStream,
             getVersionsLimit: getVersionsLimit,
             searchSongs: searchSong,
@@ -226,6 +236,10 @@ void main() {
     });
 
     group("When request fails", () {
+      final version = getFakeVersion();
+      final getAllVersionsFromSongbook = _GetAllVersionsFromSongbookMock();
+      when(() => getAllVersionsFromSongbook(10)).thenAnswer((_) => SynchronousFuture([version]));
+
       final searchSong = _SearchSongsMock();
       when(() => searchSong(query: any(named: "query")))
           .thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Err(ConnectionError()))));
@@ -236,7 +250,7 @@ void main() {
       blocTest(
         "should show loading and return empty list",
         build: () => getBloc(
-          getVersionsLimitState: getVersionsLimitState,
+          getAllVersionsFromSongbook: getAllVersionsFromSongbook,
           getProStatusStream: getProStatusStream,
           getVersionsLimit: getVersionsLimit,
           searchSongs: searchSong,
@@ -253,6 +267,106 @@ void main() {
           isA<AddVersionsToListState>().having((state) => state.isLoading, "start request", isTrue),
           isA<AddVersionsToListState>().having((state) => state.songs, "songs list result", []).having(
               (state) => state.isLoading, "finish request", isFalse),
+        ],
+      );
+    });
+  });
+
+  group("When 'addSongsToSongbook' is called", () {
+    group("and request return all success", () {
+      final songSearchList = [getFakeSongSearch(), getFakeSongSearch()];
+      final versionReponseList = [getFakeVersion(), getFakeVersion()];
+      final insertVersionToSongbook = _InsertVersionToSongbookMock();
+      when(() => insertVersionToSongbook(
+          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.first),
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.first)));
+      when(() => insertVersionToSongbook(
+          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.last),
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last)));
+
+      blocTest(
+        "should return count of success",
+        build: () => getBloc(
+          insertVersionToSongbook: insertVersionToSongbook,
+        ),
+        act: (bloc) async {
+          bloc.emit(AddVersionsToListState(songbookId: 10, selectedSongs: songSearchList));
+          final result = await bloc.addSongsToSongbook();
+          expect(result, (songsSaved: 2, errorCount: 0, lastSongError: null));
+        },
+        expect: () => [
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 0),
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 1),
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 2),
+          isA<AddVersionsToListState>()
+              .having((state) => state.savedSongsCount, "resetCount", 0)
+              .having((state) => state.selectedSongs, "resetSelectedSongs", isEmpty)
+              .having((state) => state.songsId, "response list id", versionReponseList.map((e) => e.songId).toList()),
+        ],
+      );
+    });
+
+    group("and request return all erro", () {
+      final songSearchList = [getFakeSongSearch(), getFakeSongSearch()];
+      final insertVersionToSongbook = _InsertVersionToSongbookMock();
+      when(() => insertVersionToSongbook(
+          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.first),
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+      when(() => insertVersionToSongbook(
+          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.last),
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+      blocTest(
+        "should return count of erros",
+        build: () => getBloc(
+          insertVersionToSongbook: insertVersionToSongbook,
+        ),
+        act: (bloc) async {
+          bloc.emit(AddVersionsToListState(songbookId: 10, selectedSongs: songSearchList));
+          final result = await bloc.addSongsToSongbook();
+          expect(result, (songsSaved: 0, errorCount: 2, lastSongError: songSearchList.last));
+        },
+        expect: () => [
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 0),
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 1),
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 2),
+          isA<AddVersionsToListState>()
+              .having((state) => state.savedSongsCount, "resetCount", 0)
+              .having((state) => state.selectedSongs, "resetSelectedSongs", isEmpty)
+              .having((state) => state.songsId, "response list id", isEmpty),
+        ],
+      );
+    });
+
+    group("and request return success and error", () {
+      final songSearchList = [getFakeSongSearch(), getFakeSongSearch()];
+      final versionReponseList = [getFakeVersion(), getFakeVersion()];
+      final insertVersionToSongbook = _InsertVersionToSongbookMock();
+      when(() => insertVersionToSongbook(
+          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.first),
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+      when(() => insertVersionToSongbook(
+          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.last),
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last)));
+
+      blocTest(
+        "should return count of success and erros",
+        build: () => getBloc(
+          insertVersionToSongbook: insertVersionToSongbook,
+        ),
+        act: (bloc) async {
+          bloc.emit(AddVersionsToListState(songbookId: 10, selectedSongs: songSearchList));
+          final result = await bloc.addSongsToSongbook();
+          expect(result, (songsSaved: 1, errorCount: 1, lastSongError: songSearchList.first));
+        },
+        expect: () => [
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 0),
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 1),
+          isA<AddVersionsToListState>().having((state) => state.savedSongsCount, "count", 2),
+          isA<AddVersionsToListState>()
+              .having((state) => state.savedSongsCount, "resetCount", 0)
+              .having((state) => state.selectedSongs, "resetSelectedSongs", isEmpty)
+              .having((state) => state.songsId, "response list id", [versionReponseList.last.songId]),
         ],
       );
     });

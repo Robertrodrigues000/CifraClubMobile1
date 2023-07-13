@@ -127,7 +127,6 @@
     "inputDialogHint": "Ex.: Luau com amigos",
     "inputDialogLabel": "Nome da lista",
     "searchSongs" : "Buscar músicas",
-
     "versionsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
     "@versionsCount":{
       "placeholders": {
@@ -137,7 +136,32 @@
             }
         }
     },
-
+    "savedListSongs": "{count} {count, plural, =1{cifra adicionada}other{cifras adicionadas}}",
+    "@savedListSongs":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
+    "errorsListSongs": "{count, plural, =1{Ocorreu um erro ao fazer o download da música {songName} - {artistName}. Ela não estará disponível no modo offline.}other{Ocorreu um erro ao fazer o download de {count} das músicas. Elas não estarão disponíveis no modo offline.}}",
+    "@errorsListSongs":{
+      "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            },
+            "songName": {
+                "type": "String",
+                "example": "Vídeos"
+            },
+            "artistName": {
+                "type": "String",
+                "example": "Vídeos"
+            }
+        }
+    },
     "savingToList": "Salvando à lista",
     "loadingSongs": "Carregando músicas...",
     "privateListErrorTitle": "Você não possui acesso a esta lista privada",
@@ -167,6 +191,8 @@
     "instrumentBass" : "Baixo",
     "instrumentDrums" : "Bateria",
     "instrumentHarmonica" : "Gaita",
+    "searchNotFound" : "Não encontramos nada por aqui :(",
+    "searchNewTerm" : "Tente pesquisar um novo termo.",
 
     "songs": "{count,plural, =1{Música}other{Músicas}}",
     "@songs":{
