@@ -1,6 +1,7 @@
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart';
 import 'package:cifraclub/data/version/models/user_version_artist_dto.dart';
 import 'package:cifraclub/data/version/models/user_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
@@ -25,17 +26,35 @@ void main() {
     isar.close(deleteFromDisk: true);
   });
 
-  UserVersionDto getUserVersionDto(
-          {UserVersionArtistDto? userVersionArtistDto, int? songbookId, String? artistImage}) =>
+  UserVersionDto getUserVersionDto({
+    UserVersionArtistDto? userVersionArtistDto,
+    int? songbookId,
+    String? artistImage,
+  }) =>
       UserVersionDto(
+        id: faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
-        remoteDatabaseID: faker.randomGenerator.integer(10000),
         songUrl: faker.animal.name(),
         tone: faker.animal.name(),
         type: faker.randomGenerator.integer(10000),
-        localDatabaseID: faker.randomGenerator.integer(10000),
         songId: faker.randomGenerator.integer(10000),
         songbookId: songbookId ?? faker.randomGenerator.integer(10000),
+        artist: userVersionArtistDto ?? UserVersionArtistDto(),
+        artistImage: artistImage,
+        versionId: faker.randomGenerator.integer(10000),
+      );
+
+  UserRecentVersionDto getUserRecentVersionDto({
+    UserVersionArtistDto? userVersionArtistDto,
+    String? artistImage,
+  }) =>
+      UserRecentVersionDto(
+        localDatabaseID: faker.randomGenerator.integer(10000),
+        name: faker.food.cuisine(),
+        songUrl: faker.animal.name(),
+        tone: faker.animal.name(),
+        type: faker.randomGenerator.integer(10000),
+        songId: faker.randomGenerator.integer(10000),
         artist: userVersionArtistDto ?? UserVersionArtistDto(),
         artistImage: artistImage,
         versionId: faker.randomGenerator.integer(10000),
@@ -72,6 +91,25 @@ void main() {
     });
   });
 
+  test("when getVersionsFromSongbook is called should return songs list", () async {
+    final versions = [
+      getUserRecentVersionDto(),
+    ];
+
+    await isar.writeTxn(
+      () async {
+        await isar.userRecentVersionDtos.putAll(versions);
+      },
+    );
+
+    final result = await userVersionDataSource.getVersionsFromRecentSongbook();
+
+    expect(result, isNotNull);
+    expect(result, isNotEmpty);
+    expect(result.length, 1);
+    expect(result.first, versions.first);
+  });
+
   test("When 'addVersionsToSongbook' is called should save versions to local db", () async {
     final versions = [
       getUserVersionDto(),
@@ -85,9 +123,27 @@ void main() {
       localVersions = await isar.userVersionDtos.where().findAll();
     });
 
-    expect(result, [versions[0].localDatabaseID, versions[1].localDatabaseID]);
+    expect(result, [versions[0].id, versions[1].id]);
     // toSet para comparar as 2 listas que podem vir em ordens diferentes
     expect(localVersions.toSet(), versions.toSet());
+  });
+
+  test("When 'addVersionsToRecentSongbook' is called should save versions to local db", () async {
+    final recentVersions = [
+      getUserRecentVersionDto(),
+      getUserRecentVersionDto(),
+    ];
+
+    final result = await userVersionDataSource.addVersionsToRecentSongbook(recentVersions);
+
+    late List<UserRecentVersionDto> localVersions;
+    await isar.txn(() async {
+      localVersions = await isar.userRecentVersionDtos.where().findAll();
+    });
+
+    expect(result, [recentVersions[0].localDatabaseID, recentVersions[1].localDatabaseID]);
+    // toSet para comparar as 2 listas que podem vir em ordens diferentes
+    expect(localVersions.toSet(), recentVersions.toSet());
   });
 
   test("When 'clearAllVersions' is called should delete all versions", () async {
@@ -174,7 +230,26 @@ void main() {
     expect(numberVersionsDeleted, 3);
   });
 
-  test("When `deleteSongsById` is called should delete songs from songbook", () async {
+  test("When `deleteRecentVersions` is called should delete versions from songbook id", () async {
+    final versions = [
+      getUserRecentVersionDto(),
+      getUserRecentVersionDto(),
+      getUserRecentVersionDto(),
+      getUserRecentVersionDto(),
+    ];
+
+    await isar.writeTxn(
+      () async {
+        await isar.userRecentVersionDtos.putAll(versions);
+      },
+    );
+
+    final numberVersionsDeleted = await userVersionDataSource.deleteRecentVersions();
+
+    expect(numberVersionsDeleted, 4);
+  });
+
+  test("When `deleteVersionsById` is called should delete songs from songbook", () async {
     final versions = [
       getUserVersionDto(),
       getUserVersionDto(),
@@ -188,8 +263,7 @@ void main() {
       },
     );
 
-    final numberVersionsDeleted =
-        await userVersionDataSource.deleteVersionsById(versions.map((e) => e.localDatabaseID).toList());
+    final numberVersionsDeleted = await userVersionDataSource.deleteVersionsById(versions.map((e) => e.id).toList());
 
     expect(numberVersionsDeleted, 4);
   });
@@ -217,6 +291,30 @@ void main() {
       final fakeSongbookId = faker.randomGenerator.integer(1000);
 
       final result = userVersionDataSource.getVersionsStreamFromSongbook(fakeSongbookId);
+
+      expect(result, emits([]));
+    });
+  });
+
+  group("when getVersionsStreamFromRecentSongbook is called", () {
+    test("when user has versions on songbook should return version list", () async {
+      final versions = [
+        getUserRecentVersionDto(),
+      ];
+
+      await isar.writeTxn(
+        () async {
+          await isar.userRecentVersionDtos.putAll(versions);
+        },
+      );
+
+      final result = userVersionDataSource.getVersionsStreamFromRecentSongbook();
+
+      expect(result, emits(versions));
+    });
+
+    test("when user hasn't versions on songbook should return version list", () async {
+      final result = userVersionDataSource.getVersionsStreamFromRecentSongbook();
 
       expect(result, emits([]));
     });

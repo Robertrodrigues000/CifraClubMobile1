@@ -33,7 +33,8 @@ void main() {
       final songbookVersion = [
         getFakeSongbookVersions(),
         getFakeSongbookVersions(),
-        getFakeSongbookVersions(listType: ListType.cantPlay)
+        getFakeSongbookVersions(listType: ListType.cantPlay),
+        getFakeSongbookVersions(listType: ListType.recents),
       ];
       final songbooks = songbookVersion.map((e) => e.songbook).toList();
 
@@ -41,6 +42,8 @@ void main() {
       when(() => userSongbookRepository.setUserSongbooks(songbooks))
           .thenAnswer((_) => SynchronousFuture(songbooks.map((e) => e.id!).toList(growable: false)));
       when(() => userVersionRepository.addVersionToSongbook(captureAny(), captureAny()))
+          .thenAnswer((_) => SynchronousFuture([]));
+      when(() => userVersionRepository.addVersionToRecentSongbook(captureAny()))
           .thenAnswer((_) => SynchronousFuture([]));
       when(userVersionRepository.clearAllVersions).thenAnswer((_) => SynchronousFuture(null));
       when(() => updateSongbookPreview(any())).thenAnswer((_) => SynchronousFuture(1));
@@ -66,6 +69,11 @@ void main() {
         songbookVersion[2].versions,
         songbookVersion[2].songbook.type.localId,
       ]);
+
+      final recentSongbookParams =
+          verify(() => userVersionRepository.addVersionToRecentSongbook(captureAny())).captured;
+
+      expect(recentSongbookParams, [songbookVersion[3].versions]);
     });
   });
 

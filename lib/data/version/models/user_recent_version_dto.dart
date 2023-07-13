@@ -5,12 +5,13 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 
-part 'user_version_dto.g.dart';
+part 'user_recent_version_dto.g.dart';
 
 @CopyWith()
 @Collection(inheritance: false)
-class UserVersionDto extends Equatable {
-  final Id id;
+class UserRecentVersionDto extends Equatable {
+  Id localDatabaseID = Isar.autoIncrement;
+  final int? remoteDatabaseID;
   final String name;
   final int versionId;
   final String songUrl;
@@ -23,20 +24,17 @@ class UserVersionDto extends Equatable {
   final UserVersionArtistDto artist;
   @Index()
   final String? artistImage;
-  @Index(composite: [CompositeIndex('artistImage')])
-  @Index()
-  final int songbookId;
 
-  UserVersionDto({
+  UserRecentVersionDto({
+    required this.localDatabaseID,
+    this.remoteDatabaseID,
     required this.songUrl,
     this.tone,
     required this.type,
     required this.name,
-    required this.songbookId,
     this.capo,
     this.stdTone,
     this.tuning,
-    required this.id,
     required this.songId,
     required this.artist,
     String? artistImage,
@@ -44,7 +42,8 @@ class UserVersionDto extends Equatable {
   }) : artistImage = (artistImage ?? "").isNotEmpty ? artistImage : null;
 
   Version toDomain() => Version(
-        remoteDatabaseID: id,
+        localDatabaseID: localDatabaseID,
+        remoteDatabaseID: (remoteDatabaseID ?? -1) > 0 ? remoteDatabaseID : null,
         songId: songId,
         type: type,
         name: name,
@@ -57,12 +56,12 @@ class UserVersionDto extends Equatable {
         versionId: versionId,
       );
 
-  UserVersionDto.fromDomain(Version version, int songbookId)
+  UserRecentVersionDto.fromDomain(Version version)
       : this(
-          id: version.remoteDatabaseID!,
+          localDatabaseID: version.localDatabaseID ?? Isar.autoIncrement,
+          remoteDatabaseID: version.remoteDatabaseID,
           name: version.name,
           songUrl: version.songUrl,
-          songbookId: songbookId,
           type: version.type,
           tone: version.tone,
           songId: version.songId,
@@ -77,8 +76,9 @@ class UserVersionDto extends Equatable {
   @ignore
   @override
   List<Object?> get props => [
-        id,
+        localDatabaseID,
         name,
+        remoteDatabaseID,
         songUrl,
         tone,
         type,
@@ -87,6 +87,5 @@ class UserVersionDto extends Equatable {
         versionId,
         capo,
         tuning,
-        songbookId,
       ];
 }

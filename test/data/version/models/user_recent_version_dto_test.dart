@@ -1,5 +1,5 @@
 import 'package:cifraclub/data/version/models/user_version_artist_dto.dart';
-import 'package:cifraclub/data/version/models/user_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,14 +7,14 @@ import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
 
 void main() {
   test("When `toDomain` is called should convert correctly to Version", () {
-    final userVersionDto = UserVersionDto(
-      id: 12,
+    final userVersionDto = UserRecentVersionDto(
+      remoteDatabaseID: -1,
+      localDatabaseID: 10,
       songUrl: "test",
       type: 4,
       name: "name",
       songId: 3,
       capo: 1,
-      songbookId: 2,
       stdTone: "t",
       tone: "s",
       tuning: "abc",
@@ -24,7 +24,8 @@ void main() {
     );
     final version = userVersionDto.toDomain();
 
-    expect(version.remoteDatabaseID, 12);
+    expect(version.remoteDatabaseID, null);
+    expect(version.localDatabaseID, 10);
     expect(version.capo, 1);
     expect(version.name, "name");
     expect(version.songId, 3);
@@ -44,6 +45,8 @@ void main() {
   test("When `fromDomain` is called should convert correctly to VersionDto", () {
     final artist = getFakeArtist();
     final version = Version(
+      remoteDatabaseID: 5,
+      localDatabaseID: 10,
       songId: 1,
       type: 2,
       name: "name",
@@ -53,12 +56,12 @@ void main() {
       tone: "B",
       tuning: "AB",
       artist: artist,
-      remoteDatabaseID: 5,
       versionId: 12,
     );
-    final userVersionDto = UserVersionDto.fromDomain(version, 10);
+    final userVersionDto = UserRecentVersionDto.fromDomain(version);
 
-    expect(userVersionDto.id, version.remoteDatabaseID);
+    expect(userVersionDto.remoteDatabaseID, version.remoteDatabaseID);
+    expect(userVersionDto.localDatabaseID, version.localDatabaseID);
     expect(userVersionDto.versionId, 12);
     expect(userVersionDto.name, "name");
     expect(userVersionDto.songUrl, "songUrl");
@@ -68,7 +71,6 @@ void main() {
     expect(userVersionDto.stdTone, "A");
     expect(userVersionDto.capo, 3);
     expect(userVersionDto.tuning, "AB");
-    expect(userVersionDto.songbookId, 10);
     expect(userVersionDto.artist.id, artist.id);
     expect(userVersionDto.artist.name, artist.name);
     expect(userVersionDto.artist.url, artist.url);

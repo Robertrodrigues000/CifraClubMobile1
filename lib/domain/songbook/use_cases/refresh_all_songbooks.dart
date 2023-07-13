@@ -16,7 +16,7 @@ class RefreshAllSongbooks {
   final UserVersionRepository _userVersionRepository;
   final UpdateSongbookPreview _updateSongbookPreview;
 
-  RefreshAllSongbooks(
+  const RefreshAllSongbooks(
     this._songbookRepository,
     this._userSongbookRepository,
     this._userVersionRepository,
@@ -33,10 +33,19 @@ class RefreshAllSongbooks {
 
             for (var element in response) {
               final id = element.songbook.type == ListType.user ? element.songbook.id : element.songbook.type.localId;
+
               if (id != null) {
-                await _userVersionRepository.addVersionToSongbook(element.versions, id);
-                if (element.songbook.type == ListType.user) {
-                  await _updateSongbookPreview(id);
+                switch (element.songbook.type) {
+                  case ListType.user:
+                    await _userVersionRepository.addVersionToSongbook(element.versions, id);
+                    await _updateSongbookPreview(id);
+                    break;
+                  case ListType.recents:
+                    await _userVersionRepository.addVersionToRecentSongbook(element.versions);
+                    break;
+                  default:
+                    await _userVersionRepository.addVersionToSongbook(element.versions, id);
+                    break;
                 }
               } else {
                 // coverage:ignore-start

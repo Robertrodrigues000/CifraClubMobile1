@@ -1,5 +1,7 @@
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart';
 import 'package:cifraclub/data/version/models/user_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 
@@ -10,13 +12,24 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
 
   @override
   Future<List<Version>> getUserVersionsFromSongbook(int songbookId) async {
-    return (await _userVersionDataSource.getVersionsFromSongbook(songbookId)).map((e) => e.toDomain()).toList();
+    if (songbookId == ListType.recents.localId) {
+      return (await _userVersionDataSource.getVersionsFromRecentSongbook()).map((e) => e.toDomain()).toList();
+    } else {
+      return (await _userVersionDataSource.getVersionsFromSongbook(songbookId)).map((e) => e.toDomain()).toList();
+    }
   }
 
   @override
   Future<List<int>> addVersionToSongbook(List<Version> versions, int songbookId) {
     return _userVersionDataSource.addVersionsToSongbook(
       versions.map((e) => UserVersionDto.fromDomain(e, songbookId)).toList(),
+    );
+  }
+
+  @override
+  Future<List<int>> addVersionToRecentSongbook(List<Version> versions) {
+    return _userVersionDataSource.addVersionsToRecentSongbook(
+      versions.map(UserRecentVersionDto.fromDomain).toList(),
     );
   }
 
@@ -37,7 +50,11 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
 
   @override
   Future<int?> deleteVersionsBySongbookId(int songbookId) {
-    return _userVersionDataSource.deleteVersions(songbookId);
+    if (songbookId == ListType.recents.localId) {
+      return _userVersionDataSource.deleteRecentVersions();
+    } else {
+      return _userVersionDataSource.deleteVersions(songbookId);
+    }
   }
 
   @override
@@ -47,8 +64,14 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
 
   @override
   Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId) {
-    return _userVersionDataSource
-        .getVersionsStreamFromSongbook(songbookId)
-        .map((event) => event.map((e) => e.toDomain()).toList());
+    if (songbookId == ListType.recents.localId) {
+      return _userVersionDataSource
+          .getVersionsStreamFromRecentSongbook()
+          .map((event) => event.map((e) => e.toDomain()).toList());
+    } else {
+      return _userVersionDataSource
+          .getVersionsStreamFromSongbook(songbookId)
+          .map((event) => event.map((e) => e.toDomain()).toList());
+    }
   }
 }

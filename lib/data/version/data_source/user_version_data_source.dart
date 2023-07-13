@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/version/models/user_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
 import 'package:isar/isar.dart';
 
 class UserVersionDataSource {
@@ -16,16 +17,31 @@ class UserVersionDataSource {
     );
   }
 
+  Future<List<int>> addVersionsToRecentSongbook(List<UserRecentVersionDto> userVersionDtos) async {
+    return _isar.writeTxn(
+      () async {
+        return _isar.userRecentVersionDtos.putAll(userVersionDtos);
+      },
+    );
+  }
+
   Future<void> clearAllVersions() {
     return _isar.writeTxn(
       () async {
-        return _isar.userVersionDtos.clear();
+        Future.wait([
+          _isar.userVersionDtos.clear(),
+          _isar.userRecentVersionDtos.clear(),
+        ]);
       },
     );
   }
 
   Future<List<UserVersionDto>> getVersionsFromSongbook(int songbookId) async {
     return _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).findAll();
+  }
+
+  Future<List<UserRecentVersionDto>> getVersionsFromRecentSongbook() async {
+    return _isar.userRecentVersionDtos.where().findAll();
   }
 
   Stream<int> getTotalSongbookVersions(int songbookId) {
@@ -57,6 +73,12 @@ class UserVersionDataSource {
     });
   }
 
+  Future<int?> deleteRecentVersions() {
+    return _isar.writeTxn(() async {
+      return _isar.userRecentVersionDtos.where().deleteAll();
+    });
+  }
+
   Future<int?> deleteVersionsById(List<int> ids) async {
     return _isar.writeTxn(() async {
       return _isar.userVersionDtos.deleteAll(ids);
@@ -65,5 +87,9 @@ class UserVersionDataSource {
 
   Stream<List<UserVersionDto>> getVersionsStreamFromSongbook(int songbookId) {
     return _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).watch(fireImmediately: true);
+  }
+
+  Stream<List<UserRecentVersionDto>> getVersionsStreamFromRecentSongbook() {
+    return _isar.userRecentVersionDtos.where().watch(fireImmediately: true);
   }
 }
