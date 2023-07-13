@@ -167,9 +167,8 @@
     "instrumentBass" : "Bajo",
     "instrumentDrums" : "Batería",
     "instrumentHarmonica" : "Armónica",
-
     "songs": "{count,plural, =1{Musica}other{Musicas}}",
-    "@versionsCount":{
+    "@songs":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -179,7 +178,7 @@
     },
     "alphabeticalOrder" : "Orden alfabética",
     "videoLessons" : "Vídeo lecciones",
-    
+    "views": "exposiciones",
     "emptyListTitle": "Sin canciones",
     "emptyListDescription": "Buscar para agregar canciones a esta lista."
 }

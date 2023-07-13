@@ -169,7 +169,7 @@
     "instrumentHarmonica" : "Gaita",
 
     "songs": "{count,plural, =1{Música}other{Músicas}}",
-    "@versionsCount":{
+    "@songs":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -179,7 +179,7 @@
     },
     "alphabeticalOrder" : "Ordem alfabética",
     "videoLessons" : "Videoaulas",
-    
+    "views": "exibições",
     "emptyListTitle": "Sem músicas",
     "emptyListDescription": "Faça uma busca para adicionar músicas a essa lista."
 }

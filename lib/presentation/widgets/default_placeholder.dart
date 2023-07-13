@@ -1,12 +1,17 @@
-import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DefaultPlaceholder extends StatelessWidget {
   const DefaultPlaceholder(
-      {super.key, required this.height, required this.width, required this.svgIcon, required this.isLarge});
+      {super.key,
+      required this.height,
+      required this.width,
+      required this.svgIcon,
+      required this.isLarge,
+      this.borderRadius = 4});
   final double height;
+  final double borderRadius;
   final double width;
   final bool isLarge;
   final String svgIcon;
@@ -15,11 +20,11 @@ class DefaultPlaceholder extends StatelessWidget {
     final double circleSize = isLarge ? 56 : 32;
     final double iconSize = isLarge ? 32 : 18;
     return Container(
-      padding: EdgeInsets.all(context.appDimensionScheme.screenMargin),
+      padding: const EdgeInsets.all(16),
       width: width,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(borderRadius),
         color: CosmosColors.grey90,
       ),
       child: Center(

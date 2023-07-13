@@ -2,12 +2,14 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ArtistSongsScreen extends StatefulWidget {
   const ArtistSongsScreen({super.key});
+
   @override
   State<ArtistSongsScreen> createState() => _ArtistSongsScreenState();
 }
@@ -81,40 +83,49 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
             },
             body: Builder(builder: (context) {
               return PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: pageController,
-                  children: <Widget>[
-                    CustomScrollView(slivers: [
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: 200,
-                          (context, index) {
-                            return Text("${context.text.mostAccessed} $index");
-                          },
-                        ),
+                physics: const NeverScrollableScrollPhysics(),
+                controller: pageController,
+                children: <Widget>[
+                  CustomScrollView(slivers: [
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: 200,
+                        (context, index) {
+                          return Text("${context.text.mostAccessed} $index");
+                        },
                       ),
-                    ]),
-                    CustomScrollView(slivers: [
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: 200,
-                          (context, index) {
-                            return Text("${context.text.alphabeticalOrder} $index");
-                          },
-                        ),
+                    ),
+                  ]),
+                  CustomScrollView(slivers: [
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: 200,
+                        (context, index) {
+                          return Text("${context.text.alphabeticalOrder} $index");
+                        },
                       ),
-                    ]),
-                    CustomScrollView(slivers: [
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: 200,
-                          (context, index) {
-                            return Text("${context.text.videoLessons} $index");
-                          },
-                        ),
+                    ),
+                  ]),
+                  CustomScrollView(slivers: [
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: 200,
+                        (context, index) {
+                          return ArtistVideoLessonItem(
+                            onTap: () {},
+                            imageUrl: index % 2 > 0 ? "https://i3.ytimg.com/vi/f5ZZK-jt9mA/default.jpg" : "eds",
+                            artistName: "Amy Winehouse",
+                            title: "Como tocar Valerie no violão sem errar",
+                            views: "4.242",
+                            duration: "21:42",
+                            versionLabel: "principal",
+                          );
+                        },
                       ),
-                    ]),
-                  ]);
+                    ),
+                  ]),
+                ],
+              );
             }),
           ),
         );

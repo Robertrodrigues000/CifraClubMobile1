@@ -224,9 +224,8 @@
     "instrumentBass" : "Bass",
     "instrumentDrums" : "Drums",
     "instrumentHarmonica" : "Harmonica",
-
     "songs": "{count,plural, =1{Song}other{Songs}}",
-    "@versionsCount":{
+    "@songs":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -236,7 +235,7 @@
     },
     "alphabeticalOrder" : "Alphabetical order",
     "videoLessons" : "Video lessons",
-    
+    "views": "views",
     "emptyListTitle": "No songs",
     "emptyListDescription": "Search to add songs to this list."
 }
