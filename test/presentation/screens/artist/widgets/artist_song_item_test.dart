@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:flutter/material.dart';
@@ -76,5 +75,31 @@ void main() {
           description: 'verified icon',
         ),
         findsOneWidget);
+  });
+
+  testWidgets("when isEnable is false should hide overflow", (widgetTester) async {
+    await widgetTester.pumpWidget(TestWrapper(
+      child: ArtistSongItem(
+        key: const Key('artist-song'),
+        name: "Legiao Urbana",
+        ranking: 1,
+        onTap: () {},
+        onOptionsTap: () {},
+        hasVideoLessons: false,
+        isVerified: false,
+        isEnable: false,
+      ),
+    ));
+    await widgetTester.pumpAndSettle();
+
+    final overflowWidget = find.byWidgetPredicate(
+      (Widget widget) {
+        return widget is SvgPicture &&
+            widget.pictureProvider is ExactAssetPicture &&
+            (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.overflowIcon;
+      },
+      description: 'overflow icon',
+    );
+    expect(overflowWidget, findsNothing);
   });
 }

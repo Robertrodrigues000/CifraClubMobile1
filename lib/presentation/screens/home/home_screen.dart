@@ -13,6 +13,7 @@ import 'package:cifraclub/presentation/screens/home/widgets/home_top_songs.dart'
 import 'package:cifraclub/presentation/screens/home/widgets/news/blog.dart';
 import 'package:cifraclub/presentation/bottom_sheets/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
+import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -98,15 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     else ...[
                       if (state.highlights != null) Highlights(highlights: state.highlights!),
 
-                      //Cifras section
+                      //Songs section
                       HomeTitle(
+                        key: const Key("top songs title"),
                         text: context.text.topSongs,
                         horizontalPadding: dimensions.screenMargin,
-                        // coverage:ignore-start
                         onClick: () => Nav.of(context).push(
                           screenName: TopSongsEntry.name,
                         ),
-                        // coverage:ignore-end
                       ),
                       HomeTopSongs(
                         topSongs: state.topSongs,
@@ -114,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       HomeButton(
+                        key: const Key("top songs button"),
                         text: context.text.moreSongs,
                         onTap: () => Nav.of(context).push(
                           screenName: TopSongsEntry.name,
@@ -122,22 +123,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       //Artists section
                       HomeTitle(
+                        key: const Key("top artists title"),
                         text: context.text.topArtists,
                         horizontalPadding: dimensions.screenMargin,
+                        onClick: () => Nav.of(context).push(
+                          screenName: TopArtistsEntry.name,
+                        ),
                       ),
                       HomeTopArtists(
                         artists: state.topArtists,
-                        // coverage:ignore-start
                         onTap: (artist) {
                           Nav.of(context)
                               .push(screenName: ArtistEntry.name, params: {'url': artist.url, 'name': artist.name});
-                          // coverage:ignore-end
                         },
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       HomeButton(
+                        key: const Key("top artists button"),
                         text: context.text.moreArtists,
-                        onTap: () {},
+                        onTap: () => Nav.of(context).push(
+                          screenName: TopArtistsEntry.name,
+                        ),
                       ),
 
                       //Video lessons section

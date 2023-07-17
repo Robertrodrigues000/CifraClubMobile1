@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
+import 'package:cifraclub/presentation/screens/album/album_entry.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
@@ -76,5 +77,9 @@ final List<NavRoute> routes = [
   NavRoute(
     ArtistSongsEntry.name,
     (params, _) => ArtistSongsEntry(params),
+  ),
+  NavRoute(
+    AlbumEntry.name,
+    (params, _) => AlbumEntry(params),
   ),
 ];

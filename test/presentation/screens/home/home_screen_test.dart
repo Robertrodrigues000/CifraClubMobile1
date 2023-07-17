@@ -6,6 +6,10 @@ import 'package:cifraclub/presentation/screens/home/home_bloc.dart';
 import 'package:cifraclub/presentation/screens/home/home_screen.dart';
 import 'package:cifraclub/presentation/bottom_sheets/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/home_state.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_button.dart';
+import 'package:cifraclub/presentation/screens/home/widgets/home_title.dart';
+import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
+import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -20,6 +24,7 @@ import '../../../shared_mocks/domain/home/models/highlight_mock.dart';
 import '../../../shared_mocks/domain/home/models/news_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
 import '../../../shared_mocks/domain/song/models/song_mock.dart';
+import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
 import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
@@ -232,5 +237,83 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     verify(() => bloc.insertGenre(any())).called(1);
+  });
+  group("Should navigate to top songs screen", () {
+    testWidgets("When tap on show more songs button", (widgetTester) async {
+      bloc.mockStream(HomeState(topSongs: [getFakeSong(), getFakeSong(), getFakeSong()]));
+      final nav = NavMock.getDummy();
+
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: HomeScreen(_GenreBottomSheetMock()),
+        ),
+        nav: nav,
+      );
+      final HomeButton button =
+          find.byKey(const Key("top songs button"), skipOffstage: false).evaluate().first.widget as HomeButton;
+      button.onTap();
+      await widgetTester.pumpAndSettle();
+      verify(() => nav.push(screenName: TopSongsEntry.name)).called(1);
+    });
+
+    testWidgets("When tap on top songs title", (widgetTester) async {
+      bloc.mockStream(HomeState(topSongs: [getFakeSong(), getFakeSong(), getFakeSong()]));
+      final nav = NavMock.getDummy();
+
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: HomeScreen(_GenreBottomSheetMock()),
+        ),
+        nav: nav,
+      );
+
+      final HomeTitle title =
+          find.byKey(const Key("top songs title"), skipOffstage: false).evaluate().first.widget as HomeTitle;
+      title.onClick!();
+      await widgetTester.pumpAndSettle();
+      verify(() => nav.push(screenName: TopSongsEntry.name)).called(1);
+    });
+  });
+
+  group("Should navigate to top artists screen", () {
+    testWidgets("When tap on show more artists button", (widgetTester) async {
+      bloc.mockStream(HomeState(topArtists: [getFakeArtist(), getFakeArtist(), getFakeArtist()]));
+      final nav = NavMock.getDummy();
+
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: HomeScreen(_GenreBottomSheetMock()),
+        ),
+        nav: nav,
+      );
+
+      final HomeButton button =
+          find.byKey(const Key("top artists button"), skipOffstage: false).evaluate().first.widget as HomeButton;
+      button.onTap();
+      await widgetTester.pumpAndSettle();
+      verify(() => nav.push(screenName: TopArtistsEntry.name)).called(1);
+    });
+
+    testWidgets("When tap on top artists title", (widgetTester) async {
+      bloc.mockStream(HomeState(topArtists: [getFakeArtist(), getFakeArtist(), getFakeArtist()]));
+      final nav = NavMock.getDummy();
+
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<HomeBloc>.value(
+          value: bloc,
+          child: HomeScreen(_GenreBottomSheetMock()),
+        ),
+        nav: nav,
+      );
+
+      final HomeTitle title =
+          find.byKey(const Key("top artists title"), skipOffstage: false).evaluate().first.widget as HomeTitle;
+      title.onClick!();
+      await widgetTester.pumpAndSettle();
+      verify(() => nav.push(screenName: TopArtistsEntry.name)).called(1);
+    });
   });
 }

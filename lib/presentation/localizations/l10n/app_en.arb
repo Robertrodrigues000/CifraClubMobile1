@@ -265,5 +265,14 @@
     "videoLessons" : "Video lessons",
     "views": "views",
     "emptyListTitle": "No songs",
-    "emptyListDescription": "Search to add songs to this list."
+    "emptyListDescription": "Search to add songs to this list.",
+    "disc": "Disc {index}",
+    "@disc": {
+        "placeholders": {
+            "index" : {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    }
 }

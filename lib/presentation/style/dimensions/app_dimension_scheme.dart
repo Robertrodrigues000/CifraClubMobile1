@@ -40,6 +40,7 @@ class AppDimensionScheme {
   final double appBarLeadingWidth;
   final int albumsPerRow;
   final double iconTileSpace;
+  final double artistSongItemRightMargin;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -76,5 +77,6 @@ class AppDimensionScheme {
     required this.appBarLeadingWidth,
     required this.albumsPerRow,
     required this.iconTileSpace,
+    required this.artistSongItemRightMargin,
   });
 }

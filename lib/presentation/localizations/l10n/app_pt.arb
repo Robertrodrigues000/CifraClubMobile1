@@ -207,5 +207,14 @@
     "videoLessons" : "Videoaulas",
     "views": "exibições",
     "emptyListTitle": "Sem músicas",
-    "emptyListDescription": "Faça uma busca para adicionar músicas a essa lista."
+    "emptyListDescription": "Faça uma busca para adicionar músicas a essa lista.",
+    "disc": "Disco {index}",
+    "@disc": {
+        "placeholders": {
+            "index" : {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    }
 }

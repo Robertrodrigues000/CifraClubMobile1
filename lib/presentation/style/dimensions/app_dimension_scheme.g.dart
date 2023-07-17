@@ -75,6 +75,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme iconTileSpace(double iconTileSpace);
 
+  AppDimensionScheme artistSongItemRightMargin(double artistSongItemRightMargin);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -116,6 +118,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? appBarLeadingWidth,
     int? albumsPerRow,
     double? iconTileSpace,
+    double? artistSongItemRightMargin,
   });
 }
 
@@ -244,6 +247,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme iconTileSpace(double iconTileSpace) => this(iconTileSpace: iconTileSpace);
 
   @override
+  AppDimensionScheme artistSongItemRightMargin(double artistSongItemRightMargin) =>
+      this(artistSongItemRightMargin: artistSongItemRightMargin);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -286,6 +293,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? appBarLeadingWidth = const $CopyWithPlaceholder(),
     Object? albumsPerRow = const $CopyWithPlaceholder(),
     Object? iconTileSpace = const $CopyWithPlaceholder(),
+    Object? artistSongItemRightMargin = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -432,6 +440,11 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.iconTileSpace
           // ignore: cast_nullable_to_non_nullable
           : iconTileSpace as double,
+      artistSongItemRightMargin:
+          artistSongItemRightMargin == const $CopyWithPlaceholder() || artistSongItemRightMargin == null
+              ? _value.artistSongItemRightMargin
+              // ignore: cast_nullable_to_non_nullable
+              : artistSongItemRightMargin as double,
     );
   }
 }

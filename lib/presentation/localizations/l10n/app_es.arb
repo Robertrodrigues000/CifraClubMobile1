@@ -207,5 +207,14 @@
     "videoLessons" : "Vídeo lecciones",
     "views": "exposiciones",
     "emptyListTitle": "Sin canciones",
-    "emptyListDescription": "Buscar para agregar canciones a esta lista."
+    "emptyListDescription": "Buscar para agregar canciones a esta lista.",
+    "disc": "Disco {index}",
+    "@disc": {
+        "placeholders": {
+            "index" : {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    }
 }

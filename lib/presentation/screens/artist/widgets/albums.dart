@@ -1,8 +1,10 @@
 import 'package:cifraclub/domain/artist/models/album.dart';
 import 'package:cifraclub/extensions/text_style.dart';
+import 'package:cifraclub/presentation/screens/album/album_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/album_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:nav/nav.dart';
 
 class Albums extends StatefulWidget {
   final List<Album> albums;
@@ -18,6 +20,7 @@ class Albums extends StatefulWidget {
 
 class _AlbumsState extends State<Albums> {
   late double textHeight;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -47,7 +50,8 @@ class _AlbumsState extends State<Albums> {
               key: Key(widget.albums[index].albumUrl),
               album: widget.albums[index],
               // coverage:ignore-start
-              onTap: () {},
+              onTap: () => AlbumEntry.push(Nav.of(context), widget.albums[index].artistUrl,
+                  widget.albums[index].albumUrl, widget.albums[index].title),
               // coverage:ignore-end
               size: imageSize,
             );

@@ -11,40 +11,42 @@ class ArtistSongItem extends StatelessWidget {
   final int ranking;
   final bool isVerified;
   final bool hasVideoLessons;
+  final bool isEnable;
 
-  const ArtistSongItem({
-    super.key,
-    required this.onTap,
-    required this.onOptionsTap,
-    required this.name,
-    required this.ranking,
-    required this.isVerified,
-    required this.hasVideoLessons,
-  });
+  const ArtistSongItem(
+      {super.key,
+      required this.onTap,
+      required this.onOptionsTap,
+      required this.name,
+      required this.ranking,
+      required this.isVerified,
+      required this.hasVideoLessons,
+      this.isEnable = true});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: context.appDimensionScheme.screenMargin),
+      onTap: isEnable ? onTap : null,
+      child: SizedBox(
+        height: 72,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: hasVideoLessons ? CrossAxisAlignment.baseline : CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           textBaseline: TextBaseline.alphabetic,
           children: [
-            SizedBox(
-              width: 28,
-              child: Text(
-                ranking.toString(),
-                style: context.typography.subtitle3.copyWith(
-                  color: context.colors.textSecondary,
+            Padding(
+              padding: EdgeInsets.only(left: context.appDimensionScheme.screenMargin, right: 12),
+              child: SizedBox(
+                width: 28,
+                child: Text(
+                  ranking.toString(),
+                  style: context.typography.subtitle3.copyWith(
+                    color: context.colors.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-            const SizedBox(
-              width: 12,
             ),
             Expanded(
               child: Column(
@@ -58,22 +60,26 @@ class ArtistSongItem extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          name,
-                          style: context.typography.subtitle3,
+                          name.replaceAll("&amp;", "&"),
+                          style: isEnable
+                              ? context.typography.subtitle3
+                              : context.typography.subtitle3.copyWith(color: context.colors.disabled),
                           overflow: TextOverflow.ellipsis,
                           textWidthBasis: TextWidthBasis.longestLine,
                         ),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      if (isVerified) SvgPicture.asset(AppSvgs.verifiedIcon)
+                      if (isVerified) ...[
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        SvgPicture.asset(AppSvgs.verifiedIcon),
+                      ]
                     ],
                   ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  if (hasVideoLessons)
+                  if (hasVideoLessons) ...[
+                    const SizedBox(
+                      height: 2,
+                    ),
                     Row(
                       children: [
                         SvgPicture.asset(AppSvgs.videoLessonIcon),
@@ -86,24 +92,32 @@ class ArtistSongItem extends StatelessWidget {
                         )
                       ],
                     )
+                  ]
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                onPressed: onOptionsTap,
-                splashRadius: 28,
-                padding: const EdgeInsets.all(12),
-                highlightColor: Theme.of(context).splashColor,
-                icon: SvgImage(
-                  assetPath: AppSvgs.songbookOptionsIcon,
-                  color: context.colors.textPrimary,
-                  height: 24,
-                  width: 24,
+            if (isEnable) ...[
+              const SizedBox(
+                width: 4,
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: context.appDimensionScheme.artistSongItemRightMargin),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: onOptionsTap,
+                    padding: const EdgeInsets.all(12),
+                    highlightColor: Theme.of(context).splashColor,
+                    icon: SvgImage(
+                      assetPath: AppSvgs.songbookOptionsIcon,
+                      color: context.colors.textPrimary,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ]
           ],
         ),
       ),

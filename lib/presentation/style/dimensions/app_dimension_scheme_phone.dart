@@ -51,4 +51,5 @@ const appDimensionSchemePhone = AppDimensionScheme(
   albumsPerRow: 2,
 
   iconTileSpace: 4,
+  artistSongItemRightMargin: 4,
 );

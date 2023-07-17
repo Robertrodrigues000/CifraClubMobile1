@@ -51,4 +51,5 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   albumsPerRow: 4,
 
   iconTileSpace: 12,
+  artistSongItemRightMargin: 12,
 );
