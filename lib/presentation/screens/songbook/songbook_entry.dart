@@ -4,6 +4,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.d
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_screen.dart';
+import 'package:cifraclub/presentation/widgets/device_type_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
@@ -21,24 +22,29 @@ class SongbookEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider(
-          create: (context) => ListsBloc(
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-                getIt(),
-              )),
-      BlocProvider(create: (context) => VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt())),
-      BlocProvider(create: (context) => SongbookBloc(getIt(), getIt())),
-    ], child: SongbookScreen(getIt()));
+    return DeviceTypeBuilder(builder: (context, deviceType) {
+      return MultiBlocProvider(providers: [
+        BlocProvider(
+            create: (context) => ListsBloc(
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                  getIt(),
+                )..init()),
+        BlocProvider(create: (context) => SongbookBloc(getIt(), getIt())..init()),
+        if (deviceType == DeviceType.tablet)
+          BlocProvider(
+            create: (context) => VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
+          ),
+      ], child: SongbookScreen(deviceType, getIt()));
+    });
   }
 }

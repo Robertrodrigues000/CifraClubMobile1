@@ -44,7 +44,7 @@ void main() {
             (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.backArrowIcon,
         description: 'widget with back arrow',
       );
-      await tester.tap(finder);
+      await tester.tap(finder, warnIfMissed: false);
       await tester.pumpAndSettle();
       expect(find.byType(EditModeDialog), findsOneWidget);
     });

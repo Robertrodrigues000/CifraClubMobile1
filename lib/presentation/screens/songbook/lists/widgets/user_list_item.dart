@@ -21,7 +21,6 @@ class UserListItem extends StatelessWidget {
   final bool isSelected;
   @override
   Widget build(BuildContext context) {
-    final subtitle = getSubtitle(songbook);
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -67,7 +66,7 @@ class UserListItem extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    subtitle.isNotEmpty ? subtitle : context.text.emptyList,
+                    songbook.totalSongs.toString(),
                     key: const Key("Cifra Preview Subtitle"),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -99,15 +98,4 @@ class UserListItem extends StatelessWidget {
       ),
     );
   }
-
-  // coverage:ignore-start
-  String getSubtitle(Songbook songbook) {
-    final songNames = ["Oops I Did It Again", "Conquista", "Tempo Perdido", "Cupid"];
-    songNames.shuffle();
-    if (songbook.totalSongs == 0) {
-      return "";
-    }
-    return songNames.take(songbook.totalSongs >= 4 ? 4 : songbook.totalSongs).join(', ');
-  }
-  // coverage:ignore-end
 }

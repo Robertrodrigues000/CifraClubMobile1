@@ -29,11 +29,9 @@ void main() {
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
-  final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
-
   testWidgets("When instructors lists is empty, should show a container", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(850, 1000);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(850, 1000);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     bloc.mockStream(
       AcademyState(
@@ -59,8 +57,8 @@ void main() {
   });
 
   testWidgets("When device is tablet, should show screen for tablet", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(850, 1000);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(850, 1000);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     bloc.mockStream(
       AcademyState(
@@ -89,8 +87,8 @@ void main() {
   });
 
   testWidgets("When device is phone, should show screen for phone", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     bloc.mockStream(
       AcademyState(
@@ -119,8 +117,8 @@ void main() {
   });
 
   testWidgets("When device is small, should show screen for phone with small dimensions", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(320, 533);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(320, 533);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     bloc.mockStream(
       AcademyState(

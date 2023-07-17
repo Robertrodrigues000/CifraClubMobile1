@@ -57,12 +57,21 @@ class ListsBloc extends Cubit<ListsState> {
   StreamSubscription? _getProStatusSubscription;
 
   void init() {
+    initListLimitStreams();
     _getCredentialStreamSubscription = _getCredentialStream().listen(_updateCredential);
     _userSubscription = _getCredentialStream().listen(_updateCredential);
     _songbooksSubscription = _getAllUserSongbooks().listen(_onSongbooksUpdated);
     _getProStatusSubscription = _getProStatusStream().listen(_updateProStatus);
-    // TODO: Melhorar lógica (fazer automaticamente baseado no horario do ultimo refresh)
-    _refreshAllSongbooks();
+  }
+
+  Future<void> initListLimitStreams() async {
+    _listLimitStateSubscription = _getListLimitState().listen((listState) {
+      emit(state.copyWith(listState: listState));
+    });
+
+    _totalSongbooksSubscription = _getTotalSongbooks().listen((total) {
+      emit(state.copyWith(listCount: total));
+    });
   }
 
   void _onSongbooksUpdated(List<Songbook> songbooks) {
@@ -74,7 +83,12 @@ class ListsBloc extends Cubit<ListsState> {
     );
   }
 
-  void _updateCredential(UserCredential? userCredential) {
+  void _updateCredential(UserCredential? userCredential) async {
+    if (userCredential?.isUserLoggedIn ?? false) {
+      // TODO: Melhorar lógica (fazer automaticamente baseado no horario do ultimo refresh)
+      await syncList();
+    }
+
     emit(state.copyWith(user: userCredential?.user));
   }
 
@@ -92,16 +106,6 @@ class ListsBloc extends Cubit<ListsState> {
     emit(state.copyWith(isSyncing: true));
     await _refreshAllSongbooks();
     emit(state.copyWith(isSyncing: false));
-  }
-
-  Future<void> initListLimitStreams() async {
-    _listLimitStateSubscription = _getListLimitState().listen((listState) {
-      emit(state.copyWith(listState: listState));
-    });
-
-    _totalSongbooksSubscription = _getTotalSongbooks().listen((total) {
-      emit(state.copyWith(listCount: total));
-    });
   }
 
   Future<void> logout() => _logout();

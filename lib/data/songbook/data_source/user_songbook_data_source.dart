@@ -43,7 +43,7 @@ class UserSongbookDataSource {
       return BehaviorSubject.seeded(null);
     }
 
-    return _isar.userSongbookDtos.where().idEqualTo(id).watch(fireImmediately: true).map((event) => event.first);
+    return _isar.userSongbookDtos.watchObject(id, fireImmediately: true);
   }
 
   /// Remove all songbooks, then insert all songbooks from [userSongbookDtos]

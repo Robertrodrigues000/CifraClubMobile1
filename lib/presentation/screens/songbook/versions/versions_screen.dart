@@ -47,7 +47,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<VersionsBloc>(context);
+    _bloc = BlocProvider.of<VersionsBloc>(context)..init(widget.songbookId);
     scrollController.addListener(_onScroll);
   }
 

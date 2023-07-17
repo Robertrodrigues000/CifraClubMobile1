@@ -7,8 +7,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
-
   testWidgets("When scroll with collapse header should hide the header", (widgetTester) async {
     await widgetTester.pumpWidgetWithWrapper(
       CustomScrollView(
@@ -43,8 +41,8 @@ void main() {
   });
 
   testWidgets("When device is tablet and text have 2 lines, should show screen size for tablet", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(850, 1000);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(850, 1000);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     await widgetTester.pumpWidgetWithWrapper(
       const CustomScrollView(
@@ -75,8 +73,8 @@ void main() {
   });
 
   testWidgets("When device is tablet and text have 1 lines, should show screen size for tablet", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(850, 1000);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(850, 1000);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     await widgetTester.pumpWidgetWithWrapper(
       const CustomScrollView(
@@ -106,8 +104,8 @@ void main() {
   });
 
   testWidgets("When device is phone and text have 2 lines, should show screen size for phone", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     await widgetTester.pumpWidgetWithWrapper(
       const CustomScrollView(
@@ -138,8 +136,8 @@ void main() {
   });
 
   testWidgets("When device is phone and text have 1 line, should show screen size for phone", (widgetTester) async {
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     await widgetTester.pumpWidgetWithWrapper(
       const CustomScrollView(

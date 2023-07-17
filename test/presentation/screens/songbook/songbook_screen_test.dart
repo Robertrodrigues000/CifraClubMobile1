@@ -1,12 +1,11 @@
-// ignore_for_file: deprecated_member_use
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/user/models/user_credential.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
-import 'package:cifraclub/domain/user/models/user_credential.dart';
-import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
@@ -23,6 +22,7 @@ import 'package:cifraclub/presentation/screens/songbook/songbook_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_state.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/device_type_builder.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +65,6 @@ class _ListOptionsBottomSheetBlocMock extends Mock implements ListOptionsBottomS
 class _EditListScreenBuilderMock extends Mock implements EditListScreenBuilder {}
 
 void main() {
-  final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
   late SongbookBloc bloc;
   late ListsBloc listsBloc;
   late VersionsBloc versionsBloc;
@@ -118,6 +117,7 @@ void main() {
           child: BlocProvider<SongbookBloc>.value(
             value: bloc,
             child: SongbookScreen(
+              DeviceType.phone,
               bottomSheet,
             ),
           ),
@@ -130,11 +130,11 @@ void main() {
 
     group("in a phone", () {
       testWidgets("should show lists screen", (widgetTester) async {
-        binding.window.physicalSizeTestValue = const Size(460, 800);
-        binding.window.devicePixelRatioTestValue = 1.0;
+        widgetTester.view.physicalSize = const Size(460, 800);
+        widgetTester.view.devicePixelRatio = 1.0;
 
         bloc.mockStream(
-            const SongbookState(selectedSongbook: null, userCredential: UserCredential(isUserLoggedIn: true)));
+            const SongbookState(selectedSongbookId: null, userCredential: UserCredential(isUserLoggedIn: true)));
         listsBloc.mockStream(const ListsState());
 
         await widgetTester.pumpWidgetWithWrapper(
@@ -144,6 +144,7 @@ void main() {
               BlocProvider<ListsBloc>.value(value: listsBloc),
             ],
             child: SongbookScreen(
+              DeviceType.phone,
               bottomSheet,
             ),
           ),
@@ -153,12 +154,12 @@ void main() {
       });
 
       testWidgets("and click in a songbook should push to a new versions screen", (widgetTester) async {
-        binding.window.physicalSizeTestValue = const Size(460, 800);
-        binding.window.devicePixelRatioTestValue = 1.0;
+        widgetTester.view.physicalSize = const Size(460, 800);
+        widgetTester.view.devicePixelRatio = 1.0;
 
         final songbook = getFakeSongbook();
         bloc.mockStream(const SongbookState(
-          selectedSongbook: null,
+          selectedSongbookId: null,
           userCredential: UserCredential(isUserLoggedIn: true),
         ));
         listsBloc.mockStream(ListsState(userLists: [songbook]));
@@ -172,6 +173,7 @@ void main() {
               BlocProvider<ListsBloc>.value(value: listsBloc),
             ],
             child: SongbookScreen(
+              DeviceType.phone,
               bottomSheet,
             ),
           ),
@@ -188,12 +190,12 @@ void main() {
 
     group("in a tablet", () {
       testWidgets("should show lists and version screen", (widgetTester) async {
-        binding.window.physicalSizeTestValue = const Size(850, 1000);
-        binding.window.devicePixelRatioTestValue = 1.0;
+        widgetTester.view.physicalSize = const Size(850, 1000);
+        widgetTester.view.devicePixelRatio = 1.0;
 
         final songbook = getFakeSongbook(isPublic: true);
         bloc.mockStream(const SongbookState(
-          selectedSongbook: null,
+          selectedSongbookId: null,
           userCredential: UserCredential(isUserLoggedIn: true),
         ));
         listsBloc.mockStream(const ListsState());
@@ -207,6 +209,7 @@ void main() {
               BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
             child: SongbookScreen(
+              DeviceType.tablet,
               bottomSheet,
             ),
           ),
@@ -217,12 +220,12 @@ void main() {
       });
 
       testWidgets("and click in a songbook should emit new songbook", (widgetTester) async {
-        binding.window.physicalSizeTestValue = const Size(850, 1000);
-        binding.window.devicePixelRatioTestValue = 1.0;
+        widgetTester.view.physicalSize = const Size(850, 1000);
+        widgetTester.view.devicePixelRatio = 1.0;
 
         final songbook = getFakeSongbook(isPublic: true);
         bloc.mockStream(
-            const SongbookState(selectedSongbook: null, userCredential: UserCredential(isUserLoggedIn: true)));
+            const SongbookState(selectedSongbookId: null, userCredential: UserCredential(isUserLoggedIn: true)));
         listsBloc.mockStream(ListsState(userLists: [songbook]));
         versionsBloc.mockStream(VersionsState(songbook: songbook));
 
@@ -234,6 +237,7 @@ void main() {
               BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
             child: SongbookScreen(
+              DeviceType.tablet,
               bottomSheet,
             ),
           ),
@@ -246,8 +250,8 @@ void main() {
       });
 
       testWidgets("and click to delete songbook should change to default songbook", (widgetTester) async {
-        binding.window.physicalSizeTestValue = const Size(850, 1000);
-        binding.window.devicePixelRatioTestValue = 1.0;
+        widgetTester.view.physicalSize = const Size(850, 1000);
+        widgetTester.view.devicePixelRatio = 1.0;
 
         final deleteSongbookMock = _DeleteSongbookMock();
         when(() => deleteSongbookMock(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
@@ -263,7 +267,7 @@ void main() {
 
         final songbook = getFakeSongbook(isPublic: true);
         bloc.mockStream(
-            const SongbookState(selectedSongbook: null, userCredential: UserCredential(isUserLoggedIn: true)));
+            const SongbookState(selectedSongbookId: null, userCredential: UserCredential(isUserLoggedIn: true)));
         listsBloc.mockStream(ListsState(userLists: [songbook]));
         versionsBloc.mockStream(VersionsState(songbook: songbook));
 
@@ -275,6 +279,7 @@ void main() {
               BlocProvider<VersionsBloc>.value(value: versionsBloc),
             ],
             child: SongbookScreen(
+              DeviceType.tablet,
               bottomSheet,
             ),
           ),

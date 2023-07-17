@@ -7,7 +7,7 @@ part of 'songbook_state.dart';
 // **************************************************************************
 
 abstract class _$SongbookStateCWProxy {
-  SongbookState selectedSongbook(Songbook? selectedSongbook);
+  SongbookState selectedSongbookId(int? selectedSongbookId);
 
   SongbookState userCredential(UserCredential? userCredential);
 
@@ -18,7 +18,7 @@ abstract class _$SongbookStateCWProxy {
   /// SongbookState(...).copyWith(id: 12, name: "My name")
   /// ````
   SongbookState call({
-    Songbook? selectedSongbook,
+    int? selectedSongbookId,
     UserCredential? userCredential,
   });
 }
@@ -30,7 +30,7 @@ class _$SongbookStateCWProxyImpl implements _$SongbookStateCWProxy {
   final SongbookState _value;
 
   @override
-  SongbookState selectedSongbook(Songbook? selectedSongbook) => this(selectedSongbook: selectedSongbook);
+  SongbookState selectedSongbookId(int? selectedSongbookId) => this(selectedSongbookId: selectedSongbookId);
 
   @override
   SongbookState userCredential(UserCredential? userCredential) => this(userCredential: userCredential);
@@ -44,14 +44,14 @@ class _$SongbookStateCWProxyImpl implements _$SongbookStateCWProxy {
   /// SongbookState(...).copyWith(id: 12, name: "My name")
   /// ````
   SongbookState call({
-    Object? selectedSongbook = const $CopyWithPlaceholder(),
+    Object? selectedSongbookId = const $CopyWithPlaceholder(),
     Object? userCredential = const $CopyWithPlaceholder(),
   }) {
     return SongbookState(
-      selectedSongbook: selectedSongbook == const $CopyWithPlaceholder()
-          ? _value.selectedSongbook
+      selectedSongbookId: selectedSongbookId == const $CopyWithPlaceholder()
+          ? _value.selectedSongbookId
           // ignore: cast_nullable_to_non_nullable
-          : selectedSongbook as Songbook?,
+          : selectedSongbookId as int?,
       userCredential: userCredential == const $CopyWithPlaceholder()
           ? _value.userCredential
           // ignore: cast_nullable_to_non_nullable

@@ -65,7 +65,7 @@ void main() {
 
     blocTest("should emit a new songbook",
         build: () => bloc,
-        act: (bloc) => bloc.onSelectSongbook(songbook),
-        expect: () => [isA<SongbookState>().having((state) => state.selectedSongbook, "songbook", songbook)]);
+        act: (bloc) => bloc.onSelectSongbook(songbook.id),
+        expect: () => [isA<SongbookState>().having((state) => state.selectedSongbookId, "songbook id", songbook.id)]);
   });
 }

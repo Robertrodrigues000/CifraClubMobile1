@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
@@ -20,11 +20,11 @@ class SongbookBloc extends Cubit<SongbookState> {
   }
 
   void _updateCredential(UserCredential? userCredential) {
-    emit(state.copyWith(userCredential: userCredential));
+    emit(state.copyWith(userCredential: userCredential, selectedSongbookId: ListType.recents.localId));
   }
 
-  void onSelectSongbook(Songbook? songbook) {
-    emit(state.copyWith(selectedSongbook: songbook));
+  void onSelectSongbook(int? songbookId) {
+    emit(state.copyWith(selectedSongbookId: songbookId));
   }
 
   void openLoginPage() => _openLoginView();

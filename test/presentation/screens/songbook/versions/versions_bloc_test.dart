@@ -79,10 +79,10 @@ void main() {
         ),
         act: (bloc) => bloc.init(songbook.id),
         expect: () => [
-          isA<VersionsState>().having((state) => state.songbook, "songbook", songbook),
           isA<VersionsState>()
               .having((state) => state.isPro, "pro", isTrue)
               .having((state) => state.versionsLimit, "tabs limit", 1000),
+          isA<VersionsState>().having((state) => state.songbook, "songbook", songbook),
           isA<VersionsState>()
               .having((state) => state.versions, "cifras", cifras)
               .having((state) => state.versionsCount, "count", 2),
@@ -103,7 +103,6 @@ void main() {
         ),
         act: (bloc) => bloc.init(null),
         expect: () => [
-          isA<VersionsState>().having((state) => state.songbook, "songbook", null),
           isA<VersionsState>()
               .having((state) => state.isPro, "pro", isTrue)
               .having((state) => state.versionsLimit, "tabs limit", 1000),

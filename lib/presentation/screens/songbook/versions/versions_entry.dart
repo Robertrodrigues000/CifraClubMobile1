@@ -29,7 +29,7 @@ class VersionsEntry extends ScreenEntry {
     final userId = int.tryParse(params[userIdKey] ?? "");
 
     return BlocProvider(
-      create: (context) => VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt())..init(songbookId),
+      create: (context) => VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
       child: VersionsScreen(
         isTablet: false,
         userId: userId,

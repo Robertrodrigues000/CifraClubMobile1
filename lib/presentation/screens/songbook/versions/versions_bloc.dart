@@ -11,6 +11,7 @@ import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.da
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 class VersionsBloc extends Cubit<VersionsState> {
   final GetSongbookStreamById _getSongbookStreamById;
@@ -29,17 +30,16 @@ class VersionsBloc extends Cubit<VersionsState> {
     this._getVersionsLimit,
   ) : super(const VersionsState());
 
-  StreamSubscription<Songbook?>? _songbookSubscription;
-  StreamSubscription<List<Version>>? _versionSubscription;
-  StreamSubscription<ListLimitState>? _getVersionLimitStateSubscription;
-  StreamSubscription<bool>? _getProStatusSubscription;
+  final CompositeSubscription _compositeSubscription = CompositeSubscription();
 
   Future<void> init(int? songbookId) async {
-    _songbookSubscription = _getSongbookStreamById(songbookId).listen(_updateSongbook);
-    _getProStatusSubscription = _getProStatusStream().listen(_updateProStatus);
+    await _compositeSubscription.clear();
+
+    _getProStatusStream().listen(_updateProStatus).addTo(_compositeSubscription);
     if (songbookId != null) {
-      _versionSubscription = _getVersionsStremBySongbookId(songbookId).listen(_updateVersions);
-      _getVersionLimitStateSubscription = _getVersionsLimitState(songbookId).listen(_updateVersionLimitState);
+      _getSongbookStreamById(songbookId).listen(_updateSongbook).addTo(_compositeSubscription);
+      _getVersionsStremBySongbookId(songbookId).listen(_updateVersions).addTo(_compositeSubscription);
+      _getVersionsLimitState(songbookId).listen(_updateVersionLimitState).addTo(_compositeSubscription);
     }
   }
 
@@ -69,10 +69,7 @@ class VersionsBloc extends Cubit<VersionsState> {
 
   @override
   Future<void> close() {
-    _songbookSubscription?.cancel();
-    _versionSubscription?.cancel();
-    _getVersionLimitStateSubscription?.cancel();
-    _getProStatusSubscription?.cancel();
+    _compositeSubscription.dispose();
     return super.close();
   }
 }

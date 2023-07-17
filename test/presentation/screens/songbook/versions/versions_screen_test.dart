@@ -9,8 +9,8 @@ import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart'
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
+import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
@@ -19,8 +19,8 @@ import 'package:cifraclub/presentation/screens/songbook/versions/widgets/empty_l
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
-import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cosmos/cosmos.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +60,6 @@ void main() {
   late VersionsBloc bloc;
   late ListOptionsBottomSheet bottomSheet;
   late _ListOptionsBottomSheetBlocMock blocBottomSheet;
-  final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() {
     registerFallbackValue(_BuildContextMock());
@@ -182,10 +181,8 @@ void main() {
   });
 
   testWidgets('When is phone as click to back should call pop', (widgetTester) async {
-    // ignore: deprecated_member_use
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    // ignore: deprecated_member_use
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
     bloc.mockStream(VersionsState(songbook: getFakeSongbook(isPublic: true)));
 
     final nav = NavMock.getDummy();
@@ -218,10 +215,8 @@ void main() {
   });
 
   testWidgets('When click in share should call lib', (widgetTester) async {
-    // ignore: deprecated_member_use
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    // ignore: deprecated_member_use
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
     bloc.mockStream(VersionsState(songbook: getFakeSongbook(isPublic: true)));
 
     final nav = NavMock.getDummy();
@@ -254,10 +249,8 @@ void main() {
   });
 
   testWidgets('When click in options should call options bottom sheet', (widgetTester) async {
-    // ignore: deprecated_member_use
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    // ignore: deprecated_member_use
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
     final songbook = getFakeSongbook(isPublic: true);
     bloc.mockStream(VersionsState(songbook: songbook));
 
@@ -297,10 +290,8 @@ void main() {
   });
 
   testWidgets('When click in add should navigate to addCifrasTolistScreen', (widgetTester) async {
-    // ignore: deprecated_member_use
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    // ignore: deprecated_member_use
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
     bloc.mockStream(VersionsState(songbook: getFakeSongbook(isPublic: true)));
 
     final nav = NavMock.getDummy();
@@ -360,10 +351,8 @@ void main() {
   });
 
   testWidgets("When tap on delete songbook and is phone should pop to previus screen", (widgetTester) async {
-    // ignore: deprecated_member_use
-    binding.window.physicalSizeTestValue = const Size(460, 800);
-    // ignore: deprecated_member_use
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     final deleteSongbookMock = _DeleteSongbookMock();
     when(() => deleteSongbookMock(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
@@ -418,10 +407,8 @@ void main() {
   });
 
   testWidgets("When tap on delete songbook and is tablet should call onDeleteSongbook callback", (widgetTester) async {
-    // ignore: deprecated_member_use
-    binding.window.physicalSizeTestValue = const Size(800, 1200);
-    // ignore: deprecated_member_use
-    binding.window.devicePixelRatioTestValue = 1.0;
+    widgetTester.view.physicalSize = const Size(800, 1200);
+    widgetTester.view.devicePixelRatio = 1.0;
 
     final deleteSongbookMock = _DeleteSongbookMock();
     when(() => deleteSongbookMock(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
