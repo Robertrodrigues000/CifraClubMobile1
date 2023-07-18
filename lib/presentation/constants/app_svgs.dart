@@ -59,4 +59,5 @@ class AppSvgs {
   static const deleteIcon = "assets/images/delete_icon.svg";
   static const clearIcon = "assets/images/clear_icon.svg";
   static const favoriteIcon = "assets/images/favorite_icon.svg";
+  static const filledFavoriteIcon = "assets/images/filled_favorite_icon.svg";
 }

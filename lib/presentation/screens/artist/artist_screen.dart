@@ -5,6 +5,7 @@ import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
+import 'package:cifraclub/presentation/screens/artist/artist_event.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_header.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
@@ -17,9 +18,11 @@ import 'package:cifraclub/presentation/widgets/error_description/error_descripti
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
+import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ArtistScreen extends StatefulWidget {
   const ArtistScreen({super.key, required this.name});
@@ -28,7 +31,7 @@ class ArtistScreen extends StatefulWidget {
   State<ArtistScreen> createState() => _ArtistScreenState();
 }
 
-class _ArtistScreenState extends State<ArtistScreen> {
+class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
   late ArtistBloc _bloc;
   final _scrollController = ScrollController();
   static const maxSongs = 10;
@@ -37,6 +40,22 @@ class _ArtistScreenState extends State<ArtistScreen> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<ArtistBloc>(context);
+    listenEvents();
+  }
+
+  void listenEvents() {
+    _bloc.artistEventStream.listen((event) {
+      switch (event.runtimeType) {
+        case FavoriteError:
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: (event as FavoriteError).error is ServerError
+                    ? Text(context.text.serverErrorDescription)
+                    : Text(context.text.connectionErrorDescription)),
+          );
+      }
+    }).addTo(subscriptions);
   }
 
   @override
@@ -56,8 +75,15 @@ class _ArtistScreenState extends State<ArtistScreen> {
               ArtistHeader(
                 scrollController: _scrollController,
                 maxOffset: context.appDimensionScheme.artistHeaderHeight - 56,
-                isLoading: _bloc.state.isLoading,
-                onFavorite: () {},
+                isLoading: state.isLoading,
+                isFavorite: state.isFavorite,
+                onFavorite: () {
+                  if (state.user != null) {
+                    _bloc.onFavorite();
+                  } else {
+                    _bloc.openLoginPage();
+                  }
+                },
                 onShare: () {},
                 genreName: state.artistInfo?.genre.name ?? "",
                 artistName: state.artistInfo?.name ?? "",
@@ -90,7 +116,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
                             ? ErrorDescriptionWidgetType.connection
                             : ErrorDescriptionWidgetType.server,
                         // coverage:ignore-start
-                        onClick: () => _bloc.init(),
+                        onClick: () => _bloc.fetchArtistInfos(),
                         // coverage:ignore-end
                       ),
                     ],
@@ -203,6 +229,7 @@ class _ArtistScreenState extends State<ArtistScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    disposeAll();
     super.dispose();
   }
 }

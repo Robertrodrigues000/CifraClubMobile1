@@ -59,4 +59,19 @@ class ArtistRepositoryImpl extends ArtistRepository {
         albumUrl: albumUrl,
       ))
           .map((value) => value.toDomain());
+
+  @override
+  Future<Result<void, RequestError>> favoriteArtist({required String artistUrl}) {
+    return artistDataSource.favoriteArtist(artistUrl: artistUrl);
+  }
+
+  @override
+  Future<Result<bool, RequestError>> getIsArtistFan({required String artistUrl, required int userId}) async {
+    return (await artistDataSource.getIsArtistFan(artistUrl: artistUrl, userId: userId)).map((value) => value.isFan);
+  }
+
+  @override
+  Future<Result<void, RequestError>> unfavoriteArtist({required String artistUrl}) {
+    return artistDataSource.unfavoriteArtist(artistUrl: artistUrl);
+  }
 }

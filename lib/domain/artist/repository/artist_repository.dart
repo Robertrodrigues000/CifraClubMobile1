@@ -27,4 +27,10 @@ abstract class ArtistRepository {
   Future<Result<List<Album>, RequestError>> getAlbums({required String artistUrl});
 
   Future<Result<AlbumDetail, RequestError>> getAlbumDetail({required String artistUrl, required String albumUrl});
+
+  Future<Result<bool, RequestError>> getIsArtistFan({required String artistUrl, required int userId});
+
+  Future<Result<void, RequestError>> favoriteArtist({required String artistUrl});
+
+  Future<Result<void, RequestError>> unfavoriteArtist({required String artistUrl});
 }

@@ -25,6 +25,7 @@ class ArtistHeader extends StatefulWidget {
     required this.onFavorite,
     required this.onShare,
     required this.isLoading,
+    required this.isFavorite,
   });
 
   final ScrollController scrollController;
@@ -36,6 +37,7 @@ class ArtistHeader extends StatefulWidget {
   final VoidCallback onFavorite;
   final VoidCallback onShare;
   final bool isLoading;
+  final bool isFavorite;
 
   @override
   State<ArtistHeader> createState() => _ArtistHeaderState();
@@ -108,37 +110,39 @@ class _ArtistHeaderState extends State<ArtistHeader> {
       backgroundColor: widget.color.isNotEmpty
           ? ColorApproximator.of(context).getNearestColor(context, HexColor.fromHex(widget.color))
           : CosmosColors.grey40,
-      actions: [
-        IconButton(
-          key: const Key("favorite button"),
-          onPressed: widget.onFavorite,
-          splashRadius: 28,
-          padding: const EdgeInsets.all(12),
-          highlightColor: Theme.of(context).splashColor,
-          icon: const SvgImage(
-            assetPath: AppSvgs.favoriteIcon,
-            color: Colors.white,
-            height: 24,
-            width: 24,
-          ),
-        ),
-        IconButton(
-          key: const Key("share button"),
-          onPressed: widget.onShare,
-          splashRadius: 28,
-          padding: const EdgeInsets.all(12),
-          highlightColor: Theme.of(context).splashColor,
-          icon: const SvgImage(
-            assetPath: AppSvgs.shareIcon,
-            color: Colors.white,
-            height: 24,
-            width: 24,
-          ),
-        ),
-        SizedBox(
-          width: context.appDimensionScheme.screenMargin,
-        ),
-      ],
+      actions: !widget.isLoading
+          ? [
+              IconButton(
+                key: const Key("favorite button"),
+                onPressed: widget.onFavorite,
+                splashRadius: 28,
+                padding: const EdgeInsets.all(12),
+                highlightColor: Theme.of(context).splashColor,
+                icon: SvgImage(
+                  assetPath: widget.isFavorite ? AppSvgs.filledFavoriteIcon : AppSvgs.favoriteIcon,
+                  color: Colors.white,
+                  height: 24,
+                  width: 24,
+                ),
+              ),
+              IconButton(
+                key: const Key("share button"),
+                onPressed: widget.onShare,
+                splashRadius: 28,
+                padding: const EdgeInsets.all(12),
+                highlightColor: Theme.of(context).splashColor,
+                icon: const SvgImage(
+                  assetPath: AppSvgs.shareIcon,
+                  color: Colors.white,
+                  height: 24,
+                  width: 24,
+                ),
+              ),
+              SizedBox(
+                width: context.appDimensionScheme.screenMargin,
+              ),
+            ]
+          : null,
       flexibleSpace: FlexibleSpaceBar(
         expandedTitleScale: 1.25,
         titlePadding: EdgeInsetsDirectional.only(

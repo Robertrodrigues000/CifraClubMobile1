@@ -30,61 +30,63 @@ import 'package:cifraclub/data/subscription/repository/persisted_purchase_reposi
 import 'package:cifraclub/data/subscription/repository/validate_purchase_repository_impl.dart' as _i96;
 import 'package:cifraclub/data/time/data_source/ntp_data_source.dart' as _i27;
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart' as _i48;
-import 'package:cifraclub/di/analytics_module.dart' as _i145;
-import 'package:cifraclub/di/app_module.dart' as _i149;
-import 'package:cifraclub/di/artist_module.dart' as _i142;
-import 'package:cifraclub/di/authentication_module.dart' as _i135;
-import 'package:cifraclub/di/bottom_sheet_module.dart' as _i152;
-import 'package:cifraclub/di/controllers_module.dart' as _i153;
-import 'package:cifraclub/di/device_module.dart' as _i154;
-import 'package:cifraclub/di/firebase_module.dart' as _i138;
-import 'package:cifraclub/di/genre_module.dart' as _i148;
-import 'package:cifraclub/di/home_module.dart' as _i141;
-import 'package:cifraclub/di/in_app_purchase_module.dart' as _i139;
-import 'package:cifraclub/di/isar_module.dart' as _i155;
-import 'package:cifraclub/di/log_module.dart' as _i136;
+import 'package:cifraclub/di/analytics_module.dart' as _i147;
+import 'package:cifraclub/di/app_module.dart' as _i151;
+import 'package:cifraclub/di/artist_module.dart' as _i144;
+import 'package:cifraclub/di/authentication_module.dart' as _i137;
+import 'package:cifraclub/di/bottom_sheet_module.dart' as _i154;
+import 'package:cifraclub/di/controllers_module.dart' as _i155;
+import 'package:cifraclub/di/device_module.dart' as _i156;
+import 'package:cifraclub/di/firebase_module.dart' as _i140;
+import 'package:cifraclub/di/genre_module.dart' as _i150;
+import 'package:cifraclub/di/home_module.dart' as _i143;
+import 'package:cifraclub/di/in_app_purchase_module.dart' as _i141;
+import 'package:cifraclub/di/isar_module.dart' as _i157;
+import 'package:cifraclub/di/log_module.dart' as _i138;
 import 'package:cifraclub/di/navigator_module.dart' as _i25;
-import 'package:cifraclub/di/network_module.dart' as _i151;
-import 'package:cifraclub/di/path_module.dart' as _i133;
-import 'package:cifraclub/di/remote_config_module.dart' as _i150;
-import 'package:cifraclub/di/search_module.dart' as _i137;
-import 'package:cifraclub/di/shared_preferences_module.dart' as _i144;
-import 'package:cifraclub/di/song_module.dart' as _i143;
-import 'package:cifraclub/di/songbook_module.dart' as _i147;
-import 'package:cifraclub/di/subscription_module.dart' as _i134;
-import 'package:cifraclub/di/time_module.dart' as _i140;
-import 'package:cifraclub/di/version_module.dart' as _i146;
+import 'package:cifraclub/di/network_module.dart' as _i153;
+import 'package:cifraclub/di/path_module.dart' as _i135;
+import 'package:cifraclub/di/remote_config_module.dart' as _i152;
+import 'package:cifraclub/di/search_module.dart' as _i139;
+import 'package:cifraclub/di/shared_preferences_module.dart' as _i146;
+import 'package:cifraclub/di/song_module.dart' as _i145;
+import 'package:cifraclub/di/songbook_module.dart' as _i149;
+import 'package:cifraclub/di/subscription_module.dart' as _i136;
+import 'package:cifraclub/di/time_module.dart' as _i142;
+import 'package:cifraclub/di/version_module.dart' as _i148;
 import 'package:cifraclub/domain/analytics/repository/analytics_repository.dart' as _i97;
 import 'package:cifraclub/domain/app/repository/installed_app_repository.dart' as _i19;
 import 'package:cifraclub/domain/app/repository/share_link_repository.dart' as _i40;
 import 'package:cifraclub/domain/app/use_cases/is_app_installed.dart' as _i20;
 import 'package:cifraclub/domain/app/use_cases/open_app.dart' as _i28;
-import 'package:cifraclub/domain/app/use_cases/open_app_or_store.dart' as _i122;
+import 'package:cifraclub/domain/app/use_cases/open_app_or_store.dart' as _i124;
 import 'package:cifraclub/domain/app/use_cases/share_link.dart' as _i85;
 import 'package:cifraclub/domain/artist/repository/artist_repository.dart' as _i99;
-import 'package:cifraclub/domain/artist/use_cases/get_album_detail.dart' as _i105;
-import 'package:cifraclub/domain/artist/use_cases/get_albums.dart' as _i106;
-import 'package:cifraclub/domain/artist/use_cases/get_artist_info.dart' as _i107;
-import 'package:cifraclub/domain/artist/use_cases/get_artist_songs.dart' as _i108;
-import 'package:cifraclub/domain/artist/use_cases/get_artist_video_lessons.dart' as _i109;
+import 'package:cifraclub/domain/artist/use_cases/favorite_unfavorite_artist.dart' as _i104;
+import 'package:cifraclub/domain/artist/use_cases/get_album_detail.dart' as _i106;
+import 'package:cifraclub/domain/artist/use_cases/get_albums.dart' as _i107;
+import 'package:cifraclub/domain/artist/use_cases/get_artist_info.dart' as _i108;
+import 'package:cifraclub/domain/artist/use_cases/get_artist_songs.dart' as _i109;
+import 'package:cifraclub/domain/artist/use_cases/get_artist_video_lessons.dart' as _i110;
 import 'package:cifraclub/domain/artist/use_cases/get_default_instruments.dart' as _i13;
 import 'package:cifraclub/domain/artist/use_cases/get_filtered_artist_songs.dart' as _i14;
-import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart' as _i113;
+import 'package:cifraclub/domain/artist/use_cases/get_is_artist_fan.dart' as _i112;
+import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart' as _i115;
 import 'package:cifraclub/domain/device/operating_system/use_cases/get_operating_system.dart' as _i15;
 import 'package:cifraclub/domain/device/url_launcher/repository/url_launcher_repository.dart' as _i44;
 import 'package:cifraclub/domain/device/url_launcher/use_cases/open_url.dart' as _i78;
 import 'package:cifraclub/domain/genre/repository/genres_repository.dart' as _i56;
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart' as _i60;
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart' as _i73;
-import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart' as _i117;
+import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart' as _i119;
 import 'package:cifraclub/domain/genre/use_cases/set_user_genre.dart' as _i84;
 import 'package:cifraclub/domain/home/repository/home_repository.dart' as _i77;
-import 'package:cifraclub/domain/home/use_cases/get_home_info.dart' as _i110;
-import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart' as _i111;
-import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart' as _i131;
-import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart' as _i115;
-import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart' as _i116;
-import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart' as _i132;
+import 'package:cifraclub/domain/home/use_cases/get_home_info.dart' as _i111;
+import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart' as _i113;
+import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart' as _i133;
+import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart' as _i117;
+import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart' as _i118;
+import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart' as _i134;
 import 'package:cifraclub/domain/log/repository/log_repository.dart' as _i22;
 import 'package:cifraclub/domain/preferences/repository/shared_preferences_repository.dart' as _i42;
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart' as _i62;
@@ -96,10 +98,10 @@ import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dar
 import 'package:cifraclub/domain/remote_config/use_cases/get_time_between_interstitials.dart' as _i70;
 import 'package:cifraclub/domain/remote_config/use_cases/get_versions_limit_constants.dart' as _i74;
 import 'package:cifraclub/domain/search/repository/search_repository.dart' as _i81;
-import 'package:cifraclub/domain/search/use_cases/search_all_use_case.dart' as _i125;
+import 'package:cifraclub/domain/search/use_cases/search_all_use_case.dart' as _i127;
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart' as _i82;
 import 'package:cifraclub/domain/song/repository/song_repository.dart' as _i87;
-import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart' as _i114;
+import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart' as _i116;
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart' as _i89;
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart' as _i47;
 import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart' as _i100;
@@ -111,10 +113,10 @@ import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.da
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbook_versions.dart' as _i71;
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart' as _i72;
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart' as _i75;
-import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart' as _i118;
-import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart' as _i119;
-import 'package:cifraclub/domain/songbook/use_cases/insert_versions_to_songbook.dart' as _i120;
-import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart' as _i124;
+import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart' as _i120;
+import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart' as _i121;
+import 'package:cifraclub/domain/songbook/use_cases/insert_versions_to_songbook.dart' as _i122;
+import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart' as _i126;
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart' as _i92;
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart' as _i93;
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart' as _i50;
@@ -126,20 +128,20 @@ import 'package:cifraclub/domain/subscription/repository/validate_purchase_repos
 import 'package:cifraclub/domain/subscription/use_cases/complete_purchase.dart' as _i53;
 import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart' as _i64;
 import 'package:cifraclub/domain/subscription/use_cases/get_persisted_purchase.dart' as _i65;
-import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart' as _i112;
+import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart' as _i114;
 import 'package:cifraclub/domain/subscription/use_cases/get_products.dart' as _i66;
 import 'package:cifraclub/domain/subscription/use_cases/get_remote_pro_status.dart' as _i67;
 import 'package:cifraclub/domain/subscription/use_cases/persist_purchase.dart' as _i79;
 import 'package:cifraclub/domain/subscription/use_cases/post_persistent_purchase_order.dart' as _i37;
 import 'package:cifraclub/domain/subscription/use_cases/post_purchase_order.dart' as _i38;
-import 'package:cifraclub/domain/subscription/use_cases/purchase_product.dart' as _i123;
+import 'package:cifraclub/domain/subscription/use_cases/purchase_product.dart' as _i125;
 import 'package:cifraclub/domain/subscription/use_cases/update_pro_status_with_purchase_result.dart' as _i91;
-import 'package:cifraclub/domain/subscription/use_cases/validate_persisted_purchase.dart' as _i126;
-import 'package:cifraclub/domain/subscription/use_cases/validate_purchase.dart' as _i127;
-import 'package:cifraclub/domain/subscription/use_cases/validate_purchases.dart' as _i128;
+import 'package:cifraclub/domain/subscription/use_cases/validate_persisted_purchase.dart' as _i128;
+import 'package:cifraclub/domain/subscription/use_cases/validate_purchase.dart' as _i129;
+import 'package:cifraclub/domain/subscription/use_cases/validate_purchases.dart' as _i130;
 import 'package:cifraclub/domain/subscription/use_cases/verify_pro_status.dart' as _i51;
-import 'package:cifraclub/domain/subscription/use_cases/watch_for_purchases.dart' as _i129;
-import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.dart' as _i130;
+import 'package:cifraclub/domain/subscription/use_cases/watch_for_purchases.dart' as _i131;
+import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.dart' as _i132;
 import 'package:cifraclub/domain/time/repository/time_repository.dart' as _i43;
 import 'package:cifraclub/domain/time/use_cases/get_current_time.dart' as _i59;
 import 'package:cifraclub/domain/user/repository/authentication_repository.dart' as _i3;
@@ -150,8 +152,8 @@ import 'package:cifraclub/domain/user/use_cases/open_login_page.dart' as _i29;
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart' as _i30;
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart' as _i49;
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart' as _i103;
-import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart' as _i104;
-import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart' as _i121;
+import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart' as _i105;
+import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart' as _i123;
 import 'package:cifraclub/presentation/navigator/deep_link_parser.dart' as _i5;
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart' as _i8;
 import 'package:cifraclub/presentation/widgets/color_approximator.dart' as _i4;
@@ -370,41 +372,44 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i49.UserVersionRepository>(),
       ));
   gh.factory<_i103.DevBottomSheet>(() => bottomSheetModule.getDevBottomSheet(gh<_i60.GetGenres>()));
-  gh.factory<_i104.GenreBottomSheet>(() => bottomSheetModule.getGenreBottomSheet(gh<_i60.GetGenres>()));
-  gh.factory<_i105.GetAlbumDetail>(() => _i105.GetAlbumDetail(artistRepository: gh<_i99.ArtistRepository>()));
-  gh.factory<_i106.GetAlbums>(() => _i106.GetAlbums(artistRepository: gh<_i99.ArtistRepository>()));
-  gh.factory<_i107.GetArtistInfo>(() => _i107.GetArtistInfo(artistRepository: gh<_i99.ArtistRepository>()));
-  gh.factory<_i108.GetArtistSongs>(() => _i108.GetArtistSongs(artistRepository: gh<_i99.ArtistRepository>()));
-  gh.factory<_i109.GetArtistVideoLessons>(() => _i109.GetArtistVideoLessons(gh<_i99.ArtistRepository>()));
-  gh.factory<_i110.GetHomeInfo>(() => _i110.GetHomeInfo(gh<_i77.HomeRepository>()));
-  gh.factory<_i111.GetListLimit>(() => _i111.GetListLimit(gh<_i63.GetListLimitConstants>()));
-  gh.factory<_i112.GetProStatusStream>(() => _i112.GetProStatusStream(gh<_i90.SubscriptionRepository>()));
-  gh.factory<_i113.GetTopArtists>(() => _i113.GetTopArtists(artistRepository: gh<_i99.ArtistRepository>()));
-  gh.factory<_i114.GetTopSongs>(() => _i114.GetTopSongs(songRepository: gh<_i87.SongRepository>()));
-  gh.factory<_i115.GetVersionsLimit>(() => _i115.GetVersionsLimit(gh<_i74.GetVersionsLimitConstants>()));
-  gh.factory<_i116.GetVersionsLimitState>(() => _i116.GetVersionsLimitState(
+  gh.factory<_i104.FavoriteUnfavoriteArtist>(
+      () => _i104.FavoriteUnfavoriteArtist(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i105.GenreBottomSheet>(() => bottomSheetModule.getGenreBottomSheet(gh<_i60.GetGenres>()));
+  gh.factory<_i106.GetAlbumDetail>(() => _i106.GetAlbumDetail(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i107.GetAlbums>(() => _i107.GetAlbums(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i108.GetArtistInfo>(() => _i108.GetArtistInfo(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i109.GetArtistSongs>(() => _i109.GetArtistSongs(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i110.GetArtistVideoLessons>(() => _i110.GetArtistVideoLessons(gh<_i99.ArtistRepository>()));
+  gh.factory<_i111.GetHomeInfo>(() => _i111.GetHomeInfo(gh<_i77.HomeRepository>()));
+  gh.factory<_i112.GetIsArtistFan>(() => _i112.GetIsArtistFan(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i113.GetListLimit>(() => _i113.GetListLimit(gh<_i63.GetListLimitConstants>()));
+  gh.factory<_i114.GetProStatusStream>(() => _i114.GetProStatusStream(gh<_i90.SubscriptionRepository>()));
+  gh.factory<_i115.GetTopArtists>(() => _i115.GetTopArtists(artistRepository: gh<_i99.ArtistRepository>()));
+  gh.factory<_i116.GetTopSongs>(() => _i116.GetTopSongs(songRepository: gh<_i87.SongRepository>()));
+  gh.factory<_i117.GetVersionsLimit>(() => _i117.GetVersionsLimit(gh<_i74.GetVersionsLimitConstants>()));
+  gh.factory<_i118.GetVersionsLimitState>(() => _i118.GetVersionsLimitState(
         gh<_i71.GetTotalSongbookVersions>(),
-        gh<_i115.GetVersionsLimit>(),
-        gh<_i112.GetProStatusStream>(),
+        gh<_i117.GetVersionsLimit>(),
+        gh<_i114.GetProStatusStream>(),
         gh<_i74.GetVersionsLimitConstants>(),
       ));
-  gh.factory<_i117.InsertUserGenre>(() => _i117.InsertUserGenre(
+  gh.factory<_i119.InsertUserGenre>(() => _i119.InsertUserGenre(
         getUserGenresAsStream: gh<_i73.GetUserGenresAsStream>(),
         setUserGenres: gh<_i84.SetUserGenres>(),
       ));
-  gh.factory<_i118.InsertUserSongbook>(() => _i118.InsertUserSongbook(
+  gh.factory<_i120.InsertUserSongbook>(() => _i120.InsertUserSongbook(
         gh<_i89.SongbookRepository>(),
         gh<_i47.UserSongbookRepository>(),
       ));
-  gh.factory<_i119.InsertVersionToSongbook>(() => _i119.InsertVersionToSongbook(
+  gh.factory<_i121.InsertVersionToSongbook>(() => _i121.InsertVersionToSongbook(
         gh<_i89.SongbookRepository>(),
         gh<_i49.UserVersionRepository>(),
       ));
-  gh.factory<_i120.InsertVersionsToSongbook>(() => _i120.InsertVersionsToSongbook(
+  gh.factory<_i122.InsertVersionsToSongbook>(() => _i122.InsertVersionsToSongbook(
         gh<_i89.SongbookRepository>(),
         gh<_i49.UserVersionRepository>(),
       ));
-  gh.factory<_i121.ListOptionsBottomSheet>(() => bottomSheetModule.getListOptionsBottomSheet(
+  gh.factory<_i123.ListOptionsBottomSheet>(() => bottomSheetModule.getListOptionsBottomSheet(
         gh<_i101.DeleteSongbook>(),
         gh<_i92.UpdateSongbookData>(),
         gh<_i50.ValidateSongbookName>(),
@@ -412,108 +417,108 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i85.ShareLink>(),
         gh<_i8.EditListScreenBuilder>(),
       ));
-  gh.factory<_i122.OpenAppOrStore>(() => _i122.OpenAppOrStore(
+  gh.factory<_i124.OpenAppOrStore>(() => _i124.OpenAppOrStore(
         openApp: gh<_i28.OpenApp>(),
         openUrl: gh<_i78.OpenUrl>(),
         isAppInstalled: gh<_i20.IsAppInstalled>(),
         getOperatingSystem: gh<_i15.GetOperatingSystem>(),
       ));
-  gh.factory<_i123.PurchaseProduct>(() => _i123.PurchaseProduct(
+  gh.factory<_i125.PurchaseProduct>(() => _i125.PurchaseProduct(
         gh<_i18.InAppPurchaseRepository>(),
         gh<_i90.SubscriptionRepository>(),
       ));
-  gh.factory<_i124.RefreshAllSongbooks>(() => _i124.RefreshAllSongbooks(
+  gh.factory<_i126.RefreshAllSongbooks>(() => _i126.RefreshAllSongbooks(
         gh<_i89.SongbookRepository>(),
         gh<_i47.UserSongbookRepository>(),
         gh<_i49.UserVersionRepository>(),
         gh<_i93.UpdateSongbookPreview>(),
       ));
-  gh.factory<_i125.SearchAll>(() => _i125.SearchAll(searchRepository: gh<_i81.SearchRepository>()));
-  gh.factory<_i126.ValidatePersistedPurchase>(() => _i126.ValidatePersistedPurchase(
+  gh.factory<_i127.SearchAll>(() => _i127.SearchAll(searchRepository: gh<_i81.SearchRepository>()));
+  gh.factory<_i128.ValidatePersistedPurchase>(() => _i128.ValidatePersistedPurchase(
         gh<_i11.GetCredential>(),
         gh<_i37.PostPersistentPurchaseOrder>(),
         gh<_i95.ValidatePurchaseRepository>(),
         gh<_i91.UpdateProStatusWithPurchaseResult>(),
         gh<_i65.GetPersistedPurchase>(),
       ));
-  gh.factory<_i127.ValidatePurchase>(() => inAppPurchaseModule.getValidatePurchase(
+  gh.factory<_i129.ValidatePurchase>(() => inAppPurchaseModule.getValidatePurchase(
         gh<_i11.GetCredential>(),
         gh<_i38.PostPurchaseOrder>(),
         gh<_i95.ValidatePurchaseRepository>(),
       ));
-  gh.factory<_i128.ValidatePurchases>(() => _i128.ValidatePurchases(
-        gh<_i127.ValidatePurchase>(),
+  gh.factory<_i130.ValidatePurchases>(() => _i130.ValidatePurchases(
+        gh<_i129.ValidatePurchase>(),
         gh<_i53.CompletePurchase>(),
         gh<_i79.PersistPurchase>(),
       ));
-  gh.singleton<_i129.WatchForPurchases>(_i129.WatchForPurchases(
+  gh.singleton<_i131.WatchForPurchases>(_i131.WatchForPurchases(
     gh<_i18.InAppPurchaseRepository>(),
-    gh<_i128.ValidatePurchases>(),
+    gh<_i130.ValidatePurchases>(),
     gh<_i91.UpdateProStatusWithPurchaseResult>(),
   ));
-  gh.singleton<_i130.WatchForSubscriptions>(_i130.WatchForSubscriptions(
+  gh.singleton<_i132.WatchForSubscriptions>(_i132.WatchForSubscriptions(
     gh<_i12.GetCredentialStream>(),
     gh<_i90.SubscriptionRepository>(),
     gh<_i67.GetRemoteProStatus>(),
-    gh<_i126.ValidatePersistedPurchase>(),
+    gh<_i128.ValidatePersistedPurchase>(),
   ));
-  gh.factory<_i131.GetListLimitState>(() => _i131.GetListLimitState(
+  gh.factory<_i133.GetListLimitState>(() => _i133.GetListLimitState(
         gh<_i72.GetTotalSongbooks>(),
-        gh<_i112.GetProStatusStream>(),
-        gh<_i111.GetListLimit>(),
+        gh<_i114.GetProStatusStream>(),
+        gh<_i113.GetListLimit>(),
         gh<_i63.GetListLimitConstants>(),
       ));
-  gh.factory<_i132.GetVersionLimitStateByCount>(() => _i132.GetVersionLimitStateByCount(
-        gh<_i115.GetVersionsLimit>(),
+  gh.factory<_i134.GetVersionLimitStateByCount>(() => _i134.GetVersionLimitStateByCount(
+        gh<_i117.GetVersionsLimit>(),
         gh<_i74.GetVersionsLimitConstants>(),
       ));
   return getIt;
 }
 
-class _$PathModule extends _i133.PathModule {}
+class _$PathModule extends _i135.PathModule {}
 
-class _$SubscriptionModule extends _i134.SubscriptionModule {}
+class _$SubscriptionModule extends _i136.SubscriptionModule {}
 
-class _$AuthenticationModule extends _i135.AuthenticationModule {}
+class _$AuthenticationModule extends _i137.AuthenticationModule {}
 
-class _$LogModule extends _i136.LogModule {}
+class _$LogModule extends _i138.LogModule {}
 
-class _$SearchModule extends _i137.SearchModule {}
+class _$SearchModule extends _i139.SearchModule {}
 
-class _$FirebaseModule extends _i138.FirebaseModule {}
+class _$FirebaseModule extends _i140.FirebaseModule {}
 
-class _$InAppPurchaseModule extends _i139.InAppPurchaseModule {}
+class _$InAppPurchaseModule extends _i141.InAppPurchaseModule {}
 
-class _$TimeModule extends _i140.TimeModule {}
+class _$TimeModule extends _i142.TimeModule {}
 
-class _$HomeModule extends _i141.HomeModule {}
+class _$HomeModule extends _i143.HomeModule {}
 
-class _$ArtistModule extends _i142.ArtistModule {}
+class _$ArtistModule extends _i144.ArtistModule {}
 
-class _$SongModule extends _i143.SongModule {}
+class _$SongModule extends _i145.SongModule {}
 
-class _$SharedPreferencesModule extends _i144.SharedPreferencesModule {}
+class _$SharedPreferencesModule extends _i146.SharedPreferencesModule {}
 
-class _$AnalyticsModule extends _i145.AnalyticsModule {}
+class _$AnalyticsModule extends _i147.AnalyticsModule {}
 
-class _$VersionModule extends _i146.VersionModule {}
+class _$VersionModule extends _i148.VersionModule {}
 
 class _$NavigatorModule extends _i25.NavigatorModule {}
 
-class _$SongbookModule extends _i147.SongbookModule {}
+class _$SongbookModule extends _i149.SongbookModule {}
 
-class _$GenreModule extends _i148.GenreModule {}
+class _$GenreModule extends _i150.GenreModule {}
 
-class _$AppModule extends _i149.AppModule {}
+class _$AppModule extends _i151.AppModule {}
 
-class _$RemoteConfigModule extends _i150.RemoteConfigModule {}
+class _$RemoteConfigModule extends _i152.RemoteConfigModule {}
 
-class _$NetworkModule extends _i151.NetworkModule {}
+class _$NetworkModule extends _i153.NetworkModule {}
 
-class _$BottomSheetModule extends _i152.BottomSheetModule {}
+class _$BottomSheetModule extends _i154.BottomSheetModule {}
 
-class _$ControllersModule extends _i153.ControllersModule {}
+class _$ControllersModule extends _i155.ControllersModule {}
 
-class _$DeviceModule extends _i154.DeviceModule {}
+class _$DeviceModule extends _i156.DeviceModule {}
 
-class _$IsarModule extends _i155.IsarModule {}
+class _$IsarModule extends _i157.IsarModule {}

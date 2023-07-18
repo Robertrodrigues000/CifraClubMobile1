@@ -18,6 +18,7 @@ void main() {
           slivers: [
             ArtistHeader(
               scrollController: scrollController,
+              isFavorite: false,
               maxOffset: 56,
               isLoading: false,
               color: "#C43A3A",
@@ -44,6 +45,7 @@ void main() {
         slivers: [
           ArtistHeader(
             scrollController: scrollController,
+            isFavorite: false,
             maxOffset: 56,
             isLoading: false,
             color: "#C43A3A",
@@ -71,6 +73,7 @@ void main() {
           slivers: [
             ArtistHeader(
               scrollController: scrollController,
+              isFavorite: false,
               maxOffset: 56,
               isLoading: false,
               color: "#C43A3A",
@@ -97,6 +100,7 @@ void main() {
           slivers: [
             ArtistHeader(
               scrollController: scrollController,
+              isFavorite: false,
               maxOffset: 56,
               isLoading: false,
               color: "#C43A3A",

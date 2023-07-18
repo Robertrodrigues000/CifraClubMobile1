@@ -4,6 +4,7 @@ import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
 import 'package:cifraclub/data/artist/models/album_detail_dto.dart';
 import 'package:cifraclub/data/artist/models/albums_dto.dart';
+import 'package:cifraclub/data/artist/models/artist_fan_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
@@ -21,6 +22,14 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(NetworkRequest<dynamic>(
+      parser: (_) => throw Exception(""),
+      path: "",
+      type: NetworkRequestType.get,
+    ));
+  });
+
   group("When getTopArtists is called", () {
     test("When request is successful with params", () async {
       final queryParams = {
@@ -390,6 +399,114 @@ void main() {
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When getIsArtistFan is called", () {
+    const artistUrl = "bruno-e-marrone";
+    const userId = 54054612;
+    test("When request is successful ", () async {
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/artist/data_source/artist_user_is_fan_mock_json_response.json").readAsString();
+      await networkService.mock<ArtistFanDto>(response: mockResponse);
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getIsArtistFan(artistUrl: artistUrl, userId: userId);
+
+      final request = verify(() => networkService.execute<ArtistFanDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<ArtistFanDto>;
+
+      expect(request.path, "/v3/user/$userId/is-fan/$artistUrl");
+      expect(request.type, NetworkRequestType.get);
+      expect(result.isSuccess, true);
+      final artistFanDto = result.get()!;
+
+      expect(artistFanDto.isFan, true);
+    });
+    test("When request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<ArtistFanDto>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(
+                Err(ServerError(statusCode: 404)),
+              ));
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.getIsArtistFan(artistUrl: artistUrl, userId: userId);
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When favoriteArtist is called", () {
+    const artistUrl = "bruno-e-marrone";
+    test("When request is successful ", () async {
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(
+                const Ok(null),
+              ));
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.favoriteArtist(artistUrl: artistUrl);
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/artist/$artistUrl/favorite");
+      expect(request.type, NetworkRequestType.post);
+      expect(result.isSuccess, isTrue);
+    });
+    test("When request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<void>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(
+                Err(ServerError(statusCode: 404)),
+              ));
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+
+      final result = await artistDataSource.favoriteArtist(artistUrl: artistUrl);
+
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
+    });
+  });
+
+  group("When unfavoriteArtist is called", () {
+    const artistUrl = "bruno-e-marrone";
+    test("When request is successful ", () async {
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(
+                const Ok(null),
+              ));
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+      final result = await artistDataSource.unfavoriteArtist(artistUrl: artistUrl);
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/artist/$artistUrl/unfavorite");
+      expect(request.type, NetworkRequestType.post);
+      expect(result.isSuccess, isTrue);
+    });
+    test("When request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<void>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => SynchronousFuture(
+                Err(ServerError(statusCode: 404)),
+              ));
+
+      final artistDataSource = ArtistDataSource(networkService: networkService);
+
+      final result = await artistDataSource.unfavoriteArtist(artistUrl: artistUrl);
+
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });
 }

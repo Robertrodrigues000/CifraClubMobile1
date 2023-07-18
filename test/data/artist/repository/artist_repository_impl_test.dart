@@ -3,6 +3,7 @@ import 'package:cifraclub/data/artist/data_source/artist_data_source.dart';
 import 'package:cifraclub/data/artist/models/album_detail_dto.dart';
 import 'package:cifraclub/data/artist/models/albums_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_dto.dart';
+import 'package:cifraclub/data/artist/models/artist_fan_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_image_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_song_dto.dart';
@@ -360,6 +361,116 @@ void main() {
       expect(artistAlbums.isFailure, true);
       expect(artistAlbums.getError().runtimeType, ServerError);
       expect((artistAlbums.getError() as ServerError).statusCode, null);
+    });
+  });
+
+  group("When getIsArtistFan is Called if ", () {
+    const artistUrl = "bruno-e-marrone";
+    const userId = 541123;
+    test("Request is successful", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.getIsArtistFan(artistUrl: artistUrl, userId: userId)).thenAnswer(
+        (_) => SynchronousFuture(
+          Ok(ArtistFanDto(true)),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final isArtistFanResult = await repository.getIsArtistFan(artistUrl: artistUrl, userId: userId);
+
+      expect(isArtistFanResult.get(), true);
+    });
+
+    test("Request failed", () async {
+      final artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.getIsArtistFan(artistUrl: artistUrl, userId: userId)).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError()),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final isArtistFanResult = await repository.getIsArtistFan(artistUrl: artistUrl, userId: userId);
+
+      expect(isArtistFanResult.isFailure, true);
+      expect(isArtistFanResult.getError().runtimeType, ServerError);
+      expect((isArtistFanResult.getError() as ServerError).statusCode, null);
+    });
+  });
+
+  group("When favoriteArtist is Called if ", () {
+    const artistUrl = "bruno-e-marrone";
+    test("Request is successful", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.favoriteArtist(artistUrl: artistUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          const Ok(null),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final favoriteResult = await repository.favoriteArtist(artistUrl: artistUrl);
+
+      expect(favoriteResult.isSuccess, true);
+    });
+
+    test("Request failed", () async {
+      final artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.favoriteArtist(artistUrl: artistUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError()),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final favoriteResult = await repository.favoriteArtist(
+        artistUrl: artistUrl,
+      );
+
+      expect(favoriteResult.isFailure, true);
+      expect(favoriteResult.getError().runtimeType, ServerError);
+      expect((favoriteResult.getError() as ServerError).statusCode, null);
+    });
+  });
+
+  group("When unfavoriteArtist is Called if ", () {
+    const artistUrl = "bruno-e-marrone";
+    test("Request is successful", () async {
+      var artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.unfavoriteArtist(artistUrl: artistUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          const Ok(null),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final unfavoriteResult = await repository.unfavoriteArtist(artistUrl: artistUrl);
+
+      expect(unfavoriteResult.isSuccess, true);
+    });
+
+    test("Request failed", () async {
+      final artistDataSource = _ArtistDataSourceMock();
+
+      when(() => artistDataSource.unfavoriteArtist(artistUrl: artistUrl)).thenAnswer(
+        (_) => SynchronousFuture(
+          Err(ServerError()),
+        ),
+      );
+
+      final repository = ArtistRepositoryImpl(artistDataSource: artistDataSource);
+      final unfavoriteResult = await repository.unfavoriteArtist(
+        artistUrl: artistUrl,
+      );
+
+      expect(unfavoriteResult.isFailure, true);
+      expect(unfavoriteResult.getError().runtimeType, ServerError);
+      expect((unfavoriteResult.getError() as ServerError).statusCode, null);
     });
   });
 }

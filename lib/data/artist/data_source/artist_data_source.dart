@@ -1,6 +1,7 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/artist/models/album_detail_dto.dart';
 import 'package:cifraclub/data/artist/models/albums_dto.dart';
+import 'package:cifraclub/data/artist/models/artist_fan_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_info_dto.dart';
 import 'package:cifraclub/data/artist/models/artist_songs_dto.dart';
 import 'package:cifraclub/data/artist/models/top_artists_dto.dart';
@@ -85,11 +86,38 @@ class ArtistDataSource {
     return networkService.execute(request: request);
   }
 
-  Future<Result<AlbumDetailDto, RequestError>> getAlbumDetail({required String artistUrl, required albumUrl}) {
+  Future<Result<AlbumDetailDto, RequestError>> getAlbumDetail({required String artistUrl, required String albumUrl}) {
     var request = NetworkRequest(
       type: NetworkRequestType.get,
       path: "/v3/album/$artistUrl/$albumUrl",
       parser: (data) => AlbumDetailDto.fromJson(data as Map<String, dynamic>),
+    );
+    return networkService.execute(request: request);
+  }
+
+  Future<Result<ArtistFanDto, RequestError>> getIsArtistFan({required String artistUrl, required int userId}) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.get,
+      path: "/v3/user/$userId/is-fan/$artistUrl",
+      parser: (data) => ArtistFanDto.fromJson(data as Map<String, dynamic>),
+    );
+    return networkService.execute(request: request);
+  }
+
+  Future<Result<void, RequestError>> favoriteArtist({required String artistUrl}) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/artist/$artistUrl/favorite",
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return networkService.execute(request: request);
+  }
+
+  Future<Result<void, RequestError>> unfavoriteArtist({required String artistUrl}) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: "/v3/artist/$artistUrl/unfavorite",
+      parser: (_) => null, // coverage:ignore-line
     );
     return networkService.execute(request: request);
   }

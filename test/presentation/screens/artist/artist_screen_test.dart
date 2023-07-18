@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_screen.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
@@ -8,12 +9,14 @@ import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.d
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../shared_mocks/domain/artist/models/album_mock.dart';
 import '../../../shared_mocks/domain/artist/models/artist_song_mock.dart';
@@ -29,6 +32,7 @@ void main() {
     bloc = _ArtistBlocMock();
     when(bloc.init).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.artistEventStream).thenAnswer((_) => PublishSubject());
   });
 
   testWidgets("When state has songs, should display artist songs list", (widgetTester) async {
@@ -152,5 +156,47 @@ void main() {
     );
 
     expect(find.byType(FilterCapsuleList), findsOneWidget);
+  });
+
+  testWidgets("When isFavorite is true, should show filled favorite icon", (widgetTester) async {
+    bloc.mockStream(const ArtistState(isFavorite: true));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<ArtistBloc>.value(
+          value: bloc,
+          child: const ArtistScreen(
+            name: "Legiao Urbana",
+          ),
+        ),
+      ),
+    );
+
+    final favoriteIconFinder = find.byWidgetPredicate(
+      (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.filledFavoriteIcon,
+    );
+    expect(favoriteIconFinder, findsOneWidget);
+  });
+
+  testWidgets("When isFavorite is false, should show favorite icon", (widgetTester) async {
+    bloc.mockStream(const ArtistState(isFavorite: false));
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<ArtistBloc>.value(
+            value: bloc,
+            child: const ArtistScreen(
+              name: "Legiao Urbana",
+            ),
+          ),
+        ),
+      );
+    });
+
+    final favoriteIconFinder = find.byWidgetPredicate(
+      (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.favoriteIcon,
+    );
+    expect(favoriteIconFinder, findsOneWidget);
   });
 }
