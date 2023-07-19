@@ -13,12 +13,14 @@ class VersionsCollapsedHeader extends StatefulWidget {
     required this.isPublic,
     this.preview,
     required this.isTablet,
+    this.width,
   });
   final bool isScrolledUnder;
   final String songbookName;
   final bool isPublic;
   final List<String?>? preview;
   final bool isTablet;
+  final double? width;
 
   @override
   State<VersionsCollapsedHeader> createState() => _VersionsCollapsedHeaderState();
@@ -134,7 +136,8 @@ class _VersionsCollapsedHeaderState extends State<VersionsCollapsedHeader> {
   ) {
     var screenWidth = MediaQuery.of(context).size.width;
     if (isTablet) {
-      screenWidth -= 300; //TODO : Esse valor tem que ser atualizado na issue que vai mudar o tamanho da tela de listas
+      screenWidth -=
+          widget.width!; //TODO : Esse valor tem que ser atualizado na issue que vai mudar o tamanho da tela de listas
     }
     double maxWidth = screenWidth - (padding * 2);
     if (havePrefix) {

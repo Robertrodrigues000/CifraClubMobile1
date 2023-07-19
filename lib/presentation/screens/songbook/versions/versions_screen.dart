@@ -26,6 +26,7 @@ class VersionsScreen extends StatefulWidget {
     this.userId,
     required this.listOptionsbottomSheet,
     this.onDeleteSongbook,
+    this.width,
   });
 
   final ListOptionsBottomSheet listOptionsbottomSheet;
@@ -33,6 +34,7 @@ class VersionsScreen extends StatefulWidget {
   final int? songbookId;
   final int? userId;
   final VoidCallback? onDeleteSongbook;
+  final double? width;
 
   @override
   State<VersionsScreen> createState() => _VersionsScreenState();
@@ -212,6 +214,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                 songbookName: state.songbook?.name ?? "",
                 preview: state.songbook?.preview,
                 isTablet: widget.isTablet,
+                width: widget.width,
               ),
               VersionsFixedHeader(
                 isScrolledUnder: isScrolledUnder,

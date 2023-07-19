@@ -309,4 +309,64 @@ void main() {
       });
     });
   });
+
+  testWidgets("When it's a tablet and in portrait", (widgetTester) async {
+    widgetTester.view.physicalSize = const Size(600, 1000);
+    widgetTester.view.devicePixelRatio = 1.0;
+
+    final songbook = getFakeSongbook();
+    bloc.mockStream(
+        const SongbookState(selectedSongbookId: null, userCredential: UserCredential(isUserLoggedIn: true)));
+    listsBloc.mockStream(ListsState(userLists: [songbook]));
+    versionsBloc.mockStream(VersionsState(songbook: songbook));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<SongbookBloc>.value(value: bloc),
+          BlocProvider<ListsBloc>.value(value: listsBloc),
+          BlocProvider<VersionsBloc>.value(value: versionsBloc),
+        ],
+        child: SongbookScreen(
+          DeviceType.tablet,
+          bottomSheet,
+        ),
+      ),
+    );
+
+    final finder = find.byType(ListsScreen);
+
+    final widgetSize = widgetTester.getSize(finder);
+    expect(widgetSize.width, 300);
+  });
+
+  testWidgets("When it's a tablet and in landscape", (widgetTester) async {
+    widgetTester.view.physicalSize = const Size(1150, 1200);
+    widgetTester.view.devicePixelRatio = 1.0;
+
+    final songbook = getFakeSongbook();
+    bloc.mockStream(
+        const SongbookState(selectedSongbookId: null, userCredential: UserCredential(isUserLoggedIn: true)));
+    listsBloc.mockStream(ListsState(userLists: [songbook]));
+    versionsBloc.mockStream(VersionsState(songbook: songbook));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<SongbookBloc>.value(value: bloc),
+          BlocProvider<ListsBloc>.value(value: listsBloc),
+          BlocProvider<VersionsBloc>.value(value: versionsBloc),
+        ],
+        child: SongbookScreen(
+          DeviceType.tablet,
+          bottomSheet,
+        ),
+      ),
+    );
+
+    final finder = find.byType(ListsScreen);
+
+    final widgetSize = widgetTester.getSize(finder);
+    expect(widgetSize.width, 400);
+  });
 }

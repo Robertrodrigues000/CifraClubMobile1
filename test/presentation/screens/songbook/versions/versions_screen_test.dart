@@ -94,6 +94,7 @@ void main() {
           isTablet: true,
           listOptionsbottomSheet: bottomSheet,
           songbookId: 1,
+          width: 300,
         ),
       ),
     );
@@ -114,6 +115,7 @@ void main() {
           isTablet: true,
           listOptionsbottomSheet: bottomSheet,
           songbookId: 1,
+          width: 300,
         ),
       ),
     );
@@ -137,6 +139,7 @@ void main() {
           listOptionsbottomSheet: bottomSheet,
           userId: 1,
           songbookId: 1,
+          width: 300,
         ),
       ),
     );
@@ -165,6 +168,7 @@ void main() {
           listOptionsbottomSheet: bottomSheet,
           userId: 1,
           songbookId: 1,
+          width: 300,
         ),
       ),
     );
@@ -435,6 +439,7 @@ void main() {
           isTablet: true,
           onDeleteSongbook: completer.complete,
           songbookId: songbook.id,
+          width: 300,
         ),
       ),
       nav: nav,

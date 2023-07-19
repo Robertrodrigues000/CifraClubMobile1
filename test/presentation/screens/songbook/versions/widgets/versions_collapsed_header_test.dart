@@ -16,6 +16,7 @@ void main() {
             isPublic: false,
             songbookName: "Songbook name",
             isTablet: true,
+            width: 400,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -53,6 +54,7 @@ void main() {
             songbookName:
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
             isTablet: true,
+            width: 400,
           ),
         ],
       ),
@@ -84,6 +86,7 @@ void main() {
             isPublic: false,
             songbookName: "1500s",
             isTablet: true,
+            width: 400,
           ),
         ],
       ),

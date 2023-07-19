@@ -52,6 +52,9 @@ class _SongbookScreenState extends State<SongbookScreen> {
                 ),
               ));
         } else if (widget.deviceType == DeviceType.tablet) {
+          final width = MediaQuery.of(context).size.width;
+          final double widthList = width < 1000 ? 300 : 400;
+
           return Scaffold(
             appBar: const CosmosAppBar(toolbarHeight: 0),
             body: MediaQuery.removeViewPadding(
@@ -60,7 +63,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
               child: Row(
                 children: [
                   SizedBox(
-                    width: 300,
+                    width: widthList,
                     child: ListsScreen(
                       isTablet: true,
                       selectedSongbookId: state.selectedSongbookId,
@@ -77,6 +80,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
                   Expanded(
                     child: VersionsScreen(
                       isTablet: true,
+                      width: widthList,
                       userId: state.userCredential?.user?.id,
                       songbookId: state.selectedSongbookId,
                       listOptionsbottomSheet: widget.listOptionsbottomSheet,
