@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/home/models/video_lesson.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
@@ -14,6 +15,6 @@ VideoLesson getFakeVideoLessons() => VideoLesson(
     duration: faker.randomGenerator.integer(1000),
     urlApi: faker.internet.httpUrl(),
     images: getFakeHomeImage(),
-    instrumentsId: [faker.food.cuisine()],
+    instrument: Instrument.guitar,
     artist: getFakeArtist(),
     version: getFakeVideoLessonVersion());

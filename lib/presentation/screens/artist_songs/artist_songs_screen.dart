@@ -6,6 +6,7 @@ import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class ArtistSongsScreen extends StatefulWidget {
   const ArtistSongsScreen({super.key});
@@ -109,16 +110,17 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                   CustomScrollView(slivers: [
                     SliverList(
                       delegate: SliverChildBuilderDelegate(
-                        childCount: 200,
+                        childCount: state.videoLessons.length,
                         (context, index) {
+                          final videoLesson = state.videoLessons[index];
                           return ArtistVideoLessonItem(
                             onTap: () {},
-                            imageUrl: index % 2 > 0 ? "https://i3.ytimg.com/vi/f5ZZK-jt9mA/default.jpg" : "eds",
-                            artistName: "Amy Winehouse",
-                            title: "Como tocar Valerie no violão sem errar",
-                            views: "4.242",
-                            duration: "21:42",
-                            versionLabel: "principal",
+                            imageUrl: videoLesson.images.small,
+                            artistName: videoLesson.artist?.name ?? "",
+                            title: videoLesson.title,
+                            views: formatVideoLessonView(videoLesson.views, context),
+                            duration: formatVideoLessonDuration(videoLesson.duration),
+                            versionLabel: videoLesson.version?.label ?? "",
                           );
                         },
                       ),
@@ -131,5 +133,13 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
         );
       },
     );
+  }
+
+  String formatVideoLessonView(int views, BuildContext context) {
+    return NumberFormat.compact(locale: Localizations.localeOf(context).toLanguageTag()).format(views);
+  }
+
+  String formatVideoLessonDuration(int seconds) {
+    return DateFormat.ms().format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: seconds).inMilliseconds));
   }
 }

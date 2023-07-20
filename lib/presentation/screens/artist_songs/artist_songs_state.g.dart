@@ -9,9 +9,11 @@ part of 'artist_songs_state.dart';
 abstract class _$ArtistSongsStateCWProxy {
   ArtistSongsState songs(List<String> songs);
 
-  ArtistSongsState videoLessons(List<String> videoLessons);
+  ArtistSongsState videoLessons(List<VideoLesson> videoLessons);
 
   ArtistSongsState artistName(String artistName);
+
+  ArtistSongsState error(RequestError? error);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ArtistSongsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -21,8 +23,9 @@ abstract class _$ArtistSongsStateCWProxy {
   /// ````
   ArtistSongsState call({
     List<String>? songs,
-    List<String>? videoLessons,
+    List<VideoLesson>? videoLessons,
     String? artistName,
+    RequestError? error,
   });
 }
 
@@ -36,10 +39,13 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
   ArtistSongsState songs(List<String> songs) => this(songs: songs);
 
   @override
-  ArtistSongsState videoLessons(List<String> videoLessons) => this(videoLessons: videoLessons);
+  ArtistSongsState videoLessons(List<VideoLesson> videoLessons) => this(videoLessons: videoLessons);
 
   @override
   ArtistSongsState artistName(String artistName) => this(artistName: artistName);
+
+  @override
+  ArtistSongsState error(RequestError? error) => this(error: error);
 
   @override
 
@@ -53,6 +59,7 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
     Object? songs = const $CopyWithPlaceholder(),
     Object? videoLessons = const $CopyWithPlaceholder(),
     Object? artistName = const $CopyWithPlaceholder(),
+    Object? error = const $CopyWithPlaceholder(),
   }) {
     return ArtistSongsState(
       songs: songs == const $CopyWithPlaceholder() || songs == null
@@ -62,11 +69,15 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
       videoLessons: videoLessons == const $CopyWithPlaceholder() || videoLessons == null
           ? _value.videoLessons
           // ignore: cast_nullable_to_non_nullable
-          : videoLessons as List<String>,
+          : videoLessons as List<VideoLesson>,
       artistName: artistName == const $CopyWithPlaceholder() || artistName == null
           ? _value.artistName
           // ignore: cast_nullable_to_non_nullable
           : artistName as String,
+      error: error == const $CopyWithPlaceholder()
+          ? _value.error
+          // ignore: cast_nullable_to_non_nullable
+          : error as RequestError?,
     );
   }
 }

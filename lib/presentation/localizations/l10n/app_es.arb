@@ -205,7 +205,7 @@
     },
     "alphabeticalOrder" : "Orden alfabética",
     "videoLessons" : "Vídeo lecciones",
-    "views": "exposiciones",
+    "views": "vistas",
     "emptyListTitle": "Sin canciones",
     "emptyListDescription": "Buscar para agregar canciones a esta lista.",
     "disc": "Disco {index}",

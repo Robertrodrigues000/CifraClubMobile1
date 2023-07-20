@@ -171,7 +171,10 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                       type: ButtonType.outline,
                       // coverage:ignore-start
                       onPressed: () {
-                        Nav.of(context).push(screenName: ArtistSongsEntry.name);
+                        Nav.of(context).push(screenName: ArtistSongsEntry.name, params: {
+                          ArtistSongsEntry.artistUrlParamKey: state.artistInfo?.url ?? "",
+                          ArtistSongsEntry.instrumentParamKey: state.selectedInstrument?.name ?? "",
+                        });
                       },
                       // coverage:ignore-end
                       padding: EdgeInsets.only(

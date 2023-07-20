@@ -2,6 +2,8 @@ import 'package:cifraclub/data/artist/models/artist_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lesson_version_dto.dart';
 import 'package:cifraclub/data/home/models/video_lessons/video_lessons_image_dto.dart';
 import 'package:cifraclub/data/song/models/song_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:cifraclub/domain/home/models/video_lesson.dart';
@@ -31,7 +33,8 @@ class VideoLessonsDto extends Equatable {
         views: views,
         duration: duration,
         urlApi: urlApi,
-        instrumentsId: instruments ?? List.empty(),
+        instrument: Instrument.values.firstWhereOrNull((element) =>
+            instruments?.any((instrumentName) => element.videoLessonInstrumentNames.contains(instrumentName)) == true),
         images: images!.toDomain(),
         song: song?.toDomain(),
         artist: artist?.toDomain(),

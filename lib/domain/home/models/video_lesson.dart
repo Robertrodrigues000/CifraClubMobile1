@@ -2,6 +2,7 @@ import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/home/models/images_size.dart';
 import 'package:cifraclub/domain/home/models/video_lesson_version.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:equatable/equatable.dart';
 
 class VideoLesson extends Equatable {
@@ -12,7 +13,7 @@ class VideoLesson extends Equatable {
   final int views;
   final int duration;
   final String urlApi;
-  final List<String> instrumentsId;
+  final Instrument? instrument;
   final Song? song;
   final Artist? artist;
   final ImagesSize images;
@@ -26,7 +27,7 @@ class VideoLesson extends Equatable {
     required this.views,
     required this.duration,
     required this.urlApi,
-    required this.instrumentsId,
+    required this.instrument,
     this.song,
     this.artist,
     this.version,
