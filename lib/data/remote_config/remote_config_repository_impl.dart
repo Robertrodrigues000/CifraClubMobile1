@@ -108,4 +108,14 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   VersionsLimitConstants getVersionsLimitConstants() {
     return remoteConfigParameters.tabsLimitConstants.value;
   }
+
+  @override
+  String getImagePrefixUrl() {
+    return remoteConfigParameters.imagePrefixUrl.value;
+  }
+
+  @override
+  String getArtistImagePath() {
+    return remoteConfigParameters.artistImagePath.value;
+  }
 }

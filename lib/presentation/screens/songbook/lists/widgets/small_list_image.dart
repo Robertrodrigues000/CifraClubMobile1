@@ -2,7 +2,7 @@ import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 
 class SmallListImage extends StatelessWidget {
-  final String image;
+  final String? image;
 
   const SmallListImage({super.key, required this.image});
   @override

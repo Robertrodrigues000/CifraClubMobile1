@@ -1,3 +1,5 @@
+import 'package:cifraclub/data/remote_config/parameters/artist_image_path_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/image_prefix_url_pramater.dart';
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/list_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
@@ -12,7 +14,9 @@ class RemoteConfigRegisteredParameters {
     timeBetweenInterstitials,
     products,
     listLimitConstants,
-    tabsLimitConstants
+    tabsLimitConstants,
+    imagePrefixUrl,
+    artistImagePath
   ];
 
   final InstrumentUrlsParameter instrumentUrls = InstrumentUrlsParameter();
@@ -20,4 +24,6 @@ class RemoteConfigRegisteredParameters {
   final RemoteProductParameter products = RemoteProductParameter();
   final ListLimitConstantsParameter listLimitConstants = ListLimitConstantsParameter();
   final VersionsLimitConstantsParameter tabsLimitConstants = VersionsLimitConstantsParameter();
+  final ImagePrefixUrlParameter imagePrefixUrl = ImagePrefixUrlParameter();
+  final ArtistImagePathParameter artistImagePath = ArtistImagePathParameter();
 }

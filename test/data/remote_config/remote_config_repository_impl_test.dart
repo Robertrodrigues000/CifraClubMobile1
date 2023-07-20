@@ -1,3 +1,5 @@
+import 'package:cifraclub/data/remote_config/parameters/artist_image_path_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/image_prefix_url_pramater.dart';
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/list_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
@@ -123,6 +125,20 @@ void main() {
       expect(value.maxVersionsForPro == versionsLimitConstantsParameter.value.maxVersionsForPro, true);
       expect(value.versionsWarningCountThreshold == versionsLimitConstantsParameter.value.versionsWarningCountThreshold,
           true);
+    });
+
+    test(" getImagePrefixUrl() called", () async {
+      final imagePrefixUrlParameter = ImagePrefixUrlParameter();
+      when(() => remoteConfigParametersMock.imagePrefixUrl).thenAnswer((_) => imagePrefixUrlParameter);
+      final value = repository.getImagePrefixUrl();
+      expect(value == imagePrefixUrlParameter.value, true);
+    });
+
+    test(" getArtistImagePath() called", () async {
+      final artistImagePathParameter = ArtistImagePathParameter();
+      when(() => remoteConfigParametersMock.artistImagePath).thenAnswer((_) => artistImagePathParameter);
+      final value = repository.getArtistImagePath();
+      expect(value == artistImagePathParameter.value, true);
     });
   });
 }

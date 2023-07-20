@@ -19,6 +19,7 @@ class UserListItem extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onOptionsTap;
   final bool isSelected;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -40,10 +41,7 @@ class UserListItem extends StatelessWidget {
             ),
             // coverage:ignore-start
             ListImageGroup(
-              images: List.generate(
-                  songbook.totalSongs,
-                  (index) =>
-                      "https://akamai.sscdn.co/letras/250x250/fotos/8/d/f/c/8dfc6f49453dc5f678ae7d633f0eb4da.jpg"),
+              images: songbook.preview,
             ),
             // coverage:ignore-end
             const SizedBox(

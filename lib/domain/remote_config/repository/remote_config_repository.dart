@@ -19,4 +19,8 @@ abstract class RemoteConfigRepository {
   ListLimitConstants getListLimitConstants();
 
   VersionsLimitConstants getVersionsLimitConstants();
+
+  String getImagePrefixUrl();
+
+  String getArtistImagePath();
 }

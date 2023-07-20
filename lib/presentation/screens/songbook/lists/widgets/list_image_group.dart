@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class ListImageGroup extends StatelessWidget {
   const ListImageGroup({super.key, required this.images});
-  final List<String> images;
+  final List<String?> images;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,7 +27,7 @@ class _ImageGroup extends StatelessWidget {
   const _ImageGroup({
     required this.images,
   });
-  final List<String> images;
+  final List<String?> images;
   @override
   Widget build(BuildContext context) {
     return Stack(
