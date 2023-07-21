@@ -15,6 +15,14 @@ class UserSongbookDataSource {
     return query.watch(fireImmediately: true);
   }
 
+  Future<void> deleteAll() {
+    return _isar.writeTxn(
+      () async {
+        return _isar.userSongbookDtos.clear();
+      },
+    );
+  }
+
   /// Insert or update a songbook
   Future<int> insert(UserSongbookDto userSongbookDto) async {
     if (userSongbookDto.id == Isar.autoIncrement) {

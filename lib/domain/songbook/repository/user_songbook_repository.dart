@@ -9,4 +9,5 @@ abstract class UserSongbookRepository {
   Future<Songbook?> getSongbookById(int id);
   Stream<Songbook?> getSongbookStreamById(int? id);
   Future<int?> updateSongbookPreview(int songbookId, List<String?> preview);
+  Future<void> deleteAll();
 }

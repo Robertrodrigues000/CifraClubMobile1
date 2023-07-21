@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
 import 'package:cifraclub/di/navigator_module.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_user_songbooks_on_logout.dart';
 import 'package:cifraclub/domain/subscription/use_cases/watch_for_purchases.dart';
 import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.dart';
 import 'package:cifraclub/domain/user/repository/authentication_repository.dart';
@@ -37,6 +38,11 @@ void initializeWatchForPurchases() {
   watchForPurchases();
 }
 
+void initializeClearUserSongbooksOnLogout() {
+  final clearUserSongbooksOnLogout = getIt<ClearUserSongbooksOnLogout>();
+  clearUserSongbooksOnLogout();
+}
+
 /// Fix SSL certificate problems with Android 7.1.1 and below
 Future<void> applyLeHttp() async {
   if (Platform.isAndroid) {
@@ -55,6 +61,7 @@ void main() async {
   await initializeCcid();
   initializeWatchForPurchases();
   initializeWatchForSubscriptions();
+  initializeClearUserSongbooksOnLogout();
 
   runApp(const CifraClub());
 }

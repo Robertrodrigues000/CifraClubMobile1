@@ -162,4 +162,15 @@ void main() {
 
     expect(result, songbook.id);
   });
+
+  test("when deleteAll is called should call data source", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+
+    when(userSongbookDataSource.deleteAll).thenAnswer((_) => SynchronousFuture(null));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    await songbookRepository.deleteAll();
+
+    verify(userSongbookDataSource.deleteAll).called(1);
+  });
 }

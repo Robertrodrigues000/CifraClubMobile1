@@ -49,4 +49,9 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   Stream<Songbook?> getSongbookStreamById(int? id) {
     return _userSongbookDataSource.getSongbookStreamById(id).map((songbook) => songbook?.toDomain());
   }
+
+  @override
+  Future<void> deleteAll() {
+    return _userSongbookDataSource.deleteAll();
+  }
 }

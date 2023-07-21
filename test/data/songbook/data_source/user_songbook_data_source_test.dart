@@ -319,6 +319,29 @@ void main() {
     expect(updatedSongbookId, null);
   });
 
+  test("when deleteAll is called should delete all songbooks from isar", () async {
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(
+          UserSongbookDto(
+            id: 1,
+            createdAt: DateTime.now(),
+            lastUpdated: DateTime.now(),
+            name: "old",
+            type: ListTypeDto.user,
+            isPublic: false,
+            totalSongs: 0,
+            preview: const [],
+          ),
+        );
+      },
+    );
+
+    await userSongbookDataSource.deleteAll();
+
+    expect(await isar.userSongbookDtos.getSize(), 0);
+  });
+
   tearDown(() {
     isar.close(deleteFromDisk: true);
   });
