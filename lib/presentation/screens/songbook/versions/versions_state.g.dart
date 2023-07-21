@@ -19,6 +19,8 @@ abstract class _$VersionsStateCWProxy {
 
   VersionsState versionsCount(int versionsCount);
 
+  VersionsState selectedListOrderType(ListOrderType selectedListOrderType);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -32,6 +34,7 @@ abstract class _$VersionsStateCWProxy {
     bool? isPro,
     int? versionsLimit,
     int? versionsCount,
+    ListOrderType? selectedListOrderType,
   });
 }
 
@@ -60,6 +63,10 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
   VersionsState versionsCount(int versionsCount) => this(versionsCount: versionsCount);
 
   @override
+  VersionsState selectedListOrderType(ListOrderType selectedListOrderType) =>
+      this(selectedListOrderType: selectedListOrderType);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -74,6 +81,7 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
     Object? isPro = const $CopyWithPlaceholder(),
     Object? versionsLimit = const $CopyWithPlaceholder(),
     Object? versionsCount = const $CopyWithPlaceholder(),
+    Object? selectedListOrderType = const $CopyWithPlaceholder(),
   }) {
     return VersionsState(
       versions: versions == const $CopyWithPlaceholder() || versions == null
@@ -100,6 +108,10 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
           ? _value.versionsCount
           // ignore: cast_nullable_to_non_nullable
           : versionsCount as int,
+      selectedListOrderType: selectedListOrderType == const $CopyWithPlaceholder() || selectedListOrderType == null
+          ? _value.selectedListOrderType
+          // ignore: cast_nullable_to_non_nullable
+          : selectedListOrderType as ListOrderType,
     );
   }
 }

@@ -42,7 +42,8 @@ class SongbookEntry extends ScreenEntry {
         BlocProvider(create: (context) => SongbookBloc(getIt(), getIt())..init()),
         if (deviceType == DeviceType.tablet)
           BlocProvider(
-            create: (context) => VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
+            create: (context) =>
+                VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
           ),
       ], child: SongbookScreen(deviceType, getIt()));
     });

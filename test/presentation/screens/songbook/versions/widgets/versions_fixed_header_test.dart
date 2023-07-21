@@ -1,6 +1,11 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:async';
+
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/widgets/list_order_type.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,12 +17,15 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       CustomScrollView(
         slivers: [
-          const VersionsFixedHeader(
+          VersionsFixedHeader(
             isScrolledUnder: true,
             isPro: true,
             tabsCount: 100,
             tabsLimit: 100,
             tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (_) {},
+            listType: ListType.user,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -47,7 +55,7 @@ void main() {
     widgetTester.view.devicePixelRatio = 1.0;
 
     await widgetTester.pumpWidgetWithWrapper(
-      const CustomScrollView(
+      CustomScrollView(
         slivers: [
           VersionsFixedHeader(
             isScrolledUnder: true,
@@ -55,6 +63,9 @@ void main() {
             tabsCount: 100,
             tabsLimit: 100,
             tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (_) {},
+            listType: ListType.user,
           ),
         ],
       ),
@@ -74,7 +85,7 @@ void main() {
     widgetTester.view.devicePixelRatio = 1.0;
 
     await widgetTester.pumpWidgetWithWrapper(
-      const CustomScrollView(
+      CustomScrollView(
         slivers: [
           VersionsFixedHeader(
             isScrolledUnder: true,
@@ -82,6 +93,9 @@ void main() {
             tabsCount: 100,
             tabsLimit: 100,
             tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (_) {},
+            listType: ListType.user,
           ),
         ],
       ),
@@ -134,7 +148,7 @@ void main() {
 
   testWidgets("When init counter informations should show correctly", (widgetTester) async {
     await widgetTester.pumpWidgetWithWrapper(
-      const CustomScrollView(
+      CustomScrollView(
         slivers: [
           VersionsFixedHeader(
             isScrolledUnder: true,
@@ -142,6 +156,9 @@ void main() {
             tabsCount: 100,
             tabsLimit: 100,
             tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (_) {},
+            listType: ListType.user,
           ),
         ],
       ),
@@ -149,5 +166,76 @@ void main() {
 
     expect(find.text(appTextEn.increaseLimit), findsOneWidget);
     expect(find.textContaining("100/100", findRichText: true), findsOneWidget);
+  });
+
+  testWidgets("When tap in a capsule should return the tapped capsule", (widgetTester) async {
+    final completer = Completer<ListOrderType>();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      CustomScrollView(
+        slivers: [
+          VersionsFixedHeader(
+            isScrolledUnder: true,
+            isPro: false,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (orderCapsule) {
+              completer.complete(orderCapsule);
+            },
+            listType: ListType.user,
+          ),
+        ],
+      ),
+    );
+
+    await widgetTester.tap(find.byKey(Key(appTextEn.oldestOrder)));
+    await widgetTester.pumpAndSettle();
+
+    expect(completer.isCompleted, isTrue);
+    expect(await completer.future, ListOrderType.oldest);
+  });
+
+  testWidgets("When is user list should show all order options", (widgetTester) async {
+    await widgetTester.pumpWidgetWithWrapper(
+      CustomScrollView(
+        slivers: [
+          VersionsFixedHeader(
+            isScrolledUnder: true,
+            isPro: false,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (orderCapsule) {},
+            listType: ListType.user,
+          ),
+        ],
+      ),
+    );
+
+    expect(find.byType(FilterCapsule, skipOffstage: false), findsNWidgets(4));
+  });
+
+  testWidgets("When is not user list should show 3 order options", (widgetTester) async {
+    await widgetTester.pumpWidgetWithWrapper(
+      CustomScrollView(
+        slivers: [
+          VersionsFixedHeader(
+            isScrolledUnder: true,
+            isPro: false,
+            tabsCount: 100,
+            tabsLimit: 100,
+            tabsLimitState: ListLimitState.reached,
+            selectedOrderType: ListOrderType.custom,
+            onSelectedOrderType: (orderCapsule) {},
+            listType: ListType.recents,
+          ),
+        ],
+      ),
+    );
+
+    expect(find.byType(FilterCapsule, skipOffstage: false), findsNWidgets(3));
   });
 }

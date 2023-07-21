@@ -208,6 +208,10 @@
     "views": "vistas",
     "emptyListTitle": "Sin canciones",
     "emptyListDescription": "Buscar para agregar canciones a esta lista.",
+
+    "recentOrder": "Reciente",
+    "customOrder": "Costumbre",
+    "oldestOrder": "Más Antígua",
     "disc": "Disco {index}",
     "@disc": {
         "placeholders": {

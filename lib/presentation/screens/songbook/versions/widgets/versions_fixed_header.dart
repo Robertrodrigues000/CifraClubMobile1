@@ -1,6 +1,10 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/version_limit_card.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/widgets/list_order_type.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:flutter/material.dart';
 
 class VersionsFixedHeader extends StatefulWidget {
@@ -11,12 +15,18 @@ class VersionsFixedHeader extends StatefulWidget {
     required this.tabsLimitState,
     required this.tabsCount,
     required this.tabsLimit,
+    required this.selectedOrderType,
+    required this.onSelectedOrderType,
+    required this.listType,
   });
   final bool isScrolledUnder;
   final bool isPro;
   final ListLimitState tabsLimitState;
   final int tabsCount;
   final int tabsLimit;
+  final ListOrderType selectedOrderType;
+  final Function(ListOrderType) onSelectedOrderType;
+  final ListType listType;
 
   @override
   State<VersionsFixedHeader> createState() => _VersionsFixedHeaderState();
@@ -39,14 +49,11 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
       delegate: VersionFixedHeaderDelegate(
         maxExtend: heightFixedHeader,
         child: Padding(
-          padding: EdgeInsets.only(
-            bottom: context.appDimensionScheme.screenMargin,
-            left: context.appDimensionScheme.screenMargin,
-            right: context.appDimensionScheme.screenMargin,
-          ),
+          padding: EdgeInsets.only(bottom: context.appDimensionScheme.screenMargin),
           child: Column(
             children: [
-              SizedBox(
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
                 height: 50,
                 child: VersionLimitCard(
                   isPro: widget.isPro,
@@ -58,10 +65,19 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
                 ),
               ),
               SizedBox(height: context.appDimensionScheme.screenMargin),
-              Container(
-                height: 32,
-                color: Colors.purpleAccent,
-              )
+              FilterCapsuleList(
+                alignment: Alignment.center,
+                capsulePadding: const EdgeInsets.symmetric(horizontal: 8),
+                filters: [
+                  ...ListOrderType.getValuesByListType(widget.listType)
+                      .map((order) => Filter(
+                            label: order.getName(context),
+                            onTap: () => widget.onSelectedOrderType(order),
+                            isSelected: order == widget.selectedOrderType,
+                          ))
+                      .toList()
+                ],
+              ),
             ],
           ),
         ),

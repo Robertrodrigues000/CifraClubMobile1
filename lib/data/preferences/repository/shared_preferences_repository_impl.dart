@@ -14,10 +14,21 @@ class SharedPreferencesRepositoryImpl extends SharedPreferencesRepository {
   bool? getBool(SharedPreferencesKeys preferencesKeys) {
     return _prefs.getBool(preferencesKeys.key);
   }
+
+  @override
+  Future<bool> setString(SharedPreferencesKeys preferencesKeys, String value) {
+    return _prefs.setString(preferencesKeys.key, value);
+  }
+
+  @override
+  String? getString(SharedPreferencesKeys preferencesKeys) {
+    return _prefs.getString(preferencesKeys.key);
+  }
 }
 
 enum SharedPreferencesKeys {
-  pro("PRO_KEY");
+  pro("PRO_KEY"),
+  orderType("LAST_FILTER");
 
   final String key;
   const SharedPreferencesKeys(this.key);

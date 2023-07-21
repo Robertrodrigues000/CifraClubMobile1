@@ -88,7 +88,6 @@ class _VersionsScreenState extends State<VersionsScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: CosmosAppBar(
-            title: Text(context.text.lists, style: context.typography.title3),
             toolbarHeight: context.appDimensionScheme.appBarHeight,
             automaticallyImplyLeading: false,
             extendsUnderScroll: _searchHeight.toInt(),
@@ -222,6 +221,9 @@ class _VersionsScreenState extends State<VersionsScreen> {
                 tabsCount: state.versionsCount,
                 tabsLimit: state.versionsLimit,
                 tabsLimitState: state.versionLimitState,
+                selectedOrderType: state.selectedListOrderType,
+                onSelectedOrderType: _bloc.onSelectedOrderType,
+                listType: state.songbook?.type ?? ListType.recents,
               ),
               SliverList(
                 delegate: SliverChildBuilderDelegate(

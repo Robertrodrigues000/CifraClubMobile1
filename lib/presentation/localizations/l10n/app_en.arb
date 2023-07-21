@@ -266,6 +266,10 @@
     "views": "views",
     "emptyListTitle": "No songs",
     "emptyListDescription": "Search to add songs to this list.",
+
+    "recentOrder": "Recent",
+    "customOrder": "Custom",
+    "oldestOrder": "Oldest",
     "disc": "Disc {index}",
     "@disc": {
         "placeholders": {

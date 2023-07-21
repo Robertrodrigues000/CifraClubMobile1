@@ -208,6 +208,10 @@
     "views": "vizualizações",
     "emptyListTitle": "Sem músicas",
     "emptyListDescription": "Faça uma busca para adicionar músicas a essa lista.",
+
+    "recentOrder": "Recentes",
+    "customOrder": "Personalizado",
+    "oldestOrder": "Mais Antigas",
     "disc": "Disco {index}",
     "@disc": {
         "placeholders": {

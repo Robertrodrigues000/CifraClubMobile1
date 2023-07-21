@@ -3,11 +3,11 @@ import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
 
-Version getFakeVersion({int? versionId}) {
+Version getFakeVersion({int? versionId, String? name, int? remoteDatabaseID, int? localDatabaseID}) {
   return Version(
-    localDatabaseID: faker.randomGenerator.integer(100),
-    remoteDatabaseID: faker.randomGenerator.integer(100),
-    name: faker.animal.name(),
+    localDatabaseID: localDatabaseID ?? faker.randomGenerator.integer(100),
+    remoteDatabaseID: remoteDatabaseID ?? faker.randomGenerator.integer(100),
+    name: name ?? faker.animal.name(),
     songUrl: faker.address.city(),
     tone: faker.vehicle.model(),
     type: faker.randomGenerator.integer(4),

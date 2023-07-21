@@ -3,4 +3,6 @@ import 'package:cifraclub/data/preferences/repository/shared_preferences_reposit
 abstract class SharedPreferencesRepository {
   Future<bool> setBool(SharedPreferencesKeys preferencesKeys, bool value);
   bool? getBool(SharedPreferencesKeys preferencesKeys);
+  Future<bool> setString(SharedPreferencesKeys preferencesKeys, String value);
+  String? getString(SharedPreferencesKeys preferencesKeys);
 }

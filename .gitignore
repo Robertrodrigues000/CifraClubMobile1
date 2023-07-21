@@ -59,3 +59,7 @@ android/fastlane/Preview.html
 android/fastlane/screenshots
 android/fastlane/test_output
 cifraclub_secret_file.json
+
+# Isar temp
+*_tmp.isar
+*_tmp.isar.lock

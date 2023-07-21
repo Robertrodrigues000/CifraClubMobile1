@@ -7,20 +7,24 @@ import 'package:flutter/material.dart';
 class FilterCapsuleList extends StatelessWidget {
   final List<Filter> filters;
   final EdgeInsets capsulePadding;
+  final Alignment? alignment;
   const FilterCapsuleList({
     super.key,
     required this.filters,
     this.capsulePadding = EdgeInsets.zero,
     this.scrollController,
+    this.alignment,
   });
 
   final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: 32 + capsulePadding.vertical,
+      alignment: alignment,
       child: ListView.builder(
+        shrinkWrap: alignment == null ? false : true,
         scrollDirection: Axis.horizontal,
         itemCount: filters.length,
         controller: scrollController,

@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/widgets/list_order_type.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 
 part 'versions_state.g.dart';
@@ -13,6 +14,7 @@ class VersionsState {
   final bool isPro;
   final int versionsLimit;
   final int versionsCount;
+  final ListOrderType selectedListOrderType;
 
   const VersionsState({
     this.versions = const [],
@@ -21,5 +23,6 @@ class VersionsState {
     this.isPro = false,
     this.versionsLimit = 0,
     this.versionsCount = 0,
+    this.selectedListOrderType = ListOrderType.custom,
   });
 }

@@ -130,13 +130,15 @@ class _ListsScreenState extends State<ListsScreen> {
               SpecialLists(
                 lists: state.specialLists,
                 selectedSongbookId: widget.selectedSongbookId,
+                onTap: widget.onTapSongbook,
               ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: context.appDimensionScheme.screenMargin,
-                      right: context.appDimensionScheme.screenMargin,
-                      top: 36),
+                    left: context.appDimensionScheme.screenMargin,
+                    right: context.appDimensionScheme.screenMargin,
+                    top: 36,
+                  ),
                   child: Text(
                     context.text.newlyCreated,
                     style: context.typography.title3,

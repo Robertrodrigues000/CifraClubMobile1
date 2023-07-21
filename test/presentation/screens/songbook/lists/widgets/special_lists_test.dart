@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_list_item.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
@@ -22,6 +25,7 @@ void main() {
         child: CustomScrollView(slivers: [
           SpecialLists(
             lists: songbooks,
+            onTap: (_) {},
           ),
         ]),
       ),
@@ -40,6 +44,7 @@ void main() {
         child: CustomScrollView(slivers: [
           SpecialLists(
             lists: songbooks,
+            onTap: (_) {},
           ),
         ]),
       ),
@@ -56,5 +61,30 @@ void main() {
           description: 'widget with recents icon',
         ),
         findsOneWidget);
+  });
+
+  testWidgets("When in a songbook should return songbook tapped", (widgetTester) async {
+    final songbooks = [
+      getFakeSongbook(listType: ListType.recents),
+      getFakeSongbook(listType: ListType.favorites),
+    ];
+    final completer = Completer<Songbook>();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      CustomScrollView(slivers: [
+        SpecialLists(
+          lists: songbooks,
+          onTap: (songbook) {
+            completer.complete(songbook);
+          },
+        ),
+      ]),
+    );
+
+    expect(find.byType(SpecialListItem), findsNWidgets(2));
+
+    await widgetTester.tap(find.byType(SpecialListItem).first);
+
+    expect(await completer.future, songbooks.first);
   });
 }

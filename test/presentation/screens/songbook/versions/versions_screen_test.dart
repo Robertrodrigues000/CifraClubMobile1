@@ -123,7 +123,7 @@ void main() {
     expect(find.byType(CosmosSearchBar), findsNothing);
     expect(find.byType(VersionsCollapsedHeader), findsOneWidget);
     expect(find.byType(VersionsFixedHeader), findsOneWidget);
-    expect(find.byType(VersionTile), findsNWidgets(2));
+    expect(find.byType(VersionTile, skipOffstage: false), findsNWidgets(2));
   });
 
   testWidgets('When start and sonbook is private should not show share icon should omit the share icon',
