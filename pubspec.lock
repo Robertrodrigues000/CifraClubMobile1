@@ -914,8 +914,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.0"
-      resolved-ref: af65de597608132eee4dd0fe248b3a266307c79c
+      ref: "1.0.2"
+      resolved-ref: "34f579552ed3f5953a91ba2e10aa6883cf2e57a5"
       url: "git@github.com:CifraClub/flutter_nav.git"
     source: git
     version: "1.0.0"

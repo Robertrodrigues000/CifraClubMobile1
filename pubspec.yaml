@@ -54,7 +54,7 @@ dependencies:
   nav:
     git:
       url: "git@github.com:CifraClub/flutter_nav.git"
-      ref: "1.0.0"
+      ref: "1.0.2"
   network_image_mock: ^2.1.1
   ntp: ^2.0.0
   path_provider: ^2.0.12
