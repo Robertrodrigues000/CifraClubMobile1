@@ -2,10 +2,10 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_state.dart';
+import 'package:cifraclub/presentation/screens/album/widgets/album_header.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,13 +34,25 @@ class _AlbumScreenState extends State<AlbumScreen> {
       bloc: _bloc,
       builder: (context, state) {
         return Scaffold(
-          appBar: CosmosAppBar(
-            title: Text(widget.name),
-          ),
           body: CustomScrollView(
             controller: _scrollController,
             slivers: [
-              //todo: album header
+              AlbumHeader(
+                scrollController: _scrollController,
+                maxOffset: context.appDimensionScheme.albumHeaderHeight - context.appDimensionScheme.appBarHeight,
+                // coverage:ignore-start
+                onShare: () {},
+                // coverage:ignore-end
+                artistName: state.album?.artistName ?? "",
+                albumName: state.album?.title ?? "",
+                image: state.album?.image?.thumb ?? "",
+                color: state.album?.image?.color ?? "",
+                isLoading: state.isLoading,
+                isError: state.error != null,
+                albumThumbSize: context.appDimensionScheme.albumHeaderThumbHeight,
+                totalSongs: state.album?.totalSongs ?? 0,
+                releaseYear: state.album?.releaseYear,
+              ),
               if (state.isLoading)
                 SliverToBoxAdapter(
                   child: Column(
@@ -108,12 +120,16 @@ class _AlbumScreenState extends State<AlbumScreen> {
                       },
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: context.appDimensionScheme.highlightCardBorderRadius,
-                    ),
+                ],
+                const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: SizedBox(),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: context.appDimensionScheme.albumHeaderHeight - context.appDimensionScheme.appBarHeight,
                   ),
-                ]
+                ),
               ]
             ],
           ),

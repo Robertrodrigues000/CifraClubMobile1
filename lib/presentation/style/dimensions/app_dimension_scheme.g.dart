@@ -75,6 +75,10 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme iconTileSpace(double iconTileSpace);
 
+  AppDimensionScheme albumHeaderThumbHeight(double albumHeaderThumbHeight);
+
+  AppDimensionScheme albumHeaderHeight(double albumHeaderHeight);
+
   AppDimensionScheme artistSongItemRightMargin(double artistSongItemRightMargin);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -118,6 +122,8 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? appBarLeadingWidth,
     int? albumsPerRow,
     double? iconTileSpace,
+    double? albumHeaderThumbHeight,
+    double? albumHeaderHeight,
     double? artistSongItemRightMargin,
   });
 }
@@ -247,6 +253,13 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme iconTileSpace(double iconTileSpace) => this(iconTileSpace: iconTileSpace);
 
   @override
+  AppDimensionScheme albumHeaderThumbHeight(double albumHeaderThumbHeight) =>
+      this(albumHeaderThumbHeight: albumHeaderThumbHeight);
+
+  @override
+  AppDimensionScheme albumHeaderHeight(double albumHeaderHeight) => this(albumHeaderHeight: albumHeaderHeight);
+
+  @override
   AppDimensionScheme artistSongItemRightMargin(double artistSongItemRightMargin) =>
       this(artistSongItemRightMargin: artistSongItemRightMargin);
 
@@ -293,6 +306,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? appBarLeadingWidth = const $CopyWithPlaceholder(),
     Object? albumsPerRow = const $CopyWithPlaceholder(),
     Object? iconTileSpace = const $CopyWithPlaceholder(),
+    Object? albumHeaderThumbHeight = const $CopyWithPlaceholder(),
+    Object? albumHeaderHeight = const $CopyWithPlaceholder(),
     Object? artistSongItemRightMargin = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
@@ -440,6 +455,14 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.iconTileSpace
           // ignore: cast_nullable_to_non_nullable
           : iconTileSpace as double,
+      albumHeaderThumbHeight: albumHeaderThumbHeight == const $CopyWithPlaceholder() || albumHeaderThumbHeight == null
+          ? _value.albumHeaderThumbHeight
+          // ignore: cast_nullable_to_non_nullable
+          : albumHeaderThumbHeight as double,
+      albumHeaderHeight: albumHeaderHeight == const $CopyWithPlaceholder() || albumHeaderHeight == null
+          ? _value.albumHeaderHeight
+          // ignore: cast_nullable_to_non_nullable
+          : albumHeaderHeight as double,
       artistSongItemRightMargin:
           artistSongItemRightMargin == const $CopyWithPlaceholder() || artistSongItemRightMargin == null
               ? _value.artistSongItemRightMargin

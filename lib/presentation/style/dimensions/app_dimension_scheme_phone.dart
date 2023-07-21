@@ -51,5 +51,9 @@ const appDimensionSchemePhone = AppDimensionScheme(
   albumsPerRow: 2,
 
   iconTileSpace: 4,
+
+  //Album Detail
+  albumHeaderThumbHeight: 80,
+  albumHeaderHeight: 168,
   artistSongItemRightMargin: 4,
 );

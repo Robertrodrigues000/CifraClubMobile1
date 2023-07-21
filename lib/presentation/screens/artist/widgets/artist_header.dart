@@ -56,7 +56,7 @@ class _ArtistHeaderState extends State<ArtistHeader> {
 
     if (currentOffset <= widget.maxOffset || isScrolledUnder != oldIsScrollUnder) {
       setState(() {
-        _expandedOpacity = isScrolledUnder ? 0.0 : 1.0 - scrollPercentage;
+        _expandedOpacity = isScrolledUnder ? 0.0 : 1.0 - Curves.easeOutCirc.transform(scrollPercentage);
         _collapsedOpacity = isScrolledUnder ? 1.0 : 1.0 - _expandedOpacity;
       });
     }
@@ -139,7 +139,7 @@ class _ArtistHeaderState extends State<ArtistHeader> {
                 ),
               ),
               SizedBox(
-                width: context.appDimensionScheme.screenMargin,
+                width: context.appDimensionScheme.appBarMargin,
               ),
             ]
           : null,
@@ -168,7 +168,8 @@ class _ArtistHeaderState extends State<ArtistHeader> {
           ),
         ),
         background: widget.isLoading
-            ? const ArtistHeaderPlaceholder(placeholder: AppWebp.largePlaceholder)
+            ? HeaderPlaceholder(
+                height: context.appDimensionScheme.artistHeaderHeight, placeholder: AppWebp.largePlaceholder)
             : RemoteImage(
                 // coverage:ignore-start
                 imageUrl: widget.image,
@@ -198,9 +199,11 @@ class _ArtistHeaderState extends State<ArtistHeader> {
                     ),
                   );
                 },
-                placeholder: const ArtistHeaderPlaceholder(placeholder: AppWebp.artistPlaceholder),
+                placeholder: HeaderPlaceholder(
+                    height: context.appDimensionScheme.artistHeaderHeight, placeholder: AppWebp.artistPlaceholder),
                 errorWidget: !widget.isLoading
-                    ? (context, _, __) => const ArtistHeaderPlaceholder(placeholder: AppWebp.artistPlaceholder)
+                    ? (context, _, __) => HeaderPlaceholder(
+                        height: context.appDimensionScheme.artistHeaderHeight, placeholder: AppWebp.artistPlaceholder)
                     : null,
                 // coverage:ignore-end
               ),

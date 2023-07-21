@@ -220,5 +220,6 @@
                 "example": "1"
             }
         }
-    }
+    },
+    "albumOf":"Álbum de"
 }

@@ -74,7 +74,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
             slivers: [
               ArtistHeader(
                 scrollController: _scrollController,
-                maxOffset: context.appDimensionScheme.artistHeaderHeight - 56,
+                maxOffset: context.appDimensionScheme.artistHeaderHeight - context.appDimensionScheme.appBarHeight,
                 isLoading: state.isLoading,
                 isFavorite: state.isFavorite,
                 onFavorite: () {
