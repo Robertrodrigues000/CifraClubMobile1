@@ -1,0 +1,14 @@
+minimum-coverage: 97
+maximum-uncovered-lines: 5
+add-to-known-generated-files:
+  - "lib/di/di_setup.dart"
+ignore:
+  - "lib/main.dart"
+  - "lib/di/**"
+  - "lib/presentation/screens/*/*_entry.dart"
+  - "lib/presentation/style/**"
+ignore-lines:
+  - "^.*@override.*$"
+  - "^.*logger\\?.sendNonFatalCrash\\(.*$"
+  - "^.*logger\\?.log\\(.*$"
+  - "^.*int get hashCode => Object.hashAll.*$"

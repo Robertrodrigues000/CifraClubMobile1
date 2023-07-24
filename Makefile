@@ -26,7 +26,8 @@ png-to-webp:
 	find assets/images -name '*.png' | awk -F ".png" '{printf "%s\n", $$1}' | xargs -I% bash -c 'cwebp -q 80 %.png -o %.webp && rm %.png'
 
 coverage-result:
-	git diff origin/development | flutter pub run pull_request_coverage --minimum-coverage 97 --maximum-uncovered-lines 5
+	dart pub global activate pull_request_coverage 2.1.0
+	git diff origin/development | pull_request_coverage
 	flutter pub run dlcov --exclude-files $COVERAGE_EXCLUDE_FILES --exclude-suffix=$COVERAGE_EXCLUDE_FILES_SUFFIX
 
 generate-localization:

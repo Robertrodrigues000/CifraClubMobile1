@@ -1135,14 +1135,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  pull_request_coverage:
-    dependency: "direct dev"
-    description:
-      name: pull_request_coverage
-      sha256: "42693b0e7d211c78b15a24816e7b5010ee8ac56bea4435185ef68be911ad999b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6+1"
   quiver:
     dependency: "direct main"
     description:

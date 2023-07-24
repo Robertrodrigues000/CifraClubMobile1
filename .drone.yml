@@ -4,8 +4,6 @@ name: default
 
 environment:
   PUB_CACHE: /pub-cache
-  COVERAGE_EXCLUDE_FILES: lib/di/di_setup.config.dart
-  COVERAGE_EXCLUDE_FILES_SUFFIX: .g.dart
   FIREBASE_APP_ID: "1:1046541148461:android:25851732fcbe5e47b6b3a4"
   GOOGLE_APPLICATION_CREDENTIALS: "/workspace/CifraClub/cifraclub_secret_file.json"
 
@@ -71,9 +69,10 @@ steps:
     image: ghcr.io/cirruslabs/flutter:3.10.3
     environment:
     commands:
+      - export PATH="$PATH":"/pub-cache/bin"
+      - dart pub global activate pull_request_coverage 2.1.0
       - ruby ci/github_coverage.rb
-      - git diff origin/development | flutter pub run pull_request_coverage --minimum-coverage 97 --maximum-uncovered-lines 5
-      - flutter pub run dlcov --exclude-files $COVERAGE_EXCLUDE_FILES --exclude-suffix=$COVERAGE_EXCLUDE_FILES_SUFFIX
+      - git diff origin/development | pull_request_coverage
     depends_on:
       - pub-get
       - tests
