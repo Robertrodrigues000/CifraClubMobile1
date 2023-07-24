@@ -12,11 +12,13 @@ class ArtistSongsEntry extends ScreenEntry {
   static const name = "ArtistSongsEntry";
   static const artistUrlParamKey = "artistUrl";
   static const instrumentParamKey = "instrument";
+  static const artistNameParamKey = "artistName";
 
   ArtistSongsEntry(super.params);
 
   String? get artistUrl => params[artistUrlParamKey];
   String? get instrument => params[instrumentParamKey];
+  String? get artistName => params[artistNameParamKey];
 
   @override
   String get screenName => name;
@@ -29,7 +31,7 @@ class ArtistSongsEntry extends ScreenEntry {
     Instrument? instrumentFilter = instrument?.isNotEmpty == true ? Instrument.values.byName(instrument!) : null;
     return BlocProvider(
       create: (context) => ArtistSongsBloc(getIt())..init(instrumentFilter, artistUrl),
-      child: const ArtistSongsScreen(),
+      child: ArtistSongsScreen(artistName: artistName ?? ""),
     );
   }
 }

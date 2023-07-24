@@ -9,9 +9,10 @@ import 'package:typed_result/typed_result.dart';
 class ArtistSongsBloc extends Cubit<ArtistSongsState> {
   final GetArtistVideoLessons _getArtistVideoLessons;
 
-  ArtistSongsBloc(this._getArtistVideoLessons) : super(ArtistSongsState(artistName: "Artist name"));
+  ArtistSongsBloc(this._getArtistVideoLessons) : super(ArtistSongsState());
 
   Future<void> init(Instrument? instrument, String? artistUrl) async {
+    emit(state.copyWith(instrument: instrument));
     await getVideoLessons(instrument, artistUrl ?? "");
   }
 

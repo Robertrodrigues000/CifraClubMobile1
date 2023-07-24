@@ -185,7 +185,6 @@
     "deleteVersionOption": "Eliminar cifrado",
     "versionOptionsBottomSheet": "Opciones de cifrado",
     "deleteVersionDialogDescription": "¿Seguro que quieres eliminar este cifrado?",
-
     "instrumentGuitar" : "Guitarra",
     "instrumentKeyboard" : "Teclado",
     "instrumentBass" : "Bajo",
@@ -221,6 +220,18 @@
             }
         }
     },
-    "albumOf":"Álbum de"
-
+    "albumOf":"Álbum de",
+    "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{musica}other{musicas}} • {filter}",
+    "@artistTotalSongsAndFilter": {
+        "placeholders": {
+            "totalSongs": {
+                "type" : "int",
+                "example" : "1"
+            },
+            "filter": {
+                "type": "String",
+                "example": "Bass"
+            }
+        }
+    }
 }

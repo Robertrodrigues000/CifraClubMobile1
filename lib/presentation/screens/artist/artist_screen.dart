@@ -172,6 +172,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                       // coverage:ignore-start
                       onPressed: () {
                         Nav.of(context).push(screenName: ArtistSongsEntry.name, params: {
+                          ArtistSongsEntry.artistNameParamKey: widget.name,
                           ArtistSongsEntry.artistUrlParamKey: state.artistInfo?.url ?? "",
                           ArtistSongsEntry.instrumentParamKey: state.selectedInstrument?.name ?? "",
                         });

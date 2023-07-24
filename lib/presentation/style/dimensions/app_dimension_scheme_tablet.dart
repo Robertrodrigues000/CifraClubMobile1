@@ -55,4 +55,5 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   albumHeaderThumbHeight: 140,
   albumHeaderHeight: 268,
   artistSongItemRightMargin: 12,
+  artistSongsHeaderSpace: 16,
 );

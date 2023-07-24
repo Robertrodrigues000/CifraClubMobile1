@@ -240,7 +240,6 @@
     "deleteVersionOption": "Delete tab",
     "versionOptionsBottomSheet": "Tab options",
     "deleteVersionDialogDescription": "Are you sure you want to delete this tab?",
-
     "instrumentGuitar" : "Guitar",
     "instrumentUkulele" : "Ukulele",
     "instrumentKeyboard" : "Keyboard",
@@ -279,6 +278,18 @@
             }
         }
     },
-    "albumOf":"Album of"
-
+    "albumOf":"Album of",
+    "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{song}other{songs}} • {filter}",
+    "@artistTotalSongsAndFilter": {
+        "placeholders": {
+            "totalSongs": {
+                "type" : "int",
+                "example" : "1"
+            },
+            "filter": {
+                "type": "String",
+                "example": "Bass"
+            }
+        }
+    }
 }

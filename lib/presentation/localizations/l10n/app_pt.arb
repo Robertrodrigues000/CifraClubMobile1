@@ -185,7 +185,6 @@
     "deleteVersionOption": "Excluir cifra",
     "versionOptionsBottomSheet": "Opções da cifra",
     "deleteVersionDialogDescription": "Tem certeza que deseja excluir esta cifra?",
-
     "instrumentGuitar" : "Violão & Guitarra",
     "instrumentKeyboard" : "Teclado",
     "instrumentBass" : "Baixo",
@@ -221,5 +220,18 @@
             }
         }
     },
-    "albumOf":"Álbum de"
+    "albumOf":"Álbum de",
+    "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{música}other{músicas}}  • {filter}",
+    "@artistTotalSongsAndFilter": {
+        "placeholders": {
+            "totalSongs": {
+                "type" : "int",
+                "example" : "1"
+            },
+            "filter": {
+                "type": "String",
+                "example": "Bass"
+            }
+        }
+    }
 }
