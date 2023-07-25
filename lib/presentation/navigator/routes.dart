@@ -15,6 +15,7 @@ import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_entry.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:nav/nav.dart';
 
 final List<NavRoute> routes = [
@@ -81,5 +82,9 @@ final List<NavRoute> routes = [
   NavRoute(
     AlbumEntry.name,
     (params, _) => AlbumEntry(params),
+  ),
+  NavRoute(
+    VersionEntry.name,
+    (params, _) => VersionEntry(params),
   ),
 ];

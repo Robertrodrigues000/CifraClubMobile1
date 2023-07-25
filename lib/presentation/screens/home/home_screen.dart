@@ -15,6 +15,7 @@ import 'package:cifraclub/presentation/bottom_sheets/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cifraclub/presentation/widgets/genres_capsule/genres_capsule.dart';
@@ -110,7 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       HomeTopSongs(
                         topSongs: state.topSongs,
-                        onTap: (song) {},
+                        onTap: (song) => VersionEntry.pushFromSong(
+                          Nav.of(context),
+                          song.artist?.url ?? "",
+                          song.url,
+                        ),
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       HomeButton(

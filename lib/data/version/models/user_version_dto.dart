@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable
 import 'package:cifraclub/data/version/models/user_version_artist_dto.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
