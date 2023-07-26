@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class VersionsEntry extends ScreenEntry {
-  static const name = "VersionsEntry";
+  static const name = "Versions";
   static const songbookIdKey = "songbookIdKey";
   static const userIdKey = "userIdKey";
 

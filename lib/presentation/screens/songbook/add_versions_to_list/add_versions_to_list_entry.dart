@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class AddVersionsToListEntry extends ScreenEntry {
-  static const name = "addVersionsToList";
+  static const name = "AddVersionsToList";
   static const songbookIdKey = "songbookIdKey";
 
   static Map<String, String> declareParams(int songbookId) {

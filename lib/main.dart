@@ -10,10 +10,10 @@ import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.
 import 'package:cifraclub/domain/user/repository/authentication_repository.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
-import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
 import 'package:cifraclub/presentation/screens/more/more_entry.dart';
+import 'package:cifraclub/presentation/screens/search/search_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_entry.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
@@ -103,7 +103,7 @@ class CifraClub extends StatelessWidget {
               param1: NavConstructorParams(firstScreen: SongbookEntry({}), restorationId: 'BottomNav2'),
             ),
             getIt(
-              param1: NavConstructorParams(firstScreen: DevScreenEntry({}), restorationId: 'BottomNav3'),
+              param1: const NavConstructorParams(firstScreen: SearchEntry({}), restorationId: 'BottomNav3'),
             ),
             getIt(
               param1: NavConstructorParams(firstScreen: AcademyEntry({}), restorationId: 'BottomNav4'),

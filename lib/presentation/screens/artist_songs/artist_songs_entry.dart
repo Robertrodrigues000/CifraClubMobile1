@@ -9,7 +9,7 @@ import 'package:nav/nav.dart';
 import 'package:cifraclub/di/di_setup.dart';
 
 class ArtistSongsEntry extends ScreenEntry {
-  static const name = "ArtistSongsEntry";
+  static const name = "ArtistSongs";
   static const artistUrlParamKey = "artistUrl";
   static const instrumentParamKey = "instrument";
   static const artistNameParamKey = "artistName";

@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class SongbookEntry extends ScreenEntry {
-  static const name = "SongbookEntry";
+  static const name = "Songbook";
 
   SongbookEntry(super.params);
 

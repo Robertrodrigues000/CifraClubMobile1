@@ -8,6 +8,7 @@ import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
 import 'package:cifraclub/presentation/screens/home/home_entry.dart';
+import 'package:cifraclub/presentation/screens/search/search_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.dart';
 import 'package:cifraclub/presentation/screens/more/more_entry.dart';
@@ -82,6 +83,10 @@ final List<NavRoute> routes = [
   NavRoute(
     AlbumEntry.name,
     (params, _) => AlbumEntry(params),
+  ),
+  NavRoute(
+    SearchEntry.name,
+    (params, _) => SearchEntry(params),
   ),
   NavRoute(
     VersionEntry.name,

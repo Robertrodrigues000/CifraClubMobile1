@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class HomeEntry extends ScreenEntry {
-  static const name = "home";
+  static const name = "Home";
 
   HomeEntry(super.params);
 

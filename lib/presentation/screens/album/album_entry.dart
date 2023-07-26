@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class AlbumEntry extends ScreenEntry {
-  static const name = "AlbumEntry";
+  static const name = "Album";
   static const artistUrlParamKey = "artistUrl";
   static const albumUrlParamKey = "albumUrl";
   static const albumNameParamKey = "albumName";

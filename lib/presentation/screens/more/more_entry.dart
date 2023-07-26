@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class MoreEntry extends ScreenEntry {
-  static const name = "more";
+  static const name = "More";
 
   MoreEntry(super.params);
 

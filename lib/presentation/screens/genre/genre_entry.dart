@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GenreEntry extends ScreenEntry {
-  static const name = "genre";
+  static const name = "Genre";
   static const genreUrlParamKey = "genreUrlParamKey";
   static const genreNameParamKey = "genreNameParamKey";
 

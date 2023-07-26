@@ -17,7 +17,7 @@ dependencies:
   cosmos:
     git:
       url: "git@github.com:CifraClub/CosmosMobile.git"
-      ref: "5d3c0f15924e08c59ff32871d9c3110547da234c"
+      ref: "3c0359d1693f2e9ae059fafb257718e2d6683577"
   crypto: ^3.0.2
   cupertino_icons: ^1.0.5
   device_info_plus: ^8.1.0
