@@ -9,7 +9,7 @@ class UserVersionDataSource {
     this._isar,
   );
 
-  Future<List<int>> addVersionsToSongbook(List<UserVersionDto> userVersionDtos) async {
+  Future<List<int>> putVersionsToSongbook(List<UserVersionDto> userVersionDtos) async {
     return _isar.writeTxn(
       () async {
         return _isar.userVersionDtos.putAll(userVersionDtos);
@@ -17,7 +17,7 @@ class UserVersionDataSource {
     );
   }
 
-  Future<List<int>> addVersionsToRecentSongbook(List<UserRecentVersionDto> userVersionDtos) async {
+  Future<List<int>> putVersionsToRecentSongbook(List<UserRecentVersionDto> userVersionDtos) async {
     return _isar.writeTxn(
       () async {
         return _isar.userRecentVersionDtos.putAll(userVersionDtos);

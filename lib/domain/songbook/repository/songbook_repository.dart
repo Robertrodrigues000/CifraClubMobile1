@@ -27,4 +27,5 @@ abstract class SongbookRepository {
     required int songbookId,
     required SongbookVersionInput versionInput,
   });
+  Future<Result<void, RequestError>> sortVersionFromSongbook({required int songbookId, required List<int> versionsId});
 }

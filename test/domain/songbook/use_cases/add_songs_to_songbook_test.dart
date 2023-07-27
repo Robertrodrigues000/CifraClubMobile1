@@ -25,7 +25,7 @@ void main() {
   test("When call use case and request is successful should return songs and add to local db", () async {
     final songs = [getFakeVersion()];
     when(() => userCifraRepository.deleteVersionsBySongbookId(1)).thenAnswer((_) => SynchronousFuture(1));
-    when(() => userCifraRepository.addVersionToSongbook(songs, 1))
+    when(() => userCifraRepository.addVersionsToSongbook(songs, 1))
         .thenAnswer((_) => SynchronousFuture([songs.first.localDatabaseID!]));
     when(() => songbookRepository.addVersionsToSongbook(versionsInput: any(named: "versionsInput"), songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Ok(songs)));
@@ -36,7 +36,7 @@ void main() {
     expect(result.get(), songs);
 
     verify(() => userCifraRepository.deleteVersionsBySongbookId(1)).called(1);
-    verify(() => userCifraRepository.addVersionToSongbook(songs, 1)).called(1);
+    verify(() => userCifraRepository.addVersionsToSongbook(songs, 1)).called(1);
   });
 
   test("When call use case and request fails should return request error", () async {
@@ -50,6 +50,6 @@ void main() {
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
 
     verifyNever(() => userCifraRepository.deleteVersionsBySongbookId(any()));
-    verifyNever(() => userCifraRepository.addVersionToSongbook(any(), any()));
+    verifyNever(() => userCifraRepository.addVersionsToSongbook(any(), any()));
   });
 }

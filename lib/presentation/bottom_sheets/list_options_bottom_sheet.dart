@@ -80,7 +80,7 @@ class ListOptionsBottomSheet {
     if (songbook.id == null || ccid == null || !songbook.isPublic) {
       options.removeWhere((element) => element == ListOptionsBottomSheetItem.share);
     }
-    if (haveEditMode == false) {
+    if (!haveEditMode) {
       options.removeWhere((element) => element == ListOptionsBottomSheetItem.edit);
     }
 

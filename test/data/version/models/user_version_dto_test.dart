@@ -21,6 +21,7 @@ void main() {
       artistImage: "123",
       artist: UserVersionArtistDto(id: 1, name: "telo", color: "#FFFFFF", url: "https"),
       versionId: 10,
+      order: 11,
     );
     final version = userVersionDto.toDomain();
 
@@ -39,23 +40,24 @@ void main() {
     expect(version.artist.image!.color, "#FFFFFF");
     expect(version.artist.image!.size162, "123");
     expect(version.versionId, 10);
+    expect(version.order, 11);
   });
 
   test("When `fromDomain` is called should convert correctly to VersionDto", () {
     final artist = getFakeArtist();
     final version = Version(
-      songId: 1,
-      type: 2,
-      name: "name",
-      songUrl: "songUrl",
-      capo: 3,
-      stdTone: "A",
-      tone: "B",
-      tuning: "AB",
-      artist: artist,
-      remoteDatabaseID: 5,
-      versionId: 12,
-    );
+        songId: 1,
+        type: 2,
+        name: "name",
+        songUrl: "songUrl",
+        capo: 3,
+        stdTone: "A",
+        tone: "B",
+        tuning: "AB",
+        artist: artist,
+        remoteDatabaseID: 5,
+        versionId: 12,
+        order: 10);
     final userVersionDto = UserVersionDto.fromDomain(version, 10);
 
     expect(userVersionDto.id, version.remoteDatabaseID);
@@ -74,5 +76,6 @@ void main() {
     expect(userVersionDto.artist.url, artist.url);
     expect(userVersionDto.artist.color, artist.image?.color);
     expect(userVersionDto.artistImage, artist.image?.size162);
+    expect(userVersionDto.order, 10);
   });
 }

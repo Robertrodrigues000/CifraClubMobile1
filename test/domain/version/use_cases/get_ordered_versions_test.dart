@@ -93,5 +93,22 @@ void main() {
       expect(orderedList[2].localDatabaseID, 10);
       expect(orderedList[3].localDatabaseID, 15);
     });
+
+    test("and selected custom order should sort correctly", () async {
+      final desorderedList = [
+        getFakeVersion(order: 10),
+        getFakeVersion(order: 8),
+        getFakeVersion(order: 15),
+        getFakeVersion(order: 9),
+      ];
+
+      final orderedList = GetOrderedVersions()(ListOrderType.custom, desorderedList, ListType.user);
+
+      expect(orderedList.length, 4);
+      expect(orderedList[0].order, 8);
+      expect(orderedList[1].order, 9);
+      expect(orderedList[2].order, 10);
+      expect(orderedList[3].order, 15);
+    });
   });
 }

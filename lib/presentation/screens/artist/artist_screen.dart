@@ -45,12 +45,12 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
 
   void listenEvents() {
     _bloc.artistEventStream.listen((event) {
-      switch (event.runtimeType) {
-        case FavoriteError:
+      switch (event) {
+        case FavoriteError():
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content: (event as FavoriteError).error is ServerError
+                content: event.error is ServerError
                     ? Text(context.text.serverErrorDescription)
                     : Text(context.text.connectionErrorDescription)),
           );

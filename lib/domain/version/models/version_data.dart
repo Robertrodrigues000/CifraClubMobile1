@@ -81,6 +81,7 @@ class VersionData extends Equatable {
         tuning: tuning,
         tone: key,
         stdTone: stdKey,
+        order: 0,
       );
 
   @override

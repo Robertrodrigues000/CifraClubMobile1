@@ -1,15 +1,19 @@
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/edit_mode_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_bloc.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_event.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_state.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../../../shared_mocks/domain/version/models/version_mock.dart';
 import '../../../../test_helpers/app_localizations.dart';
@@ -23,6 +27,9 @@ void main() {
 
   setUpAll(() {
     bloc = _EditListBlocMock();
+    when(bloc.save).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.editListEventStream).thenAnswer((_) => PublishSubject());
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
@@ -45,7 +52,7 @@ void main() {
         description: 'widget with back arrow',
       );
       await tester.tap(finder, warnIfMissed: false);
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.byType(EditModeDialog), findsOneWidget);
     });
 
@@ -61,7 +68,7 @@ void main() {
       );
 
       await tester.tap(find.widgetWithText(CifraClubButton, appTextEn.cancel));
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.byType(EditModeDialog), findsOneWidget);
     });
 
@@ -137,11 +144,11 @@ void main() {
         description: 'widget with back arrow',
       );
       await tester.tap(finder);
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.byType(EditModeDialog), findsOneWidget);
 
       await tester.tap(find.widgetWithText(CifraClubButton, appTextEn.editListDialogPrimaryButton));
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.byType(EditModeDialog), findsNothing);
       expect(find.byType(ReorderableListView), findsOneWidget);
     });
@@ -164,7 +171,7 @@ void main() {
         description: 'widget with back arrow',
       );
       await tester.tap(finder);
-      await tester.pumpAndSettle();
+      await tester.pump();
       expect(find.byType(EditModeDialog), findsOneWidget);
 
       await tester.tap(find.widgetWithText(CifraClubButton, appTextEn.exit));
@@ -172,5 +179,68 @@ void main() {
       expect(find.byType(EditModeDialog), findsNothing);
       expect(find.byType(ReorderableListView), findsNothing);
     });
+  });
+
+  testWidgets("When loading is true should show loading", (widgetTester) async {
+    bloc.mockStream(const EditListState(isLoading: true, songbookId: 0));
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<EditListBloc>.value(
+          value: bloc,
+          child: const EditListScreen(name: "Teste"),
+        ),
+      ),
+    );
+
+    await widgetTester.pump();
+    expect(find.byType(LoadingIndicatorContainer), findsOneWidget);
+  });
+
+  testWidgets("When emit error event should show snack bar with erro message", (widgetTester) async {
+    // ignore: close_sinks
+    final publishSubject = PublishSubject<EditListEvent>();
+    when(() => bloc.editListEventStream).thenAnswer((_) => publishSubject.stream);
+    bloc.mockStream(const EditListState(hasChanges: true, songbookId: 0));
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<EditListBloc>.value(
+          value: bloc,
+          child: const EditListScreen(name: "Teste"),
+        ),
+      ),
+    );
+
+    publishSubject.add(ReorderError(deleteError: true, error: ConnectionError(), sortError: true));
+    await widgetTester.pumpAndSettle();
+    expect(find.text(appTextEn.connectionErrorDescription), findsOneWidget);
+    await widgetTester.pump(const Duration(seconds: 5));
+
+    publishSubject.add(ReorderError(deleteError: true, error: ServerError(), sortError: false));
+    await widgetTester.pumpAndSettle();
+    expect(find.text(appTextEn.deleteReorderErrorMessage), findsOneWidget);
+    await widgetTester.pump(const Duration(seconds: 5));
+
+    publishSubject.add(ReorderError(deleteError: false, error: ServerError(), sortError: true));
+    await widgetTester.pumpAndSettle();
+    expect(find.text(appTextEn.sortReorderErrorMessage), findsOneWidget);
+  });
+
+  testWidgets("When emit success event should show snack bar with success message", (widgetTester) async {
+    // ignore: close_sinks
+    final publishSubject = PublishSubject<EditListEvent>();
+    when(() => bloc.editListEventStream).thenAnswer((_) => publishSubject.stream);
+    bloc.mockStream(const EditListState(hasChanges: true, songbookId: 0));
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<EditListBloc>.value(
+          value: bloc,
+          child: const EditListScreen(name: "Teste"),
+        ),
+      ),
+    );
+
+    publishSubject.add(ReorderSucess());
+    await widgetTester.pumpAndSettle();
+    expect(find.text(appTextEn.savedReorderChanges), findsOneWidget);
   });
 }

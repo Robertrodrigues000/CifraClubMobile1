@@ -25,6 +25,7 @@ class UserVersionDto extends Equatable {
   @Index(composite: [CompositeIndex('artistImage')])
   @Index()
   final int songbookId;
+  final int order;
 
   UserVersionDto({
     required this.songUrl,
@@ -40,6 +41,7 @@ class UserVersionDto extends Equatable {
     required this.artist,
     String? artistImage,
     required this.versionId,
+    required this.order,
   }) : artistImage = (artistImage ?? "").isNotEmpty ? artistImage : null;
 
   Version toDomain() => Version(
@@ -54,9 +56,10 @@ class UserVersionDto extends Equatable {
         tuning: tuning,
         artist: artist.toDomain(artistImage),
         versionId: versionId,
+        order: order,
       );
 
-  UserVersionDto.fromDomain(Version version, int songbookId)
+  UserVersionDto.fromDomain(Version version, int songbookId, [int? order])
       : this(
           id: version.remoteDatabaseID!,
           name: version.name,
@@ -71,6 +74,7 @@ class UserVersionDto extends Equatable {
           artist: UserVersionArtistDto.fromDomain(version.artist),
           artistImage: (version.artist.image?.size162 ?? "").isNotEmpty ? version.artist.image?.size162 : null,
           versionId: version.versionId,
+          order: order ?? version.order,
         );
 
   @ignore

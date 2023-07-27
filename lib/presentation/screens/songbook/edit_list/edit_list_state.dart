@@ -9,9 +9,15 @@ class EditListState {
   final List<Version> deletedVersions;
   final bool hasChanges;
   final int songbookId;
+  final bool isLoading;
 
-  const EditListState(
-      {this.versions = const [], this.deletedVersions = const [], this.hasChanges = false, required this.songbookId});
+  const EditListState({
+    this.versions = const [],
+    this.deletedVersions = const [],
+    this.hasChanges = false,
+    required this.songbookId,
+    this.isLoading = false,
+  });
 
   factory EditListState.fromSongbook(List<Version> versions, int songbookId) {
     return EditListState(

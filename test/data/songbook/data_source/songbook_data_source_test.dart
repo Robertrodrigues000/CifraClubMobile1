@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
-import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/versions_ids_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
@@ -194,7 +194,7 @@ void main() {
         (_) => SynchronousFuture(const Ok(null)),
       );
 
-      final result = await songbookDataSource.deleteVersions(songbookId, const DeleteVersionsInputDto([0]));
+      final result = await songbookDataSource.deleteVersions(songbookId, const VersionsIdsInputDto([0]));
 
       final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
           as NetworkRequest<void>;
@@ -213,7 +213,7 @@ void main() {
       );
 
       final songbookDataSource = SongbookDataSource(networkService);
-      final result = await songbookDataSource.deleteVersions(songbookId, const DeleteVersionsInputDto([0]));
+      final result = await songbookDataSource.deleteVersions(songbookId, const VersionsIdsInputDto([0]));
 
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
@@ -237,6 +237,7 @@ void main() {
         capo: 0,
         tuning: "E A D G B E",
         artist: Artist(url: "the-sugarhill-gang", image: null, name: "The Sugarhill Gang", id: 75423),
+        order: 0,
       );
 
       final mockResponse =
@@ -303,6 +304,7 @@ void main() {
         capo: 0,
         tuning: "E A D G B E",
         artist: Artist(url: "raul-seixas", image: null, name: "Raul Seixas", id: 52),
+        order: 0,
       );
 
       final mockResponse =
@@ -345,6 +347,41 @@ void main() {
       final songbookDataSource = SongbookDataSource(networkService);
       final result =
           await songbookDataSource.addVersionToSongbook(songbookId, SongbookVersionInputDto.fromDomain(versionInput));
+
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
+    });
+  });
+
+  group("When sortVersions is called", () {
+    const songbookId = 0;
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final result = await songbookDataSource.sortVersions(songbookId, const VersionsIdsInputDto([0, 1]));
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/songbook/$songbookId/sort");
+      expect(request.type, NetworkRequestType.put);
+
+      expect(result.isSuccess, true);
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result = await songbookDataSource.sortVersions(songbookId, const VersionsIdsInputDto([0]));
 
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });

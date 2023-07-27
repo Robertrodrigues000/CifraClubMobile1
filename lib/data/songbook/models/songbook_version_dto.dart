@@ -37,7 +37,7 @@ class SongbookVersionDto extends Equatable {
 
   factory SongbookVersionDto.fromJson(Map<String, dynamic> json) => _$SongbookVersionDtoFromJson(json);
 
-  Version toDomain() {
+  Version toDomain(int order) {
     return Version(
       songId: songId,
       type: type,
@@ -50,6 +50,7 @@ class SongbookVersionDto extends Equatable {
       artist: artist.toDomain(),
       remoteDatabaseID: remoteDatabaseID,
       versionId: versionId,
+      order: order,
     );
   }
 

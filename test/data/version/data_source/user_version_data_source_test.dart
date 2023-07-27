@@ -42,6 +42,7 @@ void main() {
         artist: userVersionArtistDto ?? UserVersionArtistDto(),
         artistImage: artistImage,
         versionId: faker.randomGenerator.integer(10000),
+        order: faker.randomGenerator.integer(10000),
       );
 
   UserRecentVersionDto getUserRecentVersionDto({
@@ -116,7 +117,7 @@ void main() {
       getUserVersionDto(),
     ];
 
-    final result = await userVersionDataSource.addVersionsToSongbook(versions);
+    final result = await userVersionDataSource.putVersionsToSongbook(versions);
 
     late List<UserVersionDto> localVersions;
     await isar.txn(() async {
@@ -134,7 +135,7 @@ void main() {
       getUserRecentVersionDto(),
     ];
 
-    final result = await userVersionDataSource.addVersionsToRecentSongbook(recentVersions);
+    final result = await userVersionDataSource.putVersionsToRecentSongbook(recentVersions);
 
     late List<UserRecentVersionDto> localVersions;
     await isar.txn(() async {

@@ -160,6 +160,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       isUserList: state.songbook?.type == ListType.user,
                       ccid: widget.userId,
                       songbook: state.songbook!,
+                      haveEditMode: true,
                       onDeleteSongbook: () {
                         if (widget.isTablet) {
                           widget.onDeleteSongbook!();

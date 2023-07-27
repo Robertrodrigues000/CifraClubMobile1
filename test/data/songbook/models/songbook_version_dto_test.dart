@@ -24,7 +24,7 @@ void main() {
       versionId: 10,
     );
 
-    final version = songbookVersionDto.toDomain();
+    final version = songbookVersionDto.toDomain(10);
 
     verify(versionArtistDto.toDomain).called(1);
     expect(songbookVersionDto.remoteDatabaseID, version.remoteDatabaseID);
@@ -34,5 +34,6 @@ void main() {
     expect(songbookVersionDto.songId, version.songId);
     expect(songbookVersionDto.versionId, version.versionId);
     expect(artist, version.artist);
+    expect(version.order, 10);
   });
 }

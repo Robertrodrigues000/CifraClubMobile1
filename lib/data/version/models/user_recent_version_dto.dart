@@ -54,6 +54,7 @@ class UserRecentVersionDto extends Equatable {
         tuning: tuning,
         artist: artist.toDomain(artistImage),
         versionId: versionId,
+        order: 0,
       );
 
   UserRecentVersionDto.fromDomain(Version version)

@@ -41,9 +41,9 @@ void main() {
       when(songbookRepository.getAllSongbooks).thenAnswer((_) => SynchronousFuture(Ok(songbookVersion)));
       when(() => userSongbookRepository.setUserSongbooks(songbooks))
           .thenAnswer((_) => SynchronousFuture(songbooks.map((e) => e.id!).toList(growable: false)));
-      when(() => userVersionRepository.addVersionToSongbook(captureAny(), captureAny()))
+      when(() => userVersionRepository.addVersionsToSongbook(captureAny(), captureAny()))
           .thenAnswer((_) => SynchronousFuture([]));
-      when(() => userVersionRepository.addVersionToRecentSongbook(captureAny()))
+      when(() => userVersionRepository.addVersionsToRecentSongbook(captureAny()))
           .thenAnswer((_) => SynchronousFuture([]));
       when(userVersionRepository.clearAllVersions).thenAnswer((_) => SynchronousFuture(null));
       when(() => updateSongbookPreview(any())).thenAnswer((_) => SynchronousFuture(1));
@@ -59,7 +59,7 @@ void main() {
       verify(() => updateSongbookPreview(any())).called(2);
 
       final songbookParams =
-          verify(() => userVersionRepository.addVersionToSongbook(captureAny(), captureAny())).captured;
+          verify(() => userVersionRepository.addVersionsToSongbook(captureAny(), captureAny())).captured;
 
       expect(songbookParams, [
         songbookVersion[0].versions,
@@ -71,7 +71,7 @@ void main() {
       ]);
 
       final recentSongbookParams =
-          verify(() => userVersionRepository.addVersionToRecentSongbook(captureAny())).captured;
+          verify(() => userVersionRepository.addVersionsToRecentSongbook(captureAny())).captured;
 
       expect(recentSongbookParams, [songbookVersion[3].versions]);
     });

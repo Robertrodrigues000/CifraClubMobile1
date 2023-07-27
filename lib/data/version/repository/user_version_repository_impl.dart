@@ -4,6 +4,7 @@ import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
+import 'package:collection/collection.dart';
 
 class UserVersionRepositoryImpl extends UserVersionRepository {
   final UserVersionDataSource _userVersionDataSource;
@@ -20,15 +21,17 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   }
 
   @override
-  Future<List<int>> addVersionToSongbook(List<Version> versions, int songbookId) {
-    return _userVersionDataSource.addVersionsToSongbook(
-      versions.map((e) => UserVersionDto.fromDomain(e, songbookId)).toList(),
+  Future<List<int>> addVersionsToSongbook(List<Version> versions, int songbookId) async {
+    final order = await _userVersionDataSource.getTotalSongbookVersions(songbookId).first;
+
+    return _userVersionDataSource.putVersionsToSongbook(
+      versions.mapIndexed((index, e) => UserVersionDto.fromDomain(e, songbookId, order + index)).toList(),
     );
   }
 
   @override
-  Future<List<int>> addVersionToRecentSongbook(List<Version> versions) {
-    return _userVersionDataSource.addVersionsToRecentSongbook(
+  Future<List<int>> addVersionsToRecentSongbook(List<Version> versions) {
+    return _userVersionDataSource.putVersionsToRecentSongbook(
       versions.map(UserRecentVersionDto.fromDomain).toList(),
     );
   }
@@ -73,5 +76,12 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
           .getVersionsStreamFromSongbook(songbookId)
           .map((event) => event.map((e) => e.toDomain()).toList());
     }
+  }
+
+  @override
+  Future<List<int>> updateVersionsToSongbook(List<Version> versions, int songbookId) async {
+    return _userVersionDataSource.putVersionsToSongbook(
+      versions.map((e) => UserVersionDto.fromDomain(e, songbookId)).toList(),
+    );
   }
 }

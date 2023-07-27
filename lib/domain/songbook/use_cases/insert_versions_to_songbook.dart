@@ -9,16 +9,18 @@ import 'package:typed_result/typed_result.dart';
 @injectable
 class InsertVersionsToSongbook {
   final SongbookRepository _songbookRepository;
-  final UserVersionRepository _userCifraRepository;
+  final UserVersionRepository _userVersionRepository;
 
-  InsertVersionsToSongbook(this._songbookRepository, this._userCifraRepository);
+  InsertVersionsToSongbook(this._songbookRepository, this._userVersionRepository);
 
   Future<Result<List<Version>, RequestError>> call({required int songbookId, required List<Version> versions}) async {
     return (await _songbookRepository.addVersionsToSongbook(
-            songbookId: songbookId, versionsInput: versions.map(SongbookVersionInput.fromVersion).toList()))
+      songbookId: songbookId,
+      versionsInput: versions.map(SongbookVersionInput.fromVersion).toList(),
+    ))
         .onSuccess((value) async {
-      await _userCifraRepository.deleteVersionsBySongbookId(songbookId);
-      await _userCifraRepository.addVersionToSongbook(value, songbookId);
+      await _userVersionRepository.deleteVersionsBySongbookId(songbookId);
+      await _userVersionRepository.addVersionsToSongbook(value, songbookId);
     });
   }
 }

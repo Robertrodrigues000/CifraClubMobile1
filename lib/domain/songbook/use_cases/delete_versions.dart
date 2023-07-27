@@ -12,12 +12,12 @@ class DeleteVersions {
 
   DeleteVersions(this._songbookRepository, this._userVersionRepository);
 
-  Future<Result<void, RequestError>> call({required int songbookId, required List<Version> songs}) async {
-    final songsRemoteIds = songs.map((e) => e.remoteDatabaseID ?? -1).toList();
+  Future<Result<void, RequestError>> call({required int songbookId, required List<Version> versions}) async {
+    final songsRemoteIds = versions.map((e) => e.remoteDatabaseID ?? -1).toList();
 
     return (await _songbookRepository.deleteVersions(songbookId: songbookId, versionsId: songsRemoteIds)).onSuccess(
       (value) async {
-        final songsLocalId = songs.map((e) => e.localDatabaseID ?? -1).toList();
+        final songsLocalId = versions.map((e) => e.localDatabaseID ?? -1).toList();
         await _userVersionRepository.deleteVersionsById(songsLocalId);
       },
     );

@@ -1,6 +1,10 @@
 import 'package:cifraclub/domain/artist/models/artist.dart';
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 
+part 'version.g.dart';
+
+@CopyWith()
 class Version extends Equatable {
   final int? localDatabaseID;
   final int? remoteDatabaseID;
@@ -14,6 +18,7 @@ class Version extends Equatable {
   final int? capo;
   final String? tuning;
   final Artist artist;
+  final int order;
 
   const Version({
     this.localDatabaseID,
@@ -28,6 +33,7 @@ class Version extends Equatable {
     this.capo,
     this.tuning,
     required this.artist,
+    required this.order,
   });
 
   // coverage:ignore-start
@@ -45,6 +51,7 @@ class Version extends Equatable {
         capo,
         tuning,
         artist,
+        order,
       ];
   // coverage:ignore-end
 }

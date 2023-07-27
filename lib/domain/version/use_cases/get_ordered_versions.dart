@@ -11,7 +11,7 @@ class GetOrderedVersions {
       case ListOrderType.alphabeticOrder:
         return versions..sortBy((element) => element.name);
       case ListOrderType.custom:
-        return versions..shuffle(); // coverage:ignore-line
+        return versions..sort((a, b) => a.order.compareTo(b.order));
       case ListOrderType.oldest:
         return switch (listType) {
           ListType.recents => versions..sort((a, b) => _compareId(a.localDatabaseID, b.localDatabaseID)),

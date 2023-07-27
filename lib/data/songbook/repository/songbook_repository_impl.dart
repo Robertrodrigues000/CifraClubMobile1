@@ -1,5 +1,5 @@
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
-import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/versions_ids_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart';
@@ -59,7 +59,7 @@ class SongbookRepositoryImpl extends SongbookRepository {
 
   @override
   Future<Result<void, RequestError>> deleteVersions({required int songbookId, required List<int> versionsId}) {
-    final input = DeleteVersionsInputDto(versionsId);
+    final input = VersionsIdsInputDto(versionsId);
 
     return _songbookDataSource.deleteVersions(songbookId, input);
   }
@@ -71,7 +71,7 @@ class SongbookRepositoryImpl extends SongbookRepository {
   }) async {
     return (await _songbookDataSource.addVersionsToSongbook(
             songbookId, SongbookVersionsInputDto.fromDomain(versionsInput)))
-        .map((value) => value.map((e) => e.toDomain()).toList());
+        .map((value) => value.map((e) => e.toDomain(0)).toList());
   }
 
   @override
@@ -81,6 +81,15 @@ class SongbookRepositoryImpl extends SongbookRepository {
   }) async {
     return (await _songbookDataSource.addVersionToSongbook(
             songbookId, SongbookVersionInputDto.fromDomain(versionInput)))
-        .map((value) => value.toDomain());
+        .map(
+      (value) => value.toDomain(0),
+    );
+  }
+
+  @override
+  Future<Result<void, RequestError>> sortVersionFromSongbook({required int songbookId, required List<int> versionsId}) {
+    final input = VersionsIdsInputDto(versionsId);
+
+    return _songbookDataSource.sortVersions(songbookId, input);
   }
 }

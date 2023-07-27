@@ -25,13 +25,13 @@ void main() {
         .thenAnswer((_) => SynchronousFuture(Ok(versionResponse)));
 
     final userVersionRepository = _UserVersionRepositoryMock();
-    when(() => userVersionRepository.addVersionToSongbook([versionResponse], 10))
+    when(() => userVersionRepository.addVersionsToSongbook([versionResponse], 10))
         .thenAnswer((_) => SynchronousFuture([version.localDatabaseID!]));
 
     final result = await InsertVersionToSongbook(songbookRepository, userVersionRepository)(
         versionInput: versionInput, songbookId: 10);
 
-    verify(() => userVersionRepository.addVersionToSongbook([versionResponse], 10)).called(1);
+    verify(() => userVersionRepository.addVersionsToSongbook([versionResponse], 10)).called(1);
     verify(() => songbookRepository.addVersionToSongbook(versionInput: versionInput, songbookId: 10)).called(1);
     expectLater(result.get(), versionResponse);
   });
@@ -48,7 +48,7 @@ void main() {
     final result = await InsertVersionToSongbook(songbookRepository, userVersionRepository)(
         versionInput: versionInput, songbookId: 10);
 
-    verifyNever(() => userVersionRepository.addVersionToSongbook(any(), any()));
+    verifyNever(() => userVersionRepository.addVersionsToSongbook(any(), any()));
     verify(() => songbookRepository.addVersionToSongbook(versionInput: versionInput, songbookId: 10)).called(1);
     expectLater(result.getError(), isA<ServerError>());
   });

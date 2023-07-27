@@ -29,7 +29,7 @@ void main() {
     when(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseID!]))
         .thenAnswer((invocation) => SynchronousFuture(1));
 
-    final result = await DeleteVersions(songbookRepository, userCifraRepository)(songbookId: 1, songs: songs);
+    final result = await DeleteVersions(songbookRepository, userCifraRepository)(songbookId: 1, versions: songs);
 
     expect(result.isSuccess, isTrue);
 
@@ -41,7 +41,7 @@ void main() {
     when(() => songbookRepository.deleteVersions(versionsId: [songs.first.remoteDatabaseID!], songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
-    final result = await DeleteVersions(songbookRepository, userCifraRepository)(songbookId: 1, songs: songs);
+    final result = await DeleteVersions(songbookRepository, userCifraRepository)(songbookId: 1, versions: songs);
 
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
 

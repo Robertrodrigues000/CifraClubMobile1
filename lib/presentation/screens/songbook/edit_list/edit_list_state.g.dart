@@ -15,6 +15,8 @@ abstract class _$EditListStateCWProxy {
 
   EditListState songbookId(int songbookId);
 
+  EditListState isLoading(bool isLoading);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `EditListState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -26,6 +28,7 @@ abstract class _$EditListStateCWProxy {
     List<Version>? deletedVersions,
     bool? hasChanges,
     int? songbookId,
+    bool? isLoading,
   });
 }
 
@@ -48,6 +51,9 @@ class _$EditListStateCWProxyImpl implements _$EditListStateCWProxy {
   EditListState songbookId(int songbookId) => this(songbookId: songbookId);
 
   @override
+  EditListState isLoading(bool isLoading) => this(isLoading: isLoading);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `EditListState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -60,6 +66,7 @@ class _$EditListStateCWProxyImpl implements _$EditListStateCWProxy {
     Object? deletedVersions = const $CopyWithPlaceholder(),
     Object? hasChanges = const $CopyWithPlaceholder(),
     Object? songbookId = const $CopyWithPlaceholder(),
+    Object? isLoading = const $CopyWithPlaceholder(),
   }) {
     return EditListState(
       versions: versions == const $CopyWithPlaceholder() || versions == null
@@ -78,6 +85,10 @@ class _$EditListStateCWProxyImpl implements _$EditListStateCWProxy {
           ? _value.songbookId
           // ignore: cast_nullable_to_non_nullable
           : songbookId as int,
+      isLoading: isLoading == const $CopyWithPlaceholder() || isLoading == null
+          ? _value.isLoading
+          // ignore: cast_nullable_to_non_nullable
+          : isLoading as bool,
     );
   }
 }

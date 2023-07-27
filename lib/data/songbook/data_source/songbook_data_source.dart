@@ -1,6 +1,6 @@
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
-import 'package:cifraclub/data/songbook/models/delete_versions_input_dto.dart';
+import 'package:cifraclub/data/songbook/models/versions_ids_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
@@ -57,7 +57,7 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  Future<Result<void, RequestError>> deleteVersions(int songbookId, DeleteVersionsInputDto deleteVersionsInputDto) {
+  Future<Result<void, RequestError>> deleteVersions(int songbookId, VersionsIdsInputDto deleteVersionsInputDto) {
     var request = NetworkRequest(
       type: NetworkRequestType.post,
       path: "/v3/songbook/$songbookId/songs/delete",
@@ -90,6 +90,19 @@ class SongbookDataSource {
       parser: (data) {
         return SongbookVersionDto.fromJson(data);
       },
+    );
+    return _networkService.execute(request: request);
+  }
+
+  Future<Result<void, RequestError>> sortVersions(
+    int songbookId,
+    VersionsIdsInputDto orderedVersionInput,
+  ) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.put,
+      path: "/v3/songbook/$songbookId/sort",
+      data: orderedVersionInput.toJson(),
+      parser: (_) => null, // coverage:ignore-line
     );
     return _networkService.execute(request: request);
   }

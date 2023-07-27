@@ -83,14 +83,15 @@ void main() {
     final versionsIds = versions.map((e) => e.remoteDatabaseID!).toList();
 
     final userVersionDataSource = _UserVersionDataSourceMock();
-    when(() => userVersionDataSource.addVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));
+    when(() => userVersionDataSource.putVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));
+    when(() => userVersionDataSource.getTotalSongbookVersions(any())).thenAnswer((_) => BehaviorSubject.seeded(0));
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
-    final deletedIds = await userVersionRepository.addVersionToSongbook(versions, 1);
+    final deletedIds = await userVersionRepository.addVersionsToSongbook(versions, 1);
     final domainVersions = versions.map((e) => UserVersionDto.fromDomain(e, 1)).toList();
 
-    verify(() => userVersionDataSource.addVersionsToSongbook(domainVersions)).called(1);
+    verify(() => userVersionDataSource.putVersionsToSongbook(domainVersions)).called(1);
     expect(deletedIds, versionsIds);
   });
 
@@ -99,15 +100,15 @@ void main() {
     final versionsIds = versions.map((e) => e.remoteDatabaseID!).toList();
 
     final userVersionDataSource = _UserVersionDataSourceMock();
-    when(() => userVersionDataSource.addVersionsToRecentSongbook(any()))
+    when(() => userVersionDataSource.putVersionsToRecentSongbook(any()))
         .thenAnswer((_) => SynchronousFuture(versionsIds));
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
-    final deletedIds = await userVersionRepository.addVersionToRecentSongbook(versions);
+    final deletedIds = await userVersionRepository.addVersionsToRecentSongbook(versions);
     final domainVersions = versions.map(UserRecentVersionDto.fromDomain).toList();
 
-    verify(() => userVersionDataSource.addVersionsToRecentSongbook(domainVersions)).called(1);
+    verify(() => userVersionDataSource.putVersionsToRecentSongbook(domainVersions)).called(1);
     expect(deletedIds, versionsIds);
   });
 
@@ -189,5 +190,21 @@ void main() {
 
     expect(versions, emits([fakeVersion]));
     verify(userVersionDataSource.getVersionsStreamFromRecentSongbook).called(1);
+  });
+
+  test("When `updateVersionsToSongbook` is called should return ids of versions updated", () async {
+    final versions = [getFakeVersion(), getFakeVersion()];
+    final versionsIds = versions.map((e) => e.remoteDatabaseID!).toList();
+
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.putVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    final updatedIds = await userVersionRepository.updateVersionsToSongbook(versions, 1);
+    final domainVersions = versions.map((e) => UserVersionDto.fromDomain(e, 1)).toList();
+
+    verify(() => userVersionDataSource.putVersionsToSongbook(domainVersions)).called(1);
+    expect(updatedIds, versionsIds);
   });
 }

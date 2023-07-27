@@ -37,14 +37,14 @@ class RefreshAllSongbooks {
               if (id != null) {
                 switch (element.songbook.type) {
                   case ListType.user:
-                    await _userVersionRepository.addVersionToSongbook(element.versions, id);
+                    await _userVersionRepository.addVersionsToSongbook(element.versions, id);
                     await _updateSongbookPreview(id);
                     break;
                   case ListType.recents:
-                    await _userVersionRepository.addVersionToRecentSongbook(element.versions);
+                    await _userVersionRepository.addVersionsToRecentSongbook(element.versions);
                     break;
                   default:
-                    await _userVersionRepository.addVersionToSongbook(element.versions, id);
+                    await _userVersionRepository.addVersionsToSongbook(element.versions, id);
                     break;
                 }
               } else {

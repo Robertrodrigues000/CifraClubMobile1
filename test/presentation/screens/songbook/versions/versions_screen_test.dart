@@ -75,6 +75,7 @@ void main() {
         isUserList: any(named: 'isUserList'),
         ccid: any(named: 'ccid'),
         onDeleteSongbook: any(named: 'onDeleteSongbook'),
+        haveEditMode: any(named: 'haveEditMode'),
         songbook: any(named: 'songbook'))).thenAnswer((_) => SynchronousFuture(null));
     bottomSheet = bottomSheetMock;
 
@@ -289,7 +290,7 @@ void main() {
         isUserList: true,
         ccid: 1,
         songbook: songbook,
-        haveEditMode: false,
+        haveEditMode: true,
         onDeleteSongbook: any(named: 'onDeleteSongbook'))).called(1);
   });
 

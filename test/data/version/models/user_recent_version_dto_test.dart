@@ -57,6 +57,7 @@ void main() {
       tuning: "AB",
       artist: artist,
       versionId: 12,
+      order: 0,
     );
     final userVersionDto = UserRecentVersionDto.fromDomain(version);
 

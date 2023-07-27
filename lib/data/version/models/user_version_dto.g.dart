@@ -33,6 +33,8 @@ abstract class _$UserVersionDtoCWProxy {
 
   UserVersionDto versionId(int versionId);
 
+  UserVersionDto order(int order);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserVersionDto(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -53,6 +55,7 @@ abstract class _$UserVersionDtoCWProxy {
     UserVersionArtistDto? artist,
     String? artistImage,
     int? versionId,
+    int? order,
   });
 }
 
@@ -102,6 +105,9 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
   UserVersionDto versionId(int versionId) => this(versionId: versionId);
 
   @override
+  UserVersionDto order(int order) => this(order: order);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserVersionDto(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -123,6 +129,7 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
     Object? artist = const $CopyWithPlaceholder(),
     Object? artistImage = const $CopyWithPlaceholder(),
     Object? versionId = const $CopyWithPlaceholder(),
+    Object? order = const $CopyWithPlaceholder(),
   }) {
     return UserVersionDto(
       songUrl: songUrl == const $CopyWithPlaceholder() || songUrl == null
@@ -177,6 +184,10 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
           ? _value.versionId
           // ignore: cast_nullable_to_non_nullable
           : versionId as int,
+      order: order == const $CopyWithPlaceholder() || order == null
+          ? _value.order
+          // ignore: cast_nullable_to_non_nullable
+          : order as int,
     );
   }
 }
@@ -223,43 +234,48 @@ const UserVersionDtoSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'songId': PropertySchema(
+    r'order': PropertySchema(
       id: 4,
+      name: r'order',
+      type: IsarType.long,
+    ),
+    r'songId': PropertySchema(
+      id: 5,
       name: r'songId',
       type: IsarType.long,
     ),
     r'songUrl': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'songUrl',
       type: IsarType.string,
     ),
     r'songbookId': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'songbookId',
       type: IsarType.long,
     ),
     r'stdTone': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'stdTone',
       type: IsarType.string,
     ),
     r'tone': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'tone',
       type: IsarType.string,
     ),
     r'tuning': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'tuning',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'type',
       type: IsarType.long,
     ),
     r'versionId': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'versionId',
       type: IsarType.long,
     )
@@ -375,14 +391,15 @@ void _userVersionDtoSerialize(
   writer.writeString(offsets[1], object.artistImage);
   writer.writeLong(offsets[2], object.capo);
   writer.writeString(offsets[3], object.name);
-  writer.writeLong(offsets[4], object.songId);
-  writer.writeString(offsets[5], object.songUrl);
-  writer.writeLong(offsets[6], object.songbookId);
-  writer.writeString(offsets[7], object.stdTone);
-  writer.writeString(offsets[8], object.tone);
-  writer.writeString(offsets[9], object.tuning);
-  writer.writeLong(offsets[10], object.type);
-  writer.writeLong(offsets[11], object.versionId);
+  writer.writeLong(offsets[4], object.order);
+  writer.writeLong(offsets[5], object.songId);
+  writer.writeString(offsets[6], object.songUrl);
+  writer.writeLong(offsets[7], object.songbookId);
+  writer.writeString(offsets[8], object.stdTone);
+  writer.writeString(offsets[9], object.tone);
+  writer.writeString(offsets[10], object.tuning);
+  writer.writeLong(offsets[11], object.type);
+  writer.writeLong(offsets[12], object.versionId);
 }
 
 UserVersionDto _userVersionDtoDeserialize(
@@ -402,14 +419,15 @@ UserVersionDto _userVersionDtoDeserialize(
     capo: reader.readLongOrNull(offsets[2]),
     id: id,
     name: reader.readString(offsets[3]),
-    songId: reader.readLong(offsets[4]),
-    songUrl: reader.readString(offsets[5]),
-    songbookId: reader.readLong(offsets[6]),
-    stdTone: reader.readStringOrNull(offsets[7]),
-    tone: reader.readStringOrNull(offsets[8]),
-    tuning: reader.readStringOrNull(offsets[9]),
-    type: reader.readLong(offsets[10]),
-    versionId: reader.readLong(offsets[11]),
+    order: reader.readLong(offsets[4]),
+    songId: reader.readLong(offsets[5]),
+    songUrl: reader.readString(offsets[6]),
+    songbookId: reader.readLong(offsets[7]),
+    stdTone: reader.readStringOrNull(offsets[8]),
+    tone: reader.readStringOrNull(offsets[9]),
+    tuning: reader.readStringOrNull(offsets[10]),
+    type: reader.readLong(offsets[11]),
+    versionId: reader.readLong(offsets[12]),
   );
   return object;
 }
@@ -437,18 +455,20 @@ P _userVersionDtoDeserializeProp<P>(
     case 4:
       return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
-    case 6:
       return (reader.readLong(offset)) as P;
+    case 6:
+      return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 8:
       return (reader.readStringOrNull(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 11:
+      return (reader.readLong(offset)) as P;
+    case 12:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1242,6 +1262,58 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'name',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> orderEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'order',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> orderGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'order',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> orderLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'order',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> orderBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'order',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -2062,6 +2134,18 @@ extension UserVersionDtoQuerySortBy on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByOrder() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'order', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByOrderDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'order', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'songId', Sort.asc);
@@ -2208,6 +2292,18 @@ extension UserVersionDtoQuerySortThenBy on QueryBuilder<UserVersionDto, UserVers
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByOrder() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'order', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByOrderDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'order', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'songId', Sort.asc);
@@ -2324,6 +2420,12 @@ extension UserVersionDtoQueryWhereDistinct on QueryBuilder<UserVersionDto, UserV
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByOrder() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'order');
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'songId');
@@ -2401,6 +2503,12 @@ extension UserVersionDtoQueryProperty on QueryBuilder<UserVersionDto, UserVersio
   QueryBuilder<UserVersionDto, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<UserVersionDto, int, QQueryOperations> orderProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'order');
     });
   }
 

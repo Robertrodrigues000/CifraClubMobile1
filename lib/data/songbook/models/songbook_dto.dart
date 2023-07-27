@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
 
 part 'songbook_dto.g.dart';
 
@@ -58,7 +59,7 @@ class SongbookDto {
           totalSongs: totalSongs ?? 0,
           preview: const [],
         ),
-        versions: versions?.map((e) => e.toDomain()).toList() ?? [],
+        versions: versions?.mapIndexed((index, e) => e.toDomain(index)).toList() ?? [],
       );
 
   ListType _getListType(String type) {

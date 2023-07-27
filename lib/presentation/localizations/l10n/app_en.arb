@@ -291,5 +291,8 @@
                 "example": "Bass"
             }
         }
-    }
+    },
+    "deleteReorderErrorMessage": "Failed to delete music from the list.",
+    "sortReorderErrorMessage": "Failed to reorder the list.",
+    "savedReorderChanges" : "Changes saved successfully"
 }

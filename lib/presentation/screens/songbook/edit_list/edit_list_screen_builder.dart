@@ -12,7 +12,7 @@ class EditListScreenBuilder {
       MaterialPageRoute(
         builder: (context) {
           return BlocProvider(
-            create: (context) => EditListBloc(songbookId, getIt())..init(),
+            create: (context) => EditListBloc(songbookId, getIt(), getIt(), getIt(), getIt())..init(),
             child: EditListScreen(name: name),
           );
         },
