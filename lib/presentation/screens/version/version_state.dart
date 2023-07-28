@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter/foundation.dart';
@@ -11,6 +12,9 @@ class VersionState {
   final VersionData? version;
   final bool isLoading;
   final RequestError? error;
+  final List<Section> sections;
+
+  final bool isChordListPinned;
 
   /*
   
@@ -45,5 +49,7 @@ class VersionState {
     this.version,
     this.isLoading = false,
     this.error,
+    this.sections = const [],
+    this.isChordListPinned = false,
   });
 }

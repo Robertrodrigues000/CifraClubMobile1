@@ -92,6 +92,20 @@ AppTypographyScheme getTypographyScheme(CosmosColorScheme cosmosColorScheme) {
       fontSize: 12.0,
       height: 1.5,
     ),
+    body7: TextStyle(
+      color: cosmosColorScheme.primary,
+      fontWeight: FontWeight.bold,
+      fontFamily: FontFamilies.robotoMono,
+      fontSize: 14.0,
+      height: 1.6,
+    ),
+    body8: TextStyle(
+      color: cosmosColorScheme.textPrimary,
+      fontWeight: FontWeight.normal,
+      fontFamily: FontFamilies.robotoMono,
+      fontSize: 14.0,
+      height: 1.6,
+    ),
     body9: TextStyle(
       color: cosmosColorScheme.textPrimary,
       fontWeight: FontWeight.bold,

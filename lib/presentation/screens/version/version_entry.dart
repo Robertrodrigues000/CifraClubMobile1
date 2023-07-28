@@ -41,7 +41,8 @@ class VersionEntry extends ScreenEntry {
   Widget build(BuildContext context) {
     return BlocProvider<VersionBloc>(
       create: (context) =>
-          VersionBloc(getIt(), artistUrl: artistUrl, songUrl: songUrl, songbookVersionId: songbookVersionId)..init(),
+          VersionBloc(getIt(), getIt(), artistUrl: artistUrl, songUrl: songUrl, songbookVersionId: songbookVersionId)
+            ..init(),
       child: const VersionScreen(),
     );
   }

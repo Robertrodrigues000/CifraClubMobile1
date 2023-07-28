@@ -17,6 +17,8 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
   final TextStyle body2;
   final TextStyle body3;
   final TextStyle body6;
+  final TextStyle body7;
+  final TextStyle body8;
   final TextStyle body9;
   final TextStyle body10;
 
@@ -34,6 +36,8 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
     required this.body2,
     required this.body3,
     required this.body6,
+    required this.body7,
+    required this.body8,
     required this.body9,
     required this.body10,
   });
@@ -54,6 +58,8 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
     TextStyle? body2,
     TextStyle? body3,
     TextStyle? body6,
+    TextStyle? body7,
+    TextStyle? body8,
     TextStyle? body9,
     TextStyle? body10,
   }) {
@@ -71,6 +77,8 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
       body2: body2 ?? this.body2,
       body3: body3 ?? this.body3,
       body6: body6 ?? this.body6,
+      body7: body7 ?? this.body7,
+      body8: body8 ?? this.body8,
       body9: body9 ?? this.body9,
       body10: body10 ?? this.body10,
     );
@@ -95,6 +103,8 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
       body2: body2.copyWith(color: Color.lerp(body2.color, other.body2.color, t)),
       body3: body3.copyWith(color: Color.lerp(body3.color, other.body3.color, t)),
       body6: body6.copyWith(color: Color.lerp(body6.color, other.body6.color, t)),
+      body7: body7.copyWith(color: Color.lerp(body7.color, other.body7.color, t)),
+      body8: body8.copyWith(color: Color.lerp(body8.color, other.body8.color, t)),
       body9: body9.copyWith(color: Color.lerp(body9.color, other.body9.color, t)),
       body10: body10.copyWith(color: Color.lerp(body10.color, other.body10.color, t)),
     );

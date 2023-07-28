@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
+import 'package:cifraclub/domain/version/use_cases/parse_sections.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';
@@ -8,9 +9,11 @@ class VersionBloc extends Cubit<VersionState> {
   final String? songUrl;
   final int? songbookVersionId;
   final GetVersionData _getVersionData;
+  final ParseSections _parseSections;
 
   VersionBloc(
-    this._getVersionData, {
+    this._getVersionData,
+    this._parseSections, {
     this.artistUrl,
     this.songUrl,
     this.songbookVersionId,
@@ -23,11 +26,23 @@ class VersionBloc extends Cubit<VersionState> {
       final result = await _getVersionData(artistDns: artistUrl!, songDns: songUrl!);
 
       result.when(
-        success: (value) => emit(state.copyWith(isLoading: false, version: value)),
+        success: (value) {
+          emit(
+            state.copyWith(
+              isLoading: false,
+              version: value,
+              sections: _parseSections(value.content),
+            ),
+          );
+        },
         failure: (error) {
           emit(state.copyWith(isLoading: false, error: error));
         },
       );
     }
+  }
+
+  void toggleChordPinnedState() {
+    emit(state.copyWith(isChordListPinned: !state.isChordListPinned));
   }
 }
