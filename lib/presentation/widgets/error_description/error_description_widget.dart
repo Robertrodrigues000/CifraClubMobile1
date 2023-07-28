@@ -5,27 +5,30 @@ import 'package:cifraclub/presentation/widgets/error_description/error_descripti
 import 'package:flutter/widgets.dart';
 
 class ErrorDescriptionWidget extends StatelessWidget {
-  const ErrorDescriptionWidget({super.key, required this.typeError, required this.onClick});
+  const ErrorDescriptionWidget({super.key, required this.typeError, this.onClick});
   final ErrorDescriptionWidgetType typeError;
-  final VoidCallback onClick;
+  final VoidCallback? onClick;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final dimensions = context.appDimensionScheme;
     final imageHeight = (screenWidth - (dimensions.externalMarginWithoutConnection * 2)) * 0.35;
+    final imageName = context.isDarkMode ? typeError.getImageDark() : typeError.getImageLight();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: dimensions.externalMarginWithoutConnection),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            context.isDarkMode ? typeError.getImageDark() : typeError.getImageLight(),
-            height: imageHeight,
-            fit: BoxFit.fitHeight,
-          ),
-          const SizedBox(height: 16),
+          if (imageName != null) ...[
+            Image.asset(
+              imageName,
+              height: imageHeight,
+              fit: BoxFit.fitHeight,
+            ),
+            const SizedBox(height: 16),
+          ],
           Text(
             typeError.getTitle(context),
             style: context.typography.title5,
@@ -38,12 +41,13 @@ class ErrorDescriptionWidget extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: dimensions.errorWidgetButtonSpace),
-          CifraClubButton(
-            type: ButtonType.outline,
-            width: dimensions.errorWidgetButtonWidth,
-            onPressed: onClick,
-            child: Text(typeError.getButtonText(context)),
-          ),
+          if (typeError.getButtonText(context) != null)
+            CifraClubButton(
+              type: ButtonType.outline,
+              width: dimensions.errorWidgetButtonWidth,
+              onPressed: onClick,
+              child: Text(typeError.getButtonText(context)!),
+            ),
         ],
       ),
     );

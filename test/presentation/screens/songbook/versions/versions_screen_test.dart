@@ -248,7 +248,7 @@ void main() {
     );
     expect(finder, findsOneWidget);
 
-    await widgetTester.tap(finder);
+    await widgetTester.tap(finder, warnIfMissed: false);
 
     verify(() => bloc.shareLink(any(), any())).called(1);
   });

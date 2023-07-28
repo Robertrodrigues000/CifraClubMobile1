@@ -3,19 +3,26 @@ import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class ArtistSongsFixedHeader extends StatefulWidget {
-  const ArtistSongsFixedHeader(
-      {super.key, required this.isScrolledUnder, required this.tabController, required this.pageController});
+  const ArtistSongsFixedHeader({
+    super.key,
+    required this.isScrolledUnder,
+    required this.tabController,
+    required this.pageController,
+    required this.shouldShowSearch,
+  });
 
   final bool isScrolledUnder;
   final TabController tabController;
   final PageController pageController;
+  final bool shouldShowSearch;
 
   @override
   State<ArtistSongsFixedHeader> createState() => _ArtistSongsFixedHeaderState();
 }
 
 class _ArtistSongsFixedHeaderState extends State<ArtistSongsFixedHeader> {
-  static const _searchHeight = 107.0;
+  static const _headerHeightWithSearchAndTabs = 108.0;
+  static const _headerHeightWithTabsOnly = 52.0;
 
   @override
   void didChangeDependencies() {
@@ -27,7 +34,7 @@ class _ArtistSongsFixedHeaderState extends State<ArtistSongsFixedHeader> {
     return SliverPersistentHeader(
       pinned: true,
       delegate: ArtistSongsFixedHeaderDelegate(
-        maxExtend: _searchHeight,
+        maxExtend: widget.shouldShowSearch ? _headerHeightWithSearchAndTabs : _headerHeightWithTabsOnly,
         child: Column(
           children: [
             TabBar(
@@ -53,19 +60,20 @@ class _ArtistSongsFixedHeaderState extends State<ArtistSongsFixedHeader> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin, vertical: 8),
-              child: CosmosSearchBar(
-                onChanged: (_) {},
-                onTapClear: () {},
-                textEditingController: TextEditingController(),
-                focusNode: FocusNode(),
-                cancelText: context.text.cancel,
-                hintText: context.text.searchSongs,
-                labelText: context.text.searchSongs,
-                invertColorsOnScroll: true,
-              ),
-            )
+            if (widget.shouldShowSearch)
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin, vertical: 8),
+                child: CosmosSearchBar(
+                  onChanged: (_) {},
+                  onTapClear: () {},
+                  textEditingController: TextEditingController(),
+                  focusNode: FocusNode(),
+                  cancelText: context.text.cancel,
+                  hintText: context.text.searchSongs,
+                  labelText: context.text.searchSongs,
+                  invertColorsOnScroll: true,
+                ),
+              )
           ],
         ),
         haveScroll: widget.isScrolledUnder,

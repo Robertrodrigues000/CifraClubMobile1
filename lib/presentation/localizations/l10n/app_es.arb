@@ -234,6 +234,10 @@
             }
         }
     },
+    "noVideoLessonYetTitle": "Aún no hay lecciones en video",
+    "noVideoLessonYetDescription": "Mira los videos en nuestro canal para estar al día con las noticias de tus artistas favoritos.",
+    "resultNotFoundTitle": "Resultado no encontrado",
+    "resultNotFoundDescription": "Intente buscar un nuevo término.",
     "deleteReorderErrorMessage": "Error al eliminar la canción de la lista.",
     "sortReorderErrorMessage": "Error al reorganizar la lista.",
     "savedReorderChanges" : "Cambios guardados con éxito"

@@ -49,4 +49,7 @@ class AppWebp {
 
   static const privateListErrorDark = "assets/images/private_list_error_dark.webp";
   static const loggedOutListErrorDark = "assets/images/logged_out_list_error_dark.webp";
+
+  static const artistVideoLessonEmptyStateDark = "assets/images/artist_video_lesson_empty_state_dark.webp";
+  static const artistVideoLessonEmptyStateLight = "assets/images/artist_video_lesson_empty_state_light.webp";
 }

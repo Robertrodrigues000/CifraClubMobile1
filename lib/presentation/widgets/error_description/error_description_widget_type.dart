@@ -6,10 +6,12 @@ enum ErrorDescriptionWidgetType {
   connection(),
   server(),
   privateList(),
-  loggedOut();
+  loggedOut(),
+  videoLesson(),
+  resultNotFound();
 
   // coverage:ignore-start
-  String getImageLight() {
+  String? getImageLight() {
     switch (this) {
       case connection:
       case server:
@@ -18,10 +20,14 @@ enum ErrorDescriptionWidgetType {
         return AppWebp.privateListErrorLight;
       case loggedOut:
         return AppWebp.loggedOutListErrorLight;
+      case videoLesson:
+        return AppWebp.artistVideoLessonEmptyStateLight;
+      case resultNotFound:
+        return null;
     }
   }
 
-  String getImageDark() {
+  String? getImageDark() {
     switch (this) {
       case connection:
       case server:
@@ -30,6 +36,10 @@ enum ErrorDescriptionWidgetType {
         return AppWebp.privateListErrorDark;
       case loggedOut:
         return AppWebp.loggedOutListErrorDark;
+      case videoLesson:
+        return AppWebp.artistVideoLessonEmptyStateDark;
+      case resultNotFound:
+        return null;
     }
   }
   // coverage:ignore-end
@@ -44,6 +54,10 @@ enum ErrorDescriptionWidgetType {
         return context.text.privateListErrorTitle;
       case loggedOut:
         return context.text.loggedOutListErrorTitle;
+      case videoLesson:
+        return context.text.noVideoLessonYetTitle;
+      case resultNotFound:
+        return context.text.resultNotFoundTitle;
     }
   }
 
@@ -57,10 +71,14 @@ enum ErrorDescriptionWidgetType {
         return context.text.privateListErrorDescription;
       case loggedOut:
         return context.text.loggedOutListErrorDescription;
+      case videoLesson:
+        return context.text.noVideoLessonYetDescription;
+      case resultNotFound:
+        return context.text.resultNotFoundDescription;
     }
   }
 
-  String getButtonText(BuildContext context) {
+  String? getButtonText(BuildContext context) {
     switch (this) {
       case connection:
         return context.text.reload;
@@ -70,6 +88,10 @@ enum ErrorDescriptionWidgetType {
         return context.text.privateListErrorButtonText;
       case loggedOut:
         return context.text.loggedOutListErrorButtonText;
+      case videoLesson:
+        return null;
+      case resultNotFound:
+        return null;
     }
   }
 }

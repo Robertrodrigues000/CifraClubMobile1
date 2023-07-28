@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
@@ -6,6 +5,8 @@ import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.da
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_collapsed_header.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
   late TabController _tabController;
   final scrollController = ScrollController();
   var isScrolledUnder = false;
+  var shouldShowSearch = true;
 
   @override
   void initState() {
@@ -34,6 +36,13 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     _bloc = BlocProvider.of<ArtistSongsBloc>(context);
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     scrollController.addListener(_onScroll);
+    pageController.addListener(_onPageChange);
+  }
+
+  void _onPageChange() {
+    setState(() {
+      shouldShowSearch = pageController.page != 2 || _bloc.state.videoLessons.isNotEmpty;
+    });
   }
 
   void _onScroll() {
@@ -47,6 +56,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
 
   @override
   void dispose() {
+    pageController.removeListener(_onPageChange);
     pageController.dispose();
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
@@ -98,6 +108,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                       isScrolledUnder: isScrolledUnder,
                       tabController: _tabController,
                       pageController: pageController,
+                      shouldShowSearch: shouldShowSearch,
                     ),
                   ),
                 ),
@@ -138,12 +149,12 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                           SliverOverlapInjector(
                             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                           ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              childCount: 200,
-                              (context, index) {
-                                return Text("${context.text.alphabeticalOrder} $index");
-                              },
+                          SliverPadding(
+                            padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
+                            sliver: const SliverToBoxAdapter(
+                              child: ErrorDescriptionWidget(
+                                typeError: ErrorDescriptionWidgetType.resultNotFound,
+                              ),
                             ),
                           ),
                         ],
@@ -158,23 +169,32 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                         SliverOverlapInjector(
                           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                         ),
-                        SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            childCount: state.videoLessons.length,
-                            (context, index) {
-                              final videoLesson = state.videoLessons[index];
-                              return ArtistVideoLessonItem(
-                                onTap: () {},
-                                imageUrl: videoLesson.images.small,
-                                artistName: videoLesson.artist?.name ?? "",
-                                title: videoLesson.title,
-                                views: formatVideoLessonView(videoLesson.views, context),
-                                duration: formatVideoLessonDuration(videoLesson.duration),
-                                versionLabel: videoLesson.version?.label ?? "",
-                              );
-                            },
+                        if (state.videoLessons.isEmpty)
+                          const SliverFillRemaining(
+                            child: Center(
+                              child: ErrorDescriptionWidget(
+                                typeError: ErrorDescriptionWidgetType.videoLesson,
+                              ),
+                            ),
+                          )
+                        else
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              childCount: state.videoLessons.length,
+                              (context, index) {
+                                final videoLesson = state.videoLessons[index];
+                                return ArtistVideoLessonItem(
+                                  onTap: () {},
+                                  imageUrl: videoLesson.images.small,
+                                  artistName: videoLesson.artist?.name ?? "",
+                                  title: videoLesson.title,
+                                  views: formatVideoLessonView(videoLesson.views, context),
+                                  duration: formatVideoLessonDuration(videoLesson.duration),
+                                  versionLabel: videoLesson.version?.label ?? "",
+                                );
+                              },
+                            ),
                           ),
-                        ),
                       ]);
                     }),
                   ),

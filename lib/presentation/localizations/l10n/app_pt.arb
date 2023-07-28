@@ -234,6 +234,10 @@
             }
         }
     },
+    "noVideoLessonYetTitle": "Nenhuma videoaula ainda",
+    "noVideoLessonYetDescription": "Conheça os vídeos do nosso canal para ficar por dentro das novidades dos seus artistas favoritos.",
+    "resultNotFoundTitle": "Resultado não encontrado",
+    "resultNotFoundDescription": "Tente pesquisar um novo termo.",
     "deleteReorderErrorMessage": "Falha ao excluir música da lista.",
     "sortReorderErrorMessage": "Falha ao reordenar a lista.",
     "savedReorderChanges" : "Alterações salvas com sucesso"

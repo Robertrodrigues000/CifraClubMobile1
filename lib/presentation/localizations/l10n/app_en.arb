@@ -292,6 +292,10 @@
             }
         }
     },
+    "noVideoLessonYetTitle": "No video lessons yet",
+    "noVideoLessonYetDescription": "Check out the videos on our channel to stay up to date with the news from your favorite artists.",
+    "resultNotFoundTitle": "Result not found",
+    "resultNotFoundDescription": "Try searching for a new term.",
     "deleteReorderErrorMessage": "Failed to delete music from the list.",
     "sortReorderErrorMessage": "Failed to reorder the list.",
     "savedReorderChanges" : "Changes saved successfully"
