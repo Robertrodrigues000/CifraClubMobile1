@@ -8,7 +8,7 @@ class ArtistSongItem extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onOptionsTap;
   final String name;
-  final int ranking;
+  final String prefix;
   final bool isVerified;
   final bool hasVideoLessons;
   final bool isEnable;
@@ -18,7 +18,7 @@ class ArtistSongItem extends StatelessWidget {
       required this.onTap,
       required this.onOptionsTap,
       required this.name,
-      required this.ranking,
+      required this.prefix,
       required this.isVerified,
       required this.hasVideoLessons,
       this.isEnable = true});
@@ -40,7 +40,7 @@ class ArtistSongItem extends StatelessWidget {
               child: SizedBox(
                 width: 28,
                 child: Text(
-                  ranking.toString(),
+                  prefix,
                   style: context.typography.subtitle3.copyWith(
                     color: context.colors.textSecondary,
                   ),

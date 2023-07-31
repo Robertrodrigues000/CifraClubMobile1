@@ -1,13 +1,18 @@
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/domain/artist/models/artist_song.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_collapsed_header.dart';
+import 'package:collection/collection.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cosmos/cosmos.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -130,9 +135,18 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                           ),
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
-                              childCount: 200,
+                              childCount: state.songs.length,
                               (context, index) {
-                                return Text("${context.text.mostAccessed} $index");
+                                final song = state.songs[index];
+                                return ArtistSongItem(
+                                    // coverage:ignore-start
+                                    onTap: () {},
+                                    onOptionsTap: () {},
+                                    // coverage:ignore-end
+                                    name: song.name,
+                                    prefix: (index + 1).toString(),
+                                    isVerified: song.verified,
+                                    hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
                               },
                             ),
                           ),
@@ -149,12 +163,23 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                           SliverOverlapInjector(
                             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                           ),
-                          SliverPadding(
-                            padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
-                            sliver: const SliverToBoxAdapter(
-                              child: ErrorDescriptionWidget(
-                                typeError: ErrorDescriptionWidgetType.resultNotFound,
-                              ),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              childCount: state.songs.length,
+                              (context, index) {
+                                final alphabeticalSongs =
+                                    state.songs.sortedBy((a) => removeDiacritics(a.name).toLowerCase());
+                                final song = alphabeticalSongs[index];
+                                return ArtistSongItem(
+                                    // coverage:ignore-start
+                                    onTap: () {},
+                                    onOptionsTap: () {},
+                                    // coverage:ignore-end
+                                    name: song.name,
+                                    prefix: state.prefixes[index],
+                                    isVerified: song.verified,
+                                    hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
+                              },
                             ),
                           ),
                         ],
@@ -205,6 +230,14 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
         );
       },
     );
+  }
+
+  bool hasInstrumentVideoLesson(Instrument? instrument, ArtistSong song) {
+    if (instrument == null && song.videoLessons > 0) {
+      return true;
+    } else {
+      return song.videoLessonsInstruments?.contains(instrument) ?? false;
+    }
   }
 
   String formatVideoLessonView(int views, BuildContext context) {

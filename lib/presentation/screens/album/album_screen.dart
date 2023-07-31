@@ -112,7 +112,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                           onTap: () {},
                           onOptionsTap: () {},
                           name: discSong.name,
-                          ranking: discSong.order,
+                          prefix: (discSong.order).toString(),
                           isVerified: artistSong?.verified ?? false,
                           hasVideoLessons: artistSong?.videoLessons != null ? artistSong!.videoLessons > 0 : false,
                           isEnable: isEnable,

@@ -1,5 +1,4 @@
 // coverage:ignore-file
-import 'package:cifraclub/domain/artist/use_cases/get_artist_video_lessons.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
@@ -23,7 +22,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final PostPurchaseOrder _postPurchaseOrder;
   final GetIsProPreference _getIsProPreference;
   final ClearSongsFromSongbook _clearSongsFromSongbook;
-  final GetArtistVideoLessons _getArtistVideoLessons;
 
   DevScreenBloc(
     this._getProducts,
@@ -34,7 +32,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._postPurchaseOrder,
     this._getIsProPreference,
     this._clearSongsFromSongbook,
-    this._getArtistVideoLessons,
   ) : super(const DevScreenState(isLoading: false));
 
   Future<void> restorePurchases() {
@@ -78,12 +75,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     print(isPro);
 
     emit(DevScreenState(isLoading: !state.isLoading));
-  }
-
-  void getArtistVideoLessons() async {
-    final result = await _getArtistVideoLessons("the-beatles");
-
-    result.when(success: print, failure: print);
   }
 
   Future<void> deleteCifrasTest() async {

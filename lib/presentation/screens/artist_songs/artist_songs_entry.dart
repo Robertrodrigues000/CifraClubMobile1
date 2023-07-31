@@ -30,7 +30,8 @@ class ArtistSongsEntry extends ScreenEntry {
   Widget build(BuildContext context) {
     Instrument? instrumentFilter = instrument?.isNotEmpty == true ? Instrument.values.byName(instrument!) : null;
     return BlocProvider(
-      create: (context) => ArtistSongsBloc(getIt())..init(instrumentFilter, artistUrl),
+      create: (context) =>
+          ArtistSongsBloc(getIt(), getIt(), getIt(), instrument: instrumentFilter, artistUrl: artistUrl)..init(),
       child: ArtistSongsScreen(artistName: artistName ?? ""),
     );
   }

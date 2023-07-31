@@ -156,7 +156,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                       onTap: () {},
                       onOptionsTap: () {},
                       name: state.songs[index].name,
-                      ranking: index + 1,
+                      prefix: (index + 1).toString(),
                       isVerified: state.songs[index].verified,
                       hasVideoLessons: hasInstrumentVideoLesson(
                         state.selectedInstrument,

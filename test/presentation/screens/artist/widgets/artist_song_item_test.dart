@@ -14,7 +14,7 @@ void main() {
       child: ArtistSongItem(
         key: const Key('artist-song'),
         name: "Legiao Urbana",
-        ranking: 1,
+        prefix: "1",
         onTap: completer.complete,
         onOptionsTap: () {},
         hasVideoLessons: false,
@@ -30,7 +30,7 @@ void main() {
       child: ArtistSongItem(
         key: const Key('artist-song'),
         name: "Legiao Urbana",
-        ranking: 1,
+        prefix: "1",
         onTap: () {},
         onOptionsTap: () {},
         hasVideoLessons: true,
@@ -56,7 +56,7 @@ void main() {
       child: ArtistSongItem(
         key: const Key('artist-song'),
         name: "Legiao Urbana",
-        ranking: 1,
+        prefix: "1",
         onTap: () {},
         onOptionsTap: () {},
         hasVideoLessons: false,
@@ -82,7 +82,7 @@ void main() {
       child: ArtistSongItem(
         key: const Key('artist-song'),
         name: "Legiao Urbana",
-        ranking: 1,
+        prefix: "1",
         onTap: () {},
         onOptionsTap: () {},
         hasVideoLessons: false,
