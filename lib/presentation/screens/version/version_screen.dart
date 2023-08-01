@@ -1,10 +1,17 @@
 import 'package:cifraclub/domain/version/models/chord.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
+import 'package:cifraclub/presentation/screens/version/version_event.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
+import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
+import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VersionScreen extends StatefulWidget {
   const VersionScreen({super.key});
@@ -13,15 +20,38 @@ class VersionScreen extends StatefulWidget {
   State<VersionScreen> createState() => _VersionScreenState();
 }
 
-class _VersionScreenState extends State<VersionScreen> {
+class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
   late final _bloc = BlocProvider.of<VersionBloc>(context);
   final _scrollController = TrackingScrollController();
   var isFooterBarVisible = true;
+
+  YoutubePlayerController? _youtubePlayerController;
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(onScroll);
+
+    _bloc.versionEventStream.listen((event) async {
+      switch (event) {
+        case OnYouTubeVideoSelected():
+          if (_youtubePlayerController == null) {
+            _youtubePlayerController = YoutubePlayerController(
+              params: const YoutubePlayerParams(
+                mute: false,
+                showControls: true,
+                showFullscreenButton: true,
+              ),
+            );
+            await _youtubePlayerController?.loadVideoById(videoId: event.videoId);
+          }
+          break;
+        case OnYouTubeVideoClosed():
+          await _youtubePlayerController?.close();
+          _youtubePlayerController = null;
+          break;
+      }
+    }).addTo(subscriptions);
   }
 
   void onScroll() {
@@ -38,14 +68,14 @@ class _VersionScreenState extends State<VersionScreen> {
 
   @override
   void dispose() {
+    disposeAll();
+    _youtubePlayerController?.close();
     _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // https://github.com/StudioSol/PalcoMobile/blob/development/lib/presentation/screens/podcast/podcast_screen.dart#L168
-
     return BlocBuilder<VersionBloc, VersionState>(
       builder: (context, state) {
         return Scaffold(
@@ -56,32 +86,42 @@ class _VersionScreenState extends State<VersionScreen> {
                   onPressed: () {
                     _bloc.toggleChordPinnedState();
                   },
-                  child: Text(state.isChordListPinned ? "Ocultar acordes na tela" : "Fixar acordes na tela"))
+                  child: Text(state.isChordListPinned ? "Ocultar acordes na tela" : "Fixar acordes na tela")),
             ],
           ),
-          // SliverAppBar
-
-          // Ação pra trocar o pinned no state
           body: Stack(
             alignment: Alignment.bottomCenter,
             children: [
               CustomScrollView(
                 controller: _scrollController,
                 slivers: [
-                  SliverPersistentHeader(
-                    delegate: VersionInfoHeaderDelegate(
-                        maxExtend: 110,
-                        child: SingleChildScrollView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          reverse: true,
-                          child: Column(
-                            children: [
-                              Text(state.version?.music.name ?? ""),
-                              Text(state.version?.artist?.name ?? ""),
-                            ],
-                          ),
+                  if (state.isYouTubeVisible && _youtubePlayerController != null)
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: YouTubeHeaderDelegate(
+                        MediaQuery.sizeOf(context).width * 9 / 16,
+                        _youtubePlayerController!,
+                      ),
+                    ),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        Text(state.version?.music.name ?? ""),
+                        Text(state.version?.artist?.name ?? ""),
+                        FilterCapsuleList(
+                          filters: state.version?.songsDetail?.first.songs?.map((song) {
+                                return Filter(
+                                    label: song.label,
+                                    isSelected: song.label == state.version?.label,
+                                    onTap: () {
+                                      _bloc.onVersionSelected(song);
+                                    },
+                                    leadingIconUri: song.verified ? AppSvgs.verifiedIcon : null);
+                              }).toList() ??
+                              const [],
                         ),
-                        haveScroll: false),
+                      ],
+                    ),
                   ),
                   SliverPersistentHeader(
                       pinned: state.isChordListPinned,
@@ -110,6 +150,20 @@ class _VersionScreenState extends State<VersionScreen> {
                   height: 32,
                   width: 300,
                   color: Colors.amber,
+                  child: Row(
+                    children: [
+                      TextButton(onPressed: () {}, child: const Icon(Icons.video_chat)),
+                      TextButton(onPressed: () {}, child: const Icon(Icons.arrow_outward)),
+                      TextButton(onPressed: () {}, child: const Icon(Icons.settings)),
+                      TextButton(
+                          onPressed: () {
+                            state.isYouTubeVisible
+                                ? _bloc.closeYouTubeVideo()
+                                : _bloc.loadYouTubeVideo(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM");
+                          },
+                          child: const Icon(Icons.youtube_searched_for_outlined))
+                    ],
+                  ),
                 ),
               )
             ],
@@ -117,6 +171,37 @@ class _VersionScreenState extends State<VersionScreen> {
         );
       },
     );
+  }
+}
+
+// https://pub.dev/packages/youtube_player_iframe
+class YouTubeHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double height;
+  final YoutubePlayerController controller;
+
+  YouTubeHeaderDelegate(this.height, this.controller);
+
+  @override
+  double get maxExtent => height;
+
+  @override
+  double get minExtent => height;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return YoutubePlayerScaffold(
+      controller: controller,
+      builder: (context, player) {
+        return player;
+      },
+    );
+  }
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return oldDelegate is! YouTubeHeaderDelegate ||
+        oldDelegate.height != height ||
+        oldDelegate.controller != controller;
   }
 }
 
@@ -172,39 +257,5 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
         oldDelegate.haveScroll != haveScroll ||
         oldDelegate.child != child ||
         oldDelegate.chords != chords;
-  }
-}
-
-class VersionInfoHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final double maxExtend;
-  final Widget child;
-  final bool haveScroll;
-
-  VersionInfoHeaderDelegate({
-    required this.maxExtend,
-    required this.child,
-    required this.haveScroll,
-  });
-
-  @override
-  double get maxExtent => maxExtend;
-
-  @override
-  double get minExtent => 0;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      height: maxExtend,
-      color: Colors.cyan,
-      child: child,
-    );
-  }
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return oldDelegate is! VersionInfoHeaderDelegate ||
-        oldDelegate.haveScroll != haveScroll ||
-        oldDelegate.child != child;
   }
 }

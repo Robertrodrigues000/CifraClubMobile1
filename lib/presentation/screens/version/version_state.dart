@@ -16,6 +16,8 @@ class VersionState {
 
   final bool isChordListPinned;
 
+  final bool isYouTubeVisible;
+
   /*
   
 
@@ -51,5 +53,6 @@ class VersionState {
     this.error,
     this.sections = const [],
     this.isChordListPinned = false,
+    this.isYouTubeVisible = false,
   });
 }

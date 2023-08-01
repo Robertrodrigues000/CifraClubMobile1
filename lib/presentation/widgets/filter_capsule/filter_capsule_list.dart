@@ -44,6 +44,7 @@ class FilterCapsuleList extends StatelessWidget {
               isSelected: filter.isSelected,
               onTap: filter.onTap,
               trailingIconUri: filter.trailingIconUri,
+              leadingIconUri: filter.leadingIconUri,
             ),
           );
         },

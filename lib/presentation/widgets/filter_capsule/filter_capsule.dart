@@ -40,7 +40,11 @@ class FilterCapsule extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (leadingIconUri != null) SvgPicture.asset(leadingIconUri!),
+            if (leadingIconUri != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: SvgPicture.asset(leadingIconUri!),
+              ),
             Padding(
               padding: trailingIconUri != null ? const EdgeInsets.symmetric(horizontal: 8.0) : labelPadding,
               child: Text(

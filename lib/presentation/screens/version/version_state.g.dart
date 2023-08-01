@@ -17,6 +17,8 @@ abstract class _$VersionStateCWProxy {
 
   VersionState isChordListPinned(bool isChordListPinned);
 
+  VersionState isYouTubeVisible(bool isYouTubeVisible);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -29,6 +31,7 @@ abstract class _$VersionStateCWProxy {
     RequestError? error,
     List<Section>? sections,
     bool? isChordListPinned,
+    bool? isYouTubeVisible,
   });
 }
 
@@ -54,6 +57,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
   VersionState isChordListPinned(bool isChordListPinned) => this(isChordListPinned: isChordListPinned);
 
   @override
+  VersionState isYouTubeVisible(bool isYouTubeVisible) => this(isYouTubeVisible: isYouTubeVisible);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -67,6 +73,7 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? error = const $CopyWithPlaceholder(),
     Object? sections = const $CopyWithPlaceholder(),
     Object? isChordListPinned = const $CopyWithPlaceholder(),
+    Object? isYouTubeVisible = const $CopyWithPlaceholder(),
   }) {
     return VersionState(
       version: version == const $CopyWithPlaceholder()
@@ -89,6 +96,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.isChordListPinned
           // ignore: cast_nullable_to_non_nullable
           : isChordListPinned as bool,
+      isYouTubeVisible: isYouTubeVisible == const $CopyWithPlaceholder() || isYouTubeVisible == null
+          ? _value.isYouTubeVisible
+          // ignore: cast_nullable_to_non_nullable
+          : isYouTubeVisible as bool,
     );
   }
 }
