@@ -84,4 +84,9 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
       versions.map((e) => UserVersionDto.fromDomain(e, songbookId)).toList(),
     );
   }
+
+  @override
+  Stream<bool> getIsFavoriteVersionBySongIdStream(int songId) {
+    return _userVersionDataSource.getIsFavoriteVersionBySongIdStream(songId);
+  }
 }

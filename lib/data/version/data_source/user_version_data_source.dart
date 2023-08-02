@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/version/models/user_version_dto.dart';
 import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:isar/isar.dart';
 
 class UserVersionDataSource {
@@ -91,5 +92,15 @@ class UserVersionDataSource {
 
   Stream<List<UserRecentVersionDto>> getVersionsStreamFromRecentSongbook() {
     return _isar.userRecentVersionDtos.where().watch(fireImmediately: true);
+  }
+
+  Stream<bool> getIsFavoriteVersionBySongIdStream(int songId) {
+    return _isar.userVersionDtos
+        .where()
+        .songbookIdEqualTo(ListType.favorites.localId)
+        .filter()
+        .songIdEqualTo(songId)
+        .watch(fireImmediately: true)
+        .map((event) => event.isNotEmpty);
   }
 }

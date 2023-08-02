@@ -11,4 +11,5 @@ abstract class UserVersionRepository {
   Future<int?> deleteVersionsById(List<int> songsId);
   Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId);
   Future<List<int>> updateVersionsToSongbook(List<Version> versions, int songbookId);
+  Stream<bool> getIsFavoriteVersionBySongIdStream(int songId);
 }

@@ -207,4 +207,17 @@ void main() {
     verify(() => userVersionDataSource.putVersionsToSongbook(domainVersions)).called(1);
     expect(updatedIds, versionsIds);
   });
+
+  test("When `getIsFavoriteVersionBySongIdStream` is called should return stream of favorite version", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.getIsFavoriteVersionBySongIdStream(1))
+        .thenAnswer((_) => BehaviorSubject.seeded(true));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    final isFavorite = userVersionRepository.getIsFavoriteVersionBySongIdStream(1);
+
+    verify(() => userVersionDataSource.getIsFavoriteVersionBySongIdStream(1)).called(1);
+    expect(isFavorite, emitsInOrder([true]));
+  });
 }

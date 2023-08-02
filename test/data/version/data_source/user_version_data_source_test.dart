@@ -2,6 +2,7 @@ import 'package:cifraclub/data/version/data_source/user_version_data_source.dart
 import 'package:cifraclub/data/version/models/user_version_artist_dto.dart';
 import 'package:cifraclub/data/version/models/user_version_dto.dart';
 import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
@@ -30,6 +31,7 @@ void main() {
     UserVersionArtistDto? userVersionArtistDto,
     int? songbookId,
     String? artistImage,
+    int? songId,
   }) =>
       UserVersionDto(
         id: faker.randomGenerator.integer(10000),
@@ -37,7 +39,7 @@ void main() {
         songUrl: faker.animal.name(),
         tone: faker.animal.name(),
         type: faker.randomGenerator.integer(10000),
-        songId: faker.randomGenerator.integer(10000),
+        songId: songId ?? faker.randomGenerator.integer(10000),
         songbookId: songbookId ?? faker.randomGenerator.integer(10000),
         artist: userVersionArtistDto ?? UserVersionArtistDto(),
         artistImage: artistImage,
@@ -319,5 +321,27 @@ void main() {
 
       expect(result, emits([]));
     });
+  });
+
+  test("When 'getIsFavoriteVersionBySongIdStream' is called should return bool if favorite", () async {
+    const songId = 1;
+    final version = getUserVersionDto(songId: songId, songbookId: ListType.favorites.localId);
+
+    await isar.writeTxn(
+      () async {
+        await isar.userVersionDtos.put(version);
+      },
+    );
+
+    final stream = userVersionDataSource.getIsFavoriteVersionBySongIdStream(songId).asBroadcastStream();
+    stream.listen((_) {});
+
+    await isar.writeTxn(
+      () async {
+        await isar.userVersionDtos.delete(version.id);
+      },
+    );
+
+    expect(stream, emitsInOrder([isTrue, isFalse]));
   });
 }
