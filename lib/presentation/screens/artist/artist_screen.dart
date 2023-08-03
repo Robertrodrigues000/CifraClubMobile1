@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_event.dart';
@@ -154,7 +155,11 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                     childCount: state.songs.take(maxSongs).length,
                     (context, index) => ArtistSongItem(
                       onTap: () {},
-                      onOptionsTap: () {},
+                      onOptionsTap: () async {
+                        await const VersionOptionsBottomSheet().open(
+                          context: context,
+                        );
+                      },
                       name: state.songs[index].name,
                       prefix: (index + 1).toString(),
                       isVerified: state.songs[index].verified,

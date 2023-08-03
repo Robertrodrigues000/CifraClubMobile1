@@ -2,6 +2,7 @@ import 'package:cifraclub/domain/artist/models/album_disc.dart';
 import 'package:cifraclub/domain/artist/models/album_disc_song.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_screen.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 import '../../../shared_mocks/domain/artist/models/album_disc_song_mock.dart';
 import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
@@ -228,5 +230,49 @@ void main() {
           ),
           findsOneWidget);
     });
+  });
+
+  testWidgets("When tapping the options icon of a album song, should show bottom sheet", (widgetTester) async {
+    final discs = [
+      AlbumDisc(songs: [
+        const AlbumDiscSong(
+            disc: 1,
+            id: 1,
+            name: "Será",
+            order: 1,
+            artistSong: ArtistSong(
+                id: 1,
+                lyrics: 123,
+                lyricsId: 232,
+                name: "Será",
+                bass: 1,
+                drums: 2,
+                guitar: 13,
+                guitarpro: 2,
+                harmonica: 1,
+                sheet: 0,
+                url: "",
+                verified: true,
+                videoLessons: 2))
+      ])
+    ];
+    bloc.mockStream(AlbumState(discs: discs));
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: TestWrapper(
+            child: BlocProvider<AlbumBloc>.value(
+              value: bloc,
+              child: const AlbumScreen(name: "A Tempestade"),
+            ),
+          ),
+        ),
+      );
+    });
+    await widgetTester.tap(find.byKey(const Key("options-icon")));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(DefaultBottomSheet), findsOneWidget);
   });
 }

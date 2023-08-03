@@ -391,7 +391,7 @@ void main() {
 
     expect(find.byType(SingleChildScrollView), findsOneWidget);
 
-    await widgetTester.tap(find.text(appTextEn.shareList));
+    await widgetTester.tap(find.text(appTextEn.share));
     await widgetTester.pumpAndSettle();
 
     verify(() => bloc.shareLink(link, any())).called(1);

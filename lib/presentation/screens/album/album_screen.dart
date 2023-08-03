@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_state.dart';
 import 'package:cifraclub/presentation/screens/album/widgets/album_header.dart';
@@ -110,7 +111,11 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                 artistSong.drums > 0);
                         return ArtistSongItem(
                           onTap: () {},
-                          onOptionsTap: () {},
+                          onOptionsTap: () async {
+                            await const VersionOptionsBottomSheet().open(
+                              context: context,
+                            );
+                          },
                           name: discSong.name,
                           prefix: (discSong.order).toString(),
                           isVerified: artistSong?.verified ?? false,

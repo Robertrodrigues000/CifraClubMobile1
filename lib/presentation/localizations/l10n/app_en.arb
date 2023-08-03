@@ -165,7 +165,7 @@
     "exit":"Exit",
     "renameList": "Rename List",
     "editTabsList": "Edit List",
-    "shareList": "Share",
+    "share": "Share",
     "clearList": "Clear List",
     "deleteList": "Delete List",
     "privacyList": "Privacy",
@@ -278,6 +278,9 @@
             }
         }
     },
+    "saveVersionToList": "Save to a list",
+    "favoriteVersion": "Favorite chord",
+    "correctVersion": "Correct chord",
     "albumOf":"Album of",
     "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{song}other{songs}} • {filter}",
     "@artistTotalSongsAndFilter": {

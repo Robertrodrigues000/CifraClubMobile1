@@ -240,7 +240,7 @@ enum ListOptionsBottomSheetItem {
   String getText(BuildContext context) {
     switch (this) {
       case ListOptionsBottomSheetItem.share:
-        return context.text.shareList;
+        return context.text.share;
       case ListOptionsBottomSheetItem.rename:
         return context.text.renameList;
       case ListOptionsBottomSheetItem.edit:

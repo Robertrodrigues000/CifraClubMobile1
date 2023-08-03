@@ -111,7 +111,7 @@
     "exit":"Sair",
     "renameList": "Renomear Lista",
     "editTabsList": "Editar Lista",
-    "shareList": "Compartilhar",
+    "share": "Compartilhar",
     "clearList": "Limpar Lista",
     "deleteList": "Excluir Lista",
     "privacyList": "Privacidade",
@@ -220,6 +220,9 @@
             }
         }
     },
+    "saveVersionToList":"Salvar em uma lista",
+    "favoriteVersion":"Favoritar cifra",
+    "correctVersion":"Corrigir cifra",
     "albumOf":"Álbum de",
     "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{música}other{músicas}}  • {filter}",
     "@artistTotalSongsAndFilter": {

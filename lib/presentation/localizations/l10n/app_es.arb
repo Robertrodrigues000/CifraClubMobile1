@@ -111,7 +111,7 @@
     "exit":"Salir",
     "renameList": "Renombrar Lista",
     "editTabsList": "Editar Lista",
-    "shareList": "Compartir",
+    "share": "Compartir",
     "clearList": "Limpiar Lista",
     "deleteList": "Eliminar Lista",
     "privacyList": "Privacidad",
@@ -220,6 +220,9 @@
             }
         }
     },
+    "saveVersionToList": "Guardar en una lista",
+    "favoriteVersion": "Favorito acorde",
+    "correctVersion": "Corregir acorde",
     "albumOf":"Álbum de",
     "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{musica}other{musicas}} • {filter}",
     "@artistTotalSongsAndFilter": {

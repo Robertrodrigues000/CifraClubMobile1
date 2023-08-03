@@ -25,6 +25,23 @@ void main() {
     expect(completer.isCompleted, isTrue);
   });
 
+  testWidgets("When tapping the options icon, should call onOptionsTap", (widgetTester) async {
+    final completer = Completer();
+    await widgetTester.pumpWidget(TestWrapper(
+      child: ArtistSongItem(
+        key: const Key('artist-song'),
+        name: "Legiao Urbana",
+        prefix: "",
+        onTap: () {},
+        onOptionsTap: completer.complete,
+        hasVideoLessons: false,
+        isVerified: false,
+      ),
+    ));
+    await widgetTester.tap(find.byKey(const Key("options-icon")));
+    expect(completer.isCompleted, isTrue);
+  });
+
   testWidgets("when hasVideoLessons is true should show subtitle", (widgetTester) async {
     await widgetTester.pumpWidget(TestWrapper(
       child: ArtistSongItem(

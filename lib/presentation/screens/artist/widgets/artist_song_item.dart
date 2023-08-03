@@ -105,6 +105,7 @@ class ArtistSongItem extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
+                    key: const Key("options-icon"),
                     onPressed: onOptionsTap,
                     padding: const EdgeInsets.all(12),
                     highlightColor: Theme.of(context).splashColor,

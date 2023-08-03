@@ -60,4 +60,7 @@ class AppSvgs {
   static const clearIcon = "assets/images/clear_icon.svg";
   static const favoriteIcon = "assets/images/favorite_icon.svg";
   static const filledFavoriteIcon = "assets/images/filled_favorite_icon.svg";
+  static const saveVersionIcon = "assets/images/save_version_icon.svg";
+  static const correctVersionIcon = "assets/images/correct_version_icon.svg";
+  static const favoriteVersionIcon = "assets/images/favorite_version_icon.svg";
 }
