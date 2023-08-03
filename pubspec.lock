@@ -245,8 +245,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "3c0359d1693f2e9ae059fafb257718e2d6683577"
-      resolved-ref: "3c0359d1693f2e9ae059fafb257718e2d6683577"
+      ref: "97a7f8ef01d80c505a3cfd1bef589aad25151185"
+      resolved-ref: "97a7f8ef01d80c505a3cfd1bef589aad25151185"
       url: "git@github.com:CifraClub/CosmosMobile.git"
     source: git
     version: "0.0.1"

@@ -1,4 +1,3 @@
-import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data_song.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/domain/version/use_cases/parse_sections.dart';
