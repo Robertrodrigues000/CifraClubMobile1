@@ -9,6 +9,8 @@ class VersionEntry extends ScreenEntry {
   static const name = "Version";
   static const artistUrlParamKey = "artistUrl";
   static const songUrlParamKey = "songUrl";
+  static const artistNameParamKey = "artistName";
+  static const songNameParamKey = "songName";
   static const songbookVersionIdKey = "songbookVersionIdKey";
 
   VersionEntry(super.params);
@@ -17,18 +19,22 @@ class VersionEntry extends ScreenEntry {
     nav.push(screenName: name, params: {songbookVersionIdKey: songbookVersionId.toString()});
   }
 
-  static void pushFromSong(Nav nav, String artistUrl, String songUrl) {
+  static void pushFromSong(Nav nav, String artistUrl, String songUrl, String artistName, String songName) {
     nav.push(
       screenName: name,
       params: {
         artistUrlParamKey: artistUrl,
         songUrlParamKey: songUrl,
+        artistNameParamKey: artistName,
+        songNameParamKey: songName,
       },
     );
   }
 
   String? get artistUrl => params[artistUrlParamKey];
   String? get songUrl => params[songUrlParamKey];
+  String? get artistName => params[artistNameParamKey];
+  String? get songName => params[songNameParamKey];
   int? get songbookVersionId => int.tryParse(params[songbookVersionIdKey] ?? "");
 
   @override
@@ -40,9 +46,13 @@ class VersionEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<VersionBloc>(
-      create: (context) =>
-          VersionBloc(getIt(), getIt(), artistUrl: artistUrl, songUrl: songUrl, songbookVersionId: songbookVersionId)
-            ..init(),
+      create: (context) => VersionBloc(getIt(), getIt(),
+          artistUrl: artistUrl,
+          songUrl: songUrl,
+          songbookVersionId: songbookVersionId,
+          artistName: artistName,
+          songName: songName)
+        ..init(),
       child: const VersionScreen(),
     );
   }

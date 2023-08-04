@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 enum Instrument {
-  guitar("", 1, ["guitar", "electric-guitar"], [1, 2]),
+  guitar("cifras", 1, ["guitar", "electric-guitar"], [1, 2]),
   ukulele("ukulele", 12, ["ukulele"], [11]),
   keyboard("keyboard", 9, ["keyboard"], [5]),
   cavaco("cavaco", 10, ["cavaco"], [10]),

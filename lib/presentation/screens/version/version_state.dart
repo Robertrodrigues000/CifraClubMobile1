@@ -17,6 +17,7 @@ class VersionState {
   final bool isChordListPinned;
 
   final bool isYouTubeVisible;
+  final VersionHeaderState versionHeaderState;
 
   /*
   
@@ -54,5 +55,28 @@ class VersionState {
     this.sections = const [],
     this.isChordListPinned = false,
     this.isYouTubeVisible = false,
+    this.versionHeaderState = const VersionHeaderState(),
+  });
+}
+
+@CopyWith()
+@immutable
+class VersionHeaderState {
+  final String artistName;
+  final String songName;
+  final String? artistUrl;
+  final String? songUrl;
+  final bool? isFavorite;
+  final String? selectedVersionLabel;
+  final List<String> versionLabels;
+
+  const VersionHeaderState({
+    this.isFavorite,
+    this.selectedVersionLabel,
+    this.versionLabels = const [],
+    this.artistName = "",
+    this.songName = "",
+    this.artistUrl,
+    this.songUrl,
   });
 }

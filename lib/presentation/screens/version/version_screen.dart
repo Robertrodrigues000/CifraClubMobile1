@@ -106,15 +106,15 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                   SliverToBoxAdapter(
                     child: Column(
                       children: [
-                        Text(state.version?.music.name ?? ""),
-                        Text(state.version?.artist?.name ?? ""),
+                        Text(state.versionHeaderState.songName),
+                        Text(state.versionHeaderState.artistName),
                         FilterCapsuleList(
                           filters: state.version?.songsDetail?.first.songs?.map((song) {
                                 return Filter(
                                     label: song.label,
                                     isSelected: song.label == state.version?.label,
                                     onTap: () {
-                                      _bloc.onVersionSelected(song);
+                                      _bloc.onVersionSelected(song.label);
                                     },
                                     leadingIconUri: song.verified ? AppSvgs.verifiedIcon : null);
                               }).toList() ??

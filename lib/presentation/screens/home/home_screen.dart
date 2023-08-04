@@ -115,6 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Nav.of(context),
                           song.artist?.url ?? "",
                           song.url,
+                          song.artist?.name ?? "",
+                          song.name,
                         ),
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
