@@ -1,4 +1,7 @@
 import 'package:cifraclub/di/di_setup.dart';
+import 'package:cifraclub/presentation/screens/version/middlewares/content_middleware.dart';
+import 'package:cifraclub/presentation/screens/version/middlewares/version_loader_middleware.dart';
+import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_screen.dart';
 import 'package:flutter/material.dart';
@@ -46,13 +49,14 @@ class VersionEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<VersionBloc>(
-      create: (context) => VersionBloc(getIt(), getIt(),
+      create: (context) => VersionBloc([getIt<VersionLoaderMiddleware>(), getIt<ContentMiddleware>()], getIt())
+        ..add(OnVersionInit(
+          artistName: artistName,
+          songName: songName,
           artistUrl: artistUrl,
           songUrl: songUrl,
           songbookVersionId: songbookVersionId,
-          artistName: artistName,
-          songName: songName)
-        ..init(),
+        )),
       child: const VersionScreen(),
     );
   }

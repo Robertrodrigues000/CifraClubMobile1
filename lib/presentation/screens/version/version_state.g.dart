@@ -123,11 +123,13 @@ extension $VersionStateCopyWith on VersionState {
 }
 
 abstract class _$VersionHeaderStateCWProxy {
+  VersionHeaderState selectedInstrument(Instrument? selectedInstrument);
+
   VersionHeaderState isFavorite(bool? isFavorite);
 
-  VersionHeaderState selectedVersionLabel(String? selectedVersionLabel);
+  VersionHeaderState selectedVersionFilter(VersionFilter? selectedVersionFilter);
 
-  VersionHeaderState versionLabels(List<String> versionLabels);
+  VersionHeaderState versionFilters(List<VersionFilter> versionFilters);
 
   VersionHeaderState artistName(String artistName);
 
@@ -144,9 +146,10 @@ abstract class _$VersionHeaderStateCWProxy {
   /// VersionHeaderState(...).copyWith(id: 12, name: "My name")
   /// ````
   VersionHeaderState call({
+    Instrument? selectedInstrument,
     bool? isFavorite,
-    String? selectedVersionLabel,
-    List<String>? versionLabels,
+    VersionFilter? selectedVersionFilter,
+    List<VersionFilter>? versionFilters,
     String? artistName,
     String? songName,
     String? artistUrl,
@@ -161,14 +164,17 @@ class _$VersionHeaderStateCWProxyImpl implements _$VersionHeaderStateCWProxy {
   final VersionHeaderState _value;
 
   @override
+  VersionHeaderState selectedInstrument(Instrument? selectedInstrument) => this(selectedInstrument: selectedInstrument);
+
+  @override
   VersionHeaderState isFavorite(bool? isFavorite) => this(isFavorite: isFavorite);
 
   @override
-  VersionHeaderState selectedVersionLabel(String? selectedVersionLabel) =>
-      this(selectedVersionLabel: selectedVersionLabel);
+  VersionHeaderState selectedVersionFilter(VersionFilter? selectedVersionFilter) =>
+      this(selectedVersionFilter: selectedVersionFilter);
 
   @override
-  VersionHeaderState versionLabels(List<String> versionLabels) => this(versionLabels: versionLabels);
+  VersionHeaderState versionFilters(List<VersionFilter> versionFilters) => this(versionFilters: versionFilters);
 
   @override
   VersionHeaderState artistName(String artistName) => this(artistName: artistName);
@@ -191,27 +197,32 @@ class _$VersionHeaderStateCWProxyImpl implements _$VersionHeaderStateCWProxy {
   /// VersionHeaderState(...).copyWith(id: 12, name: "My name")
   /// ````
   VersionHeaderState call({
+    Object? selectedInstrument = const $CopyWithPlaceholder(),
     Object? isFavorite = const $CopyWithPlaceholder(),
-    Object? selectedVersionLabel = const $CopyWithPlaceholder(),
-    Object? versionLabels = const $CopyWithPlaceholder(),
+    Object? selectedVersionFilter = const $CopyWithPlaceholder(),
+    Object? versionFilters = const $CopyWithPlaceholder(),
     Object? artistName = const $CopyWithPlaceholder(),
     Object? songName = const $CopyWithPlaceholder(),
     Object? artistUrl = const $CopyWithPlaceholder(),
     Object? songUrl = const $CopyWithPlaceholder(),
   }) {
     return VersionHeaderState(
+      selectedInstrument: selectedInstrument == const $CopyWithPlaceholder()
+          ? _value.selectedInstrument
+          // ignore: cast_nullable_to_non_nullable
+          : selectedInstrument as Instrument?,
       isFavorite: isFavorite == const $CopyWithPlaceholder()
           ? _value.isFavorite
           // ignore: cast_nullable_to_non_nullable
           : isFavorite as bool?,
-      selectedVersionLabel: selectedVersionLabel == const $CopyWithPlaceholder()
-          ? _value.selectedVersionLabel
+      selectedVersionFilter: selectedVersionFilter == const $CopyWithPlaceholder()
+          ? _value.selectedVersionFilter
           // ignore: cast_nullable_to_non_nullable
-          : selectedVersionLabel as String?,
-      versionLabels: versionLabels == const $CopyWithPlaceholder() || versionLabels == null
-          ? _value.versionLabels
+          : selectedVersionFilter as VersionFilter?,
+      versionFilters: versionFilters == const $CopyWithPlaceholder() || versionFilters == null
+          ? _value.versionFilters
           // ignore: cast_nullable_to_non_nullable
-          : versionLabels as List<String>,
+          : versionFilters as List<VersionFilter>,
       artistName: artistName == const $CopyWithPlaceholder() || artistName == null
           ? _value.artistName
           // ignore: cast_nullable_to_non_nullable

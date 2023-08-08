@@ -1,6 +1,8 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/presentation/screens/version/version_filter.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter/foundation.dart';
 
@@ -67,13 +69,15 @@ class VersionHeaderState {
   final String? artistUrl;
   final String? songUrl;
   final bool? isFavorite;
-  final String? selectedVersionLabel;
-  final List<String> versionLabels;
+  final VersionFilter? selectedVersionFilter;
+  final List<VersionFilter> versionFilters;
+  final Instrument? selectedInstrument;
 
   const VersionHeaderState({
+    this.selectedInstrument,
     this.isFavorite,
-    this.selectedVersionLabel,
-    this.versionLabels = const [],
+    this.selectedVersionFilter,
+    this.versionFilters = const [],
     this.artistName = "",
     this.songName = "",
     this.artistUrl,

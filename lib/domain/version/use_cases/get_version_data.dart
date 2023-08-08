@@ -13,9 +13,10 @@ class GetVersionData {
   Future<Result<VersionData, RequestError>> call({
     required String artistDns,
     required String songDns,
-    String? type,
-    String? label,
+    String? instrumentUrl,
+    String? versionUrl,
   }) {
-    return _versionRepository.getVersionData(artistDns: artistDns, songDns: songDns, type: type, label: label);
+    return _versionRepository.getVersionData(
+        artistDns: artistDns, songDns: songDns, type: instrumentUrl, label: versionUrl);
   }
 }

@@ -1,8 +1,9 @@
 import 'package:cifraclub/domain/version/models/chord.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
-import 'package:cifraclub/presentation/screens/version/version_event.dart';
+import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
@@ -32,9 +33,9 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
     super.initState();
     _scrollController.addListener(onScroll);
 
-    _bloc.versionEventStream.listen((event) async {
+    _bloc.versionEffectStream.listen((event) async {
       switch (event) {
-        case OnYouTubeVideoSelected():
+        case OnShowYouTubeVideo():
           if (_youtubePlayerController == null) {
             _youtubePlayerController = YoutubePlayerController(
               params: const YoutubePlayerParams(
@@ -46,7 +47,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
             await _youtubePlayerController?.loadVideoById(videoId: event.videoId);
           }
           break;
-        case OnYouTubeVideoClosed():
+        case OnCloseYouTubeVideo():
           await _youtubePlayerController?.close();
           _youtubePlayerController = null;
           break;
@@ -79,12 +80,11 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
     return BlocBuilder<VersionBloc, VersionState>(
       builder: (context, state) {
         return Scaffold(
-          //persistentFooterButtons: [Container(height: 40, width: 300,color:Colors.amber),],
           appBar: CosmosAppBar(
             actions: [
               TextButton(
                   onPressed: () {
-                    _bloc.toggleChordPinnedState();
+                    _bloc.add(OnToggleIsChordPinned());
                   },
                   child: Text(state.isChordListPinned ? "Ocultar acordes na tela" : "Fixar acordes na tela")),
             ],
@@ -109,38 +109,45 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                         Text(state.versionHeaderState.songName),
                         Text(state.versionHeaderState.artistName),
                         FilterCapsuleList(
-                          filters: state.version?.songsDetail?.first.songs?.map((song) {
-                                return Filter(
-                                    label: song.label,
-                                    isSelected: song.label == state.version?.label,
-                                    onTap: () {
-                                      _bloc.onVersionSelected(song.label);
-                                    },
-                                    leadingIconUri: song.verified ? AppSvgs.verifiedIcon : null);
-                              }).toList() ??
-                              const [],
-                        ),
+                            filters: state.versionHeaderState.versionFilters.map((filter) {
+                          return Filter(
+                            label: filter.versionName,
+                            isSelected: filter == state.versionHeaderState.selectedVersionFilter,
+                            onTap: () {
+                              _bloc.add(OnVersionSelected(filter));
+                            },
+                            leadingIconUri: filter.isVerified ? AppSvgs.verifiedIcon : null,
+                          );
+                        }).toList()),
                       ],
                     ),
                   ),
-                  SliverPersistentHeader(
-                      pinned: state.isChordListPinned,
-                      delegate: ChordListHeaderDelegate(
-                          haveScroll: false,
-                          maxExtend: 110,
-                          child: const Text("Acordes"),
-                          isPinned: state.isChordListPinned,
-                          chords: state.version?.chords ?? [])),
-                  SliverList.builder(
-                    itemCount: state.sections.length,
-                    itemBuilder: (context, index) {
-                      final section = state.sections[index];
-                      return Text(
-                        section.content,
-                        style: context.typography.body8,
-                      );
-                    },
-                  ),
+                  if (state.isLoading)
+                    const SliverFillRemaining(
+                      child: Center(
+                        child: LoadingIndicator(),
+                      ),
+                    )
+                  else ...[
+                    SliverPersistentHeader(
+                        pinned: state.isChordListPinned,
+                        delegate: ChordListHeaderDelegate(
+                            haveScroll: false,
+                            maxExtend: 110,
+                            child: const Text("Acordes"),
+                            isPinned: state.isChordListPinned,
+                            chords: state.version?.chords ?? [])),
+                    SliverList.builder(
+                      itemCount: state.sections.length,
+                      itemBuilder: (context, index) {
+                        final section = state.sections[index];
+                        return Text(
+                          section.content,
+                          style: context.typography.body8,
+                        );
+                      },
+                    ),
+                  ],
                 ],
               ),
               AnimatedPositioned(
@@ -158,8 +165,9 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                       TextButton(
                           onPressed: () {
                             state.isYouTubeVisible
-                                ? _bloc.closeYouTubeVideo()
-                                : _bloc.loadYouTubeVideo(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM");
+                                ? _bloc.add(OnYouTubeVideoClosed())
+                                : _bloc.add(
+                                    OnYouTubeVideoSelected(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM"));
                           },
                           child: const Icon(Icons.youtube_searched_for_outlined))
                     ],
