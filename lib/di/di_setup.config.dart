@@ -406,6 +406,7 @@ Future<_i1.GetIt> $initGetIt(
   gh.factory<_i115.DeleteVersions>(() => _i115.DeleteVersions(
         gh<_i101.SongbookRepository>(),
         gh<_i52.UserVersionRepository>(),
+        gh<_i50.UserSongbookRepository>(),
       ));
   gh.factory<_i116.DevBottomSheet>(() => bottomSheetModule.getDevBottomSheet(gh<_i67.GetGenres>()));
   gh.factory<_i117.FavoriteUnfavoriteArtist>(
@@ -445,10 +446,12 @@ Future<_i1.GetIt> $initGetIt(
   gh.factory<_i135.InsertVersionToSongbook>(() => _i135.InsertVersionToSongbook(
         gh<_i101.SongbookRepository>(),
         gh<_i52.UserVersionRepository>(),
+        gh<_i50.UserSongbookRepository>(),
       ));
   gh.factory<_i136.InsertVersionsToSongbook>(() => _i136.InsertVersionsToSongbook(
         gh<_i101.SongbookRepository>(),
         gh<_i52.UserVersionRepository>(),
+        gh<_i50.UserSongbookRepository>(),
       ));
   gh.factory<_i137.ListOptionsBottomSheet>(() => bottomSheetModule.getListOptionsBottomSheet(
         gh<_i114.DeleteSongbook>(),

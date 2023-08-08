@@ -173,4 +173,30 @@ void main() {
 
     verify(userSongbookDataSource.deleteAll).called(1);
   });
+
+  test("when incrementTotalSongs is called, should return id of songbook updated", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+    final songbook = getFakeSongbook();
+
+    when(() => userSongbookDataSource.incrementTotalSongs(songbook.id!, 4))
+        .thenAnswer((_) => SynchronousFuture(songbook.id!));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final result = await songbookRepository.incrementTotalSongs(songbookId: songbook.id!, quantity: 4);
+
+    expect(result, songbook.id);
+  });
+
+  test("when decrementTotalSongs is called, should return id of songbook updated", () async {
+    final userSongbookDataSource = _UserSongbookDataSourceMock();
+    final songbook = getFakeSongbook();
+
+    when(() => userSongbookDataSource.decrementTotalSongs(songbook.id!, 1))
+        .thenAnswer((_) => SynchronousFuture(songbook.id!));
+
+    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
+    final result = await songbookRepository.decrementTotalSongs(songbookId: songbook.id!, quantity: 1);
+
+    expect(result, songbook.id);
+  });
 }

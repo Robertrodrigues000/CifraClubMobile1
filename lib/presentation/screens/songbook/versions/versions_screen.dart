@@ -243,8 +243,8 @@ class _VersionsScreenState extends State<VersionsScreen> {
                             context: context,
                             versionName: item.name,
                           );
-                          if (shouldDeleteVersion) {
-                            // todo: delete version from songbook
+                          if (shouldDeleteVersion == true) {
+                            await _bloc.deleteVersion(widget.songbookId, state.versions[index]);
                           }
                         }).show(context);
                       },

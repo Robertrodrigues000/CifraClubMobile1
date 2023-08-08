@@ -64,7 +64,7 @@ class UserListItem extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    songbook.totalSongs.toString(),
+                    "${songbook.totalSongs.toString()} ${context.text.songs(songbook.totalSongs).toLowerCase()}",
                     key: const Key("Cifra Preview Subtitle"),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

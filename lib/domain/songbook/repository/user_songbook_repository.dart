@@ -9,5 +9,7 @@ abstract class UserSongbookRepository {
   Future<Songbook?> getSongbookById(int id);
   Stream<Songbook?> getSongbookStreamById(int? id);
   Future<int?> updateSongbookPreview(int songbookId, List<String?> preview);
+  Future<int?> incrementTotalSongs({required int songbookId, int quantity});
+  Future<int?> decrementTotalSongs({required int songbookId, int quantity});
   Future<void> deleteAll();
 }

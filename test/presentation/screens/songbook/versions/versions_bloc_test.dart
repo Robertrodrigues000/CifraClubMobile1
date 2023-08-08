@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.d
 import 'package:cifraclub/domain/preferences/use_cases/get_list_order_type_preference.dart';
 import 'package:cifraclub/domain/preferences/use_cases/set_list_order_type_preference.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:typed_result/typed_result.dart';
 
 import '../../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 import '../../../../shared_mocks/domain/version/models/version_mock.dart';
@@ -40,6 +42,8 @@ class _SetOrderFilterPreferencesMock extends Mock implements SetListOrderTypePre
 
 class _GetOrderedVersionsMock extends Mock implements GetOrderedVersions {}
 
+class _DeleteVersions extends Mock implements DeleteVersions {}
+
 void main() {
   VersionsBloc getBloc({
     _GetSongbookStreamByIdMock? getSongbookStreamByIdMock,
@@ -51,6 +55,7 @@ void main() {
     _GetOrderFilterPreferencesMock? getOrderFilterPreferences,
     _SetOrderFilterPreferencesMock? setOrderFilterPreferences,
     _GetOrderedVersionsMock? getOrderedVersions,
+    _DeleteVersions? deleteVersions,
   }) =>
       VersionsBloc(
         getSongbookStreamByIdMock ?? _GetSongbookStreamByIdMock(),
@@ -62,6 +67,7 @@ void main() {
         getOrderFilterPreferences ?? _GetOrderFilterPreferencesMock(),
         setOrderFilterPreferences ?? _SetOrderFilterPreferencesMock(),
         getOrderedVersions ?? _GetOrderedVersionsMock(),
+        deleteVersions ?? _DeleteVersions(),
       );
 
   setUpAll(() {
@@ -296,6 +302,44 @@ void main() {
       verify: (bloc) {
         verify(() => setOrderPreferences(ListOrderType.recent)).called(1);
         verify(() => getOrderedVersions(ListOrderType.recent, versions, ListType.user)).called(1);
+      },
+    );
+  });
+
+  group("When 'deleteVersion' is called", () {
+    final version = getFakeVersion();
+    final deleteVersions = _DeleteVersions();
+
+    when(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions")))
+        .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    blocTest(
+      "should call use case",
+      build: () => getBloc(
+        deleteVersions: deleteVersions,
+      ),
+      act: (bloc) => bloc.deleteVersion(1, version),
+      verify: (bloc) {
+        verify(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions"))).called(1);
+      },
+    );
+  });
+
+  group("When 'deleteVersion' is called and songbookId is null", () {
+    final version = getFakeVersion();
+    final deleteVersions = _DeleteVersions();
+
+    when(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions")))
+        .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    blocTest(
+      "should not call use case",
+      build: () => getBloc(
+        deleteVersions: deleteVersions,
+      ),
+      act: (bloc) => bloc.deleteVersion(null, version),
+      verify: (bloc) {
+        verifyNever(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions")));
       },
     );
   });

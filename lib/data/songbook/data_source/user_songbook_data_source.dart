@@ -84,4 +84,28 @@ class UserSongbookDataSource {
       return _isar.userSongbookDtos.put(updatedSongbook);
     });
   }
+
+  Future<int?> incrementTotalSongs(int songbookId, int quantity) async {
+    return _isar.writeTxn(() async {
+      final songbook = await _isar.userSongbookDtos.where().idEqualTo(songbookId).findFirst();
+      final updatedSongbook =
+          songbook?.copyWith(totalSongs: songbook.totalSongs != null ? songbook.totalSongs! + quantity : 0);
+      if (updatedSongbook == null) {
+        return SynchronousFuture(null);
+      }
+      return _isar.userSongbookDtos.put(updatedSongbook);
+    });
+  }
+
+  Future<int?> decrementTotalSongs(int songbookId, int quantity) async {
+    return _isar.writeTxn(() async {
+      final songbook = await _isar.userSongbookDtos.where().idEqualTo(songbookId).findFirst();
+      final updatedSongbook =
+          songbook?.copyWith(totalSongs: songbook.totalSongs != null ? songbook.totalSongs! - quantity : 0);
+      if (updatedSongbook == null) {
+        return SynchronousFuture(null);
+      }
+      return _isar.userSongbookDtos.put(updatedSongbook);
+    });
+  }
 }

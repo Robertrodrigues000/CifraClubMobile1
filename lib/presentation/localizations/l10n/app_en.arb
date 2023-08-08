@@ -251,7 +251,7 @@
     "searchNotFound" : "We didn't find anything around here :(",
     "searchNewTerm" : "Try searching for a new term",
 
-    "songs": "{count,plural, =1{Song}other{Songs}}",
+    "songs": "{count,plural, =1{Song} =0{Song} other{Songs}}",
     "@songs":{
       "placeholders": {
             "count": {

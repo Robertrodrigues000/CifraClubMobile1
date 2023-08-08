@@ -8,7 +8,9 @@ import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet_bloc.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/list_operation_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
@@ -19,6 +21,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/widgets/empty_l
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/foundation.dart';
@@ -27,6 +30,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
@@ -64,6 +68,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(_BuildContextMock());
     registerFallbackValue(getFakeSongbook());
+    registerFallbackValue(getFakeVersion());
 
     blocBottomSheet = _ListOptionsBottomSheetBlocMock();
     when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
@@ -82,6 +87,7 @@ void main() {
     bloc = _VersionsBlocMock();
     when(() => bloc.init(any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.shareLink(any(), any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.deleteVersion(any(), any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
@@ -467,5 +473,45 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     expect(completer.isCompleted, isTrue);
+  });
+
+  testWidgets('When tap version options icon and tap delete, should delete version from songbook',
+      (widgetTester) async {
+    final version = getFakeVersion();
+    bloc.mockStream(VersionsState(versions: [version], songbook: getFakeSongbook(isPublic: true)));
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<VersionsBloc>.value(
+          value: bloc,
+          child: VersionsScreen(
+            isTablet: true,
+            listOptionsbottomSheet: bottomSheet,
+            userId: 1,
+            songbookId: 1,
+            width: 300,
+          ),
+        ),
+      );
+    });
+
+    expect(find.byType(VersionTile), findsOneWidget);
+
+    await widgetTester.tap(find.byKey(const Key("options-button")));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(ListVersionOptionsBottomSheet), findsOneWidget);
+
+    await widgetTester.tap(find.byType(IconTextTile));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(ListOperationDialog), findsOneWidget);
+
+    await widgetTester.tap(find.text(appTextEn.yes));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(ListOperationDialog), findsNothing);
+
+    verify(() => bloc.deleteVersion(any(), any())).called(1);
   });
 }

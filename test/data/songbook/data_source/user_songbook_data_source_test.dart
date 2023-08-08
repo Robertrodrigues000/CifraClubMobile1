@@ -345,4 +345,64 @@ void main() {
   tearDown(() {
     isar.close(deleteFromDisk: true);
   });
+
+  test("When incrementTotalSongs is called should add the quantity to the totalSongs of the songbook", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+      id: 1,
+      createdAt: faker.date.dateTime(),
+      lastUpdated: faker.date.dateTime(),
+      name: faker.animal.name(),
+      type: ListTypeDto.user,
+      isPublic: false,
+      totalSongs: 2,
+      preview: const [],
+    );
+
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      },
+    );
+
+    final updatedSongbookId = await userSongbookDataSource.incrementTotalSongs(1, 3);
+
+    expect(updatedSongbookId, 1);
+
+    await isar.txn(
+      () async {
+        final songbook = await isar.userSongbookDtos.where().idEqualTo(1).findFirst();
+        expect(songbook?.totalSongs, 5);
+      },
+    );
+  });
+
+  test("When decrementTotalSongs is called should subtract the quantity to the totalSongs of the songbook", () async {
+    final fakeUserSongBookDto = UserSongbookDto(
+      id: 1,
+      createdAt: faker.date.dateTime(),
+      lastUpdated: faker.date.dateTime(),
+      name: faker.animal.name(),
+      type: ListTypeDto.user,
+      isPublic: false,
+      totalSongs: 10,
+      preview: const [],
+    );
+
+    await isar.writeTxn(
+      () async {
+        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+      },
+    );
+
+    final updatedSongbookId = await userSongbookDataSource.decrementTotalSongs(1, 3);
+
+    expect(updatedSongbookId, 1);
+
+    await isar.txn(
+      () async {
+        final songbook = await isar.userSongbookDtos.where().idEqualTo(1).findFirst();
+        expect(songbook?.totalSongs, 7);
+      },
+    );
+  });
 }

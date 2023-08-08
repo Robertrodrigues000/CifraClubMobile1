@@ -54,4 +54,14 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   Future<void> deleteAll() {
     return _userSongbookDataSource.deleteAll();
   }
+
+  @override
+  Future<int?> decrementTotalSongs({required int songbookId, int quantity = 1}) {
+    return _userSongbookDataSource.decrementTotalSongs(songbookId, quantity);
+  }
+
+  @override
+  Future<int?> incrementTotalSongs({required int songbookId, int quantity = 1}) {
+    return _userSongbookDataSource.incrementTotalSongs(songbookId, quantity);
+  }
 }

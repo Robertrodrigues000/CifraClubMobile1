@@ -193,7 +193,7 @@
     "searchNotFound" : "No encontramos nada aquí :(",
     "searchNewTerm" : "Intente buscar un término nuevo.",
 
-    "songs": "{count,plural, =1{Musica}other{Musicas}}",
+    "songs": "{count,plural, =1{Musica} =0{Musica} other{Musicas}}",
     "@songs":{
       "placeholders": {
             "count": {

@@ -117,6 +117,7 @@ class VersionTile extends StatelessWidget {
                         ),
                       )
                     : IconButton(
+                        key: const Key("options-button"),
                         onPressed: onOptionsTap,
                         padding: const EdgeInsets.all(12),
                         highlightColor: Theme.of(context).splashColor,

@@ -8,6 +8,7 @@ import 'package:cifraclub/domain/preferences/use_cases/get_list_order_type_prefe
 import 'package:cifraclub/domain/preferences/use_cases/set_list_order_type_preference.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
@@ -29,6 +30,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
   final SetListOrderTypePreferences _setOrderFilterPreferences;
   final GetListOrderTypePreferences _getOrderFilterPreferences;
   final GetOrderedVersions _getOrderedVersions;
+  final DeleteVersions _deleteVersions;
 
   VersionsBloc(
     this._getSongbookStreamById,
@@ -40,6 +42,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     this._getOrderFilterPreferences,
     this._setOrderFilterPreferences,
     this._getOrderedVersions,
+    this._deleteVersions,
   ) : super(const VersionsState());
 
   Future<void> init(int? songbookId) async {
@@ -118,6 +121,12 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     emit(state.copyWith(
         selectedListOrderType: orderListType,
         versions: _getOrderedVersions(orderListType, state.versions, state.songbook?.type ?? ListType.user)));
+  }
+
+  Future<void> deleteVersion(int? songbookId, Version version) async {
+    if (songbookId != null) {
+      await _deleteVersions(songbookId: songbookId, versions: [version]);
+    }
   }
 
   @override
