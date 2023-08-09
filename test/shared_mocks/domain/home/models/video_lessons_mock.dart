@@ -6,10 +6,10 @@ import '../../artist/models/artist_mock.dart';
 import 'images_size_mock.dart';
 import 'video_lesson_version_mock.dart';
 
-VideoLesson getFakeVideoLessons({int? bass, Instrument? instrument}) => VideoLesson(
+VideoLesson getFakeVideoLessons({int? bass, Instrument? instrument, String? title}) => VideoLesson(
     id: faker.randomGenerator.integer(1000),
     youtubeId: faker.internet.email(),
-    title: faker.food.cuisine(),
+    title: title ?? faker.food.cuisine(),
     url: faker.internet.httpUrl(),
     views: faker.randomGenerator.integer(1000),
     duration: faker.randomGenerator.integer(1000),

@@ -31,7 +31,8 @@ class ArtistSongsEntry extends ScreenEntry {
     Instrument? instrumentFilter = instrument?.isNotEmpty == true ? Instrument.values.byName(instrument!) : null;
     return BlocProvider(
       create: (context) =>
-          ArtistSongsBloc(getIt(), getIt(), getIt(), instrument: instrumentFilter, artistUrl: artistUrl)..init(),
+          ArtistSongsBloc(getIt(), getIt(), getIt(), getIt(), instrument: instrumentFilter, artistUrl: artistUrl)
+            ..init(),
       child: ArtistSongsScreen(artistName: artistName ?? ""),
     );
   }

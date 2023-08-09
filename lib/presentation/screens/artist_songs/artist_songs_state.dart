@@ -10,19 +10,28 @@ part 'artist_songs_state.g.dart';
 @CopyWith()
 class ArtistSongsState {
   final List<ArtistSong> songs;
-  final List<String> prefixes;
+  final List<ArtistSong> songsFilteredBySearch;
+  final List<String> alphabeticalPrefixes;
+  final List<String> rankingPrefixes;
   final List<VideoLesson> videoLessons;
+  final List<VideoLesson> videoLessonsFilteredBySearch;
   final RequestError? songsError;
   final RequestError? videoLessonsError;
   final Instrument? instrument;
   final bool isLoading;
+  final bool shouldShowSearch;
 
-  ArtistSongsState(
-      {this.songs = const [],
-      this.prefixes = const [],
-      this.videoLessons = const [],
-      this.songsError,
-      this.videoLessonsError,
-      this.instrument,
-      this.isLoading = false});
+  ArtistSongsState({
+    this.songs = const [],
+    this.songsFilteredBySearch = const [],
+    this.alphabeticalPrefixes = const [],
+    this.rankingPrefixes = const [],
+    this.videoLessons = const [],
+    this.videoLessonsFilteredBySearch = const [],
+    this.instrument,
+    this.songsError,
+    this.videoLessonsError,
+    this.isLoading = false,
+    this.shouldShowSearch = false,
+  });
 }

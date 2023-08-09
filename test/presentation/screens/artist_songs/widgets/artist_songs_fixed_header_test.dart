@@ -12,6 +12,7 @@ void main() {
           ArtistSongsFixedHeader(
             isScrolledUnder: true,
             tabController: TabController(length: 3, vsync: const TestVSync(), initialIndex: 0),
+            onSearchStringChanged: (_) => {},
             shouldShowSearch: true,
           ),
           SliverList(

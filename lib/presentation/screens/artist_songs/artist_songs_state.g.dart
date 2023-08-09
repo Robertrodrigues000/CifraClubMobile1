@@ -9,17 +9,25 @@ part of 'artist_songs_state.dart';
 abstract class _$ArtistSongsStateCWProxy {
   ArtistSongsState songs(List<ArtistSong> songs);
 
-  ArtistSongsState prefixes(List<String> prefixes);
+  ArtistSongsState songsFilteredBySearch(List<ArtistSong> songsFilteredBySearch);
+
+  ArtistSongsState alphabeticalPrefixes(List<String> alphabeticalPrefixes);
+
+  ArtistSongsState rankingPrefixes(List<String> rankingPrefixes);
 
   ArtistSongsState videoLessons(List<VideoLesson> videoLessons);
+
+  ArtistSongsState videoLessonsFilteredBySearch(List<VideoLesson> videoLessonsFilteredBySearch);
+
+  ArtistSongsState instrument(Instrument? instrument);
 
   ArtistSongsState songsError(RequestError? songsError);
 
   ArtistSongsState videoLessonsError(RequestError? videoLessonsError);
 
-  ArtistSongsState instrument(Instrument? instrument);
-
   ArtistSongsState isLoading(bool isLoading);
+
+  ArtistSongsState shouldShowSearch(bool shouldShowSearch);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ArtistSongsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -29,12 +37,16 @@ abstract class _$ArtistSongsStateCWProxy {
   /// ````
   ArtistSongsState call({
     List<ArtistSong>? songs,
-    List<String>? prefixes,
+    List<ArtistSong>? songsFilteredBySearch,
+    List<String>? alphabeticalPrefixes,
+    List<String>? rankingPrefixes,
     List<VideoLesson>? videoLessons,
+    List<VideoLesson>? videoLessonsFilteredBySearch,
+    Instrument? instrument,
     RequestError? songsError,
     RequestError? videoLessonsError,
-    Instrument? instrument,
     bool? isLoading,
+    bool? shouldShowSearch,
   });
 }
 
@@ -48,10 +60,25 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
   ArtistSongsState songs(List<ArtistSong> songs) => this(songs: songs);
 
   @override
-  ArtistSongsState prefixes(List<String> prefixes) => this(prefixes: prefixes);
+  ArtistSongsState songsFilteredBySearch(List<ArtistSong> songsFilteredBySearch) =>
+      this(songsFilteredBySearch: songsFilteredBySearch);
+
+  @override
+  ArtistSongsState alphabeticalPrefixes(List<String> alphabeticalPrefixes) =>
+      this(alphabeticalPrefixes: alphabeticalPrefixes);
+
+  @override
+  ArtistSongsState rankingPrefixes(List<String> rankingPrefixes) => this(rankingPrefixes: rankingPrefixes);
 
   @override
   ArtistSongsState videoLessons(List<VideoLesson> videoLessons) => this(videoLessons: videoLessons);
+
+  @override
+  ArtistSongsState videoLessonsFilteredBySearch(List<VideoLesson> videoLessonsFilteredBySearch) =>
+      this(videoLessonsFilteredBySearch: videoLessonsFilteredBySearch);
+
+  @override
+  ArtistSongsState instrument(Instrument? instrument) => this(instrument: instrument);
 
   @override
   ArtistSongsState songsError(RequestError? songsError) => this(songsError: songsError);
@@ -60,10 +87,10 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
   ArtistSongsState videoLessonsError(RequestError? videoLessonsError) => this(videoLessonsError: videoLessonsError);
 
   @override
-  ArtistSongsState instrument(Instrument? instrument) => this(instrument: instrument);
+  ArtistSongsState isLoading(bool isLoading) => this(isLoading: isLoading);
 
   @override
-  ArtistSongsState isLoading(bool isLoading) => this(isLoading: isLoading);
+  ArtistSongsState shouldShowSearch(bool shouldShowSearch) => this(shouldShowSearch: shouldShowSearch);
 
   @override
 
@@ -75,26 +102,47 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
   /// ````
   ArtistSongsState call({
     Object? songs = const $CopyWithPlaceholder(),
-    Object? prefixes = const $CopyWithPlaceholder(),
+    Object? songsFilteredBySearch = const $CopyWithPlaceholder(),
+    Object? alphabeticalPrefixes = const $CopyWithPlaceholder(),
+    Object? rankingPrefixes = const $CopyWithPlaceholder(),
     Object? videoLessons = const $CopyWithPlaceholder(),
+    Object? videoLessonsFilteredBySearch = const $CopyWithPlaceholder(),
+    Object? instrument = const $CopyWithPlaceholder(),
     Object? songsError = const $CopyWithPlaceholder(),
     Object? videoLessonsError = const $CopyWithPlaceholder(),
-    Object? instrument = const $CopyWithPlaceholder(),
     Object? isLoading = const $CopyWithPlaceholder(),
+    Object? shouldShowSearch = const $CopyWithPlaceholder(),
   }) {
     return ArtistSongsState(
       songs: songs == const $CopyWithPlaceholder() || songs == null
           ? _value.songs
           // ignore: cast_nullable_to_non_nullable
           : songs as List<ArtistSong>,
-      prefixes: prefixes == const $CopyWithPlaceholder() || prefixes == null
-          ? _value.prefixes
+      songsFilteredBySearch: songsFilteredBySearch == const $CopyWithPlaceholder() || songsFilteredBySearch == null
+          ? _value.songsFilteredBySearch
           // ignore: cast_nullable_to_non_nullable
-          : prefixes as List<String>,
+          : songsFilteredBySearch as List<ArtistSong>,
+      alphabeticalPrefixes: alphabeticalPrefixes == const $CopyWithPlaceholder() || alphabeticalPrefixes == null
+          ? _value.alphabeticalPrefixes
+          // ignore: cast_nullable_to_non_nullable
+          : alphabeticalPrefixes as List<String>,
+      rankingPrefixes: rankingPrefixes == const $CopyWithPlaceholder() || rankingPrefixes == null
+          ? _value.rankingPrefixes
+          // ignore: cast_nullable_to_non_nullable
+          : rankingPrefixes as List<String>,
       videoLessons: videoLessons == const $CopyWithPlaceholder() || videoLessons == null
           ? _value.videoLessons
           // ignore: cast_nullable_to_non_nullable
           : videoLessons as List<VideoLesson>,
+      videoLessonsFilteredBySearch:
+          videoLessonsFilteredBySearch == const $CopyWithPlaceholder() || videoLessonsFilteredBySearch == null
+              ? _value.videoLessonsFilteredBySearch
+              // ignore: cast_nullable_to_non_nullable
+              : videoLessonsFilteredBySearch as List<VideoLesson>,
+      instrument: instrument == const $CopyWithPlaceholder()
+          ? _value.instrument
+          // ignore: cast_nullable_to_non_nullable
+          : instrument as Instrument?,
       songsError: songsError == const $CopyWithPlaceholder()
           ? _value.songsError
           // ignore: cast_nullable_to_non_nullable
@@ -103,14 +151,14 @@ class _$ArtistSongsStateCWProxyImpl implements _$ArtistSongsStateCWProxy {
           ? _value.videoLessonsError
           // ignore: cast_nullable_to_non_nullable
           : videoLessonsError as RequestError?,
-      instrument: instrument == const $CopyWithPlaceholder()
-          ? _value.instrument
-          // ignore: cast_nullable_to_non_nullable
-          : instrument as Instrument?,
       isLoading: isLoading == const $CopyWithPlaceholder() || isLoading == null
           ? _value.isLoading
           // ignore: cast_nullable_to_non_nullable
           : isLoading as bool,
+      shouldShowSearch: shouldShowSearch == const $CopyWithPlaceholder() || shouldShowSearch == null
+          ? _value.shouldShowSearch
+          // ignore: cast_nullable_to_non_nullable
+          : shouldShowSearch as bool,
     );
   }
 }

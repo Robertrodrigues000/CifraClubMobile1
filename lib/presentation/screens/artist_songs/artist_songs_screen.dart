@@ -1,8 +1,10 @@
-import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_page.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
@@ -32,7 +34,6 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
   late TabController _tabController;
   final scrollController = ScrollController();
   var isScrolledUnder = false;
-  var shouldShowSearch = true;
 
   @override
   void initState() {
@@ -40,16 +41,11 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     _bloc = BlocProvider.of<ArtistSongsBloc>(context);
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     scrollController.addListener(_onScroll);
-    _tabController.addListener(_onTabChange);
+    _tabController.addListener(_onPageChange);
   }
 
-  void _onTabChange() {
-    final isVideoLessonsTab = _tabController.index != 2 || _bloc.state.videoLessons.isNotEmpty;
-    if (shouldShowSearch != isVideoLessonsTab) {
-      setState(() {
-        shouldShowSearch = isVideoLessonsTab;
-      });
-    }
+  void _onPageChange() {
+    _bloc.onPageChange(ArtistSongsPage.fromIndex(_tabController.index));
   }
 
   void _onScroll() {
@@ -65,7 +61,8 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
   void dispose() {
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
-    _tabController.removeListener(_onTabChange);
+    _tabController.removeListener(_onPageChange);
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -115,7 +112,8 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                     sliver: ArtistSongsFixedHeader(
                       isScrolledUnder: isScrolledUnder,
                       tabController: _tabController,
-                      shouldShowSearch: shouldShowSearch,
+                      onSearchStringChanged: _bloc.onSearchStringChanged,
+                      shouldShowSearch: state.shouldShowSearch,
                     ),
                   ),
                 ),
@@ -135,23 +133,48 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                           SliverOverlapInjector(
                             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                           ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              childCount: state.songs.length,
-                              (context, index) {
-                                final song = state.songs[index];
-                                return ArtistSongItem(
-                                    // coverage:ignore-start
-                                    onTap: () {},
-                                    onOptionsTap: () {},
-                                    // coverage:ignore-end
-                                    name: song.name,
-                                    prefix: (index + 1).toString(),
-                                    isVerified: song.verified,
-                                    hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
-                              },
+                          if (state.songsError != null)
+                            SliverFillRemaining(
+                              child: Center(
+                                child: SingleChildScrollView(
+                                  child: ErrorDescriptionWidget(
+                                    typeError: state.songsError! is ConnectionError
+                                        ? ErrorDescriptionWidgetType.connection
+                                        : ErrorDescriptionWidgetType.server,
+                                    onClick: () => _bloc.getArtistSongsAndVideoLessons(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          else if (state.isLoading)
+                            const SliverFillRemaining(child: Center(child: LoadingIndicator()))
+                          else if (state.songsFilteredBySearch.isNotEmpty)
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                childCount: state.songsFilteredBySearch.length,
+                                (context, index) {
+                                  final song = state.songsFilteredBySearch[index];
+                                  return ArtistSongItem(
+                                      // coverage:ignore-start
+                                      onTap: () {},
+                                      onOptionsTap: () {},
+                                      // coverage:ignore-end
+                                      name: song.name,
+                                      prefix: state.rankingPrefixes[index],
+                                      isVerified: song.verified,
+                                      hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
+                                },
+                              ),
+                            )
+                          else
+                            SliverPadding(
+                              padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
+                              sliver: const SliverToBoxAdapter(
+                                child: ErrorDescriptionWidget(
+                                  typeError: ErrorDescriptionWidgetType.resultNotFound,
+                                ),
+                              ),
                             ),
-                          ),
                         ],
                       );
                     }),
@@ -160,30 +183,55 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                     top: false,
                     bottom: false,
                     child: Builder(builder: (context) {
+                      final alphabeticalSongs =
+                          state.songsFilteredBySearch.sortedBy((a) => removeDiacritics(a.name).toLowerCase());
                       return CustomScrollView(
                         slivers: [
                           SliverOverlapInjector(
                             handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                           ),
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              childCount: state.songs.length,
-                              (context, index) {
-                                final alphabeticalSongs =
-                                    state.songs.sortedBy((a) => removeDiacritics(a.name).toLowerCase());
-                                final song = alphabeticalSongs[index];
-                                return ArtistSongItem(
-                                    // coverage:ignore-start
-                                    onTap: () {},
-                                    onOptionsTap: () {},
-                                    // coverage:ignore-end
-                                    name: song.name,
-                                    prefix: state.prefixes[index],
-                                    isVerified: song.verified,
-                                    hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
-                              },
+                          if (state.songsError != null)
+                            SliverFillRemaining(
+                              child: Center(
+                                child: SingleChildScrollView(
+                                  child: ErrorDescriptionWidget(
+                                    typeError: state.songsError! is ConnectionError
+                                        ? ErrorDescriptionWidgetType.connection
+                                        : ErrorDescriptionWidgetType.server,
+                                    onClick: () => _bloc.getArtistSongsAndVideoLessons(),
+                                  ),
+                                ),
+                              ),
+                            )
+                          else if (state.isLoading)
+                            const SliverFillRemaining(child: Center(child: LoadingIndicator()))
+                          else if (alphabeticalSongs.isNotEmpty)
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                childCount: alphabeticalSongs.length,
+                                (context, index) {
+                                  final song = alphabeticalSongs[index];
+                                  return ArtistSongItem(
+                                      // coverage:ignore-start
+                                      onTap: () {},
+                                      onOptionsTap: () {},
+                                      // coverage:ignore-end
+                                      name: song.name,
+                                      prefix: state.alphabeticalPrefixes[index],
+                                      isVerified: song.verified,
+                                      hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
+                                },
+                              ),
+                            )
+                          else
+                            SliverPadding(
+                              padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
+                              sliver: const SliverToBoxAdapter(
+                                child: ErrorDescriptionWidget(
+                                  typeError: ErrorDescriptionWidgetType.resultNotFound,
+                                ),
+                              ),
                             ),
-                          ),
                         ],
                       );
                     }),
@@ -196,20 +244,48 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                         SliverOverlapInjector(
                           handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                         ),
-                        if (state.videoLessons.isEmpty)
+                        if (state.videoLessonsError != null)
+                          SliverFillRemaining(
+                            child: Center(
+                              child: SingleChildScrollView(
+                                child: ErrorDescriptionWidget(
+                                  typeError: state.videoLessonsError! is ConnectionError
+                                      ? ErrorDescriptionWidgetType.connection
+                                      : ErrorDescriptionWidgetType.server,
+                                  onClick: () => _bloc.getArtistSongsAndVideoLessons(),
+                                ),
+                              ),
+                            ),
+                          )
+                        else if (state.isLoading)
+                          const SliverFillRemaining(child: Center(child: LoadingIndicator()))
+                        else if (state.videoLessons.isEmpty)
                           const SliverFillRemaining(
                             child: Center(
-                              child: ErrorDescriptionWidget(
-                                typeError: ErrorDescriptionWidgetType.videoLesson,
+                              child: SingleChildScrollView(
+                                child: ErrorDescriptionWidget(
+                                  typeError: ErrorDescriptionWidgetType.videoLesson,
+                                ),
+                              ),
+                            ),
+                          )
+                        else if (state.videoLessonsFilteredBySearch.isEmpty)
+                          SliverPadding(
+                            padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
+                            sliver: const SliverToBoxAdapter(
+                              child: SingleChildScrollView(
+                                child: ErrorDescriptionWidget(
+                                  typeError: ErrorDescriptionWidgetType.resultNotFound,
+                                ),
                               ),
                             ),
                           )
                         else
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
-                              childCount: state.videoLessons.length,
+                              childCount: state.videoLessonsFilteredBySearch.length,
                               (context, index) {
-                                final videoLesson = state.videoLessons[index];
+                                final videoLesson = state.videoLessonsFilteredBySearch[index];
                                 return ArtistVideoLessonItem(
                                   onTap: () {},
                                   imageUrl: videoLesson.images.small,

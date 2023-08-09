@@ -39,12 +39,15 @@ class ArtistSongItem extends StatelessWidget {
               padding: EdgeInsets.only(left: context.appDimensionScheme.screenMargin, right: 12),
               child: SizedBox(
                 width: 28,
-                child: Text(
-                  prefix,
-                  style: context.typography.subtitle3.copyWith(
-                    color: context.colors.textSecondary,
+                child: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: Text(
+                    prefix,
+                    style: context.typography.subtitle3.copyWith(
+                      color: context.colors.textSecondary,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),
