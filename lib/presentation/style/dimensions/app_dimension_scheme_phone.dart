@@ -49,12 +49,14 @@ const appDimensionSchemePhone = AppDimensionScheme(
   //Artist
   artistHeaderHeight: 180,
   albumsPerRow: 2,
-
   iconTileSpace: 4,
 
   //Album Detail
   albumHeaderThumbHeight: 80,
   albumHeaderHeight: 168,
+
+  //Artist songs
   artistSongItemRightMargin: 4,
   artistSongsHeaderSpace: 8,
+  searchBarVerticalPadding: 8,
 );

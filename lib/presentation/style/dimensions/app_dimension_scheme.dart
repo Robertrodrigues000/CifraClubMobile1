@@ -44,6 +44,7 @@ class AppDimensionScheme {
   final double albumHeaderHeight;
   final double artistSongItemRightMargin;
   final double artistSongsHeaderSpace;
+  final double searchBarVerticalPadding;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -84,5 +85,6 @@ class AppDimensionScheme {
     required this.albumHeaderHeight,
     required this.artistSongItemRightMargin,
     required this.artistSongsHeaderSpace,
+    required this.searchBarVerticalPadding,
   });
 }

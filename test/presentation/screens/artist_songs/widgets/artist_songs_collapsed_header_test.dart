@@ -9,11 +9,13 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       CustomScrollView(
         slivers: [
-          const ArtistSongsCollapsedHeader(
-            isScrolledUnder: true,
-            artist: "Artista",
-            filter: "Todos",
-            totalSongs: 150,
+          const SliverToBoxAdapter(
+            child: ArtistSongsCollapsedHeader(
+              isScrolledUnder: true,
+              artist: "Artista",
+              filter: "Todos",
+              totalSongs: 150,
+            ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -36,41 +38,5 @@ void main() {
     await widgetTester.pump();
 
     expect(find.byType(ArtistSongsCollapsedHeader), findsNothing);
-  });
-
-  group("When `shouldRebuild` is called", () {
-    test("return false if all elements are the same", () {
-      var widget = const Text("Artist");
-
-      final delegate1 = ArtistSongsCollapsedHeaderDelegate(
-        haveScroll: true,
-        maxExtend: 250,
-        child: widget,
-      );
-
-      final delegate2 = ArtistSongsCollapsedHeaderDelegate(
-        haveScroll: true,
-        maxExtend: 250,
-        child: widget,
-      );
-
-      expect(delegate1.shouldRebuild(delegate2), false);
-    });
-
-    test("return true if not all elements are the same", () {
-      final delegate1 = ArtistSongsCollapsedHeaderDelegate(
-        haveScroll: true,
-        maxExtend: 250,
-        child: const Text("Artist"),
-      );
-
-      final delegate2 = ArtistSongsCollapsedHeaderDelegate(
-        haveScroll: true,
-        maxExtend: 250,
-        child: const Text("New Artist"),
-      );
-
-      expect(delegate1.shouldRebuild(delegate2), true);
-    });
   });
 }

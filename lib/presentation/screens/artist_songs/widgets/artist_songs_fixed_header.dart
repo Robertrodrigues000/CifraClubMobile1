@@ -7,13 +7,11 @@ class ArtistSongsFixedHeader extends StatefulWidget {
     super.key,
     required this.isScrolledUnder,
     required this.tabController,
-    required this.pageController,
     required this.shouldShowSearch,
   });
 
   final bool isScrolledUnder;
   final TabController tabController;
-  final PageController pageController;
   final bool shouldShowSearch;
 
   @override
@@ -21,12 +19,14 @@ class ArtistSongsFixedHeader extends StatefulWidget {
 }
 
 class _ArtistSongsFixedHeaderState extends State<ArtistSongsFixedHeader> {
-  static const _headerHeightWithSearchAndTabs = 108.0;
-  static const _headerHeightWithTabsOnly = 52.0;
+  late double _headerHeightWithSearchAndTabs;
+  static const _headerHeightWithTabsOnly = 49.0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // tab bar height + search bar height + divider + search vertical padding
+    _headerHeightWithSearchAndTabs = 49 + 40 + (2 * context.appDimensionScheme.highlightCardBorderRadius);
   }
 
   @override
@@ -36,33 +36,41 @@ class _ArtistSongsFixedHeaderState extends State<ArtistSongsFixedHeader> {
       delegate: ArtistSongsFixedHeaderDelegate(
         maxExtend: widget.shouldShowSearch ? _headerHeightWithSearchAndTabs : _headerHeightWithTabsOnly,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TabBar(
-              controller: widget.tabController,
-              labelPadding: const EdgeInsets.symmetric(vertical: 15),
-              indicatorWeight: 3,
-              onTap: widget.pageController.jumpToPage,
-              splashFactory: NoSplash.splashFactory,
-              overlayColor: MaterialStateProperty.resolveWith((_) => Colors.transparent),
-              dividerColor: context.colors.neutralTertiary,
-              tabs: [
-                Text(
-                  context.text.mostAccessed,
-                  style: context.typography.subtitle4,
-                ),
-                Text(
-                  context.text.alphabeticalOrder,
-                  style: context.typography.subtitle4,
-                ),
-                Text(
-                  context.text.videoLessons,
-                  style: context.typography.subtitle4,
-                ),
-              ],
+            Container(
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: context.colors.neutralTertiary))),
+              child: TabBar(
+                controller: widget.tabController,
+                labelPadding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(color: context.colors.primary, width: 2),
+                    borderRadius: BorderRadius.circular(3)),
+                unselectedLabelColor: context.colors.textSecondary,
+                labelStyle: context.typography.subtitle4,
+                labelColor: context.colors.textPrimary,
+                indicatorSize: TabBarIndicatorSize.label,
+                overlayColor: MaterialStateProperty.resolveWith((_) => Colors.transparent),
+                dividerColor: Colors.transparent,
+                isScrollable: true,
+                tabs: [
+                  Tab(
+                    text: context.text.mostAccessed,
+                  ),
+                  Tab(
+                    text: context.text.alphabeticalOrder,
+                  ),
+                  Tab(
+                    text: context.text.videoLessons,
+                  ),
+                ],
+              ),
             ),
             if (widget.shouldShowSearch)
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin, vertical: 8),
+                padding: EdgeInsets.symmetric(
+                    horizontal: context.appDimensionScheme.screenMargin,
+                    vertical: context.appDimensionScheme.highlightCardBorderRadius),
                 child: CosmosSearchBar(
                   onChanged: (_) {},
                   onTapClear: () {},

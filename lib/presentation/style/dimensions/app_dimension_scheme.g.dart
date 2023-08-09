@@ -83,6 +83,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme artistSongsHeaderSpace(double artistSongsHeaderSpace);
 
+  AppDimensionScheme searchBarVerticalPadding(double searchBarVerticalPadding);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -128,6 +130,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? albumHeaderHeight,
     double? artistSongItemRightMargin,
     double? artistSongsHeaderSpace,
+    double? searchBarVerticalPadding,
   });
 }
 
@@ -271,6 +274,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(artistSongsHeaderSpace: artistSongsHeaderSpace);
 
   @override
+  AppDimensionScheme searchBarVerticalPadding(double searchBarVerticalPadding) =>
+      this(searchBarVerticalPadding: searchBarVerticalPadding);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -317,6 +324,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? albumHeaderHeight = const $CopyWithPlaceholder(),
     Object? artistSongItemRightMargin = const $CopyWithPlaceholder(),
     Object? artistSongsHeaderSpace = const $CopyWithPlaceholder(),
+    Object? searchBarVerticalPadding = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -480,6 +488,11 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.artistSongsHeaderSpace
           // ignore: cast_nullable_to_non_nullable
           : artistSongsHeaderSpace as double,
+      searchBarVerticalPadding:
+          searchBarVerticalPadding == const $CopyWithPlaceholder() || searchBarVerticalPadding == null
+              ? _value.searchBarVerticalPadding
+              // ignore: cast_nullable_to_non_nullable
+              : searchBarVerticalPadding as double,
     );
   }
 }

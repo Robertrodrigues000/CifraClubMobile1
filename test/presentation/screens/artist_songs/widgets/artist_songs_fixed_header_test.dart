@@ -10,10 +10,10 @@ void main() {
       body: CustomScrollView(
         slivers: [
           ArtistSongsFixedHeader(
-              isScrolledUnder: true,
-              tabController: TabController(length: 3, vsync: const TestVSync(), initialIndex: 0),
-              pageController: PageController(),
-              shouldShowSearch: true),
+            isScrolledUnder: true,
+            tabController: TabController(length: 3, vsync: const TestVSync(), initialIndex: 0),
+            shouldShowSearch: true,
+          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               childCount: 50,

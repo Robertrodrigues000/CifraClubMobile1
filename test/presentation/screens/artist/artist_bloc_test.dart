@@ -298,7 +298,7 @@ void main() {
     );
 
     blocTest(
-      "when favoriteUnfavorite is sucesss, should update isFavorite state",
+      "when favoriteUnfavorite is success, should update isFavorite state",
       build: () => getArtistBloc(favoriteArtist: favoriteArtist, getIsArtistFan: getIsArtistFan),
       act: (bloc) async {
         bloc.initSubscriptions();

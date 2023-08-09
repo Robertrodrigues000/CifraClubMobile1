@@ -123,7 +123,7 @@ void main() {
 
       await widgetTester.pumpAndSettle();
       var tabBar = find.byType(TabBar).evaluate().first.widget as TabBar;
-      Text tab = tabBar.tabs.firstWhere((element) => (element as Text).data == appTextEn.alphabeticalOrder) as Text;
+      Tab tab = tabBar.tabs.firstWhere((element) => (element as Tab).text == appTextEn.alphabeticalOrder) as Tab;
       await widgetTester.tap(find.byWidget(tab));
       await widgetTester.pumpAndSettle();
 

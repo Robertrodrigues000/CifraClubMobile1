@@ -29,7 +29,6 @@ class ArtistSongsScreen extends StatefulWidget {
 
 class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTickerProviderStateMixin {
   late ArtistSongsBloc _bloc;
-  final PageController pageController = PageController();
   late TabController _tabController;
   final scrollController = ScrollController();
   var isScrolledUnder = false;
@@ -41,13 +40,16 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     _bloc = BlocProvider.of<ArtistSongsBloc>(context);
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     scrollController.addListener(_onScroll);
-    pageController.addListener(_onPageChange);
+    _tabController.addListener(_onTabChange);
   }
 
-  void _onPageChange() {
-    setState(() {
-      shouldShowSearch = pageController.page != 2 || _bloc.state.videoLessons.isNotEmpty;
-    });
+  void _onTabChange() {
+    final isVideoLessonsTab = _tabController.index != 2 || _bloc.state.videoLessons.isNotEmpty;
+    if (shouldShowSearch != isVideoLessonsTab) {
+      setState(() {
+        shouldShowSearch = isVideoLessonsTab;
+      });
+    }
   }
 
   void _onScroll() {
@@ -61,10 +63,9 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
 
   @override
   void dispose() {
-    pageController.removeListener(_onPageChange);
-    pageController.dispose();
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
+    _tabController.removeListener(_onTabChange);
     super.dispose();
   }
 
@@ -100,11 +101,13 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
             controller: scrollController,
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                ArtistSongsCollapsedHeader(
-                    isScrolledUnder: isScrolledUnder,
-                    artist: widget.artistName,
-                    filter: state.instrument?.getInstrumentName(context) ?? context.text.all,
-                    totalSongs: state.songs.length),
+                SliverToBoxAdapter(
+                  child: ArtistSongsCollapsedHeader(
+                      isScrolledUnder: isScrolledUnder,
+                      artist: widget.artistName,
+                      filter: state.instrument?.getInstrumentName(context) ?? context.text.all,
+                      totalSongs: state.songs.length),
+                ),
                 SliverOverlapAbsorber(
                   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: SliverSafeArea(
@@ -112,7 +115,6 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                     sliver: ArtistSongsFixedHeader(
                       isScrolledUnder: isScrolledUnder,
                       tabController: _tabController,
-                      pageController: pageController,
                       shouldShowSearch: shouldShowSearch,
                     ),
                   ),
@@ -120,9 +122,9 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
               ];
             },
             body: Builder(builder: (context) {
-              return PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: pageController,
+              return TabBarView(
+                physics: const PageScrollPhysics(),
+                controller: _tabController,
                 children: <Widget>[
                   SafeArea(
                     top: false,
