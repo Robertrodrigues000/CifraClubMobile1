@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/version/models/version.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
 
 abstract class UserVersionRepository {
   Future<List<int>> addVersionsToSongbook(List<Version> versions, int songbookId);
@@ -12,4 +13,5 @@ abstract class UserVersionRepository {
   Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId);
   Future<List<int>> updateVersionsToSongbook(List<Version> versions, int songbookId);
   Stream<bool> getIsFavoriteVersionBySongIdStream(int songId);
+  Future<int> addVersionData(VersionData versionData, int versionId);
 }

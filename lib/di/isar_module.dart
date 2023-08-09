@@ -2,10 +2,11 @@
 import 'dart:io';
 
 import 'package:cifraclub/data/genre/models/user_genre/user_genres_dto.dart';
-import 'package:cifraclub/data/version/models/user_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
 import 'package:cifraclub/data/subscription/models/persisted_purchase_dto.dart';
-import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 
@@ -15,6 +16,7 @@ const isarAppSchemas = [
   UserVersionDtoSchema,
   PersistedPurchaseDtoSchema,
   UserRecentVersionDtoSchema,
+  UserVersionDataDtoSchema,
 ];
 
 @module

@@ -8,6 +8,7 @@ import 'package:cifraclub/data/songbook/models/songbook_version_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:typed_result/typed_result.dart';
 
 class SongbookDataSource {
@@ -79,21 +80,6 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  Future<Result<SongbookVersionDto, RequestError>> addVersionToSongbook(
-    int songbookId,
-    SongbookVersionInputDto songbookSongInputDto,
-  ) {
-    var request = NetworkRequest(
-      type: NetworkRequestType.post,
-      path: "/v3/songbook/$songbookId/song",
-      data: songbookSongInputDto.toJson(),
-      parser: (data) {
-        return SongbookVersionDto.fromJson(data);
-      },
-    );
-    return _networkService.execute(request: request);
-  }
-
   Future<Result<void, RequestError>> sortVersions(
     int songbookId,
     VersionsIdsInputDto orderedVersionInput,
@@ -105,5 +91,31 @@ class SongbookDataSource {
       parser: (_) => null, // coverage:ignore-line
     );
     return _networkService.execute(request: request);
+  }
+
+  Future<Result<SongbookVersionDto, RequestError>> addVersionToSongbook(
+    int songbookId,
+    SongbookVersionInputDto songbookSongInputDto,
+  ) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: _getRequestPath(songbookId),
+      data: songbookSongInputDto.toJson(),
+      parser: (data) {
+        return SongbookVersionDto.fromJson(data);
+      },
+    );
+    return _networkService.execute(request: request);
+  }
+
+  String _getRequestPath(int songbookId) {
+    final listType = ListType.getListTypeById(songbookId);
+
+    return switch (listType) {
+      ListType.favorites => "/v3/user/favorite-song",
+      ListType.canPlay => "/v3/user/${listType.label}-play",
+      ListType.cantPlay => "/v3/user/${listType.label}-play",
+      _ => "/v3/songbook/$songbookId/song",
+    };
   }
 }

@@ -31,7 +31,7 @@ import 'package:cifraclub/data/subscription/repository/validate_purchase_reposit
 import 'package:cifraclub/data/time/data_source/ntp_data_source.dart' as _i29;
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart' as _i51;
 import 'package:cifraclub/data/version/data_source/version_data_source.dart' as _i55;
-import 'package:cifraclub/data/version/repository/version_repository.dart' as _i58;
+import 'package:cifraclub/data/version/repository/version_repository_impl.dart' as _i58;
 import 'package:cifraclub/di/analytics_module.dart' as _i164;
 import 'package:cifraclub/di/app_module.dart' as _i168;
 import 'package:cifraclub/di/artist_module.dart' as _i161;
@@ -452,6 +452,7 @@ Future<_i1.GetIt> $initGetIt(
   gh.factory<_i138.InsertVersionToSongbook>(() => _i138.InsertVersionToSongbook(
         gh<_i103.SongbookRepository>(),
         gh<_i52.UserVersionRepository>(),
+        gh<_i86.GetVersionData>(),
         gh<_i50.UserSongbookRepository>(),
       ));
   gh.factory<_i139.InsertVersionsToSongbook>(() => _i139.InsertVersionsToSongbook(

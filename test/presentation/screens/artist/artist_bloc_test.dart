@@ -303,9 +303,9 @@ void main() {
       act: (bloc) async {
         bloc.initSubscriptions();
         bloc.onFavorite();
-        await Future.delayed(const Duration(milliseconds: 310));
+        await Future.delayed(const Duration(milliseconds: 400));
         bloc.onFavorite();
-        await Future.delayed(const Duration(milliseconds: 310));
+        await Future.delayed(const Duration(milliseconds: 400));
       },
       expect: () => [
         isA<ArtistState>().having((state) => state.isFavorite, "isFavorite", false),

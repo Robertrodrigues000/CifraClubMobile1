@@ -1,25 +1,15 @@
-import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
-
 class VersionDataSong {
-  final int id;
-  final String label;
-  final int hits;
-  final String versionUrl;
-  final String instrumentUrl;
-  final VersionDataVideoLesson? videoLesson;
-  final int level;
+  final int songId;
+  final int lyricsId;
+  final String name;
   final String url;
-  final bool verified;
+  final String description;
 
   VersionDataSong({
-    required this.id,
-    required this.label,
-    required this.hits,
-    required this.versionUrl,
-    required this.instrumentUrl,
-    this.videoLesson,
-    required this.level,
+    required this.songId,
+    required this.lyricsId,
+    required this.name,
     required this.url,
-    required this.verified,
+    required this.description,
   });
 }

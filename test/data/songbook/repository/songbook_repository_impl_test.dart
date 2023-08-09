@@ -10,6 +10,7 @@ import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart'
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/data/songbook/repository/songbook_repository_impl.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -36,6 +37,7 @@ void main() {
     registerFallbackValue(const VersionsIdsInputDto([0]));
     registerFallbackValue(_SongbookSongsInputFake());
     registerFallbackValue(_SongbookSongInputFake());
+    registerFallbackValue(ListType.canPlay);
   });
 
   test("When getAllSongbooks is called, should return songbook domain entity", () async {
@@ -128,7 +130,7 @@ void main() {
   group("When deleteCifras is called", () {
     const songbookId = 0;
 
-    test("and request is successful should return sucess", () async {
+    test("and request is successful should return success", () async {
       final songbookDataSource = _SongbookDataSourceMock();
 
       when(() => songbookDataSource.deleteVersions(any(), any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));

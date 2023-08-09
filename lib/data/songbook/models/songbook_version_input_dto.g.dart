@@ -7,9 +7,7 @@ part of 'songbook_version_input_dto.dart';
 // **************************************************************************
 
 Map<String, dynamic> _$SongbookVersionInputDtoToJson(SongbookVersionInputDto instance) {
-  final val = <String, dynamic>{
-    'artistDns': instance.artistUrl,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -17,11 +15,12 @@ Map<String, dynamic> _$SongbookVersionInputDtoToJson(SongbookVersionInputDto ins
     }
   }
 
+  writeNotNull('artistDns', instance.artistUrl);
   writeNotNull('capo', instance.capo);
   writeNotNull('cifraId', instance.versionId);
   writeNotNull('id', instance.id);
   writeNotNull('instrumentType', instance.instrument);
-  val['songDns'] = instance.songUrl;
+  writeNotNull('songDns', instance.songUrl);
   writeNotNull('tone', instance.tone);
   writeNotNull('tuning', instance.tuning);
   writeNotNull('type', instance.type);

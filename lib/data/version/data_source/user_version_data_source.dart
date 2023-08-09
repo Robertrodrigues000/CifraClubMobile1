@@ -1,5 +1,6 @@
-import 'package:cifraclub/data/version/models/user_version_dto.dart';
-import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:isar/isar.dart';
 
@@ -102,5 +103,11 @@ class UserVersionDataSource {
         .songIdEqualTo(songId)
         .watch(fireImmediately: true)
         .map((event) => event.isNotEmpty);
+  }
+
+  Future<int> addVersionData(UserVersionDataDto versionData) {
+    return _isar.writeTxn(() async {
+      return _isar.userVersionDataDtos.put(versionData);
+    });
   }
 }

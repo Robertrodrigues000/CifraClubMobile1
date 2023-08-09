@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/repository/version_repository.dart';

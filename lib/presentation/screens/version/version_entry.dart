@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/content_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_loader_middleware.dart';

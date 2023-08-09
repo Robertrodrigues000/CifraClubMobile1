@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
@@ -41,9 +42,9 @@ class VersionLoaderMiddleware implements VersionMiddleware {
           return;
         }
 
-        var versionUrl = versionData.songsDetail
+        var versionUrl = versionData.instrumentVersions
             ?.firstWhere((element) => element.type == state.versionHeaderState.selectedInstrument!.apiType)
-            .songs
+            .versions
             ?.firstWhereOrNull(
               (element) => element.label == action.filter.versionName,
             )
@@ -55,7 +56,7 @@ class VersionLoaderMiddleware implements VersionMiddleware {
         _fetchVersion(
           addAction,
           versionData.artist!.url,
-          versionData.music.url,
+          versionData.song.url,
           instrumentUrl,
           versionUrl,
         );

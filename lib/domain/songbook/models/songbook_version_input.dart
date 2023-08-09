@@ -4,24 +4,24 @@ import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:equatable/equatable.dart';
 
 class SongbookVersionInput extends Equatable {
-  final String artistUrl;
+  final String? artistUrl;
   final int? capo;
   final int? versionId;
   final int? id;
   final String? instrument;
-  final String songUrl;
+  final String? songUrl;
   final String? tone;
   final String? tuning;
   final int? type;
   final String? versionLabel;
 
   const SongbookVersionInput({
-    required this.artistUrl,
+    this.artistUrl,
     this.capo,
     this.versionId,
     this.id,
     this.instrument,
-    required this.songUrl,
+    this.songUrl,
     this.tone,
     this.tuning,
     this.type,

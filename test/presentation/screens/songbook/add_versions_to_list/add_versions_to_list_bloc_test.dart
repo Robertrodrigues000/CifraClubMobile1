@@ -5,7 +5,6 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart';
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
@@ -278,11 +277,13 @@ void main() {
       final versionReponseList = [getFakeVersion(), getFakeVersion()];
       final insertVersionToSongbook = _InsertVersionToSongbookMock();
       when(() => insertVersionToSongbook(
-          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.first),
-          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.first)));
+          artistUrl: songSearchList.first.artistUrl,
+          songUrl: songSearchList.first.songUrl,
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.first.songId)));
       when(() => insertVersionToSongbook(
-          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.last),
-          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last)));
+          artistUrl: songSearchList.last.artistUrl,
+          songUrl: songSearchList.last.songUrl,
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last.songId)));
 
       blocTest(
         "should return count of success",
@@ -310,10 +311,12 @@ void main() {
       final songSearchList = [getFakeSongSearch(), getFakeSongSearch()];
       final insertVersionToSongbook = _InsertVersionToSongbookMock();
       when(() => insertVersionToSongbook(
-          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.first),
+          artistUrl: songSearchList.first.artistUrl,
+          songUrl: songSearchList.first.songUrl,
           songbookId: 10)).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
       when(() => insertVersionToSongbook(
-          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.last),
+          artistUrl: songSearchList.last.artistUrl,
+          songUrl: songSearchList.last.songUrl,
           songbookId: 10)).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
       blocTest(
@@ -343,11 +346,13 @@ void main() {
       final versionReponseList = [getFakeVersion(), getFakeVersion()];
       final insertVersionToSongbook = _InsertVersionToSongbookMock();
       when(() => insertVersionToSongbook(
-          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.first),
+          artistUrl: songSearchList.first.artistUrl,
+          songUrl: songSearchList.first.songUrl,
           songbookId: 10)).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
       when(() => insertVersionToSongbook(
-          versionInput: SongbookVersionInput.fromSongSearch(songSearchList.last),
-          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last)));
+          artistUrl: songSearchList.last.artistUrl,
+          songUrl: songSearchList.last.songUrl,
+          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last.songId)));
 
       blocTest(
         "should return count of success and erros",

@@ -1,12 +1,14 @@
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart';
-import 'package:cifraclub/data/version/models/user_version_dto.dart';
-import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/data/version/repository/user_version_repository_impl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../shared_mocks/domain/version/models/version_data_mock.dart';
 import '../../../shared_mocks/domain/version/models/version_mock.dart';
 
 class _UserVersionDataSourceMock extends Mock implements UserVersionDataSource {}
@@ -15,7 +17,13 @@ class _UserVersionDtoMock extends Mock implements UserVersionDto {}
 
 class _UserRecentVersionDtoMock extends Mock implements UserRecentVersionDto {}
 
+class _UserVersionDataDtoFake extends Fake implements UserVersionDataDto {}
+
 void main() {
+  setUpAll(() {
+    registerFallbackValue(_UserVersionDataDtoFake());
+  });
+
   test("When `clearAllVersion` is called should clear user versions", () async {
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(userVersionDataSource.clearAllVersions).thenAnswer((_) => SynchronousFuture(null));
@@ -219,5 +227,18 @@ void main() {
 
     verify(() => userVersionDataSource.getIsFavoriteVersionBySongIdStream(1)).called(1);
     expect(isFavorite, emitsInOrder([true]));
+  });
+
+  test("When `addVersionData` is called should return ids of versions deleted", () async {
+    final versionData = getFakeVersionData();
+
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.addVersionData(any())).thenAnswer((_) => SynchronousFuture(1));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    final addedId = await userVersionRepository.addVersionData(versionData, 1);
+
+    expect(addedId, 1);
   });
 }

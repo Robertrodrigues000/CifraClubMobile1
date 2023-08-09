@@ -1,7 +1,9 @@
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart';
-import 'package:cifraclub/data/version/models/user_version_artist_dto.dart';
-import 'package:cifraclub/data/version/models/user_version_dto.dart';
-import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_song_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -343,5 +345,43 @@ void main() {
     );
 
     expect(stream, emitsInOrder([isTrue, isFalse]));
+  });
+
+  test("When 'addVersionData' is called should save version data in local DB", () async {
+    final musicDto = UserVersionDataSongDto();
+    musicDto.id = 2;
+    musicDto.lyricsId = 1;
+    musicDto.name = "name";
+    musicDto.description = "description";
+    musicDto.url = "https://example.com/music.json";
+
+    final fakeUserVersionDataDto = UserVersionDataDto(
+      localId: 10,
+      versionId: 1,
+      type: 1,
+      content: "Content",
+      label: "Label",
+      versionUrl: "https://example.com/version.mp3",
+      completePath: "https://example.com/song.json",
+      siteUrl: "https://example.com/site.json",
+      key: "Key",
+      shapeKey: "Shape Key",
+      stdKey: "Std Key",
+      stdShapeKey: "Std Shape Key",
+      tuning: "Tuning",
+      capo: 5,
+      composers: "Composers",
+      isVerified: true,
+      blocked: false,
+      reason: "Reason",
+      song: musicDto,
+      songbookVersionId: 11,
+    );
+
+    await userVersionDataSource.addVersionData(fakeUserVersionDataDto);
+
+    final userVersionData = await isar.userVersionDataDtos.get(10);
+
+    expect(userVersionData, fakeUserVersionDataDto);
   });
 }

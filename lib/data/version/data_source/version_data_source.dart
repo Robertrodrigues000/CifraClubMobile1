@@ -1,6 +1,6 @@
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/clients/http/network_service.dart';
-import 'package:cifraclub/data/version/models/version_data_dto.dart';
+import 'package:cifraclub/data/version/models/version/version_data_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';

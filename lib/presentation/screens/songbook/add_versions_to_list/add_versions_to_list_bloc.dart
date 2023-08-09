@@ -5,7 +5,6 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_b
 import 'package:cifraclub/domain/search/models/song_search.dart';
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
@@ -137,14 +136,14 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
     var errorCount = 0;
 
     for (var song in state.selectedSongs) {
-      final versionInput = SongbookVersionInput.fromSongSearch(song);
-
-      final result = await _insertVersionToSongbook(songbookId: state.songbookId, versionInput: versionInput);
+      final result = await _insertVersionToSongbook(
+        songbookId: state.songbookId,
+        artistUrl: song.artistUrl,
+        songUrl: song.songUrl,
+      );
 
       result.when(
-        success: (value) {
-          songsIds.add(value.songId);
-        },
+        success: songsIds.add,
         failure: (error) {
           errorCount += 1;
           lastSongError = song;
@@ -158,10 +157,10 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
     songsIdState.addAll(songsIds);
 
     emit(state.copyWith(
-      selectedSongs: List.empty(),
-      savedSongsCount: 0,
-      songsId: songsIdState,
-    ));
+        selectedSongs: List.empty(),
+        savedSongsCount: 0,
+        songsId: songsIdState,
+        songsCount: state.songsCount - errorCount));
 
     return (songsSaved: songsIds.length, errorCount: errorCount, lastSongError: lastSongError);
   }

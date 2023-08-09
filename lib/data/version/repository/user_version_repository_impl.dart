@@ -1,7 +1,9 @@
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart';
-import 'package:cifraclub/data/version/models/user_version_dto.dart';
-import 'package:cifraclub/data/version/models/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:collection/collection.dart';
@@ -88,5 +90,10 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   @override
   Stream<bool> getIsFavoriteVersionBySongIdStream(int songId) {
     return _userVersionDataSource.getIsFavoriteVersionBySongIdStream(songId);
+  }
+
+  @override
+  Future<int> addVersionData(VersionData versionData, int versionId) {
+    return _userVersionDataSource.addVersionData(UserVersionDataDto.fromDomain(versionData, versionId));
   }
 }

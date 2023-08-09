@@ -6,7 +6,7 @@ part 'songbook_version_input_dto.g.dart';
 @JsonSerializable(createFactory: false, includeIfNull: false)
 class SongbookVersionInputDto {
   @JsonKey(name: "artistDns")
-  final String artistUrl;
+  final String? artistUrl;
   final int? capo;
   @JsonKey(name: "cifraId")
   final int? versionId;
@@ -14,7 +14,7 @@ class SongbookVersionInputDto {
   @JsonKey(name: "instrumentType")
   final String? instrument;
   @JsonKey(name: "songDns")
-  final String songUrl;
+  final String? songUrl;
   final String? tone;
   final String? tuning;
   final int? type;

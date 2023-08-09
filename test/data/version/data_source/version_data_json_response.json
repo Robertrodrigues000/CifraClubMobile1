@@ -1,0 +1,174 @@
+{
+    "id": 3219,
+    "type": 1,
+    "status": 0,
+    "content": "letra da musica",
+    "label": "Principal",
+    "versionUrl": "principal",
+    "instrumentUrl": "guitar",
+    "hits": 13186829,
+    "url": "/version/legiao-urbana/tempo-perdido/cifras/principal",
+    "siteUrl": "/legiao-urbana/tempo-perdido/",
+    "youtubeId": "qku-HL1pmYs",
+    "key": "G",
+    "shapeKey": "G",
+    "stdKey": "Em",
+    "stdShapeKey": "Em",
+    "tuning": "E A D G B E",
+    "capo": 0,
+    "level": 2,
+    "font": "cifra mono",
+    "chords": [
+        {
+            "chord": "Am7",
+            "alt": "Am7",
+            "guitar": [
+                "X 0 2 0 1 0"
+            ],
+            "cavaco": [
+                "7 P5 5 5"
+            ],
+            "keyboard": [
+                "10 1 5 8"
+            ],
+            "ukulele": [
+                "0 0 0 0"
+            ],
+            "viola": [
+                "X 7 6 7 5"
+            ],
+            "viola_mi": [
+                "X 5 4 5 3"
+            ],
+            "viola_ra": [
+                "X 7 5 5 5"
+            ]
+        }
+    ],
+    "music": {
+        "id": 3219,
+        "lyricsId": 22489,
+        "name": "Tempo Perdido",
+        "url": "tempo-perdido",
+        "description": "Somos tão jovens / Tão jovens / Tão jovens"
+    },
+    "artist": {
+        "id": 19,
+        "name": "Legião Urbana",
+        "url": "legiao-urbana",
+        "totalPhotos": 43,
+        "genre": {
+            "id": 2,
+            "name": "Pop Rock",
+            "url": "poprock",
+            "icons": {
+                "light": "https://akamai.sscdn.co/gcs/cifraclub/genres/poprock-light.svg",
+                "lightInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/poprock-inactive-light.svg",
+                "dark": "https://akamai.sscdn.co/gcs/cifraclub/genres/poprock-dark.svg",
+                "darkInactive": "https://akamai.sscdn.co/gcs/cifraclub/genres/poprock-inactive-dark.svg"
+            }
+        },
+        "image": {
+            "50": "https://akamai.sscdn.co/letras/50x50/fotos/8/d/f/c/8dfc6f49453dc5f678ae7d633f0eb4da-tb2.jpg",
+            "162": "https://akamai.sscdn.co/letras/162x162/fotos/8/d/f/c/8dfc6f49453dc5f678ae7d633f0eb4da.jpg",
+            "250": "https://akamai.sscdn.co/letras/250x250/fotos/8/d/f/c/8dfc6f49453dc5f678ae7d633f0eb4da.jpg",
+            "color": "#D76432"
+        },
+        "headImage": {
+            "color": "#2E2E2E"
+        },
+        "inappropriateContent": {
+            "artist": false,
+            "albuns": false,
+            "photos": false
+        },
+        "songs": null,
+        "externalURLs": {}
+    },
+    "videoLesson": {
+        "id": 1573,
+        "youtubeId": "Pt9elq3DYNM",
+        "title": "Tempo Perdido (aula de violão completa)",
+        "hits": 4711821,
+        "thumb": "https://i3.ytimg.com/vi/Pt9elq3DYNM/mqdefault.jpg",
+        "cc": false
+    },
+    "composers": "Renato Russo",
+    "contributors": [
+        {
+            "name": "Gustavo Cunha",
+            "id": 2337985,
+            "type": 2,
+            "avatar": "https://akamai.sscdn.co/tb/ccid-avatar/8/5/1301341357_50.jpg",
+            "url": "/musico/2337985/"
+        }
+    ],
+    "verified": true,
+    "versions": [
+        {
+            "songs": [
+                {
+                    "id": 3219,
+                    "label": "Principal",
+                    "hits": 13186829,
+                    "versionUrl": "principal",
+                    "instrumentUrl": "guitar",
+                    "videoLesson": {
+                        "id": 1573,
+                        "youtubeId": "Pt9elq3DYNM",
+                        "title": "Tempo Perdido (aula de violão completa)",
+                        "hits": 4711821,
+                        "thumb": "https://i3.ytimg.com/vi/Pt9elq3DYNM/mqdefault.jpg",
+                        "cc": false
+                    },
+                    "level": 2,
+                    "url": "/version/legiao-urbana/tempo-perdido/cifras/principal",
+                    "verified": true,
+                    "strumming": null
+                },
+                {
+                    "id": 45153,
+                    "label": "Simplificada",
+                    "hits": 2237003,
+                    "versionUrl": "simplificada",
+                    "instrumentUrl": "guitar",
+                    "videoLesson": {
+                        "id": 1573,
+                        "youtubeId": "Pt9elq3DYNM",
+                        "title": "Tempo Perdido (aula de violão completa)",
+                        "hits": 4711821,
+                        "thumb": "https://i3.ytimg.com/vi/Pt9elq3DYNM/mqdefault.jpg",
+                        "cc": false
+                    },
+                    "level": 2,
+                    "url": "/version/legiao-urbana/tempo-perdido/cifras/simplificada",
+                    "verified": true,
+                    "strumming": null
+                },
+                {
+                    "id": 684049,
+                    "label": "Academy-violao",
+                    "hits": 20419,
+                    "versionUrl": "academy-violao",
+                    "instrumentUrl": "guitar",
+                    "videoLesson": {
+                        "id": 1573,
+                        "youtubeId": "Pt9elq3DYNM",
+                        "title": "Tempo Perdido (aula de violão completa)",
+                        "hits": 4711821,
+                        "thumb": "https://i3.ytimg.com/vi/Pt9elq3DYNM/mqdefault.jpg",
+                        "cc": false
+                    },
+                    "level": 2,
+                    "url": "/version/legiao-urbana/tempo-perdido/cifras/academy-violao",
+                    "verified": true,
+                    "strumming": null
+                }
+            ],
+            "label": "Violão e guitarra",
+            "type": 1
+        }
+    ],
+    "blocked": true,
+    "reason": "has videolesson; version is verified"
+}

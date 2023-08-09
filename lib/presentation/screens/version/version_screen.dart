@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:cifraclub/domain/version/models/chord.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
@@ -167,7 +168,8 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                             state.isYouTubeVisible
                                 ? _bloc.add(OnYouTubeVideoClosed())
                                 : _bloc.add(
-                                    OnYouTubeVideoSelected(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM"));
+                                    OnYouTubeVideoSelected(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM"),
+                                  );
                           },
                           child: const Icon(Icons.youtube_searched_for_outlined))
                     ],

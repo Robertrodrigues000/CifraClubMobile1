@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/songbook/data_source/songbook_data_source.dart';
+import 'package:cifraclub/data/songbook/models/songbook_version_artist_dto.dart';
 import 'package:cifraclub/data/songbook/models/versions_ids_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
@@ -12,6 +13,7 @@ import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart'
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -286,72 +288,6 @@ void main() {
     });
   });
 
-  group("When addVersionToSongbook is called", () {
-    const songbookId = 0;
-    test("and request is successful", () async {
-      final networkService = NetworkServiceMock();
-      final songbookDataSource = SongbookDataSource(networkService);
-      const version = Version(
-        songId: 2498,
-        versionId: 2498,
-        type: 1,
-        name: "S.O.S",
-        songUrl: "sos",
-        localDatabaseID: 1,
-        remoteDatabaseID: 141322313,
-        tone: "G",
-        stdTone: "G",
-        capo: 0,
-        tuning: "E A D G B E",
-        artist: Artist(url: "raul-seixas", image: null, name: "Raul Seixas", id: 52),
-        order: 0,
-      );
-
-      final mockResponse =
-          await File("test/data/songbook/data_source/songbook_version_input_mock_json_reponse.json").readAsString();
-      await networkService.mock<SongbookVersionDto>(response: mockResponse);
-
-      final result = await songbookDataSource.addVersionToSongbook(
-          songbookId, SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()));
-
-      final request = verify(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<SongbookVersionDto>;
-
-      expect(request.path, "/v3/songbook/$songbookId/song");
-      expect(request.type, NetworkRequestType.post);
-
-      expect(result.isSuccess, true);
-      expect(result.get()?.name, version.name);
-      expect(result.get()?.songId, version.songId);
-      expect(result.get()?.versionId, version.versionId);
-      expect(result.get()?.type, version.type);
-      expect(result.get()?.songUrl, version.songUrl);
-      expect(result.get()?.tone, version.tone);
-      expect(result.get()?.stdTone, version.stdTone);
-      expect(result.get()?.capo, version.capo);
-      expect(result.get()?.tuning, version.tuning);
-      expect(result.get()?.remoteDatabaseID, version.remoteDatabaseID);
-      expect(result.get()?.artist.url, version.artist.url);
-      expect(result.get()?.artist.name, version.artist.name);
-    });
-
-    test("and request fails", () async {
-      final networkService = NetworkServiceMock();
-      final versionInput = getFakeSongbookVersionInput();
-
-      when(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request"))).thenAnswer(
-        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
-      );
-
-      final songbookDataSource = SongbookDataSource(networkService);
-      final result =
-          await songbookDataSource.addVersionToSongbook(songbookId, SongbookVersionInputDto.fromDomain(versionInput));
-
-      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
-    });
-  });
-
   group("When sortVersions is called", () {
     const songbookId = 0;
     test("and request is successful", () async {
@@ -382,6 +318,142 @@ void main() {
 
       final songbookDataSource = SongbookDataSource(networkService);
       final result = await songbookDataSource.sortVersions(songbookId, const VersionsIdsInputDto([0]));
+
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
+    });
+  });
+
+  group("When addVersionToSongbook is called", () {
+    const songbookId = 0;
+    const songbookVersion = SongbookVersionDto(
+      songId: 2498,
+      versionId: 2498,
+      type: 1,
+      name: "S.O.S",
+      songUrl: "sos",
+      remoteDatabaseID: 141322313,
+      tone: "G",
+      stdTone: "G",
+      capo: 0,
+      tuning: "E A D G B E",
+      artist: SongbookVersionArtistDto(
+          url: "raul-seixas",
+          image: "2/b/f/f/2bffb38ff274a89069f0b98bb8cf1335.jpg",
+          name: "Raul Seixas",
+          id: 52,
+          color: "#BDBDBD"),
+    );
+
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      final mockResponse =
+          await File("test/data/songbook/data_source/songbook_version_input_mock_json_reponse.json").readAsString();
+      await networkService.mock<SongbookVersionDto>(response: mockResponse);
+
+      final result = await songbookDataSource.addVersionToSongbook(
+          songbookId, SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()));
+
+      final request = verify(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<SongbookVersionDto>;
+
+      expect(request.path, "/v3/songbook/$songbookId/song");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+      expect(result.get()?.name, songbookVersion.name);
+      expect(result.get()?.songId, songbookVersion.songId);
+      expect(result.get()?.versionId, songbookVersion.versionId);
+      expect(result.get()?.type, songbookVersion.type);
+      expect(result.get()?.songUrl, songbookVersion.songUrl);
+      expect(result.get()?.tone, songbookVersion.tone);
+      expect(result.get()?.stdTone, songbookVersion.stdTone);
+      expect(result.get()?.capo, songbookVersion.capo);
+      expect(result.get()?.tuning, songbookVersion.tuning);
+      expect(result.get()?.remoteDatabaseID, songbookVersion.remoteDatabaseID);
+      expect(result.get()?.artist.url, songbookVersion.artist.url);
+      expect(result.get()?.artist.name, songbookVersion.artist.name);
+    });
+
+    test("and request is successful and is favorite songbook", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      final mockResponse =
+          await File("test/data/songbook/data_source/songbook_version_input_mock_json_reponse.json").readAsString();
+      await networkService.mock<SongbookVersionDto>(response: mockResponse);
+
+      final result = await songbookDataSource.addVersionToSongbook(
+          ListType.favorites.localId, SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()));
+
+      final request = verify(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<SongbookVersionDto?>;
+
+      expect(request.path, "/v3/user/favorite-song");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+      expect(result.get(), songbookVersion);
+    });
+
+    test("and request is successful and is can songbook", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      final mockResponse =
+          await File("test/data/songbook/data_source/songbook_version_input_mock_json_reponse.json").readAsString();
+      await networkService.mock<SongbookVersionDto>(response: mockResponse);
+
+      final result = await songbookDataSource.addVersionToSongbook(
+          ListType.canPlay.localId, SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()));
+
+      final request = verify(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<SongbookVersionDto>;
+
+      expect(request.path, "/v3/user/can-play");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+      expect(result.get(), songbookVersion);
+    });
+
+    test("and request is successful and is cant songbook", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      final mockResponse =
+          await File("test/data/songbook/data_source/songbook_version_input_mock_json_reponse.json").readAsString();
+      await networkService.mock<SongbookVersionDto>(response: mockResponse);
+
+      final result = await songbookDataSource.addVersionToSongbook(
+          ListType.cantPlay.localId, SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()));
+
+      final request = verify(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<SongbookVersionDto>;
+
+      expect(request.path, "/v3/user/cannot-play");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+      expect(result.get(), songbookVersion);
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      final versionInput = getFakeSongbookVersionInput();
+
+      when(() => networkService.execute<SongbookVersionDto>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result =
+          await songbookDataSource.addVersionToSongbook(songbookId, SongbookVersionInputDto.fromDomain(versionInput));
 
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
