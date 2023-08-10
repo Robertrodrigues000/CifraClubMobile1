@@ -11,7 +11,7 @@ class EditListScreenBuilder {
     return Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
         builder: (context) {
-          return BlocProvider(
+          return BlocProvider<EditListBloc>(
             create: (context) => EditListBloc(songbookId, getIt(), getIt(), getIt(), getIt())..init(),
             child: EditListScreen(name: name),
           );

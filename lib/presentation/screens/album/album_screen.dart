@@ -20,14 +20,8 @@ class AlbumScreen extends StatefulWidget {
 }
 
 class _AlbumScreenState extends State<AlbumScreen> {
-  late AlbumBloc _bloc;
+  late final AlbumBloc _bloc = BlocProvider.of<AlbumBloc>(context);
   final _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<AlbumBloc>(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +35,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
               AlbumHeader(
                 scrollController: _scrollController,
                 maxOffset: context.appDimensionScheme.albumHeaderHeight - context.appDimensionScheme.appBarHeight,
-                // coverage:ignore-start
-                onShare: () {},
-                // coverage:ignore-end
+                onShare: () {}, // coverage:ignore-line
                 artistName: state.album?.artistName ?? "",
                 albumName: state.album?.title ?? "",
                 image: state.album?.image?.thumb ?? "",

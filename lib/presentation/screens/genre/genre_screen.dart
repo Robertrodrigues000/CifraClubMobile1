@@ -13,20 +13,6 @@ class GenreScreen extends StatefulWidget {
 }
 
 class _GenreScreenState extends State<GenreScreen> {
-  late GenreBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = BlocProvider.of<GenreBloc>(context);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    bloc.requestTopArtists();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GenreBloc, GenreState>(builder: (context, state) {

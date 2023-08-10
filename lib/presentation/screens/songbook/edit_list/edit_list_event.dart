@@ -10,4 +10,4 @@ class ReorderError extends EditListEvent {
   ReorderError({required this.error, required this.deleteError, required this.sortError});
 }
 
-class ReorderSucess extends EditListEvent {}
+class ReorderSuccess extends EditListEvent {}

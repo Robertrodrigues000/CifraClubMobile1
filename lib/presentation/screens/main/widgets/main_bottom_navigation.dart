@@ -89,13 +89,13 @@ class MainBottomNavigation extends StatelessWidget {
             ),
             BottomNavigationBarItem(
               icon: SvgImage(
-                assetPath: AppSvgs.songbookBottomNavIcon,
+                assetPath: AppSvgs.moreBottomNavIcon,
                 height: 24,
                 width: 24,
                 color: context.colors.neutralSextenary,
               ),
               activeIcon: SvgImage(
-                assetPath: AppSvgs.songbookBottomNavIcon,
+                assetPath: AppSvgs.moreBottomNavIcon,
                 height: 24,
                 width: 24,
                 color: context.colors.textPrimary,

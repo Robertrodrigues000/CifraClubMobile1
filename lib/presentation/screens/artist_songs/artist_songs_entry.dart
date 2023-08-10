@@ -16,6 +16,14 @@ class ArtistSongsEntry extends ScreenEntry {
 
   ArtistSongsEntry(super.params);
 
+  static void push(Nav nav, String artistUrl, String instrument, String artistName) {
+    nav.push(screenName: name, params: {
+      artistUrlParamKey: artistUrl,
+      instrumentParamKey: instrument,
+      artistNameParamKey: artistName,
+    });
+  }
+
   String? get artistUrl => params[artistUrlParamKey];
   String? get instrument => params[instrumentParamKey];
   String? get artistName => params[artistNameParamKey];
@@ -29,7 +37,7 @@ class ArtistSongsEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     Instrument? instrumentFilter = instrument?.isNotEmpty == true ? Instrument.values.byName(instrument!) : null;
-    return BlocProvider(
+    return BlocProvider<ArtistSongsBloc>(
       create: (context) =>
           ArtistSongsBloc(getIt(), getIt(), getIt(), getIt(), instrument: instrumentFilter, artistUrl: artistUrl)
             ..init(),

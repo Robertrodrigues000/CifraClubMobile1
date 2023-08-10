@@ -26,7 +26,7 @@ class EditListScreen extends StatefulWidget {
 }
 
 class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder {
-  late final bloc = BlocProvider.of<EditListBloc>(context);
+  late final _bloc = BlocProvider.of<EditListBloc>(context);
   late final navigator = Navigator.of(context, rootNavigator: true);
 
   @override
@@ -36,7 +36,7 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
   }
 
   void listenEvents() {
-    bloc.editListEventStream.listen((event) {
+    _bloc.editListEventStream.listen((event) {
       switch (event) {
         case ReorderError():
           String message;
@@ -60,7 +60,7 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
                 )),
           );
           break;
-        case ReorderSucess():
+        case ReorderSuccess():
           ScaffoldMessenger.of(context).removeCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -128,13 +128,13 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
                             artist: item.artist.name,
                             type: "Violão",
                             tone: item.tone,
-                            onDeleteTap: () => bloc.deleteVersion(index),
+                            onDeleteTap: () => _bloc.deleteVersion(index),
                             editable: true,
                             index: index,
                           );
                         },
                         itemCount: state.versions.length,
-                        onReorder: bloc.onReorderList,
+                        onReorder: _bloc.onReorderList,
                         scrollDirection: Axis.vertical,
                         buildDefaultDragHandles: false,
                       ),
@@ -162,7 +162,7 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
                               Expanded(
                                 child: CifraClubButton(
                                   type: ButtonType.solidOrange,
-                                  onPressed: state.hasChanges ? bloc.save : null,
+                                  onPressed: state.hasChanges ? _bloc.save : null,
                                   child: Text(context.text.save),
                                 ),
                               ),

@@ -8,10 +8,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GenreEntry extends ScreenEntry {
   static const name = "Genre";
-  static const genreUrlParamKey = "genreUrlParamKey";
-  static const genreNameParamKey = "genreNameParamKey";
+  static const genreUrlParamKey = "genreUrl";
+  static const genreNameParamKey = "genreName";
 
   GenreEntry(super.params);
+
+  static void push(Nav nav, String genreUrl, String genreName) {
+    nav.push(screenName: name, params: {
+      genreUrlParamKey: genreUrl,
+      genreNameParamKey: genreName,
+    });
+  }
+
+  String? get genreUrl => params[genreUrlParamKey];
+  String? get genreName => params[genreNameParamKey];
 
   @override
   String get screenName => name;
@@ -21,15 +31,13 @@ class GenreEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    assert(params[genreUrlParamKey] != null, "Invalid genre url");
-    final genreUrl = params[genreUrlParamKey] ?? "";
-    final genreName = params[genreNameParamKey];
+    assert(genreUrl != null, "Invalid genre url");
     return BlocProvider<GenreBloc>(
       create: (context) => GenreBloc(
-        genreUrl,
+        genreUrl ?? "",
         genreName,
         getIt(),
-      ),
+      )..init(),
       child: const GenreScreen(),
     );
   }

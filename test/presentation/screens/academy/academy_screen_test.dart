@@ -24,7 +24,7 @@ void main() {
 
   setUpAll(() {
     bloc = _AcademyBlocMock();
-    when(bloc.initInstructors).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.init).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.openAppOrStore).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';
 
 class AlbumsBloc extends Cubit<AlbumsState> {
-  final String artistUrl;
+  final String? artistUrl;
   final GetAlbums _getAlbums;
   AlbumsBloc(this.artistUrl, this._getAlbums) : super(const AlbumsState());
 
@@ -15,7 +15,7 @@ class AlbumsBloc extends Cubit<AlbumsState> {
 
   Future<void> getAlbums() async {
     emit(state.copyWith(isLoading: true));
-    final albumsResult = await _getAlbums(artistUrl);
+    final albumsResult = await _getAlbums(artistUrl ?? "");
 
     albumsResult.when(
         success: (value) => emit(

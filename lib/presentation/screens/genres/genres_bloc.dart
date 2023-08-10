@@ -10,6 +10,10 @@ class GenresBloc extends Cubit<GenresState> {
 
   GenresBloc(this._getGenres) : super(GenresLoadingState());
 
+  Future<void> init() async {
+    await requestGenres();
+  }
+
   Future<void> requestGenres() async {
     var genresResult = await _getGenres();
 

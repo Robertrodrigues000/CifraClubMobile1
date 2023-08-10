@@ -24,7 +24,7 @@ class TopArtistsEntry extends ScreenEntry {
         getIt(),
         getIt(),
         getIt(),
-      ),
+      )..init(),
       child: TopArtistsScreen(getIt()),
     );
   }

@@ -20,20 +20,7 @@ class TopArtistsScreen extends StatefulWidget {
 }
 
 class _TopArtistsScreenState extends State<TopArtistsScreen> {
-  late final TopArtistsBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = BlocProvider.of<TopArtistsBloc>(context);
-    bloc.initGenres();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    bloc.requestTopArtists();
-  }
+  late final TopArtistsBloc _bloc = BlocProvider.of<TopArtistsBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +30,7 @@ class _TopArtistsScreenState extends State<TopArtistsScreen> {
         title: Text(context.text.topArtists),
       ),
       body: BlocBuilder<TopArtistsBloc, TopArtistsState>(
-        bloc: bloc,
+        bloc: _bloc,
         builder: (context, state) => Builder(
           builder: (context) {
             return CustomScrollView(
@@ -54,11 +41,11 @@ class _TopArtistsScreenState extends State<TopArtistsScreen> {
                     child: GenresCapsule(
                       genres: state.genres,
                       selectedGenre: state.selectedGenre,
-                      onGenreSelected: bloc.onGenreSelected,
+                      onGenreSelected: _bloc.onGenreSelected,
                       onMore: () async {
                         final result = await widget._genreBottomSheet.open(context);
                         if (result != null) {
-                          bloc.insertGenre(result);
+                          _bloc.insertGenre(result);
                           return true;
                         }
                         return false;
@@ -75,13 +62,8 @@ class _TopArtistsScreenState extends State<TopArtistsScreen> {
                     return TopArtists(
                       topArtists: state.topArtists,
                       // coverage:ignore-start
-                      onTap: (artist) {
-                        Nav.of(context).push(
-                          screenName: ArtistEntry.name,
-                          params: {'url': artist.url, 'name': artist.name},
-                        );
-                        // coverage:ignore-end
-                      },
+                      onTap: (artist) =>
+                          ArtistEntry.push(Nav.of(context), artist.url, artist.name), // coverage:ignore-end
                       selectedGenre: state.selectedGenre,
                     );
                   }

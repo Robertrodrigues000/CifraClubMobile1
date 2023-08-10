@@ -2,6 +2,7 @@ import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_top_artists.dart';
+import 'package:cifraclub/domain/genre/models/genre.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart';
 import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
@@ -12,6 +13,7 @@ import 'package:cifraclub/presentation/screens/top_artists/top_artists_state.dar
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
@@ -33,7 +35,13 @@ class _GetTopArtistsMock extends Mock implements GetTopArtists {
 
 class _InsertUserGenreMock extends Mock implements InsertUserGenre {}
 
-class _GetUserGenresAsStreamMock extends Mock implements GetUserGenresAsStream {}
+class _GetUserGenresAsStreamMock extends Mock implements GetUserGenresAsStream {
+  static _GetUserGenresAsStreamMock newDummy([List<Genre>? genres]) {
+    final mock = _GetUserGenresAsStreamMock();
+    when(mock).thenAnswer((_) => BehaviorSubject.seeded(genres ?? []));
+    return mock;
+  }
+}
 
 void main() {
   TopArtistsBloc getTopArtistsBloc({
@@ -51,9 +59,43 @@ void main() {
     registerFallbackValue(getFakeGenre());
   });
 
-  test("When bloc is created, expect genres to be empty", () {
-    final bloc = getTopArtistsBloc();
-    expect(bloc.state, isA<TopArtistsState>().having((state) => state.genres, "genres", []));
+  group("when init is called", () {
+    final topArtists = [getFakeArtist(), getFakeArtist()];
+    final genres = [getFakeGenre(), getFakeGenre()];
+
+    final getTopArtists = _GetTopArtistsMock.newDummy();
+    final getUserGenres = _GetUserGenresAsStreamMock.newDummy(genres);
+
+    final mixin = getTopArtistsBloc(getTopArtists: getTopArtists, getUserGenresAsStream: getUserGenres);
+    mixin.initGenres();
+
+    when(() => getTopArtists.call(
+          genreUrl: any(named: "genreUrl"),
+          limit: any(named: "limit"),
+          offset: any(named: "offset"),
+        )).thenAnswer(
+      (_) => CancelableOperation.fromFuture(
+        SynchronousFuture(
+          Ok(
+            PaginatedList(
+              items: topArtists,
+              hasMoreResults: false,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    blocTest(
+      "should init genres and emit artists",
+      build: () => mixin,
+      act: (bloc) => bloc.init(),
+      expect: () => [
+        isA<TopArtistsState>().having((state) => state.genres, "Genres", genres),
+        isA<TopArtistsState>().having((state) => state.isLoadingArtists, "is Loading Artists", true),
+        isA<TopArtistsState>().having((state) => state.topArtists, "Top Artists", topArtists),
+      ],
+    );
   });
 
   group("When onGenreSelected is called", () {
@@ -80,10 +122,16 @@ void main() {
             limit: any(named: "limit"),
             offset: any(named: "offset"),
           )).thenAnswer(
-        (_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(PaginatedList(
-          items: topArtists,
-          hasMoreResults: false,
-        )))),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Ok(
+              PaginatedList(
+                items: topArtists,
+                hasMoreResults: false,
+              ),
+            ),
+          ),
+        ),
       );
 
       blocTest(

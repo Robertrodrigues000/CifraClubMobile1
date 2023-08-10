@@ -13,14 +13,14 @@ class VersionEntry extends ScreenEntry {
   static const name = "Version";
   static const artistUrlParamKey = "artistUrl";
   static const songUrlParamKey = "songUrl";
+  static const songbookVersionIdParamKey = "songbookVersionId";
   static const artistNameParamKey = "artistName";
   static const songNameParamKey = "songName";
-  static const songbookVersionIdKey = "songbookVersionIdKey";
 
   VersionEntry(super.params);
 
   static void pushFromSongbook(Nav nav, int songbookVersionId) {
-    nav.push(screenName: name, params: {songbookVersionIdKey: songbookVersionId.toString()});
+    nav.push(screenName: name, params: {songbookVersionIdParamKey: songbookVersionId.toString()});
   }
 
   static void pushFromSong(Nav nav, String artistUrl, String songUrl, String artistName, String songName) {
@@ -37,9 +37,9 @@ class VersionEntry extends ScreenEntry {
 
   String? get artistUrl => params[artistUrlParamKey];
   String? get songUrl => params[songUrlParamKey];
+  int? get songbookVersionId => int.tryParse(params[songbookVersionIdParamKey] ?? "");
   String? get artistName => params[artistNameParamKey];
   String? get songName => params[songNameParamKey];
-  int? get songbookVersionId => int.tryParse(params[songbookVersionIdKey] ?? "");
 
   @override
   String get screenName => name;

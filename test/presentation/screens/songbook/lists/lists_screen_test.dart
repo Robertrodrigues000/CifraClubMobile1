@@ -99,7 +99,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
     );
 
@@ -114,7 +114,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
     );
 
@@ -130,7 +130,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
     );
 
@@ -159,7 +159,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
       nav: nav,
     );
@@ -183,10 +183,7 @@ void main() {
 
     await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.create));
     verify(() => bloc.createNewSongbook(newSongbookName)).called(1);
-    verify(() => nav.push(
-          screenName: AddVersionsToListEntry.name,
-          params: AddVersionsToListEntry.declareParams(songbookFake.id!),
-        )).called(1);
+    verify(() => AddVersionsToListEntry.push(nav, songbookFake.id!)).called(1);
   });
 
   testWidgets("Tapping add icon and songbook is repeated should show a dialog with information", (widgetTester) async {
@@ -197,7 +194,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
     );
 
@@ -235,7 +232,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
     );
 
@@ -275,7 +272,7 @@ void main() {
             onTapSongbook: (_) {
               complete.complete();
             },
-            listOptionsbottomSheet: bottomSheet,
+            listOptionsBottomSheet: bottomSheet,
             isTablet: false),
       ),
     );
@@ -296,7 +293,7 @@ void main() {
     await widgetTester.pumpWidgetWithWrapper(
       BlocProvider<ListsBloc>.value(
         value: bloc,
-        child: ListsScreen(onTapSongbook: (_) {}, listOptionsbottomSheet: bottomSheet, isTablet: false),
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
       ),
     );
 
@@ -341,7 +338,7 @@ void main() {
           onTapSongbook: (_) {
             completer.complete();
           },
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           isTablet: true,
           selectedSongbookId: songbook.id,
         ),

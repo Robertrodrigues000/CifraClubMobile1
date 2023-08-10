@@ -28,6 +28,11 @@ class TopSongsBloc extends Cubit<TopSongsState> with GenresCapsuleMixin {
     this.insertUserGenre,
   ) : super(TopSongsState());
 
+  void init() {
+    initGenres();
+    requestTopSongs();
+  }
+
   @override
   void emitGenres(List<Genre> genres) async {
     emit(state.copyWith(genres: genres));

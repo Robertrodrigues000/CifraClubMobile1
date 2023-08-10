@@ -22,7 +22,7 @@ void main() {
     );
   }
 
-  group('When initInstructors is called', () {
+  group('When init is called', () {
     var isAppInstalledMock = _IsAppInstalledMock();
     registerFallbackValue(App.academy);
     when(() => isAppInstalledMock.call(any())).thenAnswer((_) => Future.value(true));
@@ -30,7 +30,7 @@ void main() {
     blocTest(
       'should update state',
       build: () => getAcademyBloc(isAppInstalledMock: isAppInstalledMock),
-      act: (bloc) => bloc.initInstructors(),
+      act: (bloc) => bloc.init(),
       expect: () => [
         isA<AcademyState>()
             .having((state) => state.isAcademyInstalled, "is academy installed", true)

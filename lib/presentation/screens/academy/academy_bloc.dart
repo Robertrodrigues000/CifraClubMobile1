@@ -27,7 +27,7 @@ class AcademyBloc extends Cubit<AcademyState> {
     AppWebp.cardContrabaixo,
   ];
 
-  Future<void> initInstructors() async {
+  Future<void> init() async {
     emit(state.copyWith(instructors: instructors, isAcademyInstalled: await _isAppInstalled(App.academy)));
   }
 

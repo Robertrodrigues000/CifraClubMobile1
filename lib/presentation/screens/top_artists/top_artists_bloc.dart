@@ -29,6 +29,11 @@ class TopArtistsBloc extends Cubit<TopArtistsState> with GenresCapsuleMixin {
     this.insertUserGenre,
   ) : super(TopArtistsState());
 
+  void init() {
+    initGenres();
+    requestTopArtists();
+  }
+
   @override
   void emitGenres(List<Genre> genres) async {
     emit(state.copyWith(genres: genres));

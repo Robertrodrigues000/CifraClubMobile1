@@ -24,7 +24,7 @@ class TopSongsEntry extends ScreenEntry {
         getIt(),
         getIt(),
         getIt(),
-      ),
+      )..init(),
       child: TopSongsScreen(getIt()),
     );
   }

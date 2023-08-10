@@ -30,7 +30,7 @@ class ArtistSongsScreen extends StatefulWidget {
 }
 
 class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTickerProviderStateMixin {
-  late ArtistSongsBloc _bloc;
+  late final ArtistSongsBloc _bloc = BlocProvider.of<ArtistSongsBloc>(context);
   late TabController _tabController;
   final scrollController = ScrollController();
   var isScrolledUnder = false;
@@ -38,7 +38,6 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<ArtistSongsBloc>(context);
     _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     scrollController.addListener(_onScroll);
     _tabController.addListener(_onPageChange);
@@ -162,7 +161,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                                       name: song.name,
                                       prefix: state.rankingPrefixes[index],
                                       isVerified: song.verified,
-                                      hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
+                                      hasVideoLessons: _hasInstrumentVideoLesson(state.instrument, song));
                                 },
                               ),
                             )
@@ -219,7 +218,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                                       name: song.name,
                                       prefix: state.alphabeticalPrefixes[index],
                                       isVerified: song.verified,
-                                      hasVideoLessons: hasInstrumentVideoLesson(state.instrument, song));
+                                      hasVideoLessons: _hasInstrumentVideoLesson(state.instrument, song));
                                 },
                               ),
                             )
@@ -291,8 +290,8 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                                   imageUrl: videoLesson.images.small,
                                   artistName: videoLesson.artist?.name ?? "",
                                   title: videoLesson.title,
-                                  views: formatVideoLessonView(videoLesson.views, context),
-                                  duration: formatVideoLessonDuration(videoLesson.duration),
+                                  views: _formatVideoLessonView(videoLesson.views, context),
+                                  duration: _formatVideoLessonDuration(videoLesson.duration),
                                   versionLabel: videoLesson.version?.label ?? "",
                                 );
                               },
@@ -310,7 +309,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     );
   }
 
-  bool hasInstrumentVideoLesson(Instrument? instrument, ArtistSong song) {
+  bool _hasInstrumentVideoLesson(Instrument? instrument, ArtistSong song) {
     if (instrument == null && song.videoLessons > 0) {
       return true;
     } else {
@@ -318,11 +317,11 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     }
   }
 
-  String formatVideoLessonView(int views, BuildContext context) {
+  String _formatVideoLessonView(int views, BuildContext context) {
     return NumberFormat.compact(locale: Localizations.localeOf(context).toLanguageTag()).format(views);
   }
 
-  String formatVideoLessonDuration(int seconds) {
+  String _formatVideoLessonDuration(int seconds) {
     return DateFormat.ms().format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: seconds).inMilliseconds));
   }
 }

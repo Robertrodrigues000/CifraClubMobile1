@@ -12,17 +12,49 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/artist/models/artist_mock.dart';
 
-class _MockGetTopArtists extends Mock implements GetTopArtists {}
+class _GetTopArtistsMock extends Mock implements GetTopArtists {}
 
 void main() {
-  test("When bloc is created, expect state to be at loading state", () {
-    final bloc = GenreBloc("", "", _MockGetTopArtists());
-    expect(bloc.state, isA<GenreLoadingState>());
+  GenreBloc getBloc({
+    String? genreUrl,
+    String? genreName,
+    _GetTopArtistsMock? getTopArtists,
+  }) =>
+      GenreBloc(genreUrl ?? "", genreName ?? "", getTopArtists ?? _GetTopArtistsMock());
+
+  group("When init is called", () {
+    final getTopArtists = _GetTopArtistsMock();
+    final topArtists = [getFakeArtist(), getFakeArtist()];
+
+    when(() => getTopArtists.call(
+          genreUrl: any(named: "genreUrl"),
+          limit: any(named: "limit"),
+          offset: any(named: "offset"),
+        )).thenAnswer(
+      (_) => CancelableOperation.fromFuture(
+        SynchronousFuture(
+          Ok(
+            PaginatedList(items: topArtists, hasMoreResults: false),
+          ),
+        ),
+      ),
+    );
+
+    blocTest("should emit a list of artists and genre name",
+        build: () => getBloc(genreUrl: "genreUrl", genreName: "genreName", getTopArtists: getTopArtists),
+        act: (bloc) async {
+          await bloc.init();
+        },
+        expect: () => [
+              isA<GenreLoadedState>()
+                  .having((state) => state.artists, "top artists", topArtists)
+                  .having((state) => state.genreName, "genre name", "genreName")
+            ]);
   });
 
   group("When requestTopArtists is called", () {
     group("when request is successful", () {
-      final getTopArtists = _MockGetTopArtists();
+      final getTopArtists = _GetTopArtistsMock();
       final topArtists = [getFakeArtist(), getFakeArtist()];
 
       when(() => getTopArtists.call(
@@ -30,10 +62,16 @@ void main() {
             limit: any(named: "limit"),
             offset: any(named: "offset"),
           )).thenAnswer(
-        (_) => CancelableOperation.fromFuture(SynchronousFuture(Ok(PaginatedList(
-          items: topArtists,
-          hasMoreResults: false,
-        )))),
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            Ok(
+              PaginatedList(
+                items: topArtists,
+                hasMoreResults: false,
+              ),
+            ),
+          ),
+        ),
       );
 
       blocTest(
@@ -58,7 +96,7 @@ void main() {
     });
 
     group("When request fails", () {
-      final getTopArtists = _MockGetTopArtists();
+      final getTopArtists = _GetTopArtistsMock();
       when(() => getTopArtists.call(
               genreUrl: any(named: "genreUrl"), limit: any(named: "limit"), offset: any(named: "offset")))
           .thenAnswer((_) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
@@ -74,14 +112,20 @@ void main() {
     });
 
     group("When request returns empty list", () {
-      final getTopArtists = _MockGetTopArtists();
+      final getTopArtists = _GetTopArtistsMock();
       when(() => getTopArtists.call(
-                genreUrl: any(named: "genreUrl"),
-                limit: any(named: "limit"),
-                offset: any(named: "offset"),
-              ))
-          .thenAnswer((_) => CancelableOperation.fromFuture(
-              SynchronousFuture(const Ok(PaginatedList(items: [], hasMoreResults: false)))));
+            genreUrl: any(named: "genreUrl"),
+            limit: any(named: "limit"),
+            offset: any(named: "offset"),
+          )).thenAnswer(
+        (_) => CancelableOperation.fromFuture(
+          SynchronousFuture(
+            const Ok(
+              PaginatedList(items: [], hasMoreResults: false),
+            ),
+          ),
+        ),
+      );
 
       blocTest(
         "should emit an error state",

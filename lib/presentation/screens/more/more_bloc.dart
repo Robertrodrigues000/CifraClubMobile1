@@ -22,8 +22,6 @@ class MoreBloc extends Cubit<MoreState> {
   final OpenLoginPage _openLoginPage;
   final OpenUserProfilePage _openUserProfilePage;
 
-  StreamSubscription? userSubscription;
-
   MoreBloc(
     this._getCredentialStream,
     this._openAppOrStore,
@@ -32,7 +30,9 @@ class MoreBloc extends Cubit<MoreState> {
     this._openUrl,
     this._openLoginPage,
     this._openUserProfilePage,
-  ) : super(MoreState(user: null));
+  ) : super(const MoreState());
+
+  StreamSubscription<UserCredential>? userSubscription;
 
   Future<void> init(List<AppItem> appList) async {
     userSubscription = _getCredentialStream().listen(_updateCredential);
@@ -48,12 +48,6 @@ class MoreBloc extends Cubit<MoreState> {
     emit(state.copyWith(installedApps: installedApps));
   }
 
-  @override
-  Future<void> close() {
-    userSubscription?.cancel();
-    return super.close();
-  }
-
   void _updateCredential(UserCredential? userCredential) {
     emit(state.copyWith(user: userCredential?.user));
   }
@@ -67,4 +61,10 @@ class MoreBloc extends Cubit<MoreState> {
   void openLoginPage() => _openLoginPage();
 
   void openUserProfilePage() => _openUserProfilePage();
+
+  @override
+  Future<void> close() {
+    userSubscription?.cancel();
+    return super.close();
+  }
 }

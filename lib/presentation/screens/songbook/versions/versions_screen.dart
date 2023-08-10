@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
+import 'package:cifraclub/presentation/screens/search/search_entry.dart';
 
 class VersionsScreen extends StatefulWidget {
   const VersionsScreen({
@@ -24,12 +25,12 @@ class VersionsScreen extends StatefulWidget {
     required this.isTablet,
     required this.songbookId,
     this.userId,
-    required this.listOptionsbottomSheet,
+    required this.listOptionsBottomSheet,
     this.onDeleteSongbook,
     this.width,
   });
 
-  final ListOptionsBottomSheet listOptionsbottomSheet;
+  final ListOptionsBottomSheet listOptionsBottomSheet;
   final bool isTablet;
   final int? songbookId;
   final int? userId;
@@ -42,14 +43,13 @@ class VersionsScreen extends StatefulWidget {
 
 class _VersionsScreenState extends State<VersionsScreen> {
   static const _searchHeight = 56.0;
-  late VersionsBloc _bloc;
+  late final VersionsBloc _bloc = BlocProvider.of<VersionsBloc>(context);
   final scrollController = ScrollController(initialScrollOffset: _searchHeight);
   var isScrolledUnder = false;
 
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<VersionsBloc>(context)..init(widget.songbookId);
     scrollController.addListener(_onScroll);
   }
 
@@ -136,12 +136,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                   );
                 }),
               InkWell(
-                onTap: () {
-                  Nav.of(context).push(
-                    screenName: AddVersionsToListEntry.name,
-                    params: AddVersionsToListEntry.declareParams(widget.songbookId ?? 0),
-                  );
-                },
+                onTap: () => AddVersionsToListEntry.push(Nav.of(context), widget.songbookId ?? 0),
                 child: SizedBox(
                   height: 48,
                   width: 48,
@@ -155,7 +150,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
               if (state.songbook != null)
                 InkWell(
                   onTap: () async {
-                    await widget.listOptionsbottomSheet.open(
+                    await widget.listOptionsBottomSheet.open(
                       context: context,
                       isUserList: state.songbook?.type == ListType.user,
                       ccid: widget.userId,
@@ -201,9 +196,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       hintText: context.text.searchSongs,
                       labelText: context.text.searchSongs,
                       isReadOnly: true,
-                      onTap: () =>
-                          Nav.of(context).push(screenName: AddVersionsToListEntry.name), // coverage:ignore-line
-                      // TODO : Mudar para a tela de pesquisar cifras
+                      onTap: () => Nav.of(context).push(screenName: SearchEntry.name), // coverage:ignore-line
                     ),
                   ),
                 ),
@@ -260,11 +253,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                 hasScrollBody: false,
                 child: state.versions.isEmpty
                     ? EmptyListEmptyState(
-                        onClick: () {
-                          Nav.of(context).push(
-                              screenName: AddVersionsToListEntry.name,
-                              params: AddVersionsToListEntry.declareParams(widget.songbookId ?? 0));
-                        },
+                        onClick: () => AddVersionsToListEntry.push(Nav.of(context), widget.songbookId ?? 0),
                       )
                     : Container(),
               ),

@@ -8,8 +8,22 @@ import 'package:nav/nav.dart';
 
 class AlbumsEntry extends ScreenEntry {
   static const name = "Albums";
+  static const artistUrlParamKey = "artistUrl";
+  static const artistNameParamKey = "artistName";
+  static const totalAlbumsParamKey = "totalAlbums";
 
   AlbumsEntry(super.params);
+
+  static void push(Nav nav, String artistUrl, String artistName, String totalAlbums) {
+    nav.push(
+      screenName: name,
+      params: {artistUrlParamKey: artistUrl, artistNameParamKey: artistName, totalAlbumsParamKey: totalAlbums},
+    );
+  }
+
+  String? get artistUrl => params[artistUrlParamKey];
+  String? get artistName => params[artistNameParamKey];
+  String? get totalAlbums => params[totalAlbumsParamKey];
 
   @override
   String get screenName => name;
@@ -19,14 +33,14 @@ class AlbumsEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<AlbumsBloc>(
       create: (context) => AlbumsBloc(
-        params['url'] as String,
+        artistUrl,
         getIt(),
       )..init(),
       child: AlbumsScreen(
-        artistName: params['name'] as String,
-        totalAlbums: params['totalAlbums'] as String,
+        artistName: artistName ?? "",
+        totalAlbums: totalAlbums ?? "",
       ),
     );
   }

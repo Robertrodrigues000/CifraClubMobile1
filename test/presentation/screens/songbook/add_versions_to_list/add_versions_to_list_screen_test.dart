@@ -26,7 +26,7 @@ void main() {
     bloc = _AddVersionsToListScreenBlocMock();
     registerFallbackValue(getFakeSongSearch());
 
-    when(() => bloc.init(any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.init()).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.addOrRemoveVersion(any())).thenReturn(null);
     when(bloc.clearCount).thenReturn(null);
     when(() => bloc.getSongState(any())).thenReturn(SongState.selected);

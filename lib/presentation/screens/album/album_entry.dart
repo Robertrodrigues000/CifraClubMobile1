@@ -15,6 +15,13 @@ class AlbumEntry extends ScreenEntry {
 
   AlbumEntry(super.params);
 
+  static void push(Nav nav, String artistUrl, String albumUrl, String albumName) {
+    nav.push(
+      screenName: name,
+      params: {albumNameParamKey: albumName, albumUrlParamKey: albumUrl, artistUrlParamKey: artistUrl},
+    );
+  }
+
   String? get artistUrl => params[artistUrlParamKey];
   String? get albumUrl => params[albumUrlParamKey];
   String? get albumName => params[albumNameParamKey];
@@ -27,18 +34,12 @@ class AlbumEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<AlbumBloc>(
       create: (context) => AlbumBloc(artistUrl, albumUrl, getIt())..init(),
       child: AlbumScreen(
-        name: albumName!,
+        name: albumName ?? "",
         versionOptionsBottomSheet: VersionOptionsBottomSheet(getIt()),
       ),
     );
-  }
-
-  static void push(Nav nav, String artistUrl, String albumUrl, String albumName) {
-    nav.push(
-        screenName: name,
-        params: {albumNameParamKey: albumName, albumUrlParamKey: albumUrl, artistUrlParamKey: artistUrl});
   }
 }

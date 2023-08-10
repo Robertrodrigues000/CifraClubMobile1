@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
@@ -26,22 +25,23 @@ import 'package:nav/nav.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ArtistScreen extends StatefulWidget {
-  final VersionOptionsBottomSheet versionOptionsBottomSheet;
   const ArtistScreen({super.key, required this.name, required this.versionOptionsBottomSheet});
   final String name;
+  final VersionOptionsBottomSheet versionOptionsBottomSheet;
+
   @override
   State<ArtistScreen> createState() => _ArtistScreenState();
 }
 
 class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
-  late ArtistBloc _bloc;
+  late final ArtistBloc _bloc = BlocProvider.of<ArtistBloc>(context);
   final _scrollController = ScrollController();
   static const maxSongs = 10;
   static const maxAlbums = 4;
+
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<ArtistBloc>(context);
     listenEvents();
   }
 
@@ -58,11 +58,6 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
           );
       }
     }).addTo(subscriptions);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
   }
 
   @override
@@ -118,7 +113,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                             ? ErrorDescriptionWidgetType.connection
                             : ErrorDescriptionWidgetType.server,
                         // coverage:ignore-start
-                        onClick: () => _bloc.fetchArtistInfos(),
+                        onClick: () => _bloc.fetchArtistInfo(),
                         // coverage:ignore-end
                       ),
                     ],
@@ -166,7 +161,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                       name: state.songs[index].name,
                       prefix: (index + 1).toString(),
                       isVerified: state.songs[index].verified,
-                      hasVideoLessons: hasInstrumentVideoLesson(
+                      hasVideoLessons: _hasInstrumentVideoLesson(
                         state.selectedInstrument,
                         state.songs[index],
                       ),
@@ -178,13 +173,8 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                     child: CifraClubButton(
                       type: ButtonType.outline,
                       // coverage:ignore-start
-                      onPressed: () {
-                        Nav.of(context).push(screenName: ArtistSongsEntry.name, params: {
-                          ArtistSongsEntry.artistNameParamKey: widget.name,
-                          ArtistSongsEntry.artistUrlParamKey: state.artistInfo?.url ?? "",
-                          ArtistSongsEntry.instrumentParamKey: state.selectedInstrument?.name ?? "",
-                        });
-                      },
+                      onPressed: () => ArtistSongsEntry.push(
+                          Nav.of(context), state.artistInfo!.url, state.selectedInstrument?.name ?? "", widget.name),
                       // coverage:ignore-end
                       padding: EdgeInsets.only(
                         left: context.appDimensionScheme.screenMargin,
@@ -206,11 +196,8 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                       child: CifraClubButton(
                         type: ButtonType.outline,
                         // coverage:ignore-start
-                        onPressed: () => Nav.of(context).push(screenName: AlbumsEntry.name, params: {
-                          'url': state.artistInfo!.url,
-                          'name': state.artistInfo!.name,
-                          'totalAlbums': state.albums.length.toString(),
-                        }),
+                        onPressed: () => AlbumsEntry.push(Nav.of(context), state.artistInfo!.url,
+                            state.artistInfo!.name, state.albums.length.toString()),
                         // coverage:ignore-end
                         padding: EdgeInsets.only(
                           left: context.appDimensionScheme.screenMargin,
@@ -230,7 +217,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
     );
   }
 
-  bool hasInstrumentVideoLesson(Instrument? instrument, ArtistSong song) {
+  bool _hasInstrumentVideoLesson(Instrument? instrument, ArtistSong song) {
     if (instrument == null && song.videoLessons > 0) {
       return true;
     } else {

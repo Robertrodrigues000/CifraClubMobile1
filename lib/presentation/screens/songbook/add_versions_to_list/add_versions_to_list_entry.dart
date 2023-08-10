@@ -8,13 +8,15 @@ import 'package:nav/nav.dart';
 
 class AddVersionsToListEntry extends ScreenEntry {
   static const name = "AddVersionsToList";
-  static const songbookIdKey = "songbookIdKey";
+  static const songbookIdParamKey = "songbookId";
 
-  static Map<String, String> declareParams(int songbookId) {
-    return {songbookIdKey: songbookId.toString()};
+  static void push(Nav nav, int songbookId) {
+    nav.push(screenName: name, params: {songbookIdParamKey: songbookId.toString()});
   }
 
   AddVersionsToListEntry(super.params);
+
+  int? get songbookId => int.tryParse(params[songbookIdParamKey] ?? "");
 
   @override
   String get screenName => name;
@@ -24,18 +26,16 @@ class AddVersionsToListEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    final songbookId = int.parse(params[songbookIdKey] ?? "0");
-
     return BlocProvider(
       create: (context) => AddVersionsToListBloc(
-        songbookId,
+        songbookId!,
         getIt(),
         getIt(),
         getIt(),
         getIt(),
         getIt(),
         getIt(),
-      )..init(songbookId),
+      )..init(),
       child: const AddVersionsToListScreen(),
     );
   }

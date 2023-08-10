@@ -15,9 +15,34 @@ import '../../../shared_mocks/domain/genre/models/genre_mock.dart';
 class _GetGenresMock extends Mock implements GetGenres {}
 
 void main() {
-  test("When bloc is created, expect state to be at loading state", () {
-    final bloc = GenresBloc(_GetGenresMock());
-    expect(bloc.state, isA<GenresLoadingState>());
+  GenresBloc getBloc({
+    _GetGenresMock? getGenres,
+  }) =>
+      GenresBloc(
+        getGenres ?? _GetGenresMock(),
+      );
+
+  group("When init is called", () {
+    final getGenres = _GetGenresMock();
+    final allGenres = AllGenres(top: [getFakeGenre(), getFakeGenre()], all: [getFakeGenre(), getFakeGenre()]);
+
+    when(getGenres.call).thenAnswer((_) => SynchronousFuture(Ok(allGenres)));
+    final genreItems = [
+      const GenreHeaderItem(type: GenreHeaderType.top),
+      GenreListItem(genre: allGenres.top.first),
+      GenreListItem(genre: allGenres.top.last),
+      GenreDivider(),
+      const GenreHeaderItem(type: GenreHeaderType.all),
+      GenreListItem(genre: allGenres.all.first),
+      GenreListItem(genre: allGenres.all.last),
+    ];
+
+    blocTest("should emit genres",
+        build: () => getBloc(getGenres: getGenres),
+        act: (bloc) async {
+          await bloc.init();
+        },
+        expect: () => [isA<GenresLoadedState>().having((state) => state.genres, "genres", genreItems)]);
   });
 
   group("When requestGenres() is called", () {

@@ -9,7 +9,7 @@ class MoreState {
   final User? user;
   final List<AppItem> installedApps;
 
-  MoreState({
+  const MoreState({
     this.user,
     this.installedApps = const [],
   });

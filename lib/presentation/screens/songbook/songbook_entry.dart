@@ -24,7 +24,7 @@ class SongbookEntry extends ScreenEntry {
   Widget build(BuildContext context) {
     return DeviceTypeBuilder(builder: (context, deviceType) {
       return MultiBlocProvider(providers: [
-        BlocProvider(
+        BlocProvider<ListsBloc>(
             create: (context) => ListsBloc(
                   getIt(),
                   getIt(),
@@ -39,9 +39,9 @@ class SongbookEntry extends ScreenEntry {
                   getIt(),
                   getIt(),
                 )..init()),
-        BlocProvider(create: (context) => SongbookBloc(getIt(), getIt())..init()),
+        BlocProvider<SongbookBloc>(create: (context) => SongbookBloc(getIt(), getIt())..init()),
         if (deviceType == DeviceType.tablet)
-          BlocProvider(
+          BlocProvider<VersionsBloc>(
             create: (context) =>
                 VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
           ),

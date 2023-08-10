@@ -22,7 +22,7 @@ class GenresEntry extends ScreenEntry {
     return BlocProvider<GenresBloc>(
       create: (context) => GenresBloc(
         getIt(),
-      ),
+      )..init(),
       child: const GenresScreen(),
     );
   }

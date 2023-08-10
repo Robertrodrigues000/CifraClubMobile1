@@ -38,7 +38,7 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
   CancelableOperation<Result<List<SongSearch>, RequestError>>? currentRequest;
   final BehaviorSubject<String> _searchQuery = BehaviorSubject();
 
-  Future<void> init(int songbookId) async {
+  Future<void> init() async {
     _getProStatusSubscription = _getProStatusStream().listen(_updateProStatus);
     _searchRequestSubscription = _searchQuery.debounceTime(const Duration(milliseconds: 300)).listen(_searchRequest);
     await _updateLimitState(songbookId);

@@ -19,8 +19,8 @@ class AcademyEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AcademyBloc(getIt(), getIt()),
+    return BlocProvider<AcademyBloc>(
+      create: (context) => AcademyBloc(getIt(), getIt())..init(),
       child: const AcademyScreen(),
     );
   }

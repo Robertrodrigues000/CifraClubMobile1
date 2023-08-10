@@ -91,7 +91,7 @@ void main() {
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
-  testWidgets('When scroll up should show serach bar', (widgetTester) async {
+  testWidgets('When scroll up should show search bar', (widgetTester) async {
     bloc.mockStream(VersionsState(versions: [getFakeVersion(), getFakeVersion()], songbook: getFakeSongbook()));
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -99,7 +99,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: true,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
           width: 300,
         ),
@@ -120,7 +120,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: true,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
           width: 300,
         ),
@@ -133,7 +133,7 @@ void main() {
     expect(find.byType(VersionTile, skipOffstage: false), findsNWidgets(2));
   });
 
-  testWidgets('When start and sonbook is private should not show share icon should omit the share icon',
+  testWidgets('When start and songbook is private should not show share icon should omit the share icon',
       (widgetTester) async {
     bloc.mockStream(
         VersionsState(versions: [getFakeVersion(), getFakeVersion()], songbook: getFakeSongbook(isPublic: false)));
@@ -143,7 +143,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: true,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           userId: 1,
           songbookId: 1,
           width: 300,
@@ -172,7 +172,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: true,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           userId: 1,
           songbookId: 1,
           width: 300,
@@ -203,7 +203,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: false,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
         ),
       ),
@@ -237,7 +237,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: false,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
           userId: 1,
         ),
@@ -272,7 +272,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: false,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
           userId: 1,
         ),
@@ -300,7 +300,7 @@ void main() {
         onDeleteSongbook: any(named: 'onDeleteSongbook'))).called(1);
   });
 
-  testWidgets('When click in add should navigate to addCifrasTolistScreen', (widgetTester) async {
+  testWidgets('When click in add should navigate to addVersionsToListScreen', (widgetTester) async {
     widgetTester.view.physicalSize = const Size(460, 800);
     widgetTester.view.devicePixelRatio = 1.0;
     bloc.mockStream(VersionsState(songbook: getFakeSongbook(isPublic: true)));
@@ -312,7 +312,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: false,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
           userId: 1,
         ),
@@ -331,10 +331,10 @@ void main() {
 
     await widgetTester.tap(finder);
 
-    verify(() => nav.push(screenName: AddVersionsToListEntry.name, params: AddVersionsToListEntry.declareParams(1)));
+    verify(() => AddVersionsToListEntry.push(nav, 1));
   });
 
-  testWidgets("When versions is empty and click in serch songs should navigato to addVersionsScreen",
+  testWidgets("When versions is empty and click in search songs should navigate to addVersionsScreen",
       (widgetTester) async {
     widgetTester.view.physicalSize = const Size(460, 800);
     widgetTester.view.devicePixelRatio = 1.0;
@@ -347,7 +347,7 @@ void main() {
         value: bloc,
         child: VersionsScreen(
           isTablet: false,
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           songbookId: 1,
           userId: 1,
         ),
@@ -358,10 +358,10 @@ void main() {
     expect(find.byType(EmptyListEmptyState), findsOneWidget);
     await widgetTester.tap(find.text(appTextEn.searchSongs));
 
-    verify(() => nav.push(screenName: AddVersionsToListEntry.name, params: AddVersionsToListEntry.declareParams(1)));
+    verify(() => AddVersionsToListEntry.push(nav, 1));
   });
 
-  testWidgets("When tap on delete songbook and is phone should pop to previus screen", (widgetTester) async {
+  testWidgets("When tap on delete songbook and is phone should pop to previous screen", (widgetTester) async {
     widgetTester.view.physicalSize = const Size(460, 800);
     widgetTester.view.devicePixelRatio = 1.0;
 
@@ -385,7 +385,7 @@ void main() {
       BlocProvider<VersionsBloc>.value(
         value: bloc,
         child: VersionsScreen(
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           isTablet: false,
           onDeleteSongbook: () {},
           songbookId: songbook.id,
@@ -442,7 +442,7 @@ void main() {
       BlocProvider<VersionsBloc>.value(
         value: bloc,
         child: VersionsScreen(
-          listOptionsbottomSheet: bottomSheet,
+          listOptionsBottomSheet: bottomSheet,
           isTablet: true,
           onDeleteSongbook: completer.complete,
           songbookId: songbook.id,
@@ -486,7 +486,7 @@ void main() {
           value: bloc,
           child: VersionsScreen(
             isTablet: true,
-            listOptionsbottomSheet: bottomSheet,
+            listOptionsBottomSheet: bottomSheet,
             userId: 1,
             songbookId: 1,
             width: 300,

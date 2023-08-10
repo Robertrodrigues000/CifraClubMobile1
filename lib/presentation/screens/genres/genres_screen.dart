@@ -16,19 +16,6 @@ class GenresScreen extends StatefulWidget {
 }
 
 class _GenresScreenState extends State<GenresScreen> {
-  late GenresBloc bloc;
-  @override
-  void initState() {
-    super.initState();
-    bloc = BlocProvider.of<GenresBloc>(context);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    bloc.requestGenres();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +31,7 @@ class _GenresScreenState extends State<GenresScreen> {
           } else if (state is GenresLoadedState) {
             return GenresList(
               genres: state.genres,
-              onTap: (genre) {
-                Nav.of(context).push(
-                  screenName: GenreEntry.name,
-                  params: {GenreEntry.genreUrlParamKey: genre.url, GenreEntry.genreNameParamKey: genre.name},
-                );
-              },
+              onTap: (genre) => GenreEntry.push(Nav.of(context), genre.url, genre.name), // coverage:ignore-line
             );
           } else {
             return const Center(child: Text("Erro"));

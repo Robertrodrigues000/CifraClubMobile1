@@ -31,26 +31,17 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
-  late final MoreBloc bloc;
+  late final MoreBloc _bloc = BlocProvider.of<MoreBloc>(context);
   var isSyncing = false;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = BlocProvider.of<MoreBloc>(context);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    bloc.init(widget.appList);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CosmosAppBar(
-        title: Text(context.text.more),
+        title: Text(
+          context.text.more,
+          style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+        ),
       ),
       body: BlocBuilder<MoreBloc, MoreState>(
         builder: (context, state) {
@@ -68,14 +59,14 @@ class _MoreScreenState extends State<MoreScreen> {
                     onLogoutTap: () async {
                       await LogoutDialog.show(
                         context: context,
-                        onLogout: bloc.logout,
+                        onLogout: _bloc.logout,
                       );
                     },
                     onTap: () {
                       if (state.user != null) {
-                        bloc.openUserProfilePage();
+                        _bloc.openUserProfilePage();
                       } else {
-                        bloc.openLoginPage();
+                        _bloc.openLoginPage();
                       }
                     },
                   ),
@@ -85,7 +76,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   moreMenuList: widget.moreMenuList,
                   onClick: (item) {
                     if (item.isExternalDestination) {
-                      bloc.openUrl(item.destination);
+                      _bloc.openUrl(item.destination);
                     } else {
                       Nav.of(context).push(screenName: item.destination);
                     }
@@ -105,7 +96,7 @@ class _MoreScreenState extends State<MoreScreen> {
                 ),
               ),
               MoreInstalledApps(
-                  allApps: widget.appList, onTap: bloc.openAppOrStore, installedApps: state.installedApps),
+                  allApps: widget.appList, onTap: _bloc.openAppOrStore, installedApps: state.installedApps),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -122,7 +113,7 @@ class _MoreScreenState extends State<MoreScreen> {
               ),
               MoreSocialNetworks(
                 socialNetworks: widget.socialNetworkList,
-                onTap: bloc.openUrl,
+                onTap: _bloc.openUrl,
               ),
             ],
           );

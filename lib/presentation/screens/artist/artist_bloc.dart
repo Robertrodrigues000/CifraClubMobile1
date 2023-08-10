@@ -58,11 +58,11 @@ class ArtistBloc extends Cubit<ArtistState> with SubscriptionHolder {
   void onFavorite() => _favoriteController.add(null);
 
   Future<void> init() async {
-    fetchArtistInfos();
+    fetchArtistInfo();
     initSubscriptions();
   }
 
-  Future<void> fetchArtistInfos() async {
+  Future<void> fetchArtistInfo() async {
     emit(state.copyWith(isLoading: true));
 
     final results = await Future.wait([

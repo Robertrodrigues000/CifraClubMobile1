@@ -33,13 +33,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late HomeBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = BlocProvider.of<HomeBloc>(context);
-  }
+  late final HomeBloc _bloc = BlocProvider.of<HomeBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: HomeHeader(
             user: state.user,
             isPro: state.isPro,
-            openLogin: bloc.openLoginPage,
+            openLogin: _bloc.openLoginPage,
             openProfile: () {
               ProfileBottomSheet(
                 user: state.user!,
-                onOpenProfile: () => bloc.openProfilePage(),
-                onLogout: () => bloc.logoutUser(),
+                onOpenProfile: () => _bloc.openProfilePage(),
+                onLogout: () => _bloc.logoutUser(),
               ).open(context);
             },
             height: dimensions.appBarHeight,
@@ -69,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Center(
                   child: ErrorDescriptionWidget(
                     typeError: errorType,
-                    onClick: () => bloc.requestHomeData(genreUrl: state.selectedGenre),
+                    onClick: () => _bloc.requestHomeData(genreUrl: state.selectedGenre),
                   ),
                 );
               } else {
@@ -81,11 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: GenresCapsule(
                           genres: state.genres,
                           selectedGenre: state.selectedGenre,
-                          onGenreSelected: bloc.onGenreSelected,
+                          onGenreSelected: _bloc.onGenreSelected,
                           onMore: () async {
                             final result = await widget._genreBottomSheet.open(context);
                             if (result != null) {
-                              bloc.insertGenre(result);
+                              _bloc.insertGenre(result);
                               return true;
                             }
                             return false;
@@ -139,10 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       HomeTopArtists(
                         artists: state.topArtists,
-                        onTap: (artist) {
-                          Nav.of(context)
-                              .push(screenName: ArtistEntry.name, params: {'url': artist.url, 'name': artist.name});
-                        },
+                        // coverage:ignore-start
+                        onTap: (artist) =>
+                            ArtistEntry.push(Nav.of(context), artist.url, artist.name), // coverage:ignore-end
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       HomeButton(

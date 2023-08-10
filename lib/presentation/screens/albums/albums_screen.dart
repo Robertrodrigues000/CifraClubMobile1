@@ -20,13 +20,7 @@ class AlbumsScreen extends StatefulWidget {
 }
 
 class _AlbumsScreenState extends State<AlbumsScreen> {
-  late AlbumsBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<AlbumsBloc>(context);
-  }
+  late final AlbumsBloc _bloc = BlocProvider.of<AlbumsBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +41,7 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
                   typeError: state.error is ConnectionError
                       ? ErrorDescriptionWidgetType.connection
                       : ErrorDescriptionWidgetType.server,
-                  // coverage:ignore-start
-                  onClick: () => _bloc.getAlbums(),
-                  // coverage:ignore-end
+                  onClick: () => _bloc.getAlbums(), // coverage:ignore-line
                 ),
               );
             } else {

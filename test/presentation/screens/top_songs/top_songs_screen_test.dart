@@ -29,8 +29,7 @@ void main() {
     registerFallbackValue(_BuildContextMock());
     registerFallbackValue(getFakeGenre());
     bloc = _TopSongsBlocMock();
-    when(bloc.initGenres).thenAnswer((_) => SynchronousFuture(null));
-    when(bloc.requestTopSongs).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.init).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.insertGenre(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });

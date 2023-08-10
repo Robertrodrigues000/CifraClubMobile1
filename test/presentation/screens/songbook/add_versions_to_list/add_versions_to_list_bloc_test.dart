@@ -73,7 +73,7 @@ void main() {
         getVersionsLimit: getVersionsLimit,
         getVersionLimitStateByCount: getVersionLimitStateByCount,
       ),
-      act: (bloc) => bloc.init(10),
+      act: (bloc) => bloc.init(),
       verify: (bloc) {
         expect(bloc.state.limitState, ListLimitState.atWarning);
         expect(bloc.state.isPro, false);
@@ -219,7 +219,7 @@ void main() {
             searchSongs: searchSong,
             getVersionLimitStateByCount: getVersionLimitStateByCount),
         act: (bloc) async {
-          bloc.init(10);
+          bloc.init();
           bloc.searchSongs("a");
           await Future.delayed(const Duration(milliseconds: 400));
         },
@@ -256,7 +256,7 @@ void main() {
           getVersionLimitStateByCount: getTabLimitStateByCount,
         ),
         act: (bloc) async {
-          bloc.init(10);
+          bloc.init();
           bloc.searchSongs("a");
           await Future.delayed(const Duration(milliseconds: 400));
         },

@@ -30,8 +30,7 @@ void main() {
     registerFallbackValue(_BuildContextMock());
     registerFallbackValue(getFakeGenre());
     bloc = _TopArtistsBlocMock();
-    when(bloc.initGenres).thenAnswer((_) => SynchronousFuture(null));
-    when(bloc.requestTopArtists).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.init).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.insertGenre(any())).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });

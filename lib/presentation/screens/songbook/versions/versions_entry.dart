@@ -8,14 +8,20 @@ import 'package:nav/nav.dart';
 
 class VersionsEntry extends ScreenEntry {
   static const name = "Versions";
-  static const songbookIdKey = "songbookIdKey";
-  static const userIdKey = "userIdKey";
-
-  static Map<String, String> declareParams(int? songbookId, int? userId) {
-    return {songbookIdKey: songbookId.toString(), userIdKey: userId.toString()};
-  }
+  static const songbookIdParamKey = "songbookId";
+  static const userIdParamKey = "userId";
 
   VersionsEntry(super.params);
+
+  static void push(Nav nav, int songbookId, int userId) {
+    nav.push(screenName: name, params: {
+      songbookIdParamKey: songbookId.toString(),
+      userIdParamKey: userId.toString(),
+    });
+  }
+
+  int? get songbookId => int.tryParse(params[songbookIdParamKey] ?? "");
+  int? get userId => int.tryParse(params[userIdParamKey] ?? "");
 
   @override
   String get screenName => name;
@@ -25,27 +31,15 @@ class VersionsEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    final songbookId = int.tryParse(params[songbookIdKey] ?? "");
-    final userId = int.tryParse(params[userIdKey] ?? "");
-
-    return BlocProvider(
-      create: (context) => VersionsBloc(
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-      ),
+    return BlocProvider<VersionsBloc>(
+      create: (context) =>
+          VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())
+            ..init(songbookId),
       child: VersionsScreen(
         isTablet: false,
         userId: userId,
         songbookId: songbookId,
-        listOptionsbottomSheet: getIt(),
+        listOptionsBottomSheet: getIt(),
       ),
     );
   }

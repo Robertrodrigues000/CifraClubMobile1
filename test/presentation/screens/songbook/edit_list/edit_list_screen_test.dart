@@ -239,7 +239,7 @@ void main() {
       ),
     );
 
-    publishSubject.add(ReorderSucess());
+    publishSubject.add(ReorderSuccess());
     await widgetTester.pumpAndSettle();
     expect(find.text(appTextEn.savedReorderChanges), findsOneWidget);
   });

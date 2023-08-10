@@ -22,6 +22,7 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/domain/user/models/user_mock.dart';
 import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
+import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
@@ -37,13 +38,17 @@ void main() {
   });
 
   testWidgets("When user is logged out, should open login when tapping user card", (tester) async {
-    bloc.mockStream(MoreState(user: null));
+    bloc.mockStream(const MoreState(user: null));
     when(bloc.openLoginPage).thenAnswer((_) => SynchronousFuture(null));
 
     await tester.pumpWidgetWithWrapper(
       BlocProvider<MoreBloc>.value(
         value: bloc,
-        child: const MoreScreen(moreMenuList: [], socialNetworkList: [], appList: []),
+        child: const MoreScreen(
+          moreMenuList: [],
+          socialNetworkList: [],
+          appList: [],
+        ),
       ),
     );
 
@@ -59,7 +64,11 @@ void main() {
       await tester.pumpWidgetWithWrapper(
         BlocProvider<MoreBloc>.value(
           value: bloc,
-          child: const MoreScreen(moreMenuList: [], socialNetworkList: [], appList: []),
+          child: const MoreScreen(
+            moreMenuList: [],
+            socialNetworkList: [],
+            appList: [],
+          ),
         ),
       );
 
@@ -74,7 +83,11 @@ void main() {
       await tester.pumpWidgetWithWrapper(
         BlocProvider<MoreBloc>.value(
           value: bloc,
-          child: const MoreScreen(moreMenuList: [], socialNetworkList: [], appList: []),
+          child: const MoreScreen(
+            moreMenuList: [],
+            socialNetworkList: [],
+            appList: [],
+          ),
         ),
       );
 
@@ -93,7 +106,7 @@ void main() {
   });
 
   testWidgets("When menu item with external url is tapped, should open browser", (tester) async {
-    bloc.mockStream(MoreState());
+    bloc.mockStream(const MoreState());
     when(() => bloc.openUrl(any())).thenAnswer((_) => SynchronousFuture(null));
     MoreMenuItem item = const MoreMenuItem(
       title: '',
@@ -116,7 +129,7 @@ void main() {
   });
 
   testWidgets("When menu item with internal route is tapped, should push to a new screen", (tester) async {
-    bloc.mockStream(MoreState());
+    bloc.mockStream(const MoreState());
     final nav = NavMock.getDummy();
 
     MoreMenuItem item = const MoreMenuItem(
@@ -127,7 +140,11 @@ void main() {
     await tester.pumpWidgetWithWrapper(
       BlocProvider<MoreBloc>.value(
         value: bloc,
-        child: MoreScreen(moreMenuList: [item], socialNetworkList: const [], appList: const []),
+        child: MoreScreen(
+          moreMenuList: [item],
+          socialNetworkList: const [],
+          appList: const [],
+        ),
       ),
       nav: nav,
     );
@@ -137,12 +154,12 @@ void main() {
   });
 
   testWidgets("When app is tapped, should open app or store", (tester) async {
-    bloc.mockStream(MoreState());
+    bloc.mockStream(const MoreState());
 
-    AppItem item = const AppItem(
+    AppItem item = AppItem(
       imageAsset: AppWebp.appTuner,
-      title: 'legal',
-      subtitle: 'olha só',
+      title: appTextEn.appTuner,
+      subtitle: appTextEn.appTunerDescription,
       app: App.afinador,
     );
     when(() => bloc.openAppOrStore(item.app)).thenAnswer((_) => SynchronousFuture(null));
@@ -157,20 +174,21 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.byType(AppCard));
+    await tester.tap(find.widgetWithText(AppCard, appTextEn.appTuner));
   });
 
   testWidgets("Should create AppListItem with installed app information", (tester) async {
-    AppItem item1 = const AppItem(
+    AppItem item1 = AppItem(
       imageAsset: AppWebp.appTuner,
-      title: 'legal',
-      subtitle: 'olha só',
+      title: appTextEn.appTuner,
+      subtitle: appTextEn.appTunerDescription,
       app: App.afinador,
     );
-    AppItem item2 = const AppItem(
+
+    AppItem item2 = AppItem(
       imageAsset: AppWebp.appMetronome,
-      title: 'legal',
-      subtitle: 'olha só',
+      title: appTextEn.appMetronome,
+      subtitle: appTextEn.appMetronomeDescription,
       app: App.metronomo,
     );
 
@@ -198,7 +216,7 @@ void main() {
   });
 
   testWidgets("When social network item is tapped, should open the social network", (tester) async {
-    bloc.mockStream(MoreState());
+    bloc.mockStream(const MoreState());
 
     SocialNetwork item = SocialNetwork(
       socialNetworkName: 'olha só',
@@ -219,7 +237,10 @@ void main() {
         ),
       ),
     );
-    await tester.tap(find.byType(SocialNetworkCard));
+    final finder = find.byType(SocialNetworkCard, skipOffstage: false);
+    await tester.scrollUntilVisible(finder, 100.0);
+    await tester.pump();
+    await tester.tap(finder, warnIfMissed: false);
     verify(() => bloc.openUrl(item.url)).called(1);
   });
 }

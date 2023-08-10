@@ -22,12 +22,22 @@ class MoreEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
+    List<AppItem> list = AppItem.getAllApps(context);
+
     return BlocProvider<MoreBloc>(
-      create: (context) => MoreBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
+      create: (context) => MoreBloc(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      )..init(list),
       child: MoreScreen(
         moreMenuList: MoreMenuItem.getAll(context),
         socialNetworkList: SocialNetwork.getAll(context),
-        appList: AppItem.getAllApps(context),
+        appList: list,
       ),
     );
   }

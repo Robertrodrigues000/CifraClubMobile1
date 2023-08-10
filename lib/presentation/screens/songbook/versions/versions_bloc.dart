@@ -22,7 +22,7 @@ import 'package:rxdart/rxdart.dart';
 
 class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
   final GetSongbookStreamById _getSongbookStreamById;
-  final GetVersionsStreamBySongbookId _getVersionsStremBySongbookId;
+  final GetVersionsStreamBySongbookId _getVersionsStreamBySongbookId;
   final ShareLink _shareLink;
   final GetVersionsLimitState _getVersionsLimitState;
   final GetProStatusStream _getProStatusStream;
@@ -35,7 +35,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
   VersionsBloc(
     this._getSongbookStreamById,
     this._shareLink,
-    this._getVersionsStremBySongbookId,
+    this._getVersionsStreamBySongbookId,
     this._getVersionsLimitState,
     this._getProStatusStream,
     this._getVersionsLimit,
@@ -50,7 +50,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     _getProStatusStream().listen(_updateProStatus).addTo(subscriptions);
 
     if (songbookId != null) {
-      final versionsStreamBroadcast = _getVersionsStremBySongbookId(songbookId).asBroadcastStream();
+      final versionsStreamBroadcast = _getVersionsStreamBySongbookId(songbookId).asBroadcastStream();
       final songbookStreamBroadcast = _getSongbookStreamById(songbookId).asBroadcastStream();
 
       final songbook = songbookStreamBroadcast.first;

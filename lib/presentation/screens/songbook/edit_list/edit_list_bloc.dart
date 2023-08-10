@@ -62,7 +62,7 @@ class EditListBloc extends Cubit<EditListState> {
         sortError: sortVersionResult.isFailure,
       ));
     } else {
-      _eventController.add(ReorderSucess());
+      _eventController.add(ReorderSuccess());
     }
 
     emit(state.copyWith(isLoading: false, hasChanges: false));

@@ -15,19 +15,7 @@ class AcademyScreen extends StatefulWidget {
 }
 
 class _AcademyScreenState extends State<AcademyScreen> {
-  late AcademyBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = BlocProvider.of<AcademyBloc>(context);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    bloc.initInstructors();
-  }
+  late final AcademyBloc _bloc = BlocProvider.of<AcademyBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -37,25 +25,27 @@ class _AcademyScreenState extends State<AcademyScreen> {
           return Container();
         }
         final safeAreaTopOffset = MediaQuery.of(context).padding.top;
-        return DeviceTypeBuilder(builder: (context, device) {
-          if (device == DeviceType.tablet) {
-            return AcademyScreenTablet(
-              safeAreaTopOffset: safeAreaTopOffset,
-              backgroundImagePath: AppWebp.academyBgTablet,
-              instructors: state.instructors,
-              isAcademyInstalled: state.isAcademyInstalled,
-              openAppOrStore: bloc.openAppOrStore,
-            );
-          } else {
-            return AcademyScreenPhone(
-              safeAreaTopOffset: safeAreaTopOffset,
-              backgroundImagePath: AppWebp.academyBg,
-              instructors: state.instructors,
-              isAcademyInstalled: state.isAcademyInstalled,
-              openAppOrStore: bloc.openAppOrStore,
-            );
-          }
-        });
+        return DeviceTypeBuilder(
+          builder: (context, device) {
+            if (device == DeviceType.tablet) {
+              return AcademyScreenTablet(
+                safeAreaTopOffset: safeAreaTopOffset,
+                backgroundImagePath: AppWebp.academyBgTablet,
+                instructors: state.instructors,
+                isAcademyInstalled: state.isAcademyInstalled,
+                openAppOrStore: _bloc.openAppOrStore,
+              );
+            } else {
+              return AcademyScreenPhone(
+                safeAreaTopOffset: safeAreaTopOffset,
+                backgroundImagePath: AppWebp.academyBg,
+                instructors: state.instructors,
+                isAcademyInstalled: state.isAcademyInstalled,
+                openAppOrStore: _bloc.openAppOrStore,
+              );
+            }
+          },
+        );
       },
     );
   }

@@ -24,11 +24,11 @@ class ListsScreen extends StatefulWidget {
     super.key,
     required this.onTapSongbook,
     this.selectedSongbookId,
-    required this.listOptionsbottomSheet,
+    required this.listOptionsBottomSheet,
     required this.isTablet,
   });
 
-  final ListOptionsBottomSheet listOptionsbottomSheet;
+  final ListOptionsBottomSheet listOptionsBottomSheet;
   final Function(Songbook) onTapSongbook;
   final int? selectedSongbookId;
   final bool isTablet;
@@ -38,13 +38,7 @@ class ListsScreen extends StatefulWidget {
 }
 
 class _ListsScreenState extends State<ListsScreen> {
-  late ListsBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<ListsBloc>(context);
-  }
+  late final ListsBloc _bloc = BlocProvider.of<ListsBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +64,7 @@ class _ListsScreenState extends State<ListsScreen> {
                           (await _bloc.createNewSongbook(name)).when(
                             success: (songbook) {
                               InputDialog.close(context);
-                              Nav.of(context).push(
-                                screenName: AddVersionsToListEntry.name,
-                                params: AddVersionsToListEntry.declareParams(songbook.id!),
-                              );
+                              AddVersionsToListEntry.push(Nav.of(context), songbook.id!);
                             },
                             failure: (_) {
                               ScaffoldMessenger.of(widgetContext)
@@ -153,9 +144,7 @@ class _ListsScreenState extends State<ListsScreen> {
                     limit: state.listLimit,
                     isPro: state.isPro,
                     isWithinLimit: state.listState == ListLimitState.withinLimit,
-                    // coverage:ignore-start
-                    onTap: () {},
-                    // coverage:ignore-end
+                    onTap: () {}, // coverage:ignore-line
                   ),
                 ),
               ),
@@ -169,7 +158,7 @@ class _ListsScreenState extends State<ListsScreen> {
                   widget.onTapSongbook(songbook);
                 },
                 onOptionsTap: (songbook) async {
-                  await widget.listOptionsbottomSheet.open(
+                  await widget.listOptionsBottomSheet.open(
                     context: context,
                     isUserList: true,
                     ccid: state.user?.id,

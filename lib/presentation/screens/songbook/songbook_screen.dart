@@ -15,9 +15,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class SongbookScreen extends StatefulWidget {
-  const SongbookScreen(this.deviceType, this.listOptionsbottomSheet, {super.key});
+  const SongbookScreen(this.deviceType, this.listOptionsBottomSheet, {super.key});
 
-  final ListOptionsBottomSheet listOptionsbottomSheet;
+  final ListOptionsBottomSheet listOptionsBottomSheet;
   final DeviceType deviceType;
 
   @override
@@ -25,13 +25,7 @@ class SongbookScreen extends StatefulWidget {
 }
 
 class _SongbookScreenState extends State<SongbookScreen> {
-  late SongbookBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<SongbookBloc>(context);
-  }
+  late final SongbookBloc _bloc = BlocProvider.of<SongbookBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +64,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
                       onTapSongbook: (songbook) {
                         _bloc.onSelectSongbook(songbook.id);
                       },
-                      listOptionsbottomSheet: widget.listOptionsbottomSheet,
+                      listOptionsBottomSheet: widget.listOptionsBottomSheet,
                     ),
                   ),
                   VerticalDivider(
@@ -83,7 +77,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
                       width: widthList,
                       userId: state.userCredential?.user?.id,
                       songbookId: state.selectedSongbookId,
-                      listOptionsbottomSheet: widget.listOptionsbottomSheet,
+                      listOptionsBottomSheet: widget.listOptionsBottomSheet,
                       onDeleteSongbook: () {
                         _bloc.onSelectSongbook(ListType.recents.localId);
                       },
@@ -96,16 +90,9 @@ class _SongbookScreenState extends State<SongbookScreen> {
         } else {
           return ListsScreen(
             isTablet: false,
-            onTapSongbook: (songbook) {
-              Nav.of(context).push(
-                screenName: VersionsEntry.name,
-                params: VersionsEntry.declareParams(
-                  songbook.id,
-                  state.userCredential?.user?.id,
-                ),
-              );
-            },
-            listOptionsbottomSheet: widget.listOptionsbottomSheet,
+            onTapSongbook: (songbook) =>
+                VersionsEntry.push(Nav.of(context), songbook.id ?? 0, state.userCredential?.user?.id ?? 0),
+            listOptionsBottomSheet: widget.listOptionsBottomSheet,
           );
         }
       },

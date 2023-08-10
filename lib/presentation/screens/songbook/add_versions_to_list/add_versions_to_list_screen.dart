@@ -20,13 +20,7 @@ class AddVersionsToListScreen extends StatefulWidget {
 }
 
 class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
-  late AddVersionsToListBloc _bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _bloc = BlocProvider.of<AddVersionsToListBloc>(context);
-  }
+  late final AddVersionsToListBloc _bloc = BlocProvider.of<AddVersionsToListBloc>(context);
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +134,7 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                             );
                           }
                         });
-                      }, // coverage:ignore-line
+                      },
                     ),
                 ],
               ),

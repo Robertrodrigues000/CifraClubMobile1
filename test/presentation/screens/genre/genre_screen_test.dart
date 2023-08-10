@@ -19,7 +19,7 @@ void main() {
 
   setUpAll(() {
     bloc = _GenreBlocMock();
-    when(bloc.requestTopArtists).thenAnswer((_) => SynchronousFuture(null));
+    when(bloc.init).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 

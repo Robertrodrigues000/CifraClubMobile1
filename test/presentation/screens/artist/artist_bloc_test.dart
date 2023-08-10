@@ -143,7 +143,7 @@ void main() {
     });
   });
 
-  group("When fetchArtistInfos is called", () {
+  group("When fetchArtistInfo is called", () {
     group("when request getArtistInfo and getArtistSongs is successful", () {
       final getArtistAlbums = _GetAlbumsMock();
       final getArtistInfo = _GetArtistInfoMock();
@@ -191,7 +191,7 @@ void main() {
             getArtistInfo: getArtistInfo,
             getArtistSongs: getArtistSongs,
             getDefaultInstruments: getDefaultInstruments),
-        act: (bloc) => bloc.fetchArtistInfos(),
+        act: (bloc) => bloc.fetchArtistInfo(),
         expect: () => [
           isA<ArtistState>().having((state) => state.isLoading, "isLoading", true),
           isA<ArtistState>()
@@ -248,7 +248,7 @@ void main() {
             getArtistInfo: getArtistInfo,
             getArtistSongs: getArtistSongs,
             getDefaultInstruments: getDefaultInstruments),
-        act: (bloc) => bloc.fetchArtistInfos(),
+        act: (bloc) => bloc.fetchArtistInfo(),
         expect: () => [
           isA<ArtistState>().having((state) => state.isLoading, "isLoading", true),
           isA<ArtistState>()

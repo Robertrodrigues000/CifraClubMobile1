@@ -16,9 +16,10 @@ class _GetAlbumsMock extends Mock implements GetAlbums {}
 void main() {
   AlbumsBloc getAlbumsBloc({
     _GetAlbumsMock? getAlbums,
+    String? artistUrl,
   }) =>
       AlbumsBloc(
-        "",
+        artistUrl ?? "",
         getAlbums ?? _GetAlbumsMock(),
       );
 
