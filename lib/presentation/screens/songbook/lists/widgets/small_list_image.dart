@@ -18,6 +18,7 @@ class SmallListImage extends StatelessWidget {
             image: DecorationImage(image: imageProvider),
           ),
         ),
+        placeholder: Container(),
       ),
     );
   }

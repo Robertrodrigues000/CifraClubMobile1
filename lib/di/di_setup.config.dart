@@ -32,30 +32,30 @@ import 'package:cifraclub/data/time/data_source/ntp_data_source.dart' as _i30;
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart' as _i52;
 import 'package:cifraclub/data/version/data_source/version_data_source.dart' as _i56;
 import 'package:cifraclub/data/version/repository/version_repository_impl.dart' as _i59;
-import 'package:cifraclub/di/analytics_module.dart' as _i153;
-import 'package:cifraclub/di/app_module.dart' as _i154;
-import 'package:cifraclub/di/artist_module.dart' as _i155;
+import 'package:cifraclub/di/analytics_module.dart' as _i166;
+import 'package:cifraclub/di/app_module.dart' as _i170;
+import 'package:cifraclub/di/artist_module.dart' as _i163;
 import 'package:cifraclub/di/authentication_module.dart' as _i156;
-import 'package:cifraclub/di/bottom_sheet_module.dart' as _i157;
-import 'package:cifraclub/di/controllers_module.dart' as _i158;
-import 'package:cifraclub/di/device_module.dart' as _i159;
-import 'package:cifraclub/di/firebase_module.dart' as _i160;
-import 'package:cifraclub/di/genre_module.dart' as _i161;
+import 'package:cifraclub/di/bottom_sheet_module.dart' as _i173;
+import 'package:cifraclub/di/controllers_module.dart' as _i174;
+import 'package:cifraclub/di/device_module.dart' as _i175;
+import 'package:cifraclub/di/firebase_module.dart' as _i159;
+import 'package:cifraclub/di/genre_module.dart' as _i169;
 import 'package:cifraclub/di/home_module.dart' as _i162;
-import 'package:cifraclub/di/in_app_purchase_module.dart' as _i163;
-import 'package:cifraclub/di/isar_module.dart' as _i164;
-import 'package:cifraclub/di/log_module.dart' as _i165;
+import 'package:cifraclub/di/in_app_purchase_module.dart' as _i160;
+import 'package:cifraclub/di/isar_module.dart' as _i176;
+import 'package:cifraclub/di/log_module.dart' as _i157;
 import 'package:cifraclub/di/navigator_module.dart' as _i28;
-import 'package:cifraclub/di/network_module.dart' as _i166;
-import 'package:cifraclub/di/path_module.dart' as _i167;
-import 'package:cifraclub/di/remote_config_module.dart' as _i168;
-import 'package:cifraclub/di/search_module.dart' as _i169;
-import 'package:cifraclub/di/shared_preferences_module.dart' as _i170;
-import 'package:cifraclub/di/song_module.dart' as _i171;
-import 'package:cifraclub/di/songbook_module.dart' as _i172;
-import 'package:cifraclub/di/subscription_module.dart' as _i173;
-import 'package:cifraclub/di/time_module.dart' as _i174;
-import 'package:cifraclub/di/version_module.dart' as _i175;
+import 'package:cifraclub/di/network_module.dart' as _i172;
+import 'package:cifraclub/di/path_module.dart' as _i154;
+import 'package:cifraclub/di/remote_config_module.dart' as _i171;
+import 'package:cifraclub/di/search_module.dart' as _i158;
+import 'package:cifraclub/di/shared_preferences_module.dart' as _i165;
+import 'package:cifraclub/di/song_module.dart' as _i164;
+import 'package:cifraclub/di/songbook_module.dart' as _i168;
+import 'package:cifraclub/di/subscription_module.dart' as _i155;
+import 'package:cifraclub/di/time_module.dart' as _i161;
+import 'package:cifraclub/di/version_module.dart' as _i167;
 import 'package:cifraclub/domain/analytics/repository/analytics_repository.dart' as _i114;
 import 'package:cifraclub/domain/app/repository/installed_app_repository.dart' as _i22;
 import 'package:cifraclub/domain/app/repository/share_link_repository.dart' as _i44;
@@ -169,6 +169,8 @@ import 'package:cifraclub/domain/version/use_cases/parse_sections.dart' as _i37;
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart' as _i120;
 import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart' as _i122;
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart' as _i141;
+import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart'
+    as _i153;
 import 'package:cifraclub/presentation/navigator/deep_link_parser.dart' as _i5;
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart' as _i8;
 import 'package:cifraclub/presentation/screens/version/middlewares/content_middleware.dart' as _i63;
@@ -525,53 +527,64 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i135.GetVersionsLimit>(),
         gh<_i88.GetVersionsLimitConstants>(),
       ));
+  gh.factory<_i153.SaveVersionToListBottomSheet>(() => bottomSheetModule.getSaveVersionToListBottomSheet(
+        gh<_i125.GetAllUserSongbooks>(),
+        gh<_i138.InsertUserSongbook>(),
+        gh<_i151.GetListLimitState>(),
+        gh<_i136.GetVersionsLimitState>(),
+        gh<_i139.InsertVersionToSongbook>(),
+        gh<_i54.ValidateSongbookName>(),
+        gh<_i131.GetListLimit>(),
+        gh<_i135.GetVersionsLimit>(),
+        gh<_i132.GetProStatusStream>(),
+      ));
   return getIt;
 }
 
-class _$AnalyticsModule extends _i153.AnalyticsModule {}
+class _$PathModule extends _i154.PathModule {}
 
-class _$AppModule extends _i154.AppModule {}
-
-class _$ArtistModule extends _i155.ArtistModule {}
+class _$SubscriptionModule extends _i155.SubscriptionModule {}
 
 class _$AuthenticationModule extends _i156.AuthenticationModule {}
 
-class _$BottomSheetModule extends _i157.BottomSheetModule {}
+class _$LogModule extends _i157.LogModule {}
 
-class _$ControllersModule extends _i158.ControllersModule {}
+class _$SearchModule extends _i158.SearchModule {}
 
-class _$DeviceModule extends _i159.DeviceModule {}
+class _$FirebaseModule extends _i159.FirebaseModule {}
 
-class _$FirebaseModule extends _i160.FirebaseModule {}
+class _$InAppPurchaseModule extends _i160.InAppPurchaseModule {}
 
-class _$GenreModule extends _i161.GenreModule {}
+class _$TimeModule extends _i161.TimeModule {}
 
 class _$HomeModule extends _i162.HomeModule {}
 
-class _$InAppPurchaseModule extends _i163.InAppPurchaseModule {}
+class _$ArtistModule extends _i163.ArtistModule {}
 
-class _$IsarModule extends _i164.IsarModule {}
+class _$SongModule extends _i164.SongModule {}
 
-class _$LogModule extends _i165.LogModule {}
+class _$SharedPreferencesModule extends _i165.SharedPreferencesModule {}
+
+class _$AnalyticsModule extends _i166.AnalyticsModule {}
+
+class _$VersionModule extends _i167.VersionModule {}
 
 class _$NavigatorModule extends _i28.NavigatorModule {}
 
-class _$NetworkModule extends _i166.NetworkModule {}
+class _$SongbookModule extends _i168.SongbookModule {}
 
-class _$PathModule extends _i167.PathModule {}
+class _$GenreModule extends _i169.GenreModule {}
 
-class _$RemoteConfigModule extends _i168.RemoteConfigModule {}
+class _$AppModule extends _i170.AppModule {}
 
-class _$SearchModule extends _i169.SearchModule {}
+class _$RemoteConfigModule extends _i171.RemoteConfigModule {}
 
-class _$SharedPreferencesModule extends _i170.SharedPreferencesModule {}
+class _$NetworkModule extends _i172.NetworkModule {}
 
-class _$SongModule extends _i171.SongModule {}
+class _$BottomSheetModule extends _i173.BottomSheetModule {}
 
-class _$SongbookModule extends _i172.SongbookModule {}
+class _$ControllersModule extends _i174.ControllersModule {}
 
-class _$SubscriptionModule extends _i173.SubscriptionModule {}
+class _$DeviceModule extends _i175.DeviceModule {}
 
-class _$TimeModule extends _i174.TimeModule {}
-
-class _$VersionModule extends _i175.VersionModule {}
+class _$IsarModule extends _i176.IsarModule {}

@@ -8,12 +8,12 @@ class UserLists extends StatelessWidget {
     super.key,
     required this.lists,
     required this.onTap,
-    required this.onOptionsTap,
+    this.onOptionsTap,
     this.selectedSongbookId,
   });
   final List<Songbook> lists;
   final Function(Songbook) onTap;
-  final Function(Songbook) onOptionsTap;
+  final Function(Songbook)? onOptionsTap;
   final int? selectedSongbookId;
 
   @override
@@ -25,7 +25,7 @@ class UserLists extends StatelessWidget {
             key: Key(lists[index].name),
             onTap: () => onTap(lists[index]),
             // coverage:ignore-start
-            onOptionsTap: () => onOptionsTap(lists[index]),
+            onOptionsTap: onOptionsTap != null ? () => onOptionsTap!(lists[index]) : null,
             // coverage:ignore-end
             songbook: lists[index],
             isSelected: lists[index].id == selectedSongbookId,

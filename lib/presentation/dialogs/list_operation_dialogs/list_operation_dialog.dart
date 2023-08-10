@@ -40,6 +40,7 @@ class ListOperationDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CifraClubButton(
+                  key: const Key("first-button"),
                   type: ButtonType.solidBlack,
                   onPressed: onFirstButtonTap,
                   child: Text(firstButtonText),
@@ -68,6 +69,7 @@ class ListOperationDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: CifraClubButton(
+                    key: const Key("first-button"),
                     type: ButtonType.solidBlack,
                     onPressed: onFirstButtonTap,
                     child: Text(firstButtonText),

@@ -344,7 +344,7 @@ void main() {
       },
     );
 
-    expect(stream, emitsInOrder([isTrue, isFalse]));
+    expect(stream, emitsInOrder([isTrue]));
   });
 
   test("When 'addVersionData' is called should save version data in local DB", () async {

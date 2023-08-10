@@ -220,10 +220,20 @@
             }
         }
     },
+    "createNewList": "Crear una nueva lista",
     "saveVersionToList": "Guardar en una lista",
-    "favoriteVersion": "Favorito acorde",
-    "correctVersion": "Corregir acorde",
+    "favoriteVersion": "Favorito cifrado",
+    "correctVersion": "Corregir cifrado",
     "albumOf":"Álbum de",
+    "saveVersionToListMessage": "El cifrado está guardado y disponible en la lista {listName}",
+    "@saveVersionToListMessage": {
+        "placeholders": {
+            "listName" : {
+                "type": "String",
+                "example": "Luau"
+            }
+        }
+    },
     "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{musica}other{musicas}} • {filter}",
     "@artistTotalSongsAndFilter": {
         "placeholders": {

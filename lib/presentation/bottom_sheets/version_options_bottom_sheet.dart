@@ -1,77 +1,80 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet_bloc.dart';
+import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VersionOptionsBottomSheet {
-  const VersionOptionsBottomSheet();
+  final SaveVersionToListBottomSheet saveToListbottomSheet;
+  const VersionOptionsBottomSheet(this.saveToListbottomSheet);
 
   // coverage:ignore-start
   Future<void> open({
-    required BuildContext context,
-    VersionOptionsBottomSheetBloc? bloc,
+    required BuildContext screenContext,
+    required String artistUrl,
+    required String songUrl,
   }) {
-    return _show(context, bloc ?? VersionOptionsBottomSheetBloc());
+    return _show(screenContext, artistUrl, songUrl);
   }
   // coverage:ignore-end
 
   Future<void> _show(
-    BuildContext context,
-    VersionOptionsBottomSheetBloc bloc,
+    BuildContext screenContext,
+    String artistUrl,
+    String songUrl,
   ) {
     final controller = ScrollController();
 
     final options = List<VersionOptionsBottomSheetItem>.from(VersionOptionsBottomSheetItem.values);
 
     return DefaultBottomSheet.showBottomSheet(
-      child: BlocProvider(
-        create: (_) => bloc,
-        child: BlocBuilder<VersionOptionsBottomSheetBloc, dynamic>(
-          builder: (_, __) {
-            return SingleChildScrollView(
-              controller: controller,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
-                    child: Text(
-                      context.text.versionOptionsBottomSheet,
-                      style: context.typography.title3,
-                    ),
+      child: Builder(
+        builder: (context) {
+          return SingleChildScrollView(
+            controller: controller,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                  child: Text(
+                    context.text.versionOptionsBottomSheet,
+                    style: context.typography.title3,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  ...options.map(
-                    (e) {
-                      return IconTextTile(
-                        // coverage:ignore-start
-                        onClick: () async {
-                          switch (e) {
-                            case VersionOptionsBottomSheetItem.saveVersion:
-                            case VersionOptionsBottomSheetItem.favoriteVersion:
-                            case VersionOptionsBottomSheetItem.correctVersion:
-                            case VersionOptionsBottomSheetItem.share:
-                          }
-                        },
-                        // coverage:ignore-end
-                        text: e.getText(context),
-                        leadingIconAsset: e.icon,
-                      );
-                    },
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                ...options.map(
+                  (e) {
+                    return IconTextTile(
+                      // coverage:ignore-start
+                      onClick: () async {
+                        switch (e) {
+                          case VersionOptionsBottomSheetItem.saveVersion:
+                            Navigator.of(context).pop();
+                            await saveToListbottomSheet.show(
+                                context: screenContext, artistUrl: artistUrl, songUrl: songUrl);
+
+                          case VersionOptionsBottomSheetItem.favoriteVersion:
+                          case VersionOptionsBottomSheetItem.correctVersion:
+                          case VersionOptionsBottomSheetItem.share:
+                        }
+                      },
+                      // coverage:ignore-end
+                      text: e.getText(context),
+                      leadingIconAsset: e.icon,
+                    );
+                  },
+                )
+              ],
+            ),
+          );
+        },
       ),
-      context: context,
+      context: screenContext,
       scrollController: controller,
     );
   }

@@ -282,6 +282,16 @@
     "favoriteVersion": "Favorite chord",
     "correctVersion": "Correct chord",
     "albumOf":"Album of",
+    "saveVersionToListMessage": "The chord is saved and available in the list {listName}",
+    "@saveVersionToListMessage": {
+        "placeholders": {
+            "listName" : {
+                "type": "String",
+                "example": "Luau"
+            }
+        }
+    },
+    "createNewList": "Create a new list",
     "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{song}other{songs}} • {filter}",
     "@artistTotalSongsAndFilter": {
         "placeholders": {

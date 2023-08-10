@@ -3,6 +3,8 @@ import 'package:cifraclub/domain/artist/models/album_disc_song.dart';
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_screen.dart';
@@ -23,12 +25,29 @@ import '../../../test_helpers/test_wrapper.dart';
 
 class _AlbumBlocMock extends Mock implements AlbumBloc {}
 
+class _BuildContextMock extends Mock implements BuildContext {}
+
+class _VersionOptionsBottomSheetMock extends Mock implements VersionOptionsBottomSheet {}
+
+class _SaveVersionToListBottomSheetMock extends Mock implements SaveVersionToListBottomSheet {}
+
 void main() {
   late AlbumBloc bloc;
+  late VersionOptionsBottomSheet bottomSheet;
 
   setUpAll(() {
+    registerFallbackValue(_BuildContextMock());
+
     bloc = _AlbumBlocMock();
     when(bloc.getAlbumDetail).thenAnswer((_) => SynchronousFuture(null));
+
+    final bottomSheetMock = _VersionOptionsBottomSheetMock();
+    when(() => bottomSheetMock.open(
+          screenContext: any(named: 'screenContext'),
+          artistUrl: any(named: 'artistUrl'),
+          songUrl: any(named: 'songUrl'),
+        )).thenAnswer((_) => SynchronousFuture(null));
+    bottomSheet = bottomSheetMock;
   });
 
   testWidgets("When state isLoading, should display loading circle", (widgetTester) async {
@@ -37,8 +56,9 @@ void main() {
       TestWrapper(
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
-          child: const AlbumScreen(
+          child: AlbumScreen(
             name: "A Tempestade",
+            versionOptionsBottomSheet: bottomSheet,
           ),
         ),
       ),
@@ -53,8 +73,9 @@ void main() {
       TestWrapper(
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
-          child: const AlbumScreen(
+          child: AlbumScreen(
             name: "A Tempestade",
+            versionOptionsBottomSheet: bottomSheet,
           ),
         ),
       ),
@@ -73,7 +94,10 @@ void main() {
         TestWrapper(
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
-            child: const AlbumScreen(name: "A Tempestade"),
+            child: AlbumScreen(
+              name: "A Tempestade",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         ),
       );
@@ -93,7 +117,10 @@ void main() {
         TestWrapper(
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
-            child: const AlbumScreen(name: "A Tempestade"),
+            child: AlbumScreen(
+              name: "A Tempestade",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         ),
       );
@@ -112,7 +139,10 @@ void main() {
       TestWrapper(
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
-          child: const AlbumScreen(name: "A Tempestade"),
+          child: AlbumScreen(
+            name: "A Tempestade",
+            versionOptionsBottomSheet: bottomSheet,
+          ),
         ),
       ),
     );
@@ -128,7 +158,10 @@ void main() {
       TestWrapper(
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
-          child: const AlbumScreen(name: "A Tempestade"),
+          child: AlbumScreen(
+            name: "A Tempestade",
+            versionOptionsBottomSheet: bottomSheet,
+          ),
         ),
       ),
     );
@@ -166,7 +199,10 @@ void main() {
         TestWrapper(
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
-            child: const AlbumScreen(name: "A Tempestade"),
+            child: AlbumScreen(
+              name: "A Tempestade",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         ),
       );
@@ -189,7 +225,10 @@ void main() {
         TestWrapper(
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
-            child: const AlbumScreen(name: "A Tempestade"),
+            child: AlbumScreen(
+              name: "A Tempestade",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         ),
       );
@@ -213,7 +252,10 @@ void main() {
         TestWrapper(
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
-            child: const AlbumScreen(name: "A Tempestade"),
+            child: AlbumScreen(
+              name: "A Tempestade",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         ),
       );
@@ -242,15 +284,15 @@ void main() {
             order: 1,
             artistSong: ArtistSong(
                 id: 1,
-                lyrics: 123,
-                lyricsId: 232,
+                lyrics: 0,
+                lyricsId: 0,
                 name: "Será",
                 bass: 1,
                 drums: 2,
-                guitar: 13,
-                guitarpro: 2,
+                guitar: 3,
+                guitarpro: 1,
                 harmonica: 1,
-                sheet: 0,
+                sheet: 1,
                 url: "",
                 verified: true,
                 videoLessons: 2))
@@ -258,13 +300,17 @@ void main() {
     ];
     bloc.mockStream(AlbumState(discs: discs));
 
+    final bottomSheet = VersionOptionsBottomSheet(_SaveVersionToListBottomSheetMock());
     await mockNetworkImagesFor(() async {
       await widgetTester.pumpWidget(
         TestWrapper(
           child: TestWrapper(
             child: BlocProvider<AlbumBloc>.value(
               value: bloc,
-              child: const AlbumScreen(name: "A Tempestade"),
+              child: AlbumScreen(
+                name: "A Tempestade",
+                versionOptionsBottomSheet: bottomSheet,
+              ),
             ),
           ),
         ),

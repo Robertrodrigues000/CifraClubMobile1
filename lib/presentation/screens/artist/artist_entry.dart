@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_screen.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class ArtistEntry extends ScreenEntry {
       )..init(),
       child: ArtistScreen(
         name: params['name'] as String,
+        versionOptionsBottomSheet: VersionOptionsBottomSheet(getIt()),
       ),
     );
   }

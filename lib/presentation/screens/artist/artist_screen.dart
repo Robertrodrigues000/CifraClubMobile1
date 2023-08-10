@@ -26,7 +26,8 @@ import 'package:nav/nav.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ArtistScreen extends StatefulWidget {
-  const ArtistScreen({super.key, required this.name});
+  final VersionOptionsBottomSheet versionOptionsBottomSheet;
+  const ArtistScreen({super.key, required this.name, required this.versionOptionsBottomSheet});
   final String name;
   @override
   State<ArtistScreen> createState() => _ArtistScreenState();
@@ -68,7 +69,7 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
   Widget build(BuildContext context) {
     return BlocBuilder<ArtistBloc, ArtistState>(
       bloc: _bloc,
-      builder: (context, state) {
+      builder: (_, state) {
         return Scaffold(
           body: CustomScrollView(
             controller: _scrollController,
@@ -153,11 +154,13 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     childCount: state.songs.take(maxSongs).length,
-                    (context, index) => ArtistSongItem(
+                    (_, index) => ArtistSongItem(
                       onTap: () {},
                       onOptionsTap: () async {
-                        await const VersionOptionsBottomSheet().open(
-                          context: context,
+                        await widget.versionOptionsBottomSheet.open(
+                          screenContext: context,
+                          artistUrl: state.artistInfo?.url ?? "",
+                          songUrl: state.songs[index].url,
                         );
                       },
                       name: state.songs[index].name,

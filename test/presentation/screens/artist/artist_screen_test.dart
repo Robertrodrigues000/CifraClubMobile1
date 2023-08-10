@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_screen.dart';
@@ -25,6 +26,8 @@ import '../../../test_helpers/test_wrapper.dart';
 
 class _ArtistBlocMock extends Mock implements ArtistBloc {}
 
+class _VersionOptionsBottomSheetMock extends Mock implements VersionOptionsBottomSheet {}
+
 void main() {
   late ArtistBloc bloc;
 
@@ -47,8 +50,9 @@ void main() {
       TestWrapper(
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
-          child: const ArtistScreen(
+          child: ArtistScreen(
             name: "Legiao Urbana",
+            versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
       ),
@@ -68,8 +72,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
-            child: const ArtistScreen(
+            child: ArtistScreen(
               name: "Legiao Urbana",
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
         ),
@@ -86,8 +91,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
-            child: const ArtistScreen(
+            child: ArtistScreen(
               name: "Legiao Urbana",
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
         ),
@@ -105,8 +111,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
-            child: const ArtistScreen(
+            child: ArtistScreen(
               name: "Legiao Urbana",
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
         ),
@@ -125,8 +132,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
-            child: const ArtistScreen(
+            child: ArtistScreen(
               name: "Legiao Urbana",
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
         ),
@@ -148,8 +156,9 @@ void main() {
       TestWrapper(
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
-          child: const ArtistScreen(
+          child: ArtistScreen(
             name: "Legiao Urbana",
+            versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
       ),
@@ -165,8 +174,9 @@ void main() {
       TestWrapper(
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
-          child: const ArtistScreen(
+          child: ArtistScreen(
             name: "Legiao Urbana",
+            versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
       ),
@@ -186,8 +196,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
-            child: const ArtistScreen(
+            child: ArtistScreen(
               name: "Legiao Urbana",
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
         ),

@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AlbumScreen extends StatefulWidget {
-  const AlbumScreen({super.key, required this.name});
-
+  const AlbumScreen({super.key, required this.name, required this.versionOptionsBottomSheet});
+  final VersionOptionsBottomSheet versionOptionsBottomSheet;
   final String name;
 
   @override
@@ -33,7 +33,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AlbumBloc, AlbumState>(
       bloc: _bloc,
-      builder: (context, state) {
+      builder: (_, state) {
         return Scaffold(
           body: CustomScrollView(
             controller: _scrollController,
@@ -101,7 +101,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       childCount: disc.songs.length,
-                      (context, index) {
+                      (_, index) {
                         final discSong = disc.songs[index];
                         final artistSong = discSong.artistSong;
                         final isEnable = artistSong != null &&
@@ -112,9 +112,10 @@ class _AlbumScreenState extends State<AlbumScreen> {
                         return ArtistSongItem(
                           onTap: () {},
                           onOptionsTap: () async {
-                            await const VersionOptionsBottomSheet().open(
-                              context: context,
-                            );
+                            await widget.versionOptionsBottomSheet.open(
+                                screenContext: context,
+                                artistUrl: state.album?.artistUrl ?? "",
+                                songUrl: disc.songs[index].artistSong?.url ?? "");
                           },
                           name: discSong.name,
                           prefix: (discSong.order).toString(),

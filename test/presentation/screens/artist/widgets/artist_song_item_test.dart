@@ -31,7 +31,7 @@ void main() {
       child: ArtistSongItem(
         key: const Key('artist-song'),
         name: "Legiao Urbana",
-        prefix: "",
+        prefix: "1",
         onTap: () {},
         onOptionsTap: completer.complete,
         hasVideoLessons: false,

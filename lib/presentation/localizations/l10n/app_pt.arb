@@ -224,6 +224,16 @@
     "favoriteVersion":"Favoritar cifra",
     "correctVersion":"Corrigir cifra",
     "albumOf":"Álbum de",
+    "saveVersionToListMessage":"A cifra está salva e disponível na lista {listName}",
+    "@saveVersionToListMessage": {
+        "placeholders": {
+            "listName" : {
+                "type": "String",
+                "example": "Luau"
+            }
+        }
+    },
+    "createNewList":"Criar uma nova lista",
     "artistTotalSongsAndFilter": "{totalSongs} {totalSongs,plural, =1{música}other{músicas}}  • {filter}",
     "@artistTotalSongsAndFilter": {
         "placeholders": {

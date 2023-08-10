@@ -17,7 +17,7 @@ class UserListItem extends StatelessWidget {
 
   final Songbook songbook;
   final VoidCallback onTap;
-  final VoidCallback onOptionsTap;
+  final VoidCallback? onOptionsTap;
   final bool isSelected;
 
   @override
@@ -73,24 +73,26 @@ class UserListItem extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                onPressed: onOptionsTap,
-                splashRadius: 28,
-                padding: const EdgeInsets.all(12),
-                highlightColor: Theme.of(context).splashColor,
-                icon: SvgImage(
-                  assetPath: AppSvgs.songbookOptionsIcon,
-                  color: context.colors.textPrimary,
-                  height: 24,
-                  width: 24,
+            if (onOptionsTap != null) ...[
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: onOptionsTap,
+                  splashRadius: 28,
+                  padding: const EdgeInsets.all(12),
+                  highlightColor: Theme.of(context).splashColor,
+                  icon: SvgImage(
+                    assetPath: AppSvgs.songbookOptionsIcon,
+                    color: context.colors.textPrimary,
+                    height: 24,
+                    width: 24,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: context.appDimensionScheme.rightPaddingCard,
-            ),
+              SizedBox(
+                width: context.appDimensionScheme.rightPaddingCard,
+              ),
+            ]
           ],
         ),
       ),
