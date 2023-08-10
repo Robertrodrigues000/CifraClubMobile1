@@ -99,7 +99,7 @@ steps:
       - push
 
   - name: distribute
-    image: ayerribeiro/fastlane
+    image: mingc/android-build-box
     environment:
       GOOGLE_APPLICATION_CREDENTIALS_RAW:
         from_secret: GOOGLE_APPLICATION_CREDENTIALS_RAW
@@ -108,7 +108,7 @@ steps:
     commands:
       - printf "%s" "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > $GOOGLE_APPLICATION_CREDENTIALS
       - cd android
-      - bundle exec fastlane android firebase
+      - fastlane android firebase
     depends_on:
         - build-apk
     when:
