@@ -108,7 +108,7 @@ steps:
     commands:
       - printf "%s" "$GOOGLE_APPLICATION_CREDENTIALS_RAW" > $GOOGLE_APPLICATION_CREDENTIALS
       - cd android
-      - fastlane android firebase
+      - bundle exec fastlane android firebase
     depends_on:
         - build-apk
     when:
