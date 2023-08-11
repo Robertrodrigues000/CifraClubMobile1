@@ -1,6 +1,7 @@
-import 'package:cifraclub/domain/shared/request_error.dart';
+// coverage:ignore-file
 import 'package:cifraclub/domain/version/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
 
 typedef ActionEmitter = Function(VersionAction);
@@ -31,10 +32,10 @@ class OnVersionLoaded implements VersionAction {
   const OnVersionLoaded(this.versionData);
 }
 
-class OnVersionLoadError implements VersionAction {
-  final RequestError error;
+class OnVersionError implements VersionAction {
+  final VersionError error;
 
-  const OnVersionLoadError({required this.error});
+  const OnVersionError({required this.error});
 }
 
 class OnContentParsed implements VersionAction {

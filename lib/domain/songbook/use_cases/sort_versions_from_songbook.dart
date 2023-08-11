@@ -14,7 +14,7 @@ class SortVersionsFromSongbook {
   const SortVersionsFromSongbook(this._songbookRepository, this._userVersionRepository);
 
   Future<Result<void, RequestError>> call(int songbookId, List<Version> versions) async {
-    final versionsId = versions.map((e) => e.remoteDatabaseID!).toList();
+    final versionsId = versions.map((e) => e.remoteDatabaseId!).toList();
 
     return (await _songbookRepository.sortVersionFromSongbook(songbookId: songbookId, versionsId: versionsId))
         .onSuccess((_) async {

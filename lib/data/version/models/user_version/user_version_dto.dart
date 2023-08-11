@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
@@ -13,10 +14,10 @@ class UserVersionDto extends Equatable {
   final String name;
   final int versionId;
   final String songUrl;
-  final String? tone;
+  final String? key;
   final int type;
   final int songId;
-  final String? stdTone;
+  final String? stdKey;
   final int? capo;
   final String? tuning;
   final UserVersionArtistDto artist;
@@ -29,12 +30,12 @@ class UserVersionDto extends Equatable {
 
   UserVersionDto({
     required this.songUrl,
-    this.tone,
+    this.key,
     required this.type,
     required this.name,
     required this.songbookId,
     this.capo,
-    this.stdTone,
+    this.stdKey,
     this.tuning,
     required this.id,
     required this.songId,
@@ -45,13 +46,13 @@ class UserVersionDto extends Equatable {
   }) : artistImage = (artistImage ?? "").isNotEmpty ? artistImage : null;
 
   Version toDomain() => Version(
-        remoteDatabaseID: id,
+        remoteDatabaseId: id,
         songId: songId,
-        type: type,
+        instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
         name: name,
         songUrl: songUrl,
-        tone: tone,
-        stdTone: stdTone,
+        key: key,
+        stdKey: stdKey,
         capo: capo,
         tuning: tuning,
         artist: artist.toDomain(artistImage),
@@ -61,15 +62,15 @@ class UserVersionDto extends Equatable {
 
   UserVersionDto.fromDomain(Version version, int songbookId, [int? order])
       : this(
-          id: version.remoteDatabaseID!,
+          id: version.remoteDatabaseId!,
           name: version.name,
           songUrl: version.songUrl,
           songbookId: songbookId,
-          type: version.type,
-          tone: version.tone,
+          type: version.instrument.apiType,
+          key: version.key,
           songId: version.songId,
           capo: version.capo,
-          stdTone: version.stdTone,
+          stdKey: version.stdKey,
           tuning: version.tuning,
           artist: UserVersionArtistDto.fromDomain(version.artist),
           artistImage: (version.artist.image?.size162 ?? "").isNotEmpty ? version.artist.image?.size162 : null,
@@ -83,10 +84,10 @@ class UserVersionDto extends Equatable {
         id,
         name,
         songUrl,
-        tone,
+        key,
         type,
         songId,
-        stdTone,
+        stdKey,
         versionId,
         capo,
         tuning,

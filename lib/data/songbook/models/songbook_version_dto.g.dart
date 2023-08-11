@@ -7,13 +7,13 @@ part of 'songbook_version_dto.dart';
 // **************************************************************************
 
 SongbookVersionDto _$SongbookVersionDtoFromJson(Map<String, dynamic> json) => SongbookVersionDto(
-      remoteDatabaseID: json['id'] as int?,
+      remoteDatabaseId: json['id'] as int?,
       type: json['type'] as int,
       name: json['name'] as String,
       songUrl: json['songUrl'] as String,
       songId: json['songId'] as int,
-      tone: json['tone'] as String?,
-      stdTone: json['stdTone'] as String?,
+      key: json['tone'] as String?,
+      stdKey: json['stdTone'] as String?,
       capo: json['capo'] as int?,
       tuning: json['tuning'] as String?,
       artist: SongbookVersionArtistDto.fromJson(json['artist'] as Map<String, dynamic>),
@@ -21,14 +21,14 @@ SongbookVersionDto _$SongbookVersionDtoFromJson(Map<String, dynamic> json) => So
     );
 
 Map<String, dynamic> _$SongbookVersionDtoToJson(SongbookVersionDto instance) => <String, dynamic>{
-      'id': instance.remoteDatabaseID,
+      'id': instance.remoteDatabaseId,
       'songId': instance.songId,
       'cifraId': instance.versionId,
       'type': instance.type,
       'name': instance.name,
       'songUrl': instance.songUrl,
-      'tone': instance.tone,
-      'stdTone': instance.stdTone,
+      'tone': instance.key,
+      'stdTone': instance.stdKey,
       'capo': instance.capo,
       'tuning': instance.tuning,
       'artist': instance.artist,

@@ -16,7 +16,7 @@ void main() {
         song: "Tempo Perdido",
         artist: "Legião Urbana",
         type: "Violão",
-        tone: "A",
+        versionKey: "A",
         onVersionTap: completer.complete,
       ),
     );
@@ -29,7 +29,7 @@ void main() {
       song: "Tempo Perdido",
       artist: "Legião Urbana",
       type: "Violão",
-      tone: "A",
+      versionKey: "A",
       editable: true,
     );
 

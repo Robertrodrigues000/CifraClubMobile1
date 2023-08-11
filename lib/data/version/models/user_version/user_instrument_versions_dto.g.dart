@@ -13,21 +13,17 @@ const UserInstrumentVersionsDtoSchema = Schema(
   name: r'UserInstrumentVersionsDto',
   id: 1238804202600983845,
   properties: {
-    r'label': PropertySchema(
+    r'instrument': PropertySchema(
       id: 0,
-      name: r'label',
-      type: IsarType.string,
+      name: r'instrument',
+      type: IsarType.byte,
+      enumMap: _UserInstrumentVersionsDtoinstrumentEnumValueMap,
     ),
-    r'songs': PropertySchema(
+    r'versions': PropertySchema(
       id: 1,
-      name: r'songs',
+      name: r'versions',
       type: IsarType.objectList,
       target: r'UserInstrumentVersionDto',
-    ),
-    r'type': PropertySchema(
-      id: 2,
-      name: r'type',
-      type: IsarType.long,
     )
   },
   estimateSize: _userInstrumentVersionsDtoEstimateSize,
@@ -42,9 +38,8 @@ int _userInstrumentVersionsDtoEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.label.length * 3;
   {
-    final list = object.songs;
+    final list = object.versions;
     if (list != null) {
       bytesCount += 3 + list.length * 3;
       {
@@ -65,14 +60,13 @@ void _userInstrumentVersionsDtoSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.label);
+  writer.writeByte(offsets[0], object.instrument.index);
   writer.writeObjectList<UserInstrumentVersionDto>(
     offsets[1],
     allOffsets,
     UserInstrumentVersionDtoSchema.serialize,
-    object.songs,
+    object.versions,
   );
-  writer.writeLong(offsets[2], object.type);
 }
 
 UserInstrumentVersionsDto _userInstrumentVersionsDtoDeserialize(
@@ -82,14 +76,14 @@ UserInstrumentVersionsDto _userInstrumentVersionsDtoDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = UserInstrumentVersionsDto();
-  object.label = reader.readString(offsets[0]);
-  object.songs = reader.readObjectList<UserInstrumentVersionDto>(
+  object.instrument =
+      _UserInstrumentVersionsDtoinstrumentValueEnumMap[reader.readByteOrNull(offsets[0])] ?? Instrument.guitar;
+  object.versions = reader.readObjectList<UserInstrumentVersionDto>(
     offsets[1],
     UserInstrumentVersionDtoSchema.deserialize,
     allOffsets,
     UserInstrumentVersionDto(),
   );
-  object.type = reader.readLong(offsets[2]);
   return object;
 }
 
@@ -101,7 +95,8 @@ P _userInstrumentVersionsDtoDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (_UserInstrumentVersionsDtoinstrumentValueEnumMap[reader.readByteOrNull(offset)] ?? Instrument.guitar)
+          as P;
     case 1:
       return (reader.readObjectList<UserInstrumentVersionDto>(
         offset,
@@ -109,164 +104,110 @@ P _userInstrumentVersionsDtoDeserializeProp<P>(
         allOffsets,
         UserInstrumentVersionDto(),
       )) as P;
-    case 2:
-      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
+const _UserInstrumentVersionsDtoinstrumentEnumValueMap = {
+  'guitar': 0,
+  'ukulele': 1,
+  'keyboard': 2,
+  'cavaco': 3,
+  'violaCaipira': 4,
+  'bass': 5,
+  'drums': 6,
+  'harmonica': 7,
+  'unknown': 8,
+};
+const _UserInstrumentVersionsDtoinstrumentValueEnumMap = {
+  0: Instrument.guitar,
+  1: Instrument.ukulele,
+  2: Instrument.keyboard,
+  3: Instrument.cavaco,
+  4: Instrument.violaCaipira,
+  5: Instrument.bass,
+  6: Instrument.drums,
+  7: Instrument.harmonica,
+  8: Instrument.unknown,
+};
+
 extension UserInstrumentVersionsDtoQueryFilter
     on QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QFilterCondition> {
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> instrumentEqualTo(
+      Instrument value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'label',
+        property: r'instrument',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelGreaterThan(
-    String value, {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> instrumentGreaterThan(
+    Instrument value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'label',
+        property: r'instrument',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelLessThan(
-    String value, {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> instrumentLessThan(
+    Instrument value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'label',
+        property: r'instrument',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelBetween(
-    String lower,
-    String upper, {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> instrumentBetween(
+    Instrument lower,
+    Instrument upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'label',
+        property: r'instrument',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'label',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'label',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'label',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> labelIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'label',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsIsNull() {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'songs',
+        property: r'versions',
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsIsNotNull() {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'songs',
+        property: r'versions',
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsLengthEqualTo(
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsLengthEqualTo(
       int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'songs',
+        r'versions',
         length,
         true,
         length,
@@ -275,10 +216,10 @@ extension UserInstrumentVersionsDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsIsEmpty() {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'songs',
+        r'versions',
         0,
         true,
         0,
@@ -287,10 +228,10 @@ extension UserInstrumentVersionsDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsIsNotEmpty() {
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'songs',
+        r'versions',
         0,
         false,
         999999,
@@ -299,13 +240,13 @@ extension UserInstrumentVersionsDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsLengthLessThan(
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsLengthLessThan(
     int length, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'songs',
+        r'versions',
         0,
         true,
         length,
@@ -314,13 +255,13 @@ extension UserInstrumentVersionsDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsLengthGreaterThan(
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsLengthGreaterThan(
     int length, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'songs',
+        r'versions',
         length,
         include,
         999999,
@@ -329,7 +270,7 @@ extension UserInstrumentVersionsDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsLengthBetween(
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -337,7 +278,7 @@ extension UserInstrumentVersionsDtoQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
-        r'songs',
+        r'versions',
         lower,
         includeLower,
         upper,
@@ -345,66 +286,14 @@ extension UserInstrumentVersionsDtoQueryFilter
       );
     });
   }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> typeEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'type',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> typeGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'type',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> typeLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'type',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> typeBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'type',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
 extension UserInstrumentVersionsDtoQueryObject
     on QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QFilterCondition> {
-  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> songsElement(
+  QueryBuilder<UserInstrumentVersionsDto, UserInstrumentVersionsDto, QAfterFilterCondition> versionsElement(
       FilterQuery<UserInstrumentVersionDto> q) {
     return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'songs');
+      return query.object(q, r'versions');
     });
   }
 }

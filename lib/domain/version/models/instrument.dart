@@ -11,7 +11,8 @@ enum Instrument {
   violaCaipira("viola", 13, ["viola"], [9]),
   bass("tabs-baixo", 2, ["bass"], [3]),
   drums("tabs-bateria", 3, ["drums"], [4]),
-  harmonica("tabs-gaita", 5, [], []);
+  harmonica("tabs-gaita", 5, [], []),
+  unknown("unknown", 0, [], []);
 
   final String instrumentUrl;
   final int apiType;
@@ -37,6 +38,8 @@ enum Instrument {
         return context.text.instrumentDrums;
       case harmonica:
         return context.text.instrumentHarmonica;
+      case unknown:
+        return "";
     }
   }
 

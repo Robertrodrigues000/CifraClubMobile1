@@ -15,7 +15,8 @@ class SongbookVersionInputDto {
   final String? instrument;
   @JsonKey(name: "songDns")
   final String? songUrl;
-  final String? tone;
+  @JsonKey(name: "tone")
+  final String? key;
   final String? tuning;
   final int? type;
   @JsonKey(name: "versionLabel")
@@ -28,7 +29,7 @@ class SongbookVersionInputDto {
     required this.id,
     this.instrument,
     required this.songUrl,
-    this.tone,
+    this.key,
     this.tuning,
     this.type,
     this.versionLabel,
@@ -42,7 +43,7 @@ class SongbookVersionInputDto {
             songUrl: versionInput.songUrl,
             instrument: versionInput.instrument,
             capo: versionInput.capo,
-            tone: versionInput.tone,
+            key: versionInput.key,
             tuning: versionInput.tuning,
             type: versionInput.type,
             versionLabel: versionInput.versionLabel);

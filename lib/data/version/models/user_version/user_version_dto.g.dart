@@ -9,7 +9,7 @@ part of 'user_version_dto.dart';
 abstract class _$UserVersionDtoCWProxy {
   UserVersionDto songUrl(String songUrl);
 
-  UserVersionDto tone(String? tone);
+  UserVersionDto key(String? key);
 
   UserVersionDto type(int type);
 
@@ -19,7 +19,7 @@ abstract class _$UserVersionDtoCWProxy {
 
   UserVersionDto capo(int? capo);
 
-  UserVersionDto stdTone(String? stdTone);
+  UserVersionDto stdKey(String? stdKey);
 
   UserVersionDto tuning(String? tuning);
 
@@ -43,12 +43,12 @@ abstract class _$UserVersionDtoCWProxy {
   /// ````
   UserVersionDto call({
     String? songUrl,
-    String? tone,
+    String? key,
     int? type,
     String? name,
     int? songbookId,
     int? capo,
-    String? stdTone,
+    String? stdKey,
     String? tuning,
     int? id,
     int? songId,
@@ -69,7 +69,7 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
   UserVersionDto songUrl(String songUrl) => this(songUrl: songUrl);
 
   @override
-  UserVersionDto tone(String? tone) => this(tone: tone);
+  UserVersionDto key(String? key) => this(key: key);
 
   @override
   UserVersionDto type(int type) => this(type: type);
@@ -84,7 +84,7 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
   UserVersionDto capo(int? capo) => this(capo: capo);
 
   @override
-  UserVersionDto stdTone(String? stdTone) => this(stdTone: stdTone);
+  UserVersionDto stdKey(String? stdKey) => this(stdKey: stdKey);
 
   @override
   UserVersionDto tuning(String? tuning) => this(tuning: tuning);
@@ -117,12 +117,12 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
   /// ````
   UserVersionDto call({
     Object? songUrl = const $CopyWithPlaceholder(),
-    Object? tone = const $CopyWithPlaceholder(),
+    Object? key = const $CopyWithPlaceholder(),
     Object? type = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? songbookId = const $CopyWithPlaceholder(),
     Object? capo = const $CopyWithPlaceholder(),
-    Object? stdTone = const $CopyWithPlaceholder(),
+    Object? stdKey = const $CopyWithPlaceholder(),
     Object? tuning = const $CopyWithPlaceholder(),
     Object? id = const $CopyWithPlaceholder(),
     Object? songId = const $CopyWithPlaceholder(),
@@ -136,10 +136,10 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
           ? _value.songUrl
           // ignore: cast_nullable_to_non_nullable
           : songUrl as String,
-      tone: tone == const $CopyWithPlaceholder()
-          ? _value.tone
+      key: key == const $CopyWithPlaceholder()
+          ? _value.key
           // ignore: cast_nullable_to_non_nullable
-          : tone as String?,
+          : key as String?,
       type: type == const $CopyWithPlaceholder() || type == null
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
@@ -156,10 +156,10 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
           ? _value.capo
           // ignore: cast_nullable_to_non_nullable
           : capo as int?,
-      stdTone: stdTone == const $CopyWithPlaceholder()
-          ? _value.stdTone
+      stdKey: stdKey == const $CopyWithPlaceholder()
+          ? _value.stdKey
           // ignore: cast_nullable_to_non_nullable
-          : stdTone as String?,
+          : stdKey as String?,
       tuning: tuning == const $CopyWithPlaceholder()
           ? _value.tuning
           // ignore: cast_nullable_to_non_nullable
@@ -229,39 +229,39 @@ const UserVersionDtoSchema = CollectionSchema(
       name: r'capo',
       type: IsarType.long,
     ),
-    r'name': PropertySchema(
+    r'key': PropertySchema(
       id: 3,
+      name: r'key',
+      type: IsarType.string,
+    ),
+    r'name': PropertySchema(
+      id: 4,
       name: r'name',
       type: IsarType.string,
     ),
     r'order': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'order',
       type: IsarType.long,
     ),
     r'songId': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'songId',
       type: IsarType.long,
     ),
     r'songUrl': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'songUrl',
       type: IsarType.string,
     ),
     r'songbookId': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'songbookId',
       type: IsarType.long,
     ),
-    r'stdTone': PropertySchema(
-      id: 8,
-      name: r'stdTone',
-      type: IsarType.string,
-    ),
-    r'tone': PropertySchema(
+    r'stdKey': PropertySchema(
       id: 9,
-      name: r'tone',
+      name: r'stdKey',
       type: IsarType.string,
     ),
     r'tuning': PropertySchema(
@@ -353,16 +353,16 @@ int _userVersionDtoEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.name.length * 3;
-  bytesCount += 3 + object.songUrl.length * 3;
   {
-    final value = object.stdTone;
+    final value = object.key;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.songUrl.length * 3;
   {
-    final value = object.tone;
+    final value = object.stdKey;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -390,13 +390,13 @@ void _userVersionDtoSerialize(
   );
   writer.writeString(offsets[1], object.artistImage);
   writer.writeLong(offsets[2], object.capo);
-  writer.writeString(offsets[3], object.name);
-  writer.writeLong(offsets[4], object.order);
-  writer.writeLong(offsets[5], object.songId);
-  writer.writeString(offsets[6], object.songUrl);
-  writer.writeLong(offsets[7], object.songbookId);
-  writer.writeString(offsets[8], object.stdTone);
-  writer.writeString(offsets[9], object.tone);
+  writer.writeString(offsets[3], object.key);
+  writer.writeString(offsets[4], object.name);
+  writer.writeLong(offsets[5], object.order);
+  writer.writeLong(offsets[6], object.songId);
+  writer.writeString(offsets[7], object.songUrl);
+  writer.writeLong(offsets[8], object.songbookId);
+  writer.writeString(offsets[9], object.stdKey);
   writer.writeString(offsets[10], object.tuning);
   writer.writeLong(offsets[11], object.type);
   writer.writeLong(offsets[12], object.versionId);
@@ -418,13 +418,13 @@ UserVersionDto _userVersionDtoDeserialize(
     artistImage: reader.readStringOrNull(offsets[1]),
     capo: reader.readLongOrNull(offsets[2]),
     id: id,
-    name: reader.readString(offsets[3]),
-    order: reader.readLong(offsets[4]),
-    songId: reader.readLong(offsets[5]),
-    songUrl: reader.readString(offsets[6]),
-    songbookId: reader.readLong(offsets[7]),
-    stdTone: reader.readStringOrNull(offsets[8]),
-    tone: reader.readStringOrNull(offsets[9]),
+    key: reader.readStringOrNull(offsets[3]),
+    name: reader.readString(offsets[4]),
+    order: reader.readLong(offsets[5]),
+    songId: reader.readLong(offsets[6]),
+    songUrl: reader.readString(offsets[7]),
+    songbookId: reader.readLong(offsets[8]),
+    stdKey: reader.readStringOrNull(offsets[9]),
     tuning: reader.readStringOrNull(offsets[10]),
     type: reader.readLong(offsets[11]),
     versionId: reader.readLong(offsets[12]),
@@ -451,17 +451,17 @@ P _userVersionDtoDeserializeProp<P>(
     case 2:
       return (reader.readLongOrNull(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
-    case 7:
       return (reader.readLong(offset)) as P;
+    case 7:
+      return (reader.readString(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
@@ -1138,6 +1138,150 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'key',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'key',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'key',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'key',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'key',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'key',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -1550,36 +1694,36 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneIsNull() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'stdTone',
+        property: r'stdKey',
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneIsNotNull() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'stdTone',
+        property: r'stdKey',
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneEqualTo(
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneGreaterThan(
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1587,14 +1731,14 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneLessThan(
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1602,14 +1746,14 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneBetween(
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1618,7 +1762,7 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'stdTone',
+        property: r'stdKey',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1628,211 +1772,67 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneStartsWith(
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneEndsWith(
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneContains(String value,
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneMatches(String pattern,
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'stdTone',
+        property: r'stdKey',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneIsEmpty() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'stdTone',
+        property: r'stdKey',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdToneIsNotEmpty() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> stdKeyIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'stdTone',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'tone',
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'tone',
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'tone',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'tone',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tone',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> toneIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'tone',
+        property: r'stdKey',
         value: '',
       ));
     });
@@ -2122,6 +2122,18 @@ extension UserVersionDtoQuerySortBy on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -2182,27 +2194,15 @@ extension UserVersionDtoQuerySortBy on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByStdTone() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByStdKey() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.asc);
+      return query.addSortBy(r'stdKey', Sort.asc);
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByStdToneDesc() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByStdKeyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByTone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByToneDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.desc);
+      return query.addSortBy(r'stdKey', Sort.desc);
     });
   }
 
@@ -2280,6 +2280,18 @@ extension UserVersionDtoQuerySortThenBy on QueryBuilder<UserVersionDto, UserVers
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -2340,27 +2352,15 @@ extension UserVersionDtoQuerySortThenBy on QueryBuilder<UserVersionDto, UserVers
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByStdTone() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByStdKey() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.asc);
+      return query.addSortBy(r'stdKey', Sort.asc);
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByStdToneDesc() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByStdKeyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByTone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByToneDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.desc);
+      return query.addSortBy(r'stdKey', Sort.desc);
     });
   }
 
@@ -2414,6 +2414,12 @@ extension UserVersionDtoQueryWhereDistinct on QueryBuilder<UserVersionDto, UserV
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByKey({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'key', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
@@ -2444,15 +2450,9 @@ extension UserVersionDtoQueryWhereDistinct on QueryBuilder<UserVersionDto, UserV
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByStdTone({bool caseSensitive = true}) {
+  QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByStdKey({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'stdTone', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByTone({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'tone', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'stdKey', caseSensitive: caseSensitive);
     });
   }
 
@@ -2500,6 +2500,12 @@ extension UserVersionDtoQueryProperty on QueryBuilder<UserVersionDto, UserVersio
     });
   }
 
+  QueryBuilder<UserVersionDto, String?, QQueryOperations> keyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'key');
+    });
+  }
+
   QueryBuilder<UserVersionDto, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
@@ -2530,15 +2536,9 @@ extension UserVersionDtoQueryProperty on QueryBuilder<UserVersionDto, UserVersio
     });
   }
 
-  QueryBuilder<UserVersionDto, String?, QQueryOperations> stdToneProperty() {
+  QueryBuilder<UserVersionDto, String?, QQueryOperations> stdKeyProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'stdTone');
-    });
-  }
-
-  QueryBuilder<UserVersionDto, String?, QQueryOperations> toneProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'tone');
+      return query.addPropertyName(r'stdKey');
     });
   }
 

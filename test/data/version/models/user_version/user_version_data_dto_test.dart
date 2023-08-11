@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
@@ -10,9 +11,9 @@ void main() {
   test("When call 'fromDomain'", () {
     final versionData = VersionData(
       versionId: 1,
-      type: 1,
+      instrument: Instrument.bass,
       content: "Content",
-      label: "Label",
+      versionName: "Label",
       versionUrl: "https://example.com/version.mp3",
       completePath: "https://example.com/song.json",
       siteUrl: "https://example.com/site.json",
@@ -35,9 +36,9 @@ void main() {
     expect(userVersionDataDto.localId, Isar.autoIncrement);
     expect(userVersionDataDto.versionId, 1);
     expect(userVersionDataDto.songbookVersionId, 11);
-    expect(userVersionDataDto.type, 1);
+    expect(userVersionDataDto.instrument, Instrument.bass);
     expect(userVersionDataDto.content, "Content");
-    expect(userVersionDataDto.label, "Label");
+    expect(userVersionDataDto.versionName, "Label");
     expect(userVersionDataDto.versionUrl, "https://example.com/version.mp3");
     expect(userVersionDataDto.completePath, "https://example.com/song.json");
     expect(userVersionDataDto.siteUrl, "https://example.com/site.json");

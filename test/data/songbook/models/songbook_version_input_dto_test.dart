@@ -13,7 +13,7 @@ void main() {
       type: 2,
       songUrl: "songUrl",
       capo: 3,
-      tone: "B",
+      key: "B",
       tuning: "AB",
       versionId: 12,
     );
@@ -25,7 +25,7 @@ void main() {
     expect(versionInput.capo, songbookSongInputDto.capo);
     expect(versionInput.versionId, songbookSongInputDto.versionId);
     expect(versionInput.songUrl, songbookSongInputDto.songUrl);
-    expect(versionInput.tone, songbookSongInputDto.tone);
+    expect(versionInput.key, songbookSongInputDto.key);
     expect(versionInput.tuning, songbookSongInputDto.tuning);
     expect(versionInput.type, songbookSongInputDto.type);
     expect(versionInput.versionLabel, songbookSongInputDto.versionLabel);

@@ -171,10 +171,10 @@
     "loggedOutListErrorButtonText": "Fazer login",
     "artistMoreSongs":"Mostrar mais músicas",
     "moreAlbums":"Mostrar mais álbuns",
-    "versionTone": "・Tom: {tone}",
-    "@versionTone": {
+    "versionKey": "・Tom: {key}",
+    "@versionKey": {
         "placeholders": {
-            "tone": {
+            "key": {
                 "type": "String",
                 "example": "A"
             }

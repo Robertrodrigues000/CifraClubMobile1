@@ -14,13 +14,13 @@ class GetOrderedVersions {
         return versions..sort((a, b) => a.order.compareTo(b.order));
       case ListOrderType.oldest:
         return switch (listType) {
-          ListType.recents => versions..sort((a, b) => _compareId(a.localDatabaseID, b.localDatabaseID)),
-          _ => versions..sort((a, b) => _compareId(a.remoteDatabaseID, b.remoteDatabaseID))
+          ListType.recents => versions..sort((a, b) => _compareId(a.localDatabaseId, b.localDatabaseId)),
+          _ => versions..sort((a, b) => _compareId(a.remoteDatabaseId, b.remoteDatabaseId))
         };
       case ListOrderType.recent:
         return switch (listType) {
-          ListType.recents => versions..sort((a, b) => _compareId(b.localDatabaseID, a.localDatabaseID)),
-          _ => versions..sort((a, b) => _compareId(b.remoteDatabaseID, a.remoteDatabaseID))
+          ListType.recents => versions..sort((a, b) => _compareId(b.localDatabaseId, a.localDatabaseId)),
+          _ => versions..sort((a, b) => _compareId(b.remoteDatabaseId, a.remoteDatabaseId))
         };
     }
   }

@@ -1,17 +1,16 @@
 import 'package:cifraclub/data/version/models/user_version/user_instrument_versions_dto.dart';
-import 'package:cifraclub/domain/version/models/instrument_versions.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../../../shared_mocks/domain/version/models/instrument_version_mock.dart';
 
 void main() {
   test("When call 'fromDomain'", () {
-    final versionDataSongsDetail = InstrumentVersions(
-      label: "Bohemian Rhapsody",
-      type: 1,
-    );
+    final instrumentVersions = (instrument: Instrument.bass, versions: [getFakeInstrumentVersion()]);
 
-    final userVersionDataSongsDetailDto = UserInstrumentVersionsDto.fromDomain(versionDataSongsDetail);
+    final userInstrumentVersionsDto = UserInstrumentVersionsDto.fromDomain(instrumentVersions);
 
-    expect(userVersionDataSongsDetailDto.label, "Bohemian Rhapsody");
-    expect(userVersionDataSongsDetailDto.type, 1);
+    expect(userInstrumentVersionsDto.instrument, Instrument.bass);
+    expect(userInstrumentVersionsDto.versions?.length, 1);
   });
 }

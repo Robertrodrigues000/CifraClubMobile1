@@ -41,7 +41,7 @@ void main() {
     final versionData = getFakeVersionData();
 
     when(() => userVersionRepository.addVersionsToSongbook(any(), any()))
-        .thenAnswer((_) => SynchronousFuture([version.localDatabaseID!]));
+        .thenAnswer((_) => SynchronousFuture([version.localDatabaseId!]));
 
     when(() => getVersionData(
           artistDns: any(named: "artistDns"),
@@ -80,7 +80,7 @@ void main() {
       verify(() => userSongbookRepository.incrementTotalSongs(
           songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
       verify(() => userVersionRepository.addVersionsToSongbook([versionResponse], 10)).called(1);
-      verify(() => userVersionRepository.addVersionData(versionData, versionResponse.remoteDatabaseID!)).called(1);
+      verify(() => userVersionRepository.addVersionData(versionData, versionResponse.remoteDatabaseId!)).called(1);
       expect(result.get(), versionResponse.songId);
     });
   });

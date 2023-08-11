@@ -7,21 +7,21 @@ part of 'user_recent_version_dto.dart';
 // **************************************************************************
 
 abstract class _$UserRecentVersionDtoCWProxy {
-  UserRecentVersionDto localDatabaseID(int localDatabaseID);
+  UserRecentVersionDto localDatabaseId(int localDatabaseId);
 
-  UserRecentVersionDto remoteDatabaseID(int? remoteDatabaseID);
+  UserRecentVersionDto remoteDatabaseId(int? remoteDatabaseId);
 
   UserRecentVersionDto songUrl(String songUrl);
 
-  UserRecentVersionDto tone(String? tone);
+  UserRecentVersionDto key(String? key);
 
-  UserRecentVersionDto type(int type);
+  UserRecentVersionDto instrument(Instrument instrument);
 
   UserRecentVersionDto name(String name);
 
   UserRecentVersionDto capo(int? capo);
 
-  UserRecentVersionDto stdTone(String? stdTone);
+  UserRecentVersionDto stdKey(String? stdKey);
 
   UserRecentVersionDto tuning(String? tuning);
 
@@ -40,14 +40,14 @@ abstract class _$UserRecentVersionDtoCWProxy {
   /// UserRecentVersionDto(...).copyWith(id: 12, name: "My name")
   /// ````
   UserRecentVersionDto call({
-    int? localDatabaseID,
-    int? remoteDatabaseID,
+    int? localDatabaseId,
+    int? remoteDatabaseId,
     String? songUrl,
-    String? tone,
-    int? type,
+    String? key,
+    Instrument? instrument,
     String? name,
     int? capo,
-    String? stdTone,
+    String? stdKey,
     String? tuning,
     int? songId,
     UserVersionArtistDto? artist,
@@ -63,19 +63,19 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
   final UserRecentVersionDto _value;
 
   @override
-  UserRecentVersionDto localDatabaseID(int localDatabaseID) => this(localDatabaseID: localDatabaseID);
+  UserRecentVersionDto localDatabaseId(int localDatabaseId) => this(localDatabaseId: localDatabaseId);
 
   @override
-  UserRecentVersionDto remoteDatabaseID(int? remoteDatabaseID) => this(remoteDatabaseID: remoteDatabaseID);
+  UserRecentVersionDto remoteDatabaseId(int? remoteDatabaseId) => this(remoteDatabaseId: remoteDatabaseId);
 
   @override
   UserRecentVersionDto songUrl(String songUrl) => this(songUrl: songUrl);
 
   @override
-  UserRecentVersionDto tone(String? tone) => this(tone: tone);
+  UserRecentVersionDto key(String? key) => this(key: key);
 
   @override
-  UserRecentVersionDto type(int type) => this(type: type);
+  UserRecentVersionDto instrument(Instrument instrument) => this(instrument: instrument);
 
   @override
   UserRecentVersionDto name(String name) => this(name: name);
@@ -84,7 +84,7 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
   UserRecentVersionDto capo(int? capo) => this(capo: capo);
 
   @override
-  UserRecentVersionDto stdTone(String? stdTone) => this(stdTone: stdTone);
+  UserRecentVersionDto stdKey(String? stdKey) => this(stdKey: stdKey);
 
   @override
   UserRecentVersionDto tuning(String? tuning) => this(tuning: tuning);
@@ -110,14 +110,14 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
   /// UserRecentVersionDto(...).copyWith(id: 12, name: "My name")
   /// ````
   UserRecentVersionDto call({
-    Object? localDatabaseID = const $CopyWithPlaceholder(),
-    Object? remoteDatabaseID = const $CopyWithPlaceholder(),
+    Object? localDatabaseId = const $CopyWithPlaceholder(),
+    Object? remoteDatabaseId = const $CopyWithPlaceholder(),
     Object? songUrl = const $CopyWithPlaceholder(),
-    Object? tone = const $CopyWithPlaceholder(),
-    Object? type = const $CopyWithPlaceholder(),
+    Object? key = const $CopyWithPlaceholder(),
+    Object? instrument = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? capo = const $CopyWithPlaceholder(),
-    Object? stdTone = const $CopyWithPlaceholder(),
+    Object? stdKey = const $CopyWithPlaceholder(),
     Object? tuning = const $CopyWithPlaceholder(),
     Object? songId = const $CopyWithPlaceholder(),
     Object? artist = const $CopyWithPlaceholder(),
@@ -125,26 +125,26 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
     Object? versionId = const $CopyWithPlaceholder(),
   }) {
     return UserRecentVersionDto(
-      localDatabaseID: localDatabaseID == const $CopyWithPlaceholder() || localDatabaseID == null
-          ? _value.localDatabaseID
+      localDatabaseId: localDatabaseId == const $CopyWithPlaceholder() || localDatabaseId == null
+          ? _value.localDatabaseId
           // ignore: cast_nullable_to_non_nullable
-          : localDatabaseID as int,
-      remoteDatabaseID: remoteDatabaseID == const $CopyWithPlaceholder()
-          ? _value.remoteDatabaseID
+          : localDatabaseId as int,
+      remoteDatabaseId: remoteDatabaseId == const $CopyWithPlaceholder()
+          ? _value.remoteDatabaseId
           // ignore: cast_nullable_to_non_nullable
-          : remoteDatabaseID as int?,
+          : remoteDatabaseId as int?,
       songUrl: songUrl == const $CopyWithPlaceholder() || songUrl == null
           ? _value.songUrl
           // ignore: cast_nullable_to_non_nullable
           : songUrl as String,
-      tone: tone == const $CopyWithPlaceholder()
-          ? _value.tone
+      key: key == const $CopyWithPlaceholder()
+          ? _value.key
           // ignore: cast_nullable_to_non_nullable
-          : tone as String?,
-      type: type == const $CopyWithPlaceholder() || type == null
-          ? _value.type
+          : key as String?,
+      instrument: instrument == const $CopyWithPlaceholder() || instrument == null
+          ? _value.instrument
           // ignore: cast_nullable_to_non_nullable
-          : type as int,
+          : instrument as Instrument,
       name: name == const $CopyWithPlaceholder() || name == null
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
@@ -153,10 +153,10 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
           ? _value.capo
           // ignore: cast_nullable_to_non_nullable
           : capo as int?,
-      stdTone: stdTone == const $CopyWithPlaceholder()
-          ? _value.stdTone
+      stdKey: stdKey == const $CopyWithPlaceholder()
+          ? _value.stdKey
           // ignore: cast_nullable_to_non_nullable
-          : stdTone as String?,
+          : stdKey as String?,
       tuning: tuning == const $CopyWithPlaceholder()
           ? _value.tuning
           // ignore: cast_nullable_to_non_nullable
@@ -218,45 +218,46 @@ const UserRecentVersionDtoSchema = CollectionSchema(
       name: r'capo',
       type: IsarType.long,
     ),
-    r'name': PropertySchema(
+    r'instrument': PropertySchema(
       id: 3,
+      name: r'instrument',
+      type: IsarType.byte,
+      enumMap: _UserRecentVersionDtoinstrumentEnumValueMap,
+    ),
+    r'key': PropertySchema(
+      id: 4,
+      name: r'key',
+      type: IsarType.string,
+    ),
+    r'name': PropertySchema(
+      id: 5,
       name: r'name',
       type: IsarType.string,
     ),
-    r'remoteDatabaseID': PropertySchema(
-      id: 4,
-      name: r'remoteDatabaseID',
+    r'remoteDatabaseId': PropertySchema(
+      id: 6,
+      name: r'remoteDatabaseId',
       type: IsarType.long,
     ),
     r'songId': PropertySchema(
-      id: 5,
+      id: 7,
       name: r'songId',
       type: IsarType.long,
     ),
     r'songUrl': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'songUrl',
       type: IsarType.string,
     ),
-    r'stdTone': PropertySchema(
-      id: 7,
-      name: r'stdTone',
-      type: IsarType.string,
-    ),
-    r'tone': PropertySchema(
-      id: 8,
-      name: r'tone',
+    r'stdKey': PropertySchema(
+      id: 9,
+      name: r'stdKey',
       type: IsarType.string,
     ),
     r'tuning': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'tuning',
       type: IsarType.string,
-    ),
-    r'type': PropertySchema(
-      id: 10,
-      name: r'type',
-      type: IsarType.long,
     ),
     r'versionId': PropertySchema(
       id: 11,
@@ -268,7 +269,7 @@ const UserRecentVersionDtoSchema = CollectionSchema(
   serialize: _userRecentVersionDtoSerialize,
   deserialize: _userRecentVersionDtoDeserialize,
   deserializeProp: _userRecentVersionDtoDeserializeProp,
-  idName: r'localDatabaseID',
+  idName: r'localDatabaseId',
   indexes: {
     r'artistImage': IndexSchema(
       id: 897173347989801551,
@@ -306,16 +307,16 @@ int _userRecentVersionDtoEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.name.length * 3;
-  bytesCount += 3 + object.songUrl.length * 3;
   {
-    final value = object.stdTone;
+    final value = object.key;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
+  bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.songUrl.length * 3;
   {
-    final value = object.tone;
+    final value = object.stdKey;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -343,14 +344,14 @@ void _userRecentVersionDtoSerialize(
   );
   writer.writeString(offsets[1], object.artistImage);
   writer.writeLong(offsets[2], object.capo);
-  writer.writeString(offsets[3], object.name);
-  writer.writeLong(offsets[4], object.remoteDatabaseID);
-  writer.writeLong(offsets[5], object.songId);
-  writer.writeString(offsets[6], object.songUrl);
-  writer.writeString(offsets[7], object.stdTone);
-  writer.writeString(offsets[8], object.tone);
-  writer.writeString(offsets[9], object.tuning);
-  writer.writeLong(offsets[10], object.type);
+  writer.writeByte(offsets[3], object.instrument.index);
+  writer.writeString(offsets[4], object.key);
+  writer.writeString(offsets[5], object.name);
+  writer.writeLong(offsets[6], object.remoteDatabaseId);
+  writer.writeLong(offsets[7], object.songId);
+  writer.writeString(offsets[8], object.songUrl);
+  writer.writeString(offsets[9], object.stdKey);
+  writer.writeString(offsets[10], object.tuning);
   writer.writeLong(offsets[11], object.versionId);
 }
 
@@ -369,15 +370,15 @@ UserRecentVersionDto _userRecentVersionDtoDeserialize(
         UserVersionArtistDto(),
     artistImage: reader.readStringOrNull(offsets[1]),
     capo: reader.readLongOrNull(offsets[2]),
-    localDatabaseID: id,
-    name: reader.readString(offsets[3]),
-    remoteDatabaseID: reader.readLongOrNull(offsets[4]),
-    songId: reader.readLong(offsets[5]),
-    songUrl: reader.readString(offsets[6]),
-    stdTone: reader.readStringOrNull(offsets[7]),
-    tone: reader.readStringOrNull(offsets[8]),
-    tuning: reader.readStringOrNull(offsets[9]),
-    type: reader.readLong(offsets[10]),
+    instrument: _UserRecentVersionDtoinstrumentValueEnumMap[reader.readByteOrNull(offsets[3])] ?? Instrument.guitar,
+    key: reader.readStringOrNull(offsets[4]),
+    localDatabaseId: id,
+    name: reader.readString(offsets[5]),
+    remoteDatabaseId: reader.readLongOrNull(offsets[6]),
+    songId: reader.readLong(offsets[7]),
+    songUrl: reader.readString(offsets[8]),
+    stdKey: reader.readStringOrNull(offsets[9]),
+    tuning: reader.readStringOrNull(offsets[10]),
     versionId: reader.readLong(offsets[11]),
   );
   return object;
@@ -402,21 +403,21 @@ P _userRecentVersionDtoDeserializeProp<P>(
     case 2:
       return (reader.readLongOrNull(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (_UserRecentVersionDtoinstrumentValueEnumMap[reader.readByteOrNull(offset)] ?? Instrument.guitar) as P;
     case 4:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readLong(offset)) as P;
-    case 6:
       return (reader.readString(offset)) as P;
+    case 6:
+      return (reader.readLongOrNull(offset)) as P;
     case 7:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 11:
       return (reader.readLong(offset)) as P;
     default:
@@ -424,8 +425,31 @@ P _userRecentVersionDtoDeserializeProp<P>(
   }
 }
 
+const _UserRecentVersionDtoinstrumentEnumValueMap = {
+  'guitar': 0,
+  'ukulele': 1,
+  'keyboard': 2,
+  'cavaco': 3,
+  'violaCaipira': 4,
+  'bass': 5,
+  'drums': 6,
+  'harmonica': 7,
+  'unknown': 8,
+};
+const _UserRecentVersionDtoinstrumentValueEnumMap = {
+  0: Instrument.guitar,
+  1: Instrument.ukulele,
+  2: Instrument.keyboard,
+  3: Instrument.cavaco,
+  4: Instrument.violaCaipira,
+  5: Instrument.bass,
+  6: Instrument.drums,
+  7: Instrument.harmonica,
+  8: Instrument.unknown,
+};
+
 Id _userRecentVersionDtoGetId(UserRecentVersionDto object) {
-  return object.localDatabaseID;
+  return object.localDatabaseId;
 }
 
 List<IsarLinkBase<dynamic>> _userRecentVersionDtoGetLinks(UserRecentVersionDto object) {
@@ -433,11 +457,11 @@ List<IsarLinkBase<dynamic>> _userRecentVersionDtoGetLinks(UserRecentVersionDto o
 }
 
 void _userRecentVersionDtoAttach(IsarCollection<dynamic> col, Id id, UserRecentVersionDto object) {
-  object.localDatabaseID = id;
+  object.localDatabaseId = id;
 }
 
 extension UserRecentVersionDtoQueryWhereSort on QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QWhere> {
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhere> anyLocalDatabaseID() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhere> anyLocalDatabaseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -445,70 +469,70 @@ extension UserRecentVersionDtoQueryWhereSort on QueryBuilder<UserRecentVersionDt
 }
 
 extension UserRecentVersionDtoQueryWhere on QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QWhereClause> {
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIDEqualTo(
-      Id localDatabaseID) {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIdEqualTo(
+      Id localDatabaseId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: localDatabaseID,
-        upper: localDatabaseID,
+        lower: localDatabaseId,
+        upper: localDatabaseId,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIDNotEqualTo(
-      Id localDatabaseID) {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIdNotEqualTo(
+      Id localDatabaseId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: localDatabaseID, includeUpper: false),
+              IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: localDatabaseID, includeLower: false),
+              IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: localDatabaseID, includeLower: false),
+              IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: localDatabaseID, includeUpper: false),
+              IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIDGreaterThan(
-      Id localDatabaseID,
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIdGreaterThan(
+      Id localDatabaseId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: localDatabaseID, includeLower: include),
+        IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIDLessThan(
-      Id localDatabaseID,
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIdLessThan(
+      Id localDatabaseId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: localDatabaseID, includeUpper: include),
+        IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIDBetween(
-    Id lowerLocalDatabaseID,
-    Id upperLocalDatabaseID, {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> localDatabaseIdBetween(
+    Id lowerLocalDatabaseId,
+    Id upperLocalDatabaseId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerLocalDatabaseID,
+        lower: lowerLocalDatabaseId,
         includeLower: includeLower,
-        upper: upperLocalDatabaseID,
+        upper: upperLocalDatabaseId,
         includeUpper: includeUpper,
       ));
     });
@@ -793,42 +817,238 @@ extension UserRecentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIDEqualTo(Id value) {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> instrumentEqualTo(Instrument value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'localDatabaseID',
+        property: r'instrument',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIDGreaterThan(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> instrumentGreaterThan(
+    Instrument value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'instrument',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> instrumentLessThan(
+    Instrument value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'instrument',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> instrumentBetween(
+    Instrument lower,
+    Instrument upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'instrument',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'key',
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'key',
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'key',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'key',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'key',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'key',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> keyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'key',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIdEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIdGreaterThan(
     Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'localDatabaseID',
+        property: r'localDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIDLessThan(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIdLessThan(
     Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'localDatabaseID',
+        property: r'localDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIDBetween(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> localDatabaseIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -836,7 +1056,7 @@ extension UserRecentVersionDtoQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'localDatabaseID',
+        property: r'localDatabaseId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -973,58 +1193,58 @@ extension UserRecentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIDIsNull() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'remoteDatabaseID',
+        property: r'remoteDatabaseId',
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIDIsNotNull() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'remoteDatabaseID',
+        property: r'remoteDatabaseId',
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIDEqualTo(int? value) {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'remoteDatabaseID',
+        property: r'remoteDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIDGreaterThan(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdGreaterThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'remoteDatabaseID',
+        property: r'remoteDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIDLessThan(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdLessThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'remoteDatabaseID',
+        property: r'remoteDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIDBetween(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -1032,7 +1252,7 @@ extension UserRecentVersionDtoQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'remoteDatabaseID',
+        property: r'remoteDatabaseId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1221,36 +1441,36 @@ extension UserRecentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneIsNull() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'stdTone',
+        property: r'stdKey',
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneIsNotNull() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'stdTone',
+        property: r'stdKey',
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneEqualTo(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneGreaterThan(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1258,14 +1478,14 @@ extension UserRecentVersionDtoQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneLessThan(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1273,14 +1493,14 @@ extension UserRecentVersionDtoQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneBetween(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1289,7 +1509,7 @@ extension UserRecentVersionDtoQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'stdTone',
+        property: r'stdKey',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1299,211 +1519,67 @@ extension UserRecentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneStartsWith(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneEndsWith(
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneContains(String value,
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyContains(String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'stdTone',
+        property: r'stdKey',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneMatches(String pattern,
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyMatches(String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'stdTone',
+        property: r'stdKey',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneIsEmpty() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'stdTone',
+        property: r'stdKey',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdToneIsNotEmpty() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> stdKeyIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'stdTone',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'tone',
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'tone',
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'tone',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'tone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'tone',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'tone',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> toneIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'tone',
+        property: r'stdKey',
         value: '',
       ));
     });
@@ -1653,58 +1729,6 @@ extension UserRecentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> typeEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'type',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> typeGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'type',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> typeLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'type',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> typeBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'type',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> versionIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1796,6 +1820,30 @@ extension UserRecentVersionDtoQuerySortBy on QueryBuilder<UserRecentVersionDto, 
     });
   }
 
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByInstrument() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'instrument', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByInstrumentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'instrument', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1808,15 +1856,15 @@ extension UserRecentVersionDtoQuerySortBy on QueryBuilder<UserRecentVersionDto, 
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByRemoteDatabaseID() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByRemoteDatabaseId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseID', Sort.asc);
+      return query.addSortBy(r'remoteDatabaseId', Sort.asc);
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByRemoteDatabaseIDDesc() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByRemoteDatabaseIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseID', Sort.desc);
+      return query.addSortBy(r'remoteDatabaseId', Sort.desc);
     });
   }
 
@@ -1844,27 +1892,15 @@ extension UserRecentVersionDtoQuerySortBy on QueryBuilder<UserRecentVersionDto, 
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByStdTone() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByStdKey() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.asc);
+      return query.addSortBy(r'stdKey', Sort.asc);
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByStdToneDesc() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByStdKeyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByTone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByToneDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.desc);
+      return query.addSortBy(r'stdKey', Sort.desc);
     });
   }
 
@@ -1877,18 +1913,6 @@ extension UserRecentVersionDtoQuerySortBy on QueryBuilder<UserRecentVersionDto, 
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByTuningDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'tuning', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'type', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByTypeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'type', Sort.desc);
     });
   }
 
@@ -1930,15 +1954,39 @@ extension UserRecentVersionDtoQuerySortThenBy on QueryBuilder<UserRecentVersionD
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLocalDatabaseID() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByInstrument() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'localDatabaseID', Sort.asc);
+      return query.addSortBy(r'instrument', Sort.asc);
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLocalDatabaseIDDesc() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByInstrumentDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'localDatabaseID', Sort.desc);
+      return query.addSortBy(r'instrument', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'key', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLocalDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDatabaseId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLocalDatabaseIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDatabaseId', Sort.desc);
     });
   }
 
@@ -1954,15 +2002,15 @@ extension UserRecentVersionDtoQuerySortThenBy on QueryBuilder<UserRecentVersionD
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByRemoteDatabaseID() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByRemoteDatabaseId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseID', Sort.asc);
+      return query.addSortBy(r'remoteDatabaseId', Sort.asc);
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByRemoteDatabaseIDDesc() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByRemoteDatabaseIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseID', Sort.desc);
+      return query.addSortBy(r'remoteDatabaseId', Sort.desc);
     });
   }
 
@@ -1990,27 +2038,15 @@ extension UserRecentVersionDtoQuerySortThenBy on QueryBuilder<UserRecentVersionD
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByStdTone() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByStdKey() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.asc);
+      return query.addSortBy(r'stdKey', Sort.asc);
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByStdToneDesc() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByStdKeyDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'stdTone', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByTone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByToneDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'tone', Sort.desc);
+      return query.addSortBy(r'stdKey', Sort.desc);
     });
   }
 
@@ -2023,18 +2059,6 @@ extension UserRecentVersionDtoQuerySortThenBy on QueryBuilder<UserRecentVersionD
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByTuningDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'tuning', Sort.desc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'type', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByTypeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'type', Sort.desc);
     });
   }
 
@@ -2066,15 +2090,27 @@ extension UserRecentVersionDtoQueryWhereDistinct
     });
   }
 
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByInstrument() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'instrument');
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByKey({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'key', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByRemoteDatabaseID() {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByRemoteDatabaseId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'remoteDatabaseID');
+      return query.addDistinctBy(r'remoteDatabaseId');
     });
   }
 
@@ -2090,27 +2126,15 @@ extension UserRecentVersionDtoQueryWhereDistinct
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByStdTone({bool caseSensitive = true}) {
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByStdKey({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'stdTone', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByTone({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'tone', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'stdKey', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByTuning({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'tuning', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'type');
     });
   }
 
@@ -2123,9 +2147,9 @@ extension UserRecentVersionDtoQueryWhereDistinct
 
 extension UserRecentVersionDtoQueryProperty
     on QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QQueryProperty> {
-  QueryBuilder<UserRecentVersionDto, int, QQueryOperations> localDatabaseIDProperty() {
+  QueryBuilder<UserRecentVersionDto, int, QQueryOperations> localDatabaseIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'localDatabaseID');
+      return query.addPropertyName(r'localDatabaseId');
     });
   }
 
@@ -2147,15 +2171,27 @@ extension UserRecentVersionDtoQueryProperty
     });
   }
 
+  QueryBuilder<UserRecentVersionDto, Instrument, QQueryOperations> instrumentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'instrument');
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, String?, QQueryOperations> keyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'key');
+    });
+  }
+
   QueryBuilder<UserRecentVersionDto, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, int?, QQueryOperations> remoteDatabaseIDProperty() {
+  QueryBuilder<UserRecentVersionDto, int?, QQueryOperations> remoteDatabaseIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'remoteDatabaseID');
+      return query.addPropertyName(r'remoteDatabaseId');
     });
   }
 
@@ -2171,27 +2207,15 @@ extension UserRecentVersionDtoQueryProperty
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, String?, QQueryOperations> stdToneProperty() {
+  QueryBuilder<UserRecentVersionDto, String?, QQueryOperations> stdKeyProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'stdTone');
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, String?, QQueryOperations> toneProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'tone');
+      return query.addPropertyName(r'stdKey');
     });
   }
 
   QueryBuilder<UserRecentVersionDto, String?, QQueryOperations> tuningProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'tuning');
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, int, QQueryOperations> typeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'type');
     });
   }
 

@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -10,13 +11,13 @@ void main() {
     final userVersionDto = UserVersionDto(
       id: 12,
       songUrl: "test",
-      type: 4,
+      type: 2,
       name: "name",
       songId: 3,
       capo: 1,
       songbookId: 2,
-      stdTone: "t",
-      tone: "s",
+      stdKey: "t",
+      key: "s",
       tuning: "abc",
       artistImage: "123",
       artist: UserVersionArtistDto(id: 1, name: "telo", color: "#FFFFFF", url: "https"),
@@ -25,15 +26,15 @@ void main() {
     );
     final version = userVersionDto.toDomain();
 
-    expect(version.remoteDatabaseID, 12);
+    expect(version.remoteDatabaseId, 12);
     expect(version.capo, 1);
     expect(version.name, "name");
     expect(version.songId, 3);
     expect(version.songUrl, "test");
-    expect(version.tone, "s");
-    expect(version.stdTone, "t");
+    expect(version.key, "s");
+    expect(version.stdKey, "t");
     expect(version.tuning, "abc");
-    expect(version.type, 4);
+    expect(version.instrument, Instrument.bass);
     expect(version.artist.id, 1);
     expect(version.artist.name, "telo");
     expect(version.artist.url, "https");
@@ -47,27 +48,27 @@ void main() {
     final artist = getFakeArtist();
     final version = Version(
         songId: 1,
-        type: 2,
+        instrument: Instrument.bass,
         name: "name",
         songUrl: "songUrl",
         capo: 3,
-        stdTone: "A",
-        tone: "B",
+        stdKey: "A",
+        key: "B",
         tuning: "AB",
         artist: artist,
-        remoteDatabaseID: 5,
+        remoteDatabaseId: 5,
         versionId: 12,
         order: 10);
     final userVersionDto = UserVersionDto.fromDomain(version, 10);
 
-    expect(userVersionDto.id, version.remoteDatabaseID);
+    expect(userVersionDto.id, version.remoteDatabaseId);
     expect(userVersionDto.versionId, 12);
     expect(userVersionDto.name, "name");
     expect(userVersionDto.songUrl, "songUrl");
-    expect(userVersionDto.tone, "B");
-    expect(userVersionDto.type, 2);
+    expect(userVersionDto.key, "B");
+    expect(userVersionDto.type, Instrument.bass.apiType);
     expect(userVersionDto.songId, 1);
-    expect(userVersionDto.stdTone, "A");
+    expect(userVersionDto.stdKey, "A");
     expect(userVersionDto.capo, 3);
     expect(userVersionDto.tuning, "AB");
     expect(userVersionDto.songbookId, 10);

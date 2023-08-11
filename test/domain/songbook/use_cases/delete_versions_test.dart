@@ -29,9 +29,9 @@ void main() {
 
   test("When call use case and request is successful should remove songs of local db", () async {
     final songs = [getFakeVersion()];
-    when(() => songbookRepository.deleteVersions(songbookId: 1, versionsId: [songs.first.remoteDatabaseID!]))
+    when(() => songbookRepository.deleteVersions(songbookId: 1, versionsId: [songs.first.remoteDatabaseId!]))
         .thenAnswer((_) => Future.value(const Ok(null)));
-    when(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseID!]))
+    when(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!]))
         .thenAnswer((invocation) => SynchronousFuture(1));
 
     when(() => userSongbookRepository.decrementTotalSongs(
@@ -43,14 +43,14 @@ void main() {
 
     expect(result.isSuccess, isTrue);
 
-    verify(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseID!])).called(1);
+    verify(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!])).called(1);
     verify(() => userSongbookRepository.decrementTotalSongs(
         songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
   });
 
   test("When call use case and request fails should return request error", () async {
     final songs = [getFakeVersion()];
-    when(() => songbookRepository.deleteVersions(versionsId: [songs.first.remoteDatabaseID!], songbookId: 1))
+    when(() => songbookRepository.deleteVersions(versionsId: [songs.first.remoteDatabaseId!], songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
     when(() => userSongbookRepository.decrementTotalSongs(songbookId: 1))

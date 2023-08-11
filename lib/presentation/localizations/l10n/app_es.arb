@@ -171,10 +171,10 @@
     "loggedOutListErrorButtonText": "Iniciar Sesión",
     "artistMoreSongs":"Mostrar más canciones",
     "moreAlbums":"Mostrar más álbumes",
-    "versionTone": "・Tono: {tone}",
-    "@versionTone": {
+    "versionKey": "・Tono: {key}",
+    "@versionKey": {
         "placeholders": {
-            "tone": {
+            "key": {
                 "type": "String",
                 "example": "A"
             }

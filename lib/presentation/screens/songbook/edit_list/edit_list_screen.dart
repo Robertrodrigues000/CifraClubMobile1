@@ -127,7 +127,7 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
                             song: item.name,
                             artist: item.artist.name,
                             type: "Violão",
-                            tone: item.tone,
+                            versionKey: item.key,
                             onDeleteTap: () => _bloc.deleteVersion(index),
                             editable: true,
                             index: index,

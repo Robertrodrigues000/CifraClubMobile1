@@ -226,10 +226,10 @@
     "loggedOutListErrorButtonText": "Log in",
     "artistMoreSongs":"Show more songs",
     "moreAlbums":"Show more albums",
-    "versionTone": "・Tone: {tone}",
-    "@versionTone": {
+    "versionKey": "・Key: {key}",
+    "@versionKey": {
         "placeholders": {
-            "tone": {
+            "key": {
                 "type": "String",
                 "example": "A"
             }

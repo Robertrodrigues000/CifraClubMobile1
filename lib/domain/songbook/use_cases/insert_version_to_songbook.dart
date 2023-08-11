@@ -38,7 +38,7 @@ class InsertVersionToSongbook {
 
     final versionInput = SongbookVersionInput(
       versionId: versionData.get()!.versionId,
-      type: versionData.get()!.type,
+      type: versionData.get()!.instrument.apiType,
     );
 
     final addResult = await _songbookRepository.addVersionToSongbook(
@@ -52,7 +52,7 @@ class InsertVersionToSongbook {
       await Future.wait([
         _userVersionRepository.addVersionsToSongbook([version], songbookId),
         _userSongbookRepository.incrementTotalSongs(songbookId: songbookId),
-        _userVersionRepository.addVersionData(versionData.get()!, version.remoteDatabaseID!),
+        _userVersionRepository.addVersionData(versionData.get()!, version.remoteDatabaseId!),
       ]);
 
       return Ok(version.songId);

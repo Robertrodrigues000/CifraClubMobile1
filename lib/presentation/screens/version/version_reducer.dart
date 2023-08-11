@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';

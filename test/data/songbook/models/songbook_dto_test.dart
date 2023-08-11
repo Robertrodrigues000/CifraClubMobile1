@@ -2,6 +2,7 @@ import 'package:cifraclub/data/songbook/models/songbook_version_artist_dto.dart'
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -33,7 +34,7 @@ void main() {
     expect(songbookVersions.songbook.type, ListType.recents);
     expect(songbookVersions.songbook.isPublic, songbookDto.isPublic);
     expect(songbookVersions.songbook.totalSongs, songbookDto.totalSongs);
-    expect(songbookVersions.versions.first.type, 1);
+    expect(songbookVersions.versions.first.instrument, Instrument.guitar);
     expect(songbookVersions.versions.first.name, "name");
     expect(songbookVersions.versions.first.songUrl, "songUrl");
     expect(songbookVersions.versions.first.songId, 2);

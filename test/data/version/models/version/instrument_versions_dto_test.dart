@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/version/models/version/instrument_version_dto.dart';
 import 'package:cifraclub/data/version/models/version/instrument_versions_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -20,7 +21,6 @@ void main() {
     final instrumentVersions = instrumentVersionsDto.toDomain();
 
     verify(instrumentVersionDtoMock.toDomain).called(1);
-    expect(instrumentVersions.label, "label");
-    expect(instrumentVersions.type, 1);
+    expect(instrumentVersions.instrument, Instrument.guitar);
   });
 }

@@ -7,23 +7,23 @@ part of 'version.dart';
 // **************************************************************************
 
 abstract class _$VersionCWProxy {
-  Version localDatabaseID(int? localDatabaseID);
+  Version localDatabaseId(int? localDatabaseId);
 
-  Version remoteDatabaseID(int? remoteDatabaseID);
+  Version remoteDatabaseId(int? remoteDatabaseId);
 
   Version songId(int songId);
 
   Version versionId(int versionId);
 
-  Version type(int type);
+  Version instrument(Instrument instrument);
 
   Version name(String name);
 
   Version songUrl(String songUrl);
 
-  Version tone(String? tone);
+  Version key(String? key);
 
-  Version stdTone(String? stdTone);
+  Version stdKey(String? stdKey);
 
   Version capo(int? capo);
 
@@ -40,15 +40,15 @@ abstract class _$VersionCWProxy {
   /// Version(...).copyWith(id: 12, name: "My name")
   /// ````
   Version call({
-    int? localDatabaseID,
-    int? remoteDatabaseID,
+    int? localDatabaseId,
+    int? remoteDatabaseId,
     int? songId,
     int? versionId,
-    int? type,
+    Instrument? instrument,
     String? name,
     String? songUrl,
-    String? tone,
-    String? stdTone,
+    String? key,
+    String? stdKey,
     int? capo,
     String? tuning,
     Artist? artist,
@@ -63,10 +63,10 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
   final Version _value;
 
   @override
-  Version localDatabaseID(int? localDatabaseID) => this(localDatabaseID: localDatabaseID);
+  Version localDatabaseId(int? localDatabaseId) => this(localDatabaseId: localDatabaseId);
 
   @override
-  Version remoteDatabaseID(int? remoteDatabaseID) => this(remoteDatabaseID: remoteDatabaseID);
+  Version remoteDatabaseId(int? remoteDatabaseId) => this(remoteDatabaseId: remoteDatabaseId);
 
   @override
   Version songId(int songId) => this(songId: songId);
@@ -75,7 +75,7 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
   Version versionId(int versionId) => this(versionId: versionId);
 
   @override
-  Version type(int type) => this(type: type);
+  Version instrument(Instrument instrument) => this(instrument: instrument);
 
   @override
   Version name(String name) => this(name: name);
@@ -84,10 +84,10 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
   Version songUrl(String songUrl) => this(songUrl: songUrl);
 
   @override
-  Version tone(String? tone) => this(tone: tone);
+  Version key(String? key) => this(key: key);
 
   @override
-  Version stdTone(String? stdTone) => this(stdTone: stdTone);
+  Version stdKey(String? stdKey) => this(stdKey: stdKey);
 
   @override
   Version capo(int? capo) => this(capo: capo);
@@ -110,29 +110,29 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
   /// Version(...).copyWith(id: 12, name: "My name")
   /// ````
   Version call({
-    Object? localDatabaseID = const $CopyWithPlaceholder(),
-    Object? remoteDatabaseID = const $CopyWithPlaceholder(),
+    Object? localDatabaseId = const $CopyWithPlaceholder(),
+    Object? remoteDatabaseId = const $CopyWithPlaceholder(),
     Object? songId = const $CopyWithPlaceholder(),
     Object? versionId = const $CopyWithPlaceholder(),
-    Object? type = const $CopyWithPlaceholder(),
+    Object? instrument = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? songUrl = const $CopyWithPlaceholder(),
-    Object? tone = const $CopyWithPlaceholder(),
-    Object? stdTone = const $CopyWithPlaceholder(),
+    Object? key = const $CopyWithPlaceholder(),
+    Object? stdKey = const $CopyWithPlaceholder(),
     Object? capo = const $CopyWithPlaceholder(),
     Object? tuning = const $CopyWithPlaceholder(),
     Object? artist = const $CopyWithPlaceholder(),
     Object? order = const $CopyWithPlaceholder(),
   }) {
     return Version(
-      localDatabaseID: localDatabaseID == const $CopyWithPlaceholder()
-          ? _value.localDatabaseID
+      localDatabaseId: localDatabaseId == const $CopyWithPlaceholder()
+          ? _value.localDatabaseId
           // ignore: cast_nullable_to_non_nullable
-          : localDatabaseID as int?,
-      remoteDatabaseID: remoteDatabaseID == const $CopyWithPlaceholder()
-          ? _value.remoteDatabaseID
+          : localDatabaseId as int?,
+      remoteDatabaseId: remoteDatabaseId == const $CopyWithPlaceholder()
+          ? _value.remoteDatabaseId
           // ignore: cast_nullable_to_non_nullable
-          : remoteDatabaseID as int?,
+          : remoteDatabaseId as int?,
       songId: songId == const $CopyWithPlaceholder() || songId == null
           ? _value.songId
           // ignore: cast_nullable_to_non_nullable
@@ -141,10 +141,10 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
           ? _value.versionId
           // ignore: cast_nullable_to_non_nullable
           : versionId as int,
-      type: type == const $CopyWithPlaceholder() || type == null
-          ? _value.type
+      instrument: instrument == const $CopyWithPlaceholder() || instrument == null
+          ? _value.instrument
           // ignore: cast_nullable_to_non_nullable
-          : type as int,
+          : instrument as Instrument,
       name: name == const $CopyWithPlaceholder() || name == null
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
@@ -153,14 +153,14 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
           ? _value.songUrl
           // ignore: cast_nullable_to_non_nullable
           : songUrl as String,
-      tone: tone == const $CopyWithPlaceholder()
-          ? _value.tone
+      key: key == const $CopyWithPlaceholder()
+          ? _value.key
           // ignore: cast_nullable_to_non_nullable
-          : tone as String?,
-      stdTone: stdTone == const $CopyWithPlaceholder()
-          ? _value.stdTone
+          : key as String?,
+      stdKey: stdKey == const $CopyWithPlaceholder()
+          ? _value.stdKey
           // ignore: cast_nullable_to_non_nullable
-          : stdTone as String?,
+          : stdKey as String?,
       capo: capo == const $CopyWithPlaceholder()
           ? _value.capo
           // ignore: cast_nullable_to_non_nullable

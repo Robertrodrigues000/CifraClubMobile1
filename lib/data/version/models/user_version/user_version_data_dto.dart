@@ -8,6 +8,7 @@ import 'package:cifraclub/data/version/models/user_version/user_version_data_gen
 import 'package:cifraclub/data/version/models/user_version/user_version_data_genre_images_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_instrument_versions_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_data_video_lesson_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
@@ -19,9 +20,10 @@ class UserVersionDataDto extends Equatable {
   final Id localId;
   final int versionId;
   final int songbookVersionId;
-  final int type;
+  @enumerated
+  final Instrument instrument;
   final String content;
-  final String label;
+  final String versionName;
   final String versionUrl;
   final String completePath;
   final String siteUrl;
@@ -40,15 +42,15 @@ class UserVersionDataDto extends Equatable {
   final UserVersionDataArtistDto? artist;
   final UserVersionDataVideoLessonDto? videoLesson;
   final List<UserContributorDto>? contributors;
-  final List<UserInstrumentVersionsDto>? songsDetail;
+  final List<UserInstrumentVersionsDto>? instrumentVersions;
 
   const UserVersionDataDto({
     required this.localId,
     required this.versionId,
     required this.songbookVersionId,
-    required this.type,
+    required this.instrument,
     required this.content,
-    required this.label,
+    required this.versionName,
     required this.versionUrl,
     required this.completePath,
     required this.siteUrl,
@@ -67,7 +69,7 @@ class UserVersionDataDto extends Equatable {
     this.artist,
     this.videoLesson,
     this.contributors,
-    this.songsDetail,
+    this.instrumentVersions,
   });
 
   UserVersionDataDto.fromDomain(VersionData versionData, int versionId)
@@ -75,9 +77,9 @@ class UserVersionDataDto extends Equatable {
           localId: versionData.localId ?? Isar.autoIncrement,
           versionId: versionData.versionId,
           songbookVersionId: versionId,
-          type: versionData.type,
+          instrument: versionData.instrument,
           content: versionData.content,
-          label: versionData.label,
+          versionName: versionData.versionName,
           versionUrl: versionData.versionUrl,
           completePath: versionData.completePath,
           siteUrl: versionData.siteUrl,
@@ -98,7 +100,7 @@ class UserVersionDataDto extends Equatable {
               ? UserVersionDataVideoLessonDto.fromDomain(versionData.videoLesson!)
               : null,
           contributors: versionData.contributors?.map(UserContributorDto.fromDomain).toList(),
-          songsDetail: versionData.instrumentVersions?.map(UserInstrumentVersionsDto.fromDomain).toList(),
+          instrumentVersions: versionData.instrumentVersions?.map(UserInstrumentVersionsDto.fromDomain).toList(),
         );
 
   @override
@@ -107,7 +109,7 @@ class UserVersionDataDto extends Equatable {
         versionId,
         localId,
         songbookVersionId,
-        type,
+        instrument,
         content,
         versionUrl,
         shapeKey,

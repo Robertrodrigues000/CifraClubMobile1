@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart';
 import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_data_song_dto.dart';
@@ -5,6 +7,7 @@ import 'package:cifraclub/data/version/models/user_version/user_version_artist_d
 import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
@@ -39,7 +42,7 @@ void main() {
         id: faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
         songUrl: faker.animal.name(),
-        tone: faker.animal.name(),
+        key: faker.animal.name(),
         type: faker.randomGenerator.integer(10000),
         songId: songId ?? faker.randomGenerator.integer(10000),
         songbookId: songbookId ?? faker.randomGenerator.integer(10000),
@@ -54,11 +57,11 @@ void main() {
     String? artistImage,
   }) =>
       UserRecentVersionDto(
-        localDatabaseID: faker.randomGenerator.integer(10000),
+        localDatabaseId: faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
         songUrl: faker.animal.name(),
-        tone: faker.animal.name(),
-        type: faker.randomGenerator.integer(10000),
+        key: faker.animal.name(),
+        instrument: Instrument.bass,
         songId: faker.randomGenerator.integer(10000),
         artist: userVersionArtistDto ?? UserVersionArtistDto(),
         artistImage: artistImage,
@@ -146,7 +149,7 @@ void main() {
       localVersions = await isar.userRecentVersionDtos.where().findAll();
     });
 
-    expect(result, [recentVersions[0].localDatabaseID, recentVersions[1].localDatabaseID]);
+    expect(result, [recentVersions[0].localDatabaseId, recentVersions[1].localDatabaseId]);
     // toSet para comparar as 2 listas que podem vir em ordens diferentes
     expect(localVersions.toSet(), recentVersions.toSet());
   });
@@ -326,6 +329,7 @@ void main() {
   });
 
   test("When 'getIsFavoriteVersionBySongIdStream' is called should return bool if favorite", () async {
+    final List<Completer<bool>> completers = [];
     const songId = 1;
     final version = getUserVersionDto(songId: songId, songbookId: ListType.favorites.localId);
 
@@ -335,16 +339,18 @@ void main() {
       },
     );
 
-    final stream = userVersionDataSource.getIsFavoriteVersionBySongIdStream(songId).asBroadcastStream();
-    stream.listen((_) {});
+    completers.add(Completer());
+    final stream = userVersionDataSource.getIsFavoriteVersionBySongIdStream(songId);
+    stream.listen((value) => completers.last.complete(value));
+    expect(await completers.last.future, isTrue);
 
+    completers.add(Completer());
     await isar.writeTxn(
       () async {
         await isar.userVersionDtos.delete(version.id);
       },
     );
-
-    expect(stream, emitsInOrder([isTrue]));
+    expect(await completers.last.future, isFalse);
   });
 
   test("When 'addVersionData' is called should save version data in local DB", () async {
@@ -358,9 +364,9 @@ void main() {
     final fakeUserVersionDataDto = UserVersionDataDto(
       localId: 10,
       versionId: 1,
-      type: 1,
+      instrument: Instrument.bass,
       content: "Content",
-      label: "Label",
+      versionName: "Label",
       versionUrl: "https://example.com/version.mp3",
       completePath: "https://example.com/song.json",
       siteUrl: "https://example.com/site.json",

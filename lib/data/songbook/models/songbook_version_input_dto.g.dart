@@ -21,7 +21,7 @@ Map<String, dynamic> _$SongbookVersionInputDtoToJson(SongbookVersionInputDto ins
   writeNotNull('id', instance.id);
   writeNotNull('instrumentType', instance.instrument);
   writeNotNull('songDns', instance.songUrl);
-  writeNotNull('tone', instance.tone);
+  writeNotNull('tone', instance.key);
   writeNotNull('tuning', instance.tuning);
   writeNotNull('type', instance.type);
   writeNotNull('versionLabel', instance.versionLabel);

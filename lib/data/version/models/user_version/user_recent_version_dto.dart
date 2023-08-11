@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
@@ -10,15 +11,16 @@ part 'user_recent_version_dto.g.dart';
 @CopyWith()
 @Collection(inheritance: false)
 class UserRecentVersionDto extends Equatable {
-  Id localDatabaseID = Isar.autoIncrement;
-  final int? remoteDatabaseID;
+  Id localDatabaseId = Isar.autoIncrement;
+  final int? remoteDatabaseId;
   final String name;
   final int versionId;
   final String songUrl;
-  final String? tone;
-  final int type;
+  final String? key;
+  @enumerated
+  final Instrument instrument;
   final int songId;
-  final String? stdTone;
+  final String? stdKey;
   final int? capo;
   final String? tuning;
   final UserVersionArtistDto artist;
@@ -26,14 +28,14 @@ class UserRecentVersionDto extends Equatable {
   final String? artistImage;
 
   UserRecentVersionDto({
-    required this.localDatabaseID,
-    this.remoteDatabaseID,
+    required this.localDatabaseId,
+    this.remoteDatabaseId,
     required this.songUrl,
-    this.tone,
-    required this.type,
+    this.key,
+    required this.instrument,
     required this.name,
     this.capo,
-    this.stdTone,
+    this.stdKey,
     this.tuning,
     required this.songId,
     required this.artist,
@@ -42,14 +44,14 @@ class UserRecentVersionDto extends Equatable {
   }) : artistImage = (artistImage ?? "").isNotEmpty ? artistImage : null;
 
   Version toDomain() => Version(
-        localDatabaseID: localDatabaseID,
-        remoteDatabaseID: (remoteDatabaseID ?? -1) > 0 ? remoteDatabaseID : null,
+        localDatabaseId: localDatabaseId,
+        remoteDatabaseId: (remoteDatabaseId ?? -1) > 0 ? remoteDatabaseId : null,
         songId: songId,
-        type: type,
+        instrument: instrument,
         name: name,
         songUrl: songUrl,
-        tone: tone,
-        stdTone: stdTone,
+        key: key,
+        stdKey: stdKey,
         capo: capo,
         tuning: tuning,
         artist: artist.toDomain(artistImage),
@@ -59,15 +61,15 @@ class UserRecentVersionDto extends Equatable {
 
   UserRecentVersionDto.fromDomain(Version version)
       : this(
-          localDatabaseID: version.localDatabaseID ?? Isar.autoIncrement,
-          remoteDatabaseID: version.remoteDatabaseID,
+          localDatabaseId: version.localDatabaseId ?? Isar.autoIncrement,
+          remoteDatabaseId: version.remoteDatabaseId,
           name: version.name,
           songUrl: version.songUrl,
-          type: version.type,
-          tone: version.tone,
+          instrument: version.instrument,
+          key: version.key,
           songId: version.songId,
           capo: version.capo,
-          stdTone: version.stdTone,
+          stdKey: version.stdKey,
           tuning: version.tuning,
           artist: UserVersionArtistDto.fromDomain(version.artist),
           artistImage: (version.artist.image?.size162 ?? "").isNotEmpty ? version.artist.image?.size162 : null,
@@ -77,14 +79,14 @@ class UserRecentVersionDto extends Equatable {
   @ignore
   @override
   List<Object?> get props => [
-        localDatabaseID,
+        localDatabaseId,
         name,
-        remoteDatabaseID,
+        remoteDatabaseId,
         songUrl,
-        tone,
-        type,
+        key,
+        instrument,
         songId,
-        stdTone,
+        stdKey,
         versionId,
         capo,
         tuning,

@@ -1,5 +1,5 @@
+// coverage:ignore-file
 import 'package:cifraclub/domain/search/models/song_search.dart';
-import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:equatable/equatable.dart';
 
@@ -10,7 +10,7 @@ class SongbookVersionInput extends Equatable {
   final int? id;
   final String? instrument;
   final String? songUrl;
-  final String? tone;
+  final String? key;
   final String? tuning;
   final int? type;
   final String? versionLabel;
@@ -22,7 +22,7 @@ class SongbookVersionInput extends Equatable {
     this.id,
     this.instrument,
     this.songUrl,
-    this.tone,
+    this.key,
     this.tuning,
     this.type,
     this.versionLabel,
@@ -36,17 +36,17 @@ class SongbookVersionInput extends Equatable {
 
   SongbookVersionInput.fromVersion(Version version)
       : this(
-          id: version.remoteDatabaseID,
+          id: version.remoteDatabaseId,
           versionId: version.versionId,
           artistUrl: version.artist.url,
           songUrl: version.songUrl,
-          instrument: Instrument.getInstrumentByType(version.type)?.instrumentUrl,
+          instrument: version.instrument.instrumentUrl,
           capo: version.capo,
-          tone: version.tone,
+          key: version.key,
           tuning: version.tuning,
-          type: version.type,
+          type: version.instrument.apiType,
         );
 
   @override
-  List<Object?> get props => [artistUrl, capo, versionId, id, instrument, songUrl, tone, tuning, type, versionLabel];
+  List<Object?> get props => [artistUrl, capo, versionId, id, instrument, songUrl, key, tuning, type, versionLabel];
 }

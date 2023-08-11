@@ -15,7 +15,7 @@ class ClearSongsFromSongbook {
 
   Future<Result<void, RequestError>> call(int songbookId) async {
     final cifrasIdList = (await _userVersionRepository.getUserVersionsFromSongbook(songbookId))
-        .map((e) => e.remoteDatabaseID ?? -1)
+        .map((e) => e.remoteDatabaseId ?? -1)
         .toList();
     final apiResult = await _songbookRepository.deleteVersions(songbookId: songbookId, versionsId: cifrasIdList);
     return apiResult.onSuccess((_) async {

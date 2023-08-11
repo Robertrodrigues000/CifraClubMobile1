@@ -14,11 +14,11 @@ void main() {
     when(versionArtistDto.toDomain).thenReturn(artist);
 
     final songbookVersionDto = SongbookVersionDto(
-      remoteDatabaseID: 42,
+      remoteDatabaseId: 42,
       name: "cifra name",
       type: 1,
       songUrl: "cifra-name",
-      tone: "F",
+      key: "F",
       songId: 2,
       artist: versionArtistDto,
       versionId: 10,
@@ -27,10 +27,10 @@ void main() {
     final version = songbookVersionDto.toDomain(10);
 
     verify(versionArtistDto.toDomain).called(1);
-    expect(songbookVersionDto.remoteDatabaseID, version.remoteDatabaseID);
+    expect(songbookVersionDto.remoteDatabaseId, version.remoteDatabaseId);
     expect(songbookVersionDto.name, version.name);
-    expect(songbookVersionDto.type, version.type);
-    expect(songbookVersionDto.tone, version.tone);
+    expect(songbookVersionDto.type, version.instrument.apiType);
+    expect(songbookVersionDto.key, version.key);
     expect(songbookVersionDto.songId, version.songId);
     expect(songbookVersionDto.versionId, version.versionId);
     expect(artist, version.artist);

@@ -9,7 +9,7 @@ class VersionTile extends StatelessWidget {
       required this.song,
       required this.artist,
       required this.type,
-      required this.tone,
+      required this.versionKey,
       this.editable = false,
       this.onOptionsTap,
       this.onVersionTap,
@@ -19,7 +19,7 @@ class VersionTile extends StatelessWidget {
   final String song;
   final String artist;
   final String type;
-  final String? tone;
+  final String? versionKey;
   final bool editable;
   final VoidCallback? onOptionsTap;
   final VoidCallback? onVersionTap;
@@ -83,9 +83,9 @@ class VersionTile extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
-                      if (tone != null)
+                      if (versionKey != null)
                         Text(
-                          context.text.versionTone(tone!),
+                          context.text.versionKey(versionKey!),
                           style: context.typography.subtitle5,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,

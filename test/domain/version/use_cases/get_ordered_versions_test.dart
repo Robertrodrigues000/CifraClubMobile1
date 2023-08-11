@@ -28,70 +28,70 @@ void main() {
 
     test("and selected recent order should sort correctly", () async {
       final desorderedList = [
-        getFakeVersion(remoteDatabaseID: 10),
-        getFakeVersion(remoteDatabaseID: 8),
-        getFakeVersion(remoteDatabaseID: 15),
-        getFakeVersion(remoteDatabaseID: 9),
+        getFakeVersion(remoteDatabaseId: 10),
+        getFakeVersion(remoteDatabaseId: 8),
+        getFakeVersion(remoteDatabaseId: 15),
+        getFakeVersion(remoteDatabaseId: 9),
       ];
 
       final orderedList = GetOrderedVersions()(ListOrderType.recent, desorderedList, ListType.user);
 
       expect(orderedList.length, 4);
-      expect(orderedList[0].remoteDatabaseID, 15);
-      expect(orderedList[1].remoteDatabaseID, 10);
-      expect(orderedList[2].remoteDatabaseID, 9);
-      expect(orderedList[3].remoteDatabaseID, 8);
+      expect(orderedList[0].remoteDatabaseId, 15);
+      expect(orderedList[1].remoteDatabaseId, 10);
+      expect(orderedList[2].remoteDatabaseId, 9);
+      expect(orderedList[3].remoteDatabaseId, 8);
     });
 
     test("and selected recent order and is recent songbook should sort correctly", () async {
       final desorderedList = [
-        getFakeVersion(localDatabaseID: 10),
-        getFakeVersion(localDatabaseID: 8),
-        getFakeVersion(localDatabaseID: 15),
-        getFakeVersion(localDatabaseID: 9),
+        getFakeVersion(localDatabaseId: 10),
+        getFakeVersion(localDatabaseId: 8),
+        getFakeVersion(localDatabaseId: 15),
+        getFakeVersion(localDatabaseId: 9),
       ];
 
       final orderedList = GetOrderedVersions()(ListOrderType.recent, desorderedList, ListType.recents);
 
       expect(orderedList.length, 4);
-      expect(orderedList[0].localDatabaseID, 15);
-      expect(orderedList[1].localDatabaseID, 10);
-      expect(orderedList[2].localDatabaseID, 9);
-      expect(orderedList[3].localDatabaseID, 8);
+      expect(orderedList[0].localDatabaseId, 15);
+      expect(orderedList[1].localDatabaseId, 10);
+      expect(orderedList[2].localDatabaseId, 9);
+      expect(orderedList[3].localDatabaseId, 8);
     });
 
     test("and selected oldest order should sort correctly", () async {
       final desorderedList = [
-        getFakeVersion(remoteDatabaseID: 10),
-        getFakeVersion(remoteDatabaseID: 8),
-        getFakeVersion(remoteDatabaseID: 15),
-        getFakeVersion(remoteDatabaseID: 9),
+        getFakeVersion(remoteDatabaseId: 10),
+        getFakeVersion(remoteDatabaseId: 8),
+        getFakeVersion(remoteDatabaseId: 15),
+        getFakeVersion(remoteDatabaseId: 9),
       ];
 
       final orderedList = GetOrderedVersions()(ListOrderType.oldest, desorderedList, ListType.user);
 
       expect(orderedList.length, 4);
-      expect(orderedList[0].remoteDatabaseID, 8);
-      expect(orderedList[1].remoteDatabaseID, 9);
-      expect(orderedList[2].remoteDatabaseID, 10);
-      expect(orderedList[3].remoteDatabaseID, 15);
+      expect(orderedList[0].remoteDatabaseId, 8);
+      expect(orderedList[1].remoteDatabaseId, 9);
+      expect(orderedList[2].remoteDatabaseId, 10);
+      expect(orderedList[3].remoteDatabaseId, 15);
     });
 
     test("and selected oldest order and is recent songbook should sort correctly", () async {
       final desorderedList = [
-        getFakeVersion(localDatabaseID: 10),
-        getFakeVersion(localDatabaseID: 8),
-        getFakeVersion(localDatabaseID: 15),
-        getFakeVersion(localDatabaseID: 9),
+        getFakeVersion(localDatabaseId: 10),
+        getFakeVersion(localDatabaseId: 8),
+        getFakeVersion(localDatabaseId: 15),
+        getFakeVersion(localDatabaseId: 9),
       ];
 
       final orderedList = GetOrderedVersions()(ListOrderType.oldest, desorderedList, ListType.recents);
 
       expect(orderedList.length, 4);
-      expect(orderedList[0].localDatabaseID, 8);
-      expect(orderedList[1].localDatabaseID, 9);
-      expect(orderedList[2].localDatabaseID, 10);
-      expect(orderedList[3].localDatabaseID, 15);
+      expect(orderedList[0].localDatabaseId, 8);
+      expect(orderedList[1].localDatabaseId, 9);
+      expect(orderedList[2].localDatabaseId, 10);
+      expect(orderedList[3].localDatabaseId, 15);
     });
 
     test("and selected custom order should sort correctly", () async {

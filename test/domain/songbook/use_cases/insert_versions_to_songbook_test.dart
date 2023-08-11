@@ -31,7 +31,7 @@ void main() {
     final songs = [getFakeVersion()];
     when(() => userVersionRepository.deleteVersionsBySongbookId(1)).thenAnswer((_) => SynchronousFuture(1));
     when(() => userVersionRepository.addVersionsToSongbook(songs, 1))
-        .thenAnswer((_) => SynchronousFuture([songs.first.localDatabaseID!]));
+        .thenAnswer((_) => SynchronousFuture([songs.first.localDatabaseId!]));
     when(() => songbookRepository.addVersionsToSongbook(versionsInput: any(named: "versionsInput"), songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Ok(songs)));
 

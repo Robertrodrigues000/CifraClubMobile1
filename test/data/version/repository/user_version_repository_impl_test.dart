@@ -88,7 +88,7 @@ void main() {
 
   test("When `addVersionsToSongbook` is called should return ids of versions deleted", () async {
     final versions = [getFakeVersion(), getFakeVersion()];
-    final versionsIds = versions.map((e) => e.remoteDatabaseID!).toList();
+    final versionsIds = versions.map((e) => e.remoteDatabaseId!).toList();
 
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(() => userVersionDataSource.putVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));
@@ -105,7 +105,7 @@ void main() {
 
   test("When `addVersionToRecentSongbook` is called should return ids of versions deleted", () async {
     final versions = [getFakeVersion(), getFakeVersion()];
-    final versionsIds = versions.map((e) => e.remoteDatabaseID!).toList();
+    final versionsIds = versions.map((e) => e.remoteDatabaseId!).toList();
 
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(() => userVersionDataSource.putVersionsToRecentSongbook(any()))
@@ -202,7 +202,7 @@ void main() {
 
   test("When `updateVersionsToSongbook` is called should return ids of versions updated", () async {
     final versions = [getFakeVersion(), getFakeVersion()];
-    final versionsIds = versions.map((e) => e.remoteDatabaseID!).toList();
+    final versionsIds = versions.map((e) => e.remoteDatabaseId!).toList();
 
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(() => userVersionDataSource.putVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));

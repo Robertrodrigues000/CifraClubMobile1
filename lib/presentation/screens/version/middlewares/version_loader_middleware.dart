@@ -1,13 +1,10 @@
-// coverage:ignore-file
-import 'package:cifraclub/domain/log/repository/log_repository.dart';
-import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';
-import 'package:collection/collection.dart';
 
 typedef ActionEmitter = void Function(VersionAction);
 
@@ -36,29 +33,12 @@ class VersionLoaderMiddleware implements VersionMiddleware {
           return;
         }
 
-        final instrumentUrl = Instrument.getInstrumentByType(versionData!.type)?.instrumentUrl;
-        if (instrumentUrl == null) {
-          logger?.sendNonFatalCrash(exception: Exception("Unknown instrument type: ${versionData.type}"));
-          return;
-        }
-
-        var versionUrl = versionData.instrumentVersions
-            ?.firstWhere((element) => element.type == state.versionHeaderState.selectedInstrument!.apiType)
-            .versions
-            ?.firstWhereOrNull(
-              (element) => element.label == action.filter.versionName,
-            )
-            ?.versionUrl;
-        if (versionUrl == null) {
-          return;
-        }
-
         _fetchVersion(
           addAction,
-          versionData.artist!.url,
+          versionData!.artist!.url,
           versionData.song.url,
-          instrumentUrl,
-          versionUrl,
+          action.filter.instrument.instrumentUrl,
+          action.filter.versionUrl,
         );
         break;
       default:
@@ -88,7 +68,7 @@ class VersionLoaderMiddleware implements VersionMiddleware {
         addAction(OnVersionLoaded(versionData));
       },
       failure: (error) {
-        addAction(OnVersionLoadError(error: error));
+        addAction(OnVersionError(error: VersionLoadError(error)));
       },
     );
   }

@@ -14,6 +14,7 @@ import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -55,15 +56,15 @@ void main() {
       expect(songbooks.first.status, 1);
       expect(songbooks.first.totalSongs, 2);
       expect(songbooks.first.versions?.length, 2);
-      expect(songbooks.first.versions?.first.remoteDatabaseID, 122674888);
+      expect(songbooks.first.versions?.first.remoteDatabaseId, 122674888);
       expect(songbooks.first.versions?.first.songUrl, "lindo-testemunho");
       expect(songbooks.first.versions?.first.type, 1);
-      expect(songbooks.first.versions?.first.tone, "F");
+      expect(songbooks.first.versions?.first.key, "F");
       expect(songbooks.first.versions?.first.name, "Lindo Testemunho");
-      expect(songbooks.first.versions?.last.remoteDatabaseID, 128668178);
+      expect(songbooks.first.versions?.last.remoteDatabaseId, 128668178);
       expect(songbooks.first.versions?.last.songUrl, "we-are-the-world");
       expect(songbooks.first.versions?.last.type, 1);
-      expect(songbooks.first.versions?.last.tone, "E");
+      expect(songbooks.first.versions?.last.key, "E");
       expect(songbooks.first.versions?.last.name, "We Are The World");
     });
 
@@ -229,13 +230,13 @@ void main() {
       const version = Version(
         songId: 150216,
         versionId: 151908,
-        type: 1,
+        instrument: Instrument.guitar,
         name: "Rappers Delight",
         songUrl: "rappers-delight",
-        localDatabaseID: 1,
-        remoteDatabaseID: 140207195,
-        tone: "G",
-        stdTone: "G",
+        localDatabaseId: 1,
+        remoteDatabaseId: 140207195,
+        key: "G",
+        stdKey: "G",
         capo: 0,
         tuning: "E A D G B E",
         artist: Artist(url: "the-sugarhill-gang", image: null, name: "The Sugarhill Gang", id: 75423),
@@ -261,13 +262,13 @@ void main() {
       expect(result.get()?.first.name, version.name);
       expect(result.get()?.first.songId, version.songId);
       expect(result.get()?.first.versionId, version.versionId);
-      expect(result.get()?.first.type, version.type);
+      expect(result.get()?.first.type, version.instrument.apiType);
       expect(result.get()?.first.songUrl, version.songUrl);
-      expect(result.get()?.first.tone, version.tone);
-      expect(result.get()?.first.stdTone, version.stdTone);
+      expect(result.get()?.first.key, version.key);
+      expect(result.get()?.first.stdKey, version.stdKey);
       expect(result.get()?.first.capo, version.capo);
       expect(result.get()?.first.tuning, version.tuning);
-      expect(result.get()?.first.remoteDatabaseID, version.remoteDatabaseID);
+      expect(result.get()?.first.remoteDatabaseId, version.remoteDatabaseId);
       expect(result.get()?.first.artist.url, version.artist.url);
       expect(result.get()?.first.artist.name, version.artist.name);
     });
@@ -331,9 +332,9 @@ void main() {
       type: 1,
       name: "S.O.S",
       songUrl: "sos",
-      remoteDatabaseID: 141322313,
-      tone: "G",
-      stdTone: "G",
+      remoteDatabaseId: 141322313,
+      key: "G",
+      stdKey: "G",
       capo: 0,
       tuning: "E A D G B E",
       artist: SongbookVersionArtistDto(
@@ -368,11 +369,11 @@ void main() {
       expect(result.get()?.versionId, songbookVersion.versionId);
       expect(result.get()?.type, songbookVersion.type);
       expect(result.get()?.songUrl, songbookVersion.songUrl);
-      expect(result.get()?.tone, songbookVersion.tone);
-      expect(result.get()?.stdTone, songbookVersion.stdTone);
+      expect(result.get()?.key, songbookVersion.key);
+      expect(result.get()?.stdKey, songbookVersion.stdKey);
       expect(result.get()?.capo, songbookVersion.capo);
       expect(result.get()?.tuning, songbookVersion.tuning);
-      expect(result.get()?.remoteDatabaseID, songbookVersion.remoteDatabaseID);
+      expect(result.get()?.remoteDatabaseId, songbookVersion.remoteDatabaseId);
       expect(result.get()?.artist.url, songbookVersion.artist.url);
       expect(result.get()?.artist.name, songbookVersion.artist.name);
     });

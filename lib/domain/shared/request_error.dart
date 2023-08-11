@@ -1,11 +1,11 @@
-abstract class RequestError {}
+sealed class RequestError {}
 
-class ServerError extends RequestError {
+class ServerError implements RequestError {
   final int? statusCode;
 
   ServerError({this.statusCode});
 }
 
-class ConnectionError extends RequestError {}
+class ConnectionError implements RequestError {}
 
-class RequestCancelled extends RequestError {}
+class RequestCancelled implements RequestError {}

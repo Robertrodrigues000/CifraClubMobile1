@@ -46,7 +46,7 @@ void main() {
       final instruments = await getDefaultInstruments(songs);
 
       expect(instruments.length, 8);
-      expect(instruments, Instrument.values);
+      expect(instruments, List.from(Instrument.values)..removeWhere((element) => element == Instrument.unknown));
     });
   });
 

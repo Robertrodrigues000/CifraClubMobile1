@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/artist/models/artist.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,30 +7,30 @@ part 'version.g.dart';
 
 @CopyWith()
 class Version extends Equatable {
-  final int? localDatabaseID;
-  final int? remoteDatabaseID;
+  final int? localDatabaseId;
+  final int? remoteDatabaseId;
   final int songId;
   final int versionId;
-  final int type;
+  final Instrument instrument;
   final String name;
   final String songUrl;
-  final String? tone;
-  final String? stdTone;
+  final String? key;
+  final String? stdKey;
   final int? capo;
   final String? tuning;
   final Artist artist;
   final int order;
 
   const Version({
-    this.localDatabaseID,
-    this.remoteDatabaseID,
+    this.localDatabaseId,
+    this.remoteDatabaseId,
     required this.songId,
     required this.versionId,
-    required this.type,
+    required this.instrument,
     required this.name,
     required this.songUrl,
-    this.tone,
-    this.stdTone,
+    this.key,
+    this.stdKey,
     this.capo,
     this.tuning,
     required this.artist,
@@ -39,15 +40,15 @@ class Version extends Equatable {
   // coverage:ignore-start
   @override
   List<Object?> get props => [
-        localDatabaseID,
-        remoteDatabaseID,
+        localDatabaseId,
+        remoteDatabaseId,
         songId,
         versionId,
-        type,
+        instrument,
         name,
         songUrl,
-        tone,
-        stdTone,
+        key,
+        stdKey,
         capo,
         tuning,
         artist,

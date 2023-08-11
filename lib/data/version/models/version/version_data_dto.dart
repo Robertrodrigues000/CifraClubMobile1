@@ -4,6 +4,7 @@ import 'package:cifraclub/data/version/models/version/contributor_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_song_dto.dart';
 import 'package:cifraclub/data/version/models/version/instrument_versions_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_video_lesson_dto.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -69,27 +70,31 @@ class VersionDataDto {
   factory VersionDataDto.fromJson(Map<String, dynamic> json) => _$VersionDataDtoFromJson(json);
 
   VersionData toDomain() => VersionData(
-      versionId: versionId,
-      type: type,
-      content: content,
-      label: label,
-      versionUrl: versionUrl,
-      completePath: completePath,
-      siteUrl: siteUrl,
-      key: key,
-      shapeKey: shapeKey,
-      stdKey: stdKey,
-      stdShapeKey: stdShapeKey,
-      tuning: tuning,
-      capo: capo,
-      composers: composers,
-      isVerified: isVerified,
-      blocked: blocked,
-      reason: reason,
-      chords: chords?.map((e) => e.toDomain()).toList(),
-      song: song.toDomain(),
-      artist: artist?.toDomain(),
-      videoLesson: videoLesson?.toDomain(),
-      contributors: contributors?.map((e) => e.toDomain()).toList(),
-      instrumentVersions: instrumentVersions?.map((e) => e.toDomain()).toList());
+        versionId: versionId,
+        instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
+        content: content,
+        versionName: label,
+        versionUrl: versionUrl,
+        completePath: completePath,
+        siteUrl: siteUrl,
+        key: key,
+        shapeKey: shapeKey,
+        stdKey: stdKey,
+        stdShapeKey: stdShapeKey,
+        tuning: tuning,
+        capo: capo,
+        composers: composers,
+        isVerified: isVerified,
+        blocked: blocked,
+        reason: reason,
+        chords: chords?.map((e) => e.toDomain()).toList(),
+        song: song.toDomain(),
+        artist: artist?.toDomain(),
+        videoLesson: videoLesson?.toDomain(),
+        contributors: contributors?.map((e) => e.toDomain()).toList(),
+        instrumentVersions: instrumentVersions
+            ?.map((e) => e.toDomain())
+            .where((element) => element.instrument != Instrument.unknown && element.versions.isNotEmpty)
+            .toList(),
+      );
 }

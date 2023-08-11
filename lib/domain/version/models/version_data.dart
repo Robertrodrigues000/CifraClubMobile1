@@ -1,18 +1,19 @@
 import 'package:cifraclub/domain/artist/models/artist.dart';
 import 'package:cifraclub/domain/version/models/chord.dart';
 import 'package:cifraclub/domain/version/models/contributor.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/instrument_version.dart';
 import 'package:cifraclub/domain/version/models/version_data_song.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
-import 'package:cifraclub/domain/version/models/instrument_versions.dart';
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
 import 'package:equatable/equatable.dart';
 
 class VersionData extends Equatable {
   final int? localId;
   final int versionId;
-  final int type;
+  final Instrument instrument;
   final String content;
-  final String label;
+  final String versionName;
   final String versionUrl;
   final String completePath;
   final String siteUrl;
@@ -31,14 +32,14 @@ class VersionData extends Equatable {
   final Artist? artist;
   final VersionDataVideoLesson? videoLesson;
   final List<Contributor>? contributors;
-  final List<InstrumentVersions>? instrumentVersions;
+  final List<({Instrument instrument, List<InstrumentVersion> versions})>? instrumentVersions;
 
   const VersionData({
     this.localId,
     required this.versionId,
-    required this.type,
+    required this.instrument,
     required this.content,
-    required this.label,
+    required this.versionName,
     required this.versionUrl,
     required this.completePath,
     required this.siteUrl,
@@ -62,26 +63,26 @@ class VersionData extends Equatable {
 
   // coverage:ignore-start
   Version toVersion(int versionId) => Version(
-        remoteDatabaseID: versionId,
+        remoteDatabaseId: versionId,
         songId: song.songId,
         versionId: versionId,
-        type: type,
+        instrument: instrument,
         name: song.name,
         songUrl: completePath,
         artist: artist!,
         capo: capo,
         tuning: tuning,
-        tone: key,
-        stdTone: stdKey,
+        key: key,
+        stdKey: stdKey,
         order: 0,
       );
 
   @override
   List<Object?> get props => [
         versionId,
-        type,
+        instrument,
         content,
-        label,
+        versionName,
         versionUrl,
         completePath,
         siteUrl,

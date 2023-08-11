@@ -28,13 +28,13 @@ void main() {
 
     final userVersionRepository = _UserVersionRepositoryMock();
     when(() => userVersionRepository.updateVersionsToSongbook(any(), any()))
-        .thenAnswer((_) => SynchronousFuture([versions.first.remoteDatabaseID!, versions.last.remoteDatabaseID!]));
+        .thenAnswer((_) => SynchronousFuture([versions.first.remoteDatabaseId!, versions.last.remoteDatabaseId!]));
 
     await SortVersionsFromSongbook(songbookRepository, userVersionRepository)(songbook.id!, versions);
 
     verify(() => songbookRepository.sortVersionFromSongbook(
           songbookId: songbook.id!,
-          versionsId: [versions.first.remoteDatabaseID!, versions.last.remoteDatabaseID!],
+          versionsId: [versions.first.remoteDatabaseId!, versions.last.remoteDatabaseId!],
         )).called(1);
 
     final orderedVersion = [
@@ -61,7 +61,7 @@ void main() {
 
     verify(() => songbookRepository.sortVersionFromSongbook(
           songbookId: songbook.id!,
-          versionsId: [versions.first.remoteDatabaseID!, versions.last.remoteDatabaseID!],
+          versionsId: [versions.first.remoteDatabaseId!, versions.last.remoteDatabaseId!],
         )).called(1);
 
     verifyNever(() => userVersionRepository.updateVersionsToSongbook(any(), any()));

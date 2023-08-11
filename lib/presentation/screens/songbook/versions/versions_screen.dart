@@ -228,7 +228,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       song: item.name,
                       artist: item.artist.name,
                       type: "Violão",
-                      tone: item.tone ?? "",
+                      versionKey: item.key ?? "",
                       // coverage:ignore-start
                       onOptionsTap: () async {
                         ListVersionOptionsBottomSheet(onTap: () async {
