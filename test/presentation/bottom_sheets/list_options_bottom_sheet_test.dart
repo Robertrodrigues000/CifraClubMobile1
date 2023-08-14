@@ -555,4 +555,39 @@ void main() {
 
     verify(() => editListScreenBuilder.push(any(), songbook.name, songbook.id!)).called(1);
   });
+
+  testWidgets("When tap in privacy option should update songbook to privacy option selected", (widgetTester) async {
+    bloc.mockStream(null);
+    final songbook = getFakeSongbook(isPublic: true);
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () async {
+                await setOpenListOptionBottomSheet(context, true, 1, songbook, true, bloc);
+              },
+            ),
+          );
+        },
+      ),
+      nav: nav,
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+
+    await widgetTester.tap(find.text(appTextEn.privacyList));
+    await widgetTester.pumpAndSettle();
+
+    await widgetTester.tap(find.text(appTextEn.private));
+    await widgetTester.pumpAndSettle();
+
+    verify(() => bloc.updateSongbookData(songbook: songbook, isPublic: false)).called(1);
+  });
 }

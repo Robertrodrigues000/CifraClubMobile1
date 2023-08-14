@@ -170,7 +170,8 @@ class _ListsScreenState extends State<ListsScreen> {
                     },
                   );
                 },
-              )
+                validatePreview: (preview) => _bloc.validatePreview(preview),
+              ),
             ],
           ),
         );

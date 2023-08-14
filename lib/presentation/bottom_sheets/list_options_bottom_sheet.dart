@@ -176,21 +176,10 @@ class ListOptionsBottomSheet {
                               case ListOptionsBottomSheetItem.privacy:
                                 DefaultBottomSheet.close(context);
                                 PrivacyBottomSheet(
-                                  isPublic: false,
-                                  // coverage:ignore-start
-                                  onTap: (privacy) {
-                                    switch (privacy) {
-                                      case true:
-                                        // ignore: avoid_print
-                                        print("public");
-                                        break;
-                                      case false:
-                                        // ignore: avoid_print
-                                        print("private");
-                                        break;
-                                    }
+                                  isPublic: songbook.isPublic,
+                                  onTap: (privacy) async {
+                                    await bloc.updateSongbookData(songbook: songbook, isPublic: privacy);
                                   },
-                                  // coverage:ignore-end
                                 ).show(context);
                                 break;
                             }

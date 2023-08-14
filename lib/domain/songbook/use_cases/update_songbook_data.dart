@@ -35,7 +35,7 @@ class UpdateSongbookData {
     );
 
     return updateSongbookData.then((result) {
-      return result.onSuccess((value) {
+      if (result.isSuccess) {
         _userSongbookRepository.insertUserSongbook(
           songbook.copyWith(
             name: name ?? songbook.name,
@@ -43,7 +43,9 @@ class UpdateSongbookData {
             lastUpdated: dateTime,
           ),
         );
-      });
+      }
+
+      return result;
     });
   }
 }

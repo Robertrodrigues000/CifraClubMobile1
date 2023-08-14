@@ -12,7 +12,7 @@ class EmptyListEmptyState extends StatelessWidget {
     final dimensions = context.appDimensionScheme;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: dimensions.externalMarginWithoutConnection),
+      padding: EdgeInsets.symmetric(horizontal: dimensions.screenMargin),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

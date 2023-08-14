@@ -101,10 +101,12 @@ void main() {
     when(() => listsBloc.createNewSongbook(any())).thenAnswer((_) => SynchronousFuture(Ok(getFakeSongbook())));
     when(() => listsBloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
     when(listsBloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
+    when(() => listsBloc.validatePreview(any())).thenReturn([]);
 
     versionsBloc = _VersionsBlocMock();
     when(() => versionsBloc.init(any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => versionsBloc.shareLink(any(), any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => versionsBloc.getPreview()).thenReturn([]);
     when(versionsBloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 

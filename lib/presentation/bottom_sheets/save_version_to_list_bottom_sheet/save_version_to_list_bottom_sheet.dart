@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.d
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/extensions/build_context.dart';
@@ -32,16 +33,20 @@ class SaveVersionToListBottomSheet {
   final GetListLimit _getListLimit;
   final GetVersionsLimit _getVersionsLimit;
   final GetProStatusStream _getProStatusStream;
+  final ValidateArtistImagePreview _validateArtistImagePreview;
+
   SaveVersionToListBottomSheet(
-      this._getAllUserSongbooks,
-      this._insertUserSongbook,
-      this._getListLimitState,
-      this._getVersionsLimitState,
-      this._insertVersionToSongbook,
-      this._validateSongbookName,
-      this._getListLimit,
-      this._getVersionsLimit,
-      this._getProStatusStream);
+    this._getAllUserSongbooks,
+    this._insertUserSongbook,
+    this._getListLimitState,
+    this._getVersionsLimitState,
+    this._insertVersionToSongbook,
+    this._validateSongbookName,
+    this._getListLimit,
+    this._getVersionsLimit,
+    this._getProStatusStream,
+    this._validateArtistImagePreview,
+  );
 
   // coverage:ignore-start
   Future<void> show({
@@ -63,6 +68,7 @@ class SaveVersionToListBottomSheet {
               _getListLimit,
               _getVersionsLimit,
               _getProStatusStream,
+              _validateArtistImagePreview,
               artistUrl,
               songUrl)
         ..init(),
@@ -152,19 +158,20 @@ class SaveVersionToListBottomSheet {
                         ),
                       ),
                     UserLists(
-                        lists: state.userLists,
-                        // coverage:ignore-start
-                        onTap: (songbook) async {
-                          DefaultBottomSheet.close(context);
-                          final result = await bloc.addSongToSongbook(
-                              songbookId: songbook.id, name: songbook.name, isNewList: false);
+                      lists: state.userLists,
+                      // coverage:ignore-start
+                      onTap: (songbook) async {
+                        DefaultBottomSheet.close(context);
+                        final result = await bloc.addSongToSongbook(
+                            songbookId: songbook.id, name: songbook.name, isNewList: false);
 
-                          if (screenContext.mounted) {
-                            handleResult(screenContext, result);
-                          }
+                        if (screenContext.mounted) {
+                          handleResult(screenContext, result);
                         }
-                        // coverage:ignore-end
-                        )
+                      },
+                      validatePreview: (preview) => bloc.validatePreview(preview),
+                      // coverage:ignore-end
+                    )
                   ],
                 ),
               );

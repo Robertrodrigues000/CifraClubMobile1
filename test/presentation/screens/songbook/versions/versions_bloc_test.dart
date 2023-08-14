@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/version/use_cases/get_ordered_versions.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
@@ -44,6 +45,12 @@ class _GetOrderedVersionsMock extends Mock implements GetOrderedVersions {}
 
 class _DeleteVersions extends Mock implements DeleteVersions {}
 
+class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImagePreview {
+  _ValidateArtistImagePreviewMock() {
+    when(() => call(any())).thenReturn([]);
+  }
+}
+
 void main() {
   VersionsBloc getBloc({
     _GetSongbookStreamByIdMock? getSongbookStreamByIdMock,
@@ -56,6 +63,7 @@ void main() {
     _SetOrderFilterPreferencesMock? setOrderFilterPreferences,
     _GetOrderedVersionsMock? getOrderedVersions,
     _DeleteVersions? deleteVersions,
+    _ValidateArtistImagePreviewMock? validateArtistImagePreview,
   }) =>
       VersionsBloc(
         getSongbookStreamByIdMock ?? _GetSongbookStreamByIdMock(),
@@ -68,6 +76,7 @@ void main() {
         setOrderFilterPreferences ?? _SetOrderFilterPreferencesMock(),
         getOrderedVersions ?? _GetOrderedVersionsMock(),
         deleteVersions ?? _DeleteVersions(),
+        validateArtistImagePreview ?? _ValidateArtistImagePreviewMock(),
       );
 
   setUpAll(() {
@@ -276,6 +285,30 @@ void main() {
     await bloc.shareLink("https://www.test.com", null);
 
     verify(() => shareLink(link: "https://www.test.com")).called(1);
+  });
+
+  test("When call 'getPreview' should return preview image url list", () async {
+    final validateImagePreview = _ValidateArtistImagePreviewMock();
+    final fakeImageList = ["test1", "test2"];
+    when(() => validateImagePreview(any())).thenReturn(fakeImageList);
+
+    final bloc = getBloc(validateArtistImagePreview: validateImagePreview);
+    bloc.emit(VersionsState(songbook: getFakeSongbook(preview: fakeImageList)));
+    final result = bloc.getPreview();
+
+    verify(() => validateImagePreview(any())).called(1);
+    expect(result, fakeImageList);
+  });
+
+  test("When call 'getPreview' and preview is empty return should empty list", () async {
+    final validateImagePreview = _ValidateArtistImagePreviewMock();
+
+    final bloc = getBloc(validateArtistImagePreview: validateImagePreview);
+    bloc.emit(VersionsState(songbook: getFakeSongbook(preview: List.empty())));
+    final result = bloc.getPreview();
+
+    verifyNever(() => validateImagePreview(any()));
+    expect(result, []);
   });
 
   group("When 'onSelectedOrderType' is called", () {

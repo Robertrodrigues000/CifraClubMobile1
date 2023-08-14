@@ -32,9 +32,9 @@ class VersionsEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<VersionsBloc>(
-      create: (context) =>
-          VersionsBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())
-            ..init(songbookId),
+      create: (context) => VersionsBloc(
+          getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())
+        ..init(songbookId),
       child: VersionsScreen(
         isTablet: false,
         userId: userId,

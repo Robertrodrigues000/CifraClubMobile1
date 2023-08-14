@@ -38,7 +38,21 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    heightFixedHeader = 50 + 32 + (2 * context.appDimensionScheme.screenMargin);
+    _setHeightHeader();
+  }
+
+  @override
+  void didUpdateWidget(covariant VersionsFixedHeader oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.listType != widget.listType) {
+      _setHeightHeader(); // coverage:ignore-line
+    }
+  }
+
+  void _setHeightHeader() {
+    heightFixedHeader = 32 +
+        context.appDimensionScheme.screenMargin +
+        (widget.listType == ListType.user ? (50 + context.appDimensionScheme.screenMargin) : 0);
   }
 
   @override
@@ -52,19 +66,21 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
           padding: EdgeInsets.only(bottom: context.appDimensionScheme.screenMargin),
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
-                height: 50,
-                child: VersionLimitCard(
-                  isPro: widget.isPro,
-                  isWithinLimit: widget.tabsLimitState == ListLimitState.withinLimit,
-                  limit: widget.tabsLimit,
-                  versionsCount: widget.tabsCount,
-                  hasBackground: widget.isPro ? true : false,
-                  onTap: () {}, // coverage:ignore-line
+              if (widget.listType == ListType.user) ...[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                  height: 50,
+                  child: VersionLimitCard(
+                    isPro: widget.isPro,
+                    isWithinLimit: widget.tabsLimitState == ListLimitState.withinLimit,
+                    limit: widget.tabsLimit,
+                    versionsCount: widget.tabsCount,
+                    hasBackground: widget.isPro ? true : false,
+                    onTap: () {}, // coverage:ignore-line
+                  ),
                 ),
-              ),
-              SizedBox(height: context.appDimensionScheme.screenMargin),
+                SizedBox(height: context.appDimensionScheme.screenMargin),
+              ],
               FilterCapsuleList(
                 alignment: Alignment.center,
                 capsulePadding: const EdgeInsets.symmetric(horizontal: 8),

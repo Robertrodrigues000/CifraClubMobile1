@@ -80,6 +80,7 @@ void main() {
     when(bloc.init).thenReturn(null);
     when(bloc.openLoginPage).thenReturn(null);
     when(bloc.openUserProfilePage).thenReturn(null);
+    when(() => bloc.validatePreview(any())).thenReturn([]);
     when(bloc.logout).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.createNewSongbook(any())).thenAnswer((_) => SynchronousFuture(Ok(songbookFake)));

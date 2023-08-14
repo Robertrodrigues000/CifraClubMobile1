@@ -7,6 +7,7 @@ import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
@@ -52,6 +53,8 @@ class _GetProStatusStreamMock extends Mock implements GetProStatusStream {}
 
 class _SaveVersionToListBottomSheetBlocMock extends Mock implements SaveVersionToListBottomSheetBloc {}
 
+class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImagePreview {}
+
 void main() {
   late _SaveVersionToListBottomSheetBlocMock bloc;
   late SaveVersionToListBottomSheet saveVersionToListBottomSheet;
@@ -66,7 +69,7 @@ void main() {
     when(() => bloc.getVersionsLimit()).thenAnswer((_) => 100);
     when(() => bloc.addSongToSongbook(name: any(named: "name")))
         .thenAnswer((_) => Future.value(SaveVersionToListCompleted(name: "TESTANDO", isNewList: false)));
-
+    when(() => bloc.validatePreview(any())).thenReturn([]);
     when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
     when(() => bloc.createNewSongbook(
           any(),
@@ -83,6 +86,7 @@ void main() {
       _GetListLimitMock(),
       _GetVersionsLimitMock(),
       _GetProStatusStreamMock(),
+      _ValidateArtistImagePreviewMock(),
     );
   });
 

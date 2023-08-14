@@ -11,6 +11,7 @@ import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart'
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
@@ -53,16 +54,17 @@ abstract class BottomSheetModule {
     final GetListLimit getListLimit,
     final GetVersionsLimit getVersionsLimit,
     final GetProStatusStream getProStatusStream,
+    final ValidateArtistImagePreview validateArtistImagePreview,
   ) =>
       SaveVersionToListBottomSheet(
-        getAllUserSongbooks,
-        insertUserSongbook,
-        getListLimitState,
-        getVersionsLimitState,
-        insertVersionToSongbook,
-        validateSongbookName,
-        getListLimit,
-        getVersionsLimit,
-        getProStatusStream,
-      );
+          getAllUserSongbooks,
+          insertUserSongbook,
+          getListLimitState,
+          getVersionsLimitState,
+          insertVersionToSongbook,
+          validateSongbookName,
+          getListLimit,
+          getVersionsLimit,
+          getProStatusStream,
+          validateArtistImagePreview);
 }

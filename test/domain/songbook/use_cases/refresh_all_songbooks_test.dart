@@ -5,7 +5,6 @@ import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
@@ -38,15 +37,14 @@ void main() {
       ];
       final songbooks = songbookVersion.map((e) => e.songbook).toList();
 
-      when(songbookRepository.getAllSongbooks).thenAnswer((_) => SynchronousFuture(Ok(songbookVersion)));
+      when(songbookRepository.getAllSongbooks).thenAnswer((_) => Future.value(Ok(songbookVersion)));
       when(() => userSongbookRepository.setUserSongbooks(songbooks))
-          .thenAnswer((_) => SynchronousFuture(songbooks.map((e) => e.id!).toList(growable: false)));
+          .thenAnswer((_) => Future.value(songbooks.map((e) => e.id!).toList(growable: false)));
       when(() => userVersionRepository.addVersionsToSongbook(captureAny(), captureAny()))
-          .thenAnswer((_) => SynchronousFuture([]));
-      when(() => userVersionRepository.addVersionsToRecentSongbook(captureAny()))
-          .thenAnswer((_) => SynchronousFuture([]));
-      when(userVersionRepository.clearAllVersions).thenAnswer((_) => SynchronousFuture(null));
-      when(() => updateSongbookPreview(any())).thenAnswer((_) => SynchronousFuture(1));
+          .thenAnswer((_) => Future.value([]));
+      when(() => userVersionRepository.addVersionsToRecentSongbook(captureAny())).thenAnswer((_) => Future.value([]));
+      when(userVersionRepository.clearAllVersions).thenAnswer((_) => Future.value(null));
+      when(() => updateSongbookPreview(any())).thenAnswer((_) => Future.value(1));
 
       final result = await RefreshAllSongbooks(
           songbookRepository, userSongbookRepository, userVersionRepository, updateSongbookPreview)();
@@ -84,7 +82,7 @@ void main() {
       final userVersionRepository = _UserVersionRepositoryMock();
       final updateSongbookPreview = _UpdateSongbookPreviewMock();
 
-      when(songbookRepository.getAllSongbooks).thenAnswer((_) => SynchronousFuture(Err(ConnectionError())));
+      when(songbookRepository.getAllSongbooks).thenAnswer((_) => Future.value(Err(ConnectionError())));
 
       final result = await RefreshAllSongbooks(
           songbookRepository, userSongbookRepository, userVersionRepository, updateSongbookPreview)();

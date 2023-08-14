@@ -13,12 +13,14 @@ class UserListItem extends StatelessWidget {
     required this.songbook,
     required this.onOptionsTap,
     required this.isSelected,
+    required this.preview,
   });
 
   final Songbook songbook;
   final VoidCallback onTap;
   final VoidCallback? onOptionsTap;
   final bool isSelected;
+  final List<String> preview;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class UserListItem extends StatelessWidget {
             ),
             // coverage:ignore-start
             ListImageGroup(
-              images: songbook.preview,
+              images: preview,
             ),
             // coverage:ignore-end
             const SizedBox(

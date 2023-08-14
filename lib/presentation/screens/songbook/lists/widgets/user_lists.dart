@@ -10,10 +10,12 @@ class UserLists extends StatelessWidget {
     required this.onTap,
     this.onOptionsTap,
     this.selectedSongbookId,
+    required this.validatePreview,
   });
   final List<Songbook> lists;
   final Function(Songbook) onTap;
   final Function(Songbook)? onOptionsTap;
+  final List<String> Function(List<String?>) validatePreview;
   final int? selectedSongbookId;
 
   @override
@@ -21,14 +23,16 @@ class UserLists extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
+          final songbook = lists[index];
           return UserListItem(
-            key: Key(lists[index].name),
-            onTap: () => onTap(lists[index]),
+            key: Key(songbook.name),
+            onTap: () => onTap(songbook),
             // coverage:ignore-start
-            onOptionsTap: onOptionsTap != null ? () => onOptionsTap!(lists[index]) : null,
+            onOptionsTap: onOptionsTap != null ? () => onOptionsTap!(songbook) : null,
             // coverage:ignore-end
-            songbook: lists[index],
-            isSelected: lists[index].id == selectedSongbookId,
+            songbook: songbook,
+            isSelected: songbook.id == selectedSongbookId,
+            preview: validatePreview(songbook.preview),
           );
         },
         childCount: lists.length,

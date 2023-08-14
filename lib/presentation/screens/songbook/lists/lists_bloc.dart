@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
@@ -33,6 +34,7 @@ class ListsBloc extends Cubit<ListsState> {
   final GetAllUserSongbooks _getAllUserSongbooks;
   final GetProStatusStream _getProStatusStream;
   final ValidateSongbookName _validateSongbookName;
+  final ValidateArtistImagePreview _validateArtistImagePreview;
 
   ListsBloc(
     this._getListLimitState,
@@ -47,6 +49,7 @@ class ListsBloc extends Cubit<ListsState> {
     this._getAllUserSongbooks,
     this._getProStatusStream,
     this._validateSongbookName,
+    this._validateArtistImagePreview,
   ) : super(const ListsState());
 
   StreamSubscription<List<Songbook>>? _songbooksSubscription;
@@ -124,6 +127,8 @@ class ListsBloc extends Cubit<ListsState> {
         return true;
     }
   }
+
+  List<String> validatePreview(List<String?> preview) => _validateArtistImagePreview(preview);
 
   @override
   Future<void> close() {

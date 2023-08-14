@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:flutter/foundation.dart';
@@ -22,11 +23,14 @@ class _UserSongbookRepositoryMock extends Mock implements UserSongbookRepository
 
 class _GetVersionDataMock extends Mock implements GetVersionData {}
 
+class _UpdateSongbookPreviewMock extends Mock implements UpdateSongbookPreview {}
+
 void main() {
   final songbookRepository = _SongbookRepositoryMock();
   final userVersionRepository = _UserVersionRepositoryMock();
   final getVersionData = _GetVersionDataMock();
   final userSongbookRepository = _UserSongbookRepositoryMock();
+  final updateSongbookPreview = _UpdateSongbookPreviewMock();
 
   setUpAll(() {
     registerFallbackValue(getFakeSongbookVersionInput());
@@ -55,6 +59,8 @@ void main() {
         songbookId: any(named: "songbookId"),
         quantity: any(named: "quantity"))).thenAnswer((_) => SynchronousFuture(1));
 
+    when(() => updateSongbookPreview(10)).thenAnswer((_) => SynchronousFuture(2));
+
     test("should return success", () async {
       when(() => songbookRepository.addVersionToSongbook(
           songbookId: any(named: "songbookId"),
@@ -65,6 +71,7 @@ void main() {
         userVersionRepository,
         getVersionData,
         userSongbookRepository,
+        updateSongbookPreview,
       )(
         artistUrl: versionInput.artistUrl!,
         songUrl: versionInput.songUrl!,
@@ -81,6 +88,7 @@ void main() {
           songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
       verify(() => userVersionRepository.addVersionsToSongbook([versionResponse], 10)).called(1);
       verify(() => userVersionRepository.addVersionData(versionData, versionResponse.remoteDatabaseId!)).called(1);
+      verify(() => updateSongbookPreview(10)).called(1);
       expect(result.get(), versionResponse.songId);
     });
   });
@@ -98,6 +106,7 @@ void main() {
       userVersionRepository,
       getVersionData,
       userSongbookRepository,
+      updateSongbookPreview,
     )(
       artistUrl: versionInput.artistUrl!,
       songUrl: versionInput.songUrl!,
@@ -130,6 +139,7 @@ void main() {
       userVersionRepository,
       getVersionData,
       userSongbookRepository,
+      updateSongbookPreview,
     )(
       artistUrl: versionInput.artistUrl!,
       songUrl: versionInput.songUrl!,

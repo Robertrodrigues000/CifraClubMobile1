@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet_bloc.dart';
@@ -49,6 +50,12 @@ class _GetListLimitMock extends Mock implements GetListLimit {}
 
 class _GetVersionsLimitMock extends Mock implements GetVersionsLimit {}
 
+class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImagePreview {
+  _ValidateArtistImagePreviewMock() {
+    when(() => call(any())).thenReturn(["https://solr.co/image"]);
+  }
+}
+
 class _GetProStatusStreamMock extends Mock implements GetProStatusStream {
   _GetProStatusStreamMock() {
     when(call).thenAnswer((_) => BehaviorSubject.seeded(false));
@@ -72,6 +79,7 @@ void main() {
     _GetVersionsLimitMock? getVersionsLimitMock,
     _GetProStatusStreamMock? getProStatusStreamMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
+    _ValidateArtistImagePreviewMock? validateArtistImagePreviewMock,
   }) =>
       SaveVersionToListBottomSheetBloc(
         getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
@@ -83,6 +91,7 @@ void main() {
         getListLimitMock ?? _GetListLimitMock(),
         getVersionsLimitMock ?? _GetVersionsLimitMock(),
         getProStatusStreamMock ?? _GetProStatusStreamMock(),
+        validateArtistImagePreviewMock ?? _ValidateArtistImagePreviewMock(),
         "",
         "",
       );
@@ -264,5 +273,12 @@ void main() {
     final versionsLimit = bloc.getVersionsLimit();
 
     expect(versionsLimit, 100);
+  });
+
+  test("When `validatePreview` is called return the image url list", () async {
+    final bloc = getBloc();
+    final result = bloc.validatePreview(["image"]);
+
+    expect(result, ["https://solr.co/image"]);
   });
 }

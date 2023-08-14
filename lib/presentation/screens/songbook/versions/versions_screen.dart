@@ -7,7 +7,7 @@ import 'package:cifraclub/presentation/constants/app_urls.dart';
 import 'package:cifraclub/presentation/dialogs/delete_version_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
-import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_collapsed_header.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
-import 'package:cifraclub/presentation/screens/search/search_entry.dart';
 
 class VersionsScreen extends StatefulWidget {
   const VersionsScreen({
@@ -27,7 +26,6 @@ class VersionsScreen extends StatefulWidget {
     this.userId,
     required this.listOptionsBottomSheet,
     this.onDeleteSongbook,
-    this.width,
   });
 
   final ListOptionsBottomSheet listOptionsBottomSheet;
@@ -35,7 +33,6 @@ class VersionsScreen extends StatefulWidget {
   final int? songbookId;
   final int? userId;
   final VoidCallback? onDeleteSongbook;
-  final double? width;
 
   @override
   State<VersionsScreen> createState() => _VersionsScreenState();
@@ -44,7 +41,7 @@ class VersionsScreen extends StatefulWidget {
 class _VersionsScreenState extends State<VersionsScreen> {
   static const _searchHeight = 56.0;
   late final VersionsBloc _bloc = BlocProvider.of<VersionsBloc>(context);
-  final scrollController = ScrollController(initialScrollOffset: _searchHeight);
+  final scrollController = ScrollController();
   var isScrolledUnder = false;
 
   @override
@@ -56,7 +53,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
   void _onScroll() {
     final currentOffset = scrollController.offset;
     final oldScrolledUnder = isScrolledUnder;
-    isScrolledUnder = currentOffset > _searchHeight ? true : false;
+    isScrolledUnder = currentOffset > 0 ? true : false;
     if (oldScrolledUnder != isScrolledUnder) {
       setState(() {});
     }
@@ -68,7 +65,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
     if (oldWidget.songbookId != widget.songbookId) {
       _bloc.init(widget.songbookId);
       scrollController.animateTo(
-        _searchHeight,
+        0,
         duration: const Duration(milliseconds: 300),
         curve: Curves.decelerate,
       );
@@ -182,7 +179,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
             controller: scrollController,
             physics: state.versions.isEmpty ? const NeverScrollableScrollPhysics() : null,
             slivers: [
-              SliverToBoxAdapter(
+              /*SliverToBoxAdapter(
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.appDimensionScheme.screenMargin,
@@ -200,14 +197,15 @@ class _VersionsScreenState extends State<VersionsScreen> {
                     ),
                   ),
                 ),
-              ),
-              VersionsCollapsedHeader(
-                isScrolledUnder: isScrolledUnder,
-                isPublic: state.songbook?.isPublic ?? false,
-                songbookName: state.songbook?.name ?? "",
-                preview: state.songbook?.preview,
-                isTablet: widget.isTablet,
-                width: widget.width,
+              )*/ // TODO : Implementar tela de pesquisa de versions e ajuste o código para a barra de pesquisa
+              SliverToBoxAdapter(
+                child: SongbookInformationSection(
+                  isScrolledUnder: isScrolledUnder,
+                  isPublic: state.songbook?.isPublic ?? false,
+                  songbookName: ListType.getListTitle(context, state.songbook),
+                  preview: _bloc.getPreview(),
+                  listType: state.songbook?.type ?? ListType.recents,
+                ),
               ),
               VersionsFixedHeader(
                 isScrolledUnder: isScrolledUnder,
@@ -230,7 +228,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       type: "Violão",
                       versionKey: item.key ?? "",
                       // coverage:ignore-start
-                      onOptionsTap: () async {
+                      onOptionsTap: () {
                         ListVersionOptionsBottomSheet(onTap: () async {
                           final shouldDeleteVersion = await DeleteVersionDialog.show(
                             context: context,
@@ -257,7 +255,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       )
                     : Container(),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: context.appDimensionScheme.searchInputHeight))
+              /*SliverToBoxAdapter(child: SizedBox(height: context.appDimensionScheme.searchInputHeight))*/ // TODO : Quando tiver a barra de pesquisa vamos precisar desse box para compensar o scroll
             ],
           ),
         );

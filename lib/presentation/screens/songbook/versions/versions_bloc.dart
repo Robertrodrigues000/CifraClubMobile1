@@ -11,6 +11,7 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/domain/version/use_cases/get_ordered_versions.dart';
@@ -31,6 +32,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
   final GetListOrderTypePreferences _getOrderFilterPreferences;
   final GetOrderedVersions _getOrderedVersions;
   final DeleteVersions _deleteVersions;
+  final ValidateArtistImagePreview _validateArtistImagePreview;
 
   VersionsBloc(
     this._getSongbookStreamById,
@@ -43,6 +45,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     this._setOrderFilterPreferences,
     this._getOrderedVersions,
     this._deleteVersions,
+    this._validateArtistImagePreview,
   ) : super(const VersionsState());
 
   Future<void> init(int? songbookId) async {
@@ -127,6 +130,13 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     if (songbookId != null) {
       await _deleteVersions(songbookId: songbookId, versions: [version]);
     }
+  }
+
+  List<String> getPreview() {
+    if (state.songbook == null || state.songbook!.preview.isEmpty) {
+      return [];
+    }
+    return _validateArtistImagePreview(state.songbook?.preview ?? []);
   }
 
   @override

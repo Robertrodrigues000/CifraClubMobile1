@@ -13,12 +13,12 @@ class SpecialLists extends StatelessWidget {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          final list = lists[index];
+          final songbook = lists[index];
           return SpecialListItem(
-            key: Key(list.name),
-            type: list.type,
-            onTap: () => onTap(list),
-            isSelected: list.id == selectedSongbookId,
+            key: Key(songbook.name),
+            songbook: songbook,
+            onTap: () => onTap(songbook),
+            isSelected: songbook.id == selectedSongbookId,
           );
         },
         childCount: lists.length,

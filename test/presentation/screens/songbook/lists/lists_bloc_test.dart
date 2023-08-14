@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/refresh_all_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
@@ -103,6 +104,12 @@ class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {
   }
 }
 
+class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImagePreview {
+  _ValidateArtistImagePreviewMock() {
+    when(() => call(any())).thenReturn(["https://solr.co/image"]);
+  }
+}
+
 void main() {
   ListsBloc getBloc({
     _GetListLimitStateStreamMock? getListLimitStateMock,
@@ -117,21 +124,22 @@ void main() {
     _GetAllUserSongbooksMock? getAllUserSongbooksMock,
     _GetProStatusStreamMock? getProStatusStreamMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
+    _ValidateArtistImagePreviewMock? validateArtistImagePreview,
   }) =>
       ListsBloc(
-        getListLimitStateMock ?? _GetListLimitStateStreamMock(),
-        getTotalSongbooksMock ?? _GetTotalSongbooksStreamMock(),
-        insertUserSongbookMock ?? _InsertUserSongbookMock(),
-        getListLimitMock ?? _GetListLimitMock(),
-        getCredentialStreamMock ?? _GetCredentialStreamMock(),
-        logoutMock ?? _LogoutMock(),
-        openLoginPageMock ?? _OpenLoginPageMock(),
-        openUserProfileMock ?? _OpenUserProfileMock(),
-        refreshAllSongbooksMock ?? _RefreshAllSongbooksMock(Err(ConnectionError())),
-        getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
-        getProStatusStreamMock ?? _GetProStatusStreamMock(),
-        validateSongbookNameMock ?? _ValidateSongbookNameMock(),
-      );
+          getListLimitStateMock ?? _GetListLimitStateStreamMock(),
+          getTotalSongbooksMock ?? _GetTotalSongbooksStreamMock(),
+          insertUserSongbookMock ?? _InsertUserSongbookMock(),
+          getListLimitMock ?? _GetListLimitMock(),
+          getCredentialStreamMock ?? _GetCredentialStreamMock(),
+          logoutMock ?? _LogoutMock(),
+          openLoginPageMock ?? _OpenLoginPageMock(),
+          openUserProfileMock ?? _OpenUserProfileMock(),
+          refreshAllSongbooksMock ?? _RefreshAllSongbooksMock(Err(ConnectionError())),
+          getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
+          getProStatusStreamMock ?? _GetProStatusStreamMock(),
+          validateSongbookNameMock ?? _ValidateSongbookNameMock(),
+          validateArtistImagePreview ?? _ValidateArtistImagePreviewMock());
 
   test("When logout should call 'Logout' use case", () async {
     final logout = _LogoutMock.newDummy();
@@ -269,5 +277,12 @@ void main() {
     final result = await bloc.isValidSongbookName("teste");
 
     expect(result, false);
+  });
+
+  test("When `validatePreview` is called return the image url list", () async {
+    final bloc = getBloc();
+    final result = bloc.validatePreview(["image"]);
+
+    expect(result, ["https://solr.co/image"]);
   });
 }

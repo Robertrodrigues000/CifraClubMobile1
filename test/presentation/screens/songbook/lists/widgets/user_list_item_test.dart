@@ -17,6 +17,7 @@ void main() {
           key: Key(songbook.name),
           onTap: () {},
           isSelected: true,
+          preview: const [],
         ),
       ),
     );
@@ -36,6 +37,7 @@ void main() {
           key: Key(songbook.name),
           onTap: () {},
           isSelected: false,
+          preview: const [],
         ),
       ),
     );

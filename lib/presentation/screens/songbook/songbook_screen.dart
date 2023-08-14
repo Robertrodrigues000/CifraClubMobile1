@@ -74,7 +74,6 @@ class _SongbookScreenState extends State<SongbookScreen> {
                   Expanded(
                     child: VersionsScreen(
                       isTablet: true,
-                      width: widthList,
                       userId: state.userCredential?.user?.id,
                       songbookId: state.selectedSongbookId,
                       listOptionsBottomSheet: widget.listOptionsBottomSheet,

@@ -26,7 +26,7 @@ void main() {
       TestWrapper(
         child: SpecialListItem(
           key: Key(songbook.name),
-          type: songbook.type,
+          songbook: songbook,
           onTap: () {},
           isSelected: true,
         ),
