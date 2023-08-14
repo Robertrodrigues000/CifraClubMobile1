@@ -59,4 +59,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   artistSongItemRightMargin: 4,
   artistSongsHeaderSpace: 8,
   searchBarVerticalPadding: 8,
+
+  //Version Key
+  keyButtonPadding: 12,
 );

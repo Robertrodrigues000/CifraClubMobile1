@@ -33,13 +33,14 @@ void main() {
   });
 
   UserVersionDto getUserVersionDto({
+    int? id,
     UserVersionArtistDto? userVersionArtistDto,
     int? songbookId,
     String? artistImage,
     int? songId,
   }) =>
       UserVersionDto(
-        id: faker.randomGenerator.integer(10000),
+        id: id ?? faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
         songUrl: faker.animal.name(),
         key: faker.animal.name(),
@@ -199,12 +200,12 @@ void main() {
       final artistImage = ["url1", "url2", "url4", "url4", "url6", "url4"];
 
       final versions = [
-        getUserVersionDto(artistImage: artistImage[0], songbookId: 1),
-        getUserVersionDto(artistImage: artistImage[1], songbookId: 1),
-        getUserVersionDto(artistImage: artistImage[2], songbookId: 1),
-        getUserVersionDto(artistImage: artistImage[3], songbookId: 1),
-        getUserVersionDto(artistImage: artistImage[4], songbookId: 1),
-        getUserVersionDto(artistImage: artistImage[5], songbookId: 1),
+        getUserVersionDto(id: 1, artistImage: artistImage[0], songbookId: 1),
+        getUserVersionDto(id: 2, artistImage: artistImage[1], songbookId: 1),
+        getUserVersionDto(id: 3, artistImage: artistImage[2], songbookId: 1),
+        getUserVersionDto(id: 4, artistImage: artistImage[3], songbookId: 1),
+        getUserVersionDto(id: 5, artistImage: artistImage[4], songbookId: 1),
+        getUserVersionDto(id: 6, artistImage: artistImage[5], songbookId: 1),
       ];
 
       await isar.writeTxn(

@@ -253,5 +253,6 @@
     "resultNotFoundDescription": "Tente pesquisar um novo termo.",
     "deleteReorderErrorMessage": "Falha ao excluir música da lista.",
     "sortReorderErrorMessage": "Falha ao reordenar a lista.",
-    "savedReorderChanges" : "Alterações salvas com sucesso"
+    "savedReorderChanges" : "Alterações salvas com sucesso",
+    "key" : "Tom"
 }

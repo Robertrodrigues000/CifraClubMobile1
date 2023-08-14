@@ -59,4 +59,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   artistSongItemRightMargin: 12,
   artistSongsHeaderSpace: 16,
   searchBarVerticalPadding: 12,
+
+  //Version Key
+  keyButtonPadding: 24,
 );

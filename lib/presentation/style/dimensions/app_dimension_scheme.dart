@@ -45,6 +45,7 @@ class AppDimensionScheme {
   final double artistSongItemRightMargin;
   final double artistSongsHeaderSpace;
   final double searchBarVerticalPadding;
+  final double keyButtonPadding;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -86,5 +87,6 @@ class AppDimensionScheme {
     required this.artistSongItemRightMargin,
     required this.artistSongsHeaderSpace,
     required this.searchBarVerticalPadding,
+    required this.keyButtonPadding,
   });
 }

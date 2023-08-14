@@ -85,6 +85,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme searchBarVerticalPadding(double searchBarVerticalPadding);
 
+  AppDimensionScheme keyButtonPadding(double keyButtonPadding);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -131,6 +133,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? artistSongItemRightMargin,
     double? artistSongsHeaderSpace,
     double? searchBarVerticalPadding,
+    double? keyButtonPadding,
   });
 }
 
@@ -278,6 +281,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(searchBarVerticalPadding: searchBarVerticalPadding);
 
   @override
+  AppDimensionScheme keyButtonPadding(double keyButtonPadding) => this(keyButtonPadding: keyButtonPadding);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -325,6 +331,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? artistSongItemRightMargin = const $CopyWithPlaceholder(),
     Object? artistSongsHeaderSpace = const $CopyWithPlaceholder(),
     Object? searchBarVerticalPadding = const $CopyWithPlaceholder(),
+    Object? keyButtonPadding = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -493,6 +500,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.searchBarVerticalPadding
               // ignore: cast_nullable_to_non_nullable
               : searchBarVerticalPadding as double,
+      keyButtonPadding: keyButtonPadding == const $CopyWithPlaceholder() || keyButtonPadding == null
+          ? _value.keyButtonPadding
+          // ignore: cast_nullable_to_non_nullable
+          : keyButtonPadding as double,
     );
   }
 }

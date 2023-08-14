@@ -253,5 +253,6 @@
     "resultNotFoundDescription": "Intente buscar un nuevo término.",
     "deleteReorderErrorMessage": "Error al eliminar la canción de la lista.",
     "sortReorderErrorMessage": "Error al reorganizar la lista.",
-    "savedReorderChanges" : "Cambios guardados con éxito"
+    "savedReorderChanges" : "Cambios guardados con éxito",
+    "key" : "Tono"
 }

@@ -1,6 +1,8 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/version/models/chord.dart';
+import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
@@ -26,6 +28,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
   late final _bloc = BlocProvider.of<VersionBloc>(context);
   final _scrollController = TrackingScrollController();
   var isFooterBarVisible = true;
+  String? selectedKey; // Todo: remover isso aqui quando transpose estiver funcionando
 
   YoutubePlayerController? _youtubePlayerController;
 
@@ -80,6 +83,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
   Widget build(BuildContext context) {
     return BlocBuilder<VersionBloc, VersionState>(
       builder: (context, state) {
+        selectedKey ??= state.version?.stdKey; // Todo: remover isso aqui quando transpose estiver funcionando
         return Scaffold(
           appBar: CosmosAppBar(
             actions: [
@@ -162,7 +166,24 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                     children: [
                       TextButton(onPressed: () {}, child: const Icon(Icons.video_chat)),
                       TextButton(onPressed: () {}, child: const Icon(Icons.arrow_outward)),
-                      TextButton(onPressed: () {}, child: const Icon(Icons.settings)),
+                      TextButton(
+                          onPressed: () async {
+                            var newKey = await VersionKeyBottomSheet(
+                              musicalScale: state.version!.stdKey.contains("m")
+                                  ? MusicalScale.minorScale
+                                  : MusicalScale.majorScale,
+                              originalKey: state.version!.stdKey,
+                              selectedKey: selectedKey!,
+                            ).open(
+                              context: context,
+                            );
+                            if (newKey != null) {
+                              setState(() {
+                                selectedKey = newKey;
+                              });
+                            }
+                          },
+                          child: const Icon(Icons.settings)),
                       TextButton(
                           onPressed: () {
                             state.isYouTubeVisible

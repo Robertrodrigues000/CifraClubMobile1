@@ -311,5 +311,6 @@
     "resultNotFoundDescription": "Try searching for a new term.",
     "deleteReorderErrorMessage": "Failed to delete music from the list.",
     "sortReorderErrorMessage": "Failed to reorder the list.",
-    "savedReorderChanges" : "Changes saved successfully"
+    "savedReorderChanges" : "Changes saved successfully",
+    "key" : "Key"
 }
