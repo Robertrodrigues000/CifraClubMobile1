@@ -4,6 +4,6 @@
 	"is_in_grace_period": false,
 	"purchaseDate": "2021-05-26 17:10:10",
 	"expirationDate": "2023-05-24 09:28:46",
-	"app": "br.com.studiosol.CifraClub",
+	"app": "br.com.studiosol.CifraClub.debug",
 	"productID": "cifra_club_pro_mensal"
 }

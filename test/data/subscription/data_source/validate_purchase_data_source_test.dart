@@ -36,7 +36,7 @@ void main() {
     expect(request.data, {'sandbox': true, 'platform': 'ios', 'receipt': 'receipt'});
 
     expect(result.isSuccess, isTrue);
-    expect(result.get()!.app, "br.com.studiosol.CifraClub");
+    expect(result.get()!.app, "br.com.studiosol.CifraClub.debug");
     expect(result.get()!.expirationDate, "2023-05-24 09:28:46");
     expect(result.get()!.purchaseDate, "2021-05-26 17:10:10");
     expect(result.get()!.isInGracePeriod, false);

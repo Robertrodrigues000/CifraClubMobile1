@@ -8,7 +8,7 @@
 PRODUCT_NAME = cifraclub
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = br.com.studiosol.CifraClub
+PRODUCT_BUNDLE_IDENTIFIER = br.com.studiosol.CifraClub.debug
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2022 com.studiosol. All rights reserved.

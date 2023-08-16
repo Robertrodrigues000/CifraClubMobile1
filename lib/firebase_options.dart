@@ -67,6 +67,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'integral-accord-651.appspot.com',
     androidClientId: '1046541148461-0eqngpdekft9ilsol6sjgglooqvokjiv.apps.googleusercontent.com',
     iosClientId: '1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0.apps.googleusercontent.com',
-    iosBundleId: 'br.com.studiosol.CifraClub',
+    iosBundleId: 'br.com.studiosol.CifraClub.debug',
   );
 }

@@ -85,7 +85,7 @@
 			<string>bundleID</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>br.com.studiosol.CifraClub</string>
+				<string>br.com.studiosol.CifraClub.debug</string>
 			</array>
 		</dict>
 		<dict>
