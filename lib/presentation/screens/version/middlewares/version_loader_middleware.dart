@@ -55,7 +55,6 @@ class VersionLoaderMiddleware implements VersionMiddleware {
   ]) async {
     addAction(OnStartLoading());
 
-    await Future.delayed(const Duration(seconds: 2));
     final result = await _getVersionData(
       artistDns: artistUrl,
       songDns: songUrl,
