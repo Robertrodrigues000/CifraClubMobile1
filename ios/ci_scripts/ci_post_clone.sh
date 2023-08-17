@@ -26,6 +26,7 @@ brew install cocoapods
 cd ios && pod deintegrate && pod update 
 
 # Generate "what to test" text.
+git fetch --unshallow
 mkdir TestFlight
 cd ci_scripts
 ./get_commit_messages.sh "$(date -v-7d '+%Y-%m-%d %H:%M:%S')" ../TestFlight/WhatToTest.en-US.txt
