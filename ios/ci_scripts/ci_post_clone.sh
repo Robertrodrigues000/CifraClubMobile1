@@ -25,4 +25,8 @@ brew install cocoapods
 # Workaround Flutter 3.10 - https://stackoverflow.com/a/76349926
 cd ios && pod deintegrate && pod update 
 
+# Generate "what to test" text.
+cd ci_scripts
+./get_commit_messages.sh "$(date -v-7d '+%Y-%m-%d %H:%M:%S')" ../TestFlight/WhatToTest.en-US.txt
+
 exit 0

@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1046541148461-6ufda75hpccojg4f2o2qasgthgn8sda0</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>1046541148461-0eqngpdekft9ilsol6sjgglooqvokjiv.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -31,7 +27,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1046541148461:ios:ae6f8050cd948956</string>
+	<string>1:1046541148461:ios:1d85a1e9d2bc526eb6b3a4</string>
 	<key>DATABASE_URL</key>
 	<string>https://integral-accord-651.firebaseio.com</string>
 </dict>

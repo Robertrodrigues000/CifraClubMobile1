@@ -63,3 +63,6 @@ cifraclub_secret_file.json
 # Isar temp
 *_tmp.isar
 *_tmp.isar.lock
+
+# TestFlight
+ios/TestFlight/WhatToTest.en-US.txt

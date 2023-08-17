@@ -86,6 +86,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D40D6592A8E51EC002D212D /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TestFlight;
+			sourceTree = "<group>";
+		};
 		3DAD96CA2965FB6C000D584B /* Ccid */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +138,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				3D40D6592A8E51EC002D212D /* TestFlight */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
