@@ -6,8 +6,15 @@ class DefaultBottomSheet extends StatefulWidget {
   final Widget child;
   final ScrollController? scrollController;
   final double heightMaxFactor;
+  final bool enableHeader;
 
-  const DefaultBottomSheet({super.key, required this.child, this.scrollController, required this.heightMaxFactor});
+  const DefaultBottomSheet({
+    super.key,
+    required this.child,
+    this.scrollController,
+    required this.heightMaxFactor,
+    required this.enableHeader,
+  });
 
   static Future<T?> showBottomSheet<T>({
     required BuildContext context,
@@ -15,6 +22,7 @@ class DefaultBottomSheet extends StatefulWidget {
     ScrollController? scrollController,
     bool isScrollable = true,
     double heightMaxFactor = 1,
+    bool enableHeader = true,
   }) =>
       showModalBottomSheet<T>(
         isScrollControlled: isScrollable,
@@ -27,6 +35,7 @@ class DefaultBottomSheet extends StatefulWidget {
           return DefaultBottomSheet(
             scrollController: scrollController,
             heightMaxFactor: heightMaxFactor,
+            enableHeader: enableHeader,
             child: child,
           );
         },
@@ -41,7 +50,7 @@ class DefaultBottomSheet extends StatefulWidget {
 }
 
 class _DefaultBottomSheetState extends State<DefaultBottomSheet> {
-  var haveScroll = false;
+  var isScrolledUnder = false;
 
   @override
   void initState() {
@@ -51,9 +60,12 @@ class _DefaultBottomSheetState extends State<DefaultBottomSheet> {
 
   void _onScroll() {
     final currentOffset = widget.scrollController!.offset;
-    setState(() {
-      haveScroll = currentOffset > 0 ? true : false;
-    });
+    final currentScrollUnder = currentOffset > 0 ? true : false;
+    if (currentScrollUnder != isScrolledUnder) {
+      setState(() {
+        isScrolledUnder = currentScrollUnder;
+      });
+    }
   }
 
   @override
@@ -65,32 +77,46 @@ class _DefaultBottomSheetState extends State<DefaultBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = context.colors;
-
     return Container(
-      color: colorScheme.neutralPrimary,
+      color: context.colors.neutralPrimary,
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: widget.heightMaxFactor * MediaQuery.of(context).size.height),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: 36,
-              color: haveScroll ? colorScheme.neutralSecondary : colorScheme.neutralPrimary,
-              child: Center(
-                child: Container(
-                  width: 32,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(2)),
-                    color: colorScheme.neutralSextenary,
-                  ),
-                ),
-              ),
-            ),
+            if (widget.enableHeader) DefaultBottomSheetHeader(isScrolledUnder: isScrolledUnder),
             Flexible(child: widget.child),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DefaultBottomSheetHeader extends StatelessWidget {
+  const DefaultBottomSheetHeader({
+    super.key,
+    required this.isScrolledUnder,
+  });
+
+  final bool isScrolledUnder;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = context.colors;
+
+    return Container(
+      height: 36,
+      color: isScrolledUnder ? colorScheme.neutralSecondary : colorScheme.neutralPrimary,
+      child: Center(
+        child: Container(
+          width: 32,
+          height: 4,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(2)),
+            color: colorScheme.neutralSextenary,
+          ),
         ),
       ),
     );

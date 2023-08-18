@@ -1,15 +1,14 @@
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
-import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
+import 'package:cifraclub/presentation/widgets/video_card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ArtistVideoLessonItem extends StatelessWidget {
   final String imageUrl;
   final String artistName;
   final String title;
-  final String views;
-  final String duration;
+  final int views;
+  final int duration;
   final String versionLabel;
   final VoidCallback onTap;
   const ArtistVideoLessonItem({
@@ -31,47 +30,7 @@ class ArtistVideoLessonItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: context.appDimensionScheme.screenMargin),
         child: Row(
           children: [
-            Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                RemoteImage(
-                  imageUrl: imageUrl,
-                  imageBuilder: (image, imageProvider) => Container(
-                    width: 100,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(4)),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  placeholder: const DefaultPlaceholder(
-                    height: 56,
-                    width: 100,
-                    svgIcon: AppSvgs.videoPlaceholder,
-                    isLarge: true,
-                  ),
-                ),
-                Container(
-                  width: 40,
-                  height: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: context.colors.scrimOverlay,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(4),
-                      bottomRight: Radius.circular(4),
-                    ),
-                  ),
-                  child: Text(
-                    duration,
-                    style: context.typography.subtitle7.copyWith(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
+            VideoCard(imageUrl: imageUrl, duration: duration),
             const SizedBox(
               width: 16,
             ),
@@ -95,7 +54,7 @@ class ArtistVideoLessonItem extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    "$views ${context.text.views} • $versionLabel",
+                    "${formatVideoLessonView(views, context)} ${context.text.views} • $versionLabel",
                     style: context.typography.subtitle7,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -107,5 +66,9 @@ class ArtistVideoLessonItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatVideoLessonView(int views, BuildContext context) {
+    return NumberFormat.compact(locale: Localizations.localeOf(context).toLanguageTag()).format(views);
   }
 }

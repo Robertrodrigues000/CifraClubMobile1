@@ -17,7 +17,6 @@ import 'package:cosmos/cosmos.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
 
@@ -290,8 +289,8 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                                   imageUrl: videoLesson.images.small,
                                   artistName: videoLesson.artist?.name ?? "",
                                   title: videoLesson.title,
-                                  views: _formatVideoLessonView(videoLesson.views, context),
-                                  duration: _formatVideoLessonDuration(videoLesson.duration),
+                                  views: videoLesson.views,
+                                  duration: videoLesson.duration,
                                   versionLabel: videoLesson.version?.label ?? "",
                                 );
                               },
@@ -315,13 +314,5 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     } else {
       return song.videoLessonsInstruments?.contains(instrument) ?? false;
     }
-  }
-
-  String _formatVideoLessonView(int views, BuildContext context) {
-    return NumberFormat.compact(locale: Localizations.localeOf(context).toLanguageTag()).format(views);
-  }
-
-  String _formatVideoLessonDuration(int seconds) {
-    return DateFormat.ms().format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: seconds).inMilliseconds));
   }
 }

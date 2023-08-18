@@ -36,6 +36,7 @@ class DevScreenEntry extends ScreenEntry {
         openLoginView: getIt(),
         openUserProfilePage: getIt(),
         devBottomSheet: getIt(),
+        listenBottomSheet: getIt(),
       ),
     );
   }

@@ -254,5 +254,8 @@
     "deleteReorderErrorMessage": "Falha ao excluir música da lista.",
     "sortReorderErrorMessage": "Falha ao reordenar a lista.",
     "savedReorderChanges" : "Alterações salvas com sucesso",
+
+    "library" : "Biblioteca",
+    "listen" : "Ouvir",
     "key" : "Tom"
 }
