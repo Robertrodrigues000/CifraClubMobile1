@@ -1,8 +1,8 @@
 {
     "response": {
-        "numFound": 127,
+        "numFound": 174,
         "start": 0,
-        "maxScore": 82.04467,
+        "maxScore": 69.67354,
         "docs": [
             {
                 "txt": "Lifehouse",
@@ -10,7 +10,7 @@
                 "dns": "lifehouse",
                 "img": "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg",
                 "imgm": "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
-                "score": 82.04467,
+                "score": 69.67354,
                 "tipo": "1",
                 "id_artist": 2843
             },
@@ -21,11 +21,15 @@
                 "url": "you-and-me",
                 "img": "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg",
                 "imgm": "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
-                "score": 27.412634,
+                "score": 32.95452,
                 "tipo": "2",
                 "id_artist": 2843,
                 "id_song": 27161,
-                "b": 0
+                "v": false,
+                "b": 0,
+                "id_album": 10228,
+                "url_album": "lifehouse-2005",
+                "album_name": "Lifehouse"
             }
         ]
     }

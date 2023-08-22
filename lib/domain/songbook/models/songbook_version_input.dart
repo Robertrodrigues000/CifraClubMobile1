@@ -1,5 +1,5 @@
 // coverage:ignore-file
-import 'package:cifraclub/domain/search/models/song_search.dart';
+import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:equatable/equatable.dart';
 

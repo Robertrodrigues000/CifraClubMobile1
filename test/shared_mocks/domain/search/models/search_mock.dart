@@ -1,5 +1,5 @@
-import 'package:cifraclub/domain/search/models/artist_search.dart';
-import 'package:cifraclub/domain/search/models/song_search.dart';
+import 'package:cifraclub/domain/search/models/search_models/artist_search.dart';
+import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:faker/faker.dart';
 
 ArtistSearch getFakeArtistSearch() => ArtistSearch(

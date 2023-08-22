@@ -1,6 +1,7 @@
 // coverage:ignore-file
-
-import 'package:cifraclub/domain/search/models/search.dart';
+import 'package:async/async.dart' hide Result;
+import 'package:cifraclub/domain/search/models/search_models/search.dart';
+import 'package:cifraclub/domain/search/models/search_filter.dart';
 import 'package:cifraclub/domain/search/repository/search_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:injectable/injectable.dart';
@@ -14,7 +15,7 @@ class SearchAll {
     required this.searchRepository,
   });
 
-  Future<Result<List<Search>, RequestError>> call({required String query}) {
-    return searchRepository.getAll(query: query);
+  CancelableOperation<Result<List<Search>, RequestError>> call({required String query, SearchFilter? searchFilter}) {
+    return searchRepository.getAll(query: query, searchFilter: searchFilter);
   }
 }

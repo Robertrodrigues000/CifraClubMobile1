@@ -1,5 +1,5 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
-import 'package:cifraclub/domain/search/models/song_search.dart';
+import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 
 part 'add_versions_to_list_state.g.dart';

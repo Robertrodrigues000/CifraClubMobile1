@@ -178,6 +178,16 @@ class _DevScreenState extends State<DevScreen> {
                     _bloc.deleteCifrasTest();
                   },
                 ),
+                ListTile(
+                  leading: Icon(
+                    Icons.search,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Search All"),
+                  onTap: () {
+                    _bloc.searchRequest("melhor", null);
+                  },
+                )
               ],
             ),
             LoadingIndicatorContainer(

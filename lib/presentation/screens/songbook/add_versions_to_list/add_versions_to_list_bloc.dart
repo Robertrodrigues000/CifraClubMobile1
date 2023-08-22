@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart';
-import 'package:cifraclub/domain/search/models/song_search.dart';
+import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbook.dart';

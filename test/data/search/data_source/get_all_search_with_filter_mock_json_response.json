@@ -1,0 +1,19 @@
+{
+  "response": {
+    "numFound": 174,
+    "start": 0,
+    "maxScore": 69.67354,
+    "docs": [
+      {
+        "txt": "Lifehouse",
+        "art": "Lifehouse",
+        "dns": "lifehouse",
+        "img": "3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c-tb.jpg",
+        "imgm": "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
+        "score": 69.67354,
+        "tipo": "1",
+        "id_artist": 2843
+      }
+    ]
+  }
+}

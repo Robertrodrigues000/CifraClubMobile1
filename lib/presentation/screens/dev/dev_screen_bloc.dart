@@ -1,7 +1,11 @@
 // coverage:ignore-file
+import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
+import 'package:cifraclub/domain/search/models/search_filter.dart';
+import 'package:cifraclub/domain/search/use_cases/search_all_use_case.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
@@ -22,6 +26,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final PostPurchaseOrder _postPurchaseOrder;
   final GetIsProPreference _getIsProPreference;
   final ClearSongsFromSongbook _clearSongsFromSongbook;
+  final SearchAll _searchAll;
 
   DevScreenBloc(
     this._getProducts,
@@ -32,7 +37,10 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._postPurchaseOrder,
     this._getIsProPreference,
     this._clearSongsFromSongbook,
+    this._searchAll,
   ) : super(const DevScreenState(isLoading: false));
+
+  CancelableOperation<Result<List<dynamic>, RequestError>>? currentRequest;
 
   Future<void> restorePurchases() {
     return _inAppPurchaseRepository.restorePurchases();
@@ -79,5 +87,21 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
   Future<void> deleteCifrasTest() async {
     await _clearSongsFromSongbook(10093245);
+  }
+
+  Future<void> searchRequest(String query, SearchFilter? searchFilter) async {
+    currentRequest?.cancel();
+    currentRequest = _searchAll(query: query, searchFilter: searchFilter);
+    final request = await currentRequest!.valueOrCancellation(Err(RequestCancelled()));
+
+    request?.when(
+      success: (value) {
+        for (var item in value) {
+          // ignore: avoid_print
+          print(item);
+        }
+      },
+      failure: print,
+    );
   }
 }

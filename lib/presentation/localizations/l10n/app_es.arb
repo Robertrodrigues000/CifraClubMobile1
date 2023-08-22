@@ -254,6 +254,7 @@
     "deleteReorderErrorMessage": "Error al eliminar la canción de la lista.",
     "sortReorderErrorMessage": "Error al reorganizar la lista.",
     "savedReorderChanges" : "Cambios guardados con éxito",
+    "artists" : "Artistas",
 
     "library" : "Biblioteca",
     "listen" : "Escuchar",

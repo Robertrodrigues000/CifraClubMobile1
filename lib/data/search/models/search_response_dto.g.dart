@@ -7,5 +7,5 @@ part of 'search_response_dto.dart';
 // **************************************************************************
 
 SearchResponseDto _$SearchResponseDtoFromJson(Map<String, dynamic> json) => SearchResponseDto(
-      response: SearchListDto.fromJson(json['response'] as Map<String, dynamic>),
+      response: SearchResultDto.fromJson(json['response'] as Map<String, dynamic>),
     );

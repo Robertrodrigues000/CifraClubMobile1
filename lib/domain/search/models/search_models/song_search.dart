@@ -1,4 +1,4 @@
-import 'package:cifraclub/domain/search/models/search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search.dart';
 import 'package:equatable/equatable.dart';
 
 class SongSearch extends Equatable implements Search {

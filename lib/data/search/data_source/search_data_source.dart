@@ -13,15 +13,19 @@ class SearchDataSource {
     required this.networkService,
   });
 
-  Future<Result<SearchResponseDto, RequestError>> getAll({required String query}) async {
+  CancelableOperation<Result<SearchResponseDto, RequestError>> getAll({required String query, String? search}) {
+    final queryParams = {'q': query};
+    if (search != null) {
+      queryParams['search'] = search;
+    }
     var request = NetworkRequest(
         type: NetworkRequestType.get,
-        path: "https://solr.sscdn.co/cc/c1/",
-        queryParams: {"q": query},
+        path: "https://solr.sscdn.co/cc/c7/",
+        queryParams: queryParams,
         parser: (data) {
           return SearchResponseDto.fromJson(jsonDecode(data) as Map<String, dynamic>);
         });
-    return networkService.execute(request: request);
+    return networkService.cancelableExecute(request: request);
   }
 
   CancelableOperation<Result<SearchResponseDto, RequestError>> getSongs({required String query}) {

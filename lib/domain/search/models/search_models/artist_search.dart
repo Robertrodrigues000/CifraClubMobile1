@@ -1,6 +1,7 @@
-import 'package:cifraclub/domain/search/models/search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search.dart';
+import 'package:equatable/equatable.dart';
 
-class ArtistSearch implements Search {
+class ArtistSearch extends Equatable implements Search {
   final int id;
   final String name;
   final String url;
@@ -11,8 +12,5 @@ class ArtistSearch implements Search {
   // coverage:ignore-start
   @override
   List<Object?> get props => [id, name, url, imageUrl];
-
-  @override
-  bool? get stringify => true;
   // coverage:ignore-end
 }

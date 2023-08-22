@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/search/data_source/search_data_source.dart';
-import 'package:cifraclub/data/search/models/search_list_dto.dart';
+import 'package:cifraclub/data/search/models/search_result_dto.dart';
 import 'package:cifraclub/data/search/models/search_response_dto.dart';
 import 'package:cifraclub/data/search/models/search_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -24,39 +24,58 @@ void main() {
       await networkService.mock<SearchResponseDto>(contentType: Headers.textPlainContentType, response: mockResponse);
 
       final searchDataSource = SearchDataSource(networkService: networkService);
-      final result = await searchDataSource.getAll(
-        query: "lifehouse",
-      );
+      final result = await searchDataSource
+          .getAll(
+            query: "lifehouse",
+          )
+          .value;
 
-      final request = verify(() => networkService.execute<SearchResponseDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<SearchResponseDto>;
+      final request =
+          verify(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<SearchResponseDto>;
 
-      expect(request.path, "https://solr.sscdn.co/cc/c1/");
+      expect(request.path, "https://solr.sscdn.co/cc/c7/");
       expect(request.queryParams, {"q": "lifehouse"});
       expect(request.type, NetworkRequestType.get);
 
       const expectedAllSearchDto = SearchResponseDto(
-        response: SearchListDto(
+        response: SearchResultDto(
           docs: [
             SearchDto(
-                idSong: null,
-                type: "1",
-                txt: "Lifehouse",
-                url: null,
-                idArtist: 2843,
-                art: "Lifehouse",
-                dns: "lifehouse",
-                imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg"),
+              songId: null,
+              type: "1",
+              txt: "Lifehouse",
+              url: null,
+              artistId: 2843,
+              artist: "Lifehouse",
+              artistUrl: "lifehouse",
+              imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
+              albumUrl: null,
+              songbookId: null,
+              userId: null,
+              songbookName: null,
+              userName: null,
+              totalSongs: null,
+              imgsm: null,
+            ),
             SearchDto(
-                idSong: 27161,
-                type: "2",
-                txt: "You And Me",
-                url: "you-and-me",
-                idArtist: 2843,
-                art: "Lifehouse",
-                dns: "lifehouse",
-                imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg")
+              songId: 27161,
+              type: "2",
+              txt: "You And Me",
+              url: "you-and-me",
+              artistId: 2843,
+              artist: "Lifehouse",
+              artistUrl: "lifehouse",
+              imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
+              albumUrl: null,
+              songbookId: null,
+              userId: null,
+              songbookName: null,
+              userName: null,
+              totalSongs: null,
+              imgsm: null,
+            )
           ],
         ),
       );
@@ -64,20 +83,65 @@ void main() {
       expect(result.isSuccess, true);
       expect(result.get(), expectedAllSearchDto);
     });
+    test("Has search and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final mockResponse =
+          await File("test/data/search/data_source/get_all_search_with_filter_mock_json_response.json").readAsString();
+      await networkService.mock<SearchResponseDto>(contentType: Headers.textPlainContentType, response: mockResponse);
 
+      final searchDataSource = SearchDataSource(networkService: networkService);
+      final result = await searchDataSource.getAll(query: "lifehouse", search: "1").value;
+
+      final request =
+          verify(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<SearchResponseDto>;
+
+      expect(request.path, "https://solr.sscdn.co/cc/c7/");
+      expect(request.queryParams, {"q": "lifehouse", "search": "1"});
+      expect(request.type, NetworkRequestType.get);
+
+      const expectedFilteredSearchDto = SearchResponseDto(
+        response: SearchResultDto(
+          docs: [
+            SearchDto(
+              songId: null,
+              type: "1",
+              txt: "Lifehouse",
+              url: null,
+              artistId: 2843,
+              artist: "Lifehouse",
+              artistUrl: "lifehouse",
+              imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/7/f/2/37f26a39f944f2c63455e1e7aca58c6c.jpg",
+              albumUrl: null,
+              songbookId: null,
+              userId: null,
+              songbookName: null,
+              userName: null,
+              totalSongs: null,
+              imgsm: null,
+            ),
+          ],
+        ),
+      );
+
+      expect(result.isSuccess, true);
+      expect(result.get(), expectedFilteredSearchDto);
+    });
     test("Request failed", () async {
       final networkService = NetworkServiceMock();
 
-      when(() => networkService.execute<SearchResponseDto>(request: captureAny(named: "request")))
-          .thenAnswer((invocation) => SynchronousFuture(Err(ServerError())));
+      when(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+          .thenAnswer((invocation) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
 
-      final genresDataSource = SearchDataSource(networkService: networkService);
-      final result = await genresDataSource.getAll(query: "lifehouse");
-      final request = verify(() => networkService.execute<SearchResponseDto>(request: captureAny(named: "request")))
-          .captured
-          .first as NetworkRequest<SearchResponseDto>;
+      final searchDataSource = SearchDataSource(networkService: networkService);
+      final result = await searchDataSource.getAll(query: "lifehouse").value;
+      final request =
+          verify(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
+              .captured
+              .first as NetworkRequest<SearchResponseDto>;
 
-      expect(request.path, "https://solr.sscdn.co/cc/c1/");
+      expect(request.path, "https://solr.sscdn.co/cc/c7/");
       expect(request.queryParams, {"q": "lifehouse"});
       expect(request.type, NetworkRequestType.get);
 
@@ -88,7 +152,7 @@ void main() {
   });
 
   group("When getSongs is called", () {
-    test("and request id succesful should return songs", () async {
+    test("and request id successful should return songs", () async {
       final networkService = NetworkServiceMock();
       final mockResponse = await File("test/data/search/data_source/get_songs_mock_json_response.json").readAsString();
       await networkService.mock<SearchResponseDto>(contentType: Headers.textPlainContentType, response: mockResponse);
@@ -106,27 +170,42 @@ void main() {
       expect(request.type, NetworkRequestType.get);
 
       const expectedAllSearchDto = SearchResponseDto(
-        response: SearchListDto(
+        response: SearchResultDto(
           docs: [
             SearchDto(
-              idSong: 437376,
+              songId: 437376,
               type: "2",
               txt: "Ava",
               url: "ava",
-              idArtist: 174027,
-              art: "FAMY",
-              dns: "famy",
+              artistId: 174027,
+              artist: "FAMY",
+              artistUrl: "famy",
               imgm: "",
+              albumUrl: null,
+              songbookId: null,
+              userId: null,
+              songbookName: null,
+              userName: null,
+              totalSongs: null,
+              imgsm: null,
             ),
             SearchDto(
-                idSong: 244155,
-                type: "2",
-                txt: "Avante Eu Vou",
-                url: "avante-eu-vou",
-                idArtist: 24399,
-                art: "Harpa Cristã",
-                dns: "harpa-crista",
-                imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/0/8/3/3083b1621a661eee9c2eb4ef9d03daa5.jpg")
+              songId: 244155,
+              type: "2",
+              txt: "Avante Eu Vou",
+              url: "avante-eu-vou",
+              artistId: 24399,
+              artist: "Harpa Cristã",
+              artistUrl: "harpa-crista",
+              imgm: "https://akamai.sscdn.co/letras/250x250/fotos/3/0/8/3/3083b1621a661eee9c2eb4ef9d03daa5.jpg",
+              albumUrl: null,
+              songbookId: null,
+              userId: null,
+              songbookName: null,
+              userName: null,
+              totalSongs: null,
+              imgsm: null,
+            )
           ],
         ),
       );
@@ -141,8 +220,8 @@ void main() {
       when(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
           .thenAnswer((invocation) => CancelableOperation.fromFuture(SynchronousFuture(Err(ServerError()))));
 
-      final genresDataSource = SearchDataSource(networkService: networkService);
-      final result = await genresDataSource.getSongs(query: "ava").value;
+      final searchDataSource = SearchDataSource(networkService: networkService);
+      final result = await searchDataSource.getSongs(query: "ava").value;
       final request =
           verify(() => networkService.cancelableExecute<SearchResponseDto>(request: captureAny(named: "request")))
               .captured
