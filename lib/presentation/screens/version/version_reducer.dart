@@ -10,11 +10,12 @@ class VersionReducer {
     switch (action) {
       case OnVersionInit():
         return state.copyWith(
-            versionHeaderState: VersionHeaderState(
-          artistName: action.artistName ?? "",
-          songName: action.songName ?? "",
-          selectedInstrument: Instrument.guitar, // Todo receber isso pela shared preferences
-        ));
+          versionHeaderState: VersionHeaderState(
+            artistName: action.artistName ?? "",
+            songName: action.songName ?? "",
+            selectedInstrument: Instrument.guitar, // Todo receber isso pela shared preferences
+          ),
+        );
       case OnStartLoading():
         return state.copyWith(isLoading: true, version: null);
       case OnVersionSelected():

@@ -17,9 +17,11 @@ format-exiting-if-changed:
 analyze:
 	flutter analyze --no-pub .
 
-test:
+generate_coverage_helper:
 	rm -rf test/coverage_helper_test.dart
 	dart ci/generate_coverage_helper.dart
+
+test:
 	flutter test --no-pub --coverage
 
 png-to-webp:
@@ -33,4 +35,4 @@ coverage-result:
 generate-localization:
 	flutter gen-l10n
 
-ci: generate-localization format-exiting-if-changed analyze test coverage-result
+ci: generate-localization format generate_coverage_helper analyze test coverage-result

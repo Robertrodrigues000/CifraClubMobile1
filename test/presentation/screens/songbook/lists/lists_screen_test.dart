@@ -262,7 +262,7 @@ void main() {
   });
 
   testWidgets("Tapping songbook tile should open version list screen", (widgetTester) async {
-    final songbook = getFakeSongbook();
+    final songbook = getFakeSongbook(name: "Teste");
     bloc.mockStream(ListsState(userLists: [getFakeSongbook(), songbook]));
     final complete = Completer();
 

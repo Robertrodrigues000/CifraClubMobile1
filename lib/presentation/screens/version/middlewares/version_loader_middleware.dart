@@ -25,7 +25,6 @@ class VersionLoaderMiddleware implements VersionMiddleware {
             action.songUrl!,
           );
         }
-        break;
 
       case OnVersionSelected():
         final versionData = state.version;
@@ -40,7 +39,6 @@ class VersionLoaderMiddleware implements VersionMiddleware {
           action.filter.instrument.instrumentUrl,
           action.filter.versionUrl,
         );
-        break;
       default:
         break;
     }
