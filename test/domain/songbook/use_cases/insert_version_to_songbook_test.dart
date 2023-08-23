@@ -45,21 +45,25 @@ void main() {
     final versionData = getFakeVersionData();
 
     when(() => userVersionRepository.addVersionsToSongbook(any(), any()))
-        .thenAnswer((_) => SynchronousFuture([version.localDatabaseId!]));
+        .thenAnswer((_) => Future.value([version.localDatabaseId!]));
 
     when(() => getVersionData(
           artistDns: any(named: "artistDns"),
           songDns: any(named: "songDns"),
-        )).thenAnswer((_) => SynchronousFuture(Ok(versionData)));
+        )).thenAnswer((_) => Future.value(Ok(versionData)));
 
-    when(() => userVersionRepository.addVersionData(any(), any()))
-        .thenAnswer((_) => SynchronousFuture(versionData.versionId));
+    when(() => userVersionRepository.addVersionData(
+          versionData: any(named: "versionData"),
+          versionLocalDatabaseId: any(named: "versionLocalDatabaseId"),
+          songbookId: any(named: "songbookId"),
+        )).thenAnswer((_) => Future.value(versionData.versionId));
 
     when(() => userSongbookRepository.incrementTotalSongs(
-        songbookId: any(named: "songbookId"),
-        quantity: any(named: "quantity"))).thenAnswer((_) => SynchronousFuture(1));
+          songbookId: any(named: "songbookId"),
+          quantity: any(named: "quantity"),
+        )).thenAnswer((_) => Future.value(1));
 
-    when(() => updateSongbookPreview(10)).thenAnswer((_) => SynchronousFuture(2));
+    when(() => updateSongbookPreview(10)).thenAnswer((_) => Future.value(2));
 
     test("should return success", () async {
       when(() => songbookRepository.addVersionToSongbook(
@@ -87,7 +91,8 @@ void main() {
       verify(() => userSongbookRepository.incrementTotalSongs(
           songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
       verify(() => userVersionRepository.addVersionsToSongbook([versionResponse], 10)).called(1);
-      verify(() => userVersionRepository.addVersionData(versionData, versionResponse.remoteDatabaseId!)).called(1);
+      verify(() => userVersionRepository.addVersionData(
+          versionData: versionData, versionLocalDatabaseId: version.localDatabaseId!, songbookId: 10)).called(1);
       verify(() => updateSongbookPreview(10)).called(1);
       expect(result.get(), versionResponse.songId);
     });
@@ -128,11 +133,11 @@ void main() {
     when(() => getVersionData(
           artistDns: any(named: "artistDns"),
           songDns: any(named: "songDns"),
-        )).thenAnswer((_) => SynchronousFuture(Ok(versionData)));
+        )).thenAnswer((_) => Future.value(Ok(versionData)));
 
     when(() => songbookRepository.addVersionToSongbook(
-            songbookId: any(named: "songbookId"), versionInput: any(named: "versionInput")))
-        .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+        songbookId: any(named: "songbookId"),
+        versionInput: any(named: "versionInput"))).thenAnswer((_) => Future.value(Err(ServerError(statusCode: 404))));
 
     final result = await InsertVersionToSongbook(
       songbookRepository,

@@ -103,9 +103,9 @@ const UserVersionDataDtoSchema = CollectionSchema(
       type: IsarType.object,
       target: r'UserVersionDataSongDto',
     ),
-    r'songbookVersionId': PropertySchema(
+    r'songbookId': PropertySchema(
       id: 16,
-      name: r'songbookVersionId',
+      name: r'songbookId',
       type: IsarType.long,
     ),
     r'stdKey': PropertySchema(
@@ -128,18 +128,23 @@ const UserVersionDataDtoSchema = CollectionSchema(
       name: r'versionId',
       type: IsarType.long,
     ),
-    r'versionName': PropertySchema(
+    r'versionLocalDatabaseId': PropertySchema(
       id: 21,
+      name: r'versionLocalDatabaseId',
+      type: IsarType.long,
+    ),
+    r'versionName': PropertySchema(
+      id: 22,
       name: r'versionName',
       type: IsarType.string,
     ),
     r'versionUrl': PropertySchema(
-      id: 22,
+      id: 23,
       name: r'versionUrl',
       type: IsarType.string,
     ),
     r'videoLesson': PropertySchema(
-      id: 23,
+      id: 24,
       name: r'videoLesson',
       type: IsarType.object,
       target: r'UserVersionDataVideoLessonDto',
@@ -149,8 +154,40 @@ const UserVersionDataDtoSchema = CollectionSchema(
   serialize: _userVersionDataDtoSerialize,
   deserialize: _userVersionDataDtoDeserialize,
   deserializeProp: _userVersionDataDtoDeserializeProp,
-  idName: r'localId',
-  indexes: {},
+  idName: r'localDatabaseId',
+  indexes: {
+    r'versionLocalDatabaseId_songbookId': IndexSchema(
+      id: -8803715492365910835,
+      name: r'versionLocalDatabaseId_songbookId',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'versionLocalDatabaseId',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+        IndexPropertySchema(
+          name: r'songbookId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'songbookId': IndexSchema(
+      id: 4470184368099356442,
+      name: r'songbookId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'songbookId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
   links: {},
   embeddedSchemas: {
     r'UserChordDto': UserChordDtoSchema,
@@ -294,15 +331,16 @@ void _userVersionDataDtoSerialize(
     UserVersionDataSongDtoSchema.serialize,
     object.song,
   );
-  writer.writeLong(offsets[16], object.songbookVersionId);
+  writer.writeLong(offsets[16], object.songbookId);
   writer.writeString(offsets[17], object.stdKey);
   writer.writeString(offsets[18], object.stdShapeKey);
   writer.writeString(offsets[19], object.tuning);
   writer.writeLong(offsets[20], object.versionId);
-  writer.writeString(offsets[21], object.versionName);
-  writer.writeString(offsets[22], object.versionUrl);
+  writer.writeLong(offsets[21], object.versionLocalDatabaseId);
+  writer.writeString(offsets[22], object.versionName);
+  writer.writeString(offsets[23], object.versionUrl);
   writer.writeObject<UserVersionDataVideoLessonDto>(
-    offsets[23],
+    offsets[24],
     allOffsets,
     UserVersionDataVideoLessonDtoSchema.serialize,
     object.videoLesson,
@@ -347,7 +385,7 @@ UserVersionDataDto _userVersionDataDtoDeserialize(
     ),
     isVerified: reader.readBool(offsets[10]),
     key: reader.readString(offsets[11]),
-    localId: id,
+    localDatabaseId: id,
     reason: reader.readString(offsets[12]),
     shapeKey: reader.readString(offsets[13]),
     siteUrl: reader.readString(offsets[14]),
@@ -357,15 +395,16 @@ UserVersionDataDto _userVersionDataDtoDeserialize(
           allOffsets,
         ) ??
         UserVersionDataSongDto(),
-    songbookVersionId: reader.readLong(offsets[16]),
+    songbookId: reader.readLong(offsets[16]),
     stdKey: reader.readString(offsets[17]),
     stdShapeKey: reader.readString(offsets[18]),
     tuning: reader.readString(offsets[19]),
     versionId: reader.readLong(offsets[20]),
-    versionName: reader.readString(offsets[21]),
-    versionUrl: reader.readString(offsets[22]),
+    versionLocalDatabaseId: reader.readLong(offsets[21]),
+    versionName: reader.readString(offsets[22]),
+    versionUrl: reader.readString(offsets[23]),
     videoLesson: reader.readObjectOrNull<UserVersionDataVideoLessonDto>(
-      offsets[23],
+      offsets[24],
       UserVersionDataVideoLessonDtoSchema.deserialize,
       allOffsets,
     ),
@@ -447,10 +486,12 @@ P _userVersionDataDtoDeserializeProp<P>(
     case 20:
       return (reader.readLong(offset)) as P;
     case 21:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 22:
       return (reader.readString(offset)) as P;
     case 23:
+      return (reader.readString(offset)) as P;
+    case 24:
       return (reader.readObjectOrNull<UserVersionDataVideoLessonDto>(
         offset,
         UserVersionDataVideoLessonDtoSchema.deserialize,
@@ -485,7 +526,7 @@ const _UserVersionDataDtoinstrumentValueEnumMap = {
 };
 
 Id _userVersionDataDtoGetId(UserVersionDataDto object) {
-  return object.localId;
+  return object.localDatabaseId;
 }
 
 List<IsarLinkBase<dynamic>> _userVersionDataDtoGetLinks(UserVersionDataDto object) {
@@ -494,75 +535,449 @@ List<IsarLinkBase<dynamic>> _userVersionDataDtoGetLinks(UserVersionDataDto objec
 
 void _userVersionDataDtoAttach(IsarCollection<dynamic> col, Id id, UserVersionDataDto object) {}
 
+extension UserVersionDataDtoByIndex on IsarCollection<UserVersionDataDto> {
+  Future<UserVersionDataDto?> getByVersionLocalDatabaseIdSongbookId(int versionLocalDatabaseId, int songbookId) {
+    return getByIndex(r'versionLocalDatabaseId_songbookId', [versionLocalDatabaseId, songbookId]);
+  }
+
+  UserVersionDataDto? getByVersionLocalDatabaseIdSongbookIdSync(int versionLocalDatabaseId, int songbookId) {
+    return getByIndexSync(r'versionLocalDatabaseId_songbookId', [versionLocalDatabaseId, songbookId]);
+  }
+
+  Future<bool> deleteByVersionLocalDatabaseIdSongbookId(int versionLocalDatabaseId, int songbookId) {
+    return deleteByIndex(r'versionLocalDatabaseId_songbookId', [versionLocalDatabaseId, songbookId]);
+  }
+
+  bool deleteByVersionLocalDatabaseIdSongbookIdSync(int versionLocalDatabaseId, int songbookId) {
+    return deleteByIndexSync(r'versionLocalDatabaseId_songbookId', [versionLocalDatabaseId, songbookId]);
+  }
+
+  Future<List<UserVersionDataDto?>> getAllByVersionLocalDatabaseIdSongbookId(
+      List<int> versionLocalDatabaseIdValues, List<int> songbookIdValues) {
+    final len = versionLocalDatabaseIdValues.length;
+    assert(songbookIdValues.length == len, 'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([versionLocalDatabaseIdValues[i], songbookIdValues[i]]);
+    }
+
+    return getAllByIndex(r'versionLocalDatabaseId_songbookId', values);
+  }
+
+  List<UserVersionDataDto?> getAllByVersionLocalDatabaseIdSongbookIdSync(
+      List<int> versionLocalDatabaseIdValues, List<int> songbookIdValues) {
+    final len = versionLocalDatabaseIdValues.length;
+    assert(songbookIdValues.length == len, 'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([versionLocalDatabaseIdValues[i], songbookIdValues[i]]);
+    }
+
+    return getAllByIndexSync(r'versionLocalDatabaseId_songbookId', values);
+  }
+
+  Future<int> deleteAllByVersionLocalDatabaseIdSongbookId(
+      List<int> versionLocalDatabaseIdValues, List<int> songbookIdValues) {
+    final len = versionLocalDatabaseIdValues.length;
+    assert(songbookIdValues.length == len, 'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([versionLocalDatabaseIdValues[i], songbookIdValues[i]]);
+    }
+
+    return deleteAllByIndex(r'versionLocalDatabaseId_songbookId', values);
+  }
+
+  int deleteAllByVersionLocalDatabaseIdSongbookIdSync(
+      List<int> versionLocalDatabaseIdValues, List<int> songbookIdValues) {
+    final len = versionLocalDatabaseIdValues.length;
+    assert(songbookIdValues.length == len, 'All index values must have the same length');
+    final values = <List<dynamic>>[];
+    for (var i = 0; i < len; i++) {
+      values.add([versionLocalDatabaseIdValues[i], songbookIdValues[i]]);
+    }
+
+    return deleteAllByIndexSync(r'versionLocalDatabaseId_songbookId', values);
+  }
+
+  Future<Id> putByVersionLocalDatabaseIdSongbookId(UserVersionDataDto object) {
+    return putByIndex(r'versionLocalDatabaseId_songbookId', object);
+  }
+
+  Id putByVersionLocalDatabaseIdSongbookIdSync(UserVersionDataDto object, {bool saveLinks = true}) {
+    return putByIndexSync(r'versionLocalDatabaseId_songbookId', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByVersionLocalDatabaseIdSongbookId(List<UserVersionDataDto> objects) {
+    return putAllByIndex(r'versionLocalDatabaseId_songbookId', objects);
+  }
+
+  List<Id> putAllByVersionLocalDatabaseIdSongbookIdSync(List<UserVersionDataDto> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'versionLocalDatabaseId_songbookId', objects, saveLinks: saveLinks);
+  }
+}
+
 extension UserVersionDataDtoQueryWhereSort on QueryBuilder<UserVersionDataDto, UserVersionDataDto, QWhere> {
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhere> anyLocalId() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhere> anyLocalDatabaseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhere> anyVersionLocalDatabaseIdSongbookId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'versionLocalDatabaseId_songbookId'),
+      );
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhere> anySongbookId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'songbookId'),
+      );
     });
   }
 }
 
 extension UserVersionDataDtoQueryWhere on QueryBuilder<UserVersionDataDto, UserVersionDataDto, QWhereClause> {
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localIdEqualTo(Id localId) {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localDatabaseIdEqualTo(Id localDatabaseId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: localId,
-        upper: localId,
+        lower: localDatabaseId,
+        upper: localDatabaseId,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localIdNotEqualTo(Id localId) {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localDatabaseIdNotEqualTo(
+      Id localDatabaseId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: localId, includeUpper: false),
+              IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: localId, includeLower: false),
+              IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: localId, includeLower: false),
+              IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: localId, includeUpper: false),
+              IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localIdGreaterThan(Id localId,
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localDatabaseIdGreaterThan(Id localDatabaseId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: localId, includeLower: include),
+        IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localIdLessThan(Id localId,
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localDatabaseIdLessThan(Id localDatabaseId,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: localId, includeUpper: include),
+        IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localIdBetween(
-    Id lowerLocalId,
-    Id upperLocalId, {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> localDatabaseIdBetween(
+    Id lowerLocalDatabaseId,
+    Id upperLocalDatabaseId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerLocalId,
+        lower: lowerLocalDatabaseId,
         includeLower: includeLower,
-        upper: upperLocalId,
+        upper: upperLocalDatabaseId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> versionLocalDatabaseIdEqualToAnySongbookId(
+      int versionLocalDatabaseId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        value: [versionLocalDatabaseId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> versionLocalDatabaseIdNotEqualToAnySongbookId(
+      int versionLocalDatabaseId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [],
+              upper: [versionLocalDatabaseId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [versionLocalDatabaseId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [versionLocalDatabaseId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [],
+              upper: [versionLocalDatabaseId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause>
+      versionLocalDatabaseIdGreaterThanAnySongbookId(
+    int versionLocalDatabaseId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        lower: [versionLocalDatabaseId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> versionLocalDatabaseIdLessThanAnySongbookId(
+    int versionLocalDatabaseId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        lower: [],
+        upper: [versionLocalDatabaseId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> versionLocalDatabaseIdBetweenAnySongbookId(
+    int lowerVersionLocalDatabaseId,
+    int upperVersionLocalDatabaseId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        lower: [lowerVersionLocalDatabaseId],
+        includeLower: includeLower,
+        upper: [upperVersionLocalDatabaseId],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> versionLocalDatabaseIdSongbookIdEqualTo(
+      int versionLocalDatabaseId, int songbookId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        value: [versionLocalDatabaseId, songbookId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause>
+      versionLocalDatabaseIdEqualToSongbookIdNotEqualTo(int versionLocalDatabaseId, int songbookId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [versionLocalDatabaseId],
+              upper: [versionLocalDatabaseId, songbookId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [versionLocalDatabaseId, songbookId],
+              includeLower: false,
+              upper: [versionLocalDatabaseId],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [versionLocalDatabaseId, songbookId],
+              includeLower: false,
+              upper: [versionLocalDatabaseId],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'versionLocalDatabaseId_songbookId',
+              lower: [versionLocalDatabaseId],
+              upper: [versionLocalDatabaseId, songbookId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause>
+      versionLocalDatabaseIdEqualToSongbookIdGreaterThan(
+    int versionLocalDatabaseId,
+    int songbookId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        lower: [versionLocalDatabaseId, songbookId],
+        includeLower: include,
+        upper: [versionLocalDatabaseId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause>
+      versionLocalDatabaseIdEqualToSongbookIdLessThan(
+    int versionLocalDatabaseId,
+    int songbookId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        lower: [versionLocalDatabaseId],
+        upper: [versionLocalDatabaseId, songbookId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause>
+      versionLocalDatabaseIdEqualToSongbookIdBetween(
+    int versionLocalDatabaseId,
+    int lowerSongbookId,
+    int upperSongbookId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'versionLocalDatabaseId_songbookId',
+        lower: [versionLocalDatabaseId, lowerSongbookId],
+        includeLower: includeLower,
+        upper: [versionLocalDatabaseId, upperSongbookId],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> songbookIdEqualTo(int songbookId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'songbookId',
+        value: [songbookId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> songbookIdNotEqualTo(int songbookId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songbookId',
+              lower: [],
+              upper: [songbookId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songbookId',
+              lower: [songbookId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songbookId',
+              lower: [songbookId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songbookId',
+              lower: [],
+              upper: [songbookId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> songbookIdGreaterThan(
+    int songbookId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songbookId',
+        lower: [songbookId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> songbookIdLessThan(
+    int songbookId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songbookId',
+        lower: [],
+        upper: [songbookId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterWhereClause> songbookIdBetween(
+    int lowerSongbookId,
+    int upperSongbookId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songbookId',
+        lower: [lowerSongbookId],
+        includeLower: includeLower,
+        upper: [upperSongbookId],
         includeUpper: includeUpper,
       ));
     });
@@ -1518,42 +1933,42 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localIdEqualTo(Id value) {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localDatabaseIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'localId',
+        property: r'localDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localIdGreaterThan(
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localDatabaseIdGreaterThan(
     Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'localId',
+        property: r'localDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localIdLessThan(
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localDatabaseIdLessThan(
     Id value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'localId',
+        property: r'localDatabaseId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localIdBetween(
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> localDatabaseIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -1561,7 +1976,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'localId',
+        property: r'localDatabaseId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1954,42 +2369,42 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookVersionIdEqualTo(int value) {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'songbookVersionId',
+        property: r'songbookId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookVersionIdGreaterThan(
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookIdGreaterThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'songbookVersionId',
+        property: r'songbookId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookVersionIdLessThan(
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookIdLessThan(
     int value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'songbookVersionId',
+        property: r'songbookId',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookVersionIdBetween(
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> songbookIdBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1997,7 +2412,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'songbookVersionId',
+        property: r'songbookId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2434,6 +2849,58 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'versionId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> versionLocalDatabaseIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'versionLocalDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> versionLocalDatabaseIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'versionLocalDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> versionLocalDatabaseIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'versionLocalDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> versionLocalDatabaseIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'versionLocalDatabaseId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2894,15 +3361,15 @@ extension UserVersionDataDtoQuerySortBy on QueryBuilder<UserVersionDataDto, User
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortBySongbookVersionId() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortBySongbookId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'songbookVersionId', Sort.asc);
+      return query.addSortBy(r'songbookId', Sort.asc);
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortBySongbookVersionIdDesc() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortBySongbookIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'songbookVersionId', Sort.desc);
+      return query.addSortBy(r'songbookId', Sort.desc);
     });
   }
 
@@ -2951,6 +3418,18 @@ extension UserVersionDataDtoQuerySortBy on QueryBuilder<UserVersionDataDto, User
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortByVersionIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'versionId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortByVersionLocalDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'versionLocalDatabaseId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> sortByVersionLocalDatabaseIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'versionLocalDatabaseId', Sort.desc);
     });
   }
 
@@ -3076,15 +3555,15 @@ extension UserVersionDataDtoQuerySortThenBy on QueryBuilder<UserVersionDataDto, 
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByLocalId() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByLocalDatabaseId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'localId', Sort.asc);
+      return query.addSortBy(r'localDatabaseId', Sort.asc);
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByLocalIdDesc() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByLocalDatabaseIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'localId', Sort.desc);
+      return query.addSortBy(r'localDatabaseId', Sort.desc);
     });
   }
 
@@ -3124,15 +3603,15 @@ extension UserVersionDataDtoQuerySortThenBy on QueryBuilder<UserVersionDataDto, 
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenBySongbookVersionId() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenBySongbookId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'songbookVersionId', Sort.asc);
+      return query.addSortBy(r'songbookId', Sort.asc);
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenBySongbookVersionIdDesc() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenBySongbookIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'songbookVersionId', Sort.desc);
+      return query.addSortBy(r'songbookId', Sort.desc);
     });
   }
 
@@ -3181,6 +3660,18 @@ extension UserVersionDataDtoQuerySortThenBy on QueryBuilder<UserVersionDataDto, 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByVersionIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'versionId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByVersionLocalDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'versionLocalDatabaseId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterSortBy> thenByVersionLocalDatabaseIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'versionLocalDatabaseId', Sort.desc);
     });
   }
 
@@ -3276,9 +3767,9 @@ extension UserVersionDataDtoQueryWhereDistinct on QueryBuilder<UserVersionDataDt
     });
   }
 
-  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QDistinct> distinctBySongbookVersionId() {
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QDistinct> distinctBySongbookId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'songbookVersionId');
+      return query.addDistinctBy(r'songbookId');
     });
   }
 
@@ -3306,6 +3797,12 @@ extension UserVersionDataDtoQueryWhereDistinct on QueryBuilder<UserVersionDataDt
     });
   }
 
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QDistinct> distinctByVersionLocalDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'versionLocalDatabaseId');
+    });
+  }
+
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QDistinct> distinctByVersionName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'versionName', caseSensitive: caseSensitive);
@@ -3320,9 +3817,9 @@ extension UserVersionDataDtoQueryWhereDistinct on QueryBuilder<UserVersionDataDt
 }
 
 extension UserVersionDataDtoQueryProperty on QueryBuilder<UserVersionDataDto, UserVersionDataDto, QQueryProperty> {
-  QueryBuilder<UserVersionDataDto, int, QQueryOperations> localIdProperty() {
+  QueryBuilder<UserVersionDataDto, int, QQueryOperations> localDatabaseIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'localId');
+      return query.addPropertyName(r'localDatabaseId');
     });
   }
 
@@ -3422,9 +3919,9 @@ extension UserVersionDataDtoQueryProperty on QueryBuilder<UserVersionDataDto, Us
     });
   }
 
-  QueryBuilder<UserVersionDataDto, int, QQueryOperations> songbookVersionIdProperty() {
+  QueryBuilder<UserVersionDataDto, int, QQueryOperations> songbookIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'songbookVersionId');
+      return query.addPropertyName(r'songbookId');
     });
   }
 
@@ -3449,6 +3946,12 @@ extension UserVersionDataDtoQueryProperty on QueryBuilder<UserVersionDataDto, Us
   QueryBuilder<UserVersionDataDto, int, QQueryOperations> versionIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'versionId');
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, int, QQueryOperations> versionLocalDatabaseIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'versionLocalDatabaseId');
     });
   }
 

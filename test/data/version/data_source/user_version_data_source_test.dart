@@ -12,6 +12,7 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
+import '../../../shared_mocks/domain/version/models/version_data_mock.dart';
 import '../../../test_helpers/isar_test_module.dart';
 
 void main() {
@@ -33,14 +34,15 @@ void main() {
   });
 
   UserVersionDto getUserVersionDto({
-    int? id,
+    int? localDatabaseId,
     UserVersionArtistDto? userVersionArtistDto,
     int? songbookId,
     String? artistImage,
     int? songId,
   }) =>
       UserVersionDto(
-        id: id ?? faker.randomGenerator.integer(10000),
+        localDatabaseId: localDatabaseId ?? faker.randomGenerator.integer(10000),
+        remoteDatabaseId: faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
         songUrl: faker.animal.name(),
         key: faker.animal.name(),
@@ -56,9 +58,10 @@ void main() {
   UserRecentVersionDto getUserRecentVersionDto({
     UserVersionArtistDto? userVersionArtistDto,
     String? artistImage,
+    int? localDatabaseId,
   }) =>
       UserRecentVersionDto(
-        localDatabaseId: faker.randomGenerator.integer(10000),
+        localDatabaseId: localDatabaseId ?? faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
         songUrl: faker.animal.name(),
         key: faker.animal.name(),
@@ -121,8 +124,8 @@ void main() {
 
   test("When 'addVersionsToSongbook' is called should save versions to local db", () async {
     final versions = [
-      getUserVersionDto(),
-      getUserVersionDto(),
+      getUserVersionDto(localDatabaseId: 1),
+      getUserVersionDto(localDatabaseId: 2),
     ];
 
     final result = await userVersionDataSource.putVersionsToSongbook(versions);
@@ -132,15 +135,15 @@ void main() {
       localVersions = await isar.userVersionDtos.where().findAll();
     });
 
-    expect(result, [versions[0].id, versions[1].id]);
+    expect(result, [versions[0].localDatabaseId, versions[1].localDatabaseId]);
     // toSet para comparar as 2 listas que podem vir em ordens diferentes
     expect(localVersions.toSet(), versions.toSet());
   });
 
   test("When 'addVersionsToRecentSongbook' is called should save versions to local db", () async {
     final recentVersions = [
-      getUserRecentVersionDto(),
-      getUserRecentVersionDto(),
+      getUserRecentVersionDto(localDatabaseId: 1),
+      getUserRecentVersionDto(localDatabaseId: 2),
     ];
 
     final result = await userVersionDataSource.putVersionsToRecentSongbook(recentVersions);
@@ -157,8 +160,8 @@ void main() {
 
   test("When 'clearAllVersions' is called should delete all versions", () async {
     final versions = [
-      getUserVersionDto(),
-      getUserVersionDto(),
+      getUserVersionDto(localDatabaseId: 1),
+      getUserVersionDto(localDatabaseId: 2),
     ];
 
     await isar.writeTxn(
@@ -200,12 +203,12 @@ void main() {
       final artistImage = ["url1", "url2", "url4", "url4", "url6", "url4"];
 
       final versions = [
-        getUserVersionDto(id: 1, artistImage: artistImage[0], songbookId: 1),
-        getUserVersionDto(id: 2, artistImage: artistImage[1], songbookId: 1),
-        getUserVersionDto(id: 3, artistImage: artistImage[2], songbookId: 1),
-        getUserVersionDto(id: 4, artistImage: artistImage[3], songbookId: 1),
-        getUserVersionDto(id: 5, artistImage: artistImage[4], songbookId: 1),
-        getUserVersionDto(id: 6, artistImage: artistImage[5], songbookId: 1),
+        getUserVersionDto(localDatabaseId: 1, artistImage: artistImage[0], songbookId: 1),
+        getUserVersionDto(localDatabaseId: 2, artistImage: artistImage[1], songbookId: 1),
+        getUserVersionDto(localDatabaseId: 3, artistImage: artistImage[2], songbookId: 1),
+        getUserVersionDto(localDatabaseId: 4, artistImage: artistImage[3], songbookId: 1),
+        getUserVersionDto(localDatabaseId: 5, artistImage: artistImage[4], songbookId: 1),
+        getUserVersionDto(localDatabaseId: 6, artistImage: artistImage[5], songbookId: 1),
       ];
 
       await isar.writeTxn(
@@ -222,15 +225,23 @@ void main() {
 
   test("When `deleteVersions` is called should delete versions from songbook id", () async {
     final versions = [
-      getUserVersionDto(songbookId: 1),
-      getUserVersionDto(songbookId: 1),
-      getUserVersionDto(songbookId: 1),
-      getUserVersionDto(songbookId: 2),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 1),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 2),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 3),
+      getUserVersionDto(songbookId: 2, localDatabaseId: 4),
+    ];
+
+    final versionDatas = [
+      UserVersionDataDto.fromDomain(versionData: getFakeVersionData(), versionLocalDatabaseId: 1, songbookId: 1),
+      UserVersionDataDto.fromDomain(versionData: getFakeVersionData(), versionLocalDatabaseId: 2, songbookId: 1),
+      UserVersionDataDto.fromDomain(versionData: getFakeVersionData(), versionLocalDatabaseId: 3, songbookId: 1),
+      UserVersionDataDto.fromDomain(versionData: getFakeVersionData(), versionLocalDatabaseId: 4, songbookId: 2),
     ];
 
     await isar.writeTxn(
       () async {
         await isar.userVersionDtos.putAll(versions);
+        await isar.userVersionDataDtos.putAll(versionDatas);
       },
     );
 
@@ -241,15 +252,27 @@ void main() {
 
   test("When `deleteRecentVersions` is called should delete versions from songbook id", () async {
     final versions = [
-      getUserRecentVersionDto(),
-      getUserRecentVersionDto(),
-      getUserRecentVersionDto(),
-      getUserRecentVersionDto(),
+      getUserRecentVersionDto(localDatabaseId: 1),
+      getUserRecentVersionDto(localDatabaseId: 2),
+      getUserRecentVersionDto(localDatabaseId: 3),
+      getUserRecentVersionDto(localDatabaseId: 4),
+    ];
+
+    final versionDatas = [
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: 1, songbookId: ListType.recents.localId),
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: 2, songbookId: ListType.recents.localId),
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: 3, songbookId: ListType.recents.localId),
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: 4, songbookId: ListType.recents.localId),
     ];
 
     await isar.writeTxn(
       () async {
         await isar.userRecentVersionDtos.putAll(versions);
+        await isar.userVersionDataDtos.putAll(versionDatas);
       },
     );
 
@@ -260,21 +283,34 @@ void main() {
 
   test("When `deleteVersionsById` is called should delete songs from songbook", () async {
     final versions = [
-      getUserVersionDto(),
-      getUserVersionDto(),
-      getUserVersionDto(),
-      getUserVersionDto(),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 1),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 2),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 3),
+      getUserVersionDto(songbookId: 1, localDatabaseId: 4),
+    ];
+
+    final versionDatas = [
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: versions[0].localDatabaseId, songbookId: 1),
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: versions[1].localDatabaseId, songbookId: 1),
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: versions[2].localDatabaseId, songbookId: 1),
+      UserVersionDataDto.fromDomain(
+          versionData: getFakeVersionData(), versionLocalDatabaseId: versions[3].localDatabaseId, songbookId: 2),
     ];
 
     await isar.writeTxn(
       () async {
         await isar.userVersionDtos.putAll(versions);
+        await isar.userVersionDataDtos.putAll(versionDatas);
       },
     );
 
-    final numberVersionsDeleted = await userVersionDataSource.deleteVersionsById(versions.map((e) => e.id).toList());
+    final numberVersionsDeleted =
+        await userVersionDataSource.deleteVersionsById(versions.map((e) => e.localDatabaseId).toList(), 1);
 
-    expect(numberVersionsDeleted, 4);
+    expect(numberVersionsDeleted, 3);
   });
 
   group("when getVersionsStreamFromSongbook is called", () {
@@ -348,7 +384,7 @@ void main() {
     completers.add(Completer());
     await isar.writeTxn(
       () async {
-        await isar.userVersionDtos.delete(version.id);
+        await isar.userVersionDtos.delete(version.localDatabaseId);
       },
     );
     expect(await completers.last.future, isFalse);
@@ -356,14 +392,14 @@ void main() {
 
   test("When 'addVersionData' is called should save version data in local DB", () async {
     final musicDto = UserVersionDataSongDto();
-    musicDto.id = 2;
+    musicDto.songId = 2;
     musicDto.lyricsId = 1;
     musicDto.name = "name";
     musicDto.description = "description";
     musicDto.url = "https://example.com/music.json";
 
     final fakeUserVersionDataDto = UserVersionDataDto(
-      localId: 10,
+      localDatabaseId: 12,
       versionId: 1,
       instrument: Instrument.bass,
       content: "Content",
@@ -382,12 +418,13 @@ void main() {
       blocked: false,
       reason: "Reason",
       song: musicDto,
-      songbookVersionId: 11,
+      versionLocalDatabaseId: 11,
+      songbookId: 1,
     );
 
     await userVersionDataSource.addVersionData(fakeUserVersionDataDto);
 
-    final userVersionData = await isar.userVersionDataDtos.get(10);
+    final userVersionData = await isar.userVersionDataDtos.get(12);
 
     expect(userVersionData, fakeUserVersionDataDto);
   });

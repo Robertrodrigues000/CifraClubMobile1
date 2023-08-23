@@ -9,8 +9,6 @@ part of 'user_recent_version_dto.dart';
 abstract class _$UserRecentVersionDtoCWProxy {
   UserRecentVersionDto localDatabaseId(int localDatabaseId);
 
-  UserRecentVersionDto remoteDatabaseId(int? remoteDatabaseId);
-
   UserRecentVersionDto songUrl(String songUrl);
 
   UserRecentVersionDto key(String? key);
@@ -41,7 +39,6 @@ abstract class _$UserRecentVersionDtoCWProxy {
   /// ````
   UserRecentVersionDto call({
     int? localDatabaseId,
-    int? remoteDatabaseId,
     String? songUrl,
     String? key,
     Instrument? instrument,
@@ -64,9 +61,6 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
 
   @override
   UserRecentVersionDto localDatabaseId(int localDatabaseId) => this(localDatabaseId: localDatabaseId);
-
-  @override
-  UserRecentVersionDto remoteDatabaseId(int? remoteDatabaseId) => this(remoteDatabaseId: remoteDatabaseId);
 
   @override
   UserRecentVersionDto songUrl(String songUrl) => this(songUrl: songUrl);
@@ -111,7 +105,6 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
   /// ````
   UserRecentVersionDto call({
     Object? localDatabaseId = const $CopyWithPlaceholder(),
-    Object? remoteDatabaseId = const $CopyWithPlaceholder(),
     Object? songUrl = const $CopyWithPlaceholder(),
     Object? key = const $CopyWithPlaceholder(),
     Object? instrument = const $CopyWithPlaceholder(),
@@ -129,10 +122,6 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
           ? _value.localDatabaseId
           // ignore: cast_nullable_to_non_nullable
           : localDatabaseId as int,
-      remoteDatabaseId: remoteDatabaseId == const $CopyWithPlaceholder()
-          ? _value.remoteDatabaseId
-          // ignore: cast_nullable_to_non_nullable
-          : remoteDatabaseId as int?,
       songUrl: songUrl == const $CopyWithPlaceholder() || songUrl == null
           ? _value.songUrl
           // ignore: cast_nullable_to_non_nullable
@@ -234,33 +223,28 @@ const UserRecentVersionDtoSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'remoteDatabaseId': PropertySchema(
-      id: 6,
-      name: r'remoteDatabaseId',
-      type: IsarType.long,
-    ),
     r'songId': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'songId',
       type: IsarType.long,
     ),
     r'songUrl': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'songUrl',
       type: IsarType.string,
     ),
     r'stdKey': PropertySchema(
-      id: 9,
+      id: 8,
       name: r'stdKey',
       type: IsarType.string,
     ),
     r'tuning': PropertySchema(
-      id: 10,
+      id: 9,
       name: r'tuning',
       type: IsarType.string,
     ),
     r'versionId': PropertySchema(
-      id: 11,
+      id: 10,
       name: r'versionId',
       type: IsarType.long,
     )
@@ -271,6 +255,19 @@ const UserRecentVersionDtoSchema = CollectionSchema(
   deserializeProp: _userRecentVersionDtoDeserializeProp,
   idName: r'localDatabaseId',
   indexes: {
+    r'songId': IndexSchema(
+      id: -4588889454650216128,
+      name: r'songId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'songId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
     r'artistImage': IndexSchema(
       id: 897173347989801551,
       name: r'artistImage',
@@ -347,12 +344,11 @@ void _userRecentVersionDtoSerialize(
   writer.writeByte(offsets[3], object.instrument.index);
   writer.writeString(offsets[4], object.key);
   writer.writeString(offsets[5], object.name);
-  writer.writeLong(offsets[6], object.remoteDatabaseId);
-  writer.writeLong(offsets[7], object.songId);
-  writer.writeString(offsets[8], object.songUrl);
-  writer.writeString(offsets[9], object.stdKey);
-  writer.writeString(offsets[10], object.tuning);
-  writer.writeLong(offsets[11], object.versionId);
+  writer.writeLong(offsets[6], object.songId);
+  writer.writeString(offsets[7], object.songUrl);
+  writer.writeString(offsets[8], object.stdKey);
+  writer.writeString(offsets[9], object.tuning);
+  writer.writeLong(offsets[10], object.versionId);
 }
 
 UserRecentVersionDto _userRecentVersionDtoDeserialize(
@@ -374,12 +370,11 @@ UserRecentVersionDto _userRecentVersionDtoDeserialize(
     key: reader.readStringOrNull(offsets[4]),
     localDatabaseId: id,
     name: reader.readString(offsets[5]),
-    remoteDatabaseId: reader.readLongOrNull(offsets[6]),
-    songId: reader.readLong(offsets[7]),
-    songUrl: reader.readString(offsets[8]),
-    stdKey: reader.readStringOrNull(offsets[9]),
-    tuning: reader.readStringOrNull(offsets[10]),
-    versionId: reader.readLong(offsets[11]),
+    songId: reader.readLong(offsets[6]),
+    songUrl: reader.readString(offsets[7]),
+    stdKey: reader.readStringOrNull(offsets[8]),
+    tuning: reader.readStringOrNull(offsets[9]),
+    versionId: reader.readLong(offsets[10]),
   );
   return object;
 }
@@ -409,16 +404,14 @@ P _userRecentVersionDtoDeserializeProp<P>(
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readLongOrNull(offset)) as P;
-    case 7:
       return (reader.readLong(offset)) as P;
-    case 8:
+    case 7:
       return (reader.readString(offset)) as P;
+    case 8:
+      return (reader.readStringOrNull(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
-      return (reader.readStringOrNull(offset)) as P;
-    case 11:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -456,14 +449,20 @@ List<IsarLinkBase<dynamic>> _userRecentVersionDtoGetLinks(UserRecentVersionDto o
   return [];
 }
 
-void _userRecentVersionDtoAttach(IsarCollection<dynamic> col, Id id, UserRecentVersionDto object) {
-  object.localDatabaseId = id;
-}
+void _userRecentVersionDtoAttach(IsarCollection<dynamic> col, Id id, UserRecentVersionDto object) {}
 
 extension UserRecentVersionDtoQueryWhereSort on QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QWhere> {
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhere> anyLocalDatabaseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhere> anySongId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'songId'),
+      );
     });
   }
 }
@@ -533,6 +532,94 @@ extension UserRecentVersionDtoQueryWhere on QueryBuilder<UserRecentVersionDto, U
         lower: lowerLocalDatabaseId,
         includeLower: includeLower,
         upper: upperLocalDatabaseId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> songIdEqualTo(int songId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'songId',
+        value: [songId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> songIdNotEqualTo(int songId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId',
+              lower: [],
+              upper: [songId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId',
+              lower: [songId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId',
+              lower: [songId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId',
+              lower: [],
+              upper: [songId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> songIdGreaterThan(
+    int songId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId',
+        lower: [songId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> songIdLessThan(
+    int songId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId',
+        lower: [],
+        upper: [songId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> songIdBetween(
+    int lowerSongId,
+    int upperSongId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId',
+        lower: [lowerSongId],
+        includeLower: includeLower,
+        upper: [upperSongId],
         includeUpper: includeUpper,
       ));
     });
@@ -1193,74 +1280,6 @@ extension UserRecentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'remoteDatabaseId',
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'remoteDatabaseId',
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdEqualTo(int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'remoteDatabaseId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'remoteDatabaseId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'remoteDatabaseId',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> remoteDatabaseIdBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'remoteDatabaseId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> songIdEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1856,18 +1875,6 @@ extension UserRecentVersionDtoQuerySortBy on QueryBuilder<UserRecentVersionDto, 
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByRemoteDatabaseId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByRemoteDatabaseIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseId', Sort.desc);
-    });
-  }
-
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'songId', Sort.asc);
@@ -2002,18 +2009,6 @@ extension UserRecentVersionDtoQuerySortThenBy on QueryBuilder<UserRecentVersionD
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByRemoteDatabaseId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByRemoteDatabaseIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'remoteDatabaseId', Sort.desc);
-    });
-  }
-
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'songId', Sort.asc);
@@ -2108,12 +2103,6 @@ extension UserRecentVersionDtoQueryWhereDistinct
     });
   }
 
-  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByRemoteDatabaseId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'remoteDatabaseId');
-    });
-  }
-
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'songId');
@@ -2186,12 +2175,6 @@ extension UserRecentVersionDtoQueryProperty
   QueryBuilder<UserRecentVersionDto, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
-    });
-  }
-
-  QueryBuilder<UserRecentVersionDto, int?, QQueryOperations> remoteDatabaseIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'remoteDatabaseId');
     });
   }
 

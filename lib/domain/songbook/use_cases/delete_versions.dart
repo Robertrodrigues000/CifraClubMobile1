@@ -1,5 +1,4 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
@@ -21,11 +20,9 @@ class DeleteVersions {
     return _songbookRepository.deleteVersions(songbookId: songbookId, versionsId: songsRemoteIds).then(
       (result) async {
         if (result.isSuccess) {
-          final songsId = ListType.recents.localId != songbookId
-              ? songsRemoteIds
-              : versions.map((e) => e.localDatabaseId ?? -1).toList();
-          final songsAdded = await _userVersionRepository.deleteVersionsById(songsId) ?? 0;
-          await _userSongbookRepository.decrementTotalSongs(songbookId: songbookId, quantity: songsAdded);
+          final localDatabaseIds = versions.map((e) => e.localDatabaseId!).toList();
+          final deletedSongCount = await _userVersionRepository.deleteVersionsById(localDatabaseIds, songbookId) ?? 0;
+          await _userSongbookRepository.decrementTotalSongs(songbookId: songbookId, quantity: deletedSongCount);
         }
         return result;
       },

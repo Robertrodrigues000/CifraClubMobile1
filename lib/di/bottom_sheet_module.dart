@@ -5,7 +5,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
-import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
@@ -31,7 +31,7 @@ abstract class BottomSheetModule {
     DeleteSongbook deleteSongbook,
     UpdateSongbookData updateSongbookData,
     ValidateSongbookName validateSongbookName,
-    ClearSongsFromSongbook clearSongsFromSongbook,
+    ClearVersionsFromSongbook clearSongsFromSongbook,
     ShareLink shareLink,
     EditListScreenBuilder editListScreenBuilder,
   ) =>

@@ -84,6 +84,7 @@ void main() {
         isPublic: false,
         totalSongs: 0,
         preview: const [],
+        id: Isar.autoIncrement,
       );
 
       expect(() async => userSongbookDataSource.insert(fakeUserSongBookDto), throwsException);
@@ -136,6 +137,7 @@ void main() {
           isPublic: false,
           totalSongs: 0,
           preview: const [],
+          id: Isar.autoIncrement,
         )
       ];
       expect(() async => userSongbookDataSource.setAll(songbooks), throwsException);

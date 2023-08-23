@@ -9,7 +9,6 @@ import '../../../../shared_mocks/domain/artist/models/artist_mock.dart';
 void main() {
   test("When `toDomain` is called should convert correctly to Version", () {
     final userVersionDto = UserRecentVersionDto(
-      remoteDatabaseId: -1,
       localDatabaseId: 10,
       songUrl: "test",
       instrument: Instrument.bass,
@@ -62,7 +61,6 @@ void main() {
     );
     final userVersionDto = UserRecentVersionDto.fromDomain(version);
 
-    expect(userVersionDto.remoteDatabaseId, version.remoteDatabaseId);
     expect(userVersionDto.localDatabaseId, version.localDatabaseId);
     expect(userVersionDto.versionId, 12);
     expect(userVersionDto.name, "name");

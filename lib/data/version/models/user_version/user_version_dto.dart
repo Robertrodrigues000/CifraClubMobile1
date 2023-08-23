@@ -10,7 +10,8 @@ part 'user_version_dto.g.dart';
 @CopyWith()
 @Collection(inheritance: false)
 class UserVersionDto extends Equatable {
-  final Id id;
+  final Id localDatabaseId;
+  final int remoteDatabaseId;
   final String name;
   final int versionId;
   final String songUrl;
@@ -29,15 +30,16 @@ class UserVersionDto extends Equatable {
   final int order;
 
   UserVersionDto({
-    required this.songUrl,
     this.key,
+    required this.localDatabaseId,
+    required this.remoteDatabaseId,
+    required this.songbookId,
+    required this.songUrl,
     required this.type,
     required this.name,
-    required this.songbookId,
     this.capo,
     this.stdKey,
     this.tuning,
-    required this.id,
     required this.songId,
     required this.artist,
     String? artistImage,
@@ -46,7 +48,8 @@ class UserVersionDto extends Equatable {
   }) : artistImage = (artistImage ?? "").isNotEmpty ? artistImage : null;
 
   Version toDomain() => Version(
-        remoteDatabaseId: id,
+        localDatabaseId: localDatabaseId,
+        remoteDatabaseId: remoteDatabaseId,
         songId: songId,
         instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
         name: name,
@@ -62,7 +65,8 @@ class UserVersionDto extends Equatable {
 
   UserVersionDto.fromDomain(Version version, int songbookId, [int? order])
       : this(
-          id: version.remoteDatabaseId!,
+          localDatabaseId: version.localDatabaseId ?? Isar.autoIncrement,
+          remoteDatabaseId: version.remoteDatabaseId!,
           name: version.name,
           songUrl: version.songUrl,
           songbookId: songbookId,
@@ -81,16 +85,17 @@ class UserVersionDto extends Equatable {
   @ignore
   @override
   List<Object?> get props => [
-        id,
+        localDatabaseId,
+        remoteDatabaseId,
+        versionId,
+        songbookId,
         name,
         songUrl,
         key,
         type,
         songId,
         stdKey,
-        versionId,
         capo,
         tuning,
-        songbookId,
       ];
 }

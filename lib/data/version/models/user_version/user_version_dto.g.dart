@@ -7,23 +7,25 @@ part of 'user_version_dto.dart';
 // **************************************************************************
 
 abstract class _$UserVersionDtoCWProxy {
-  UserVersionDto songUrl(String songUrl);
-
   UserVersionDto key(String? key);
+
+  UserVersionDto localDatabaseId(int localDatabaseId);
+
+  UserVersionDto remoteDatabaseId(int remoteDatabaseId);
+
+  UserVersionDto songbookId(int songbookId);
+
+  UserVersionDto songUrl(String songUrl);
 
   UserVersionDto type(int type);
 
   UserVersionDto name(String name);
-
-  UserVersionDto songbookId(int songbookId);
 
   UserVersionDto capo(int? capo);
 
   UserVersionDto stdKey(String? stdKey);
 
   UserVersionDto tuning(String? tuning);
-
-  UserVersionDto id(int id);
 
   UserVersionDto songId(int songId);
 
@@ -42,15 +44,16 @@ abstract class _$UserVersionDtoCWProxy {
   /// UserVersionDto(...).copyWith(id: 12, name: "My name")
   /// ````
   UserVersionDto call({
-    String? songUrl,
     String? key,
+    int? localDatabaseId,
+    int? remoteDatabaseId,
+    int? songbookId,
+    String? songUrl,
     int? type,
     String? name,
-    int? songbookId,
     int? capo,
     String? stdKey,
     String? tuning,
-    int? id,
     int? songId,
     UserVersionArtistDto? artist,
     String? artistImage,
@@ -66,19 +69,25 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
   final UserVersionDto _value;
 
   @override
-  UserVersionDto songUrl(String songUrl) => this(songUrl: songUrl);
+  UserVersionDto key(String? key) => this(key: key);
 
   @override
-  UserVersionDto key(String? key) => this(key: key);
+  UserVersionDto localDatabaseId(int localDatabaseId) => this(localDatabaseId: localDatabaseId);
+
+  @override
+  UserVersionDto remoteDatabaseId(int remoteDatabaseId) => this(remoteDatabaseId: remoteDatabaseId);
+
+  @override
+  UserVersionDto songbookId(int songbookId) => this(songbookId: songbookId);
+
+  @override
+  UserVersionDto songUrl(String songUrl) => this(songUrl: songUrl);
 
   @override
   UserVersionDto type(int type) => this(type: type);
 
   @override
   UserVersionDto name(String name) => this(name: name);
-
-  @override
-  UserVersionDto songbookId(int songbookId) => this(songbookId: songbookId);
 
   @override
   UserVersionDto capo(int? capo) => this(capo: capo);
@@ -88,9 +97,6 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
 
   @override
   UserVersionDto tuning(String? tuning) => this(tuning: tuning);
-
-  @override
-  UserVersionDto id(int id) => this(id: id);
 
   @override
   UserVersionDto songId(int songId) => this(songId: songId);
@@ -116,15 +122,16 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
   /// UserVersionDto(...).copyWith(id: 12, name: "My name")
   /// ````
   UserVersionDto call({
-    Object? songUrl = const $CopyWithPlaceholder(),
     Object? key = const $CopyWithPlaceholder(),
+    Object? localDatabaseId = const $CopyWithPlaceholder(),
+    Object? remoteDatabaseId = const $CopyWithPlaceholder(),
+    Object? songbookId = const $CopyWithPlaceholder(),
+    Object? songUrl = const $CopyWithPlaceholder(),
     Object? type = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
-    Object? songbookId = const $CopyWithPlaceholder(),
     Object? capo = const $CopyWithPlaceholder(),
     Object? stdKey = const $CopyWithPlaceholder(),
     Object? tuning = const $CopyWithPlaceholder(),
-    Object? id = const $CopyWithPlaceholder(),
     Object? songId = const $CopyWithPlaceholder(),
     Object? artist = const $CopyWithPlaceholder(),
     Object? artistImage = const $CopyWithPlaceholder(),
@@ -132,14 +139,26 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
     Object? order = const $CopyWithPlaceholder(),
   }) {
     return UserVersionDto(
-      songUrl: songUrl == const $CopyWithPlaceholder() || songUrl == null
-          ? _value.songUrl
-          // ignore: cast_nullable_to_non_nullable
-          : songUrl as String,
       key: key == const $CopyWithPlaceholder()
           ? _value.key
           // ignore: cast_nullable_to_non_nullable
           : key as String?,
+      localDatabaseId: localDatabaseId == const $CopyWithPlaceholder() || localDatabaseId == null
+          ? _value.localDatabaseId
+          // ignore: cast_nullable_to_non_nullable
+          : localDatabaseId as int,
+      remoteDatabaseId: remoteDatabaseId == const $CopyWithPlaceholder() || remoteDatabaseId == null
+          ? _value.remoteDatabaseId
+          // ignore: cast_nullable_to_non_nullable
+          : remoteDatabaseId as int,
+      songbookId: songbookId == const $CopyWithPlaceholder() || songbookId == null
+          ? _value.songbookId
+          // ignore: cast_nullable_to_non_nullable
+          : songbookId as int,
+      songUrl: songUrl == const $CopyWithPlaceholder() || songUrl == null
+          ? _value.songUrl
+          // ignore: cast_nullable_to_non_nullable
+          : songUrl as String,
       type: type == const $CopyWithPlaceholder() || type == null
           ? _value.type
           // ignore: cast_nullable_to_non_nullable
@@ -148,10 +167,6 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
           ? _value.name
           // ignore: cast_nullable_to_non_nullable
           : name as String,
-      songbookId: songbookId == const $CopyWithPlaceholder() || songbookId == null
-          ? _value.songbookId
-          // ignore: cast_nullable_to_non_nullable
-          : songbookId as int,
       capo: capo == const $CopyWithPlaceholder()
           ? _value.capo
           // ignore: cast_nullable_to_non_nullable
@@ -164,10 +179,6 @@ class _$UserVersionDtoCWProxyImpl implements _$UserVersionDtoCWProxy {
           ? _value.tuning
           // ignore: cast_nullable_to_non_nullable
           : tuning as String?,
-      id: id == const $CopyWithPlaceholder() || id == null
-          ? _value.id
-          // ignore: cast_nullable_to_non_nullable
-          : id as int,
       songId: songId == const $CopyWithPlaceholder() || songId == null
           ? _value.songId
           // ignore: cast_nullable_to_non_nullable
@@ -244,38 +255,43 @@ const UserVersionDtoSchema = CollectionSchema(
       name: r'order',
       type: IsarType.long,
     ),
-    r'songId': PropertySchema(
+    r'remoteDatabaseId': PropertySchema(
       id: 6,
+      name: r'remoteDatabaseId',
+      type: IsarType.long,
+    ),
+    r'songId': PropertySchema(
+      id: 7,
       name: r'songId',
       type: IsarType.long,
     ),
     r'songUrl': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'songUrl',
       type: IsarType.string,
     ),
     r'songbookId': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'songbookId',
       type: IsarType.long,
     ),
     r'stdKey': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'stdKey',
       type: IsarType.string,
     ),
     r'tuning': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'tuning',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'type',
       type: IsarType.long,
     ),
     r'versionId': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'versionId',
       type: IsarType.long,
     )
@@ -284,7 +300,7 @@ const UserVersionDtoSchema = CollectionSchema(
   serialize: _userVersionDtoSerialize,
   deserialize: _userVersionDtoDeserialize,
   deserializeProp: _userVersionDtoDeserializeProp,
-  idName: r'id',
+  idName: r'localDatabaseId',
   indexes: {
     r'artistImage': IndexSchema(
       id: 897173347989801551,
@@ -393,13 +409,14 @@ void _userVersionDtoSerialize(
   writer.writeString(offsets[3], object.key);
   writer.writeString(offsets[4], object.name);
   writer.writeLong(offsets[5], object.order);
-  writer.writeLong(offsets[6], object.songId);
-  writer.writeString(offsets[7], object.songUrl);
-  writer.writeLong(offsets[8], object.songbookId);
-  writer.writeString(offsets[9], object.stdKey);
-  writer.writeString(offsets[10], object.tuning);
-  writer.writeLong(offsets[11], object.type);
-  writer.writeLong(offsets[12], object.versionId);
+  writer.writeLong(offsets[6], object.remoteDatabaseId);
+  writer.writeLong(offsets[7], object.songId);
+  writer.writeString(offsets[8], object.songUrl);
+  writer.writeLong(offsets[9], object.songbookId);
+  writer.writeString(offsets[10], object.stdKey);
+  writer.writeString(offsets[11], object.tuning);
+  writer.writeLong(offsets[12], object.type);
+  writer.writeLong(offsets[13], object.versionId);
 }
 
 UserVersionDto _userVersionDtoDeserialize(
@@ -417,17 +434,18 @@ UserVersionDto _userVersionDtoDeserialize(
         UserVersionArtistDto(),
     artistImage: reader.readStringOrNull(offsets[1]),
     capo: reader.readLongOrNull(offsets[2]),
-    id: id,
     key: reader.readStringOrNull(offsets[3]),
+    localDatabaseId: id,
     name: reader.readString(offsets[4]),
     order: reader.readLong(offsets[5]),
-    songId: reader.readLong(offsets[6]),
-    songUrl: reader.readString(offsets[7]),
-    songbookId: reader.readLong(offsets[8]),
-    stdKey: reader.readStringOrNull(offsets[9]),
-    tuning: reader.readStringOrNull(offsets[10]),
-    type: reader.readLong(offsets[11]),
-    versionId: reader.readLong(offsets[12]),
+    remoteDatabaseId: reader.readLong(offsets[6]),
+    songId: reader.readLong(offsets[7]),
+    songUrl: reader.readString(offsets[8]),
+    songbookId: reader.readLong(offsets[9]),
+    stdKey: reader.readStringOrNull(offsets[10]),
+    tuning: reader.readStringOrNull(offsets[11]),
+    type: reader.readLong(offsets[12]),
+    versionId: reader.readLong(offsets[13]),
   );
   return object;
 }
@@ -459,16 +477,18 @@ P _userVersionDtoDeserializeProp<P>(
     case 6:
       return (reader.readLong(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
-    case 8:
       return (reader.readLong(offset)) as P;
+    case 8:
+      return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 10:
       return (reader.readStringOrNull(offset)) as P;
     case 11:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 12:
+      return (reader.readLong(offset)) as P;
+    case 13:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -476,7 +496,7 @@ P _userVersionDtoDeserializeProp<P>(
 }
 
 Id _userVersionDtoGetId(UserVersionDto object) {
-  return object.id;
+  return object.localDatabaseId;
 }
 
 List<IsarLinkBase<dynamic>> _userVersionDtoGetLinks(UserVersionDto object) {
@@ -486,7 +506,7 @@ List<IsarLinkBase<dynamic>> _userVersionDtoGetLinks(UserVersionDto object) {
 void _userVersionDtoAttach(IsarCollection<dynamic> col, Id id, UserVersionDto object) {}
 
 extension UserVersionDtoQueryWhereSort on QueryBuilder<UserVersionDto, UserVersionDto, QWhere> {
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhere> anyId() {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhere> anyLocalDatabaseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -502,64 +522,66 @@ extension UserVersionDtoQueryWhereSort on QueryBuilder<UserVersionDto, UserVersi
 }
 
 extension UserVersionDtoQueryWhere on QueryBuilder<UserVersionDto, UserVersionDto, QWhereClause> {
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> idEqualTo(Id id) {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> localDatabaseIdEqualTo(Id localDatabaseId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: id,
-        upper: id,
+        lower: localDatabaseId,
+        upper: localDatabaseId,
       ));
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> localDatabaseIdNotEqualTo(Id localDatabaseId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
+              IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: false),
             )
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
+              IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: false),
             );
       } else {
         return query
             .addWhereClause(
-              IdWhereClause.greaterThan(lower: id, includeLower: false),
+              IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: false),
             )
             .addWhereClause(
-              IdWhereClause.lessThan(upper: id, includeUpper: false),
+              IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: false),
             );
       }
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> localDatabaseIdGreaterThan(Id localDatabaseId,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.greaterThan(lower: id, includeLower: include),
+        IdWhereClause.greaterThan(lower: localDatabaseId, includeLower: include),
       );
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> localDatabaseIdLessThan(Id localDatabaseId,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        IdWhereClause.lessThan(upper: id, includeUpper: include),
+        IdWhereClause.lessThan(upper: localDatabaseId, includeUpper: include),
       );
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> idBetween(
-    Id lowerId,
-    Id upperId, {
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> localDatabaseIdBetween(
+    Id lowerLocalDatabaseId,
+    Id upperLocalDatabaseId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
-        lower: lowerId,
+        lower: lowerLocalDatabaseId,
         includeLower: includeLower,
-        upper: upperId,
+        upper: upperLocalDatabaseId,
         includeUpper: includeUpper,
       ));
     });
@@ -1086,58 +1108,6 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> idEqualTo(Id value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> idGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> idLessThan(
-    Id value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> keyIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1278,6 +1248,58 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'key',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> localDatabaseIdEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> localDatabaseIdGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'localDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> localDatabaseIdLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'localDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> localDatabaseIdBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'localDatabaseId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1454,6 +1476,58 @@ extension UserVersionDtoQueryFilter on QueryBuilder<UserVersionDto, UserVersionD
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'order',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> remoteDatabaseIdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'remoteDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> remoteDatabaseIdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'remoteDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> remoteDatabaseIdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'remoteDatabaseId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterFilterCondition> remoteDatabaseIdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'remoteDatabaseId',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2158,6 +2232,18 @@ extension UserVersionDtoQuerySortBy on QueryBuilder<UserVersionDto, UserVersionD
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByRemoteDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteDatabaseId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortByRemoteDatabaseIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteDatabaseId', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> sortBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'songId', Sort.asc);
@@ -2268,18 +2354,6 @@ extension UserVersionDtoQuerySortThenBy on QueryBuilder<UserVersionDto, UserVers
     });
   }
 
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenById() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.asc);
-    });
-  }
-
-  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'id', Sort.desc);
-    });
-  }
-
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByKey() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'key', Sort.asc);
@@ -2289,6 +2363,18 @@ extension UserVersionDtoQuerySortThenBy on QueryBuilder<UserVersionDto, UserVers
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByKeyDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'key', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByLocalDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDatabaseId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByLocalDatabaseIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDatabaseId', Sort.desc);
     });
   }
 
@@ -2313,6 +2399,18 @@ extension UserVersionDtoQuerySortThenBy on QueryBuilder<UserVersionDto, UserVers
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByOrderDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'order', Sort.desc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByRemoteDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteDatabaseId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterSortBy> thenByRemoteDatabaseIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteDatabaseId', Sort.desc);
     });
   }
 
@@ -2432,6 +2530,12 @@ extension UserVersionDtoQueryWhereDistinct on QueryBuilder<UserVersionDto, UserV
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctByRemoteDatabaseId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'remoteDatabaseId');
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QDistinct> distinctBySongId() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'songId');
@@ -2476,9 +2580,9 @@ extension UserVersionDtoQueryWhereDistinct on QueryBuilder<UserVersionDto, UserV
 }
 
 extension UserVersionDtoQueryProperty on QueryBuilder<UserVersionDto, UserVersionDto, QQueryProperty> {
-  QueryBuilder<UserVersionDto, int, QQueryOperations> idProperty() {
+  QueryBuilder<UserVersionDto, int, QQueryOperations> localDatabaseIdProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'id');
+      return query.addPropertyName(r'localDatabaseId');
     });
   }
 
@@ -2515,6 +2619,12 @@ extension UserVersionDtoQueryProperty on QueryBuilder<UserVersionDto, UserVersio
   QueryBuilder<UserVersionDto, int, QQueryOperations> orderProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'order');
+    });
+  }
+
+  QueryBuilder<UserVersionDto, int, QQueryOperations> remoteDatabaseIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'remoteDatabaseId');
     });
   }
 

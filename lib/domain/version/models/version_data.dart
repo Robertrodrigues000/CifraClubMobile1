@@ -4,12 +4,13 @@ import 'package:cifraclub/domain/version/models/contributor.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/instrument_version.dart';
 import 'package:cifraclub/domain/version/models/version_data_song.dart';
-import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
 import 'package:equatable/equatable.dart';
 
 class VersionData extends Equatable {
-  final int? localId;
+  final int? localDatabaseId;
+  final int? songbookId;
+  final int? versionLocalDatabaseId;
   final int versionId;
   final Instrument instrument;
   final String content;
@@ -35,7 +36,9 @@ class VersionData extends Equatable {
   final List<({Instrument instrument, List<InstrumentVersion> versions})>? instrumentVersions;
 
   const VersionData({
-    this.localId,
+    this.songbookId,
+    this.localDatabaseId,
+    this.versionLocalDatabaseId,
     required this.versionId,
     required this.instrument,
     required this.content,
@@ -62,37 +65,20 @@ class VersionData extends Equatable {
   });
 
   // coverage:ignore-start
-  Version toVersion(int versionId) => Version(
-        remoteDatabaseId: versionId,
-        songId: song.songId,
-        versionId: versionId,
-        instrument: instrument,
-        name: song.name,
-        songUrl: completePath,
-        artist: artist!,
-        capo: capo,
-        tuning: tuning,
-        key: key,
-        stdKey: stdKey,
-        order: 0,
-      );
-
   @override
   List<Object?> get props => [
+        localDatabaseId,
+        versionLocalDatabaseId,
+        songbookId,
         versionId,
+        song.songId,
         instrument,
-        content,
-        versionName,
-        versionUrl,
-        completePath,
-        siteUrl,
         shapeKey,
         stdKey,
         stdShapeKey,
         tuning,
         capo,
-        isVerified,
-        blocked
+        isVerified
       ];
   // coverage:ignore-end
 }

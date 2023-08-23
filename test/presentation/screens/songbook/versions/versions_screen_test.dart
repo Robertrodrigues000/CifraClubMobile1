@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
-import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
@@ -46,7 +46,7 @@ class _ListOptionBottomSheetMock extends Mock implements ListOptionsBottomSheet 
 
 class _BuildContextMock extends Mock implements BuildContext {}
 
-class _ClearSongsFromSongbookMock extends Mock implements ClearSongsFromSongbook {}
+class _ClearVersionsFromSongbookMock extends Mock implements ClearVersionsFromSongbook {}
 
 class _ShareLinkMock extends Mock implements ShareLink {}
 
@@ -366,7 +366,7 @@ void main() {
     when(() => deleteSongbookMock(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
     bottomSheet = ListOptionsBottomSheet(
-      _ClearSongsFromSongbookMock(),
+      _ClearVersionsFromSongbookMock(),
       deleteSongbookMock,
       _ShareLinkMock(),
       _UpdateSongbookDataMock(),
@@ -423,7 +423,7 @@ void main() {
     final completer = Completer();
 
     bottomSheet = ListOptionsBottomSheet(
-      _ClearSongsFromSongbookMock(),
+      _ClearVersionsFromSongbookMock(),
       deleteSongbookMock,
       _ShareLinkMock(),
       _UpdateSongbookDataMock(),

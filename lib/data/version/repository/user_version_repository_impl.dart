@@ -63,8 +63,8 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   }
 
   @override
-  Future<int?> deleteVersionsById(List<int> songsId) {
-    return _userVersionDataSource.deleteVersionsById(songsId);
+  Future<int?> deleteVersionsById(List<int> localDatabaseIds, int songbookId) {
+    return _userVersionDataSource.deleteVersionsById(localDatabaseIds, songbookId);
   }
 
   @override
@@ -93,7 +93,15 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   }
 
   @override
-  Future<int> addVersionData(VersionData versionData, int versionId) {
-    return _userVersionDataSource.addVersionData(UserVersionDataDto.fromDomain(versionData, versionId));
+  Future<int> addVersionData({
+    required VersionData versionData,
+    required int versionLocalDatabaseId,
+    required int songbookId,
+  }) {
+    return _userVersionDataSource.addVersionData(UserVersionDataDto.fromDomain(
+      versionData: versionData,
+      versionLocalDatabaseId: versionLocalDatabaseId,
+      songbookId: songbookId,
+    ));
   }
 }

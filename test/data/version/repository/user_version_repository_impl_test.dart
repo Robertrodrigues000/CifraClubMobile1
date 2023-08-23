@@ -156,13 +156,13 @@ void main() {
 
   test("When `deleteVersionsById` is called should return quantity of deleted songs", () async {
     final userVersionDataSource = _UserVersionDataSourceMock();
-    when(() => userVersionDataSource.deleteVersionsById([1, 2])).thenAnswer((_) => SynchronousFuture(2));
+    when(() => userVersionDataSource.deleteVersionsById([1, 2], any())).thenAnswer((_) => SynchronousFuture(2));
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
-    final countVersionsDeleted = await userVersionRepository.deleteVersionsById([1, 2]);
+    final countVersionsDeleted = await userVersionRepository.deleteVersionsById([1, 2], 1);
 
     expect(countVersionsDeleted, 2);
-    verify(() => userVersionDataSource.deleteVersionsById([1, 2])).called(1);
+    verify(() => userVersionDataSource.deleteVersionsById([1, 2], 1)).called(1);
   });
 
   test("When `getUserVersionStreamFromSongbook` is called should return list of cifras", () async {
@@ -237,7 +237,8 @@ void main() {
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
-    final addedId = await userVersionRepository.addVersionData(versionData, 1);
+    final addedId =
+        await userVersionRepository.addVersionData(versionData: versionData, versionLocalDatabaseId: 1, songbookId: 2);
 
     expect(addedId, 1);
   });

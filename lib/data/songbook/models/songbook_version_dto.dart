@@ -42,6 +42,7 @@ class SongbookVersionDto extends Equatable {
 
   Version toDomain(int order) {
     return Version(
+      remoteDatabaseId: remoteDatabaseId,
       songId: songId,
       instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
       name: name,
@@ -51,7 +52,6 @@ class SongbookVersionDto extends Equatable {
       capo: capo,
       tuning: tuning,
       artist: artist.toDomain(),
-      remoteDatabaseId: remoteDatabaseId,
       versionId: versionId,
       order: order,
     );

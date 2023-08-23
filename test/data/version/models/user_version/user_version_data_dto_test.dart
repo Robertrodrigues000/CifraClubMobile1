@@ -31,11 +31,12 @@ void main() {
       videoLesson: getFakeVersionDataVideoLesson(),
     );
 
-    final userVersionDataDto = UserVersionDataDto.fromDomain(versionData, 11);
+    final userVersionDataDto =
+        UserVersionDataDto.fromDomain(versionData: versionData, versionLocalDatabaseId: 11, songbookId: 1);
 
-    expect(userVersionDataDto.localId, Isar.autoIncrement);
+    expect(userVersionDataDto.localDatabaseId, Isar.autoIncrement);
     expect(userVersionDataDto.versionId, 1);
-    expect(userVersionDataDto.songbookVersionId, 11);
+    expect(userVersionDataDto.versionLocalDatabaseId, 11);
     expect(userVersionDataDto.instrument, Instrument.bass);
     expect(userVersionDataDto.content, "Content");
     expect(userVersionDataDto.versionName, "Label");
@@ -52,5 +53,6 @@ void main() {
     expect(userVersionDataDto.isVerified, true);
     expect(userVersionDataDto.blocked, false);
     expect(userVersionDataDto.reason, "Reason");
+    expect(userVersionDataDto.songbookId, 1);
   });
 }

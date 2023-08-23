@@ -9,9 +9,13 @@ abstract class UserVersionRepository {
   Stream<int> getTotalSongbookVersions(int songbookId);
   Future<List<String?>> getImagesPreview(int songbookId);
   Future<int?> deleteVersionsBySongbookId(int songbookId);
-  Future<int?> deleteVersionsById(List<int> songsId);
+  Future<int?> deleteVersionsById(List<int> localDatabaseIds, int songbookId);
   Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId);
   Future<List<int>> updateVersionsToSongbook(List<Version> versions, int songbookId);
   Stream<bool> getIsFavoriteVersionBySongIdStream(int songId);
-  Future<int> addVersionData(VersionData versionData, int versionId);
+  Future<int> addVersionData({
+    required VersionData versionData,
+    required int versionLocalDatabaseId,
+    required int songbookId,
+  });
 }

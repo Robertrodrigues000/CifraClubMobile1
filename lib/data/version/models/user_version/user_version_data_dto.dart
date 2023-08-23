@@ -17,9 +17,12 @@ part 'user_version_data_dto.g.dart';
 
 @Collection(inheritance: false)
 class UserVersionDataDto extends Equatable {
-  final Id localId;
+  final Id localDatabaseId;
+  @Index(composite: [CompositeIndex("songbookId")], unique: true, replace: true)
+  final int versionLocalDatabaseId;
   final int versionId;
-  final int songbookVersionId;
+  @Index()
+  final int songbookId;
   @enumerated
   final Instrument instrument;
   final String content;
@@ -45,9 +48,10 @@ class UserVersionDataDto extends Equatable {
   final List<UserInstrumentVersionsDto>? instrumentVersions;
 
   const UserVersionDataDto({
-    required this.localId,
+    required this.localDatabaseId,
+    required this.songbookId,
+    required this.versionLocalDatabaseId,
     required this.versionId,
-    required this.songbookVersionId,
     required this.instrument,
     required this.content,
     required this.versionName,
@@ -72,11 +76,15 @@ class UserVersionDataDto extends Equatable {
     this.instrumentVersions,
   });
 
-  UserVersionDataDto.fromDomain(VersionData versionData, int versionId)
-      : this(
-          localId: versionData.localId ?? Isar.autoIncrement,
+  UserVersionDataDto.fromDomain({
+    required VersionData versionData,
+    required int versionLocalDatabaseId,
+    required int songbookId,
+  }) : this(
+          localDatabaseId: versionData.localDatabaseId ?? Isar.autoIncrement,
+          versionLocalDatabaseId: versionLocalDatabaseId,
+          songbookId: songbookId,
           versionId: versionData.versionId,
-          songbookVersionId: versionId,
           instrument: versionData.instrument,
           content: versionData.content,
           versionName: versionData.versionName,
@@ -106,12 +114,12 @@ class UserVersionDataDto extends Equatable {
   @override
   @ignore
   List<Object?> get props => [
+        localDatabaseId,
         versionId,
-        localId,
-        songbookVersionId,
+        versionLocalDatabaseId,
+        songbookId,
+        song.songId,
         instrument,
-        content,
-        versionUrl,
         shapeKey,
         stdKey,
         stdShapeKey,

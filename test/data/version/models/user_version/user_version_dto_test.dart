@@ -3,13 +3,15 @@ import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:isar/isar.dart';
 
 import '../../../../shared_mocks/domain/artist/models/artist_mock.dart';
 
 void main() {
   test("When `toDomain` is called should convert correctly to Version", () {
     final userVersionDto = UserVersionDto(
-      id: 12,
+      localDatabaseId: 12,
+      remoteDatabaseId: 13,
       songUrl: "test",
       type: 2,
       name: "name",
@@ -26,7 +28,8 @@ void main() {
     );
     final version = userVersionDto.toDomain();
 
-    expect(version.remoteDatabaseId, 12);
+    expect(version.remoteDatabaseId, 13);
+    expect(version.localDatabaseId, 12);
     expect(version.capo, 1);
     expect(version.name, "name");
     expect(version.songId, 3);
@@ -61,7 +64,8 @@ void main() {
         order: 10);
     final userVersionDto = UserVersionDto.fromDomain(version, 10);
 
-    expect(userVersionDto.id, version.remoteDatabaseId);
+    expect(userVersionDto.remoteDatabaseId, version.remoteDatabaseId);
+    expect(userVersionDto.localDatabaseId, Isar.autoIncrement);
     expect(userVersionDto.versionId, 12);
     expect(userVersionDto.name, "name");
     expect(userVersionDto.songUrl, "songUrl");

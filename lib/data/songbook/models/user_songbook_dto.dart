@@ -26,7 +26,7 @@ class UserSongbookDto extends Equatable {
   final List<String?> preview;
 
   const UserSongbookDto({
-    this.id = Isar.autoIncrement,
+    required this.id,
     required this.createdAt,
     required this.lastUpdated,
     required this.name,

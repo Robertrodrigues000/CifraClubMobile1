@@ -32,30 +32,30 @@ import 'package:cifraclub/data/time/data_source/ntp_data_source.dart' as _i31;
 import 'package:cifraclub/data/version/data_source/user_version_data_source.dart' as _i53;
 import 'package:cifraclub/data/version/data_source/version_data_source.dart' as _i57;
 import 'package:cifraclub/data/version/repository/version_repository_impl.dart' as _i60;
-import 'package:cifraclub/di/analytics_module.dart' as _i168;
-import 'package:cifraclub/di/app_module.dart' as _i172;
-import 'package:cifraclub/di/artist_module.dart' as _i165;
-import 'package:cifraclub/di/authentication_module.dart' as _i158;
-import 'package:cifraclub/di/bottom_sheet_module.dart' as _i175;
-import 'package:cifraclub/di/controllers_module.dart' as _i176;
-import 'package:cifraclub/di/device_module.dart' as _i177;
-import 'package:cifraclub/di/firebase_module.dart' as _i161;
-import 'package:cifraclub/di/genre_module.dart' as _i171;
-import 'package:cifraclub/di/home_module.dart' as _i164;
-import 'package:cifraclub/di/in_app_purchase_module.dart' as _i162;
-import 'package:cifraclub/di/isar_module.dart' as _i178;
-import 'package:cifraclub/di/log_module.dart' as _i159;
+import 'package:cifraclub/di/analytics_module.dart' as _i156;
+import 'package:cifraclub/di/app_module.dart' as _i157;
+import 'package:cifraclub/di/artist_module.dart' as _i158;
+import 'package:cifraclub/di/authentication_module.dart' as _i159;
+import 'package:cifraclub/di/bottom_sheet_module.dart' as _i160;
+import 'package:cifraclub/di/controllers_module.dart' as _i161;
+import 'package:cifraclub/di/device_module.dart' as _i162;
+import 'package:cifraclub/di/firebase_module.dart' as _i163;
+import 'package:cifraclub/di/genre_module.dart' as _i164;
+import 'package:cifraclub/di/home_module.dart' as _i165;
+import 'package:cifraclub/di/in_app_purchase_module.dart' as _i166;
+import 'package:cifraclub/di/isar_module.dart' as _i167;
+import 'package:cifraclub/di/log_module.dart' as _i168;
 import 'package:cifraclub/di/navigator_module.dart' as _i29;
-import 'package:cifraclub/di/network_module.dart' as _i174;
-import 'package:cifraclub/di/path_module.dart' as _i156;
-import 'package:cifraclub/di/remote_config_module.dart' as _i173;
-import 'package:cifraclub/di/search_module.dart' as _i160;
-import 'package:cifraclub/di/shared_preferences_module.dart' as _i167;
-import 'package:cifraclub/di/song_module.dart' as _i166;
-import 'package:cifraclub/di/songbook_module.dart' as _i170;
-import 'package:cifraclub/di/subscription_module.dart' as _i157;
-import 'package:cifraclub/di/time_module.dart' as _i163;
-import 'package:cifraclub/di/version_module.dart' as _i169;
+import 'package:cifraclub/di/network_module.dart' as _i169;
+import 'package:cifraclub/di/path_module.dart' as _i170;
+import 'package:cifraclub/di/remote_config_module.dart' as _i171;
+import 'package:cifraclub/di/search_module.dart' as _i172;
+import 'package:cifraclub/di/shared_preferences_module.dart' as _i173;
+import 'package:cifraclub/di/song_module.dart' as _i174;
+import 'package:cifraclub/di/songbook_module.dart' as _i175;
+import 'package:cifraclub/di/subscription_module.dart' as _i176;
+import 'package:cifraclub/di/time_module.dart' as _i177;
+import 'package:cifraclub/di/version_module.dart' as _i178;
 import 'package:cifraclub/domain/analytics/repository/analytics_repository.dart' as _i117;
 import 'package:cifraclub/domain/app/repository/installed_app_repository.dart' as _i22;
 import 'package:cifraclub/domain/app/repository/share_link_repository.dart' as _i45;
@@ -112,8 +112,8 @@ import 'package:cifraclub/domain/song/repository/song_repository.dart' as _i104;
 import 'package:cifraclub/domain/song/use_cases/get_top_songs.dart' as _i136;
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart' as _i106;
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart' as _i52;
-import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart' as _i120;
 import 'package:cifraclub/domain/songbook/use_cases/clear_user_songbooks_on_logout.dart' as _i62;
+import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart' as _i120;
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart' as _i121;
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart' as _i122;
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart' as _i68;
@@ -411,7 +411,7 @@ Future<_i1.GetIt> $initGetIt(
   gh.factory<_i117.AnalyticsRepository>(() => analyticsModule.getAnalyticsRepository(gh<_i65.FirebaseAnalytics>()));
   gh.factory<_i118.ArtistDataSource>(() => artistModule.getGenresDataSource(gh<_i61.CifraClubAPINetworkService>()));
   gh.factory<_i119.ArtistRepository>(() => artistModule.getGenresRepository(gh<_i118.ArtistDataSource>()));
-  gh.factory<_i120.ClearSongsFromSongbook>(() => _i120.ClearSongsFromSongbook(
+  gh.factory<_i120.ClearVersionsFromSongbook>(() => _i120.ClearVersionsFromSongbook(
         gh<_i106.SongbookRepository>(),
         gh<_i54.UserVersionRepository>(),
         gh<_i111.UpdateSongbookPreview>(),
@@ -472,7 +472,7 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i121.DeleteSongbook>(),
         gh<_i110.UpdateSongbookData>(),
         gh<_i55.ValidateSongbookName>(),
-        gh<_i120.ClearSongsFromSongbook>(),
+        gh<_i120.ClearVersionsFromSongbook>(),
         gh<_i102.ShareLink>(),
         gh<_i8.EditListScreenBuilder>(),
       ));
@@ -546,50 +546,50 @@ Future<_i1.GetIt> $initGetIt(
   return getIt;
 }
 
-class _$PathModule extends _i156.PathModule {}
+class _$AnalyticsModule extends _i156.AnalyticsModule {}
 
-class _$SubscriptionModule extends _i157.SubscriptionModule {}
+class _$AppModule extends _i157.AppModule {}
 
-class _$AuthenticationModule extends _i158.AuthenticationModule {}
+class _$ArtistModule extends _i158.ArtistModule {}
 
-class _$LogModule extends _i159.LogModule {}
+class _$AuthenticationModule extends _i159.AuthenticationModule {}
 
-class _$SearchModule extends _i160.SearchModule {}
+class _$BottomSheetModule extends _i160.BottomSheetModule {}
 
-class _$FirebaseModule extends _i161.FirebaseModule {}
+class _$ControllersModule extends _i161.ControllersModule {}
 
-class _$InAppPurchaseModule extends _i162.InAppPurchaseModule {}
+class _$DeviceModule extends _i162.DeviceModule {}
 
-class _$TimeModule extends _i163.TimeModule {}
+class _$FirebaseModule extends _i163.FirebaseModule {}
 
-class _$HomeModule extends _i164.HomeModule {}
+class _$GenreModule extends _i164.GenreModule {}
 
-class _$ArtistModule extends _i165.ArtistModule {}
+class _$HomeModule extends _i165.HomeModule {}
 
-class _$SongModule extends _i166.SongModule {}
+class _$InAppPurchaseModule extends _i166.InAppPurchaseModule {}
 
-class _$SharedPreferencesModule extends _i167.SharedPreferencesModule {}
+class _$IsarModule extends _i167.IsarModule {}
 
-class _$AnalyticsModule extends _i168.AnalyticsModule {}
-
-class _$VersionModule extends _i169.VersionModule {}
+class _$LogModule extends _i168.LogModule {}
 
 class _$NavigatorModule extends _i29.NavigatorModule {}
 
-class _$SongbookModule extends _i170.SongbookModule {}
+class _$NetworkModule extends _i169.NetworkModule {}
 
-class _$GenreModule extends _i171.GenreModule {}
+class _$PathModule extends _i170.PathModule {}
 
-class _$AppModule extends _i172.AppModule {}
+class _$RemoteConfigModule extends _i171.RemoteConfigModule {}
 
-class _$RemoteConfigModule extends _i173.RemoteConfigModule {}
+class _$SearchModule extends _i172.SearchModule {}
 
-class _$NetworkModule extends _i174.NetworkModule {}
+class _$SharedPreferencesModule extends _i173.SharedPreferencesModule {}
 
-class _$BottomSheetModule extends _i175.BottomSheetModule {}
+class _$SongModule extends _i174.SongModule {}
 
-class _$ControllersModule extends _i176.ControllersModule {}
+class _$SongbookModule extends _i175.SongbookModule {}
 
-class _$DeviceModule extends _i177.DeviceModule {}
+class _$SubscriptionModule extends _i176.SubscriptionModule {}
 
-class _$IsarModule extends _i178.IsarModule {}
+class _$TimeModule extends _i177.TimeModule {}
+
+class _$VersionModule extends _i178.VersionModule {}

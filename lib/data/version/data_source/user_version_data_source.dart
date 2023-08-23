@@ -71,19 +71,29 @@ class UserVersionDataSource {
 
   Future<int?> deleteVersions(int songbookId) async {
     return _isar.writeTxn(() async {
-      return _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).deleteAll();
+      await _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).deleteAll();
+      return _isar.userVersionDataDtos.where().songbookIdEqualTo(songbookId).deleteAll();
     });
   }
 
   Future<int?> deleteRecentVersions() {
     return _isar.writeTxn(() async {
-      return _isar.userRecentVersionDtos.where().deleteAll();
+      await _isar.userRecentVersionDtos.where().deleteAll();
+      return _isar.userVersionDataDtos.where().songbookIdEqualTo(ListType.recents.localId).deleteAll();
     });
   }
 
-  Future<int?> deleteVersionsById(List<int> ids) async {
+  Future<int?> deleteVersionsById(List<int> localDatabaseIds, int songbookId) async {
+    if (localDatabaseIds.isEmpty) {
+      return 0;
+    }
+
     return _isar.writeTxn(() async {
-      return _isar.userVersionDtos.deleteAll(ids);
+      await _isar.userVersionDtos.deleteAll(localDatabaseIds);
+      return _isar.userVersionDataDtos
+          .where()
+          .anyOf(localDatabaseIds, (q, id) => q.versionLocalDatabaseIdSongbookIdEqualTo(id, songbookId))
+          .deleteAll();
     });
   }
 

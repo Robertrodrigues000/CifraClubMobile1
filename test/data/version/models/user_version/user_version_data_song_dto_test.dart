@@ -14,7 +14,7 @@ void main() {
 
     final userMusicDto = UserVersionDataSongDto.fromDomain(music);
 
-    expect(userMusicDto.id, 1);
+    expect(userMusicDto.songId, 1);
     expect(userMusicDto.lyricsId, 2);
     expect(userMusicDto.name, "Bohemian Rhapsody");
     expect(userMusicDto.url, "https://www.youtube.com/watch?v=fJ9rUt9UM0k");

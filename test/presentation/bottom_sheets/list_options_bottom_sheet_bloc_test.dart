@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
@@ -14,7 +14,7 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
-class _ClearSongsFromSongbookMock extends Mock implements ClearSongsFromSongbook {}
+class _ClearVersionsFromSongbookMock extends Mock implements ClearVersionsFromSongbook {}
 
 class _ShareLinkMock extends Mock implements ShareLink {}
 
@@ -33,14 +33,14 @@ void main() {
     _DeleteSongbookMock? deleteSongbookMock,
     _UpdateSongbookDataMock? updateSongbookDataMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
-    _ClearSongsFromSongbookMock? deleteAllCifrasMock,
+    _ClearVersionsFromSongbookMock? deleteAllCifrasMock,
     _ShareLinkMock? shareLinkMock,
   }) =>
       ListOptionsBottomSheetBloc(
         deleteSongbookMock ?? _DeleteSongbookMock(),
         updateSongbookDataMock ?? _UpdateSongbookDataMock(),
         validateSongbookNameMock ?? _ValidateSongbookNameMock(),
-        deleteAllCifrasMock ?? _ClearSongsFromSongbookMock(),
+        deleteAllCifrasMock ?? _ClearVersionsFromSongbookMock(),
         shareLinkMock ?? _ShareLinkMock(),
       );
 
@@ -88,7 +88,7 @@ void main() {
   });
 
   test("When `clearlist` is called should call deleteAllCifras", () async {
-    final deleteAllCifras = _ClearSongsFromSongbookMock();
+    final deleteAllCifras = _ClearVersionsFromSongbookMock();
     when(() => deleteAllCifras(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
     final bloc = getBloc(deleteAllCifrasMock: deleteAllCifras);

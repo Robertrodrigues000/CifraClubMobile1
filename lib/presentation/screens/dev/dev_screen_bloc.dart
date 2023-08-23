@@ -3,10 +3,10 @@ import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/search/models/search_filter.dart';
 import 'package:cifraclub/domain/search/use_cases/search_all_use_case.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/domain/songbook/use_cases/clear_songs_from_songbook.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
@@ -25,7 +25,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final GetOrders _getOrders;
   final PostPurchaseOrder _postPurchaseOrder;
   final GetIsProPreference _getIsProPreference;
-  final ClearSongsFromSongbook _clearSongsFromSongbook;
+  final ClearVersionsFromSongbook _clearSongsFromSongbook;
   final SearchAll _searchAll;
 
   DevScreenBloc(

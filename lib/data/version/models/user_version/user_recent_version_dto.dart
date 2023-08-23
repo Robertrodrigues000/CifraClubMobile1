@@ -11,14 +11,14 @@ part 'user_recent_version_dto.g.dart';
 @CopyWith()
 @Collection(inheritance: false)
 class UserRecentVersionDto extends Equatable {
-  Id localDatabaseId = Isar.autoIncrement;
-  final int? remoteDatabaseId;
+  final Id localDatabaseId;
   final String name;
   final int versionId;
   final String songUrl;
   final String? key;
   @enumerated
   final Instrument instrument;
+  @Index()
   final int songId;
   final String? stdKey;
   final int? capo;
@@ -29,7 +29,6 @@ class UserRecentVersionDto extends Equatable {
 
   UserRecentVersionDto({
     required this.localDatabaseId,
-    this.remoteDatabaseId,
     required this.songUrl,
     this.key,
     required this.instrument,
@@ -45,7 +44,6 @@ class UserRecentVersionDto extends Equatable {
 
   Version toDomain() => Version(
         localDatabaseId: localDatabaseId,
-        remoteDatabaseId: (remoteDatabaseId ?? -1) > 0 ? remoteDatabaseId : null,
         songId: songId,
         instrument: instrument,
         name: name,
@@ -62,7 +60,6 @@ class UserRecentVersionDto extends Equatable {
   UserRecentVersionDto.fromDomain(Version version)
       : this(
           localDatabaseId: version.localDatabaseId ?? Isar.autoIncrement,
-          remoteDatabaseId: version.remoteDatabaseId,
           name: version.name,
           songUrl: version.songUrl,
           instrument: version.instrument,
@@ -81,7 +78,6 @@ class UserRecentVersionDto extends Equatable {
   List<Object?> get props => [
         localDatabaseId,
         name,
-        remoteDatabaseId,
         songUrl,
         key,
         instrument,

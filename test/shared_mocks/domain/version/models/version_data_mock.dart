@@ -6,8 +6,9 @@ import 'package:faker/faker.dart';
 import 'instrument_version_mock.dart';
 import 'music_mock.dart';
 
-VersionData getFakeVersionData(
-    {List<({Instrument instrument, List<InstrumentVersion> versions})>? instrumentVersions}) {
+VersionData getFakeVersionData({
+  List<({Instrument instrument, List<InstrumentVersion> versions})>? instrumentVersions,
+}) {
   final label = faker.food.restaurant();
   return VersionData(
       versionId: faker.randomGenerator.integer(100),
