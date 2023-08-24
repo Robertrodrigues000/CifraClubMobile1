@@ -6,11 +6,17 @@ import 'package:flutter/material.dart';
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double topSafeArea;
   final double searchInputHeight;
+  final VoidCallback? onTapClear;
+  final Function(String) onChanged;
+  final String hintText;
 
   const SearchAppBar({
     super.key,
     required this.topSafeArea,
     required this.searchInputHeight,
+    this.onTapClear,
+    required this.onChanged,
+    required this.hintText,
   });
 
   @override
@@ -28,12 +34,12 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 height: searchInputHeight,
                 child: CosmosSearchBar(
-                  onChanged: (query) {},
-                  onTapClear: () => {},
+                  onChanged: onChanged,
+                  onTapClear: onTapClear,
                   invertColorsOnScroll: true,
                   cancelText: context.text.cancel,
-                  hintText: context.text.searchSongs,
-                  labelText: context.text.searchSongs,
+                  hintText: hintText,
+                  labelText: hintText,
                 ),
               ),
             ],

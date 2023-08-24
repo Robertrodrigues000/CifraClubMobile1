@@ -8,7 +8,9 @@ enum ErrorDescriptionWidgetType {
   privateList(),
   loggedOut(),
   videoLesson(),
-  resultNotFound();
+  resultNotFound(),
+  emptyList(),
+  searchResultNotFound();
 
   // coverage:ignore-start
   String? getImageLight() {
@@ -23,7 +25,10 @@ enum ErrorDescriptionWidgetType {
       case videoLesson:
         return AppWebp.artistVideoLessonEmptyStateLight;
       case resultNotFound:
+      case emptyList:
         return null;
+      case searchResultNotFound:
+        return AppWebp.searchResultNotFoundLight;
     }
   }
 
@@ -39,7 +44,10 @@ enum ErrorDescriptionWidgetType {
       case videoLesson:
         return AppWebp.artistVideoLessonEmptyStateDark;
       case resultNotFound:
+      case emptyList:
         return null;
+      case searchResultNotFound:
+        return AppWebp.searchResultNotFoundDark;
     }
   }
   // coverage:ignore-end
@@ -57,7 +65,10 @@ enum ErrorDescriptionWidgetType {
       case videoLesson:
         return context.text.noVideoLessonYetTitle;
       case resultNotFound:
+      case searchResultNotFound:
         return context.text.resultNotFoundTitle;
+      case emptyList:
+        return context.text.emptyListTitle;
     }
   }
 
@@ -73,8 +84,12 @@ enum ErrorDescriptionWidgetType {
         return context.text.loggedOutListErrorDescription;
       case videoLesson:
         return context.text.noVideoLessonYetDescription;
+      case emptyList:
+        return context.text.emptyListDescription;
       case resultNotFound:
         return context.text.resultNotFoundDescription;
+      case searchResultNotFound:
+        return context.text.searchResultNotFoundDescription;
     }
   }
 
@@ -89,9 +104,11 @@ enum ErrorDescriptionWidgetType {
       case loggedOut:
         return context.text.loggedOutListErrorButtonText;
       case videoLesson:
-        return null;
       case resultNotFound:
+      case searchResultNotFound:
         return null;
+      case emptyList:
+        return context.text.searchSongs;
     }
   }
 }

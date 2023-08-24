@@ -7,7 +7,15 @@ part of 'search_state.dart';
 // **************************************************************************
 
 abstract class _$SearchStateCWProxy {
-  SearchState versions(List<Version> versions);
+  SearchState recent(List<Version> recent);
+
+  SearchState result(List<Search> result);
+
+  SearchState error(RequestError? error);
+
+  SearchState isLoading(bool isLoading);
+
+  SearchState shouldShowRecent(bool shouldShowRecent);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SearchState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -16,7 +24,11 @@ abstract class _$SearchStateCWProxy {
   /// SearchState(...).copyWith(id: 12, name: "My name")
   /// ````
   SearchState call({
-    List<Version>? versions,
+    List<Version>? recent,
+    List<Search>? result,
+    RequestError? error,
+    bool? isLoading,
+    bool? shouldShowRecent,
   });
 }
 
@@ -27,7 +39,19 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
   final SearchState _value;
 
   @override
-  SearchState versions(List<Version> versions) => this(versions: versions);
+  SearchState recent(List<Version> recent) => this(recent: recent);
+
+  @override
+  SearchState result(List<Search> result) => this(result: result);
+
+  @override
+  SearchState error(RequestError? error) => this(error: error);
+
+  @override
+  SearchState isLoading(bool isLoading) => this(isLoading: isLoading);
+
+  @override
+  SearchState shouldShowRecent(bool shouldShowRecent) => this(shouldShowRecent: shouldShowRecent);
 
   @override
 
@@ -38,13 +62,33 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
   /// SearchState(...).copyWith(id: 12, name: "My name")
   /// ````
   SearchState call({
-    Object? versions = const $CopyWithPlaceholder(),
+    Object? recent = const $CopyWithPlaceholder(),
+    Object? result = const $CopyWithPlaceholder(),
+    Object? error = const $CopyWithPlaceholder(),
+    Object? isLoading = const $CopyWithPlaceholder(),
+    Object? shouldShowRecent = const $CopyWithPlaceholder(),
   }) {
     return SearchState(
-      versions: versions == const $CopyWithPlaceholder() || versions == null
-          ? _value.versions
+      recent: recent == const $CopyWithPlaceholder() || recent == null
+          ? _value.recent
           // ignore: cast_nullable_to_non_nullable
-          : versions as List<Version>,
+          : recent as List<Version>,
+      result: result == const $CopyWithPlaceholder() || result == null
+          ? _value.result
+          // ignore: cast_nullable_to_non_nullable
+          : result as List<Search>,
+      error: error == const $CopyWithPlaceholder()
+          ? _value.error
+          // ignore: cast_nullable_to_non_nullable
+          : error as RequestError?,
+      isLoading: isLoading == const $CopyWithPlaceholder() || isLoading == null
+          ? _value.isLoading
+          // ignore: cast_nullable_to_non_nullable
+          : isLoading as bool,
+      shouldShowRecent: shouldShowRecent == const $CopyWithPlaceholder() || shouldShowRecent == null
+          ? _value.shouldShowRecent
+          // ignore: cast_nullable_to_non_nullable
+          : shouldShowRecent as bool,
     );
   }
 }

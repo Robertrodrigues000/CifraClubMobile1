@@ -44,7 +44,7 @@ class ErrorDescriptionWidget extends StatelessWidget {
           if (typeError.getButtonText(context) != null)
             CifraClubButton(
               type: ButtonType.outline,
-              width: dimensions.errorWidgetButtonWidth,
+              width: typeError == ErrorDescriptionWidgetType.emptyList ? null : dimensions.errorWidgetButtonWidth,
               onPressed: onClick,
               child: Text(typeError.getButtonText(context)!),
             ),

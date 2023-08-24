@@ -31,7 +31,7 @@ class TopArtists extends StatelessWidget {
             onTap: () => onTap(artist),
             title: artist.name,
             imageUrl: artist.image?.size162,
-            subtitle: selectedGenre,
+            subtitle: selectedGenre == null ? artist.genre?.name : null,
             ranking: (index + 1).toString(),
           );
         },

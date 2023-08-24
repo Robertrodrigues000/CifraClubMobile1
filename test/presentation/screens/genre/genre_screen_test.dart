@@ -2,6 +2,8 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_bloc.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_screen.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_state.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -70,6 +72,26 @@ void main() {
     );
 
     expect(find.text("genreName"), findsOneWidget);
-    expect(find.text("Erro"), findsOneWidget);
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+  });
+
+  testWidgets("When show error widget and click to retry should retry request", (widgetTester) async {
+    bloc.mockStream(GenreErrorState(genreName: "genreName", error: ConnectionError()));
+    when(() => bloc.requestTopArtists()).thenAnswer((_) => SynchronousFuture(null));
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<GenreBloc>.value(
+          value: bloc,
+          child: const GenreScreen(),
+        ),
+      ),
+    );
+
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+    await widgetTester.tap(find.byType(CifraClubButton));
+    await widgetTester.pumpAndSettle();
+
+    verify(() => bloc.requestTopArtists()).called(1);
   });
 }

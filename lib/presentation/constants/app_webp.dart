@@ -52,4 +52,7 @@ class AppWebp {
 
   static const artistVideoLessonEmptyStateDark = "assets/images/artist_video_lesson_empty_state_dark.webp";
   static const artistVideoLessonEmptyStateLight = "assets/images/artist_video_lesson_empty_state_light.webp";
+
+  static const searchResultNotFoundLight = "assets/images/result_not_found_light.webp";
+  static const searchResultNotFoundDark = "assets/images/result_not_found_dark.webp";
 }

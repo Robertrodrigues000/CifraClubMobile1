@@ -3,6 +3,8 @@ import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_b
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_bloc.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_screen.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_state.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
 
 import 'package:flutter/foundation.dart';
@@ -100,7 +102,27 @@ void main() {
 
       expect(find.text(genres.first.name), findsOneWidget);
       expect(find.byType(ListView), findsOneWidget);
-      expect(find.text("Erro"), findsOneWidget);
+      expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+    });
+
+    testWidgets("When show error widget and click to retry should retry request", (widgetTester) async {
+      bloc.mockStream(TopArtistsState(error: ConnectionError(), selectedGenre: "genre"));
+      when(() => bloc.requestTopArtists(genreUrl: any(named: "genreUrl"))).thenAnswer((_) => SynchronousFuture(null));
+
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<TopArtistsBloc>.value(
+            value: bloc,
+            child: TopArtistsScreen(_GenreBottomSheetMock()),
+          ),
+        ),
+      );
+
+      expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+      await widgetTester.tap(find.byType(CifraClubButton));
+      await widgetTester.pumpAndSettle();
+
+      verify(() => bloc.requestTopArtists(genreUrl: "genre")).called(1);
     });
   });
 

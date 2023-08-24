@@ -3,6 +3,8 @@ import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_b
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_bloc.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_screen.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_state.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +101,27 @@ void main() {
 
       expect(find.text(genres.first.name), findsOneWidget);
       expect(find.byType(ListView), findsOneWidget);
-      expect(find.text("Erro"), findsOneWidget);
+      expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+    });
+
+    testWidgets("When show error widget and click to retry should retry request", (widgetTester) async {
+      bloc.mockStream(TopSongsState(error: ConnectionError()));
+      when(() => bloc.requestTopSongs(genreUrl: any(named: "genreUrl"))).thenAnswer((_) => SynchronousFuture(null));
+
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<TopSongsBloc>.value(
+            value: bloc,
+            child: TopSongsScreen(_GenreBottomSheetMock()),
+          ),
+        ),
+      );
+
+      expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+      await widgetTester.tap(find.byType(CifraClubButton));
+      await widgetTester.pumpAndSettle();
+
+      verify(() => bloc.requestTopSongs(genreUrl: any(named: "genreUrl"))).called(1);
     });
   });
 

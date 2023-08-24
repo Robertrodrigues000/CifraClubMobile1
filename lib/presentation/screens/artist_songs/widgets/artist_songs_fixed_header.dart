@@ -58,6 +58,7 @@ class _ArtistSongsFixedHeaderState extends State<ArtistSongsFixedHeader> {
                   labelColor: context.colors.textPrimary,
                   indicatorSize: TabBarIndicatorSize.label,
                   //onTap: widget.pageController.jumpToPage,
+                  isScrollable: true,
                   splashFactory: NoSplash.splashFactory,
                   overlayColor: MaterialStateProperty.resolveWith((_) => Colors.transparent),
                   dividerColor: Colors.transparent,

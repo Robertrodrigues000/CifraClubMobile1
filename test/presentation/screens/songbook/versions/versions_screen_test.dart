@@ -17,10 +17,10 @@ import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_scre
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
-import 'package:cifraclub/presentation/screens/songbook/versions/widgets/empty_list_empty_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
@@ -352,7 +352,7 @@ void main() {
       nav: nav,
     );
 
-    expect(find.byType(EmptyListEmptyState), findsOneWidget);
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
     await widgetTester.tap(find.text(appTextEn.searchSongs));
 
     verify(() => AddVersionsToListEntry.push(nav, 1));

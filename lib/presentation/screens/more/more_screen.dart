@@ -38,10 +38,10 @@ class _MoreScreenState extends State<MoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CosmosAppBar(
-        title: Text(
-          context.text.more,
-          style: context.typography.title4.copyWith(color: context.colors.textPrimary),
-        ),
+        toolbarHeight: context.appDimensionScheme.appBarHeight,
+        title: Text(context.text.more, style: context.typography.title3),
+        leading: null,
+        automaticallyImplyLeading: false,
       ),
       body: BlocBuilder<MoreBloc, MoreState>(
         builder: (context, state) {

@@ -16,11 +16,10 @@
     "loading": "loading",
     "getIt": "Get it",
     "error": "error",
-    "genreScreen": "Music genres screen",
     "pressTheButtonToGetGenres": "Press the button to get the genres list",
     "emptyList": "Empty list",
     "noConnection": "No internet connection",
-    "genreHeaderTops": "Tops",
+    "genreHeaderTops": "Most played",
     "genreHeaderAll": "All",
     "topSongs": "Top tabs",
     "genres": "Musical styles",
@@ -316,5 +315,7 @@
 
     "library" : "Library",
     "listen" : "Listen",
-    "key" : "Key"
+    "key" : "Key",
+    "searchResultNotFoundDescription": "We didn't find anything here. Try again by typing the search term in a different way.",
+    "searchHint": "What do you want to play?"
 }

@@ -8,7 +8,6 @@
     "loading": "cargando",
     "getIt": "Obtener",
     "error": "error",
-    "genreScreen": "Pantalla de géneros musicales",
     "pressTheButtonToGetGenres": "Presione el botón para obtener la lista de géneros",
     "emptyList": "Lista vacía",
     "noConnection": "Sin conexión a internet",
@@ -258,5 +257,7 @@
 
     "library" : "Biblioteca",
     "listen" : "Escuchar",
-    "key" : "Tono"
+    "key" : "Tono",
+    "searchResultNotFoundDescription": "No encontramos nada aquí. Vuelva a intentarlo escribiendo el término de búsqueda de otra forma.",
+    "searchHint": "¿Que quieres tocar?"
 }

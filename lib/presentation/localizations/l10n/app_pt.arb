@@ -8,7 +8,6 @@
     "loading": "carregando",
     "getIt": "Obter",
     "error": "erro",
-    "genreScreen": "Tela de gêneros musicais",
     "pressTheButtonToGetGenres": "Pressione o botão para obter a lista de gêneros",
     "emptyList": "Lista vazia",
     "noConnection": "Sem conexão com a internet",
@@ -258,5 +257,7 @@
 
     "library" : "Biblioteca",
     "listen" : "Ouvir",
-    "key" : "Tom"
+    "key" : "Tom",
+    "searchResultNotFoundDescription": "Não encontramos nada por aqui. Tente novamente escrevendo o termo da busca de outra forma.",
+    "searchHint": "O que você quer tocar?"
 }

@@ -9,10 +9,11 @@ import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
-import 'package:cifraclub/presentation/screens/songbook/versions/widgets/empty_list_empty_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -250,7 +251,8 @@ class _VersionsScreenState extends State<VersionsScreen> {
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: state.versions.isEmpty
-                    ? EmptyListEmptyState(
+                    ? ErrorDescriptionWidget(
+                        typeError: ErrorDescriptionWidgetType.emptyList,
                         onClick: () => AddVersionsToListEntry.push(Nav.of(context), widget.songbookId ?? 0),
                       )
                     : Container(),

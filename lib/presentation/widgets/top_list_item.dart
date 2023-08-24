@@ -70,7 +70,7 @@ class _TopListItemContent extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           textBaseline: TextBaseline.alphabetic,
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: subtitle != null ? CrossAxisAlignment.start : CrossAxisAlignment.center,
           children: [
             RemoteImage(
               imageUrl: imageUrl,

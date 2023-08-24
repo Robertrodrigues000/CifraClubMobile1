@@ -3,6 +3,7 @@ import 'package:cifraclub/presentation/screens/albums/albums_bloc.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_screen.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_state.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -78,5 +79,29 @@ void main() {
       );
     });
     expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+  });
+
+  testWidgets("When show error widget and click to retry should retry request", (widgetTester) async {
+    bloc.mockStream(AlbumsState(error: ConnectionError()));
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<AlbumsBloc>.value(
+            value: bloc,
+            child: const AlbumsScreen(
+              artistName: "Legião Urbana",
+              totalAlbums: "56",
+            ),
+          ),
+        ),
+      );
+    });
+
+    expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
+    await widgetTester.tap(find.byType(CifraClubButton));
+    await widgetTester.pumpAndSettle();
+
+    verify(() => bloc.getAlbums()).called(1);
   });
 }
