@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
+import 'package:cifraclub/presentation/screens/version/middlewares/auto_scroll_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/content_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_loader_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
@@ -49,8 +50,13 @@ class VersionEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
+    var devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     return BlocProvider<VersionBloc>(
-      create: (context) => VersionBloc([getIt<VersionLoaderMiddleware>(), getIt<ContentMiddleware>()], getIt())
+      create: (context) => VersionBloc([
+        getIt<VersionLoaderMiddleware>(),
+        getIt<ContentMiddleware>(),
+        getIt<AutoScrollMiddleware>(param1: devicePixelRatio)
+      ], getIt())
         ..add(OnVersionInit(
           artistName: artistName,
           songName: songName,

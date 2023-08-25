@@ -7,3 +7,9 @@ class OnShowYouTubeVideo implements VersionEffect {
 }
 
 class OnCloseYouTubeVideo implements VersionEffect {}
+
+class OnAutoScrollTickEffect implements VersionEffect {
+  final double delta;
+
+  OnAutoScrollTickEffect(this.delta);
+}

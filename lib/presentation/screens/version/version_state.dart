@@ -21,6 +21,8 @@ class VersionState {
   final bool isYouTubeVisible;
   final VersionHeaderState versionHeaderState;
 
+  final AutoScrollState autoScrollState;
+
   /*
   
 
@@ -58,6 +60,7 @@ class VersionState {
     this.isChordListPinned = false,
     this.isYouTubeVisible = false,
     this.versionHeaderState = const VersionHeaderState(),
+    this.autoScrollState = const AutoScrollState(),
   });
 }
 
@@ -82,5 +85,17 @@ class VersionHeaderState {
     this.songName = "",
     this.artistUrl,
     this.songUrl,
+  });
+}
+
+@CopyWith()
+@immutable
+class AutoScrollState {
+  final bool isAutoScrollRunning;
+  final double speedFactor;
+
+  const AutoScrollState({
+    this.isAutoScrollRunning = false,
+    this.speedFactor = 0,
   });
 }

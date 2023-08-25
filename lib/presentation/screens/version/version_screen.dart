@@ -28,6 +28,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
   late final _bloc = BlocProvider.of<VersionBloc>(context);
   final _scrollController = TrackingScrollController();
   var isFooterBarVisible = true;
+  var isUserDraggingScreen = false;
   String? selectedKey; // Todo: remover isso aqui quando transpose estiver funcionando
 
   YoutubePlayerController? _youtubePlayerController;
@@ -37,8 +38,8 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
     super.initState();
     _scrollController.addListener(onScroll);
 
-    _bloc.versionEffectStream.listen((event) async {
-      switch (event) {
+    _bloc.versionEffectStream.listen((effect) async {
+      switch (effect) {
         case OnShowYouTubeVideo():
           if (_youtubePlayerController == null) {
             _youtubePlayerController = YoutubePlayerController(
@@ -48,23 +49,34 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                 showFullscreenButton: true,
               ),
             );
-            await _youtubePlayerController?.loadVideoById(videoId: event.videoId);
+            await _youtubePlayerController?.loadVideoById(videoId: effect.videoId);
           }
-          break;
+
         case OnCloseYouTubeVideo():
           await _youtubePlayerController?.close();
           _youtubePlayerController = null;
-          break;
+        case OnAutoScrollTickEffect():
+          if (isUserDraggingScreen) {
+            return;
+          }
+          _scrollController.animateTo(
+            _scrollController.offset + effect.delta,
+            duration: const Duration(milliseconds: 20),
+            curve: Curves.linear,
+          );
       }
     }).addTo(subscriptions);
   }
 
   void onScroll() {
+    if (_scrollController.offset >= _scrollController.position.maxScrollExtent) {
+      _bloc.add(OnAutoScrollStop());
+    }
     final currentOffset = _scrollController.offset;
     final previousOffset = _scrollController.initialScrollOffset;
     final currentIsFooterBarVisible = currentOffset < previousOffset;
 
-    if (currentIsFooterBarVisible != isFooterBarVisible) {
+    if (!_bloc.state.autoScrollState.isAutoScrollRunning && currentIsFooterBarVisible != isFooterBarVisible) {
       setState(() {
         isFooterBarVisible = currentIsFooterBarVisible;
       });
@@ -94,110 +106,123 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                   child: Text(state.isChordListPinned ? "Ocultar acordes na tela" : "Fixar acordes na tela")),
             ],
           ),
-          body: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  if (state.isYouTubeVisible && _youtubePlayerController != null)
-                    SliverPersistentHeader(
-                      pinned: true,
-                      delegate: YouTubeHeaderDelegate(
-                        MediaQuery.sizeOf(context).width * 9 / 16,
-                        _youtubePlayerController!,
+          body: Listener(
+            onPointerDown: (_) {
+              isUserDraggingScreen = true;
+            },
+            onPointerUp: (_) {
+              isUserDraggingScreen = false;
+            },
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                CustomScrollView(
+                  controller: _scrollController,
+                  slivers: [
+                    if (state.isYouTubeVisible && _youtubePlayerController != null)
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: YouTubeHeaderDelegate(
+                          MediaQuery.sizeOf(context).width * 9 / 16,
+                          _youtubePlayerController!,
+                        ),
+                      ),
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          Text(state.versionHeaderState.songName),
+                          Text(state.versionHeaderState.artistName),
+                          FilterCapsuleList(
+                              filters: state.versionHeaderState.versionFilters.map((filter) {
+                            return Filter(
+                              label: filter.versionName,
+                              isSelected: filter == state.versionHeaderState.selectedVersionFilter,
+                              onTap: () {
+                                _bloc.add(OnVersionSelected(filter));
+                              },
+                              leadingIconUri: filter.isVerified ? AppSvgs.verifiedIcon : null,
+                            );
+                          }).toList()),
+                        ],
                       ),
                     ),
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        Text(state.versionHeaderState.songName),
-                        Text(state.versionHeaderState.artistName),
-                        FilterCapsuleList(
-                            filters: state.versionHeaderState.versionFilters.map((filter) {
-                          return Filter(
-                            label: filter.versionName,
-                            isSelected: filter == state.versionHeaderState.selectedVersionFilter,
-                            onTap: () {
-                              _bloc.add(OnVersionSelected(filter));
-                            },
-                            leadingIconUri: filter.isVerified ? AppSvgs.verifiedIcon : null,
+                    if (state.isLoading)
+                      const SliverFillRemaining(
+                        child: Center(
+                          child: LoadingIndicator(),
+                        ),
+                      )
+                    else ...[
+                      SliverPersistentHeader(
+                          pinned: state.isChordListPinned,
+                          delegate: ChordListHeaderDelegate(
+                              haveScroll: false,
+                              maxExtend: 110,
+                              child: const Text("Acordes"),
+                              isPinned: state.isChordListPinned,
+                              chords: state.version?.chords ?? [])),
+                      SliverList.builder(
+                        itemCount: state.sections.length,
+                        itemBuilder: (context, index) {
+                          final section = state.sections[index];
+                          return Text(
+                            section.content,
+                            style: context.typography.body8,
                           );
-                        }).toList()),
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+                AnimatedPositioned(
+                  bottom: isFooterBarVisible ? 0 : -32,
+                  duration: const Duration(milliseconds: 150),
+                  child: Container(
+                    height: 32,
+                    width: 300,
+                    color: Colors.amber,
+                    child: Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              _bloc.add(
+                                  state.autoScrollState.isAutoScrollRunning ? OnAutoScrollStop() : OnAutoScrollStart());
+                            },
+                            child: const Icon(Icons.video_chat)),
+                        TextButton(onPressed: () {}, child: const Icon(Icons.arrow_outward)),
+                        TextButton(
+                            onPressed: () async {
+                              var newKey = await VersionKeyBottomSheet(
+                                musicalScale: state.version!.stdKey.contains("m")
+                                    ? MusicalScale.minorScale
+                                    : MusicalScale.majorScale,
+                                originalKey: state.version!.stdKey,
+                                selectedKey: selectedKey!,
+                              ).open(
+                                context: context,
+                              );
+                              if (newKey != null) {
+                                setState(() {
+                                  selectedKey = newKey;
+                                });
+                              }
+                            },
+                            child: const Icon(Icons.settings)),
+                        TextButton(
+                            onPressed: () {
+                              state.isYouTubeVisible
+                                  ? _bloc.add(OnYouTubeVideoClosed())
+                                  : _bloc.add(
+                                      OnYouTubeVideoSelected(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM"),
+                                    );
+                            },
+                            child: const Icon(Icons.youtube_searched_for_outlined))
                       ],
                     ),
                   ),
-                  if (state.isLoading)
-                    const SliverFillRemaining(
-                      child: Center(
-                        child: LoadingIndicator(),
-                      ),
-                    )
-                  else ...[
-                    SliverPersistentHeader(
-                        pinned: state.isChordListPinned,
-                        delegate: ChordListHeaderDelegate(
-                            haveScroll: false,
-                            maxExtend: 110,
-                            child: const Text("Acordes"),
-                            isPinned: state.isChordListPinned,
-                            chords: state.version?.chords ?? [])),
-                    SliverList.builder(
-                      itemCount: state.sections.length,
-                      itemBuilder: (context, index) {
-                        final section = state.sections[index];
-                        return Text(
-                          section.content,
-                          style: context.typography.body8,
-                        );
-                      },
-                    ),
-                  ],
-                ],
-              ),
-              AnimatedPositioned(
-                bottom: isFooterBarVisible ? 0 : -32,
-                duration: const Duration(milliseconds: 150),
-                child: Container(
-                  height: 32,
-                  width: 300,
-                  color: Colors.amber,
-                  child: Row(
-                    children: [
-                      TextButton(onPressed: () {}, child: const Icon(Icons.video_chat)),
-                      TextButton(onPressed: () {}, child: const Icon(Icons.arrow_outward)),
-                      TextButton(
-                          onPressed: () async {
-                            var newKey = await VersionKeyBottomSheet(
-                              musicalScale: state.version!.stdKey.contains("m")
-                                  ? MusicalScale.minorScale
-                                  : MusicalScale.majorScale,
-                              originalKey: state.version!.stdKey,
-                              selectedKey: selectedKey!,
-                            ).open(
-                              context: context,
-                            );
-                            if (newKey != null) {
-                              setState(() {
-                                selectedKey = newKey;
-                              });
-                            }
-                          },
-                          child: const Icon(Icons.settings)),
-                      TextButton(
-                          onPressed: () {
-                            state.isYouTubeVisible
-                                ? _bloc.add(OnYouTubeVideoClosed())
-                                : _bloc.add(
-                                    OnYouTubeVideoSelected(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM"),
-                                  );
-                          },
-                          child: const Icon(Icons.youtube_searched_for_outlined))
-                    ],
-                  ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         );
       },

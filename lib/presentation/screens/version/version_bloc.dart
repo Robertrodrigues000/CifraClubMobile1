@@ -29,6 +29,9 @@ class VersionBloc extends Bloc<VersionAction, VersionState> {
   @override
   Future<void> close() {
     _versionEffectStream.close();
+    for (var middleware in _middlewares) {
+      middleware.close();
+    }
     return super.close();
   }
 }

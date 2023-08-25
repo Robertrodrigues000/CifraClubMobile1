@@ -40,6 +40,15 @@ class VersionReducer {
         return state.copyWith(isYouTubeVisible: true);
       case OnToggleIsChordPinned():
         return state.copyWith(isChordListPinned: !state.isChordListPinned);
+      case OnAutoScrollTickAction():
+        onEffect(OnAutoScrollTickEffect(action.delta));
+        return state;
+      case OnAutoScrollSpeedSelected():
+        return state.copyWith(autoScrollState: state.autoScrollState.copyWith(speedFactor: action.speedFactor));
+      case OnAutoScrollStart():
+        return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: true));
+      case OnAutoScrollStop():
+        return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: false));
       default:
         return state;
     }

@@ -9,7 +9,7 @@ import 'package:typed_result/typed_result.dart';
 typedef ActionEmitter = void Function(VersionAction);
 
 @injectable
-class VersionLoaderMiddleware implements VersionMiddleware {
+class VersionLoaderMiddleware extends VersionMiddleware {
   final GetVersionData _getVersionData;
 
   VersionLoaderMiddleware(this._getVersionData);

@@ -57,3 +57,19 @@ class OnYouTubeVideoSelected implements VersionAction {
 class OnYouTubeVideoClosed implements VersionAction {}
 
 class OnToggleIsChordPinned implements VersionAction {}
+
+class OnAutoScrollSpeedSelected implements VersionAction {
+  final double speedFactor;
+
+  OnAutoScrollSpeedSelected(this.speedFactor);
+}
+
+class OnAutoScrollTickAction implements VersionAction {
+  final double delta;
+
+  OnAutoScrollTickAction(this.delta);
+}
+
+class OnAutoScrollStart implements VersionAction {}
+
+class OnAutoScrollStop implements VersionAction {}

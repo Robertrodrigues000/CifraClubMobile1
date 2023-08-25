@@ -21,6 +21,8 @@ abstract class _$VersionStateCWProxy {
 
   VersionState versionHeaderState(VersionHeaderState versionHeaderState);
 
+  VersionState autoScrollState(AutoScrollState autoScrollState);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -35,6 +37,7 @@ abstract class _$VersionStateCWProxy {
     bool? isChordListPinned,
     bool? isYouTubeVisible,
     VersionHeaderState? versionHeaderState,
+    AutoScrollState? autoScrollState,
   });
 }
 
@@ -67,6 +70,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
       this(versionHeaderState: versionHeaderState);
 
   @override
+  VersionState autoScrollState(AutoScrollState autoScrollState) => this(autoScrollState: autoScrollState);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -82,6 +88,7 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? isChordListPinned = const $CopyWithPlaceholder(),
     Object? isYouTubeVisible = const $CopyWithPlaceholder(),
     Object? versionHeaderState = const $CopyWithPlaceholder(),
+    Object? autoScrollState = const $CopyWithPlaceholder(),
   }) {
     return VersionState(
       version: version == const $CopyWithPlaceholder()
@@ -112,6 +119,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.versionHeaderState
           // ignore: cast_nullable_to_non_nullable
           : versionHeaderState as VersionHeaderState,
+      autoScrollState: autoScrollState == const $CopyWithPlaceholder() || autoScrollState == null
+          ? _value.autoScrollState
+          // ignore: cast_nullable_to_non_nullable
+          : autoScrollState as AutoScrollState,
     );
   }
 }
@@ -247,4 +258,64 @@ extension $VersionHeaderStateCopyWith on VersionHeaderState {
   /// Returns a callable class that can be used as follows: `instanceOfVersionHeaderState.copyWith(...)` or like so:`instanceOfVersionHeaderState.copyWith.fieldName(...)`.
   // ignore: library_private_types_in_public_api
   _$VersionHeaderStateCWProxy get copyWith => _$VersionHeaderStateCWProxyImpl(this);
+}
+
+abstract class _$AutoScrollStateCWProxy {
+  AutoScrollState isAutoScrollRunning(bool isAutoScrollRunning);
+
+  AutoScrollState speedFactor(double speedFactor);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AutoScrollState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// AutoScrollState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  AutoScrollState call({
+    bool? isAutoScrollRunning,
+    double? speedFactor,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfAutoScrollState.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfAutoScrollState.copyWith.fieldName(...)`
+class _$AutoScrollStateCWProxyImpl implements _$AutoScrollStateCWProxy {
+  const _$AutoScrollStateCWProxyImpl(this._value);
+
+  final AutoScrollState _value;
+
+  @override
+  AutoScrollState isAutoScrollRunning(bool isAutoScrollRunning) => this(isAutoScrollRunning: isAutoScrollRunning);
+
+  @override
+  AutoScrollState speedFactor(double speedFactor) => this(speedFactor: speedFactor);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AutoScrollState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// AutoScrollState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  AutoScrollState call({
+    Object? isAutoScrollRunning = const $CopyWithPlaceholder(),
+    Object? speedFactor = const $CopyWithPlaceholder(),
+  }) {
+    return AutoScrollState(
+      isAutoScrollRunning: isAutoScrollRunning == const $CopyWithPlaceholder() || isAutoScrollRunning == null
+          ? _value.isAutoScrollRunning
+          // ignore: cast_nullable_to_non_nullable
+          : isAutoScrollRunning as bool,
+      speedFactor: speedFactor == const $CopyWithPlaceholder() || speedFactor == null
+          ? _value.speedFactor
+          // ignore: cast_nullable_to_non_nullable
+          : speedFactor as double,
+    );
+  }
+}
+
+extension $AutoScrollStateCopyWith on AutoScrollState {
+  /// Returns a callable class that can be used as follows: `instanceOfAutoScrollState.copyWith(...)` or like so:`instanceOfAutoScrollState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$AutoScrollStateCWProxy get copyWith => _$AutoScrollStateCWProxyImpl(this);
 }

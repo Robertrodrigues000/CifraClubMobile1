@@ -8,7 +8,7 @@ import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class ContentMiddleware implements VersionMiddleware {
+class ContentMiddleware extends VersionMiddleware {
   final ParseSections _parseSections;
 
   ContentMiddleware(this._parseSections);
