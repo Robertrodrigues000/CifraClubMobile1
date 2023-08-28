@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/chord/user_cases/get_chords_representation.dart';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
@@ -13,6 +14,8 @@ import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_products.dart';
 import 'package:cifraclub/domain/subscription/use_cases/post_purchase_order.dart';
 import 'package:cifraclub/domain/subscription/use_cases/purchase_product.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:typed_result/typed_result.dart';
@@ -25,6 +28,8 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final GetOrders _getOrders;
   final PostPurchaseOrder _postPurchaseOrder;
   final GetIsProPreference _getIsProPreference;
+  final GetVersionData _getVersionData;
+  final GetChordsRepresentation _getChordsRepresentation;
   final ClearVersionsFromSongbook _clearSongsFromSongbook;
   final SearchAll _searchAll;
 
@@ -37,6 +42,8 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._postPurchaseOrder,
     this._getIsProPreference,
     this._clearSongsFromSongbook,
+    this._getChordsRepresentation,
+    this._getVersionData,
     this._searchAll,
   ) : super(const DevScreenState(isLoading: false));
 
@@ -87,6 +94,24 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
   Future<void> deleteCifrasTest() async {
     await _clearSongsFromSongbook(10093245);
+  }
+
+  Future<void> getChordsRepresentation() async {
+    final versionDataResult = await _getVersionData(
+      artistDns: "john-mayer",
+      songDns: "stop-this-train",
+      instrumentUrl: Instrument.guitar.instrumentUrl,
+      versionUrl: "principal",
+    );
+    if (versionDataResult.isSuccess) {
+      final versionData = versionDataResult.get();
+      final chordRepresentation = _getChordsRepresentation(
+          chords: [versionData?.chords?.where((e) => e.chord.contains("Gm7M")).first.guitar?.first ?? ""],
+          instrument: Instrument.guitar);
+
+      // ignore: avoid_print
+      print(chordRepresentation.toString());
+    }
   }
 
   Future<void> searchRequest(String query, SearchFilter? searchFilter) async {

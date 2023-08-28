@@ -180,6 +180,16 @@ class _DevScreenState extends State<DevScreen> {
                 ),
                 ListTile(
                   leading: Icon(
+                    Icons.music_note,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Chord Representation"),
+                  onTap: () {
+                    _bloc.getChordsRepresentation();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
                     Icons.search,
                     color: context.colors.textPrimary,
                   ),
