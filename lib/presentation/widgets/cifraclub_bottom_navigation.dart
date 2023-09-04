@@ -39,6 +39,7 @@ class _CifraclubBottomNavigationState extends State<CifraclubBottomNavigation> w
     const double indicatorHorizontalPadding = 12;
     const double indicatorHeight = 3;
     const double topBorderHeight = 1;
+    _tabController.animateTo(widget.currentIndex);
     return LayoutBuilder(
       builder: (context, constraints) => Stack(
         children: [

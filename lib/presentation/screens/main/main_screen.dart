@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cifraclub/presentation/screens/main/main_bloc.dart';
 import 'package:cifraclub/presentation/screens/main/main_state.dart';
 import 'package:cifraclub/presentation/screens/main/widgets/main_bottom_navigation.dart';
+import 'package:cifraclub/presentation/widgets/back_button_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
@@ -45,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         final safeAreaBottomOffset = MediaQuery.of(context).padding.bottom;
-        return WillPopScope(
+        return BackButtonHandler(
           onWillPop: bloc.onWillPop,
           child: Scaffold(
             body: PageView(
