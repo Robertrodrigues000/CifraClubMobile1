@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:cifraclub/data/songbook/data_source/user_songbook_data_source.dart';
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
@@ -70,7 +72,7 @@ void main() {
         preview: const [],
       );
 
-      final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
+      final insertedId = await userSongbookDataSource.put(fakeUserSongBookDto);
 
       expect(insertedId, fakeUserSongBookDto.id);
     });
@@ -87,7 +89,7 @@ void main() {
         id: Isar.autoIncrement,
       );
 
-      expect(() async => userSongbookDataSource.insert(fakeUserSongBookDto), throwsException);
+      expect(() async => userSongbookDataSource.put(fakeUserSongBookDto), throwsException);
     });
   });
 
@@ -208,7 +210,7 @@ void main() {
       preview: const [],
     );
 
-    final insertedId = await userSongbookDataSource.insert(fakeUserSongBookDto);
+    final insertedId = await userSongbookDataSource.put(fakeUserSongBookDto);
 
     expect(insertedId, fakeUserSongBookDto.id);
   });
@@ -344,12 +346,8 @@ void main() {
     expect(await isar.userSongbookDtos.getSize(), 0);
   });
 
-  tearDown(() {
-    isar.close(deleteFromDisk: true);
-  });
-
-  test("When incrementTotalSongs is called should add the quantity to the totalSongs of the songbook", () async {
-    final fakeUserSongBookDto = UserSongbookDto(
+  test("When updateTotalSongs is called should update totalSongs of the songbook", () async {
+    final fakeUserSongbookDto = UserSongbookDto(
       id: 1,
       createdAt: faker.date.dateTime(),
       lastUpdated: faker.date.dateTime(),
@@ -360,51 +358,39 @@ void main() {
       preview: const [],
     );
 
+    final version = UserVersionDto(
+      localDatabaseId: 1,
+      remoteDatabaseId: 1,
+      songbookId: 1,
+      songUrl: "songUrl",
+      type: 1,
+      name: "name",
+      songId: 1,
+      artist: UserVersionArtistDto(),
+      versionId: 1,
+      order: 0,
+    );
+
     await isar.writeTxn(
       () async {
-        await isar.userSongbookDtos.put(fakeUserSongBookDto);
+        await isar.userSongbookDtos.put(fakeUserSongbookDto);
+        await isar.userVersionDtos.put(version);
       },
     );
 
-    final updatedSongbookId = await userSongbookDataSource.incrementTotalSongs(1, 3);
+    final updatedSongbookId = await userSongbookDataSource.updateTotalSongs(1);
 
     expect(updatedSongbookId, 1);
 
     await isar.txn(
       () async {
         final songbook = await isar.userSongbookDtos.where().idEqualTo(1).findFirst();
-        expect(songbook?.totalSongs, 5);
+        expect(songbook?.totalSongs, 1);
       },
     );
   });
 
-  test("When decrementTotalSongs is called should subtract the quantity to the totalSongs of the songbook", () async {
-    final fakeUserSongBookDto = UserSongbookDto(
-      id: 1,
-      createdAt: faker.date.dateTime(),
-      lastUpdated: faker.date.dateTime(),
-      name: faker.animal.name(),
-      type: ListTypeDto.user,
-      isPublic: false,
-      totalSongs: 10,
-      preview: const [],
-    );
-
-    await isar.writeTxn(
-      () async {
-        await isar.userSongbookDtos.put(fakeUserSongBookDto);
-      },
-    );
-
-    final updatedSongbookId = await userSongbookDataSource.decrementTotalSongs(1, 3);
-
-    expect(updatedSongbookId, 1);
-
-    await isar.txn(
-      () async {
-        final songbook = await isar.userSongbookDtos.where().idEqualTo(1).findFirst();
-        expect(songbook?.totalSongs, 7);
-      },
-    );
+  tearDown(() {
+    isar.close(deleteFromDisk: true);
   });
 }

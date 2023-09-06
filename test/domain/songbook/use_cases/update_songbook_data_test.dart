@@ -20,8 +20,7 @@ void main() {
     final songbook = getFakeSongbook();
     registerFallbackValue(songbook);
 
-    when(() => userSongbookRepository.insertUserSongbook(captureAny()))
-        .thenAnswer((_) => SynchronousFuture(songbook.id!));
+    when(() => userSongbookRepository.putUserSongbook(captureAny())).thenAnswer((_) => SynchronousFuture(songbook.id!));
 
     final songbookRepository = _SongbookRepositoryMock();
 
@@ -58,7 +57,7 @@ void main() {
       expect(args, [songbook.id, true, isA<DateTime>(), "Novo songbook"]);
 
       final songbookInserted =
-          verify(() => userSongbookRepository.insertUserSongbook(captureAny())).captured.first as Songbook;
+          verify(() => userSongbookRepository.putUserSongbook(captureAny())).captured.first as Songbook;
 
       expect(songbookInserted, songbook.copyWith(name: "Novo songbook", isPublic: true, lastUpdated: args[2]));
     });
@@ -78,7 +77,7 @@ void main() {
       expect(args, [songbook.id, songbook.isPublic, isA<DateTime>(), "Songbook"]);
 
       final songbookInserted =
-          verify(() => userSongbookRepository.insertUserSongbook(captureAny())).captured.first as Songbook;
+          verify(() => userSongbookRepository.putUserSongbook(captureAny())).captured.first as Songbook;
 
       expect(songbookInserted, songbook.copyWith(lastUpdated: args[2], name: "Songbook"));
     });
@@ -95,7 +94,7 @@ void main() {
             name: captureAny(named: "name"),
           )).called(0);
 
-      verifyNever(() => userSongbookRepository.insertUserSongbook(captureAny())).called(0);
+      verifyNever(() => userSongbookRepository.putUserSongbook(captureAny())).called(0);
     });
 
     test("and fails requisition should return a exception", () async {

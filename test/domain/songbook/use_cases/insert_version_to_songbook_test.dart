@@ -44,12 +44,12 @@ void main() {
     final versionResponse = getFakeVersion();
     final versionData = getFakeVersionData();
 
-    when(() => userVersionRepository.addVersionsToSongbook(any(), any()))
+    when(() => userVersionRepository.putVersionsToSongbook(any(), any()))
         .thenAnswer((_) => Future.value([version.localDatabaseId!]));
 
     when(() => getVersionData(
-          artistDns: any(named: "artistDns"),
-          songDns: any(named: "songDns"),
+          artistUrl: any(named: "artistUrl"),
+          songUrl: any(named: "songUrl"),
         )).thenAnswer((_) => Future.value(Ok(versionData)));
 
     when(() => userVersionRepository.addVersionData(
@@ -58,10 +58,8 @@ void main() {
           songbookId: any(named: "songbookId"),
         )).thenAnswer((_) => Future.value(versionData.versionId));
 
-    when(() => userSongbookRepository.incrementTotalSongs(
-          songbookId: any(named: "songbookId"),
-          quantity: any(named: "quantity"),
-        )).thenAnswer((_) => Future.value(1));
+    when(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")))
+        .thenAnswer((_) => Future.value(1));
 
     when(() => updateSongbookPreview(10)).thenAnswer((_) => Future.value(2));
 
@@ -83,14 +81,13 @@ void main() {
       );
 
       verify(() => getVersionData(
-            artistDns: versionInput.artistUrl!,
-            songDns: versionInput.songUrl!,
+            artistUrl: versionInput.artistUrl!,
+            songUrl: versionInput.songUrl!,
           )).called(1);
       verify(() => songbookRepository.addVersionToSongbook(versionInput: any(named: "versionInput"), songbookId: 10))
           .called(1);
-      verify(() => userSongbookRepository.incrementTotalSongs(
-          songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
-      verify(() => userVersionRepository.addVersionsToSongbook([versionResponse], 10)).called(1);
+      verify(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId"))).called(1);
+      verify(() => userVersionRepository.putVersionsToSongbook([versionResponse], 10)).called(1);
       verify(() => userVersionRepository.addVersionData(
           versionData: versionData, versionLocalDatabaseId: version.localDatabaseId!, songbookId: 10)).called(1);
       verify(() => updateSongbookPreview(10)).called(1);
@@ -102,8 +99,8 @@ void main() {
     final versionInput = getFakeSongbookVersionInput();
 
     when(() => getVersionData(
-          artistDns: any(named: "artistDns"),
-          songDns: any(named: "songDns"),
+          artistUrl: any(named: "artistUrl"),
+          songUrl: any(named: "songUrl"),
         )).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
     final result = await InsertVersionToSongbook(
@@ -119,8 +116,8 @@ void main() {
     );
 
     verify(() => getVersionData(
-          artistDns: versionInput.artistUrl!,
-          songDns: versionInput.songUrl!,
+          artistUrl: versionInput.artistUrl!,
+          songUrl: versionInput.songUrl!,
         )).called(1);
     expect(result.isFailure, isTrue);
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
@@ -131,8 +128,8 @@ void main() {
     final versionData = getFakeVersionData();
 
     when(() => getVersionData(
-          artistDns: any(named: "artistDns"),
-          songDns: any(named: "songDns"),
+          artistUrl: any(named: "artistUrl"),
+          songUrl: any(named: "songUrl"),
         )).thenAnswer((_) => Future.value(Ok(versionData)));
 
     when(() => songbookRepository.addVersionToSongbook(
@@ -152,11 +149,10 @@ void main() {
     );
 
     verify(() => getVersionData(
-          artistDns: versionInput.artistUrl!,
-          songDns: versionInput.songUrl!,
+          artistUrl: versionInput.artistUrl!,
+          songUrl: versionInput.songUrl!,
         )).called(1);
-    verifyNever(() => userSongbookRepository.incrementTotalSongs(
-        songbookId: any(named: "songbookId"), quantity: any(named: "quantity")));
+    verifyNever(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")));
     expect(result.isFailure, isTrue);
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
   });

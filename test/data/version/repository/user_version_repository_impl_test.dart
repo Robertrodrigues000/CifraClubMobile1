@@ -96,7 +96,7 @@ void main() {
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
-    final deletedIds = await userVersionRepository.addVersionsToSongbook(versions, 1);
+    final deletedIds = await userVersionRepository.putVersionsToSongbook(versions, 1);
     final domainVersions = versions.map((e) => UserVersionDto.fromDomain(e, 1)).toList();
 
     verify(() => userVersionDataSource.putVersionsToSongbook(domainVersions)).called(1);

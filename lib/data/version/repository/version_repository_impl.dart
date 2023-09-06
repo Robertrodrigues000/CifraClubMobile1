@@ -13,11 +13,20 @@ class VersionRepositoryImpl extends VersionRepository {
 
   @override
   Future<Result<VersionData, RequestError>> getVersionData({
-    required String artistDns,
-    required String songDns,
-    String? type,
-    String? label,
+    required String artistUrl,
+    required String songUrl,
+    String? instrumentUrl,
+    String? versionUrl,
   }) async {
-    return (await _dataSource.getVersionData(artistDns, songDns, type, label)).map((value) => value.toDomain());
+    return (await _dataSource.getVersionData(artistUrl, songUrl, instrumentUrl, versionUrl))
+        .map((value) => value.toDomain());
+  }
+
+  @override
+  Future<Result<VersionData, RequestError>> getVersionDataByVersionId({
+    required int versionId,
+    required int apiType,
+  }) async {
+    return (await _dataSource.getVersionDataByVersionId(versionId, apiType)).map((value) => value.toDomain());
   }
 }

@@ -12,7 +12,8 @@ class InsertVersionsToSongbook {
   final SongbookRepository _songbookRepository;
   final UserVersionRepository _userVersionRepository;
   final UserSongbookRepository _userSongbookRepository;
-  InsertVersionsToSongbook(this._songbookRepository, this._userVersionRepository, this._userSongbookRepository);
+
+  const InsertVersionsToSongbook(this._songbookRepository, this._userVersionRepository, this._userSongbookRepository);
 
   Future<Result<List<Version>, RequestError>> call({required int songbookId, required List<Version> versions}) async {
     return (await _songbookRepository.addVersionsToSongbook(
@@ -21,8 +22,8 @@ class InsertVersionsToSongbook {
     ))
         .onSuccess((value) async {
       await _userVersionRepository.deleteVersionsBySongbookId(songbookId);
-      await _userVersionRepository.addVersionsToSongbook(value, songbookId);
-      await _userSongbookRepository.incrementTotalSongs(songbookId: songbookId, quantity: versions.length);
+      await _userVersionRepository.putVersionsToSongbook(value, songbookId);
+      await _userSongbookRepository.updateTotalSongs(songbookId: songbookId);
     });
   }
 }

@@ -36,7 +36,7 @@ class UpdateSongbookData {
 
     return updateSongbookData.then((result) {
       if (result.isSuccess) {
-        _userSongbookRepository.insertUserSongbook(
+        _userSongbookRepository.putUserSongbook(
           songbook.copyWith(
             name: name ?? songbook.name,
             isPublic: isPublic ?? songbook.isPublic,

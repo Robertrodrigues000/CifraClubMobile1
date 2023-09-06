@@ -226,7 +226,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                     return VersionTile(
                       song: item.name,
                       artist: item.artist.name,
-                      type: "Violão",
+                      type: item.instrument.getInstrumentName(context),
                       versionKey: item.key ?? "",
                       // coverage:ignore-start
                       onOptionsTap: () {

@@ -30,14 +30,13 @@ void main() {
   test("When call use case and request is successful should return songs and add to local db", () async {
     final songs = [getFakeVersion()];
     when(() => userVersionRepository.deleteVersionsBySongbookId(1)).thenAnswer((_) => SynchronousFuture(1));
-    when(() => userVersionRepository.addVersionsToSongbook(songs, 1))
+    when(() => userVersionRepository.putVersionsToSongbook(songs, 1))
         .thenAnswer((_) => SynchronousFuture([songs.first.localDatabaseId!]));
     when(() => songbookRepository.addVersionsToSongbook(versionsInput: any(named: "versionsInput"), songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Ok(songs)));
 
-    when(() => userSongbookRepository.incrementTotalSongs(
-        songbookId: any(named: "songbookId"),
-        quantity: any(named: "quantity"))).thenAnswer((_) => SynchronousFuture(1));
+    when(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")))
+        .thenAnswer((_) => SynchronousFuture(1));
 
     final result = await InsertVersionsToSongbook(songbookRepository, userVersionRepository, userSongbookRepository)(
         songbookId: 1, versions: songs);
@@ -45,9 +44,8 @@ void main() {
     expect(result.get(), songs);
 
     verify(() => userVersionRepository.deleteVersionsBySongbookId(1)).called(1);
-    verify(() => userVersionRepository.addVersionsToSongbook(songs, 1)).called(1);
-    verify(() => userSongbookRepository.incrementTotalSongs(
-        songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
+    verify(() => userVersionRepository.putVersionsToSongbook(songs, 1)).called(1);
+    verify(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId"))).called(1);
   });
 
   test("When call use case and request fails should return request error", () async {
@@ -55,9 +53,8 @@ void main() {
     when(() => songbookRepository.addVersionsToSongbook(versionsInput: any(named: "versionsInput"), songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
-    when(() => userSongbookRepository.incrementTotalSongs(
-        songbookId: any(named: "songbookId"),
-        quantity: any(named: "quantity"))).thenAnswer((_) => SynchronousFuture(null));
+    when(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")))
+        .thenAnswer((_) => SynchronousFuture(null));
 
     final result = await InsertVersionsToSongbook(songbookRepository, userVersionRepository, userSongbookRepository)(
         songbookId: 1, versions: songs);
@@ -65,8 +62,7 @@ void main() {
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
 
     verifyNever(() => userVersionRepository.deleteVersionsBySongbookId(any()));
-    verifyNever(() => userVersionRepository.addVersionsToSongbook(any(), any()));
-    verifyNever(() => userSongbookRepository.incrementTotalSongs(
-        songbookId: any(named: "songbookId"), quantity: any(named: "quantity")));
+    verifyNever(() => userVersionRepository.putVersionsToSongbook(any(), any()));
+    verifyNever(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")));
   });
 }

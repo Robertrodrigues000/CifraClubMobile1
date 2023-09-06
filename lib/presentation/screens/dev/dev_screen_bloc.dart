@@ -98,8 +98,8 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
   Future<void> getChordsRepresentation() async {
     final versionDataResult = await _getVersionData(
-      artistDns: "john-mayer",
-      songDns: "stop-this-train",
+      artistUrl: "john-mayer",
+      songUrl: "stop-this-train",
       instrumentUrl: Instrument.guitar.instrumentUrl,
       versionUrl: "principal",
     );

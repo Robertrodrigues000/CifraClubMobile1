@@ -21,11 +21,11 @@ class VersionDataDto {
   @JsonKey(name: 'url')
   final String completePath;
   final String siteUrl;
-  final String key;
-  final String shapeKey;
-  final String stdKey;
-  final String stdShapeKey;
-  final String tuning;
+  final String? key;
+  final String? shapeKey;
+  final String? stdKey;
+  final String? stdShapeKey;
+  final String? tuning;
   final int capo;
   final String composers;
   @JsonKey(name: 'verified')

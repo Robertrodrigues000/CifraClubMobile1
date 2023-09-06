@@ -21,8 +21,8 @@ class DeleteVersions {
       (result) async {
         if (result.isSuccess) {
           final localDatabaseIds = versions.map((e) => e.localDatabaseId!).toList();
-          final deletedSongCount = await _userVersionRepository.deleteVersionsById(localDatabaseIds, songbookId) ?? 0;
-          await _userSongbookRepository.decrementTotalSongs(songbookId: songbookId, quantity: deletedSongCount);
+          await _userVersionRepository.deleteVersionsById(localDatabaseIds, songbookId);
+          await _userSongbookRepository.updateTotalSongs(songbookId: songbookId);
         }
         return result;
       },

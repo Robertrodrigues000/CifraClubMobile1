@@ -4,9 +4,13 @@ import 'package:typed_result/typed_result.dart';
 
 abstract class VersionRepository {
   Future<Result<VersionData, RequestError>> getVersionData({
-    required String artistDns,
-    required String songDns,
-    String? type,
-    String? label,
+    required String artistUrl,
+    required String songUrl,
+    String? instrumentUrl,
+    String? versionUrl,
+  });
+  Future<Result<VersionData, RequestError>> getVersionDataByVersionId({
+    required int versionId,
+    required int apiType,
   });
 }

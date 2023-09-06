@@ -33,6 +33,7 @@ class UserVersionDataSource {
         Future.wait([
           _isar.userVersionDtos.clear(),
           _isar.userRecentVersionDtos.clear(),
+          _isar.userVersionDataDtos.clear(),
         ]);
       },
     );

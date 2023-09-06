@@ -70,8 +70,12 @@ class SongbookRepositoryImpl extends SongbookRepository {
     required List<SongbookVersionInput> versionsInput,
   }) async {
     return (await _songbookDataSource.addVersionsToSongbook(
-            songbookId, SongbookVersionsInputDto.fromDomain(versionsInput)))
-        .map((value) => value.map((e) => e.toDomain(0)).toList());
+      songbookId,
+      SongbookVersionsInputDto.fromDomain(versionsInput),
+    ))
+        .map(
+      (value) => value.map((e) => e.toDomain()).toList(),
+    );
   }
 
   @override
@@ -82,7 +86,7 @@ class SongbookRepositoryImpl extends SongbookRepository {
     return (await _songbookDataSource.addVersionToSongbook(
             songbookId, SongbookVersionInputDto.fromDomain(versionInput)))
         .map(
-      (value) => value.toDomain(0),
+      (value) => value.toDomain(),
     );
   }
 

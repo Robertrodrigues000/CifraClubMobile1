@@ -193,10 +193,10 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                         TextButton(
                             onPressed: () async {
                               var newKey = await VersionKeyBottomSheet(
-                                musicalScale: state.version!.stdKey.contains("m")
+                                musicalScale: state.version!.stdKey!.contains("m")
                                     ? MusicalScale.minorScale
                                     : MusicalScale.majorScale,
-                                originalKey: state.version!.stdKey,
+                                originalKey: state.version!.stdKey!,
                                 selectedKey: selectedKey!,
                               ).open(
                                 context: context,

@@ -23,11 +23,17 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   }
 
   @override
-  Future<List<int>> addVersionsToSongbook(List<Version> versions, int songbookId) async {
+  Future<List<int>> putVersionsToSongbook(List<Version> versions, int songbookId) async {
     final order = await _userVersionDataSource.getTotalSongbookVersions(songbookId).first;
 
     return _userVersionDataSource.putVersionsToSongbook(
-      versions.mapIndexed((index, e) => UserVersionDto.fromDomain(e, songbookId, order + index)).toList(),
+      versions
+          .mapIndexed((index, version) => UserVersionDto.fromDomain(
+                version,
+                songbookId,
+                version.order == -1 ? order + index : null,
+              ))
+          .toList(),
     );
   }
 

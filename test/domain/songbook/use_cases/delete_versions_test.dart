@@ -34,9 +34,8 @@ void main() {
     when(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!], any()))
         .thenAnswer((invocation) => SynchronousFuture(1));
 
-    when(() => userSongbookRepository.decrementTotalSongs(
-        songbookId: any(named: "songbookId"),
-        quantity: any(named: "quantity"))).thenAnswer((_) => SynchronousFuture(1));
+    when(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")))
+        .thenAnswer((_) => SynchronousFuture(1));
 
     final result = await DeleteVersions(songbookRepository, userCifraRepository, userSongbookRepository)(
       songbookId: 1,
@@ -46,8 +45,7 @@ void main() {
     expect(result.isSuccess, isTrue);
 
     verify(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!], 1)).called(1);
-    verify(() => userSongbookRepository.decrementTotalSongs(
-        songbookId: any(named: "songbookId"), quantity: any(named: "quantity"))).called(1);
+    verify(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId"))).called(1);
   });
 
   test("When call use case and request fails should return request error", () async {
@@ -55,8 +53,7 @@ void main() {
     when(() => songbookRepository.deleteVersions(versionsId: [songs.first.remoteDatabaseId!], songbookId: 1))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
-    when(() => userSongbookRepository.decrementTotalSongs(songbookId: 1))
-        .thenAnswer((invocation) => SynchronousFuture(1));
+    when(() => userSongbookRepository.updateTotalSongs(songbookId: 1)).thenAnswer((invocation) => SynchronousFuture(1));
 
     final result = await DeleteVersions(songbookRepository, userCifraRepository, userSongbookRepository)(
         songbookId: 1, versions: songs);
@@ -64,7 +61,6 @@ void main() {
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
 
     verifyNever(() => userCifraRepository.deleteVersionsById(any(), 1));
-    verifyNever(() => userSongbookRepository.decrementTotalSongs(
-        songbookId: any(named: "songbookId"), quantity: any(named: "quantity")));
+    verifyNever(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")));
   });
 }

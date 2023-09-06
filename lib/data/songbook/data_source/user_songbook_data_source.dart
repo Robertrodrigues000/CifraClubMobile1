@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/songbook/models/list_type_dto.dart';
 import 'package:cifraclub/data/songbook/models/user_songbook_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
@@ -24,7 +25,7 @@ class UserSongbookDataSource {
   }
 
   /// Insert or update a songbook
-  Future<int> insert(UserSongbookDto userSongbookDto) async {
+  Future<int> put(UserSongbookDto userSongbookDto) async {
     if (userSongbookDto.id == Isar.autoIncrement) {
       throw Exception("Songbook should have an id set");
     }
@@ -77,7 +78,7 @@ class UserSongbookDataSource {
   Future<int?> updatePreview(int songbookId, List<String?> preview) async {
     return _isar.writeTxn(() async {
       final songbook = await _isar.userSongbookDtos.where().idEqualTo(songbookId).findFirst();
-      final updatedSongbook = songbook?.copyWith(preview: preview);
+      final updatedSongbook = songbook?.copyWith(preview: preview, lastUpdated: DateTime.now());
       if (updatedSongbook == null) {
         return SynchronousFuture(null);
       }
@@ -85,26 +86,16 @@ class UserSongbookDataSource {
     });
   }
 
-  Future<int?> incrementTotalSongs(int songbookId, int quantity) async {
+  Future<int?> updateTotalSongs(int songbookId) async {
     return _isar.writeTxn(() async {
       final songbook = await _isar.userSongbookDtos.where().idEqualTo(songbookId).findFirst();
-      final updatedSongbook =
-          songbook?.copyWith(totalSongs: songbook.totalSongs != null ? songbook.totalSongs! + quantity : 0);
-      if (updatedSongbook == null) {
-        return SynchronousFuture(null);
-      }
-      return _isar.userSongbookDtos.put(updatedSongbook);
-    });
-  }
+      final count = await _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).count();
+      final updatedSongbook = songbook?.copyWith(totalSongs: count, lastUpdated: DateTime.now());
 
-  Future<int?> decrementTotalSongs(int songbookId, int quantity) async {
-    return _isar.writeTxn(() async {
-      final songbook = await _isar.userSongbookDtos.where().idEqualTo(songbookId).findFirst();
-      final updatedSongbook =
-          songbook?.copyWith(totalSongs: songbook.totalSongs != null ? songbook.totalSongs! - quantity : 0);
       if (updatedSongbook == null) {
         return SynchronousFuture(null);
       }
+
       return _isar.userSongbookDtos.put(updatedSongbook);
     });
   }

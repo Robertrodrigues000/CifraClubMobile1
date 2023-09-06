@@ -262,15 +262,40 @@ int _userVersionDataDtoEstimateSize(
       }
     }
   }
-  bytesCount += 3 + object.key.length * 3;
+  {
+    final value = object.key;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.reason.length * 3;
-  bytesCount += 3 + object.shapeKey.length * 3;
+  {
+    final value = object.shapeKey;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.siteUrl.length * 3;
   bytesCount +=
       3 + UserVersionDataSongDtoSchema.estimateSize(object.song, allOffsets[UserVersionDataSongDto]!, allOffsets);
-  bytesCount += 3 + object.stdKey.length * 3;
-  bytesCount += 3 + object.stdShapeKey.length * 3;
-  bytesCount += 3 + object.tuning.length * 3;
+  {
+    final value = object.stdKey;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.stdShapeKey;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.tuning;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.versionName.length * 3;
   bytesCount += 3 + object.versionUrl.length * 3;
   {
@@ -384,10 +409,10 @@ UserVersionDataDto _userVersionDataDtoDeserialize(
       UserInstrumentVersionsDto(),
     ),
     isVerified: reader.readBool(offsets[10]),
-    key: reader.readString(offsets[11]),
+    key: reader.readStringOrNull(offsets[11]),
     localDatabaseId: id,
     reason: reader.readString(offsets[12]),
-    shapeKey: reader.readString(offsets[13]),
+    shapeKey: reader.readStringOrNull(offsets[13]),
     siteUrl: reader.readString(offsets[14]),
     song: reader.readObjectOrNull<UserVersionDataSongDto>(
           offsets[15],
@@ -396,9 +421,9 @@ UserVersionDataDto _userVersionDataDtoDeserialize(
         ) ??
         UserVersionDataSongDto(),
     songbookId: reader.readLong(offsets[16]),
-    stdKey: reader.readString(offsets[17]),
-    stdShapeKey: reader.readString(offsets[18]),
-    tuning: reader.readString(offsets[19]),
+    stdKey: reader.readStringOrNull(offsets[17]),
+    stdShapeKey: reader.readStringOrNull(offsets[18]),
+    tuning: reader.readStringOrNull(offsets[19]),
     versionId: reader.readLong(offsets[20]),
     versionLocalDatabaseId: reader.readLong(offsets[21]),
     versionName: reader.readString(offsets[22]),
@@ -461,11 +486,11 @@ P _userVersionDataDtoDeserializeProp<P>(
     case 10:
       return (reader.readBool(offset)) as P;
     case 11:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 12:
       return (reader.readString(offset)) as P;
     case 13:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 14:
       return (reader.readString(offset)) as P;
     case 15:
@@ -478,11 +503,11 @@ P _userVersionDataDtoDeserializeProp<P>(
     case 16:
       return (reader.readLong(offset)) as P;
     case 17:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 18:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 19:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 20:
       return (reader.readLong(offset)) as P;
     case 21:
@@ -1805,8 +1830,24 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> keyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'key',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> keyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'key',
+      ));
+    });
+  }
+
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> keyEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1819,7 +1860,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> keyGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1834,7 +1875,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> keyLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -1849,8 +1890,8 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> keyBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2113,8 +2154,24 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> shapeKeyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'shapeKey',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> shapeKeyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'shapeKey',
+      ));
+    });
+  }
+
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> shapeKeyEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -2127,7 +2184,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> shapeKeyGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2142,7 +2199,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> shapeKeyLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2157,8 +2214,8 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> shapeKeyBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2421,8 +2478,24 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdKeyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'stdKey',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdKeyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'stdKey',
+      ));
+    });
+  }
+
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdKeyEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -2435,7 +2508,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdKeyGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2450,7 +2523,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdKeyLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2465,8 +2538,8 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdKeyBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2549,8 +2622,24 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdShapeKeyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'stdShapeKey',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdShapeKeyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'stdShapeKey',
+      ));
+    });
+  }
+
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdShapeKeyEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -2563,7 +2652,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdShapeKeyGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2578,7 +2667,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdShapeKeyLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2593,8 +2682,8 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> stdShapeKeyBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -2677,8 +2766,24 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
     });
   }
 
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> tuningIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'tuning',
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> tuningIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'tuning',
+      ));
+    });
+  }
+
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> tuningEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -2691,7 +2796,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> tuningGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2706,7 +2811,7 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> tuningLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -2721,8 +2826,8 @@ extension UserVersionDataDtoQueryFilter on QueryBuilder<UserVersionDataDto, User
   }
 
   QueryBuilder<UserVersionDataDto, UserVersionDataDto, QAfterFilterCondition> tuningBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -3889,7 +3994,7 @@ extension UserVersionDataDtoQueryProperty on QueryBuilder<UserVersionDataDto, Us
     });
   }
 
-  QueryBuilder<UserVersionDataDto, String, QQueryOperations> keyProperty() {
+  QueryBuilder<UserVersionDataDto, String?, QQueryOperations> keyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'key');
     });
@@ -3901,7 +4006,7 @@ extension UserVersionDataDtoQueryProperty on QueryBuilder<UserVersionDataDto, Us
     });
   }
 
-  QueryBuilder<UserVersionDataDto, String, QQueryOperations> shapeKeyProperty() {
+  QueryBuilder<UserVersionDataDto, String?, QQueryOperations> shapeKeyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'shapeKey');
     });
@@ -3925,19 +4030,19 @@ extension UserVersionDataDtoQueryProperty on QueryBuilder<UserVersionDataDto, Us
     });
   }
 
-  QueryBuilder<UserVersionDataDto, String, QQueryOperations> stdKeyProperty() {
+  QueryBuilder<UserVersionDataDto, String?, QQueryOperations> stdKeyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'stdKey');
     });
   }
 
-  QueryBuilder<UserVersionDataDto, String, QQueryOperations> stdShapeKeyProperty() {
+  QueryBuilder<UserVersionDataDto, String?, QQueryOperations> stdShapeKeyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'stdShapeKey');
     });
   }
 
-  QueryBuilder<UserVersionDataDto, String, QQueryOperations> tuningProperty() {
+  QueryBuilder<UserVersionDataDto, String?, QQueryOperations> tuningProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'tuning');
     });

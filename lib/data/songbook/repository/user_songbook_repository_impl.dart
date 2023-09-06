@@ -16,8 +16,8 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   }
 
   @override
-  Future<int> insertUserSongbook(Songbook songbook) async {
-    return _userSongbookDataSource.insert(UserSongbookDto.fromDomain(songbook));
+  Future<int> putUserSongbook(Songbook songbook) async {
+    return _userSongbookDataSource.put(UserSongbookDto.fromDomain(songbook));
   }
 
   @override
@@ -56,12 +56,7 @@ class UserSongbookRepositoryImpl extends UserSongbookRepository {
   }
 
   @override
-  Future<int?> decrementTotalSongs({required int songbookId, int quantity = 1}) {
-    return _userSongbookDataSource.decrementTotalSongs(songbookId, quantity);
-  }
-
-  @override
-  Future<int?> incrementTotalSongs({required int songbookId, int quantity = 1}) {
-    return _userSongbookDataSource.incrementTotalSongs(songbookId, quantity);
+  Future<int?> updateTotalSongs({required int songbookId}) {
+    return _userSongbookDataSource.updateTotalSongs(songbookId);
   }
 }

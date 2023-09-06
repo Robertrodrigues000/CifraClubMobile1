@@ -35,8 +35,8 @@ class InsertVersionToSongbook {
     }
 
     final versionData = await _getVersionData(
-      artistDns: artistUrl,
-      songDns: songUrl,
+      artistUrl: artistUrl,
+      songUrl: songUrl,
     );
 
     if (versionData.isFailure) {
@@ -56,15 +56,16 @@ class InsertVersionToSongbook {
     if (addResult.isSuccess) {
       final version = addResult.get()!;
 
+      await _userVersionRepository.putVersionsToSongbook([version], songbookId).then((value) async {
+        await _userVersionRepository.addVersionData(
+          versionData: versionData.get()!,
+          versionLocalDatabaseId: value.first,
+          songbookId: songbookId,
+        );
+      });
+
       await Future.wait([
-        _userVersionRepository.addVersionsToSongbook([version], songbookId).then((value) async {
-          await _userVersionRepository.addVersionData(
-            versionData: versionData.get()!,
-            versionLocalDatabaseId: value.first,
-            songbookId: songbookId,
-          );
-        }),
-        _userSongbookRepository.incrementTotalSongs(songbookId: songbookId),
+        _userSongbookRepository.updateTotalSongs(songbookId: songbookId),
         _updateSongbookPreview(songbookId),
       ]);
 

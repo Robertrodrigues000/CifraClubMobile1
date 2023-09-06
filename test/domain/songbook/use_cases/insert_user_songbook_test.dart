@@ -27,8 +27,7 @@ void main() {
             isPublic: songbook.isPublic,
             createdAt: songbook.createdAt,
           )).thenAnswer((_) => SynchronousFuture(Ok(songbook)));
-      when(() => userSongbookRepository.insertUserSongbook(songbook))
-          .thenAnswer((_) => SynchronousFuture(songbook.id!));
+      when(() => userSongbookRepository.putUserSongbook(songbook)).thenAnswer((_) => SynchronousFuture(songbook.id!));
 
       final result = await InsertUserSongbook(songbookRepository, userSongbookRepository)(
         name: songbook.name,
@@ -38,7 +37,7 @@ void main() {
 
       expect(result.isSuccess, isTrue);
       expect(result.getOrThrow().id, songbook.id);
-      verify(() => userSongbookRepository.insertUserSongbook(songbook)).called(1);
+      verify(() => userSongbookRepository.putUserSongbook(songbook)).called(1);
     });
   });
 
@@ -56,7 +55,7 @@ void main() {
       final result = await InsertUserSongbook(songbookRepository, userSongbookRepository)(name: "new");
 
       expect(result.isFailure, isTrue);
-      verifyNever(() => userSongbookRepository.insertUserSongbook(any()));
+      verifyNever(() => userSongbookRepository.putUserSongbook(any()));
     });
   });
 }

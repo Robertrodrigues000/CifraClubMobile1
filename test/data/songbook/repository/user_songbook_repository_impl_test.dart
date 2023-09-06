@@ -51,12 +51,12 @@ void main() {
     final userSongbookDataSource = _UserSongbookDataSourceMock();
     final songbook = getFakeSongbook();
 
-    when(() => userSongbookDataSource.insert(any())).thenAnswer((_) => SynchronousFuture(songbook.id!));
+    when(() => userSongbookDataSource.put(any())).thenAnswer((_) => SynchronousFuture(songbook.id!));
 
     final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
-    final songbookId = await songbookRepository.insertUserSongbook(songbook);
+    final songbookId = await songbookRepository.putUserSongbook(songbook);
 
-    var userSongbookDto = verify(() => userSongbookDataSource.insert(captureAny())).captured.first as UserSongbookDto;
+    var userSongbookDto = verify(() => userSongbookDataSource.put(captureAny())).captured.first as UserSongbookDto;
 
     expect(userSongbookDto.name, songbook.name);
     expect(songbookId, songbook.id);
@@ -174,28 +174,15 @@ void main() {
     verify(userSongbookDataSource.deleteAll).called(1);
   });
 
-  test("when incrementTotalSongs is called, should return id of songbook updated", () async {
+  test("when updateTotalSongs is called, should return id of songbook updated", () async {
     final userSongbookDataSource = _UserSongbookDataSourceMock();
     final songbook = getFakeSongbook();
 
-    when(() => userSongbookDataSource.incrementTotalSongs(songbook.id!, 4))
+    when(() => userSongbookDataSource.updateTotalSongs(songbook.id!))
         .thenAnswer((_) => SynchronousFuture(songbook.id!));
 
     final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
-    final result = await songbookRepository.incrementTotalSongs(songbookId: songbook.id!, quantity: 4);
-
-    expect(result, songbook.id);
-  });
-
-  test("when decrementTotalSongs is called, should return id of songbook updated", () async {
-    final userSongbookDataSource = _UserSongbookDataSourceMock();
-    final songbook = getFakeSongbook();
-
-    when(() => userSongbookDataSource.decrementTotalSongs(songbook.id!, 1))
-        .thenAnswer((_) => SynchronousFuture(songbook.id!));
-
-    final songbookRepository = UserSongbookRepositoryImpl(userSongbookDataSource);
-    final result = await songbookRepository.decrementTotalSongs(songbookId: songbook.id!, quantity: 1);
+    final result = await songbookRepository.updateTotalSongs(songbookId: songbook.id!);
 
     expect(result, songbook.id);
   });

@@ -22,7 +22,7 @@ void main() {
       final versionData = getFakeVersionData();
 
       final getVersionData = _GetVersionDataMock();
-      when(() => getVersionData(artistDns: any(named: "artistDns"), songDns: any(named: "songDns")))
+      when(() => getVersionData(artistUrl: any(named: "artistUrl"), songUrl: any(named: "songUrl")))
           .thenAnswer((_) => SynchronousFuture(Ok(versionData)));
 
       final middleware = VersionLoaderMiddleware(getVersionData);
@@ -40,7 +40,7 @@ void main() {
         actionStream.add(action);
       });
 
-      verify(() => getVersionData(artistDns: "a", songDns: "b")).called(1);
+      verify(() => getVersionData(artistUrl: "a", songUrl: "b")).called(1);
       actionStream.close();
     });
 
@@ -48,7 +48,7 @@ void main() {
       final error = ServerError(statusCode: 404);
 
       final getVersionData = _GetVersionDataMock();
-      when(() => getVersionData(artistDns: any(named: "artistDns"), songDns: any(named: "songDns")))
+      when(() => getVersionData(artistUrl: any(named: "artistUrl"), songUrl: any(named: "songUrl")))
           .thenAnswer((_) => SynchronousFuture(Err(error)));
 
       final middleware = VersionLoaderMiddleware(getVersionData);
@@ -71,7 +71,7 @@ void main() {
         actionStream.add(action);
       });
 
-      verify(() => getVersionData(artistDns: "a", songDns: "b")).called(1);
+      verify(() => getVersionData(artistUrl: "a", songUrl: "b")).called(1);
       actionStream.close();
     });
   });
@@ -83,8 +83,8 @@ void main() {
       final getVersionData = _GetVersionDataMock();
       when(
         () => getVersionData.call(
-            artistDns: any(named: "artistDns"),
-            songDns: any(named: "songDns"),
+            artistUrl: any(named: "artistUrl"),
+            songUrl: any(named: "songUrl"),
             instrumentUrl: any(named: "instrumentUrl"),
             versionUrl: any(named: "versionUrl")),
       ).thenAnswer((_) => SynchronousFuture(Ok(versionData)));
@@ -112,8 +112,8 @@ void main() {
       );
 
       verify(() => getVersionData.call(
-            artistDns: versionData.artist!.url,
-            songDns: versionData.song.url,
+            artistUrl: versionData.artist!.url,
+            songUrl: versionData.song.url,
             instrumentUrl: Instrument.bass.instrumentUrl,
             versionUrl: "aa",
           )).called(1);
@@ -128,8 +128,8 @@ void main() {
       final getVersionData = _GetVersionDataMock();
       when(
         () => getVersionData.call(
-            artistDns: any(named: "artistDns"),
-            songDns: any(named: "songDns"),
+            artistUrl: any(named: "artistUrl"),
+            songUrl: any(named: "songUrl"),
             instrumentUrl: any(named: "instrumentUrl"),
             versionUrl: any(named: "versionUrl")),
       ).thenAnswer((_) => SynchronousFuture(Err(error)));
@@ -162,8 +162,8 @@ void main() {
       );
 
       verify(() => getVersionData.call(
-            artistDns: versionData.artist!.url,
-            songDns: versionData.song.url,
+            artistUrl: versionData.artist!.url,
+            songUrl: versionData.song.url,
             instrumentUrl: Instrument.bass.instrumentUrl,
             versionUrl: "aa",
           )).called(1);

@@ -54,8 +54,8 @@ class VersionLoaderMiddleware extends VersionMiddleware {
     addAction(OnStartLoading());
 
     final result = await _getVersionData(
-      artistDns: artistUrl,
-      songDns: songUrl,
+      artistUrl: artistUrl,
+      songUrl: songUrl,
       instrumentUrl: instrumentUrl,
       versionUrl: versionUrl,
     );

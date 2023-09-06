@@ -25,22 +25,24 @@ class SongbookDto {
   final int? timestamp;
   @JsonKey(name: "songs")
   final List<SongbookVersionDto>? versions;
+  @JsonKey(name: "thumbURLs")
+  final List<String>? preview;
 
-  SongbookDto({
-    this.id,
-    this.name,
-    this.userName,
-    this.userId,
-    this.thumb,
-    this.type,
-    this.isPublic,
-    this.status,
-    this.totalSongs,
-    this.createdAt,
-    this.lastUpdated,
-    this.timestamp,
-    this.versions,
-  });
+  SongbookDto(
+      {this.id,
+      this.name,
+      this.userName,
+      this.userId,
+      this.thumb,
+      this.type,
+      this.isPublic,
+      this.status,
+      this.totalSongs,
+      this.createdAt,
+      this.lastUpdated,
+      this.timestamp,
+      this.versions,
+      this.preview});
 
   factory SongbookDto.fromJson(Map<String, dynamic> json) => _$SongbookDtoFromJson(json);
 
@@ -57,7 +59,7 @@ class SongbookDto {
           name: name ?? "",
           type: _getListType(type ?? ""),
           totalSongs: totalSongs ?? 0,
-          preview: const [],
+          preview: preview ?? [],
         ),
         versions: versions?.mapIndexed((index, e) => e.toDomain(index)).toList() ?? [],
       );

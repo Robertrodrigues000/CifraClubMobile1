@@ -30,11 +30,11 @@ class UserVersionDataDto extends Equatable {
   final String versionUrl;
   final String completePath;
   final String siteUrl;
-  final String key;
-  final String shapeKey;
-  final String stdKey;
-  final String stdShapeKey;
-  final String tuning;
+  final String? key;
+  final String? shapeKey;
+  final String? stdKey;
+  final String? stdShapeKey;
+  final String? tuning;
   final int capo;
   final String composers;
   final bool isVerified;
@@ -59,10 +59,10 @@ class UserVersionDataDto extends Equatable {
     required this.completePath,
     required this.siteUrl,
     required this.key,
-    required this.shapeKey,
-    required this.stdKey,
-    required this.stdShapeKey,
-    required this.tuning,
+    this.shapeKey,
+    this.stdKey,
+    this.stdShapeKey,
+    this.tuning,
     required this.capo,
     required this.composers,
     required this.isVerified,

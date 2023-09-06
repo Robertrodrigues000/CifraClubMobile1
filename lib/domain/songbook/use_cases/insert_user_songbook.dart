@@ -23,6 +23,6 @@ class InsertUserSongbook {
           isPublic: isPublic,
           createdAt: createdAt ?? DateTime.now(),
         )
-        .then((result) => result.onSuccess(_userSongbookRepository.insertUserSongbook));
+        .then((result) => result.onSuccess(_userSongbookRepository.putUserSongbook));
   }
 }

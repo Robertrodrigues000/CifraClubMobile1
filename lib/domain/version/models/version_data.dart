@@ -5,8 +5,12 @@ import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/instrument_version.dart';
 import 'package:cifraclub/domain/version/models/version_data_song.dart';
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 
+part 'version_data.g.dart';
+
+@CopyWith()
 class VersionData extends Equatable {
   final int? localDatabaseId;
   final int? songbookId;
@@ -18,11 +22,11 @@ class VersionData extends Equatable {
   final String versionUrl;
   final String completePath;
   final String siteUrl;
-  final String key;
-  final String shapeKey;
-  final String stdKey;
-  final String stdShapeKey;
-  final String tuning;
+  final String? key;
+  final String? shapeKey;
+  final String? stdKey;
+  final String? stdShapeKey;
+  final String? tuning;
   final int capo;
   final String composers;
   final bool isVerified;
@@ -46,11 +50,11 @@ class VersionData extends Equatable {
     required this.versionUrl,
     required this.completePath,
     required this.siteUrl,
-    required this.key,
-    required this.shapeKey,
-    required this.stdKey,
-    required this.stdShapeKey,
-    required this.tuning,
+    this.key,
+    this.shapeKey,
+    this.stdKey,
+    this.stdShapeKey,
+    this.tuning,
     required this.capo,
     required this.composers,
     required this.isVerified,

@@ -39,6 +39,7 @@ void main() {
     int? songbookId,
     String? artistImage,
     int? songId,
+    int? versionLocalDatabaseId,
   }) =>
       UserVersionDto(
         localDatabaseId: localDatabaseId ?? faker.randomGenerator.integer(10000),
