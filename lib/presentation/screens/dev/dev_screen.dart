@@ -134,7 +134,7 @@ class _DevScreenState extends State<DevScreen> {
                   ),
                   title: const Text("Compra"),
                   onTap: () {
-                    widget.listenBottomSheet.show(context: context);
+                    widget.listenBottomSheet.open(context: context);
                     //_bloc.purchase();
                   },
                 ),

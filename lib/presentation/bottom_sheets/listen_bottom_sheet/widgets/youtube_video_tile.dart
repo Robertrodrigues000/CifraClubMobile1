@@ -2,14 +2,14 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/video_card.dart';
 import 'package:flutter/material.dart';
 
-class YouTubeVideoItem extends StatelessWidget {
+class YouTubeVideoTile extends StatelessWidget {
   final int duration;
   final String imageUrl;
   final String videoName;
   final String views;
   final VoidCallback onTap;
 
-  const YouTubeVideoItem({
+  const YouTubeVideoTile({
     super.key,
     required this.duration,
     required this.imageUrl,

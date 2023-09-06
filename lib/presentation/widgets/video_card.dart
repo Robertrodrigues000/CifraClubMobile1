@@ -43,9 +43,9 @@ class VideoCard extends StatelessWidget {
           ),
         ),
         Container(
-          width: 40,
           height: 20,
           alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
             color: context.colors.scrimOverlay,
             borderRadius: const BorderRadius.only(
@@ -63,6 +63,15 @@ class VideoCard extends StatelessWidget {
   }
 
   String formatVideoLessonDuration(int seconds) {
-    return DateFormat.ms().format(DateTime.fromMillisecondsSinceEpoch(Duration(seconds: seconds).inMilliseconds));
+    Duration duration = Duration(seconds: seconds);
+    String formattedTime = '';
+
+    if (duration.inHours > 0) {
+      formattedTime += '${duration.inHours}:';
+    }
+
+    formattedTime += DateFormat('mm:ss').format(DateTime(0).add(duration));
+
+    return formattedTime;
   }
 }

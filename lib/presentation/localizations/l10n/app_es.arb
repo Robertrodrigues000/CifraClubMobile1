@@ -258,6 +258,7 @@
     "library" : "Biblioteca",
     "listen" : "Escuchar",
     "key" : "Tono",
+    "youtubeResultNotFound" : "No encontramos ningún video relacionado a este cifrado",
     "searchResultNotFoundDescription": "No encontramos nada aquí. Vuelva a intentarlo escribiendo el término de búsqueda de otra forma.",
     "searchHint": "¿Que quieres tocar?"
 }

@@ -9,6 +9,7 @@ enum ErrorDescriptionWidgetType {
   loggedOut(),
   videoLesson(),
   resultNotFound(),
+  youtubeResultNotFound(),
   emptyList(),
   searchResultNotFound();
 
@@ -24,11 +25,12 @@ enum ErrorDescriptionWidgetType {
         return AppWebp.loggedOutListErrorLight;
       case videoLesson:
         return AppWebp.artistVideoLessonEmptyStateLight;
-      case resultNotFound:
-      case emptyList:
-        return null;
       case searchResultNotFound:
         return AppWebp.searchResultNotFoundLight;
+      case resultNotFound:
+      case emptyList:
+      case youtubeResultNotFound:
+        return null;
     }
   }
 
@@ -43,16 +45,17 @@ enum ErrorDescriptionWidgetType {
         return AppWebp.loggedOutListErrorDark;
       case videoLesson:
         return AppWebp.artistVideoLessonEmptyStateDark;
-      case resultNotFound:
-      case emptyList:
-        return null;
       case searchResultNotFound:
         return AppWebp.searchResultNotFoundDark;
+      case resultNotFound:
+      case emptyList:
+      case youtubeResultNotFound:
+        return null;
     }
   }
   // coverage:ignore-end
 
-  String getTitle(BuildContext context) {
+  String? getTitle(BuildContext context) {
     switch (this) {
       case connection:
         return context.text.connectionErrorTitle;
@@ -69,6 +72,8 @@ enum ErrorDescriptionWidgetType {
         return context.text.resultNotFoundTitle;
       case emptyList:
         return context.text.emptyListTitle;
+      case youtubeResultNotFound:
+        return null;
     }
   }
 
@@ -88,6 +93,8 @@ enum ErrorDescriptionWidgetType {
         return context.text.emptyListDescription;
       case resultNotFound:
         return context.text.resultNotFoundDescription;
+      case youtubeResultNotFound:
+        return context.text.youtubeResultNotFound;
       case searchResultNotFound:
         return context.text.searchResultNotFoundDescription;
     }
@@ -103,12 +110,13 @@ enum ErrorDescriptionWidgetType {
         return context.text.privateListErrorButtonText;
       case loggedOut:
         return context.text.loggedOutListErrorButtonText;
+      case emptyList:
+        return context.text.searchSongs;
       case videoLesson:
       case resultNotFound:
       case searchResultNotFound:
+      case youtubeResultNotFound:
         return null;
-      case emptyList:
-        return context.text.searchSongs;
     }
   }
 }

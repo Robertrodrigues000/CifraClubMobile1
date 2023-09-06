@@ -4,13 +4,13 @@ import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LibraryVideoItem extends StatelessWidget {
+class LibrarySongTile extends StatelessWidget {
   final String imageUrl;
   final String artistName;
   final String songName;
   final VoidCallback onTap;
 
-  const LibraryVideoItem({
+  const LibrarySongTile({
     super.key,
     required this.imageUrl,
     required this.artistName,

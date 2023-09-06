@@ -1,28 +1,43 @@
+import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/youtube/use_cases/get_youtube_videos.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet_state.dart';
-import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/library_video_item.dart';
-import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/youtube_video_item.dart';
+import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/library_song_tile.dart';
+import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/youtube_video_tile.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
+import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
+import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 @injectable
 class ListenBottomSheet {
-  void show({
+  final GetYouTubeVideos _getYouTubeVideos;
+
+  const ListenBottomSheet(this._getYouTubeVideos);
+
+  // coverage:ignore-start
+  void open({
     required BuildContext context,
     ListenBottomSheetBloc? bloc,
   }) {
     DefaultBottomSheet.showBottomSheet(
       context: context,
       child: _ListenBottomSheetWidget(
-        bloc: bloc ?? ListenBottomSheetBloc(),
+        bloc: bloc ??
+            ListenBottomSheetBloc(
+              _getYouTubeVideos,
+            ),
       ),
       enableHeader: false,
       heightMaxFactor: 0.8,
     );
   }
+  // coverage:ignore-end
 }
 
 class _ListenBottomSheetWidget extends StatefulWidget {
@@ -69,7 +84,7 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => widget.bloc,
+      create: (context) => widget.bloc..init(),
       child: BlocBuilder<ListenBottomSheetBloc, ListenBottomSheetState>(
         builder: (context, state) {
           return Column(
@@ -110,20 +125,47 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                               SliverOverlapInjector(
                                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                               ),
-                              SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                  childCount: 15,
-                                  (BuildContext context, int index) {
-                                    return YouTubeVideoItem(
-                                      duration: 10000,
-                                      imageUrl: "",
-                                      videoName: "Legião Urbana - Quase sem querer (Aula de violão)",
-                                      views: "1.000 ${context.text.views}",
-                                      onTap: () {}, // coverage:ignore-line
-                                    );
-                                  },
+                              if (state.youtubeError != null)
+                                SliverFillRemaining(
+                                  hasScrollBody: false,
+                                  child: Center(
+                                    child: ErrorDescriptionWidget(
+                                      typeError: state.youtubeError! is ConnectionError
+                                          ? ErrorDescriptionWidgetType.connection
+                                          : ErrorDescriptionWidgetType.server,
+                                      onClick: widget.bloc.getYouTubeVideos,
+                                    ),
+                                  ),
+                                )
+                              else if (state.isLoadingYoutube)
+                                const SliverFillRemaining(child: Center(child: LoadingIndicator()))
+                              else if (state.youtubeVideos.isEmpty)
+                                SliverToBoxAdapter(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: context.appDimensionScheme.screenMargin),
+                                    child: const ErrorDescriptionWidget(
+                                      typeError: ErrorDescriptionWidgetType.youtubeResultNotFound,
+                                    ),
+                                  ),
+                                )
+                              else
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    childCount: state.youtubeVideos.length,
+                                    (BuildContext context, int index) {
+                                      final youtubeVideo = state.youtubeVideos[index];
+
+                                      return YouTubeVideoTile(
+                                        duration: youtubeVideo.duration,
+                                        imageUrl: youtubeVideo.imageUrl,
+                                        videoName: youtubeVideo.title,
+                                        views:
+                                            "${_formatNumber(int.tryParse(youtubeVideo.viewCount))} ${context.text.views}",
+                                        onTap: () {}, // coverage:ignore-line
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                           CustomScrollView(
@@ -134,7 +176,7 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                               SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                   (BuildContext context, int index) {
-                                    return LibraryVideoItem(
+                                    return LibrarySongTile(
                                       imageUrl: "",
                                       artistName: "Legião Urbana",
                                       songName: "Quase sem querer (Aula de violão)",
@@ -157,6 +199,11 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
         },
       ),
     );
+  }
+
+  String _formatNumber(int? number) {
+    NumberFormat numberFormat = NumberFormat('#,###', 'pt_BR');
+    return numberFormat.format(number);
   }
 }
 

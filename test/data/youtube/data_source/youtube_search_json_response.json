@@ -1,0 +1,46 @@
+{
+    "kind": "youtube#searchListResponse",
+    "etag": "EUcE2_lxzNfpAkWhENTSmzg168o",
+    "nextPageToken": "CAoQAA",
+    "regionCode": "BR",
+    "pageInfo": {
+        "totalResults": 387230,
+        "resultsPerPage": 10
+    },
+    "items": [
+        {
+            "kind": "youtube#searchResult",
+            "etag": "gF4Gb6VMZmSzebQ2qeq5ctq4ww4",
+            "id": {
+                "kind": "youtube#video",
+                "videoId": "Z6cONvRUFZQ"
+            },
+            "snippet": {
+                "publishedAt": "2023-02-01T20:00:08Z",
+                "channelId": "UC4t2mdI8uAiJDJSRjiWJT1Q",
+                "title": "GABRIELA ROCHA - ME ATRAIU (AO VIVO)",
+                "description": "Me Atraiu - Gabriela Rocha | Assista minha playlist de músicas: https://onilnk.com/r/GabrielaRocha_VidaAosSepulcros ...",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/Z6cONvRUFZQ/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/Z6cONvRUFZQ/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/Z6cONvRUFZQ/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "Gabriela Rocha",
+                "liveBroadcastContent": "none",
+                "publishTime": "2023-02-01T20:00:08Z"
+            }
+        }
+    ]
+}
