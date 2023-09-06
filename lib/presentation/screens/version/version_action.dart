@@ -1,5 +1,5 @@
 // coverage:ignore-file
-import 'package:cifraclub/domain/version/models/section.dart';
+import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
@@ -15,7 +15,13 @@ class OnVersionInit implements VersionAction {
   final String? songUrl;
   final int? songbookVersionId;
 
-  OnVersionInit({this.artistName, this.songName, this.artistUrl, this.songUrl, this.songbookVersionId});
+  OnVersionInit({
+    this.artistName,
+    this.songName,
+    this.artistUrl,
+    this.songUrl,
+    this.songbookVersionId,
+  });
 }
 
 class OnVersionSelected implements VersionAction {
@@ -44,8 +50,12 @@ class OnContentParsed implements VersionAction {
   final List<VersionFilter> versionFilters;
   final VersionFilter selectedFilter;
 
-  OnContentParsed(
-      {required this.sections, required this.versionData, required this.versionFilters, required this.selectedFilter});
+  OnContentParsed({
+    required this.sections,
+    required this.versionData,
+    required this.versionFilters,
+    required this.selectedFilter,
+  });
 }
 
 class OnYouTubeVideoSelected implements VersionAction {

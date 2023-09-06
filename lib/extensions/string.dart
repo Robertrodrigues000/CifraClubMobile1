@@ -9,6 +9,17 @@ extension RemovePrefix on String {
     }
     return this;
   }
+
+  /// Makes a split using new line separator.
+  /// This extension removes an empty string if the text ends with the new line.
+  List<String> splitLines() {
+    // Dart split makes an empty string if text ends with new line
+    final lines = split("\n");
+    if (lines.lastOrNull == "") {
+      lines.removeLast();
+    }
+    return lines;
+  }
 }
 
 extension IsExceedingLines on String {

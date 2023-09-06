@@ -154,19 +154,21 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                       )
                     else ...[
                       SliverPersistentHeader(
-                          pinned: state.isChordListPinned,
-                          delegate: ChordListHeaderDelegate(
-                              haveScroll: false,
-                              maxExtend: 110,
-                              child: const Text("Acordes"),
-                              isPinned: state.isChordListPinned,
-                              chords: state.version?.chords ?? [])),
+                        pinned: state.isChordListPinned,
+                        delegate: ChordListHeaderDelegate(
+                          haveScroll: false,
+                          maxExtend: 110,
+                          child: const Text("Acordes"),
+                          isPinned: state.isChordListPinned,
+                          chords: state.version?.chords ?? [],
+                        ),
+                      ),
                       SliverList.builder(
                         itemCount: state.sections.length,
                         itemBuilder: (context, index) {
                           final section = state.sections[index];
-                          return Text(
-                            section.content,
+                          return Text.rich(
+                            TextSpan(children: section.getSpans()),
                             style: context.typography.body8,
                           );
                         },

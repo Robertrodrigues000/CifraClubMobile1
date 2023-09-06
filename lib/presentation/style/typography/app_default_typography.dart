@@ -95,14 +95,14 @@ AppTypographyScheme getTypographyScheme(CosmosColorScheme cosmosColorScheme) {
     body7: TextStyle(
       color: cosmosColorScheme.primary,
       fontWeight: FontWeight.bold,
-      fontFamily: FontFamilies.robotoMono,
+      fontFamily: "Sono", // TODO: Arrumar RobotoMono
       fontSize: 14.0,
       height: 1.6,
     ),
     body8: TextStyle(
       color: cosmosColorScheme.textPrimary,
       fontWeight: FontWeight.normal,
-      fontFamily: FontFamilies.robotoMono,
+      fontFamily: "Sono", // TODO: Arrumar RobotoMono
       fontSize: 14.0,
       height: 1.6,
     ),

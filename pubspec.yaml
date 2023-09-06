@@ -122,5 +122,6 @@ flutter:
           weight: 600
         - asset: assets/fonts/robotomono/RobotoMono-Bold.ttf
           weight: 700
-
-
+    - family: Sono
+      fonts:
+        - asset: assets/fonts/sono/Sono-Regular.ttf

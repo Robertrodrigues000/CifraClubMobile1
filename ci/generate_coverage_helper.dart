@@ -23,15 +23,13 @@ void main() async {
   buffer.writeln();
 
   for (var file in files) {
-    final fileLibPath =
-        file.uri.toFilePath().substring(libDir.uri.toFilePath().length);
+    final fileLibPath = file.uri.toFilePath().substring(libDir.uri.toFilePath().length);
     buffer.writeln('import \'package:$packageName/$fileLibPath\';');
   }
 
   buffer.writeln();
   buffer.writeln('void main() {}');
 
-  final output =
-      File(cwd.resolve('test/coverage_helper_test.dart').toFilePath());
+  final output = File(cwd.resolve('test/coverage_helper_test.dart').toFilePath());
   await output.writeAsString(buffer.toString());
 }

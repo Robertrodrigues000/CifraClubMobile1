@@ -1,4 +1,5 @@
-import 'package:cifraclub/domain/version/use_cases/parse_sections.dart';
+import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
+import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
@@ -10,8 +11,9 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ContentMiddleware extends VersionMiddleware {
   final ParseSections _parseSections;
+  final ProcessSections _processSections;
 
-  ContentMiddleware(this._parseSections);
+  ContentMiddleware(this._parseSections, this._processSections);
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
@@ -19,6 +21,9 @@ class ContentMiddleware extends VersionMiddleware {
       // TODO: Verificar cifra autorizada
 
       final sections = _parseSections(action.versionData.content);
+      // TODO: Mover pra uma Action especializada. Quando trocarmos tamanho de fonte, poderemos só chamar o Process sem Parse.
+      _processSections(sections, 40);
+
       final versionFilters = action.versionData.instrumentVersions!
           .firstWhereOrNull((element) => element.instrument == action.versionData.instrument)
           ?.versions

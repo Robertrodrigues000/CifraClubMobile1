@@ -1,5 +1,5 @@
+import 'package:cifraclub/domain/section/models/text_section.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
-import 'package:cifraclub/domain/version/models/section.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
@@ -69,7 +69,7 @@ void main() {
       isVerified: true,
     );
 
-    final sections = [Section("")];
+    final sections = [TextSection("")];
     final versionData = getFakeVersionData();
     final versionFilters = [filter];
 
