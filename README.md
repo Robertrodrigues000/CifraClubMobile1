@@ -14,13 +14,21 @@ lib/presentation/localizations/l10n/app_<idioma>.arb`
 ```
 
 Feita a edição dos arquivos `.arb`, deve ser executado o seguinte comando para que sejam gerados os arquivos `app_localizations_<idioma>.dart`:
-```
+```bash
 flutter gen-l10n
+```
+ou:
+```bash
+make generate-localization
 ```
 
 ### Para gerar os arquivos `.g`
 ```bash
 flutter packages pub run build_runner build --delete-conflicting-outputs
+```
+ou:
+```bash
+make build-runner
 ```
 
 ### Formatação de código
@@ -28,5 +36,9 @@ flutter packages pub run build_runner build --delete-conflicting-outputs
 Ao editar arquivos do código, devemos rodar o seguinte comando para que o tudo fique devidamente formatado:
 
 ```
-flutter format --line-length=200 lib test
+flutter format --line-length=120 lib test
+```
+ou:
+```bash
+make format
 ```
