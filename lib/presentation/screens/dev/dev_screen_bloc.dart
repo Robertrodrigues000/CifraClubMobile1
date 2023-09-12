@@ -6,7 +6,7 @@ import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dar
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/search/models/search_filter.dart';
-import 'package:cifraclub/domain/search/use_cases/search_all_use_case.dart';
+import 'package:cifraclub/domain/search/use_cases/search.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
@@ -31,7 +31,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final GetVersionData _getVersionData;
   final GetChordsRepresentation _getChordsRepresentation;
   final ClearVersionsFromSongbook _clearSongsFromSongbook;
-  final SearchAll _searchAll;
+  final Search _searchAll;
 
   DevScreenBloc(
     this._getProducts,

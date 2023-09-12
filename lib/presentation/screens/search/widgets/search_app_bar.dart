@@ -4,24 +4,30 @@ import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final double topSafeArea;
-  final double searchInputHeight;
   final VoidCallback? onTapClear;
   final Function(String) onChanged;
   final String hintText;
+  final TextEditingController textEditingController;
+  final double searchInputHeight;
+  final bool isScrolledUnder;
+  final FocusNode? focusNode;
 
   const SearchAppBar({
     super.key,
-    required this.topSafeArea,
-    required this.searchInputHeight,
     this.onTapClear,
     required this.onChanged,
     required this.hintText,
+    required this.textEditingController,
+    required this.searchInputHeight,
+    required this.isScrolledUnder,
+    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0.0,
+      scrolledUnderElevation: 0.0,
       flexibleSpace: ScrolledUnderBuilder(builder: (context, isScrolledUnder) {
         return Container(
           color: isScrolledUnder ? context.colors.neutralSecondary : context.colors.neutralPrimary,
@@ -34,6 +40,8 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 height: searchInputHeight,
                 child: CosmosSearchBar(
+                  focusNode: focusNode,
+                  textEditingController: textEditingController,
                   onChanged: onChanged,
                   onTapClear: onTapClear,
                   invertColorsOnScroll: true,

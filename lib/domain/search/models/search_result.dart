@@ -1,8 +1,8 @@
-import 'package:cifraclub/domain/search/models/search_models/search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
 import 'package:equatable/equatable.dart';
 
 class SearchResult extends Equatable {
-  final List<Search> search;
+  final List<SearchItem> search;
 
   const SearchResult({
     required this.search,

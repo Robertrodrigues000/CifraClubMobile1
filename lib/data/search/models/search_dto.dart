@@ -1,6 +1,6 @@
 import 'package:cifraclub/domain/search/models/search_models/album_search.dart';
 import 'package:cifraclub/domain/search/models/search_models/artist_search.dart';
-import 'package:cifraclub/domain/search/models/search_models/search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
 import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:cifraclub/domain/search/models/search_models/songbook_search.dart';
 import 'package:equatable/equatable.dart';
@@ -57,7 +57,7 @@ class SearchDto extends Equatable {
 
   factory SearchDto.fromJson(Map<String, dynamic> json) => _$SearchDtoFromJson(json);
 
-  Search? toDomain() {
+  SearchItem? toDomain() {
     switch (type) {
       case "1":
         return ArtistSearch(id: artistId!, name: artist!, url: artistUrl!, imageUrl: imgm);

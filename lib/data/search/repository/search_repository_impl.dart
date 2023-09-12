@@ -1,6 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/search/data_source/search_data_source.dart';
-import 'package:cifraclub/domain/search/models/search_models/search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
 import 'package:cifraclub/domain/search/models/search_filter.dart';
 import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:cifraclub/domain/search/repository/search_repository.dart';
@@ -13,7 +13,8 @@ class SearchRepositoryImpl extends SearchRepository {
   SearchRepositoryImpl({required this.searchDataSource});
 
   @override
-  CancelableOperation<Result<List<Search>, RequestError>> getAll({required String query, SearchFilter? searchFilter}) {
+  CancelableOperation<Result<List<SearchItem>, RequestError>> getAll(
+      {required String query, SearchFilter? searchFilter}) {
     return searchDataSource
         .getAll(query: query, search: searchFilter?.searchType)
         .then((result) => result.map((data) => data.response.toDomain().search));

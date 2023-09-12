@@ -109,7 +109,7 @@ import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dar
 import 'package:cifraclub/domain/remote_config/use_cases/get_time_between_interstitials.dart' as _i91;
 import 'package:cifraclub/domain/remote_config/use_cases/get_versions_limit_constants.dart' as _i96;
 import 'package:cifraclub/domain/search/repository/search_repository.dart' as _i105;
-import 'package:cifraclub/domain/search/use_cases/search_all_use_case.dart' as _i155;
+import 'package:cifraclub/domain/search/use_cases/search.dart' as _i155;
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart' as _i106;
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart' as _i39;
 import 'package:cifraclub/domain/section/use_cases/process_sections.dart' as _i45;
@@ -516,7 +516,7 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i61.VersionRepository>(),
         gh<_i119.UpdateSongbookPreview>(),
       ));
-  gh.factory<_i155.SearchAll>(() => _i155.SearchAll(searchRepository: gh<_i105.SearchRepository>()));
+  gh.factory<_i155.Search>(() => _i155.Search(searchRepository: gh<_i105.SearchRepository>()));
   gh.factory<_i156.SortVersionsFromSongbook>(() => _i156.SortVersionsFromSongbook(
         gh<_i114.SongbookRepository>(),
         gh<_i56.UserVersionRepository>(),

@@ -20,7 +20,7 @@ class SearchEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SearchBloc(getIt())..init(),
+      create: (context) => SearchBloc(getIt(), getIt())..init(),
       child: const SearchScreen(),
     );
   }

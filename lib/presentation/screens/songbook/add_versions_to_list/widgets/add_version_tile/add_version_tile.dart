@@ -11,7 +11,7 @@ class AddVersionTile extends StatelessWidget {
   final VoidCallback onTap;
   final String? imageUrl;
   final String song;
-  final String artist;
+  final String? artist;
   final SongState state;
   final Widget? trailing;
 
@@ -20,7 +20,7 @@ class AddVersionTile extends StatelessWidget {
     required this.onTap,
     this.imageUrl,
     required this.song,
-    required this.artist,
+    this.artist,
     required this.state,
     this.trailing,
   });
@@ -79,7 +79,7 @@ class AddVersionTile extends StatelessWidget {
               child: Opacity(
                 opacity: state == SongState.added ? 0.5 : 1,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: artist != null ? MainAxisAlignment.start : MainAxisAlignment.center,
                   textBaseline: TextBaseline.ideographic,
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   mainAxisSize: MainAxisSize.max,
@@ -96,12 +96,13 @@ class AddVersionTile extends StatelessWidget {
                       const SizedBox(width: 8),
                       if (trailing != null) trailing!,
                     ]),
-                    Text(
-                      artist,
-                      style: typography.subtitle5,
-                      overflow: TextOverflow.ellipsis,
-                      textWidthBasis: TextWidthBasis.longestLine,
-                    ),
+                    if (artist != null)
+                      Text(
+                        artist!,
+                        style: typography.subtitle5,
+                        overflow: TextOverflow.ellipsis,
+                        textWidthBasis: TextWidthBasis.longestLine,
+                      ),
                   ],
                 ),
               ),

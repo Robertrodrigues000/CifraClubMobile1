@@ -1,7 +1,7 @@
-import 'package:cifraclub/domain/search/models/search_models/search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
 import 'package:equatable/equatable.dart';
 
-class SongbookSearch extends Equatable implements Search {
+class SongbookSearch extends Equatable implements SearchItem {
   final int songbookId;
   final String songbookName;
   final String userName;

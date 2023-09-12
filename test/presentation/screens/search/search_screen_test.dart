@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/search/search_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/add_version_tile.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -25,7 +26,7 @@ void main() {
   });
 
   testWidgets("When state error is not null then error description widget should be displayed", (widgetTester) async {
-    bloc.mockStream(SearchState(error: ServerError()));
+    bloc.mockStream(SearchState(error: ServerError(), shouldShowRecent: false));
 
     await widgetTester.pumpWidget(
       TestWrapper(
@@ -52,6 +53,12 @@ void main() {
         ),
       ),
     );
+    final textField = find.byType(TextField);
+    expect(textField, findsOneWidget);
+    await widgetTester.enterText(textField, "query");
+
+    when(() => bloc.search("query")).thenReturn(null);
+    await widgetTester.pumpAndSettle();
 
     expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
     expect(find.text(appTextEn.searchResultNotFoundDescription), findsOneWidget);

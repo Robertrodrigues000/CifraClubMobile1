@@ -9,13 +9,15 @@ part of 'search_state.dart';
 abstract class _$SearchStateCWProxy {
   SearchState recent(List<Version> recent);
 
-  SearchState result(List<Search> result);
+  SearchState result(List<SearchItem> result);
 
   SearchState error(RequestError? error);
 
   SearchState isLoading(bool isLoading);
 
   SearchState shouldShowRecent(bool shouldShowRecent);
+
+  SearchState selectedFilter(SearchFilter? selectedFilter);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SearchState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -25,10 +27,11 @@ abstract class _$SearchStateCWProxy {
   /// ````
   SearchState call({
     List<Version>? recent,
-    List<Search>? result,
+    List<SearchItem>? result,
     RequestError? error,
     bool? isLoading,
     bool? shouldShowRecent,
+    SearchFilter? selectedFilter,
   });
 }
 
@@ -42,7 +45,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
   SearchState recent(List<Version> recent) => this(recent: recent);
 
   @override
-  SearchState result(List<Search> result) => this(result: result);
+  SearchState result(List<SearchItem> result) => this(result: result);
 
   @override
   SearchState error(RequestError? error) => this(error: error);
@@ -52,6 +55,9 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
 
   @override
   SearchState shouldShowRecent(bool shouldShowRecent) => this(shouldShowRecent: shouldShowRecent);
+
+  @override
+  SearchState selectedFilter(SearchFilter? selectedFilter) => this(selectedFilter: selectedFilter);
 
   @override
 
@@ -67,6 +73,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
     Object? error = const $CopyWithPlaceholder(),
     Object? isLoading = const $CopyWithPlaceholder(),
     Object? shouldShowRecent = const $CopyWithPlaceholder(),
+    Object? selectedFilter = const $CopyWithPlaceholder(),
   }) {
     return SearchState(
       recent: recent == const $CopyWithPlaceholder() || recent == null
@@ -76,7 +83,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
       result: result == const $CopyWithPlaceholder() || result == null
           ? _value.result
           // ignore: cast_nullable_to_non_nullable
-          : result as List<Search>,
+          : result as List<SearchItem>,
       error: error == const $CopyWithPlaceholder()
           ? _value.error
           // ignore: cast_nullable_to_non_nullable
@@ -89,6 +96,10 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
           ? _value.shouldShowRecent
           // ignore: cast_nullable_to_non_nullable
           : shouldShowRecent as bool,
+      selectedFilter: selectedFilter == const $CopyWithPlaceholder()
+          ? _value.selectedFilter
+          // ignore: cast_nullable_to_non_nullable
+          : selectedFilter as SearchFilter?,
     );
   }
 }
