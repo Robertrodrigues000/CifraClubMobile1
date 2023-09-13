@@ -6,12 +6,12 @@ import 'package:cifraclub/domain/chord/models/note.dart';
 import 'package:equatable/equatable.dart';
 
 class ChordRepresentation extends Equatable {
+  final String name;
   final String original;
   final Neck neck;
   final Bar? bar;
   final List<Note> notes;
   final List<Finger> fingers;
-  final bool isLeftHanded;
 
   const ChordRepresentation({
     required this.original,
@@ -20,7 +20,7 @@ class ChordRepresentation extends Equatable {
     required this.fingers,
     required this.notes,
     required this.instrument,
-    this.isLeftHanded = false,
+    required this.name,
   });
 
   ChordRepresentation copyWith({String? original, Neck? neck, Bar? bar, List<Note>? notes, List<Finger>? fingers}) {
@@ -31,7 +31,7 @@ class ChordRepresentation extends Equatable {
       fingers: fingers ?? this.fingers,
       notes: notes ?? this.notes,
       instrument: instrument,
-      isLeftHanded: isLeftHanded,
+      name: name,
     );
   }
 
@@ -42,18 +42,8 @@ class ChordRepresentation extends Equatable {
       fingers: fingers,
       notes: notes,
       instrument: instrument,
+      name: name,
     );
-  }
-
-  ChordRepresentation copyWithLeftHanded(bool isLeftHanded) {
-    return ChordRepresentation(
-        original: original,
-        neck: neck,
-        fingers: fingers,
-        notes: this.isLeftHanded != isLeftHanded ? notes.reversed.toList() : notes,
-        instrument: instrument,
-        isLeftHanded: isLeftHanded,
-        bar: bar);
   }
 
   final InstrumentChordRepresentation instrument;
@@ -71,6 +61,6 @@ class ChordRepresentation extends Equatable {
   }
 
   @override
-  List<Object?> get props => [bar, fingers, notes, instrument, isLeftHanded, neck];
+  List<Object?> get props => [bar, fingers, notes, instrument, neck];
   // coverage:ignore-end
 }

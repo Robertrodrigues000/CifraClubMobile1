@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/chord/models/bar.dart';
 import 'package:cifraclub/domain/chord/models/finger.dart';
+import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
 import 'package:cifraclub/domain/chord/models/instrument_chord_representation.dart';
 import 'package:cifraclub/domain/chord/models/neck.dart';
 import 'package:cifraclub/domain/chord/models/note.dart';
@@ -12,7 +13,7 @@ void main() {
   group("When GetChordsRepresentation is called", () {
     group("when instrument is Guitar", () {
       test('Should return correct ChordRepresentation', () async {
-        final List<String> chords = ["X 0 2 2 2 0"];
+        final List<InstrumentChord> chords = [InstrumentChord(name: "A", original: "X 0 2 2 2 0")];
 
         final getChordsRepresentation = GetChordsRepresentation();
 
@@ -34,32 +35,8 @@ void main() {
         expect(chordRepresentation.instrument, isA<GuitarChordRepresentation>());
       });
 
-      test('and isLeftHanded should return correct ChordRepresentation', () async {
-        final List<String> chords = ["X 0 2 2 2 0"];
-
-        final getChordsRepresentation = GetChordsRepresentation();
-
-        final chordRepresentation =
-            getChordsRepresentation(chords: chords, instrument: Instrument.guitar, isLeftHanded: true).first;
-
-        expect(chordRepresentation.bar, null);
-        expect(chordRepresentation.notes.length, 6);
-        expect(chordRepresentation.notes, const [
-          Note(NoteState.notPicked),
-          Note(NoteState.bassNote),
-          Note(NoteState.picked),
-          Note(NoteState.picked),
-          Note(NoteState.picked),
-          Note(NoteState.picked),
-        ]);
-        expect(chordRepresentation.fingers.length, 3);
-        expect(chordRepresentation.fingers.first, const Finger(id: 1, fret: 2, string: 4));
-        expect(chordRepresentation.fingers.last, const Finger(id: 3, fret: 2, string: 2));
-        expect(chordRepresentation.instrument, isA<GuitarChordRepresentation>());
-      });
-
       test('and chord has two X, should return correct ChordRepresentation', () async {
-        final List<String> chords = ["X 1 2 1 2 X"];
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "X 1 2 1 2 X")];
 
         final getChordsRepresentation = GetChordsRepresentation();
 
@@ -87,7 +64,7 @@ void main() {
       });
 
       test('and chord has `pestana` should return correct ChordRepresentation', () async {
-        final List<String> chords = ["X 2 2 2 2 2"];
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "X 2 2 2 2 2")];
 
         final getChordsRepresentation = GetChordsRepresentation();
 
@@ -108,8 +85,7 @@ void main() {
       });
 
       test('and chord uses more than two frets should return correct ChordRepresentation', () async {
-        final List<String> chords = ["5 X 5 4 2 X"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "5 X 5 4 2 X")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.guitar).first;
@@ -134,8 +110,7 @@ void main() {
       });
 
       test('and chord has `pestana` with fingers should return correct ChordRepresentation', () async {
-        final List<String> chords = ["2 4 4 2 2 2"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "2 4 4 2 2 2")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.guitar).first;
@@ -160,8 +135,7 @@ void main() {
 
     group("when instrument is Cavaco", () {
       test('and chord has pestana Should return correct ChordRepresentation', () async {
-        final List<String> chords = ["P2 2 2 2"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "P2 2 2 2")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.cavaco).first;
@@ -180,8 +154,7 @@ void main() {
     });
 
     test('and chord has pestana with fingers should return correct ChordRepresentation', () async {
-      final List<String> chords = ["8 6 P5 5"];
-
+      final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "8 6 P5 5")];
       final getChordsRepresentation = GetChordsRepresentation();
 
       final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.cavaco).first;
@@ -202,8 +175,7 @@ void main() {
     });
 
     test('and chord uses 4 fingers should return correct ChordRepresentation', () async {
-      final List<String> chords = ["7 6 8 9"];
-
+      final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "7 6 8 9")];
       final getChordsRepresentation = GetChordsRepresentation();
 
       final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.cavaco).first;
@@ -228,8 +200,7 @@ void main() {
 
     group("when instrument is ukulele", () {
       test('should return correct ChordRepresentation', () async {
-        final List<String> chords = ["3 1 0 1"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "3 1 0 1")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.ukulele).first;
@@ -253,8 +224,7 @@ void main() {
     });
 
     test('and chord uses 2 fingers should return correct ChordRepresentation', () async {
-      final List<String> chords = ["2 4 0 0"];
-
+      final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "2 4 0 0")];
       final getChordsRepresentation = GetChordsRepresentation();
 
       final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.ukulele).first;
@@ -276,8 +246,7 @@ void main() {
     });
 
     test('and chord uses 4 fingers should return correct ChordRepresentation', () async {
-      final List<String> chords = ["3 3 2 2"];
-
+      final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "3 3 2 2")];
       final getChordsRepresentation = GetChordsRepresentation();
 
       final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.ukulele).first;
@@ -301,8 +270,7 @@ void main() {
     });
 
     test('and chord begins at a higher fret should return correct ChordRepresentation', () async {
-      final List<String> chords = ["6 5 7 5"];
-
+      final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "6 5 7 5")];
       final getChordsRepresentation = GetChordsRepresentation();
 
       final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.ukulele).first;
@@ -326,8 +294,7 @@ void main() {
     });
 
     test('and chord has no fingers should return correct ChordRepresentation', () async {
-      final List<String> chords = ["0 0 0 0"];
-
+      final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "0 0 0 0")];
       final getChordsRepresentation = GetChordsRepresentation();
 
       final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.ukulele).first;
@@ -347,8 +314,7 @@ void main() {
 
     group("when instrument is viola", () {
       test('should return correct ChordRepresentation', () async {
-        final List<String> chords = ["X 5 4 4 2"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "X 5 4 4 2")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.violaCaipira).first;
@@ -374,8 +340,7 @@ void main() {
       });
 
       test('and chord begins at higher fret should return correct ChordRepresentation', () async {
-        final List<String> chords = ["X 7 7 7 7"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "X 7 7 7 7")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.violaCaipira).first;
@@ -401,8 +366,7 @@ void main() {
       });
 
       test('and chord has pestana should return correct ChordRepresentation', () async {
-        final List<String> chords = ["4 2 2 2 2"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "4 2 2 2 2")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.violaCaipira).first;
@@ -425,8 +389,7 @@ void main() {
       });
 
       test('and chord has pestana in a higher fret should return correct ChordRepresentation', () async {
-        final List<String> chords = ["5 5 5 8 5"];
-
+        final List<InstrumentChord> chords = [InstrumentChord(name: "", original: "5 5 5 8 5")];
         final getChordsRepresentation = GetChordsRepresentation();
 
         final chordRepresentation = getChordsRepresentation(chords: chords, instrument: Instrument.violaCaipira).first;

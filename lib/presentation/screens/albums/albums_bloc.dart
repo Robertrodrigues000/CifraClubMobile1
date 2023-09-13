@@ -7,7 +7,10 @@ import 'package:typed_result/typed_result.dart';
 class AlbumsBloc extends Cubit<AlbumsState> {
   final String? artistUrl;
   final GetAlbums _getAlbums;
-  AlbumsBloc(this.artistUrl, this._getAlbums) : super(const AlbumsState());
+  AlbumsBloc(
+    this.artistUrl,
+    this._getAlbums,
+  ) : super(const AlbumsState());
 
   Future<void> init() async {
     await getAlbums();

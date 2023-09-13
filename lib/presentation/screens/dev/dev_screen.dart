@@ -5,12 +5,15 @@ import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
+import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_widget.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
@@ -46,6 +49,7 @@ class _DevScreenState extends State<DevScreen> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<DevScreenBloc>(context);
+    _bloc.getChordsRepresentation();
   }
 
   @override
@@ -184,8 +188,32 @@ class _DevScreenState extends State<DevScreen> {
                     color: context.colors.textPrimary,
                   ),
                   title: const Text("Chord Representation"),
-                  onTap: () {
-                    _bloc.getChordsRepresentation();
+                  onTap: () async {
+                    if (context.mounted && state.chordRepresentation != null) {
+                      DefaultBottomSheet.showBottomSheet(
+                        heightMaxFactor: 0.5,
+                        context: context,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: LayoutBuilder(builder: (context, constraints) {
+                            var maxWidth = MediaQuery.of(context).size.width;
+                            final chordSettings =
+                                ChordUISettings.guitar().scaledToFit(width: maxWidth, height: constraints.maxHeight);
+                            return CustomScrollView(scrollDirection: Axis.horizontal, shrinkWrap: true, slivers: [
+                              SliverList(
+                                  delegate: SliverChildBuilderDelegate(childCount: state.chordRepresentation!.length,
+                                      (context, index) {
+                                return ChordWidget(
+                                  chordRepresentation: state.chordRepresentation![index],
+                                  chordUiSettings: chordSettings,
+                                  isLeftHanded: false,
+                                );
+                              })),
+                            ]);
+                          }),
+                        ),
+                      );
+                    }
                   },
                 ),
                 ListTile(

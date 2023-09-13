@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/chord/models/bar.dart';
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/chord/models/finger.dart';
+import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
 import 'package:cifraclub/domain/chord/models/neck.dart';
 import 'package:cifraclub/domain/chord/models/note.dart';
 import 'package:cifraclub/domain/chord/models/note_state.dart';
@@ -10,8 +11,8 @@ abstract class InstrumentChordRepresentation {
 
   InstrumentChordRepresentation({required this.numStrings});
 
-  ChordRepresentation buildChord({required String original, required bool isLeftHanded}) {
-    var mount = original.split(" ").sublist(0, numStrings);
+  ChordRepresentation buildChord({required InstrumentChord instrumentChord}) {
+    var mount = instrumentChord.original.split(" ").sublist(0, numStrings);
 
     var lowestFret = 100; // armazena menor casa pressionada (sem corda solta)
     var highestFret = 0; // armazena maior casa pressionada
@@ -126,13 +127,13 @@ abstract class InstrumentChordRepresentation {
     }
 
     return ChordRepresentation(
-      original: original,
+      original: instrumentChord.original,
       neck: neck,
-      notes: isLeftHanded ? notes.reversed.toList() : notes,
+      notes: notes,
       fingers: fingers,
       bar: bar,
       instrument: this,
-      isLeftHanded: isLeftHanded,
+      name: instrumentChord.name,
     );
   }
 }

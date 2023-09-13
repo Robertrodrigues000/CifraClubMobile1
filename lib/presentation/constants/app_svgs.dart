@@ -64,4 +64,12 @@ class AppSvgs {
   static const saveVersionIcon = "assets/images/save_version_icon.svg";
   static const correctVersionIcon = "assets/images/correct_version_icon.svg";
   static const favoriteVersionIcon = "assets/images/favorite_version_icon.svg";
+
+  static const bassStringIcon = "assets/images/bass_string.svg";
+  static const chordBaseSmallNoNutIcon = "assets/images/chord_base_small_no_nut.svg";
+  static const chordBaseSmallNutIcon = "assets/images/chord_base_small_nut.svg";
+  static const pickedStringIcon = "assets/images/picked_string.svg";
+  static const unpickedStringIcon = "assets/images/unpicked_string.svg";
+  static const baseBody = "assets/images/base_body.svg";
+  static const baseHead = "assets/images/base_head_130.svg";
 }

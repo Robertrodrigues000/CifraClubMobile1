@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
+import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
 import 'package:cifraclub/domain/chord/models/instrument_chord_representation.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:injectable/injectable.dart';
@@ -8,9 +9,8 @@ class GetChordsRepresentation {
   GetChordsRepresentation();
 
   List<ChordRepresentation> call({
-    required List<String> chords,
+    required List<InstrumentChord> chords,
     required Instrument instrument,
-    bool isLeftHanded = false,
   }) {
     final chordsRepresentation = <ChordRepresentation>[];
     InstrumentChordRepresentation instrumentChordRepresentations = GuitarChordRepresentation();
@@ -25,7 +25,7 @@ class GetChordsRepresentation {
         instrumentChordRepresentations = GuitarChordRepresentation();
     }
     for (var chord in chords) {
-      chordsRepresentation.add(instrumentChordRepresentations.buildChord(original: chord, isLeftHanded: isLeftHanded));
+      chordsRepresentation.add(instrumentChordRepresentations.buildChord(instrumentChord: chord));
     }
     return chordsRepresentation;
   }

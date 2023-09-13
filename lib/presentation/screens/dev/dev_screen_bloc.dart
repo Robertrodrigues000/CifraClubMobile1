@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
 import 'package:cifraclub/domain/chord/user_cases/get_chords_representation.dart';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
@@ -98,19 +99,23 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
   Future<void> getChordsRepresentation() async {
     final versionDataResult = await _getVersionData(
-      artistUrl: "john-mayer",
-      songUrl: "stop-this-train",
+      artistUrl: "joao-bosco",
+      songUrl: "o-bebado-a-equilibrista",
       instrumentUrl: Instrument.guitar.instrumentUrl,
       versionUrl: "principal",
     );
     if (versionDataResult.isSuccess) {
       final versionData = versionDataResult.get();
       final chordRepresentation = _getChordsRepresentation(
-          chords: [versionData?.chords?.where((e) => e.chord.contains("Gm7M")).first.guitar?.first ?? ""],
-          instrument: Instrument.guitar);
-
+        chords:
+            versionData?.chords?.map((e) => InstrumentChord(name: e.chord, original: e.guitar?.first ?? "")).toList() ??
+                [],
+        instrument: Instrument.guitar,
+      );
       // ignore: avoid_print
-      print(chordRepresentation.toString());
+      print(chordRepresentation.first);
+
+      emit(DevScreenState(isLoading: false, chordRepresentation: chordRepresentation));
     }
   }
 
