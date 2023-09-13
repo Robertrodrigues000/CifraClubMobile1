@@ -22,6 +22,7 @@ void main() {
       songId: 2,
       artist: versionArtistDto,
       versionId: 10,
+      lastUpdate: "2023-05-09 10:26:58",
     );
 
     final version = songbookVersionDto.toDomain(10);
@@ -33,6 +34,7 @@ void main() {
     expect(songbookVersionDto.key, version.key);
     expect(songbookVersionDto.songId, version.songId);
     expect(songbookVersionDto.versionId, version.versionId);
+    expect(DateTime(2023, 5, 9, 10, 26, 58), version.lastUpdate);
     expect(artist, version.artist);
     expect(version.order, 10);
   });

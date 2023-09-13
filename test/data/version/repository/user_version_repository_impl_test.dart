@@ -86,9 +86,9 @@ void main() {
     });
   });
 
-  test("When `addVersionsToSongbook` is called should return ids of versions deleted", () async {
+  test("When `putVersionsToSongbook` is called should return ids of added versions", () async {
     final versions = [getFakeVersion(), getFakeVersion()];
-    final versionsIds = versions.map((e) => e.remoteDatabaseId!).toList();
+    final versionsIds = versions.map((e) => e.localDatabaseId!).toList();
 
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(() => userVersionDataSource.putVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));
@@ -96,10 +96,30 @@ void main() {
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
-    final deletedIds = await userVersionRepository.putVersionsToSongbook(versions, 1);
-    final domainVersions = versions.map((e) => UserVersionDto.fromDomain(e, 1)).toList();
+    final deletedIds = await userVersionRepository.putVersionsToSongbook(versions, 10);
+    final domainVersions = versions.map((e) => UserVersionDto.fromDomain(e, 10)).toList();
 
     verify(() => userVersionDataSource.putVersionsToSongbook(domainVersions)).called(1);
+    expect(deletedIds, versionsIds);
+  });
+
+  test("When `putVersionsToSongbook` is called to add versions to recents, should return ids of added versions",
+      () async {
+    final versions = [getFakeVersion(), getFakeVersion()];
+    final versionsIds = versions.map((e) => e.localDatabaseId!).toList();
+
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.putVersionsToSongbook(any())).thenAnswer((_) => SynchronousFuture(versionsIds));
+    when(() => userVersionDataSource.getTotalSongbookVersions(any())).thenAnswer((_) => BehaviorSubject.seeded(0));
+    when(() => userVersionDataSource.putVersionsToRecentSongbook(any()))
+        .thenAnswer((_) => SynchronousFuture(versionsIds));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    final deletedIds = await userVersionRepository.putVersionsToSongbook(versions, 1);
+    final domainVersions = versions.map(UserRecentVersionDto.fromDomain).toList();
+
+    verify(() => userVersionDataSource.putVersionsToRecentSongbook(domainVersions)).called(1);
     expect(deletedIds, versionsIds);
   });
 
@@ -113,7 +133,7 @@ void main() {
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
-    final deletedIds = await userVersionRepository.addVersionsToRecentSongbook(versions);
+    final deletedIds = await userVersionRepository.putVersionsToRecentSongbook(versions);
     final domainVersions = versions.map(UserRecentVersionDto.fromDomain).toList();
 
     verify(() => userVersionDataSource.putVersionsToRecentSongbook(domainVersions)).called(1);
@@ -241,5 +261,42 @@ void main() {
         await userVersionRepository.addVersionData(versionData: versionData, versionLocalDatabaseId: 1, songbookId: 2);
 
     expect(addedId, 1);
+  });
+
+  test("when getLocalDatabaseIdFromSongIdInRecentSongbook is called, the datasource method should be called", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+
+    when(() => userVersionDataSource.getLocalDatabaseIdFromSongIdInRecentSongbook(any()))
+        .thenAnswer((_) => SynchronousFuture(42));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    var localDatabaseId = await userVersionRepository.getLocalDatabaseIdFromSongIdInRecentSongbook(10);
+    expect(localDatabaseId, 42);
+    verify(() => userVersionDataSource.getLocalDatabaseIdFromSongIdInRecentSongbook(10)).called(1);
+  });
+
+  test("when getTotalRecentVersions is called, the datasource method should be called", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+
+    when(userVersionDataSource.getTotalRecentVersions).thenAnswer((_) => SynchronousFuture(42));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    var recentCount = await userVersionRepository.getTotalRecentVersions();
+    expect(recentCount, 42);
+    verify(userVersionDataSource.getTotalRecentVersions).called(1);
+  });
+
+  test("when deleteOldestRecentVersion is called, the datasource method should be called", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+
+    when(userVersionDataSource.deleteOldestRecentVersion).thenAnswer((_) => SynchronousFuture(true));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    var wasRecentDeleted = await userVersionRepository.deleteOldestRecentVersion();
+    expect(wasRecentDeleted, true);
+    verify(userVersionDataSource.deleteOldestRecentVersion).called(1);
   });
 }

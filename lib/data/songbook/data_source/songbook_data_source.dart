@@ -5,7 +5,6 @@ import 'package:cifraclub/data/songbook/models/new_songbook_response_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_input_dto.dart';
-import 'package:cifraclub/data/songbook/models/songbook_versions_input_dto.dart';
 import 'package:cifraclub/data/songbook/models/songbook_version_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
@@ -68,18 +67,6 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  Future<Result<List<SongbookVersionDto>, RequestError>> addVersionsToSongbook(
-      int songbookId, SongbookVersionsInputDto songbookSongsInputDto) {
-    var request = NetworkRequest(
-      type: NetworkRequestType.post,
-      path: "/v3/songbook/$songbookId/songs",
-      data: songbookSongsInputDto.toJson(),
-      parser: (data) =>
-          (data as List<dynamic>).map((e) => SongbookVersionDto.fromJson(e as Map<String, dynamic>)).toList(),
-    );
-    return _networkService.execute(request: request);
-  }
-
   Future<Result<void, RequestError>> sortVersions(
     int songbookId,
     VersionsIdsInputDto orderedVersionInput,
@@ -93,7 +80,7 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  Future<Result<SongbookVersionDto, RequestError>> addVersionToSongbook(
+  Future<Result<SongbookVersionDto?, RequestError>> addVersionToSongbook(
     int songbookId,
     SongbookVersionInputDto songbookSongInputDto,
   ) {
@@ -102,7 +89,10 @@ class SongbookDataSource {
       path: _getRequestPath(songbookId),
       data: songbookSongInputDto.toJson(),
       parser: (data) {
-        return SongbookVersionDto.fromJson(data);
+        if (data is Map<String, dynamic>) {
+          return SongbookVersionDto.fromJson(data);
+        }
+        return null;
       },
     );
     return _networkService.execute(request: request);
@@ -115,6 +105,7 @@ class SongbookDataSource {
       ListType.favorites => "/v3/user/favorite-song",
       ListType.canPlay => "/v3/user/${listType.label}-play",
       ListType.cantPlay => "/v3/user/${listType.label}-play",
+      ListType.recents => "/v3/user/song-view",
       _ => "/v3/songbook/$songbookId/song",
     };
   }

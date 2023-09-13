@@ -31,6 +31,8 @@ abstract class _$UserRecentVersionDtoCWProxy {
 
   UserRecentVersionDto versionId(int versionId);
 
+  UserRecentVersionDto lastUpdate(DateTime lastUpdate);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserRecentVersionDto(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -50,6 +52,7 @@ abstract class _$UserRecentVersionDtoCWProxy {
     UserVersionArtistDto? artist,
     String? artistImage,
     int? versionId,
+    DateTime? lastUpdate,
   });
 }
 
@@ -96,6 +99,9 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
   UserRecentVersionDto versionId(int versionId) => this(versionId: versionId);
 
   @override
+  UserRecentVersionDto lastUpdate(DateTime lastUpdate) => this(lastUpdate: lastUpdate);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `UserRecentVersionDto(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -116,6 +122,7 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
     Object? artist = const $CopyWithPlaceholder(),
     Object? artistImage = const $CopyWithPlaceholder(),
     Object? versionId = const $CopyWithPlaceholder(),
+    Object? lastUpdate = const $CopyWithPlaceholder(),
   }) {
     return UserRecentVersionDto(
       localDatabaseId: localDatabaseId == const $CopyWithPlaceholder() || localDatabaseId == null
@@ -166,6 +173,10 @@ class _$UserRecentVersionDtoCWProxyImpl implements _$UserRecentVersionDtoCWProxy
           ? _value.versionId
           // ignore: cast_nullable_to_non_nullable
           : versionId as int,
+      lastUpdate: lastUpdate == const $CopyWithPlaceholder() || lastUpdate == null
+          ? _value.lastUpdate
+          // ignore: cast_nullable_to_non_nullable
+          : lastUpdate as DateTime,
     );
   }
 }
@@ -218,33 +229,38 @@ const UserRecentVersionDtoSchema = CollectionSchema(
       name: r'key',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(
+    r'lastUpdate': PropertySchema(
       id: 5,
+      name: r'lastUpdate',
+      type: IsarType.dateTime,
+    ),
+    r'name': PropertySchema(
+      id: 6,
       name: r'name',
       type: IsarType.string,
     ),
     r'songId': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'songId',
       type: IsarType.long,
     ),
     r'songUrl': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'songUrl',
       type: IsarType.string,
     ),
     r'stdKey': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'stdKey',
       type: IsarType.string,
     ),
     r'tuning': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'tuning',
       type: IsarType.string,
     ),
     r'versionId': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'versionId',
       type: IsarType.long,
     )
@@ -278,6 +294,19 @@ const UserRecentVersionDtoSchema = CollectionSchema(
           name: r'artistImage',
           type: IndexType.hash,
           caseSensitive: true,
+        )
+      ],
+    ),
+    r'lastUpdate': IndexSchema(
+      id: -2443505817451631414,
+      name: r'lastUpdate',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'lastUpdate',
+          type: IndexType.value,
+          caseSensitive: false,
         )
       ],
     )
@@ -343,12 +372,13 @@ void _userRecentVersionDtoSerialize(
   writer.writeLong(offsets[2], object.capo);
   writer.writeByte(offsets[3], object.instrument.index);
   writer.writeString(offsets[4], object.key);
-  writer.writeString(offsets[5], object.name);
-  writer.writeLong(offsets[6], object.songId);
-  writer.writeString(offsets[7], object.songUrl);
-  writer.writeString(offsets[8], object.stdKey);
-  writer.writeString(offsets[9], object.tuning);
-  writer.writeLong(offsets[10], object.versionId);
+  writer.writeDateTime(offsets[5], object.lastUpdate);
+  writer.writeString(offsets[6], object.name);
+  writer.writeLong(offsets[7], object.songId);
+  writer.writeString(offsets[8], object.songUrl);
+  writer.writeString(offsets[9], object.stdKey);
+  writer.writeString(offsets[10], object.tuning);
+  writer.writeLong(offsets[11], object.versionId);
 }
 
 UserRecentVersionDto _userRecentVersionDtoDeserialize(
@@ -368,13 +398,14 @@ UserRecentVersionDto _userRecentVersionDtoDeserialize(
     capo: reader.readLongOrNull(offsets[2]),
     instrument: _UserRecentVersionDtoinstrumentValueEnumMap[reader.readByteOrNull(offsets[3])] ?? Instrument.guitar,
     key: reader.readStringOrNull(offsets[4]),
+    lastUpdate: reader.readDateTime(offsets[5]),
     localDatabaseId: id,
-    name: reader.readString(offsets[5]),
-    songId: reader.readLong(offsets[6]),
-    songUrl: reader.readString(offsets[7]),
-    stdKey: reader.readStringOrNull(offsets[8]),
-    tuning: reader.readStringOrNull(offsets[9]),
-    versionId: reader.readLong(offsets[10]),
+    name: reader.readString(offsets[6]),
+    songId: reader.readLong(offsets[7]),
+    songUrl: reader.readString(offsets[8]),
+    stdKey: reader.readStringOrNull(offsets[9]),
+    tuning: reader.readStringOrNull(offsets[10]),
+    versionId: reader.readLong(offsets[11]),
   );
   return object;
 }
@@ -402,16 +433,18 @@ P _userRecentVersionDtoDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
-    case 7:
       return (reader.readString(offset)) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
     case 8:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 9:
       return (reader.readStringOrNull(offset)) as P;
     case 10:
+      return (reader.readStringOrNull(offset)) as P;
+    case 11:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -462,6 +495,14 @@ extension UserRecentVersionDtoQueryWhereSort on QueryBuilder<UserRecentVersionDt
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'songId'),
+      );
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhere> anyLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'lastUpdate'),
       );
     });
   }
@@ -686,6 +727,95 @@ extension UserRecentVersionDtoQueryWhere on QueryBuilder<UserRecentVersionDto, U
               includeUpper: false,
             ));
       }
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> lastUpdateEqualTo(DateTime lastUpdate) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'lastUpdate',
+        value: [lastUpdate],
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> lastUpdateNotEqualTo(
+      DateTime lastUpdate) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'lastUpdate',
+              lower: [],
+              upper: [lastUpdate],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'lastUpdate',
+              lower: [lastUpdate],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'lastUpdate',
+              lower: [lastUpdate],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'lastUpdate',
+              lower: [],
+              upper: [lastUpdate],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> lastUpdateGreaterThan(
+    DateTime lastUpdate, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'lastUpdate',
+        lower: [lastUpdate],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> lastUpdateLessThan(
+    DateTime lastUpdate, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'lastUpdate',
+        lower: [],
+        upper: [lastUpdate],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterWhereClause> lastUpdateBetween(
+    DateTime lowerLastUpdate,
+    DateTime upperLastUpdate, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'lastUpdate',
+        lower: [lowerLastUpdate],
+        includeLower: includeLower,
+        upper: [upperLastUpdate],
+        includeUpper: includeUpper,
+      ));
     });
   }
 }
@@ -1096,6 +1226,58 @@ extension UserRecentVersionDtoQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'key',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> lastUpdateEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastUpdate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> lastUpdateGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastUpdate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> lastUpdateLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastUpdate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterFilterCondition> lastUpdateBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastUpdate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -1863,6 +2045,18 @@ extension UserRecentVersionDtoQuerySortBy on QueryBuilder<UserRecentVersionDto, 
     });
   }
 
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByLastUpdateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -1985,6 +2179,18 @@ extension UserRecentVersionDtoQuerySortThenBy on QueryBuilder<UserRecentVersionD
     });
   }
 
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLastUpdateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdate', Sort.desc);
+    });
+  }
+
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QAfterSortBy> thenByLocalDatabaseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'localDatabaseId', Sort.asc);
@@ -2097,6 +2303,12 @@ extension UserRecentVersionDtoQueryWhereDistinct
     });
   }
 
+  QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByLastUpdate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastUpdate');
+    });
+  }
+
   QueryBuilder<UserRecentVersionDto, UserRecentVersionDto, QDistinct> distinctByName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
@@ -2169,6 +2381,12 @@ extension UserRecentVersionDtoQueryProperty
   QueryBuilder<UserRecentVersionDto, String?, QQueryOperations> keyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'key');
+    });
+  }
+
+  QueryBuilder<UserRecentVersionDto, DateTime, QQueryOperations> lastUpdateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastUpdate');
     });
   }
 

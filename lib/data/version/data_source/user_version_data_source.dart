@@ -27,6 +27,10 @@ class UserVersionDataSource {
     );
   }
 
+  Future<int?> getLocalDatabaseIdFromSongIdInRecentSongbook(int songId) {
+    return _isar.userRecentVersionDtos.where().songIdEqualTo(songId).localDatabaseIdProperty().findFirst();
+  }
+
   Future<void> clearAllVersions() {
     return _isar.writeTxn(
       () async {
@@ -57,6 +61,10 @@ class UserVersionDataSource {
             .map((e) => e.length);
       },
     );
+  }
+
+  Future<int> getTotalRecentVersions() {
+    return _isar.userRecentVersionDtos.count();
   }
 
   Future<List<String?>> getImagesPreview(int songbookId) async {
@@ -95,6 +103,17 @@ class UserVersionDataSource {
           .where()
           .anyOf(localDatabaseIds, (q, id) => q.versionLocalDatabaseIdSongbookIdEqualTo(id, songbookId))
           .deleteAll();
+    });
+  }
+
+  Future<bool> deleteOldestRecentVersion() async {
+    // Tivemos que deletar pelo id porque o método [deleteFirst] do isar está bugado e deleta duas entidades de uma vez em vez de uma só.
+    return _isar.writeTxn(() async {
+      var versionToDelete = await _isar.userRecentVersionDtos.where().sortByLastUpdate().findFirst();
+      if (versionToDelete?.localDatabaseId == null) {
+        return false;
+      }
+      return _isar.userRecentVersionDtos.delete(versionToDelete!.localDatabaseId);
     });
   }
 

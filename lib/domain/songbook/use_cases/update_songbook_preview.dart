@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -9,8 +10,11 @@ class UpdateSongbookPreview {
 
   UpdateSongbookPreview(this._userVersionRepository, this._userSongbookRepository);
 
-  Future<int?> call(int songbookId) async {
+  Future<void> call(int songbookId) async {
+    if (ListType.getListTypeById(songbookId) != ListType.user) {
+      return;
+    }
     final images = await _userVersionRepository.getImagesPreview(songbookId);
-    return _userSongbookRepository.updateSongbookPreview(songbookId, images);
+    await _userSongbookRepository.updateSongbookPreview(songbookId, images);
   }
 }

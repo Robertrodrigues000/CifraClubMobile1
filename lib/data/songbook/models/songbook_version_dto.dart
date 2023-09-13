@@ -23,6 +23,7 @@ class SongbookVersionDto extends Equatable {
   final int? capo;
   final String? tuning;
   final SongbookVersionArtistDto artist;
+  final String lastUpdate;
 
   const SongbookVersionDto({
     this.remoteDatabaseId,
@@ -36,25 +37,26 @@ class SongbookVersionDto extends Equatable {
     this.tuning,
     required this.artist,
     required this.versionId,
+    required this.lastUpdate,
   });
 
   factory SongbookVersionDto.fromJson(Map<String, dynamic> json) => _$SongbookVersionDtoFromJson(json);
 
   Version toDomain([int? order]) {
     return Version(
-      remoteDatabaseId: remoteDatabaseId,
-      songId: songId,
-      instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
-      name: name,
-      songUrl: songUrl,
-      key: key,
-      stdKey: stdKey,
-      capo: capo,
-      tuning: tuning,
-      artist: artist.toDomain(),
-      versionId: versionId,
-      order: order ?? -1,
-    );
+        remoteDatabaseId: remoteDatabaseId,
+        songId: songId,
+        instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
+        name: name,
+        songUrl: songUrl,
+        key: key,
+        stdKey: stdKey,
+        capo: capo,
+        tuning: tuning,
+        artist: artist.toDomain(),
+        versionId: versionId,
+        order: order ?? -1,
+        lastUpdate: DateTime.tryParse(lastUpdate));
   }
 
   @override

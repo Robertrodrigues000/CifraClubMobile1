@@ -77,34 +77,25 @@ class _UserCardState extends State<UserCard> with SingleTickerProviderStateMixin
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(width: context.appDimensionScheme.screenMargin),
-              RemoteImage(
-                imageUrl: widget.user?.avatarUrl,
-                // coverage:ignore-start
-                imageBuilder: (image, imageProvider) => Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: imageProvider,
+              if ((widget.user?.avatarUrl ?? "").isEmpty)
+                const _UserCardPlaceholder()
+              else
+                RemoteImage(
+                  imageUrl: widget.user?.avatarUrl,
+                  // coverage:ignore-start
+                  imageBuilder: (image, imageProvider) => Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                      ),
                     ),
                   ),
+                  // coverage:ignore-end
+                  placeholder: const _UserCardPlaceholder(),
                 ),
-                // coverage:ignore-end
-                placeholder: Container(
-                  clipBehavior: Clip.hardEdge,
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: context.colors.neutralTertiary,
-                  ),
-                  child: SvgPicture.asset(
-                    AppSvgs.artistsAvatarPlaceHolder,
-                    color: context.colors.neutralQuaternary,
-                  ),
-                ),
-              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -169,6 +160,27 @@ class _UserCardState extends State<UserCard> with SingleTickerProviderStateMixin
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _UserCardPlaceholder extends StatelessWidget {
+  const _UserCardPlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: context.colors.neutralTertiary,
+      ),
+      child: SvgPicture.asset(
+        AppSvgs.artistsAvatarPlaceHolder,
+        color: context.colors.neutralQuaternary,
       ),
     );
   }

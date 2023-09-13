@@ -19,7 +19,7 @@ void main() {
 
     verify(highlightDto.toDomain).called(1);
 
-    expect(highlights.length, 1);
-    expect(highlights.first, highlight);
+    expect(highlights?.length, 1);
+    expect(highlights?.first, highlight);
   });
 }

@@ -34,7 +34,7 @@ void main() {
           songbookId: 100,
           versionsId: any(named: "versionsId"),
         )).thenAnswer((_) => SynchronousFuture(const Ok(null)));
-    when(() => updateSongbookPreview(100)).thenAnswer((invocation) => SynchronousFuture(100));
+    when(() => updateSongbookPreview(100)).thenAnswer((invocation) => SynchronousFuture(null));
 
     final result =
         await ClearVersionsFromSongbook(songbookRepository, userVersionRepository, updateSongbookPreview)(100);

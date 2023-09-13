@@ -1,29 +1,16 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
-import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
-import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
-import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
-import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart';
-import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
+import 'package:cifraclub/domain/songbook/use_cases/insert_version_data_to_songbook.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';
 
 @injectable
 class InsertVersionToSongbook {
-  final SongbookRepository _songbookRepository;
-  final UserSongbookRepository _userSongbookRepository;
-  final UserVersionRepository _userVersionRepository;
   final GetVersionData _getVersionData;
-  final UpdateSongbookPreview _updateSongbookPreview;
+  final InsertVersionDataToSongbook _insertVersionDataToSongbook;
 
-  InsertVersionToSongbook(
-    this._songbookRepository,
-    this._userVersionRepository,
-    this._getVersionData,
-    this._userSongbookRepository,
-    this._updateSongbookPreview,
-  );
+  InsertVersionToSongbook(this._getVersionData, this._insertVersionDataToSongbook);
 
   Future<Result<int, RequestError>> call({
     required int songbookId,
@@ -43,35 +30,6 @@ class InsertVersionToSongbook {
       return Err(versionData.getError()!);
     }
 
-    final versionInput = SongbookVersionInput(
-      versionId: versionData.get()!.versionId,
-      type: versionData.get()!.instrument.apiType,
-    );
-
-    final addResult = await _songbookRepository.addVersionToSongbook(
-      songbookId: songbookId,
-      versionInput: versionInput,
-    );
-
-    if (addResult.isSuccess) {
-      final version = addResult.get()!;
-
-      await _userVersionRepository.putVersionsToSongbook([version], songbookId).then((value) async {
-        await _userVersionRepository.addVersionData(
-          versionData: versionData.get()!,
-          versionLocalDatabaseId: value.first,
-          songbookId: songbookId,
-        );
-      });
-
-      await Future.wait([
-        _userSongbookRepository.updateTotalSongs(songbookId: songbookId),
-        _updateSongbookPreview(songbookId),
-      ]);
-
-      return Ok(version.songId);
-    } else {
-      return Err(addResult.getError()!);
-    }
+    return _insertVersionDataToSongbook(versionData: versionData.get()!, songbookId: songbookId);
   }
 }

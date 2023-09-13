@@ -26,6 +26,8 @@ class UserRecentVersionDto extends Equatable {
   final UserVersionArtistDto artist;
   @Index()
   final String? artistImage;
+  @Index()
+  final DateTime lastUpdate;
 
   UserRecentVersionDto({
     required this.localDatabaseId,
@@ -40,10 +42,12 @@ class UserRecentVersionDto extends Equatable {
     required this.artist,
     String? artistImage,
     required this.versionId,
+    required this.lastUpdate,
   }) : artistImage = (artistImage ?? "").isNotEmpty ? artistImage : null;
 
   Version toDomain() => Version(
         localDatabaseId: localDatabaseId,
+        lastUpdate: lastUpdate,
         songId: songId,
         instrument: instrument,
         name: name,
@@ -71,6 +75,7 @@ class UserRecentVersionDto extends Equatable {
           artist: UserVersionArtistDto.fromDomain(version.artist),
           artistImage: (version.artist.image?.size162 ?? "").isNotEmpty ? version.artist.image?.size162 : null,
           versionId: version.versionId,
+          lastUpdate: version.lastUpdate ?? DateTime.now(),
         );
 
   @ignore

@@ -1,10 +1,8 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
-import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
-import 'package:cifraclub/domain/songbook/repository/user_songbook_repository.dart';
+import 'package:cifraclub/domain/songbook/use_cases/insert_version_data_to_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
-import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart';
-import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,83 +13,50 @@ import '../../../shared_mocks/domain/songbook/models/songbook_version_input_mock
 import '../../../shared_mocks/domain/version/models/version_data_mock.dart';
 import '../../../shared_mocks/domain/version/models/version_mock.dart';
 
-class _SongbookRepositoryMock extends Mock implements SongbookRepository {}
-
-class _UserVersionRepositoryMock extends Mock implements UserVersionRepository {}
-
-class _UserSongbookRepositoryMock extends Mock implements UserSongbookRepository {}
+class _InsertVersionDataToSongbookMock extends Mock implements InsertVersionDataToSongbook {}
 
 class _GetVersionDataMock extends Mock implements GetVersionData {}
 
-class _UpdateSongbookPreviewMock extends Mock implements UpdateSongbookPreview {}
-
 void main() {
-  final songbookRepository = _SongbookRepositoryMock();
-  final userVersionRepository = _UserVersionRepositoryMock();
+  final insertVersionDataToSongbook = _InsertVersionDataToSongbookMock();
   final getVersionData = _GetVersionDataMock();
-  final userSongbookRepository = _UserSongbookRepositoryMock();
-  final updateSongbookPreview = _UpdateSongbookPreviewMock();
 
   setUpAll(() {
-    registerFallbackValue(getFakeSongbookVersionInput());
     registerFallbackValue(ListType.canPlay);
   });
 
   group("When all requests is successful", () {
     registerFallbackValue(getFakeVersionData());
-    final version = getFakeVersion();
-    final versionInput = getFakeSongbookVersionInput();
-    final versionResponse = getFakeVersion();
     final versionData = getFakeVersionData();
+    final version = getFakeVersion();
 
-    when(() => userVersionRepository.putVersionsToSongbook(any(), any()))
-        .thenAnswer((_) => Future.value([version.localDatabaseId!]));
+    when(() => insertVersionDataToSongbook(
+          versionData: any(named: "versionData"),
+          songbookId: any(named: "songbookId"),
+        )).thenAnswer((invocation) => SynchronousFuture(
+          Ok((invocation.namedArguments[const Symbol("versionData")]! as VersionData).song.songId),
+        ));
 
     when(() => getVersionData(
           artistUrl: any(named: "artistUrl"),
           songUrl: any(named: "songUrl"),
         )).thenAnswer((_) => Future.value(Ok(versionData)));
 
-    when(() => userVersionRepository.addVersionData(
-          versionData: any(named: "versionData"),
-          versionLocalDatabaseId: any(named: "versionLocalDatabaseId"),
-          songbookId: any(named: "songbookId"),
-        )).thenAnswer((_) => Future.value(versionData.versionId));
-
-    when(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")))
-        .thenAnswer((_) => Future.value(1));
-
-    when(() => updateSongbookPreview(10)).thenAnswer((_) => Future.value(2));
-
     test("should return success", () async {
-      when(() => songbookRepository.addVersionToSongbook(
-          songbookId: any(named: "songbookId"),
-          versionInput: any(named: "versionInput"))).thenAnswer((_) => SynchronousFuture(Ok(versionResponse)));
-
       final result = await InsertVersionToSongbook(
-        songbookRepository,
-        userVersionRepository,
         getVersionData,
-        userSongbookRepository,
-        updateSongbookPreview,
+        insertVersionDataToSongbook,
       )(
-        artistUrl: versionInput.artistUrl!,
-        songUrl: versionInput.songUrl!,
+        artistUrl: version.artist.url,
+        songUrl: version.songUrl,
         songbookId: 10,
       );
 
       verify(() => getVersionData(
-            artistUrl: versionInput.artistUrl!,
-            songUrl: versionInput.songUrl!,
+            artistUrl: version.artist.url,
+            songUrl: version.songUrl,
           )).called(1);
-      verify(() => songbookRepository.addVersionToSongbook(versionInput: any(named: "versionInput"), songbookId: 10))
-          .called(1);
-      verify(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId"))).called(1);
-      verify(() => userVersionRepository.putVersionsToSongbook([versionResponse], 10)).called(1);
-      verify(() => userVersionRepository.addVersionData(
-          versionData: versionData, versionLocalDatabaseId: version.localDatabaseId!, songbookId: 10)).called(1);
-      verify(() => updateSongbookPreview(10)).called(1);
-      expect(result.get(), versionResponse.songId);
+      expect(result.get(), versionData.song.songId);
     });
   });
 
@@ -104,11 +69,8 @@ void main() {
         )).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
     final result = await InsertVersionToSongbook(
-      songbookRepository,
-      userVersionRepository,
       getVersionData,
-      userSongbookRepository,
-      updateSongbookPreview,
+      insertVersionDataToSongbook,
     )(
       artistUrl: versionInput.artistUrl!,
       songUrl: versionInput.songUrl!,
@@ -132,16 +94,14 @@ void main() {
           songUrl: any(named: "songUrl"),
         )).thenAnswer((_) => Future.value(Ok(versionData)));
 
-    when(() => songbookRepository.addVersionToSongbook(
-        songbookId: any(named: "songbookId"),
-        versionInput: any(named: "versionInput"))).thenAnswer((_) => Future.value(Err(ServerError(statusCode: 404))));
+    when(() => insertVersionDataToSongbook(
+          versionData: any(named: "versionData"),
+          songbookId: any(named: "songbookId"),
+        )).thenAnswer((invocation) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
     final result = await InsertVersionToSongbook(
-      songbookRepository,
-      userVersionRepository,
       getVersionData,
-      userSongbookRepository,
-      updateSongbookPreview,
+      insertVersionDataToSongbook,
     )(
       artistUrl: versionInput.artistUrl!,
       songUrl: versionInput.songUrl!,
@@ -152,7 +112,6 @@ void main() {
           artistUrl: versionInput.artistUrl!,
           songUrl: versionInput.songUrl!,
         )).called(1);
-    verifyNever(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")));
     expect(result.isFailure, isTrue);
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
   });

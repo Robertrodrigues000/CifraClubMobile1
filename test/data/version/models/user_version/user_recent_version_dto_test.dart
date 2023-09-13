@@ -9,19 +9,19 @@ import '../../../../shared_mocks/domain/artist/models/artist_mock.dart';
 void main() {
   test("When `toDomain` is called should convert correctly to Version", () {
     final userVersionDto = UserRecentVersionDto(
-      localDatabaseId: 10,
-      songUrl: "test",
-      instrument: Instrument.bass,
-      name: "name",
-      songId: 3,
-      capo: 1,
-      stdKey: "t",
-      key: "s",
-      tuning: "abc",
-      artistImage: "123",
-      artist: UserVersionArtistDto(id: 1, name: "telo", color: "#FFFFFF", url: "https"),
-      versionId: 10,
-    );
+        localDatabaseId: 10,
+        songUrl: "test",
+        instrument: Instrument.bass,
+        name: "name",
+        songId: 3,
+        capo: 1,
+        stdKey: "t",
+        key: "s",
+        tuning: "abc",
+        artistImage: "123",
+        artist: UserVersionArtistDto(id: 1, name: "telo", color: "#FFFFFF", url: "https"),
+        versionId: 10,
+        lastUpdate: DateTime.now());
     final version = userVersionDto.toDomain();
 
     expect(version.remoteDatabaseId, null);

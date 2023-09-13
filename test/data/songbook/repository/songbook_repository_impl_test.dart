@@ -157,43 +157,6 @@ void main() {
     });
   });
 
-  group("When 'addVersionsToSongbook' is called", () {
-    test("and request is successful should return song list", () async {
-      final songbookDataSource = _SongbookDataSourceMock();
-      final songDto = _SongbookVersionDtoMock();
-      final songsDto = [songDto];
-      final version = getFakeVersion();
-      final versionInput = getFakeSongbookVersionInput();
-
-      when(() => songbookDataSource.addVersionsToSongbook(any(), any()))
-          .thenAnswer((_) => SynchronousFuture(Ok(songsDto)));
-      when(() => songDto.toDomain(any())).thenReturn(version);
-
-      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
-      final result = await songbookRepositoryImpl.addVersionsToSongbook(songbookId: 1, versionsInput: [versionInput]);
-
-      verify(() => songDto.toDomain(any())).called(1);
-
-      expect(result.isSuccess, isTrue);
-      expect(result.get(), [version]);
-    });
-
-    test("and request fails should return request error", () async {
-      final songbookDataSource = _SongbookDataSourceMock();
-      final song = getFakeSongbookVersionInput();
-
-      when(() => songbookDataSource.addVersionsToSongbook(any(), any()))
-          .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
-
-      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
-
-      final result = await songbookRepositoryImpl.addVersionsToSongbook(songbookId: 10, versionsInput: [song]);
-
-      expect(result.isFailure, isTrue);
-      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
-    });
-  });
-
   group("When 'addVersionToSongbook' is called", () {
     test("and request is successful should return song", () async {
       final songbookDataSource = _SongbookDataSourceMock();
@@ -212,6 +175,22 @@ void main() {
 
       expect(result.isSuccess, isTrue);
       expect(result.get(), version);
+    });
+    test("and request is successful and songbook is recent, should return null", () async {
+      final songbookDataSource = _SongbookDataSourceMock();
+      final versionInput = getFakeSongbookVersionInput();
+
+      when(() => songbookDataSource.addVersionToSongbook(any(), any()))
+          .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+      final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+      final result = await songbookRepositoryImpl.addVersionToSongbook(
+        songbookId: ListType.recents.localId,
+        versionInput: versionInput,
+      );
+
+      expect(result.isSuccess, isTrue);
+      expect(result.get(), isNull);
     });
 
     test("and request fails should return request error", () async {

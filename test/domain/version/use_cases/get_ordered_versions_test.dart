@@ -45,19 +45,19 @@ void main() {
 
     test("and selected recent order and is recent songbook should sort correctly", () async {
       final desorderedList = [
-        getFakeVersion(localDatabaseId: 10),
-        getFakeVersion(localDatabaseId: 8),
-        getFakeVersion(localDatabaseId: 15),
-        getFakeVersion(localDatabaseId: 9),
+        getFakeVersion(localDatabaseId: 10, lastUpdate: DateTime.fromMillisecondsSinceEpoch(5000)),
+        getFakeVersion(localDatabaseId: 8, lastUpdate: DateTime.fromMillisecondsSinceEpoch(6000)),
+        getFakeVersion(localDatabaseId: 15, lastUpdate: DateTime.fromMillisecondsSinceEpoch(7000)),
+        getFakeVersion(localDatabaseId: 9, lastUpdate: DateTime.fromMillisecondsSinceEpoch(8000)),
       ];
 
       final orderedList = GetOrderedVersions()(ListOrderType.recent, desorderedList, ListType.recents);
 
       expect(orderedList.length, 4);
-      expect(orderedList[0].localDatabaseId, 15);
-      expect(orderedList[1].localDatabaseId, 10);
-      expect(orderedList[2].localDatabaseId, 9);
-      expect(orderedList[3].localDatabaseId, 8);
+      expect(orderedList[0].localDatabaseId, 9);
+      expect(orderedList[1].localDatabaseId, 15);
+      expect(orderedList[2].localDatabaseId, 8);
+      expect(orderedList[3].localDatabaseId, 10);
     });
 
     test("and selected oldest order should sort correctly", () async {
@@ -79,19 +79,19 @@ void main() {
 
     test("and selected oldest order and is recent songbook should sort correctly", () async {
       final desorderedList = [
-        getFakeVersion(localDatabaseId: 10),
-        getFakeVersion(localDatabaseId: 8),
-        getFakeVersion(localDatabaseId: 15),
-        getFakeVersion(localDatabaseId: 9),
+        getFakeVersion(localDatabaseId: 8, lastUpdate: DateTime.fromMillisecondsSinceEpoch(6000)),
+        getFakeVersion(localDatabaseId: 10, lastUpdate: DateTime.fromMillisecondsSinceEpoch(5000)),
+        getFakeVersion(localDatabaseId: 9, lastUpdate: DateTime.fromMillisecondsSinceEpoch(8000)),
+        getFakeVersion(localDatabaseId: 15, lastUpdate: DateTime.fromMillisecondsSinceEpoch(7000)),
       ];
 
       final orderedList = GetOrderedVersions()(ListOrderType.oldest, desorderedList, ListType.recents);
 
       expect(orderedList.length, 4);
-      expect(orderedList[0].localDatabaseId, 8);
-      expect(orderedList[1].localDatabaseId, 9);
-      expect(orderedList[2].localDatabaseId, 10);
-      expect(orderedList[3].localDatabaseId, 15);
+      expect(orderedList[0].localDatabaseId, 10);
+      expect(orderedList[1].localDatabaseId, 8);
+      expect(orderedList[2].localDatabaseId, 15);
+      expect(orderedList[3].localDatabaseId, 9);
     });
 
     test("and selected custom order should sort correctly", () async {

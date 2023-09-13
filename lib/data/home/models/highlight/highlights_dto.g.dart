@@ -8,5 +8,5 @@ part of 'highlights_dto.dart';
 
 HighlightsDto _$HighlightsDtoFromJson(Map<String, dynamic> json) => HighlightsDto(
       highlights:
-          (json['highlights'] as List<dynamic>).map((e) => HighlightDto.fromJson(e as Map<String, dynamic>)).toList(),
+          (json['highlights'] as List<dynamic>?)?.map((e) => HighlightDto.fromJson(e as Map<String, dynamic>)).toList(),
     );

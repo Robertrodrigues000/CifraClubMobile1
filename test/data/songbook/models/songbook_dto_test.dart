@@ -14,6 +14,7 @@ void main() {
       songId: 2,
       artist: SongbookVersionArtistDto(id: 3, name: "name", url: "url", image: "image", color: "color"),
       versionId: 3,
+      lastUpdate: "2023-05-09 10:26:58",
     );
     final songbookDto = SongbookDto(
         id: 42,
@@ -39,5 +40,6 @@ void main() {
     expect(songbookVersions.versions.first.songUrl, "songUrl");
     expect(songbookVersions.versions.first.songId, 2);
     expect(songbookVersions.versions.first.versionId, 3);
+    expect(songbookVersions.versions.first.lastUpdate, DateTime(2023, 5, 9, 10, 26, 58));
   });
 }

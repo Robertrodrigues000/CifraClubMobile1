@@ -24,6 +24,10 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
 
   @override
   Future<List<int>> putVersionsToSongbook(List<Version> versions, int songbookId) async {
+    if (songbookId == ListType.recents.localId) {
+      return putVersionsToRecentSongbook(versions);
+    }
+
     final order = await _userVersionDataSource.getTotalSongbookVersions(songbookId).first;
 
     return _userVersionDataSource.putVersionsToSongbook(
@@ -38,10 +42,15 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   }
 
   @override
-  Future<List<int>> addVersionsToRecentSongbook(List<Version> versions) {
+  Future<List<int>> putVersionsToRecentSongbook(List<Version> versions) {
     return _userVersionDataSource.putVersionsToRecentSongbook(
       versions.map(UserRecentVersionDto.fromDomain).toList(),
     );
+  }
+
+  @override
+  Future<int?> getLocalDatabaseIdFromSongIdInRecentSongbook(int songId) {
+    return _userVersionDataSource.getLocalDatabaseIdFromSongIdInRecentSongbook(songId);
   }
 
   @override
@@ -52,6 +61,11 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   @override
   Stream<int> getTotalSongbookVersions(int songbookId) {
     return _userVersionDataSource.getTotalSongbookVersions(songbookId);
+  }
+
+  @override
+  Future<int> getTotalRecentVersions() {
+    return _userVersionDataSource.getTotalRecentVersions();
   }
 
   @override
@@ -71,6 +85,11 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   @override
   Future<int?> deleteVersionsById(List<int> localDatabaseIds, int songbookId) {
     return _userVersionDataSource.deleteVersionsById(localDatabaseIds, songbookId);
+  }
+
+  @override
+  Future<bool> deleteOldestRecentVersion() {
+    return _userVersionDataSource.deleteOldestRecentVersion();
   }
 
   @override

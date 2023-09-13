@@ -11,6 +11,8 @@ abstract class _$VersionCWProxy {
 
   Version remoteDatabaseId(int? remoteDatabaseId);
 
+  Version lastUpdate(DateTime? lastUpdate);
+
   Version songId(int songId);
 
   Version versionId(int versionId);
@@ -42,6 +44,7 @@ abstract class _$VersionCWProxy {
   Version call({
     int? localDatabaseId,
     int? remoteDatabaseId,
+    DateTime? lastUpdate,
     int? songId,
     int? versionId,
     Instrument? instrument,
@@ -67,6 +70,9 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
 
   @override
   Version remoteDatabaseId(int? remoteDatabaseId) => this(remoteDatabaseId: remoteDatabaseId);
+
+  @override
+  Version lastUpdate(DateTime? lastUpdate) => this(lastUpdate: lastUpdate);
 
   @override
   Version songId(int songId) => this(songId: songId);
@@ -112,6 +118,7 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
   Version call({
     Object? localDatabaseId = const $CopyWithPlaceholder(),
     Object? remoteDatabaseId = const $CopyWithPlaceholder(),
+    Object? lastUpdate = const $CopyWithPlaceholder(),
     Object? songId = const $CopyWithPlaceholder(),
     Object? versionId = const $CopyWithPlaceholder(),
     Object? instrument = const $CopyWithPlaceholder(),
@@ -133,6 +140,10 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
           ? _value.remoteDatabaseId
           // ignore: cast_nullable_to_non_nullable
           : remoteDatabaseId as int?,
+      lastUpdate: lastUpdate == const $CopyWithPlaceholder()
+          ? _value.lastUpdate
+          // ignore: cast_nullable_to_non_nullable
+          : lastUpdate as DateTime?,
       songId: songId == const $CopyWithPlaceholder() || songId == null
           ? _value.songId
           // ignore: cast_nullable_to_non_nullable

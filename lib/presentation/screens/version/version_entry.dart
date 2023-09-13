@@ -2,6 +2,7 @@
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/auto_scroll_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/content_middleware.dart';
+import 'package:cifraclub/presentation/screens/version/middlewares/songbook_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_loader_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
@@ -55,7 +56,8 @@ class VersionEntry extends ScreenEntry {
       create: (context) => VersionBloc([
         getIt<VersionLoaderMiddleware>(),
         getIt<ContentMiddleware>(),
-        getIt<AutoScrollMiddleware>(param1: devicePixelRatio)
+        getIt<AutoScrollMiddleware>(param1: devicePixelRatio),
+        getIt<SongbookMiddleware>(),
       ], getIt())
         ..add(OnVersionInit(
           artistName: artistName,

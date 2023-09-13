@@ -60,6 +60,8 @@ void main() {
     UserVersionArtistDto? userVersionArtistDto,
     String? artistImage,
     int? localDatabaseId,
+    int? songId,
+    DateTime? lastUpdate,
   }) =>
       UserRecentVersionDto(
         localDatabaseId: localDatabaseId ?? faker.randomGenerator.integer(10000),
@@ -67,10 +69,11 @@ void main() {
         songUrl: faker.animal.name(),
         key: faker.animal.name(),
         instrument: Instrument.bass,
-        songId: faker.randomGenerator.integer(10000),
+        songId: songId ?? faker.randomGenerator.integer(10000),
         artist: userVersionArtistDto ?? UserVersionArtistDto(),
         artistImage: artistImage,
         versionId: faker.randomGenerator.integer(10000),
+        lastUpdate: lastUpdate ?? DateTime.now(),
       );
 
   group("when getVersionsFromSongbook is called", () {
@@ -428,5 +431,68 @@ void main() {
     final userVersionData = await isar.userVersionDataDtos.get(12);
 
     expect(userVersionData, fakeUserVersionDataDto);
+  });
+
+  group("When getLocalDatabaseIdFromSongIdInRecentSongbook is called", () {
+    test("If there is already a recent version with the provided songId, should return its version local database Id",
+        () async {
+      final versions = [
+        getUserRecentVersionDto(songId: 11, localDatabaseId: 12),
+      ];
+
+      await isar.writeTxn(() async {
+        await isar.userRecentVersionDtos.putAll(versions);
+      });
+
+      final result = await userVersionDataSource.getLocalDatabaseIdFromSongIdInRecentSongbook(11);
+
+      expect(result, 12);
+    });
+
+    test("If there isn`t a recent version with the provided songId, should return null", () async {
+      final result = await userVersionDataSource.getLocalDatabaseIdFromSongIdInRecentSongbook(11);
+
+      expect(result, isNull);
+    });
+  });
+
+  test("When 'getTotalRecentVersions' is called should return the count of recent versions", () async {
+    final versions = [
+      getUserRecentVersionDto(),
+      getUserRecentVersionDto(),
+    ];
+
+    await isar.writeTxn(
+      () async {
+        await isar.userRecentVersionDtos.putAll(versions);
+      },
+    );
+
+    final recentCount = await userVersionDataSource.getTotalRecentVersions();
+
+    expect(recentCount, 2);
+  });
+
+  test("When 'deleteOldestRecentVersion' is called, the oldest recent version should be deleted", () async {
+    final versions = [
+      getUserRecentVersionDto(localDatabaseId: 1, lastUpdate: DateTime.fromMillisecondsSinceEpoch(8000)),
+      getUserRecentVersionDto(localDatabaseId: 2, lastUpdate: DateTime.fromMillisecondsSinceEpoch(4000)),
+      getUserRecentVersionDto(localDatabaseId: 3, lastUpdate: DateTime.fromMillisecondsSinceEpoch(1000)),
+      getUserRecentVersionDto(localDatabaseId: 4, lastUpdate: DateTime.fromMillisecondsSinceEpoch(3000)),
+      getUserRecentVersionDto(localDatabaseId: 5, lastUpdate: DateTime.fromMillisecondsSinceEpoch(9000)),
+      getUserRecentVersionDto(localDatabaseId: 6, lastUpdate: DateTime.fromMillisecondsSinceEpoch(7000)),
+    ];
+
+    await isar.writeTxn(
+      () async {
+        await isar.userRecentVersionDtos.putAll(versions);
+      },
+    );
+
+    final wasRecentDeleted = await userVersionDataSource.deleteOldestRecentVersion();
+    final recentVersions = await isar.userRecentVersionDtos.where().localDatabaseIdProperty().findAll();
+
+    expect(wasRecentDeleted, true);
+    expect(recentVersions, [1, 2, 4, 5, 6]);
   });
 }

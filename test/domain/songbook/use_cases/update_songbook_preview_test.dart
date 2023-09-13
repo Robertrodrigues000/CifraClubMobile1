@@ -20,9 +20,8 @@ void main() {
         .thenAnswer((_) => SynchronousFuture([fakeVersion.artist.image?.size162]));
     when(() => userSongbookRepository.updateSongbookPreview(any(), any())).thenAnswer((_) => SynchronousFuture(10));
 
-    final result = await UpdateSongbookPreview(userVersionRepository, userSongbookRepository)(10);
+    await UpdateSongbookPreview(userVersionRepository, userSongbookRepository)(10);
 
-    expect(result, 10);
     verify(() => userVersionRepository.getImagesPreview(10)).called(1);
     verify(() => userSongbookRepository.updateSongbookPreview(10, [fakeVersion.artist.image?.size162])).called(1);
   });

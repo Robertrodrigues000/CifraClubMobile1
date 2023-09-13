@@ -64,10 +64,16 @@ class RefreshAllSongbooks {
               ? remoteSongbookVersions.songbook.id
               : remoteSongbookVersions.songbook.type.localId;
 
+          // coverage:ignore-start
           if (remoteSongbookVersions.songbook.type == ListType.recents) {
             //TODO: Implementar a sync das recents
+            if (localSongbooks.none((element) => element.type == ListType.recents)) {
+              await _userSongbookRepository.putUserSongbook(remoteSongbookVersions.songbook);
+              await _addVersionsData(remoteSongbookVersions.versions, ListType.recents.localId);
+            }
             continue;
           }
+          // coverage:ignore-end
 
           if (songbookId == null) {
             // coverage:ignore-start

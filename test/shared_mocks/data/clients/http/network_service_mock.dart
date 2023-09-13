@@ -8,9 +8,9 @@ import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
 class NetworkServiceMock extends Mock implements NetworkService {
-  Future<void> mock<T>({required String response, String? contentType}) async {
+  Future<void> mock<T>({required String response, String? contentType, int? statusCode}) async {
     var options = RequestOptions(path: '', responseType: ResponseType.json);
-    var jsonResponse = ResponseBody.fromString(response, 200, headers: {
+    var jsonResponse = ResponseBody.fromString(response, statusCode ?? 200, headers: {
       Headers.contentTypeHeader: [contentType ?? Headers.jsonContentType]
     });
 

@@ -18,6 +18,7 @@ SongbookVersionDto _$SongbookVersionDtoFromJson(Map<String, dynamic> json) => So
       tuning: json['tuning'] as String?,
       artist: SongbookVersionArtistDto.fromJson(json['artist'] as Map<String, dynamic>),
       versionId: json['cifraId'] as int,
+      lastUpdate: json['lastUpdate'] as String,
     );
 
 Map<String, dynamic> _$SongbookVersionDtoToJson(SongbookVersionDto instance) => <String, dynamic>{
@@ -32,4 +33,5 @@ Map<String, dynamic> _$SongbookVersionDtoToJson(SongbookVersionDto instance) => 
       'capo': instance.capo,
       'tuning': instance.tuning,
       'artist': instance.artist,
+      'lastUpdate': instance.lastUpdate,
     };
