@@ -59,9 +59,9 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme searchInputHeight(double searchInputHeight);
 
-  AppDimensionScheme bottomPaddingCounter(double bottomPaddingCounter);
+  AppDimensionScheme bottomPaddingCard(double bottomPaddingCard);
 
-  AppDimensionScheme topPaddingCounter(double topPaddingCounter);
+  AppDimensionScheme topPaddingCard(double topPaddingCard);
 
   AppDimensionScheme errorWidgetButtonSpace(double errorWidgetButtonSpace);
 
@@ -86,6 +86,10 @@ abstract class _$AppDimensionSchemeCWProxy {
   AppDimensionScheme searchBarVerticalPadding(double searchBarVerticalPadding);
 
   AppDimensionScheme keyButtonPadding(double keyButtonPadding);
+
+  AppDimensionScheme identifyMusicHeight(double identifyMusicHeight);
+
+  AppDimensionScheme searchHeaderCapsuleHeight(double searchHeaderCapsuleHeight);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -120,8 +124,8 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? addVersionTileImageSize,
     double? listOperationDialogWidth,
     double? searchInputHeight,
-    double? bottomPaddingCounter,
-    double? topPaddingCounter,
+    double? bottomPaddingCard,
+    double? topPaddingCard,
     double? errorWidgetButtonSpace,
     double? errorWidgetButtonWidth,
     double? artistHeaderHeight,
@@ -134,6 +138,8 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? artistSongsHeaderSpace,
     double? searchBarVerticalPadding,
     double? keyButtonPadding,
+    double? identifyMusicHeight,
+    double? searchHeaderCapsuleHeight,
   });
 }
 
@@ -235,11 +241,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme searchInputHeight(double searchInputHeight) => this(searchInputHeight: searchInputHeight);
 
   @override
-  AppDimensionScheme bottomPaddingCounter(double bottomPaddingCounter) =>
-      this(bottomPaddingCounter: bottomPaddingCounter);
+  AppDimensionScheme bottomPaddingCard(double bottomPaddingCard) => this(bottomPaddingCard: bottomPaddingCard);
 
   @override
-  AppDimensionScheme topPaddingCounter(double topPaddingCounter) => this(topPaddingCounter: topPaddingCounter);
+  AppDimensionScheme topPaddingCard(double topPaddingCard) => this(topPaddingCard: topPaddingCard);
 
   @override
   AppDimensionScheme errorWidgetButtonSpace(double errorWidgetButtonSpace) =>
@@ -284,6 +289,13 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme keyButtonPadding(double keyButtonPadding) => this(keyButtonPadding: keyButtonPadding);
 
   @override
+  AppDimensionScheme identifyMusicHeight(double identifyMusicHeight) => this(identifyMusicHeight: identifyMusicHeight);
+
+  @override
+  AppDimensionScheme searchHeaderCapsuleHeight(double searchHeaderCapsuleHeight) =>
+      this(searchHeaderCapsuleHeight: searchHeaderCapsuleHeight);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -318,8 +330,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? addVersionTileImageSize = const $CopyWithPlaceholder(),
     Object? listOperationDialogWidth = const $CopyWithPlaceholder(),
     Object? searchInputHeight = const $CopyWithPlaceholder(),
-    Object? bottomPaddingCounter = const $CopyWithPlaceholder(),
-    Object? topPaddingCounter = const $CopyWithPlaceholder(),
+    Object? bottomPaddingCard = const $CopyWithPlaceholder(),
+    Object? topPaddingCard = const $CopyWithPlaceholder(),
     Object? errorWidgetButtonSpace = const $CopyWithPlaceholder(),
     Object? errorWidgetButtonWidth = const $CopyWithPlaceholder(),
     Object? artistHeaderHeight = const $CopyWithPlaceholder(),
@@ -332,6 +344,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? artistSongsHeaderSpace = const $CopyWithPlaceholder(),
     Object? searchBarVerticalPadding = const $CopyWithPlaceholder(),
     Object? keyButtonPadding = const $CopyWithPlaceholder(),
+    Object? identifyMusicHeight = const $CopyWithPlaceholder(),
+    Object? searchHeaderCapsuleHeight = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -446,14 +460,14 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.searchInputHeight
           // ignore: cast_nullable_to_non_nullable
           : searchInputHeight as double,
-      bottomPaddingCounter: bottomPaddingCounter == const $CopyWithPlaceholder() || bottomPaddingCounter == null
-          ? _value.bottomPaddingCounter
+      bottomPaddingCard: bottomPaddingCard == const $CopyWithPlaceholder() || bottomPaddingCard == null
+          ? _value.bottomPaddingCard
           // ignore: cast_nullable_to_non_nullable
-          : bottomPaddingCounter as double,
-      topPaddingCounter: topPaddingCounter == const $CopyWithPlaceholder() || topPaddingCounter == null
-          ? _value.topPaddingCounter
+          : bottomPaddingCard as double,
+      topPaddingCard: topPaddingCard == const $CopyWithPlaceholder() || topPaddingCard == null
+          ? _value.topPaddingCard
           // ignore: cast_nullable_to_non_nullable
-          : topPaddingCounter as double,
+          : topPaddingCard as double,
       errorWidgetButtonSpace: errorWidgetButtonSpace == const $CopyWithPlaceholder() || errorWidgetButtonSpace == null
           ? _value.errorWidgetButtonSpace
           // ignore: cast_nullable_to_non_nullable
@@ -504,6 +518,15 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.keyButtonPadding
           // ignore: cast_nullable_to_non_nullable
           : keyButtonPadding as double,
+      identifyMusicHeight: identifyMusicHeight == const $CopyWithPlaceholder() || identifyMusicHeight == null
+          ? _value.identifyMusicHeight
+          // ignore: cast_nullable_to_non_nullable
+          : identifyMusicHeight as double,
+      searchHeaderCapsuleHeight:
+          searchHeaderCapsuleHeight == const $CopyWithPlaceholder() || searchHeaderCapsuleHeight == null
+              ? _value.searchHeaderCapsuleHeight
+              // ignore: cast_nullable_to_non_nullable
+              : searchHeaderCapsuleHeight as double,
     );
   }
 }

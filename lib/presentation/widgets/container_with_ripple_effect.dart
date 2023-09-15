@@ -9,6 +9,7 @@ class ContainerWithRippleEffect extends StatelessWidget {
   final double? width;
   final Alignment? alignment;
   final VoidCallback? onTap;
+  final EdgeInsets? padding;
 
   const ContainerWithRippleEffect({
     Key? key,
@@ -19,6 +20,7 @@ class ContainerWithRippleEffect extends StatelessWidget {
     this.width,
     this.containerKey,
     this.alignment,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class ContainerWithRippleEffect extends StatelessWidget {
       children: [
         Container(
           alignment: alignment,
+          padding: padding,
           height: height,
           width: width,
           decoration: decoration,

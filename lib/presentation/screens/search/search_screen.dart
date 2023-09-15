@@ -79,6 +79,11 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           body: CustomScrollView(
             slivers: [
+              SearchFixedHeader(
+                onTapFilter: (filter) => _bloc.onFilterSelected(filter, _textEditingController.text),
+                selectedFilter: state.selectedFilter,
+                isRecent: state.shouldShowRecent,
+              ),
               if (state.shouldShowRecent)
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
@@ -96,10 +101,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 )
               else ...[
-                SearchFixedHeader(
-                  onTapFilter: (filter) => _bloc.onFilterSelected(filter, _textEditingController.text),
-                  selectedFilter: state.selectedFilter,
-                ),
                 if (state.error != null)
                   SliverFillRemaining(
                     hasScrollBody: false,

@@ -318,5 +318,7 @@
     "key" : "Key",
     "youtubeResultNotFound" : "We didn't find any related video for these chords",
     "searchResultNotFoundDescription": "We didn't find anything here. Try again by typing the search term in a different way.",
-    "searchHint": "What do you want to play?"
+    "searchHint": "What do you want to play?",
+    "newVersion": "New Version",
+    "identifyMusic": "Identify music"
 }

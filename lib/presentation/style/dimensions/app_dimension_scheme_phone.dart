@@ -12,6 +12,8 @@ const appDimensionSchemePhone = AppDimensionScheme(
   appBarMargin: 4,
   rightPaddingCard: 4,
   appBarLeadingWidth: 56,
+  bottomPaddingCard: 12,
+  topPaddingCard: 4,
 
   // Home
   topSongsItemsPerRow: 1,
@@ -39,8 +41,6 @@ const appDimensionSchemePhone = AppDimensionScheme(
   addVersionTileImageSize: 40,
   listOperationDialogWidth: null,
   searchInputHeight: 56,
-  bottomPaddingCounter: 12,
-  topPaddingCounter: 4,
 
   //Error widget space between text and button
   errorWidgetButtonSpace: 24,
@@ -62,4 +62,8 @@ const appDimensionSchemePhone = AppDimensionScheme(
 
   //Version Key
   keyButtonPadding: 12,
+
+  //Search
+  identifyMusicHeight: 40,
+  searchHeaderCapsuleHeight: 48,
 );

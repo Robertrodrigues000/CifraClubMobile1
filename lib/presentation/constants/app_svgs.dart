@@ -64,6 +64,7 @@ class AppSvgs {
   static const saveVersionIcon = "assets/images/save_version_icon.svg";
   static const correctVersionIcon = "assets/images/correct_version_icon.svg";
   static const favoriteVersionIcon = "assets/images/favorite_version_icon.svg";
+  static const identifyMusicIcon = "assets/images/identify_music_icon.svg";
 
   static const bassStringIcon = "assets/images/bass_string.svg";
   static const chordBaseSmallNoNutIcon = "assets/images/chord_base_small_no_nut.svg";

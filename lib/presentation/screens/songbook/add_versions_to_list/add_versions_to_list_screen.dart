@@ -57,8 +57,8 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                               padding: EdgeInsets.only(
                                 left: context.appDimensionScheme.screenMargin,
                                 right: context.appDimensionScheme.screenMargin,
-                                bottom: context.appDimensionScheme.bottomPaddingCounter,
-                                top: context.appDimensionScheme.topPaddingCounter,
+                                bottom: context.appDimensionScheme.bottomPaddingCard,
+                                top: context.appDimensionScheme.topPaddingCard,
                               ),
                               child: VersionLimitCard(
                                 isPro: state.isPro,

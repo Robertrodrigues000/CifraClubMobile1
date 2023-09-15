@@ -12,6 +12,8 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   appBarMargin: 12,
   rightPaddingCard: 12,
   appBarLeadingWidth: 64,
+  bottomPaddingCard: 16,
+  topPaddingCard: 8,
 
   // Home
   topSongsItemsPerRow: 2,
@@ -39,8 +41,6 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   addVersionTileImageSize: 56,
   listOperationDialogWidth: 400,
   searchInputHeight: 72,
-  bottomPaddingCounter: 16,
-  topPaddingCounter: 8,
 
   //Error widget space between text and button
   errorWidgetButtonSpace: 32,
@@ -62,4 +62,8 @@ const appDimensionSchemeTablet = AppDimensionScheme(
 
   //Version Key
   keyButtonPadding: 24,
+
+  //Search
+  identifyMusicHeight: 48,
+  searchHeaderCapsuleHeight: 52,
 );

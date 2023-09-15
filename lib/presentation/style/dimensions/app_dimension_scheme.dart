@@ -32,8 +32,8 @@ class AppDimensionScheme {
   final double addVersionTileImageSize;
   final double? listOperationDialogWidth;
   final double searchInputHeight;
-  final double bottomPaddingCounter;
-  final double topPaddingCounter;
+  final double bottomPaddingCard;
+  final double topPaddingCard;
   final double errorWidgetButtonSpace;
   final double? errorWidgetButtonWidth;
   final double artistHeaderHeight;
@@ -46,6 +46,8 @@ class AppDimensionScheme {
   final double artistSongsHeaderSpace;
   final double searchBarVerticalPadding;
   final double keyButtonPadding;
+  final double identifyMusicHeight;
+  final double searchHeaderCapsuleHeight;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -74,8 +76,8 @@ class AppDimensionScheme {
     required this.addVersionTileImageSize,
     required this.listOperationDialogWidth,
     required this.searchInputHeight,
-    required this.bottomPaddingCounter,
-    required this.topPaddingCounter,
+    required this.bottomPaddingCard,
+    required this.topPaddingCard,
     required this.errorWidgetButtonSpace,
     required this.errorWidgetButtonWidth,
     required this.artistHeaderHeight,
@@ -88,5 +90,7 @@ class AppDimensionScheme {
     required this.artistSongsHeaderSpace,
     required this.searchBarVerticalPadding,
     required this.keyButtonPadding,
+    required this.identifyMusicHeight,
+    required this.searchHeaderCapsuleHeight,
   });
 }
