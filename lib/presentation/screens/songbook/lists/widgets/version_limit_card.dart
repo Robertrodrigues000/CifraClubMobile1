@@ -10,7 +10,7 @@ class VersionLimitCard extends StatelessWidget {
     required this.isPro,
     required this.isWithinLimit,
     required this.onTap,
-    this.hasBackground = false,
+    this.isList = true,
   });
 
   final int versionsCount;
@@ -18,27 +18,31 @@ class VersionLimitCard extends StatelessWidget {
   final bool isPro;
   final bool isWithinLimit;
   final VoidCallback onTap;
-  final bool hasBackground;
+  final bool isList;
   @override
   Widget build(BuildContext context) {
+    final bool hasBorder = isPro ? !isList : true;
+
     return ContainerWithRippleEffect(
       onTap: isPro ? null : onTap,
-      decoration: hasBackground
-          ? null
-          : BoxDecoration(
+      height: isPro ? context.appDimensionScheme.heightLimitCardPro : context.appDimensionScheme.heightLimitCardFree,
+      decoration: hasBorder
+          ? BoxDecoration(
+              color: context.colors.neutralPrimary,
               border: Border.all(
                 width: 1,
                 color: context.colors.neutralTertiary,
               ),
               borderRadius: BorderRadius.circular(8),
-              color: context.colors.neutralPrimary,
-            ),
+            )
+          : null,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
         child: Stack(alignment: Alignment.center, children: [
           Align(
             alignment: isPro ? Alignment.center : Alignment.centerLeft,
             child: RichText(
+              textScaleFactor: MediaQuery.of(context).textScaleFactor,
               text: TextSpan(
                 style: context.typography.subtitle5,
                 children: [
@@ -58,9 +62,10 @@ class VersionLimitCard extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                  key: const Key('label'),
-                  context.text.increaseLimit,
-                  style: context.typography.subtitle4.copyWith(color: context.colors.successPrimary)),
+                key: const Key('label'),
+                context.text.increaseLimit,
+                style: context.typography.subtitle4.copyWith(color: context.colors.successPrimary),
+              ),
             ),
         ]),
       ),

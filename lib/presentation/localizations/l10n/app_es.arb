@@ -262,5 +262,6 @@
     "searchResultNotFoundDescription": "No encontramos nada aquí. Vuelva a intentarlo escribiendo el término de búsqueda de otra forma.",
     "searchHint": "¿Que quieres tocar?",
     "newVersion": "Nueva Versión",
-    "identifyMusic": "Identificar música"
+    "identifyMusic": "Identificar música",
+    "createListButtonText": "Crear lista"
 }

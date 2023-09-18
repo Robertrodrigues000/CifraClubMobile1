@@ -60,12 +60,16 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                                 bottom: context.appDimensionScheme.bottomPaddingCard,
                                 top: context.appDimensionScheme.topPaddingCard,
                               ),
-                              child: VersionLimitCard(
-                                isPro: state.isPro,
-                                isWithinLimit: state.limitState == ListLimitState.withinLimit,
-                                limit: state.versionsLimit,
-                                versionsCount: state.songsCount,
-                                onTap: () {}, // coverage:ignore-line
+                              child: SizedBox(
+                                height: 42,
+                                child: VersionLimitCard(
+                                  isPro: state.isPro,
+                                  isWithinLimit: state.limitState == ListLimitState.withinLimit,
+                                  limit: state.versionsLimit,
+                                  versionsCount: state.songsCount,
+                                  isList: false,
+                                  onTap: () {}, // coverage:ignore-line
+                                ),
                               ),
                             ),
                           ],

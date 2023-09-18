@@ -206,6 +206,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                   songbookName: ListType.getListTitle(context, state.songbook),
                   preview: _bloc.getPreview(),
                   listType: state.songbook?.type ?? ListType.recents,
+                  isPro: state.isPro,
                 ),
               ),
               VersionsFixedHeader(

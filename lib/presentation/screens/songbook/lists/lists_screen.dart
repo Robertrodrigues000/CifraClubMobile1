@@ -8,6 +8,8 @@ import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dial
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
+import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
@@ -52,36 +54,7 @@ class _ListsScreenState extends State<ListsScreen> {
             automaticallyImplyLeading: false,
             actions: [
               InkWell(
-                onTap: () {
-                  InputDialog.show(
-                    context: context,
-                    isNewList: true,
-                    onSave: (widgetContext, name) async {
-                      final isValidInput = await _bloc.isValidSongbookName(name);
-
-                      switch (isValidInput) {
-                        case true:
-                          (await _bloc.createNewSongbook(name)).when(
-                            success: (songbook) {
-                              InputDialog.close(context);
-                              AddVersionsToListEntry.push(Nav.of(context), songbook.id!);
-                            },
-                            failure: (_) {
-                              ScaffoldMessenger.of(widgetContext)
-                                  .showSnackBar(SnackBar(content: Text(context.text.listServerError)));
-                            },
-                          );
-                          break;
-                        case false:
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(widgetContext)
-                                .showSnackBar(SnackBar(content: Text(context.text.listUsedName)));
-                          }
-                          break;
-                      }
-                    },
-                  );
-                },
+                onTap: () => _createSongbook(context, _bloc),
                 child: SizedBox(
                   height: 48,
                   width: 48,
@@ -138,7 +111,11 @@ class _ListsScreenState extends State<ListsScreen> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.only(
+                      top: state.isPro ? 8 : 16,
+                      left: context.appDimensionScheme.screenMargin,
+                      right: context.appDimensionScheme.screenMargin,
+                      bottom: context.appDimensionScheme.screenMargin),
                   child: ListLimitCard(
                     listCount: state.listCount,
                     limit: state.listLimit,
@@ -148,9 +125,15 @@ class _ListsScreenState extends State<ListsScreen> {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox.fromSize(size: const Size.fromHeight(20)),
-              ),
+              if (state.listCount == 0)
+                SliverToBoxAdapter(
+                  child: CifraClubButton(
+                    type: ButtonType.outline,
+                    onPressed: () => _createSongbook(context, _bloc),
+                    padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                    child: Text(context.text.createListButtonText),
+                  ),
+                ),
               UserLists(
                 lists: state.userLists,
                 selectedSongbookId: widget.selectedSongbookId,
@@ -178,4 +161,36 @@ class _ListsScreenState extends State<ListsScreen> {
       },
     );
   }
+}
+
+void _createSongbook(
+  BuildContext context,
+  ListsBloc bloc,
+) {
+  InputDialog.show(
+    context: context,
+    isNewList: true,
+    onSave: (widgetContext, name) async {
+      final isValidInput = await bloc.isValidSongbookName(name);
+
+      switch (isValidInput) {
+        case true:
+          (await bloc.createNewSongbook(name)).when(
+            success: (songbook) {
+              InputDialog.close(context);
+              AddVersionsToListEntry.push(Nav.of(context), songbook.id!);
+            },
+            failure: (_) {
+              ScaffoldMessenger.of(widgetContext).showSnackBar(SnackBar(content: Text(context.text.listServerError)));
+            },
+          );
+          break;
+        case false:
+          if (context.mounted) {
+            ScaffoldMessenger.of(widgetContext).showSnackBar(SnackBar(content: Text(context.text.listUsedName)));
+          }
+          break;
+      }
+    },
+  );
 }

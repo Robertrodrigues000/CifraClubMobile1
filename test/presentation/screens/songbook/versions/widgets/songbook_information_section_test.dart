@@ -17,6 +17,7 @@ void main() {
               songbookName: "Songbook name",
               listType: ListType.user,
               preview: [],
+              isPro: false,
             ),
           ),
           SliverList(

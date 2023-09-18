@@ -77,7 +77,7 @@ void main() {
     expect(widgetFinder, findsOneWidget);
 
     final widgetSize = widgetTester.getSize(widgetFinder);
-    expect(widgetSize.height, 130);
+    expect(widgetSize.height, 122);
   });
 
   testWidgets("When device is phone, should show screen size for phone", (widgetTester) async {
@@ -107,7 +107,7 @@ void main() {
     expect(widgetFinder, findsOneWidget);
 
     final widgetSize = widgetTester.getSize(widgetFinder);
-    expect(widgetSize.height, 114);
+    expect(widgetSize.height, 102);
   });
 
   group("When `shouldRebuild` is called", () {
@@ -146,7 +146,7 @@ void main() {
     });
   });
 
-  testWidgets("When init counter informations should show correctly", (widgetTester) async {
+  testWidgets("When init counter information should show correctly", (widgetTester) async {
     await widgetTester.pumpWidgetWithWrapper(
       CustomScrollView(
         slivers: [

@@ -91,6 +91,10 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme searchHeaderCapsuleHeight(double searchHeaderCapsuleHeight);
 
+  AppDimensionScheme heightLimitCardPro(double heightLimitCardPro);
+
+  AppDimensionScheme heightLimitCardFree(double heightLimitCardFree);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -140,6 +144,8 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? keyButtonPadding,
     double? identifyMusicHeight,
     double? searchHeaderCapsuleHeight,
+    double? heightLimitCardPro,
+    double? heightLimitCardFree,
   });
 }
 
@@ -296,6 +302,12 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(searchHeaderCapsuleHeight: searchHeaderCapsuleHeight);
 
   @override
+  AppDimensionScheme heightLimitCardPro(double heightLimitCardPro) => this(heightLimitCardPro: heightLimitCardPro);
+
+  @override
+  AppDimensionScheme heightLimitCardFree(double heightLimitCardFree) => this(heightLimitCardFree: heightLimitCardFree);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -346,6 +358,8 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? keyButtonPadding = const $CopyWithPlaceholder(),
     Object? identifyMusicHeight = const $CopyWithPlaceholder(),
     Object? searchHeaderCapsuleHeight = const $CopyWithPlaceholder(),
+    Object? heightLimitCardPro = const $CopyWithPlaceholder(),
+    Object? heightLimitCardFree = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -527,6 +541,14 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
               ? _value.searchHeaderCapsuleHeight
               // ignore: cast_nullable_to_non_nullable
               : searchHeaderCapsuleHeight as double,
+      heightLimitCardPro: heightLimitCardPro == const $CopyWithPlaceholder() || heightLimitCardPro == null
+          ? _value.heightLimitCardPro
+          // ignore: cast_nullable_to_non_nullable
+          : heightLimitCardPro as double,
+      heightLimitCardFree: heightLimitCardFree == const $CopyWithPlaceholder() || heightLimitCardFree == null
+          ? _value.heightLimitCardFree
+          // ignore: cast_nullable_to_non_nullable
+          : heightLimitCardFree as double,
     );
   }
 }

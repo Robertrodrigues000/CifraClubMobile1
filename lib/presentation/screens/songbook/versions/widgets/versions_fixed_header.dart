@@ -19,6 +19,7 @@ class VersionsFixedHeader extends StatefulWidget {
     required this.onSelectedOrderType,
     required this.listType,
   });
+
   final bool isScrolledUnder;
   final bool isPro;
   final ListLimitState tabsLimitState;
@@ -50,9 +51,20 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
   }
 
   void _setHeightHeader() {
-    heightFixedHeader = 32 +
-        context.appDimensionScheme.screenMargin +
-        (widget.listType == ListType.user ? (50 + context.appDimensionScheme.screenMargin) : 0);
+    heightFixedHeader = context.appDimensionScheme.screenMargin +
+        32 +
+        (widget.listType != ListType.user
+            ? 0
+            : _getLimitCardHeight() +
+                (widget.isPro
+                    ? context.appDimensionScheme.scrollContentToBottom
+                    : context.appDimensionScheme.screenMargin));
+  }
+
+  double _getLimitCardHeight() {
+    return widget.isPro
+        ? context.appDimensionScheme.heightLimitCardPro
+        : context.appDimensionScheme.heightLimitCardFree;
   }
 
   @override
@@ -65,32 +77,37 @@ class _VersionsFixedHeaderState extends State<VersionsFixedHeader> {
         child: Padding(
           padding: EdgeInsets.only(bottom: context.appDimensionScheme.screenMargin),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               if (widget.listType == ListType.user) ...[
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
-                  height: 50,
+                  padding: EdgeInsets.only(
+                      left: context.appDimensionScheme.screenMargin,
+                      right: context.appDimensionScheme.screenMargin,
+                      bottom: widget.isPro
+                          ? context.appDimensionScheme.scrollContentToBottom
+                          : context.appDimensionScheme.screenMargin),
                   child: VersionLimitCard(
                     isPro: widget.isPro,
                     isWithinLimit: widget.tabsLimitState == ListLimitState.withinLimit,
                     limit: widget.tabsLimit,
                     versionsCount: widget.tabsCount,
-                    hasBackground: widget.isPro ? true : false,
                     onTap: () {}, // coverage:ignore-line
                   ),
                 ),
-                SizedBox(height: context.appDimensionScheme.screenMargin),
               ],
               FilterCapsuleList(
                 alignment: Alignment.center,
                 capsulePadding: const EdgeInsets.symmetric(horizontal: 8),
                 filters: [
                   ...ListOrderType.getValuesByListType(widget.listType)
-                      .map((order) => Filter(
-                            label: order.getName(context),
-                            onTap: () => widget.onSelectedOrderType(order),
-                            isSelected: order == widget.selectedOrderType,
-                          ))
+                      .map(
+                        (order) => Filter(
+                          label: order.getName(context),
+                          onTap: () => widget.onSelectedOrderType(order),
+                          isSelected: order == widget.selectedOrderType,
+                        ),
+                      )
                       .toList()
                 ],
               ),

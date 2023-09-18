@@ -13,6 +13,7 @@ class SongbookInformationSection extends StatelessWidget {
     required this.isPublic,
     required this.preview,
     required this.listType,
+    required this.isPro,
   });
 
   final bool isScrolledUnder;
@@ -20,6 +21,7 @@ class SongbookInformationSection extends StatelessWidget {
   final bool isPublic;
   final List<String> preview;
   final ListType listType;
+  final bool isPro;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,6 @@ class SongbookInformationSection extends StatelessWidget {
         top: context.appDimensionScheme.screenMargin,
         left: context.appDimensionScheme.screenMargin,
         right: context.appDimensionScheme.screenMargin,
-        bottom: 16,
       ),
       child: Column(
         children: [
@@ -73,6 +74,10 @@ class SongbookInformationSection extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
+          if (!isPro || listType != ListType.user)
+            SizedBox(
+              height: context.appDimensionScheme.scrollContentToBottom,
+            ),
         ],
       ),
     );

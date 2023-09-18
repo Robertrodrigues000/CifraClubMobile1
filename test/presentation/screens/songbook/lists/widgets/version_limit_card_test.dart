@@ -1,23 +1,82 @@
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/version_limit_card.dart';
+import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../../../test_helpers/app_localizations.dart';
 import '../../../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  testWidgets("When user is not pro should show increase limit", (widgetTester) async {
+  testWidgets("When user is Pro and isList is false should show border", (widgetTester) async {
     await widgetTester.pumpWidget(
       TestWrapper(
-          child: VersionLimitCard(
-        versionsCount: 5,
-        limit: 10,
-        isPro: false,
-        isWithinLimit: true,
-        onTap: () {},
-      )),
+        child: VersionLimitCard(
+          versionsCount: 5,
+          limit: 10,
+          isPro: true,
+          isWithinLimit: true,
+          onTap: () {},
+          isList: false,
+        ),
+      ),
     );
 
     expect(find.byType(VersionLimitCard), findsOneWidget);
-    expect(find.byKey(const Key("label")), findsOneWidget);
+    expect(find.byWidgetPredicate((Widget widget) => widget is ContainerWithRippleEffect && widget.decoration != null),
+        findsOneWidget);
+  });
+
+  testWidgets("When user is Pro and isList is true should not show border", (widgetTester) async {
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: VersionLimitCard(
+          versionsCount: 5,
+          limit: 10,
+          isPro: true,
+          isWithinLimit: true,
+          onTap: () {},
+          isList: true,
+        ),
+      ),
+    );
+
+    expect(find.byType(VersionLimitCard), findsOneWidget);
+    expect(find.byWidgetPredicate((Widget widget) => widget is ContainerWithRippleEffect && widget.decoration == null),
+        findsOneWidget);
+  });
+
+  testWidgets("When user is free should show border", (widgetTester) async {
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: VersionLimitCard(
+          versionsCount: 5,
+          limit: 10,
+          isPro: false,
+          isWithinLimit: true,
+          onTap: () {},
+        ),
+      ),
+    );
+
+    expect(find.byType(VersionLimitCard), findsOneWidget);
+    expect(find.byWidgetPredicate((Widget widget) => widget is ContainerWithRippleEffect && widget.decoration != null),
+        findsOneWidget);
+  });
+
+  testWidgets("When user is free and versionsCount is not empty, should show increase limit", (widgetTester) async {
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: VersionLimitCard(
+          versionsCount: 5,
+          limit: 10,
+          isPro: false,
+          isWithinLimit: true,
+          onTap: () {},
+        ),
+      ),
+    );
+
+    expect(find.byType(VersionLimitCard), findsOneWidget);
+    expect(find.text(appTextEn.increaseLimit), findsOneWidget);
   });
 }

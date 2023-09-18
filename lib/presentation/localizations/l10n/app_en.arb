@@ -320,5 +320,6 @@
     "searchResultNotFoundDescription": "We didn't find anything here. Try again by typing the search term in a different way.",
     "searchHint": "What do you want to play?",
     "newVersion": "New Version",
-    "identifyMusic": "Identify music"
+    "identifyMusic": "Identify music",
+    "createListButtonText": "Create list"
 }

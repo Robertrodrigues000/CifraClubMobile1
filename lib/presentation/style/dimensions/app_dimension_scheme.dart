@@ -48,6 +48,8 @@ class AppDimensionScheme {
   final double keyButtonPadding;
   final double identifyMusicHeight;
   final double searchHeaderCapsuleHeight;
+  final double heightLimitCardPro;
+  final double heightLimitCardFree;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -92,5 +94,7 @@ class AppDimensionScheme {
     required this.keyButtonPadding,
     required this.identifyMusicHeight,
     required this.searchHeaderCapsuleHeight,
+    required this.heightLimitCardPro,
+    required this.heightLimitCardFree,
   });
 }

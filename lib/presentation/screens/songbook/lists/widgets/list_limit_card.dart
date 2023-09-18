@@ -19,22 +19,28 @@ class ListLimitCard extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
+    final hasBorder = !isPro ? listCount != 0 : false;
     return ContainerWithRippleEffect(
       onTap: isPro || listCount == 0 ? null : onTap,
-      decoration: BoxDecoration(
-        border: listCount != 0
-            ? Border.all(
+      decoration: hasBorder
+          ? BoxDecoration(
+              color: context.colors.neutralPrimary,
+              border: Border.all(
                 width: 1,
                 color: context.colors.neutralTertiary,
-              )
-            : null,
-        borderRadius: BorderRadius.circular(8),
-      ),
+              ),
+              borderRadius: BorderRadius.circular(8),
+            )
+          : null,
       child: Padding(
-        padding: listCount == 0 ? EdgeInsets.zero : const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: listCount == 0 || isPro
+            ? EdgeInsets.zero
+            : EdgeInsets.symmetric(
+                vertical: context.appDimensionScheme.bottomPaddingCard,
+                horizontal: context.appDimensionScheme.screenMargin),
         child: Stack(alignment: Alignment.center, children: [
           Align(
-            alignment: (listCount == 0 && !isPro) ? Alignment.topRight : Alignment.topLeft,
+            alignment: listCount == 0 ? Alignment.topRight : Alignment.topLeft,
             child: RichText(
               textScaleFactor: MediaQuery.of(context).textScaleFactor,
               text: TextSpan(
@@ -52,17 +58,20 @@ class ListLimitCard extends StatelessWidget {
               ),
             ),
           ),
-          if (!isPro)
-            Align(
-              alignment: listCount != 0 ? Alignment.centerRight : Alignment.centerLeft,
-              child: Text(
-                key: const Key('label'),
-                listCount == 0 ? context.text.emptyLists : context.text.increaseLimit,
-                style: listCount != 0
-                    ? context.typography.subtitle4.copyWith(color: context.colors.successPrimary)
-                    : context.typography.subtitle5,
-              ),
+          Align(
+            alignment: listCount != 0 ? Alignment.centerRight : Alignment.centerLeft,
+            child: Text(
+              key: const Key('label'),
+              listCount == 0
+                  ? context.text.emptyLists
+                  : !isPro
+                      ? context.text.increaseLimit
+                      : "",
+              style: listCount != 0
+                  ? context.typography.subtitle4.copyWith(color: context.colors.successPrimary)
+                  : context.typography.subtitle5,
             ),
+          ),
         ]),
       ),
     );
