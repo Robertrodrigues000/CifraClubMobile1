@@ -19,3 +19,9 @@ enum OperatingSystem {
   }
   // coverage:ignore-end
 }
+
+class UnimplementedOperatingSystemException implements Exception {
+  final OperatingSystem os;
+
+  UnimplementedOperatingSystemException(this.os);
+}

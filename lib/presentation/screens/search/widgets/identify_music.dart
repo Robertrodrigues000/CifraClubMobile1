@@ -33,8 +33,10 @@ class IdentifyMusic extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(context.text.identifyMusic,
-                    style: context.typography.subtitle5.copyWith(color: context.colors.textPrimary)),
+                child: Text(
+                  context.text.identifyMusic,
+                  style: context.typography.subtitle5.copyWith(color: context.colors.textPrimary),
+                ),
               ),
             ),
             Container(

@@ -1,4 +1,5 @@
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
+import 'package:cifraclub/domain/device/operating_system/models/os_version.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
@@ -15,12 +16,15 @@ class TestWrapper extends StatelessWidget {
   final Widget child;
   final Nav? nav;
   final ColorApproximator? colorApproximator;
+  final OsVersion? osVersion;
 
-  const TestWrapper({Key? key, required this.child, this.nav, this.colorApproximator}) : super(key: key);
+  const TestWrapper({Key? key, required this.child, this.nav, this.colorApproximator, this.osVersion})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InheritedDependenciesWidget(
+      osVersion: osVersion ?? const AndroidOsSdkVersion.sdk30(),
       colorApproximator: colorApproximator ?? ColorApproximator.getDefaultImplementation(),
       child: MaterialApp(
         supportedLocales: supportedLocales,

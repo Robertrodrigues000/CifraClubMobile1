@@ -40,7 +40,6 @@ class VersionsScreen extends StatefulWidget {
 }
 
 class _VersionsScreenState extends State<VersionsScreen> {
-  static const _searchHeight = 56.0;
   late final VersionsBloc _bloc = BlocProvider.of<VersionsBloc>(context);
   final scrollController = ScrollController();
   var isScrolledUnder = false;
@@ -88,7 +87,6 @@ class _VersionsScreenState extends State<VersionsScreen> {
           appBar: CosmosAppBar(
             toolbarHeight: context.appDimensionScheme.appBarHeight,
             automaticallyImplyLeading: false,
-            extendsUnderScroll: _searchHeight.toInt(),
             //TODO: implementar title spacing no cosmos e depois adicionar aqui
             leading: widget.isTablet
                 ? null

@@ -3,15 +3,17 @@ import 'package:cifraclub/presentation/constants/app_webp.dart';
 import 'package:flutter/material.dart';
 
 enum ErrorDescriptionWidgetType {
-  connection(),
-  server(),
-  privateList(),
-  loggedOut(),
-  videoLesson(),
-  resultNotFound(),
-  youtubeResultNotFound(),
-  emptyList(),
-  searchResultNotFound();
+  connection,
+  server,
+  privateList,
+  loggedOut,
+  videoLesson,
+  resultNotFound,
+  youtubeResultNotFound,
+  emptyList,
+  searchResultNotFound,
+  localSongsResultNotFound,
+  localSongsPermissionDenied;
 
   // coverage:ignore-start
   String? getImageLight() {
@@ -27,9 +29,7 @@ enum ErrorDescriptionWidgetType {
         return AppWebp.artistVideoLessonEmptyStateLight;
       case searchResultNotFound:
         return AppWebp.searchResultNotFoundLight;
-      case resultNotFound:
-      case emptyList:
-      case youtubeResultNotFound:
+      default:
         return null;
     }
   }
@@ -47,9 +47,7 @@ enum ErrorDescriptionWidgetType {
         return AppWebp.artistVideoLessonEmptyStateDark;
       case searchResultNotFound:
         return AppWebp.searchResultNotFoundDark;
-      case resultNotFound:
-      case emptyList:
-      case youtubeResultNotFound:
+      default:
         return null;
     }
   }
@@ -72,7 +70,7 @@ enum ErrorDescriptionWidgetType {
         return context.text.resultNotFoundTitle;
       case emptyList:
         return context.text.emptyListTitle;
-      case youtubeResultNotFound:
+      default:
         return null;
     }
   }
@@ -97,6 +95,10 @@ enum ErrorDescriptionWidgetType {
         return context.text.youtubeResultNotFound;
       case searchResultNotFound:
         return context.text.searchResultNotFoundDescription;
+      case localSongsResultNotFound:
+        return context.text.localSongsResultNotFound;
+      case localSongsPermissionDenied:
+        return context.text.localSongsPermissionDenied;
     }
   }
 
@@ -112,10 +114,7 @@ enum ErrorDescriptionWidgetType {
         return context.text.loggedOutListErrorButtonText;
       case emptyList:
         return context.text.searchSongs;
-      case videoLesson:
-      case resultNotFound:
-      case searchResultNotFound:
-      case youtubeResultNotFound:
+      default:
         return null;
     }
   }

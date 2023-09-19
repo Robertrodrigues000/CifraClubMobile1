@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by Arthur otero on 14/09/23.
+  
+*/
+
+NSAppleMusicUsageDescription = "Permita que este app acesse sua biblioteca de músicas para que ele possa tocar suas músicas.";

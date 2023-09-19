@@ -75,6 +75,7 @@ class CifraClub extends StatelessWidget {
   Widget build(BuildContext context) {
     return InheritedDependenciesWidget(
       colorApproximator: getIt(),
+      osVersion: getIt(),
       child: MaterialApp(
         restorationScopeId: _navigationRestorationScope,
         darkTheme: getCosmosDarkTheme(const BrandColors.asCifra(), extensions: [

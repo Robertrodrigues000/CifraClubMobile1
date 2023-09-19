@@ -66,7 +66,7 @@ class VersionEntry extends ScreenEntry {
           songUrl: songUrl,
           songbookVersionId: songbookVersionId,
         )),
-      child: const VersionScreen(),
+      child: VersionScreen(getIt()),
     );
   }
 }

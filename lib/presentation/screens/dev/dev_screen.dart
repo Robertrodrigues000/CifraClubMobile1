@@ -6,7 +6,6 @@ import 'package:cifraclub/domain/user/use_cases/logout.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
-import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
@@ -26,7 +25,6 @@ class DevScreen extends StatefulWidget {
   final OpenUserProfilePage openUserProfilePage;
   final Logout logout;
   final DevBottomSheet devBottomSheet;
-  final ListenBottomSheet listenBottomSheet;
 
   const DevScreen({
     Key? key,
@@ -35,7 +33,6 @@ class DevScreen extends StatefulWidget {
     required this.openUserProfilePage,
     required this.logout,
     required this.devBottomSheet,
-    required this.listenBottomSheet,
   }) : super(key: key);
 
   @override
@@ -138,8 +135,7 @@ class _DevScreenState extends State<DevScreen> {
                   ),
                   title: const Text("Compra"),
                   onTap: () {
-                    widget.listenBottomSheet.open(context: context);
-                    //_bloc.purchase();
+                    _bloc.purchase();
                   },
                 ),
                 ListTile(

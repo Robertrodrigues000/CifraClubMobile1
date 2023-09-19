@@ -2,6 +2,7 @@
 import 'package:cifraclub/domain/version/models/chord.dart';
 import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
@@ -18,7 +19,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VersionScreen extends StatefulWidget {
-  const VersionScreen({super.key});
+  final ListenBottomSheet listenBottomSheet;
+
+  const VersionScreen(this.listenBottomSheet, {super.key});
 
   @override
   State<VersionScreen> createState() => _VersionScreenState();
@@ -191,7 +194,15 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                                   state.autoScrollState.isAutoScrollRunning ? OnAutoScrollStop() : OnAutoScrollStart());
                             },
                             child: const Icon(Icons.video_chat)),
-                        TextButton(onPressed: () {}, child: const Icon(Icons.arrow_outward)),
+                        TextButton(
+                            onPressed: () {
+                              widget.listenBottomSheet.open(
+                                context: context,
+                                artistName: state.version?.artist?.name ?? "",
+                                songName: state.version?.song.name ?? "",
+                              );
+                            },
+                            child: const Icon(Icons.arrow_outward)),
                         TextButton(
                             onPressed: () async {
                               var newKey = await VersionKeyBottomSheet(

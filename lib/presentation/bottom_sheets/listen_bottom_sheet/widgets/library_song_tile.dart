@@ -1,18 +1,19 @@
+import 'dart:typed_data';
+
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LibrarySongTile extends StatelessWidget {
-  final String imageUrl;
+  final Uint8List? image;
   final String artistName;
   final String songName;
   final VoidCallback onTap;
 
   const LibrarySongTile({
     super.key,
-    required this.imageUrl,
+    required this.image,
     required this.artistName,
     required this.songName,
     required this.onTap,
@@ -30,21 +31,17 @@ class LibrarySongTile extends StatelessWidget {
           child: Row(
             children: [
               // coverage:ignore-start
-              RemoteImage(
-                imageUrl: imageUrl,
-                imageBuilder: (context, imageProvider) => Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                    ),
+              if (image != null)
+                ClipOval(
+                  child: Image.memory(
+                    image!,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
                   ),
-                ),
-                // coverage:ignore-end
-                placeholder: SizedBox(
+                )
+              else
+                SizedBox(
                   width: 40,
                   height: 40,
                   child: ClipOval(
@@ -54,7 +51,7 @@ class LibrarySongTile extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              // coverage:ignore-end
               SizedBox.fromSize(size: const Size.fromWidth(16)),
               Expanded(
                 child: Column(

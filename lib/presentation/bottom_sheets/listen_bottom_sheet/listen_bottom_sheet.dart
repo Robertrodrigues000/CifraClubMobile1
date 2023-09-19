@@ -1,9 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/song/use_cases/get_local_song_image.dart';
+import 'package:cifraclub/domain/song/use_cases/get_local_songs.dart';
 import 'package:cifraclub/domain/youtube/use_cases/get_youtube_videos.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet_state.dart';
+import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/controller_scroll_under_builder.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/library_song_tile.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/widgets/youtube_video_tile.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -17,12 +22,16 @@ import 'package:intl/intl.dart';
 @injectable
 class ListenBottomSheet {
   final GetYouTubeVideos _getYouTubeVideos;
+  final GetLocalSongs _getLocalSongs;
+  final GetLocalSongImage _getLocalSongImage;
 
-  const ListenBottomSheet(this._getYouTubeVideos);
+  const ListenBottomSheet(this._getYouTubeVideos, this._getLocalSongImage, this._getLocalSongs);
 
   // coverage:ignore-start
   void open({
     required BuildContext context,
+    required String artistName,
+    required String songName,
     ListenBottomSheetBloc? bloc,
   }) {
     DefaultBottomSheet.showBottomSheet(
@@ -31,6 +40,10 @@ class ListenBottomSheet {
         bloc: bloc ??
             ListenBottomSheetBloc(
               _getYouTubeVideos,
+              _getLocalSongs,
+              _getLocalSongImage,
+              artistName: artistName,
+              songName: songName,
             ),
       ),
       enableHeader: false,
@@ -51,33 +64,28 @@ class _ListenBottomSheetWidget extends StatefulWidget {
 
 class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  var isScrolledUnder = false;
+  var isFirstCall = true;
   final _scrollController = ScrollController();
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
-    _scrollController.addListener(_onScroll);
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_onPageChange);
   }
 
-  // coverage:ignore-start
-  void _onScroll() {
-    final currentOffset = _scrollController.offset;
-    final currentScrollUnder = currentOffset > 0 ? true : false;
-    if (currentScrollUnder != isScrolledUnder) {
-      setState(() {
-        isScrolledUnder = currentScrollUnder;
-      });
+  void _onPageChange() {
+    if (_tabController.index == 1 && isFirstCall) {
+      isFirstCall = false;
+      widget.bloc.getLocalSongs();
     }
   }
-  // coverage:ignore-end
 
   @override
   void dispose() {
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
     _tabController.dispose();
+    _tabController.removeListener(_onPageChange);
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -89,28 +97,38 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
         builder: (context, state) {
           return Column(
             children: [
-              DefaultBottomSheetHeader(isScrolledUnder: isScrolledUnder),
+              ControllerScrollUnderBuilder(
+                scrollController: _scrollController,
+                builder: (context, isScrolledUnder) {
+                  return DefaultBottomSheetHeader(isScrolledUnder: isScrolledUnder);
+                },
+              ),
               Expanded(
                 child: NestedScrollView(
                   controller: _scrollController,
                   headerSliverBuilder: (context, innerBoxIsScrolled) {
                     return [
                       SliverToBoxAdapter(
-                        child: Container(
-                          color: isScrolledUnder ? context.colors.neutralSecondary : context.colors.neutralPrimary,
-                          padding: EdgeInsets.only(
-                            right: context.appDimensionScheme.screenMargin,
-                            left: context.appDimensionScheme.screenMargin,
-                            bottom: context.appDimensionScheme.screenMargin,
-                          ),
-                          child: Text(context.text.listen, style: context.typography.title5),
-                        ),
+                        child: ControllerScrollUnderBuilder(
+                            scrollController: _scrollController,
+                            builder: (context, isScrolledUnder) {
+                              return Container(
+                                color:
+                                    isScrolledUnder ? context.colors.neutralSecondary : context.colors.neutralPrimary,
+                                padding: EdgeInsets.only(
+                                  right: context.appDimensionScheme.screenMargin,
+                                  left: context.appDimensionScheme.screenMargin,
+                                  bottom: context.appDimensionScheme.screenMargin,
+                                ),
+                                child: Text(context.text.listen, style: context.typography.title5),
+                              );
+                            }),
                       ),
                       SliverOverlapAbsorber(
                         handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                         sliver: _ListenBottomSheetFixedHeader(
-                          haveScroll: isScrolledUnder,
                           tabController: _tabController,
+                          scrollController: _scrollController,
                         ),
                       ),
                     ];
@@ -173,19 +191,41 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                               SliverOverlapInjector(
                                 handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                               ),
-                              SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                    return LibrarySongTile(
-                                      imageUrl: "",
-                                      artistName: "Legião Urbana",
-                                      songName: "Quase sem querer (Aula de violão)",
-                                      onTap: () {}, // coverage:ignore-line
-                                    );
-                                  },
-                                  childCount: 20, // Number of containers in the list
+                              if (state.isLoadingLocalSongs)
+                                const SliverFillRemaining(child: Center(child: LoadingIndicator()))
+                              else if (state.localSongsError != null ||
+                                  (state.localSongs != null && state.localSongs!.isEmpty))
+                                SliverToBoxAdapter(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: context.appDimensionScheme.screenMargin),
+                                    child: ErrorDescriptionWidget(
+                                      typeError: state.localSongsError is LocalSongPermissionError
+                                          ? ErrorDescriptionWidgetType.localSongsPermissionDenied
+                                          : ErrorDescriptionWidgetType.localSongsResultNotFound,
+                                    ),
+                                  ),
+                                )
+                              else if (state.localSongs != null)
+                                SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    childCount: state.localSongs!.length,
+                                    (BuildContext context, int index) {
+                                      final localSong = state.localSongs![index];
+
+                                      return FutureBuilder<Uint8List?>(
+                                        future: widget.bloc.getImage(localSong.path!),
+                                        builder: (context, AsyncSnapshot<Uint8List?> snapshot) {
+                                          return LibrarySongTile(
+                                            image: snapshot.data,
+                                            artistName: localSong.artistName,
+                                            songName: localSong.songName,
+                                            onTap: () {}, // coverage:ignore-line
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                         ],
@@ -208,17 +248,17 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
 }
 
 class _ListenBottomSheetFixedHeader extends StatelessWidget {
-  const _ListenBottomSheetFixedHeader({required this.haveScroll, required this.tabController});
-  final bool haveScroll;
+  const _ListenBottomSheetFixedHeader({required this.tabController, required this.scrollController});
   final TabController tabController;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
       delegate: _ListenBottomSheetFixedHeaderDelegate(
-        haveScroll: haveScroll,
         maxExtend: 52,
+        scrollController: scrollController,
         child: TabBar(
           controller: tabController,
           labelPadding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
@@ -247,9 +287,11 @@ class _ListenBottomSheetFixedHeader extends StatelessWidget {
 class _ListenBottomSheetFixedHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double maxExtend;
   final Widget child;
-  final bool haveScroll;
+  final ScrollController scrollController;
 
-  _ListenBottomSheetFixedHeaderDelegate({required this.maxExtend, required this.child, required this.haveScroll});
+  _ListenBottomSheetFixedHeaderDelegate({required this.maxExtend, required this.scrollController, required this.child});
+
+  bool haveScroll = false;
 
   @override
   double get maxExtent => maxExtend;
@@ -259,10 +301,16 @@ class _ListenBottomSheetFixedHeaderDelegate extends SliverPersistentHeaderDelega
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      height: maxExtend,
-      color: haveScroll ? context.colors.neutralSecondary : context.colors.neutralPrimary,
-      child: child,
+    return ControllerScrollUnderBuilder(
+      scrollController: scrollController,
+      builder: (context, isScrolledUnder) {
+        haveScroll = isScrolledUnder;
+        return Container(
+          height: maxExtend,
+          color: haveScroll ? context.colors.neutralSecondary : context.colors.neutralPrimary,
+          child: child,
+        );
+      },
     );
   }
 

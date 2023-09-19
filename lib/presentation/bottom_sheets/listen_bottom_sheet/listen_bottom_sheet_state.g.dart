@@ -13,6 +13,12 @@ abstract class _$ListenBottomSheetStateCWProxy {
 
   ListenBottomSheetState youtubeError(RequestError? youtubeError);
 
+  ListenBottomSheetState localSongs(List<LocalSong>? localSongs);
+
+  ListenBottomSheetState isLoadingLocalSongs(bool isLoadingLocalSongs);
+
+  ListenBottomSheetState localSongsError(LocalSongError? localSongsError);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListenBottomSheetState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -23,6 +29,9 @@ abstract class _$ListenBottomSheetStateCWProxy {
     List<YouTubeVideo>? youtubeVideos,
     bool? isLoadingYoutube,
     RequestError? youtubeError,
+    List<LocalSong>? localSongs,
+    bool? isLoadingLocalSongs,
+    LocalSongError? localSongsError,
   });
 }
 
@@ -42,6 +51,16 @@ class _$ListenBottomSheetStateCWProxyImpl implements _$ListenBottomSheetStateCWP
   ListenBottomSheetState youtubeError(RequestError? youtubeError) => this(youtubeError: youtubeError);
 
   @override
+  ListenBottomSheetState localSongs(List<LocalSong>? localSongs) => this(localSongs: localSongs);
+
+  @override
+  ListenBottomSheetState isLoadingLocalSongs(bool isLoadingLocalSongs) =>
+      this(isLoadingLocalSongs: isLoadingLocalSongs);
+
+  @override
+  ListenBottomSheetState localSongsError(LocalSongError? localSongsError) => this(localSongsError: localSongsError);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListenBottomSheetState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -53,6 +72,9 @@ class _$ListenBottomSheetStateCWProxyImpl implements _$ListenBottomSheetStateCWP
     Object? youtubeVideos = const $CopyWithPlaceholder(),
     Object? isLoadingYoutube = const $CopyWithPlaceholder(),
     Object? youtubeError = const $CopyWithPlaceholder(),
+    Object? localSongs = const $CopyWithPlaceholder(),
+    Object? isLoadingLocalSongs = const $CopyWithPlaceholder(),
+    Object? localSongsError = const $CopyWithPlaceholder(),
   }) {
     return ListenBottomSheetState(
       youtubeVideos: youtubeVideos == const $CopyWithPlaceholder() || youtubeVideos == null
@@ -67,6 +89,18 @@ class _$ListenBottomSheetStateCWProxyImpl implements _$ListenBottomSheetStateCWP
           ? _value.youtubeError
           // ignore: cast_nullable_to_non_nullable
           : youtubeError as RequestError?,
+      localSongs: localSongs == const $CopyWithPlaceholder()
+          ? _value.localSongs
+          // ignore: cast_nullable_to_non_nullable
+          : localSongs as List<LocalSong>?,
+      isLoadingLocalSongs: isLoadingLocalSongs == const $CopyWithPlaceholder() || isLoadingLocalSongs == null
+          ? _value.isLoadingLocalSongs
+          // ignore: cast_nullable_to_non_nullable
+          : isLoadingLocalSongs as bool,
+      localSongsError: localSongsError == const $CopyWithPlaceholder()
+          ? _value.localSongsError
+          // ignore: cast_nullable_to_non_nullable
+          : localSongsError as LocalSongError?,
     );
   }
 }
