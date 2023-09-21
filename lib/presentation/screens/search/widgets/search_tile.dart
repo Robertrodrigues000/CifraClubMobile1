@@ -1,61 +1,29 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_image_group.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cifraclub/presentation/widgets/pick_shape_image.dart';
+import 'package:cifraclub/presentation/widgets/rectangle_shape_image.dart';
 import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class TopListItem extends StatelessWidget {
+class SearchTile extends StatelessWidget {
+  final VoidCallback onTap;
+  final String? imageUrl;
+  final List<String>? listPreview;
   final String title;
   final String? subtitle;
-  final String ranking;
-  final String? imageUrl;
   final Widget? trailing;
-  final VoidCallback onTap;
 
-  const TopListItem(
+  const SearchTile(
       {super.key,
+      required this.onTap,
+      this.imageUrl,
       required this.title,
       this.subtitle,
-      required this.ranking,
-      this.imageUrl,
       this.trailing,
-      required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return _TopListItemContent(
-        title: title,
-        subtitle: subtitle,
-        ranking: ranking,
-        imageUrl: imageUrl,
-        onTap: onTap,
-        trailing: trailing,
-        padding: context.appDimensionScheme.screenMargin,
-        rankWidth: context.appDimensionScheme.topCellRankingWidth);
-  }
-}
-
-class _TopListItemContent extends StatelessWidget {
-  final String title;
-  final String? subtitle;
-  final String ranking;
-  final String? imageUrl;
-  final Widget? trailing;
-  final VoidCallback onTap;
-  final double padding;
-  final double rankWidth;
-
-  const _TopListItemContent(
-      {required this.title,
-      required this.subtitle,
-      required this.ranking,
-      required this.imageUrl,
-      this.trailing,
-      required this.onTap,
-      required this.padding,
-      required this.rankWidth});
+      this.listPreview});
 
   @override
   Widget build(BuildContext context) {
@@ -65,42 +33,45 @@ class _TopListItemContent extends StatelessWidget {
       width: maxWidth,
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: padding),
+        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: context.appDimensionScheme.screenMargin),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           textBaseline: TextBaseline.alphabetic,
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: subtitle != null ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            RemoteImage(
-              imageUrl: imageUrl,
-              imageBuilder: (context, imageProvider) => PickShapeImage(
-                imageProvider: imageProvider,
-                fixedSize: 40,
+            if (listPreview != null)
+              ListImageGroup(images: listPreview!)
+            else
+              RemoteImage(
+                imageUrl: imageUrl,
+                // coverage:ignore-start
+                imageBuilder: (context, imageProvider) => subtitle != null
+                    ? RectangleShapeImage(
+                        imageProvider: imageProvider,
+                      )
+                    : PickShapeImage(
+                        imageProvider: imageProvider,
+                      ),
+                // coverage:ignore-end
+                placeholder: subtitle != null
+                    ? RectangleShapeImage(
+                        child: SvgPicture.asset(
+                          AppSvgs.artistsAvatarPlaceHolder,
+                        ),
+                      )
+                    : PickShapeImage(
+                        child: SvgPicture.asset(
+                          AppSvgs.artistsAvatarPlaceHolder,
+                        ),
+                      ),
               ),
-              placeholder: PickShapeImage(
-                key: const Key("avatarPlaceHolder"),
-                fixedSize: 40,
-                child: SvgPicture.asset(
-                  AppSvgs.artistsAvatarPlaceHolder,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: rankWidth,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Text(
-                  ranking,
-                  style: typography.subtitle3.copyWith(
-                    color: context.colors.textSecondary,
-                  ),
-                ),
-              ),
+            const SizedBox(
+              width: 16,
             ),
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: subtitle != null ? MainAxisAlignment.start : MainAxisAlignment.center,
                 textBaseline: TextBaseline.ideographic,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 mainAxisSize: MainAxisSize.max,

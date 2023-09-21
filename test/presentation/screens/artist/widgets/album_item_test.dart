@@ -10,12 +10,15 @@ import '../../../../test_helpers/test_wrapper.dart';
 void main() {
   testWidgets("When tapping an item, should call onTap", (widgetTester) async {
     final completer = Completer();
+    final album = getFakeAlbum();
     await widgetTester.pumpWidget(TestWrapper(
       child: AlbumItem(
         key: const Key('album item'),
         size: 60,
         onTap: completer.complete,
-        album: getFakeAlbum(),
+        title: album.title,
+        subtitle: album.artistName,
+        cover: album.image?.image,
       ),
     ));
     await widgetTester.tap(find.byKey(const Key("album item")));

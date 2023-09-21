@@ -1,4 +1,6 @@
 import 'package:cifraclub/domain/artist/models/album.dart';
+import 'package:cifraclub/domain/search/models/search_models/album_search.dart';
+import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
 import 'package:cifraclub/extensions/text_style.dart';
 import 'package:cifraclub/presentation/screens/album/album_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/album_item.dart';
@@ -7,11 +9,13 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:nav/nav.dart';
 
 class Albums extends StatefulWidget {
-  final List<Album> albums;
+  final List<Album>? albums;
+  final List<SearchItem>? searchItems;
 
   const Albums({
     super.key = const Key("albums"),
-    required this.albums,
+    this.albums,
+    this.searchItems,
   });
 
   @override
@@ -43,20 +47,43 @@ class _AlbumsState extends State<Albums> {
           mainAxisSpacing: dimensions.screenMargin,
           mainAxisExtent: textHeight + imageSize + 18,
         ),
-        delegate: SliverChildBuilderDelegate(
-          childCount: widget.albums.length,
-          (context, index) {
-            return AlbumItem(
-              key: Key(widget.albums[index].albumUrl),
-              album: widget.albums[index],
-              // coverage:ignore-start
-              onTap: () => AlbumEntry.push(Nav.of(context), widget.albums[index].artistUrl,
-                  widget.albums[index].albumUrl, widget.albums[index].title),
-              // coverage:ignore-end
-              size: imageSize,
-            );
-          },
-        ),
+        delegate: widget.albums != null
+            ? SliverChildBuilderDelegate(
+                childCount: widget.albums!.length,
+                (context, index) {
+                  final album = widget.albums![index];
+                  return AlbumItem(
+                    key: Key(album.albumUrl),
+                    title: album.title,
+                    subtitle: "${album.totalSongs} ${context.text.songs(album.totalSongs ?? 0)} • ${album.releaseYear}",
+                    cover: album.image?.image,
+                    // coverage:ignore-start
+                    onTap: () => AlbumEntry.push(Nav.of(context), album.artistUrl, album.albumUrl, album.title),
+                    // coverage:ignore-end
+                    size: imageSize,
+                  );
+                },
+              )
+            : SliverChildBuilderDelegate(
+                childCount: widget.searchItems!.length,
+                (context, index) {
+                  final searchAlbum = widget.searchItems![index];
+                  if (searchAlbum is AlbumSearch) {
+                    return AlbumItem(
+                      key: Key(searchAlbum.albumUrl),
+                      title: searchAlbum.albumName,
+                      subtitle: searchAlbum.artistName,
+                      cover: searchAlbum.albumCover,
+                      // coverage:ignore-start
+                      onTap: () => AlbumEntry.push(
+                          Nav.of(context), searchAlbum.artistUrl, searchAlbum.albumUrl, searchAlbum.albumName),
+                      // coverage:ignore-end
+                      size: imageSize,
+                    );
+                  }
+                  return null;
+                },
+              ),
       ),
     );
   }

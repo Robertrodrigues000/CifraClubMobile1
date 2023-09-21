@@ -1,4 +1,3 @@
-import 'package:cifraclub/domain/artist/models/album.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
@@ -7,14 +6,19 @@ import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class AlbumItem extends StatefulWidget {
-  final Album album;
   final VoidCallback onTap;
   final double size;
+  final String? cover;
+  final String subtitle;
+  final String title;
+
   const AlbumItem({
     super.key,
-    required this.album,
     required this.onTap,
     required this.size,
+    this.cover,
+    required this.subtitle,
+    required this.title,
   });
 
   @override
@@ -102,7 +106,7 @@ class _AlbumItemState extends State<AlbumItem> with SingleTickerProviderStateMix
             },
             child: RemoteImage(
               // coverage:ignore-start
-              imageUrl: widget.album.image?.image,
+              imageUrl: widget.cover,
               imageBuilder: (context, imageProvider) {
                 return Container(
                   width: widget.size,
@@ -136,14 +140,14 @@ class _AlbumItemState extends State<AlbumItem> with SingleTickerProviderStateMix
                 children: [
                   const SizedBox(height: 16),
                   Text(
-                    widget.album.title,
+                    widget.title,
                     style: styles.subtitle3,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    "${widget.album.totalSongs} ${context.text.songs(widget.album.totalSongs ?? 0)} • ${widget.album.releaseYear}",
+                    widget.subtitle,
                     style: styles.subtitle5,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

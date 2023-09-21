@@ -5,7 +5,7 @@ import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/list_animation.dart';
 import 'package:cifraclub/presentation/widgets/color_approximator.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
-import 'package:cifraclub/presentation/widgets/pick_shaped_image.dart';
+import 'package:cifraclub/presentation/widgets/pick_shape_image.dart';
 import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +97,7 @@ class _ArtistCard extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.all(context.appDimensionScheme.internalMargin),
                         child: PickShapeImage(
-                          size: 56,
+                          fixedSize: 56,
                           backgroundColor: Colors.white,
                           child: SvgPicture.asset(AppSvgs.artistsAvatarPlaceHolder),
                         ),

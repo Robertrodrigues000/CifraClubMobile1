@@ -36,6 +36,8 @@ class SearchDto extends Equatable {
   @JsonKey(name: "qnt_songs")
   final int? totalSongs;
   final List<String>? imgsm;
+  @JsonKey(name: "v")
+  final bool? isVerified;
 
   const SearchDto({
     required this.songId,
@@ -53,6 +55,7 @@ class SearchDto extends Equatable {
     required this.userName,
     required this.totalSongs,
     required this.imgsm,
+    required this.isVerified,
   });
 
   factory SearchDto.fromJson(Map<String, dynamic> json) => _$SearchDtoFromJson(json);
@@ -69,7 +72,8 @@ class SearchDto extends Equatable {
             artistId: artistId!,
             artistName: artist!,
             artistUrl: artistUrl!,
-            artistImage: imgm);
+            artistImage: imgm,
+            isVerified: isVerified!);
       case "5":
         return SongbookSearch(
             songbookId: songbookId!,
@@ -85,7 +89,8 @@ class SearchDto extends Equatable {
             artistId: artistId!,
             artistName: artist!,
             artistUrl: artistUrl!,
-            albumCover: imgm);
+            albumCover: imgm,
+            releaseYear: albumUrl!.substring(albumUrl!.length - 4));
       default:
         return null;
     }

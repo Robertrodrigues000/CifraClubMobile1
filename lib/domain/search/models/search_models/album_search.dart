@@ -8,6 +8,7 @@ class AlbumSearch extends Equatable implements SearchItem {
   final String artistName;
   final String artistUrl;
   final String? albumCover;
+  final String releaseYear;
 
   const AlbumSearch({
     required this.albumName,
@@ -16,6 +17,7 @@ class AlbumSearch extends Equatable implements SearchItem {
     required this.artistName,
     required this.artistUrl,
     required this.albumCover,
+    required this.releaseYear,
   });
 
   // coverage:ignore-start

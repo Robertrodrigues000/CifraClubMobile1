@@ -58,6 +58,7 @@ void main() {
               userName: null,
               totalSongs: null,
               imgsm: null,
+              isVerified: null,
             ),
             SearchDto(
               songId: 27161,
@@ -75,6 +76,7 @@ void main() {
               userName: null,
               totalSongs: null,
               imgsm: null,
+              isVerified: false,
             )
           ],
         ),
@@ -120,6 +122,7 @@ void main() {
               userName: null,
               totalSongs: null,
               imgsm: null,
+              isVerified: null,
             ),
           ],
         ),
@@ -188,6 +191,7 @@ void main() {
               userName: null,
               totalSongs: null,
               imgsm: null,
+              isVerified: false,
             ),
             SearchDto(
               songId: 244155,
@@ -205,6 +209,7 @@ void main() {
               userName: null,
               totalSongs: null,
               imgsm: null,
+              isVerified: false,
             )
           ],
         ),

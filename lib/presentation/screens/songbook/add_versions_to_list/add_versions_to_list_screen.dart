@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/dialogs/save_versions_in_list_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
@@ -10,6 +11,7 @@ import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart'
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
 
 class AddVersionsToListScreen extends StatefulWidget {
@@ -101,6 +103,7 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                           song: song.songName,
                           state: _bloc.getSongState(song),
                           imageUrl: song.artistImage,
+                          trailing: song.isVerified ? SvgPicture.asset(AppSvgs.verifiedIcon) : null,
                         );
                       },
                     ),

@@ -24,6 +24,7 @@ void main() {
         userName: null,
         totalSongs: null,
         imgsm: null,
+        isVerified: null,
       );
       final search = searchDto.toDomain();
 
@@ -53,6 +54,7 @@ void main() {
         userName: null,
         totalSongs: null,
         imgsm: null,
+        isVerified: false,
       );
       final search = searchDto.toDomain();
 
@@ -91,6 +93,7 @@ void main() {
           "https://akamai.sscdn.co/letras/50x50/fotos/e/0/6/f/e06f967fb0d355592be4e7674fa31d26.jpg",
           "https://akamai.sscdn.co/letras/50x50/fotos/0/c/4/a/0c4a49c282428682af1176a18b7d364a.jpg"
         ],
+        isVerified: null,
       );
       final search = searchDto.toDomain();
 
@@ -122,6 +125,7 @@ void main() {
         userName: null,
         totalSongs: null,
         imgsm: null,
+        isVerified: null,
       );
       final search = searchDto.toDomain();
 

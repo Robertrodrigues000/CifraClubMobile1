@@ -1,22 +1,24 @@
 // coverage:ignore-file
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PickShapeImage extends StatelessWidget {
   final ImageProvider? imageProvider;
   final Widget? child;
-  final double size;
+  final double? fixedSize;
   final Color? backgroundColor;
   const PickShapeImage({
     super.key,
     this.imageProvider,
     this.child,
-    this.size = 40,
+    this.fixedSize,
     this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final size = fixedSize ?? context.appDimensionScheme.addVersionTileImageSize;
     return Container(
       clipBehavior: Clip.antiAlias,
       height: size,

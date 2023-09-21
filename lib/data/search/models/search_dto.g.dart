@@ -22,4 +22,5 @@ SearchDto _$SearchDtoFromJson(Map<String, dynamic> json) => SearchDto(
       userName: json['user_name'] as String?,
       totalSongs: json['qnt_songs'] as int?,
       imgsm: (json['imgsm'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      isVerified: json['v'] as bool?,
     );

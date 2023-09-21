@@ -16,7 +16,8 @@
                 "tipo": "2",
                 "id_artist": 174027,
                 "id_song": 437376,
-                "b": 0
+                "b": 0,
+                "v": false
             },
             {
                 "art": "Harpa Cristã",
@@ -30,7 +31,8 @@
                 "tipo": "2",
                 "id_artist": 24399,
                 "id_song": 244155,
-                "b": 0
+                "b": 0,
+                "v": false
             }
         ]
     }

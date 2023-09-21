@@ -9,6 +9,7 @@ class SongSearch extends Equatable implements SearchItem {
   final String artistName;
   final String artistUrl;
   final String? artistImage;
+  final bool isVerified;
 
   const SongSearch({
     required this.songId,
@@ -18,6 +19,7 @@ class SongSearch extends Equatable implements SearchItem {
     required this.artistName,
     required this.artistUrl,
     required this.artistImage,
+    required this.isVerified,
   });
 
   // coverage:ignore-start
