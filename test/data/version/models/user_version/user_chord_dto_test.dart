@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test("When call 'fromDomain'", () {
     final chord = Chord(
-      chord: "chrod",
-      alt: "alt",
+      name: "chrod",
+      shapeName: "alt",
       guitar: ["A B"],
       cavaco: ["A E"],
       ukulele: ["A T"],
@@ -18,8 +18,8 @@ void main() {
 
     final userChordDto = UserChordDto.fromDomain(chord);
 
-    expect(userChordDto.chord, "chrod");
-    expect(userChordDto.alt, "alt");
+    expect(userChordDto.name, "chrod");
+    expect(userChordDto.shapeName, "alt");
     expect(userChordDto.guitar, ["A B"]);
     expect(userChordDto.cavaco, ["A E"]);
     expect(userChordDto.ukulele, ["A T"]);

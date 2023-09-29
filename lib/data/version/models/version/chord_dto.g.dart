@@ -7,8 +7,8 @@ part of 'chord_dto.dart';
 // **************************************************************************
 
 ChordDto _$ChordDtoFromJson(Map<String, dynamic> json) => ChordDto(
-      chord: json['chord'] as String,
-      alt: json['alt'] as String,
+      name: json['chord'] as String,
+      shapeName: json['alt'] as String,
       guitar: (json['guitar'] as List<dynamic>?)?.map((e) => e as String).toList(),
       cavaco: (json['cavaco'] as List<dynamic>?)?.map((e) => e as String).toList(),
       keyboard: (json['keyboard'] as List<dynamic>?)?.map((e) => e as String).toList(),

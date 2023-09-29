@@ -95,8 +95,8 @@ void _versionDataJsonResponseExpects(VersionDataDto versionData) {
   expect(versionData.isVerified, true);
   expect(versionData.blocked, true);
   expect(versionData.type, 1);
-  expect(versionData.chords?.first.chord, "Am7");
-  expect(versionData.chords?.first.alt, "Am7");
+  expect(versionData.chords?.first.name, "Am7");
+  expect(versionData.chords?.first.shapeName, "Am7");
   expect(versionData.chords?.first.guitar, ["X 0 2 0 1 0"]);
   expect(versionData.chords?.first.cavaco, ["7 P5 5 5"]);
   expect(versionData.chords?.first.keyboard, ["10 1 5 8"]);

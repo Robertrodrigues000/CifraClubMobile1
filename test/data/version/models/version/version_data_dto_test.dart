@@ -26,7 +26,7 @@ void main() {
       isVerified: true,
       blocked: false,
       reason: "reason",
-      chords: [ChordDto(chord: "chord", alt: "alt")],
+      chords: [ChordDto(name: "chord", shapeName: "alt")],
       song: VersionDataSongDto(songId: 1, lyricsId: 1, name: "name", url: "url", description: "description"),
       artist: const ArtistDto(url: "url", image: null, name: "name", id: 2),
       videoLesson: null,
@@ -53,8 +53,8 @@ void main() {
     expect(version.isVerified, true);
     expect(version.blocked, false);
     expect(version.reason, "reason");
-    expect(version.chords?.first.alt, "alt");
-    expect(version.chords?.first.chord, "chord");
+    expect(version.chords?.first.shapeName, "alt");
+    expect(version.chords?.first.name, "chord");
     expect(version.song.songId, 1);
     expect(version.song.lyricsId, 1);
     expect(version.song.name, "name");

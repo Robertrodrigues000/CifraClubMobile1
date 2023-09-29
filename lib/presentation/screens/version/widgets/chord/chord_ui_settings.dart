@@ -40,7 +40,7 @@ class ChordUISettings {
     this.chordGridHeight = 130,
     this.stringPlayIndicationPadding = 8,
     this.barHeight = 12,
-    this.ballFontSize = 10,
+    this.ballFontSize = 16,
     this.barPadding = 12,
     this.titleHeight = 24,
     this.titleFontSize = 20,

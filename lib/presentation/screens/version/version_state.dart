@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
@@ -22,6 +23,8 @@ class VersionState {
   final VersionHeaderState versionHeaderState;
 
   final AutoScrollState autoScrollState;
+
+  final ChordState chordState;
 
   /*
   
@@ -61,6 +64,7 @@ class VersionState {
     this.isYouTubeVisible = false,
     this.versionHeaderState = const VersionHeaderState(),
     this.autoScrollState = const AutoScrollState(),
+    this.chordState = const ChordState(),
   });
 }
 
@@ -97,5 +101,15 @@ class AutoScrollState {
   const AutoScrollState({
     this.isAutoScrollRunning = false,
     this.speedFactor = 0,
+  });
+}
+
+@CopyWith()
+@immutable
+class ChordState {
+  final List<ChordRepresentation> chordRepresentations;
+
+  const ChordState({
+    this.chordRepresentations = const [],
   });
 }

@@ -27,6 +27,7 @@ class AutoScrollMiddleware implements VersionMiddleware {
       case OnAutoScrollStop():
         _stop();
       default:
+        break;
     }
   }
 

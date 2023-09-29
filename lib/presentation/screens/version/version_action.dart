@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
@@ -83,3 +84,9 @@ class OnAutoScrollTickAction implements VersionAction {
 class OnAutoScrollStart implements VersionAction {}
 
 class OnAutoScrollStop implements VersionAction {}
+
+class OnChordListLoaded implements VersionAction {
+  final List<ChordRepresentation> chords;
+
+  OnChordListLoaded(this.chords);
+}

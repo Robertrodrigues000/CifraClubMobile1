@@ -49,6 +49,8 @@ class VersionReducer {
         return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: true));
       case OnAutoScrollStop():
         return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: false));
+      case OnChordListLoaded():
+        return state.copyWith(chordState: state.chordState.copyWith(chordRepresentations: action.chords));
       default:
         return state;
     }

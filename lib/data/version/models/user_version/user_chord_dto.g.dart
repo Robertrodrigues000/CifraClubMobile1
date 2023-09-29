@@ -13,30 +13,30 @@ const UserChordDtoSchema = Schema(
   name: r'UserChordDto',
   id: 754604440676385279,
   properties: {
-    r'alt': PropertySchema(
-      id: 0,
-      name: r'alt',
-      type: IsarType.string,
-    ),
     r'cavaco': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'cavaco',
       type: IsarType.stringList,
     ),
-    r'chord': PropertySchema(
-      id: 2,
-      name: r'chord',
-      type: IsarType.string,
-    ),
     r'guitar': PropertySchema(
-      id: 3,
+      id: 1,
       name: r'guitar',
       type: IsarType.stringList,
     ),
     r'keyboard': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'keyboard',
       type: IsarType.stringList,
+    ),
+    r'name': PropertySchema(
+      id: 3,
+      name: r'name',
+      type: IsarType.string,
+    ),
+    r'shapeName': PropertySchema(
+      id: 4,
+      name: r'shapeName',
+      type: IsarType.string,
     ),
     r'ukulele': PropertySchema(
       id: 5,
@@ -71,7 +71,6 @@ int _userChordDtoEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.alt.length * 3;
   {
     final list = object.cavaco;
     if (list != null) {
@@ -84,7 +83,6 @@ int _userChordDtoEstimateSize(
       }
     }
   }
-  bytesCount += 3 + object.chord.length * 3;
   {
     final list = object.guitar;
     if (list != null) {
@@ -109,6 +107,8 @@ int _userChordDtoEstimateSize(
       }
     }
   }
+  bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.shapeName.length * 3;
   {
     final list = object.ukulele;
     if (list != null) {
@@ -166,11 +166,11 @@ void _userChordDtoSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.alt);
-  writer.writeStringList(offsets[1], object.cavaco);
-  writer.writeString(offsets[2], object.chord);
-  writer.writeStringList(offsets[3], object.guitar);
-  writer.writeStringList(offsets[4], object.keyboard);
+  writer.writeStringList(offsets[0], object.cavaco);
+  writer.writeStringList(offsets[1], object.guitar);
+  writer.writeStringList(offsets[2], object.keyboard);
+  writer.writeString(offsets[3], object.name);
+  writer.writeString(offsets[4], object.shapeName);
   writer.writeStringList(offsets[5], object.ukulele);
   writer.writeStringList(offsets[6], object.viola);
   writer.writeStringList(offsets[7], object.violaMi);
@@ -184,11 +184,11 @@ UserChordDto _userChordDtoDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = UserChordDto();
-  object.alt = reader.readString(offsets[0]);
-  object.cavaco = reader.readStringList(offsets[1]);
-  object.chord = reader.readString(offsets[2]);
-  object.guitar = reader.readStringList(offsets[3]);
-  object.keyboard = reader.readStringList(offsets[4]);
+  object.cavaco = reader.readStringList(offsets[0]);
+  object.guitar = reader.readStringList(offsets[1]);
+  object.keyboard = reader.readStringList(offsets[2]);
+  object.name = reader.readString(offsets[3]);
+  object.shapeName = reader.readString(offsets[4]);
   object.ukulele = reader.readStringList(offsets[5]);
   object.viola = reader.readStringList(offsets[6]);
   object.violaMi = reader.readStringList(offsets[7]);
@@ -204,15 +204,15 @@ P _userChordDtoDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringList(offset)) as P;
     case 1:
       return (reader.readStringList(offset)) as P;
     case 2:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringList(offset)) as P;
     case 3:
-      return (reader.readStringList(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readStringList(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readStringList(offset)) as P;
     case 6:
@@ -227,134 +227,6 @@ P _userChordDtoDeserializeProp<P>(
 }
 
 extension UserChordDtoQueryFilter on QueryBuilder<UserChordDto, UserChordDto, QFilterCondition> {
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'alt',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'alt',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'alt',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'alt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'alt',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'alt',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'alt',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'alt',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'alt',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> altIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'alt',
-        value: '',
-      ));
-    });
-  }
-
   QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> cavacoIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -579,134 +451,6 @@ extension UserChordDtoQueryFilter on QueryBuilder<UserChordDto, UserChordDto, QF
         upper,
         includeUpper,
       );
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'chord',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'chord',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'chord',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'chord',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'chord',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'chord',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordContains(String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'chord',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordMatches(String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'chord',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'chord',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> chordIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'chord',
-        value: '',
-      ));
     });
   }
 
@@ -1161,6 +905,262 @@ extension UserChordDtoQueryFilter on QueryBuilder<UserChordDto, UserChordDto, QF
         upper,
         includeUpper,
       );
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'name',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'name',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> nameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'shapeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'shapeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'shapeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'shapeName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'shapeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'shapeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'shapeName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameMatches(String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'shapeName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'shapeName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<UserChordDto, UserChordDto, QAfterFilterCondition> shapeNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'shapeName',
+        value: '',
+      ));
     });
   }
 

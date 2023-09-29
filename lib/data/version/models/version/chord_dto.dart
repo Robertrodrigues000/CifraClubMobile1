@@ -5,8 +5,10 @@ part 'chord_dto.g.dart';
 
 @JsonSerializable(createToJson: false)
 class ChordDto {
-  final String chord;
-  final String alt;
+  @JsonKey(name: "chord")
+  final String name;
+  @JsonKey(name: "alt")
+  final String shapeName;
   final List<String>? guitar;
   final List<String>? cavaco;
   final List<String>? keyboard;
@@ -18,8 +20,8 @@ class ChordDto {
   final List<String>? violaRa;
 
   ChordDto({
-    required this.chord,
-    required this.alt,
+    required this.name,
+    required this.shapeName,
     this.guitar,
     this.cavaco,
     this.keyboard,
@@ -32,8 +34,8 @@ class ChordDto {
   factory ChordDto.fromJson(Map<String, dynamic> json) => _$ChordDtoFromJson(json);
 
   Chord toDomain() => Chord(
-        chord: chord,
-        alt: alt,
+        name: name,
+        shapeName: shapeName,
         guitar: guitar,
         cavaco: cavaco,
         keyboard: keyboard,

@@ -23,6 +23,8 @@ abstract class _$VersionStateCWProxy {
 
   VersionState autoScrollState(AutoScrollState autoScrollState);
 
+  VersionState chordState(ChordState chordState);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -38,6 +40,7 @@ abstract class _$VersionStateCWProxy {
     bool? isYouTubeVisible,
     VersionHeaderState? versionHeaderState,
     AutoScrollState? autoScrollState,
+    ChordState? chordState,
   });
 }
 
@@ -73,6 +76,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
   VersionState autoScrollState(AutoScrollState autoScrollState) => this(autoScrollState: autoScrollState);
 
   @override
+  VersionState chordState(ChordState chordState) => this(chordState: chordState);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -89,6 +95,7 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? isYouTubeVisible = const $CopyWithPlaceholder(),
     Object? versionHeaderState = const $CopyWithPlaceholder(),
     Object? autoScrollState = const $CopyWithPlaceholder(),
+    Object? chordState = const $CopyWithPlaceholder(),
   }) {
     return VersionState(
       version: version == const $CopyWithPlaceholder()
@@ -123,6 +130,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.autoScrollState
           // ignore: cast_nullable_to_non_nullable
           : autoScrollState as AutoScrollState,
+      chordState: chordState == const $CopyWithPlaceholder() || chordState == null
+          ? _value.chordState
+          // ignore: cast_nullable_to_non_nullable
+          : chordState as ChordState,
     );
   }
 }
@@ -318,4 +329,54 @@ extension $AutoScrollStateCopyWith on AutoScrollState {
   /// Returns a callable class that can be used as follows: `instanceOfAutoScrollState.copyWith(...)` or like so:`instanceOfAutoScrollState.copyWith.fieldName(...)`.
   // ignore: library_private_types_in_public_api
   _$AutoScrollStateCWProxy get copyWith => _$AutoScrollStateCWProxyImpl(this);
+}
+
+abstract class _$ChordStateCWProxy {
+  ChordState chordRepresentations(List<ChordRepresentation> chordRepresentations);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// ChordState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  ChordState call({
+    List<ChordRepresentation>? chordRepresentations,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfChordState.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfChordState.copyWith.fieldName(...)`
+class _$ChordStateCWProxyImpl implements _$ChordStateCWProxy {
+  const _$ChordStateCWProxyImpl(this._value);
+
+  final ChordState _value;
+
+  @override
+  ChordState chordRepresentations(List<ChordRepresentation> chordRepresentations) =>
+      this(chordRepresentations: chordRepresentations);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// ChordState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  ChordState call({
+    Object? chordRepresentations = const $CopyWithPlaceholder(),
+  }) {
+    return ChordState(
+      chordRepresentations: chordRepresentations == const $CopyWithPlaceholder() || chordRepresentations == null
+          ? _value.chordRepresentations
+          // ignore: cast_nullable_to_non_nullable
+          : chordRepresentations as List<ChordRepresentation>,
+    );
+  }
+}
+
+extension $ChordStateCopyWith on ChordState {
+  /// Returns a callable class that can be used as follows: `instanceOfChordState.copyWith(...)` or like so:`instanceOfChordState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$ChordStateCWProxy get copyWith => _$ChordStateCWProxyImpl(this);
 }

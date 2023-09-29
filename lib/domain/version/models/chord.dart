@@ -1,6 +1,8 @@
+import 'package:cifraclub/domain/version/models/instrument.dart';
+
 class Chord {
-  final String chord;
-  final String alt;
+  final String name;
+  final String shapeName;
   final List<String>? guitar;
   final List<String>? cavaco;
   final List<String>? keyboard;
@@ -10,8 +12,8 @@ class Chord {
   final List<String>? violaRa;
 
   Chord({
-    required this.chord,
-    required this.alt,
+    required this.name,
+    required this.shapeName,
     required this.guitar,
     required this.cavaco,
     required this.keyboard,
@@ -20,4 +22,15 @@ class Chord {
     required this.violaMi,
     required this.violaRa,
   });
+
+  List<String>? getChordsForInstrument(Instrument instrument) {
+    return switch (instrument) {
+      Instrument.guitar => guitar,
+      Instrument.cavaco => cavaco,
+      Instrument.keyboard => keyboard,
+      Instrument.ukulele => ukulele,
+      Instrument.violaCaipira => viola,
+      _ => null,
+    };
+  }
 }

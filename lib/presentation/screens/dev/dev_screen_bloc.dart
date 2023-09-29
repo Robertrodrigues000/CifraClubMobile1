@@ -1,6 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
-import 'package:cifraclub/domain/chord/user_cases/get_chords_representation.dart';
+import 'package:cifraclub/domain/chord/use_cases/get_chords_representation.dart';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
@@ -107,9 +107,10 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     if (versionDataResult.isSuccess) {
       final versionData = versionDataResult.get();
       final chordRepresentation = _getChordsRepresentation(
-        chords:
-            versionData?.chords?.map((e) => InstrumentChord(name: e.chord, original: e.guitar?.first ?? "")).toList() ??
-                [],
+        chords: versionData?.chords
+                ?.map((e) => InstrumentChord(name: e.name, fretDiagram: e.guitar?.first ?? "", shapeName: e.shapeName))
+                .toList() ??
+            [],
         instrument: Instrument.guitar,
       );
       // ignore: avoid_print

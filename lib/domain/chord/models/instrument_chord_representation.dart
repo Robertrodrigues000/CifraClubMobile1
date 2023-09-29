@@ -12,7 +12,7 @@ abstract class InstrumentChordRepresentation {
   InstrumentChordRepresentation({required this.numStrings});
 
   ChordRepresentation buildChord({required InstrumentChord instrumentChord}) {
-    var mount = instrumentChord.original.split(" ").sublist(0, numStrings);
+    var mount = instrumentChord.fretDiagram.split(" ").sublist(0, numStrings);
 
     var lowestFret = 100; // armazena menor casa pressionada (sem corda solta)
     var highestFret = 0; // armazena maior casa pressionada
@@ -127,7 +127,7 @@ abstract class InstrumentChordRepresentation {
     }
 
     return ChordRepresentation(
-      original: instrumentChord.original,
+      original: instrumentChord.fretDiagram,
       neck: neck,
       notes: notes,
       fingers: fingers,

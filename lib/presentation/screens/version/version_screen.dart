@@ -1,5 +1,5 @@
 // coverage:ignore-file
-import 'package:cifraclub/domain/version/models/chord.dart';
+import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
@@ -9,6 +9,8 @@ import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_widget.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
@@ -163,7 +165,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                           maxExtend: 110,
                           child: const Text("Acordes"),
                           isPinned: state.isChordListPinned,
-                          chords: state.version?.chords ?? [],
+                          chords: state.chordState.chordRepresentations,
                         ),
                       ),
                       SliverList.builder(
@@ -279,7 +281,7 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
   final bool haveScroll;
   final bool isPinned;
-  final List<Chord> chords;
+  final List<ChordRepresentation> chords;
 
   ChordListHeaderDelegate({
     required this.maxExtend,
@@ -301,18 +303,19 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
       physics: const NeverScrollableScrollPhysics(),
       reverse: true,
       child: Container(
+        color: context.colors.neutralPrimary,
         height: maxExtend,
-        color: Colors.red,
         child: ListView.builder(
           itemCount: chords.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final chord = chords[index];
-            return Container(
-              height: 50,
-              width: 100,
-              color: Colors.blue,
-              child: Center(child: Text(chord.chord)),
+            return Padding(
+              padding: const EdgeInsets.only(top: 4, bottom: 12),
+              child: ChordWidget(
+                  chordRepresentation: chord,
+                  chordUiSettings: ChordUISettings.guitar().scaledToFit(height: maxExtend - 16),
+                  isLeftHanded: false),
             );
           },
         ),
