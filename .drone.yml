@@ -12,7 +12,7 @@ workspace:
 
 steps:
   - name: pub-get
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     environment:
       GITHUB_ACCESS_TOKEN:
         from_secret: GITHUB_ACCESS_TOKEN
@@ -25,7 +25,7 @@ steps:
         path: /pub-cache
 
   - name: format
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     commands:
       - dart format --line-length=120 --set-exit-if-changed lib test
     depends_on:
@@ -35,7 +35,7 @@ steps:
         path: /pub-cache
 
   - name: analyze
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     commands:
       - flutter analyze --no-pub .
     depends_on:
@@ -45,7 +45,7 @@ steps:
         path: /pub-cache
 
   - name: image-files-check
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     commands:
       - flutter pub run images_files_checker --path assets/images --fail-test-on-unexpected-dir
     depends_on:
@@ -55,7 +55,7 @@ steps:
         path: /pub-cache
 
   - name: tests
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     commands:
       - dart ci/generate_coverage_helper.dart
       - flutter test --no-pub --coverage -r expanded
@@ -66,7 +66,7 @@ steps:
         path: /pub-cache
 
   - name: coverage
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     environment:
     commands:
       - export PATH="$PATH":"/pub-cache/bin"
@@ -81,7 +81,7 @@ steps:
         path: /pub-cache
 
   - name: build-apk
-    image: ghcr.io/cirruslabs/flutter:3.10.3
+    image: ghcr.io/cirruslabs/flutter:3.13.5
     environment:
       MVN_USER:
         from_secret: MVN_USER
