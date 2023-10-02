@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_bloc.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_state.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -56,11 +57,12 @@ class _GenreScreenState extends State<GenreScreen> {
               return ListView.builder(
                 itemCount: state.artists.length,
                 itemBuilder: (context, index) {
+                  final artist = state.artists[index];
                   return TopListItem(
-                    title: state.artists[index].name,
-                    imageUrl: state.artists[index].image?.size162,
+                    title: artist.name,
+                    imageUrl: artist.image?.size162,
                     ranking: (index + 1).toString(),
-                    onTap: () {}, // coverage:ignore-line
+                    onTap: () => ArtistEntry.push(Nav.of(context), artist.url, artist.name), // coverage:ignore-line
                   );
                 },
               );
