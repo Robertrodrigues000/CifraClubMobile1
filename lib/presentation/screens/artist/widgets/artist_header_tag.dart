@@ -13,7 +13,6 @@ class ArtistHeaderTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAlias,
-      height: 29,
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadiusDirectional.only(

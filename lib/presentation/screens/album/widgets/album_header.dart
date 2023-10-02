@@ -56,7 +56,7 @@ class _ArtistHeaderState extends State<AlbumHeader> {
     final currentOffset = widget.scrollController.offset;
     final oldIsScrollUnder = isScrolledUnder;
     isScrolledUnder = currentOffset > widget.maxOffset ? true : false;
-    double scrollPercentage = currentOffset / widget.maxOffset;
+    double scrollPercentage = (currentOffset / widget.maxOffset).clamp(0, 1);
 
     if (currentOffset <= widget.maxOffset || isScrolledUnder != oldIsScrollUnder) {
       setState(() {

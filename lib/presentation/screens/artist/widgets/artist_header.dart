@@ -52,7 +52,7 @@ class _ArtistHeaderState extends State<ArtistHeader> {
     final currentOffset = widget.scrollController.offset;
     final oldIsScrollUnder = isScrolledUnder;
     isScrolledUnder = currentOffset > widget.maxOffset ? true : false;
-    double scrollPercentage = currentOffset / widget.maxOffset;
+    double scrollPercentage = (currentOffset / widget.maxOffset).clamp(0, 1);
 
     if (currentOffset <= widget.maxOffset || isScrolledUnder != oldIsScrollUnder) {
       setState(() {
@@ -151,20 +151,23 @@ class _ArtistHeaderState extends State<ArtistHeader> {
         ),
         title: Opacity(
           opacity: _expandedOpacity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (widget.genreName.isNotEmpty)
-                ArtistHeaderTag(
-                  color: widget.color.isNotEmpty ? HexColor.fromHex(widget.color) : CosmosColors.grey40,
-                  genreName: widget.genreName,
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (widget.genreName.isNotEmpty)
+                  ArtistHeaderTag(
+                    color: widget.color.isNotEmpty ? HexColor.fromHex(widget.color) : CosmosColors.grey40,
+                    genreName: widget.genreName,
+                  ),
+                Text(
+                  widget.artistName,
+                  style: context.typography.title5.copyWith(color: Colors.white),
                 ),
-              Text(
-                widget.artistName,
-                style: context.typography.title5.copyWith(color: Colors.white),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         background: widget.isLoading
