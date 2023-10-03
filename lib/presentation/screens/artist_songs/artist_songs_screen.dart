@@ -2,6 +2,7 @@ import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_page.dart';
@@ -10,6 +11,7 @@ import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.da
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_collapsed_header.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:collection/collection.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -21,8 +23,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
 
 class ArtistSongsScreen extends StatefulWidget {
-  const ArtistSongsScreen({super.key, required this.artistName});
+  const ArtistSongsScreen({super.key, required this.artistName, required this.versionOptionsBottomSheet});
   final String artistName;
+  final VersionOptionsBottomSheet versionOptionsBottomSheet;
 
   @override
   State<ArtistSongsScreen> createState() => _ArtistSongsScreenState();
@@ -153,10 +156,23 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                                 (context, index) {
                                   final song = state.songsFilteredBySearch[index];
                                   return ArtistSongItem(
-                                      // coverage:ignore-start
-                                      onTap: () {},
-                                      onOptionsTap: () {},
-                                      // coverage:ignore-end
+                                      onTap: () {
+                                        VersionEntry.pushFromSong(
+                                          Nav.of(context),
+                                          _bloc.artistUrl ?? "",
+                                          song.url,
+                                          widget.artistName,
+                                          song.name,
+                                        );
+                                      },
+                                      onOptionsTap: () async {
+                                        await widget.versionOptionsBottomSheet.show(
+                                          context: context,
+                                          artistUrl: _bloc.artistUrl ?? "",
+                                          songUrl: song.url,
+                                          songId: song.id,
+                                        );
+                                      },
                                       name: song.name,
                                       prefix: state.rankingPrefixes[index],
                                       isVerified: song.verified,
@@ -211,8 +227,23 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                                   final song = alphabeticalSongs[index];
                                   return ArtistSongItem(
                                       // coverage:ignore-start
-                                      onTap: () {},
-                                      onOptionsTap: () {},
+                                      onTap: () {
+                                        VersionEntry.pushFromSong(
+                                          Nav.of(context),
+                                          _bloc.artistUrl ?? "",
+                                          song.url,
+                                          widget.artistName,
+                                          song.name,
+                                        );
+                                      },
+                                      onOptionsTap: () async {
+                                        await widget.versionOptionsBottomSheet.show(
+                                          context: context,
+                                          artistUrl: _bloc.artistUrl ?? "",
+                                          songUrl: song.url,
+                                          songId: song.id,
+                                        );
+                                      },
                                       // coverage:ignore-end
                                       name: song.name,
                                       prefix: state.alphabeticalPrefixes[index],

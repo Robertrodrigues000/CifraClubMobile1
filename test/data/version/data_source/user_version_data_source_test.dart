@@ -254,6 +254,21 @@ void main() {
     expect(numberVersionsDeleted, 3);
   });
 
+  test("when `deleteVersionBySongId` is called should delete the version from songbook id", () async {
+    final version = getUserVersionDto(songbookId: 1, songId: 2);
+    final versionData =
+        UserVersionDataDto.fromDomain(versionData: getFakeVersionData(), versionLocalDatabaseId: 1, songbookId: 1);
+    await isar.writeTxn(
+      () async {
+        await isar.userVersionDtos.put(version);
+        await isar.userVersionDataDtos.put(versionData);
+      },
+    );
+
+    final isVersionDeleted = await userVersionDataSource.deleteVersionBySongId(2, 1);
+    expect(isVersionDeleted, true);
+  });
+
   test("When `deleteRecentVersions` is called should delete versions from songbook id", () async {
     final versions = [
       getUserRecentVersionDto(localDatabaseId: 1),

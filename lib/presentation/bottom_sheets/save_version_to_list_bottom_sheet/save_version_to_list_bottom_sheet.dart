@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
@@ -107,46 +108,62 @@ class SaveVersionToListBottomSheet {
                       ),
                     ),
                     SliverToBoxAdapter(
-                        child: SelectableItem(
-                      key: const Key("create-new-list"),
-                      isSelected: false,
-                      onTap: () {
-                        DefaultBottomSheet.close(context);
-                        if (state.listState != ListLimitState.reached) {
-                          InputDialog.show(
-                            context: context,
-                            isNewList: true,
-                            onSave: (widgetContext, name) async {
-                              final isValidInput = await bloc.isValidSongbookName(name);
-                              switch (isValidInput) {
-                                case true:
-                                  if (widgetContext.mounted) {
-                                    InputDialog.close(widgetContext);
-                                  }
-                                  final result = await bloc.createNewSongbook(name);
+                      child: SelectableItem(
+                        key: const Key("create-new-list"),
+                        isSelected: false,
+                        onTap: () {
+                          DefaultBottomSheet.close(context);
+                          if (state.listState != ListLimitState.reached) {
+                            InputDialog.show(
+                              context: context,
+                              isNewList: true,
+                              onSave: (widgetContext, name) async {
+                                final isValidInput = await bloc.isValidSongbookName(name);
+                                switch (isValidInput) {
+                                  case true:
+                                    if (widgetContext.mounted) {
+                                      InputDialog.close(widgetContext);
+                                    }
+                                    final result = await bloc.createNewSongbook(name);
 
-                                  if (screenContext.mounted) {
-                                    handleResult(screenContext, result);
-                                  }
-                                  break;
-                                case false:
-                                  if (widgetContext.mounted) {
-                                    ScaffoldMessenger.of(widgetContext)
-                                        .showSnackBar(SnackBar(content: Text(widgetContext.text.listUsedName)));
-                                  }
-                                  break;
-                              }
-                            },
-                          );
-                        } else {
-                          ListLimitDialog.show(
-                              context: screenContext, isVersionLimit: false, limitCount: bloc.getListLimit());
+                                    if (screenContext.mounted) {
+                                      handleResult(screenContext, result);
+                                    }
+                                    break;
+                                  case false:
+                                    if (widgetContext.mounted) {
+                                      ScaffoldMessenger.of(widgetContext)
+                                          .showSnackBar(SnackBar(content: Text(widgetContext.text.listUsedName)));
+                                    }
+                                    break;
+                                }
+                              },
+                            );
+                          } else {
+                            ListLimitDialog.show(
+                                context: screenContext, isVersionLimit: false, limitCount: bloc.getListLimit());
+                          }
+                        },
+                        icon: AppSvgs.newSongbookIcon,
+                        text: context.text.createNewList,
+                      ),
+                    ),
+                    SpecialLists(
+                        lists: state.specialLists,
+                        // coverage:ignore-start
+                        onTap: (songbook) async {
+                          DefaultBottomSheet.close(context);
+                          final result = await bloc.addSongToSongbook(
+                              songbookId: songbook.id,
+                              name: ListType.getListTitle(context, songbook),
+                              isNewList: false);
+
+                          if (screenContext.mounted) {
+                            handleResult(screenContext, result);
+                          }
                         }
-                      },
-                      icon: AppSvgs.newSongbookIcon,
-                      text: context.text.createNewList,
-                    )),
-                    SpecialLists(lists: state.specialLists, onTap: (songbook) {}),
+                        // coverage:ignore-end
+                        ),
                     if (state.userLists.isNotEmpty)
                       SliverToBoxAdapter(
                         child: Padding(

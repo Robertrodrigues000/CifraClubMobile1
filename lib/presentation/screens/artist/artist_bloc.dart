@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/artist/models/album.dart';
 import 'package:cifraclub/domain/artist/models/artist_info.dart';
 import 'package:cifraclub/domain/artist/use_cases/favorite_unfavorite_artist.dart';
@@ -34,6 +36,7 @@ class ArtistBloc extends Cubit<ArtistState> with SubscriptionHolder {
   final GetIsArtistFan _getIsArtistFan;
   final FavoriteUnfavoriteArtist _favoriteArtist;
   final OpenLoginPage _openLoginView;
+  final ShareLink _shareLink;
 
   ArtistBloc(
     this.artistUrl,
@@ -46,6 +49,7 @@ class ArtistBloc extends Cubit<ArtistState> with SubscriptionHolder {
     this._favoriteArtist,
     this._getCredentialStream,
     this._openLoginView,
+    this._shareLink,
   ) : super(const ArtistState());
 
   List<ArtistSong> songs = [];
@@ -151,6 +155,10 @@ class ArtistBloc extends Cubit<ArtistState> with SubscriptionHolder {
       songs: filteredSongs,
       isLoading: false,
     ));
+  }
+
+  Future<void> shareLink(String link, Rect? rect) async {
+    await _shareLink(link: link, sharePositionOrigin: rect);
   }
 
   void openLoginPage() => _openLoginView();

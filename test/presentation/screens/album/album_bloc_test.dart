@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_album_detail.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
@@ -6,22 +7,27 @@ import 'package:cifraclub/presentation/screens/album/album_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/artist/models/album_detail_mock.dart';
 
 class _GetAlbumDetailMock extends Mock implements GetAlbumDetail {}
 
+class _ShareLinkMock extends Mock implements ShareLink {}
+
 void main() {
   AlbumBloc getAlbumBloc({
     _GetAlbumDetailMock? getAlbumDetail,
     String? artistUrl,
     String? albumUrl,
+    _ShareLinkMock? shareLink,
   }) =>
       AlbumBloc(
         artistUrl ?? "",
         albumUrl ?? "",
         getAlbumDetail ?? _GetAlbumDetailMock(),
+        shareLink ?? _ShareLinkMock(),
       );
 
   setUpAll(() {
@@ -87,5 +93,16 @@ void main() {
         ],
       );
     });
+  });
+
+  test("when shareLink is called", () async {
+    final shareLink = _ShareLinkMock();
+    when(() => shareLink(link: "https://www.test.com", sharePositionOrigin: null))
+        .thenAnswer((_) => SynchronousFuture(const ShareResult("raw", ShareResultStatus.success)));
+
+    final bloc = getAlbumBloc(shareLink: shareLink);
+    await bloc.shareLink("https://www.test.com", null);
+
+    verify(() => shareLink(link: "https://www.test.com")).called(1);
   });
 }

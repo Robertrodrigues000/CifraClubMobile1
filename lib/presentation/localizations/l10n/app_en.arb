@@ -323,5 +323,10 @@
     "searchHint": "What do you want to play?",
     "newVersion": "New Version",
     "identifyMusic": "Identify music",
-    "createListButtonText": "Create list"
+    "createListButtonText": "Create list",
+    "unFavoriteVersion": "Unfavorite chord",
+    "favoriteVersionMessage": "Chord added to favorites",
+    "unFavoriteVersionMessage": "Chord removed from favorites",
+    "favoriteVersionErrorMessage": "Failed to add chord to favorites",
+    "unFavoriteVersionErrorMessage": "Failed to remove chord from favorites"
 }

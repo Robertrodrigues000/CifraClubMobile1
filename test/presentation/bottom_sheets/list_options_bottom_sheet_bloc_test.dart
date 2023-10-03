@@ -5,7 +5,7 @@ import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
-import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet_bloc.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

@@ -7,17 +7,22 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
+import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
+import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
+import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
-import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/genres_bottom_sheet/genre_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:injectable/injectable.dart';
 
@@ -67,4 +72,16 @@ abstract class BottomSheetModule {
           getVersionsLimit,
           getProStatusStream,
           validateArtistImagePreview);
+
+  VersionOptionsBottomSheet getVersionOptionsBottomSheet(
+    final SaveVersionToListBottomSheet saveToListBottomSheet,
+    final InsertVersionToSongbook insertVersionToSongbook,
+    final GetIsFavoriteVersionBySongId getIsFavoriteVersionBySongId,
+    final DeleteVersionFromFavorites deleteVersionFromFavorites,
+    final GetCredentialStream getCredentialStream,
+    final OpenLoginPage openLoginView,
+    final ShareLink shareLink,
+  ) =>
+      VersionOptionsBottomSheet(saveToListBottomSheet, insertVersionToSongbook, getIsFavoriteVersionBySongId,
+          deleteVersionFromFavorites, getCredentialStream, openLoginView, shareLink);
 }

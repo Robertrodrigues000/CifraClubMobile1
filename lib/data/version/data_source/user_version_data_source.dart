@@ -106,6 +106,12 @@ class UserVersionDataSource {
     });
   }
 
+  Future<bool?> deleteVersionBySongId(int songId, int songbookId) {
+    return _isar.writeTxn(() async {
+      return _isar.userVersionDtos.where().songbookIdEqualTo(songbookId).filter().songIdEqualTo(songId).deleteFirst();
+    });
+  }
+
   Future<bool> deleteOldestRecentVersion() async {
     // Tivemos que deletar pelo id porque o método [deleteFirst] do isar está bugado e deleta duas entidades de uma vez em vez de uma só.
     return _isar.writeTxn(() async {

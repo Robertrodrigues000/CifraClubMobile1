@@ -93,6 +93,11 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   }
 
   @override
+  Future<bool?> deleteVersionBySongId(int songId, int songbookId) {
+    return _userVersionDataSource.deleteVersionBySongId(songId, songbookId);
+  }
+
+  @override
   Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId) {
     if (songbookId == ListType.recents.localId) {
       return _userVersionDataSource

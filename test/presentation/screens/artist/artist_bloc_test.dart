@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/artist/models/artist_song_filter.dart';
 import 'package:cifraclub/domain/artist/use_cases/favorite_unfavorite_artist.dart';
 import 'package:cifraclub/domain/artist/use_cases/get_albums.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/artist/models/album_mock.dart';
@@ -39,6 +41,8 @@ class _GetFilteredArtistSongsMock extends Mock implements GetFilteredArtistSongs
 class _GetIsArtistFanMock extends Mock implements GetIsArtistFan {}
 
 class _FavoriteArtistMock extends Mock implements FavoriteUnfavoriteArtist {}
+
+class _ShareLinkMock extends Mock implements ShareLink {}
 
 class _OpenLoginPageMock extends Mock implements OpenLoginPage {
   static _OpenLoginPageMock newDummy() {
@@ -68,6 +72,7 @@ void main() {
     _FavoriteArtistMock? favoriteArtist,
     _GetCredentialStreamMock? getCredentialStream,
     _OpenLoginPageMock? openLoginPage,
+    _ShareLinkMock? shareLink,
   }) =>
       ArtistBloc(
         artistUrl ?? "",
@@ -80,6 +85,7 @@ void main() {
         favoriteArtist ?? _FavoriteArtistMock(),
         getCredentialStream ?? _GetCredentialStreamMock(),
         openLoginPage ?? _OpenLoginPageMock.newDummy(),
+        shareLink ?? _ShareLinkMock(),
       );
 
   group("when init is called", () {
@@ -354,5 +360,16 @@ void main() {
     final bloc = getArtistBloc(openLoginPage: openLoginPage);
     bloc.openLoginPage();
     verify(openLoginPage).called(1);
+  });
+
+  test("when shareLink is called", () async {
+    final shareLink = _ShareLinkMock();
+    when(() => shareLink(link: "https://www.test.com", sharePositionOrigin: null))
+        .thenAnswer((_) => SynchronousFuture(const ShareResult("raw", ShareResultStatus.success)));
+
+    final bloc = getArtistBloc(shareLink: shareLink);
+    await bloc.shareLink("https://www.test.com", null);
+
+    verify(() => shareLink(link: "https://www.test.com")).called(1);
   });
 }

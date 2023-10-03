@@ -1,15 +1,12 @@
 import 'package:cifraclub/domain/artist/models/album_disc.dart';
-import 'package:cifraclub/domain/artist/models/album_disc_song.dart';
-import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
-import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_screen.dart';
 import 'package:cifraclub/presentation/screens/album/album_state.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +15,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import '../../../shared_mocks/domain/artist/models/album_detail_mock.dart';
 import '../../../shared_mocks/domain/artist/models/album_disc_song_mock.dart';
+import '../../../shared_mocks/domain/artist/models/artist_song_mock.dart';
+import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
 import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
@@ -28,8 +28,6 @@ class _AlbumBlocMock extends Mock implements AlbumBloc {}
 class _BuildContextMock extends Mock implements BuildContext {}
 
 class _VersionOptionsBottomSheetMock extends Mock implements VersionOptionsBottomSheet {}
-
-class _SaveVersionToListBottomSheetMock extends Mock implements SaveVersionToListBottomSheet {}
 
 void main() {
   late AlbumBloc bloc;
@@ -42,12 +40,17 @@ void main() {
     when(bloc.getAlbumDetail).thenAnswer((_) => SynchronousFuture(null));
 
     final bottomSheetMock = _VersionOptionsBottomSheetMock();
-    when(() => bottomSheetMock.open(
-          screenContext: any(named: 'screenContext'),
+    when(() => bottomSheetMock.show(
+          context: any(named: 'context'),
           artistUrl: any(named: 'artistUrl'),
           songUrl: any(named: 'songUrl'),
+          songId: any(named: 'songId'),
         )).thenAnswer((_) => SynchronousFuture(null));
     bottomSheet = bottomSheetMock;
+
+    bloc = _AlbumBlocMock();
+    when(bloc.getAlbumDetail).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.shareLink(any(), any())).thenAnswer((_) => SynchronousFuture(null));
   });
 
   testWidgets("When state isLoading, should display loading circle", (widgetTester) async {
@@ -171,27 +174,7 @@ void main() {
 
   group("When disc songs are displayed, ", () {
     final discs = [
-      AlbumDisc(songs: [
-        const AlbumDiscSong(
-            disc: 1,
-            id: 1,
-            name: "Será",
-            order: 1,
-            artistSong: ArtistSong(
-                id: 1,
-                lyrics: 0,
-                lyricsId: 0,
-                name: "Será",
-                bass: 0,
-                drums: 0,
-                guitar: 0,
-                guitarpro: 0,
-                harmonica: 0,
-                sheet: 0,
-                url: "",
-                verified: true,
-                videoLessons: 2))
-      ])
+      AlbumDisc(songs: [getFakeAlbumDiscSong(artistSong: getFakeArtistSong(verified: true, videoLessons: 2))])
     ];
     testWidgets("if song doesn't have any version should disable song", (widgetTester) async {
       bloc.mockStream(AlbumState(discs: discs));
@@ -276,31 +259,10 @@ void main() {
 
   testWidgets("When tapping the options icon of a album song, should show bottom sheet", (widgetTester) async {
     final discs = [
-      AlbumDisc(songs: [
-        const AlbumDiscSong(
-            disc: 1,
-            id: 1,
-            name: "Será",
-            order: 1,
-            artistSong: ArtistSong(
-                id: 1,
-                lyrics: 0,
-                lyricsId: 0,
-                name: "Será",
-                bass: 1,
-                drums: 2,
-                guitar: 3,
-                guitarpro: 1,
-                harmonica: 1,
-                sheet: 1,
-                url: "",
-                verified: true,
-                videoLessons: 2))
-      ])
+      AlbumDisc(songs: [getFakeAlbumDiscSong(artistSong: getFakeArtistSong(verified: true, videoLessons: 2))])
     ];
     bloc.mockStream(AlbumState(discs: discs));
 
-    final bottomSheet = VersionOptionsBottomSheet(_SaveVersionToListBottomSheetMock());
     await mockNetworkImagesFor(() async {
       await widgetTester.pumpWidget(
         TestWrapper(
@@ -317,8 +279,61 @@ void main() {
       );
     });
     await widgetTester.tap(find.byKey(const Key("options-icon")));
-    await widgetTester.pumpAndSettle();
 
-    expect(find.byType(DefaultBottomSheet), findsOneWidget);
+    verify(() => bottomSheet.show(
+          context: any(named: 'context'),
+          artistUrl: any(named: 'artistUrl'),
+          songUrl: any(named: 'songUrl'),
+          songId: any(named: 'songId'),
+        )).called(1);
+  });
+
+  testWidgets('When tap in share icon should call shareLink', (widgetTester) async {
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AlbumBloc>.value(
+          value: bloc,
+          child: AlbumScreen(
+            name: "A Tempestade",
+            versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+          ),
+        ),
+      );
+    });
+
+    expect(find.byKey(const Key('share button')), findsOneWidget);
+
+    await widgetTester.tap(find.byKey(const Key('share button')), warnIfMissed: false);
+
+    verify(() => bloc.shareLink(any(), any())).called(1);
+  });
+
+  testWidgets("When tap on album song, should navigate to version screen", (widgetTester) async {
+    final song = getFakeAlbumDiscSong(artistSong: getFakeArtistSong(verified: true, videoLessons: 2));
+    final album = getFakeAlbumDetail();
+    final discs = [
+      AlbumDisc(songs: [song])
+    ];
+    bloc.mockStream(AlbumState(discs: discs, album: album));
+    final nav = NavMock.getDummy();
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AlbumBloc>.value(
+          value: bloc,
+          child: AlbumScreen(
+            name: "A Tempestade",
+            versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+          ),
+        ),
+        nav: nav,
+      );
+    });
+
+    expect(find.byType(ArtistSongItem), findsOneWidget);
+    await widgetTester.tap(find.byType(ArtistSongItem), warnIfMissed: false);
+    verify(() =>
+            VersionEntry.pushFromSong(nav, album.artistUrl, song.artistSong?.url ?? "", album.artistName, song.name))
+        .called(1);
   });
 }

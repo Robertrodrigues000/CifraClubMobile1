@@ -41,7 +41,10 @@ class ArtistSongsEntry extends ScreenEntry {
       create: (context) =>
           ArtistSongsBloc(getIt(), getIt(), getIt(), getIt(), instrument: instrumentFilter, artistUrl: artistUrl)
             ..init(),
-      child: ArtistSongsScreen(artistName: artistName ?? ""),
+      child: ArtistSongsScreen(
+        artistName: artistName ?? "",
+        versionOptionsBottomSheet: getIt(),
+      ),
     );
   }
 }

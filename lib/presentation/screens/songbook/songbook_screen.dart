@@ -1,6 +1,6 @@
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_screen.dart';

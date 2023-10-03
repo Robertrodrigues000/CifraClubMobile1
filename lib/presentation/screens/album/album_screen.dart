@@ -1,14 +1,17 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/constants/app_urls.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_state.dart';
 import 'package:cifraclub/presentation/screens/album/widgets/album_header.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nav/nav.dart';
 
 class AlbumScreen extends StatefulWidget {
   const AlbumScreen({super.key, required this.name, required this.versionOptionsBottomSheet});
@@ -35,7 +38,12 @@ class _AlbumScreenState extends State<AlbumScreen> {
               AlbumHeader(
                 scrollController: _scrollController,
                 maxOffset: context.appDimensionScheme.albumHeaderHeight - context.appDimensionScheme.appBarHeight,
-                onShare: () {}, // coverage:ignore-line
+                onShare: () async {
+                  final box = context.findRenderObject() as RenderBox?;
+                  final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
+                  final link = AppUrls.albumUrlFormat(state.album?.artistUrl ?? "", state.album?.albumUrl ?? "");
+                  await _bloc.shareLink(link, rect);
+                },
                 artistName: state.album?.artistName ?? "",
                 albumName: state.album?.title ?? "",
                 image: state.album?.image?.thumb ?? "",
@@ -102,12 +110,22 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                 artistSong.harmonica > 0 ||
                                 artistSong.drums > 0);
                         return ArtistSongItem(
-                          onTap: () {},
+                          onTap: () {
+                            VersionEntry.pushFromSong(
+                              Nav.of(context),
+                              state.album?.artistUrl ?? "",
+                              disc.songs[index].artistSong?.url ?? "",
+                              state.album?.artistName ?? "",
+                              discSong.name,
+                            );
+                          },
                           onOptionsTap: () async {
-                            await widget.versionOptionsBottomSheet.open(
-                                screenContext: context,
-                                artistUrl: state.album?.artistUrl ?? "",
-                                songUrl: disc.songs[index].artistSong?.url ?? "");
+                            await widget.versionOptionsBottomSheet.show(
+                              context: context,
+                              artistUrl: state.album?.artistUrl ?? "",
+                              songUrl: disc.songs[index].artistSong?.url ?? "",
+                              songId: discSong.id,
+                            );
                           },
                           name: discSong.name,
                           prefix: (discSong.order).toString(),

@@ -265,5 +265,10 @@
     "searchHint": "O que você quer tocar?",
     "newVersion": "Nova Versão",
     "identifyMusic": "Identificar música",
-    "createListButtonText": "Criar lista"
+    "createListButtonText": "Criar lista",
+    "unFavoriteVersion": "Desfavoritar cifra",
+    "favoriteVersionMessage": "Cifra favoritada",
+    "unFavoriteVersionMessage": "Cifra desfavoritada",
+    "favoriteVersionErrorMessage": "Falha ao favoritar cifra",
+    "unFavoriteVersionErrorMessage": "Falha ao desfavoritar cifra"
 }

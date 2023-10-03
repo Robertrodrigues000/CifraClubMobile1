@@ -12,6 +12,7 @@ abstract class UserVersionRepository {
   Future<List<String?>> getImagesPreview(int songbookId);
   Future<int?> deleteVersionsBySongbookId(int songbookId);
   Future<int?> deleteVersionsById(List<int> localDatabaseIds, int songbookId);
+  Future<bool?> deleteVersionBySongId(int songId, int songbookId);
   Future<bool> deleteOldestRecentVersion();
   Stream<List<Version>> getVersionsStreamFromSongbook(int songbookId);
   Future<List<int>> updateVersionsToSongbook(List<Version> versions, int songbookId);

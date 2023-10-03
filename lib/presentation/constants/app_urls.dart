@@ -1,3 +1,4 @@
+// coverage:ignore-file
 class AppUrls {
   static const supportUrl = "https://suporte.cifraclub.com.br/support/home";
   static const cifraClubStoreUrl = "https://cifraclubstore.com.br/";
@@ -11,5 +12,10 @@ class AppUrls {
   static const instagramUrl = "https://www.instagram.com/cifraclub/";
 
   static String songbookUrlFormat(int ccid, int songbookId) =>
-      "https://m.cifraclub.com.br/musico/$ccid/repertorio/$songbookId/";
+      "https://www.cifraclub.com.br/musico/$ccid/repertorio/$songbookId/";
+  static String versionUrlFormat(String artistUrl, String songUrl) =>
+      "https://www.cifraclub.com.br/$artistUrl/$songUrl";
+  static String artistUrlFormat(String artistUrl) => "https://www.cifraclub.com.br/$artistUrl";
+  static String albumUrlFormat(String artistUrl, String albumUrl) =>
+      "https://www.cifraclub.com.br/$artistUrl/discografia/$albumUrl/";
 }

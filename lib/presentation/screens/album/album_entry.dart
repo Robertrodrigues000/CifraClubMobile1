@@ -1,6 +1,5 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +34,10 @@ class AlbumEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AlbumBloc>(
-      create: (context) => AlbumBloc(artistUrl, albumUrl, getIt())..init(),
+      create: (context) => AlbumBloc(artistUrl, albumUrl, getIt(), getIt())..init(),
       child: AlbumScreen(
         name: albumName ?? "",
-        versionOptionsBottomSheet: VersionOptionsBottomSheet(getIt()),
+        versionOptionsBottomSheet: getIt(),
       ),
     );
   }

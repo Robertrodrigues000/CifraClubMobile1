@@ -221,7 +221,7 @@
     },
     "createNewList": "Crear una nueva lista",
     "saveVersionToList": "Guardar en una lista",
-    "favoriteVersion": "Favorito cifrado",
+    "favoriteVersion": "Agregar cifrado a favoritos",
     "correctVersion": "Corregir cifrado",
     "albumOf":"Álbum de",
     "saveVersionToListMessage": "El cifrado está guardado y disponible en la lista {listName}",
@@ -265,5 +265,10 @@
     "searchHint": "¿Que quieres tocar?",
     "newVersion": "Nueva Versión",
     "identifyMusic": "Identificar música",
-    "createListButtonText": "Crear lista"
+    "createListButtonText": "Crear lista",
+    "unFavoriteVersion": "Eliminar cifrado de favoritos",
+    "favoriteVersionMessage": "Cifrado agregado a favoritos",
+    "unFavoriteVersionMessage": "Cifrado eliminado de favoritos",
+    "favoriteVersionErrorMessage": "No se pudo agregar el cifrado a favoritos",
+    "unFavoriteVersionErrorMessage": "No se pudo eliminar el cifrado de favoritos"
 }

@@ -185,14 +185,25 @@ void main() {
     verify(() => userVersionDataSource.deleteVersionsById([1, 2], 1)).called(1);
   });
 
-  test("When `getUserVersionStreamFromSongbook` is called should return list of cifras", () async {
-    final userCifraDto = _UserVersionDtoMock();
+  test("When `deleteVersionBySongId` is called should return true if version is deleted", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.deleteVersionBySongId(1, 2)).thenAnswer((_) => SynchronousFuture(true));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+    final isVersionDeleted = await userVersionRepository.deleteVersionBySongId(1, 2);
+
+    expect(isVersionDeleted, true);
+    verify(() => userVersionDataSource.deleteVersionBySongId(1, 2)).called(1);
+  });
+
+  test("When `getUserVersionStreamFromSongbook` is called should return list of versions", () async {
+    final userVersionDto = _UserVersionDtoMock();
     final fakeVersion = getFakeVersion();
-    when(userCifraDto.toDomain).thenReturn(fakeVersion);
+    when(userVersionDto.toDomain).thenReturn(fakeVersion);
 
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(() => userVersionDataSource.getVersionsStreamFromSongbook(10))
-        .thenAnswer((_) => BehaviorSubject.seeded([userCifraDto]));
+        .thenAnswer((_) => BehaviorSubject.seeded([userVersionDto]));
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 
@@ -202,15 +213,15 @@ void main() {
     verify(() => userVersionDataSource.getVersionsStreamFromSongbook(10)).called(1);
   });
 
-  test("When `getVersionsStreamFromRecentSongbook` is called and is recent songbook should return list of cifras",
+  test("When `getVersionsStreamFromRecentSongbook` is called and is recent songbook should return list of versions",
       () async {
-    final userCifraDto = _UserRecentVersionDtoMock();
+    final userVersionDto = _UserRecentVersionDtoMock();
     final fakeVersion = getFakeVersion();
-    when(userCifraDto.toDomain).thenReturn(fakeVersion);
+    when(userVersionDto.toDomain).thenReturn(fakeVersion);
 
     final userVersionDataSource = _UserVersionDataSourceMock();
     when(userVersionDataSource.getVersionsStreamFromRecentSongbook)
-        .thenAnswer((_) => BehaviorSubject.seeded([userCifraDto]));
+        .thenAnswer((_) => BehaviorSubject.seeded([userVersionDto]));
 
     final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
 

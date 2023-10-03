@@ -2,7 +2,8 @@ import 'package:cifraclub/domain/artist/models/artist_song.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/constants/app_urls.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_event.dart';
@@ -12,6 +13,7 @@ import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.d
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -81,7 +83,12 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                     _bloc.openLoginPage();
                   }
                 },
-                onShare: () {},
+                onShare: () async {
+                  final box = context.findRenderObject() as RenderBox?;
+                  final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
+                  final link = AppUrls.artistUrlFormat(state.artistInfo?.url ?? "");
+                  await _bloc.shareLink(link, rect);
+                },
                 genreName: state.artistInfo?.genre.name ?? "",
                 artistName: state.artistInfo?.name ?? "",
                 image: state.artistInfo?.headImageDto?.image ?? state.artistInfo?.imagesDto?.size250 ?? "",
@@ -150,12 +157,21 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                   delegate: SliverChildBuilderDelegate(
                     childCount: state.songs.take(maxSongs).length,
                     (_, index) => ArtistSongItem(
-                      onTap: () {},
+                      onTap: () {
+                        VersionEntry.pushFromSong(
+                          Nav.of(context),
+                          state.artistInfo?.url ?? "",
+                          state.songs[index].url,
+                          state.artistInfo?.name ?? "",
+                          state.songs[index].name,
+                        );
+                      },
                       onOptionsTap: () async {
-                        await widget.versionOptionsBottomSheet.open(
-                          screenContext: context,
+                        await widget.versionOptionsBottomSheet.show(
+                          context: context,
                           artistUrl: state.artistInfo?.url ?? "",
                           songUrl: state.songs[index].url,
+                          songId: state.songs[index].id,
                         );
                       },
                       name: state.songs[index].name,

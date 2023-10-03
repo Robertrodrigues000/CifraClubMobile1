@@ -1,9 +1,11 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_screen.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/foundation.dart';
@@ -15,20 +17,37 @@ import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../../shared_mocks/domain/artist/models/artist_song_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
+import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
 import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/bloc_stream.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
 class _ArtistSongsBlocMock extends Mock implements ArtistSongsBloc {}
 
+class _VersionOptionsBottomSheetMock extends Mock implements VersionOptionsBottomSheet {}
+
+class _BuildContextMock extends Mock implements BuildContext {}
+
 void main() {
   late ArtistSongsBloc bloc;
+  late VersionOptionsBottomSheet bottomSheet;
 
   setUpAll(() {
+    registerFallbackValue(_BuildContextMock());
+
     bloc = _ArtistSongsBlocMock();
     when(() => bloc.init()).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
     when(bloc.getArtistSongsAndVideoLessons).thenAnswer((_) => SynchronousFuture(null));
+
+    final bottomSheetMock = _VersionOptionsBottomSheetMock();
+    when(() => bottomSheetMock.show(
+          context: any(named: 'context'),
+          artistUrl: any(named: 'artistUrl'),
+          songUrl: any(named: 'songUrl'),
+          songId: any(named: 'songId'),
+        )).thenAnswer((_) => SynchronousFuture(null));
+    bottomSheet = bottomSheetMock;
   });
 
   testWidgets('If searching for a term with no result, should show empty state', (widgetTester) async {
@@ -39,8 +58,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(
+            child: ArtistSongsScreen(
               artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
             ),
           ),
         ),
@@ -70,8 +90,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(
+            child: ArtistSongsScreen(
               artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
             ),
           ),
         ),
@@ -100,8 +121,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(
+            child: ArtistSongsScreen(
               artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
             ),
           ),
         ),
@@ -136,8 +158,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(
+            child: ArtistSongsScreen(
               artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
             ),
           ),
         ),
@@ -169,8 +192,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(
+            child: ArtistSongsScreen(
               artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
             ),
           ),
         ),
@@ -195,8 +219,9 @@ void main() {
         TestWrapper(
           child: BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(
+            child: ArtistSongsScreen(
               artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
             ),
           ),
         ),
@@ -224,7 +249,10 @@ void main() {
         await widgetTester.pumpWidgetWithWrapper(
           BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(artistName: "Anitta"),
+            child: ArtistSongsScreen(
+              artistName: "Anitta",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         );
       });
@@ -246,7 +274,10 @@ void main() {
         await widgetTester.pumpWidgetWithWrapper(
           BlocProvider<ArtistSongsBloc>.value(
             value: bloc,
-            child: const ArtistSongsScreen(artistName: "Anitta"),
+            child: ArtistSongsScreen(
+              artistName: "Anitta",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
           ),
         );
       });
@@ -263,5 +294,64 @@ void main() {
       final positionText = find.text("Bang");
       expect(find.descendant(of: listItem, matching: positionText), findsOneWidget);
     });
+  });
+
+  testWidgets("when tapping options icon of a song, should show bottom sheet", (widgetTester) async {
+    var songs = [getFakeArtistSong(name: "Funk rave")];
+    bloc.mockStream(ArtistSongsState(
+        isLoading: false, shouldShowSearch: true, songs: songs, songsFilteredBySearch: songs, rankingPrefixes: ["1"]));
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<ArtistSongsBloc>.value(
+            value: bloc,
+            child: ArtistSongsScreen(
+              artistName: "Legiao Urbana",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
+          ),
+        ),
+      );
+    });
+
+    await widgetTester.tap(find.byKey(const Key("options-icon")));
+
+    verify(() => bottomSheet.show(
+          context: any(named: 'context'),
+          artistUrl: any(named: 'artistUrl'),
+          songUrl: any(named: 'songUrl'),
+          songId: any(named: 'songId'),
+        )).called(1);
+  });
+
+  testWidgets("when tapping song, should navigate to version screen", (widgetTester) async {
+    var song = getFakeArtistSong(name: "Funk rave");
+    bloc.mockStream(ArtistSongsState(
+        isLoading: false,
+        shouldShowSearch: true,
+        songs: [song],
+        songsFilteredBySearch: [song],
+        rankingPrefixes: ["1"]));
+    final nav = NavMock.getDummy();
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          nav: nav,
+          child: BlocProvider<ArtistSongsBloc>.value(
+            value: bloc,
+            child: ArtistSongsScreen(
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+              artistName: 'Legião Urbana',
+            ),
+          ),
+        ),
+      );
+    });
+
+    expect(find.byType(ArtistSongItem), findsOneWidget);
+    await widgetTester.tap(find.byType(ArtistSongItem), warnIfMissed: false);
+    verify(() => VersionEntry.pushFromSong(nav, "", song.url, 'Legião Urbana', song.name)).called(1);
   });
 }
