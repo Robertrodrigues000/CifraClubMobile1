@@ -119,6 +119,9 @@ class ListOptionsBottomSheet {
                                 }
                                 break;
                               case ListOptionsBottomSheetItem.delete:
+                                if (!context.mounted) {
+                                  break;
+                                }
                                 DefaultBottomSheet.close(context);
                                 final result = await DeleteDialog.show(context);
                                 if (result) {
@@ -130,10 +133,16 @@ class ListOptionsBottomSheet {
                                 }
                                 break;
                               case ListOptionsBottomSheetItem.edit:
+                                if (!context.mounted) {
+                                  break;
+                                }
                                 DefaultBottomSheet.close(context);
                                 await _editListScreenBuilder.push(context, songbook.name, songbook.id ?? 0);
                                 break;
                               case ListOptionsBottomSheetItem.rename:
+                                if (!context.mounted) {
+                                  break;
+                                }
                                 DefaultBottomSheet.close(context);
                                 InputDialog.show(
                                   context: context,
@@ -167,6 +176,9 @@ class ListOptionsBottomSheet {
                                 );
                                 break;
                               case ListOptionsBottomSheetItem.share:
+                                if (!context.mounted) {
+                                  break;
+                                }
                                 final box = context.findRenderObject() as RenderBox?;
                                 final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
                                 final link = AppUrls.songbookUrlFormat(ccid!, songbook.id!);
@@ -174,6 +186,9 @@ class ListOptionsBottomSheet {
                                 await bloc.shareLink(link, rect);
                                 break;
                               case ListOptionsBottomSheetItem.privacy:
+                                if (!context.mounted) {
+                                  break;
+                                }
                                 DefaultBottomSheet.close(context);
                                 PrivacyBottomSheet(
                                   isPublic: songbook.isPublic,

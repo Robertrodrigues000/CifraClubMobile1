@@ -7,3 +7,4 @@
 */
 
 NSAppleMusicUsageDescription = "Permita que este app acesse sua biblioteca de músicas para que ele possa tocar suas músicas.";
+NSMicrophoneUsageDescription = "Precisamos da sua permisão para ouvir a música";

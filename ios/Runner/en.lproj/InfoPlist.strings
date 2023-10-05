@@ -7,3 +7,4 @@
 */
 
 NSAppleMusicUsageDescription = "Allow this app to access your music library so it can play your songs.";
+NSMicrophoneUsageDescription = "We need your permission to listen to the song";

@@ -3,6 +3,7 @@ import 'package:cifraclub/data/remote_config/parameters/image_prefix_url_pramate
 import 'package:cifraclub/data/remote_config/parameters/instrument_urls_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/list_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/remote_product_parameter.dart';
+import 'package:cifraclub/data/remote_config/parameters/shazam_token_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/versions_limit_constants_parameter.dart';
 import 'package:cifraclub/data/remote_config/parameters/time_between_interstitials_parameter.dart';
 import 'package:cifraclub/data/remote_config/remote_config_parameter.dart';
@@ -16,7 +17,8 @@ class RemoteConfigRegisteredParameters {
     listLimitConstants,
     tabsLimitConstants,
     imagePrefixUrl,
-    artistImagePath
+    artistImagePath,
+    shazamToken,
   ];
 
   final InstrumentUrlsParameter instrumentUrls = InstrumentUrlsParameter();
@@ -26,4 +28,5 @@ class RemoteConfigRegisteredParameters {
   final VersionsLimitConstantsParameter tabsLimitConstants = VersionsLimitConstantsParameter();
   final ImagePrefixUrlParameter imagePrefixUrl = ImagePrefixUrlParameter();
   final ArtistImagePathParameter artistImagePath = ArtistImagePathParameter();
+  final ShazamTokenParameter shazamToken = ShazamTokenParameter();
 }

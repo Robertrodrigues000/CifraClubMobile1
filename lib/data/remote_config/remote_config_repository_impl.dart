@@ -118,4 +118,9 @@ class RemoteConfigRepositoryImpl implements RemoteConfigRepository {
   String getArtistImagePath() {
     return remoteConfigParameters.artistImagePath.value;
   }
+
+  @override
+  String getShazamToken() {
+    return remoteConfigParameters.shazamToken.value;
+  }
 }

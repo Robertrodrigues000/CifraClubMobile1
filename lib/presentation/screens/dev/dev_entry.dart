@@ -32,6 +32,7 @@ class DevScreenEntry extends ScreenEntry {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       ),
       child: DevScreen(
         getCredentialsStream: getIt(),

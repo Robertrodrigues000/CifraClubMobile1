@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/song/models/song_search_error.dart';
 import 'package:cifraclub/domain/song/use_cases/get_local_song_image.dart';
 import 'package:cifraclub/domain/song/use_cases/get_local_songs.dart';
 import 'package:cifraclub/domain/youtube/use_cases/get_youtube_videos.dart';
@@ -199,7 +200,7 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                                   child: Padding(
                                     padding: EdgeInsets.only(top: context.appDimensionScheme.screenMargin),
                                     child: ErrorDescriptionWidget(
-                                      typeError: state.localSongsError is LocalSongPermissionError
+                                      typeError: state.localSongsError is SongPermissionError
                                           ? ErrorDescriptionWidgetType.localSongsPermissionDenied
                                           : ErrorDescriptionWidgetType.localSongsResultNotFound,
                                     ),

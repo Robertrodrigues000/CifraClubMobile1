@@ -1,3 +1,4 @@
+import 'package:cifraclub/data/permission/models/app_permission_status.dart';
 import 'package:cifraclub/domain/device/operating_system/models/os_version.dart';
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/permission/repository/permission_repository.dart';
@@ -10,11 +11,11 @@ class PermissionRepositoryImpl implements PermissionRepository {
   PermissionRepositoryImpl(this._osVersion);
 
   @override
-  Future<permission_handler.PermissionStatus> requestPermission(PermissionType permission) async {
+  Future<AppPermissionStatus> requestPermission(PermissionType permission) async {
     switch (permission) {
       case PermissionType.audio:
         if (defaultTargetPlatform == TargetPlatform.iOS) {
-          return permission_handler.Permission.mediaLibrary.request();
+          return (await permission_handler.Permission.mediaLibrary.request()).appPermissionStatus;
         }
 
         final deviceInfo = defaultTargetPlatform == TargetPlatform.android ? _osVersion as AndroidOsSdkVersion : null;
@@ -27,10 +28,12 @@ class PermissionRepositoryImpl implements PermissionRepository {
         // coverage:ignore-end
 
         if (deviceInfo < const AndroidOsSdkVersion.sdk33()) {
-          return permission_handler.Permission.storage.request();
+          return (await permission_handler.Permission.storage.request()).appPermissionStatus;
         } else {
-          return permission_handler.Permission.audio.request();
+          return (await permission_handler.Permission.audio.request()).appPermissionStatus;
         }
+      case PermissionType.microphone:
+        return (await permission_handler.Permission.microphone.request()).appPermissionStatus;
     }
   }
 
@@ -40,4 +43,27 @@ class PermissionRepositoryImpl implements PermissionRepository {
   }
 }
 
-enum PermissionType { audio }
+enum PermissionType { audio, microphone }
+
+// coverage:ignore-start
+extension PermissionStatusExtension on permission_handler.PermissionStatus {
+  AppPermissionStatus get appPermissionStatus {
+    switch (this) {
+      case permission_handler.PermissionStatus.granted:
+        return AppPermissionStatus.granted;
+      case permission_handler.PermissionStatus.denied:
+        return AppPermissionStatus.denied;
+      case permission_handler.PermissionStatus.permanentlyDenied:
+        return AppPermissionStatus.permanentlyDenied;
+      case permission_handler.PermissionStatus.limited:
+        return AppPermissionStatus.limited;
+      case permission_handler.PermissionStatus.provisional:
+        return AppPermissionStatus.provisional;
+      case permission_handler.PermissionStatus.restricted:
+        return AppPermissionStatus.restricted;
+      default:
+        return AppPermissionStatus.unknown;
+    }
+  }
+}
+// coverage:ignore-end

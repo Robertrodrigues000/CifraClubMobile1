@@ -1,4 +1,6 @@
+import 'package:cifraclub/data/permission/models/app_permission_status.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/song/models/song_search_error.dart';
 import 'package:cifraclub/domain/song/use_cases/get_local_song_image.dart';
 import 'package:cifraclub/domain/song/use_cases/get_local_songs.dart';
 import 'package:cifraclub/domain/youtube/use_cases/get_youtube_videos.dart';
@@ -13,7 +15,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../shared_mocks/domain/song/models/local_song_mock.dart';
 import '../../../shared_mocks/domain/youtube/models/youtube_video_mock.dart';
@@ -163,7 +164,7 @@ void main() {
   });
 
   testWidgets("When an error occurs in the local songs request should show error widget", (widgetTester) async {
-    bloc.mockStream(ListenBottomSheetState(localSongsError: LocalSongPermissionError(PermissionStatus.denied)));
+    bloc.mockStream(ListenBottomSheetState(localSongsError: SongPermissionError(AppPermissionStatus.denied)));
 
     await widgetTester.pumpWidgetWithWrapper(
       Builder(

@@ -23,4 +23,6 @@ abstract class RemoteConfigRepository {
   String getImagePrefixUrl();
 
   String getArtistImagePath();
+
+  String getShazamToken();
 }

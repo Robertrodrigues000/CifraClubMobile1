@@ -1,3 +1,4 @@
+import 'package:cifraclub/data/permission/models/app_permission_status.dart';
 import 'package:cifraclub/data/permission/repository/permission_repository_impl.dart';
 import 'package:cifraclub/domain/device/operating_system/models/os_version.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +18,7 @@ void main() {
 
     final result = await repository.requestPermission(PermissionType.audio);
 
-    expect(result, permission_handler.PermissionStatus.granted);
+    expect(result, AppPermissionStatus.granted);
     debugDefaultTargetPlatformOverride = null;
   });
 
@@ -30,7 +31,7 @@ void main() {
 
     final result = await repository.requestPermission(PermissionType.audio);
 
-    expect(result, permission_handler.PermissionStatus.granted);
+    expect(result, AppPermissionStatus.granted);
     debugDefaultTargetPlatformOverride = null;
   });
 
@@ -43,8 +44,18 @@ void main() {
 
     final result = await repository.requestPermission(PermissionType.audio);
 
-    expect(result, permission_handler.PermissionStatus.granted);
+    expect(result, AppPermissionStatus.granted);
     debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets("When request microphone should return permission status", (tester) async {
+    final repository = PermissionRepositoryImpl(const AndroidOsSdkVersion.sdk33());
+    _setupPermissions(
+        {permission_handler.Permission.microphone.value: permission_handler.PermissionStatus.granted.index}, tester);
+
+    final result = await repository.requestPermission(PermissionType.microphone);
+
+    expect(result, AppPermissionStatus.granted);
   });
 
   testWidgets("When openAppSettings is called, invoke plugin's method", (tester) async {

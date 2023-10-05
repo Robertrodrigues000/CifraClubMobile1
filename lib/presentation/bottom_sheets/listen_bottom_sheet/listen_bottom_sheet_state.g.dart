@@ -17,7 +17,7 @@ abstract class _$ListenBottomSheetStateCWProxy {
 
   ListenBottomSheetState isLoadingLocalSongs(bool isLoadingLocalSongs);
 
-  ListenBottomSheetState localSongsError(LocalSongError? localSongsError);
+  ListenBottomSheetState localSongsError(SongSearchError? localSongsError);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListenBottomSheetState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -31,7 +31,7 @@ abstract class _$ListenBottomSheetStateCWProxy {
     RequestError? youtubeError,
     List<LocalSong>? localSongs,
     bool? isLoadingLocalSongs,
-    LocalSongError? localSongsError,
+    SongSearchError? localSongsError,
   });
 }
 
@@ -58,7 +58,7 @@ class _$ListenBottomSheetStateCWProxyImpl implements _$ListenBottomSheetStateCWP
       this(isLoadingLocalSongs: isLoadingLocalSongs);
 
   @override
-  ListenBottomSheetState localSongsError(LocalSongError? localSongsError) => this(localSongsError: localSongsError);
+  ListenBottomSheetState localSongsError(SongSearchError? localSongsError) => this(localSongsError: localSongsError);
 
   @override
 
@@ -100,7 +100,7 @@ class _$ListenBottomSheetStateCWProxyImpl implements _$ListenBottomSheetStateCWP
       localSongsError: localSongsError == const $CopyWithPlaceholder()
           ? _value.localSongsError
           // ignore: cast_nullable_to_non_nullable
-          : localSongsError as LocalSongError?,
+          : localSongsError as SongSearchError?,
     );
   }
 }

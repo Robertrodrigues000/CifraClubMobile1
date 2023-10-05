@@ -1,5 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/data/permission/models/app_permission_status.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/song/models/song_search_error.dart';
 import 'package:cifraclub/domain/song/use_cases/get_local_song_image.dart';
 import 'package:cifraclub/domain/song/use_cases/get_local_songs.dart';
 import 'package:cifraclub/domain/youtube/use_cases/get_youtube_videos.dart';
@@ -8,7 +10,6 @@ import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/song/models/local_song_mock.dart';
@@ -100,7 +101,7 @@ void main() {
     group("and is permission error", () {
       final getLocalSongsMock = _GetLocalSongsMock();
       when(() => getLocalSongsMock(artistName: any(named: "artistName"), songName: any(named: "songName")))
-          .thenAnswer((_) => SynchronousFuture(Err(LocalSongPermissionError(PermissionStatus.denied))));
+          .thenAnswer((_) => SynchronousFuture(Err(SongPermissionError(AppPermissionStatus.denied))));
 
       blocTest(
         "should emit a list of youtube videos",
@@ -113,8 +114,8 @@ void main() {
               .having(
                 (state) => state.localSongsError,
                 "permission error",
-                isA<LocalSongPermissionError>()
-                    .having((error) => error.permissionStatus, "permission status", PermissionStatus.denied),
+                isA<SongPermissionError>()
+                    .having((error) => error.permissionStatus, "permission status", AppPermissionStatus.denied),
               )
         ],
       );
@@ -123,7 +124,7 @@ void main() {
     group("and is fetch error", () {
       final getLocalSongsMock = _GetLocalSongsMock();
       when(() => getLocalSongsMock(artistName: any(named: "artistName"), songName: any(named: "songName")))
-          .thenAnswer((_) => SynchronousFuture(Err(LocalSongFetchError("error"))));
+          .thenAnswer((_) => SynchronousFuture(Err(SongFetchError("error"))));
 
       blocTest(
         "should emit a list of youtube videos",
@@ -136,7 +137,7 @@ void main() {
               .having(
                 (state) => state.localSongsError,
                 "fetch error",
-                isA<LocalSongFetchError>().having((error) => error.error, "permission status", "error"),
+                isA<SongFetchError>().having((error) => error.error, "permission status", "error"),
               )
         ],
       );

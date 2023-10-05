@@ -1,0 +1,96 @@
+group 'com.studiosol.cifraclub.shazam'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.7.22'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    dependencies {
+        implementation 'com.shazam.shazamkit:shazamkit-android:2.0.2'
+
+        implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+        implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+        implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+        implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+        testImplementation 'org.jetbrains.kotlin:kotlin-test'
+        testImplementation 'org.mockito:mockito-core:5.0.0'
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        //To publish new version: ./gradlew :shazam:publish
+        def libVersion = '2.0.2'
+
+        repositories {
+            maven {
+                def releasesRepoUrl = "https://mvn.sscdn.co/release"
+                def snapshotsRepoUrl = "https://mvn.sscdn.co/snapshot"
+                name "StudioSolCdnRepo"
+                url libVersion.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+                credentials {
+                    username = System.getenv('MVN_USER')
+                    password = System.getenv('MVN_TOKEN')
+                }
+            }
+        }
+
+        publications {
+            maven(MavenPublication) {
+                groupId 'com.shazam.shazamkit'
+                version libVersion
+                artifactId 'shazamkit-android'
+                artifact("libs/shazamkit-android-release.aar")
+            }
+        }
+    }
+}

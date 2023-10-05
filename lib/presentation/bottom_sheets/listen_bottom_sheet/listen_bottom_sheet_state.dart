@@ -1,6 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/song/models/local_song.dart';
-import 'package:cifraclub/domain/song/use_cases/get_local_songs.dart';
+import 'package:cifraclub/domain/song/models/song_search_error.dart';
 import 'package:cifraclub/domain/youtube/models/youtube_video.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class ListenBottomSheetState {
 
   final List<LocalSong>? localSongs;
   final bool isLoadingLocalSongs;
-  final LocalSongError? localSongsError;
+  final SongSearchError? localSongsError;
 
   const ListenBottomSheetState({
     this.youtubeVideos = const [],

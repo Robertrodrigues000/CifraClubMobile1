@@ -68,6 +68,8 @@ dependencies:
   scroll_loop_auto_scroll: ^0.0.5
   share_plus: ^7.0.0
   shared_preferences: ^2.1.0
+  shazam:
+    path: plugins/shazam
   typed_result: ^1.0.1
   url_launcher: ^6.1.10
   youtube_player_iframe: ^4.0.4

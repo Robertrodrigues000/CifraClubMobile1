@@ -221,6 +221,29 @@ class _DevScreenState extends State<DevScreen> {
                   onTap: () {
                     _bloc.searchRequest("melhor", null);
                   },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.search_off,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Shazam Seach"),
+                  onTap: () {
+                    _bloc.shazamRequest();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.search_off_sharp,
+                    color: context.colors.textPrimary,
+                  ),
+                  title: const Text("Cancel Shazam Seach"),
+                  onTap: () {
+                    _bloc.cancelShazam();
+                  },
+                ),
+                Center(
+                  child: Text(state.shazamResult ?? ""),
                 )
               ],
             ),

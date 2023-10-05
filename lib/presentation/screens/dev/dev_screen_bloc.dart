@@ -5,6 +5,7 @@ import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
+import 'package:cifraclub/domain/search/use_cases/search_shazam.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/search/models/search_filter.dart';
 import 'package:cifraclub/domain/search/use_cases/search.dart';
@@ -19,6 +20,7 @@ import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shazam/pigeon.g.dart';
 import 'package:typed_result/typed_result.dart';
 
 class DevScreenBloc extends Cubit<DevScreenState> {
@@ -33,6 +35,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final GetChordsRepresentation _getChordsRepresentation;
   final ClearVersionsFromSongbook _clearSongsFromSongbook;
   final Search _searchAll;
+  final SearchShazam _searchShazam;
 
   DevScreenBloc(
     this._getProducts,
@@ -46,11 +49,12 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._getChordsRepresentation,
     this._getVersionData,
     this._searchAll,
+    this._searchShazam,
   ) : super(const DevScreenState(isLoading: false));
 
   CancelableOperation<Result<List<dynamic>, RequestError>>? currentRequest;
 
-  Future<void> restorePurchases() {
+  Future<void> restorePurchases() async {
     return _inAppPurchaseRepository.restorePurchases();
   }
 
@@ -134,5 +138,22 @@ class DevScreenBloc extends Cubit<DevScreenState> {
       },
       failure: print,
     );
+  }
+
+  void shazamRequest() async {
+    emit(const DevScreenState(isLoading: true));
+    (await _searchShazam()).when(
+      success: (value) {
+        emit(DevScreenState(isLoading: false, shazamResult: "${value.artistName} -- ${value.songName}"));
+      },
+      failure: (error) {
+        emit(DevScreenState(isLoading: false, shazamResult: error.runtimeType.toString()));
+      },
+    );
+  }
+
+  void cancelShazam() async {
+    await ShazamHostApi().cancelSearch();
+    emit(const DevScreenState(isLoading: false));
   }
 }
