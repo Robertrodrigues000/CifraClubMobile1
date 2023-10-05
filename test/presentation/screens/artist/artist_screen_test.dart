@@ -69,7 +69,6 @@ void main() {
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
           child: ArtistScreen(
-            name: "Legiao Urbana",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
@@ -91,7 +90,6 @@ void main() {
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
             child: ArtistScreen(
-              name: "Legiao Urbana",
               versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
@@ -110,7 +108,6 @@ void main() {
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
             child: ArtistScreen(
-              name: "Legiao Urbana",
               versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
@@ -130,7 +127,6 @@ void main() {
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
             child: ArtistScreen(
-              name: "Legiao Urbana",
               versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
@@ -151,7 +147,6 @@ void main() {
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
             child: ArtistScreen(
-              name: "Legiao Urbana",
               versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
@@ -175,7 +170,6 @@ void main() {
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
           child: ArtistScreen(
-            name: "Legiao Urbana",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
@@ -193,7 +187,6 @@ void main() {
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
           child: ArtistScreen(
-            name: "Legiao Urbana",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
@@ -215,7 +208,6 @@ void main() {
           child: BlocProvider<ArtistBloc>.value(
             value: bloc,
             child: ArtistScreen(
-              name: "Legiao Urbana",
               versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
             ),
           ),
@@ -237,7 +229,6 @@ void main() {
         BlocProvider<ArtistBloc>.value(
           value: bloc,
           child: ArtistScreen(
-            name: "Legiao Urbana",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
@@ -266,7 +257,6 @@ void main() {
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
           child: ArtistScreen(
-            name: "Legiao Urbana",
             versionOptionsBottomSheet: bottomSheet,
           ),
         ),
@@ -297,7 +287,6 @@ void main() {
         child: BlocProvider<ArtistBloc>.value(
           value: bloc,
           child: ArtistScreen(
-            name: "Legiao Urbana",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),

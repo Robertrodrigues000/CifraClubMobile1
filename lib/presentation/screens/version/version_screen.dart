@@ -4,26 +4,32 @@ import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
-import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_widget.dart';
-import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
-import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/version_header.dart';
 import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nav/nav.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VersionScreen extends StatefulWidget {
   final ListenBottomSheet listenBottomSheet;
+  final VersionOptionsBottomSheet versionOptionsBottomSheet;
 
-  const VersionScreen(this.listenBottomSheet, {super.key});
+  const VersionScreen(
+    this.listenBottomSheet, {
+    super.key,
+    required this.versionOptionsBottomSheet,
+  });
 
   @override
   State<VersionScreen> createState() => _VersionScreenState();
@@ -105,10 +111,12 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
           appBar: CosmosAppBar(
             actions: [
               TextButton(
-                  onPressed: () {
-                    _bloc.add(OnToggleIsChordPinned());
-                  },
-                  child: Text(state.isChordListPinned ? "Ocultar acordes na tela" : "Fixar acordes na tela")),
+                onPressed: () => _bloc.add(OnToggleIsChordPinned()),
+                child: Text(
+                  state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
+                  style: context.typography.body9.copyWith(letterSpacing: 0),
+                ),
+              ),
             ],
           ),
           body: Listener(
@@ -133,22 +141,24 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                         ),
                       ),
                     SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          Text(state.versionHeaderState.songName),
-                          Text(state.versionHeaderState.artistName),
-                          FilterCapsuleList(
-                              filters: state.versionHeaderState.versionFilters.map((filter) {
-                            return Filter(
-                              label: filter.versionName,
-                              isSelected: filter == state.versionHeaderState.selectedVersionFilter,
-                              onTap: () {
-                                _bloc.add(OnVersionSelected(filter));
-                              },
-                              leadingIconUri: filter.isVerified ? AppSvgs.verifiedIcon : null,
-                            );
-                          }).toList()),
-                        ],
+                      child: VersionHeader(
+                        songName: state.versionHeaderState.songName,
+                        artistName: state.versionHeaderState.artistName,
+                        isFavorite: state.versionHeaderState.isFavorite,
+                        onTapFavoriteIcon: () {/*TODO*/},
+                        onTapArtistName: () => ArtistEntry.push(Nav.of(context), state.versionHeaderState.artistUrl),
+                        onTapOptionsIcon: () async {
+                          await widget.versionOptionsBottomSheet.show(
+                            context: context,
+                            artistUrl: state.versionHeaderState.artistUrl,
+                            songUrl: state.versionHeaderState.songUrl,
+                            songId: state.version!.song.songId,
+                          );
+                        },
+                        filters: state.versionHeaderState.versionFilters,
+                        selectedFilter: state.versionHeaderState.selectedVersionFilter,
+                        onTapFilter: (filter) => _bloc.add(OnVersionSelected(filter)),
+                        onTapMoreFilters: () {/*TODO*/},
                       ),
                     ),
                     if (state.isLoading)

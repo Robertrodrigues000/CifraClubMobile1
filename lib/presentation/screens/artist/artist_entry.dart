@@ -9,19 +9,16 @@ import 'package:nav/nav.dart';
 class ArtistEntry extends ScreenEntry {
   static const name = "ArtistEntry";
   static const artistUrlParamKey = "artistUrl";
-  static const artistNameParamKey = "artistName";
 
   ArtistEntry(super.params);
 
-  static void push(Nav nav, String artistUrl, String artistName) {
+  static void push(Nav nav, String artistUrl) {
     nav.push(screenName: name, params: {
       artistUrlParamKey: artistUrl,
-      artistNameParamKey: artistName,
     });
   }
 
   String? get artistUrl => params[artistUrlParamKey];
-  String? get artistName => params[artistNameParamKey];
 
   @override
   String get screenName => name;
@@ -46,7 +43,6 @@ class ArtistEntry extends ScreenEntry {
         getIt(),
       )..init(),
       child: ArtistScreen(
-        name: artistName ?? "",
         versionOptionsBottomSheet: getIt(),
       ),
     );

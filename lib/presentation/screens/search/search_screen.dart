@@ -176,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           case ArtistSearch artistResult:
                             return SearchTile(
                               // coverage:ignore-start
-                              onTap: () => ArtistEntry.push(Nav.of(context), artistResult.url, artistResult.name),
+                              onTap: () => ArtistEntry.push(Nav.of(context), artistResult.url),
                               // coverage:ignore-end
                               title: artistResult.name,
                               imageUrl: artistResult.imageUrl,
@@ -193,8 +193,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             return SearchTile(
                               subtitle: "${albumResult.artistName} • ${albumResult.releaseYear}",
                               // coverage:ignore-start
-                              onTap: () => AlbumEntry.push(
-                                  Nav.of(context), albumResult.artistUrl, albumResult.albumUrl, albumResult.albumName),
+                              onTap: () =>
+                                  AlbumEntry.push(Nav.of(context), albumResult.artistUrl, albumResult.albumUrl),
                               // coverage:ignore-end
                               title: albumResult.albumName,
                               imageUrl: albumResult.albumCover,

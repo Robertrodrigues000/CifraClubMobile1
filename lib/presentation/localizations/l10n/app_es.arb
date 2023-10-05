@@ -270,5 +270,7 @@
     "favoriteVersionMessage": "Cifrado agregado a favoritos",
     "unFavoriteVersionMessage": "Cifrado eliminado de favoritos",
     "favoriteVersionErrorMessage": "No se pudo agregar el cifrado a favoritos",
-    "unFavoriteVersionErrorMessage": "No se pudo eliminar el cifrado de favoritos"
+    "unFavoriteVersionErrorMessage": "No se pudo eliminar el cifrado de favoritos",
+    "hideChords": "Ocultar acordes en pantalla",
+    "fixChords": "Fijar acordes en pantalla"
 }

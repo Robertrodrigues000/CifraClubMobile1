@@ -147,7 +147,7 @@ extension $VersionStateCopyWith on VersionState {
 abstract class _$VersionHeaderStateCWProxy {
   VersionHeaderState selectedInstrument(Instrument? selectedInstrument);
 
-  VersionHeaderState isFavorite(bool? isFavorite);
+  VersionHeaderState isFavorite(bool isFavorite);
 
   VersionHeaderState selectedVersionFilter(VersionFilter? selectedVersionFilter);
 
@@ -157,9 +157,9 @@ abstract class _$VersionHeaderStateCWProxy {
 
   VersionHeaderState songName(String songName);
 
-  VersionHeaderState artistUrl(String? artistUrl);
+  VersionHeaderState artistUrl(String artistUrl);
 
-  VersionHeaderState songUrl(String? songUrl);
+  VersionHeaderState songUrl(String songUrl);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionHeaderState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -189,7 +189,7 @@ class _$VersionHeaderStateCWProxyImpl implements _$VersionHeaderStateCWProxy {
   VersionHeaderState selectedInstrument(Instrument? selectedInstrument) => this(selectedInstrument: selectedInstrument);
 
   @override
-  VersionHeaderState isFavorite(bool? isFavorite) => this(isFavorite: isFavorite);
+  VersionHeaderState isFavorite(bool isFavorite) => this(isFavorite: isFavorite);
 
   @override
   VersionHeaderState selectedVersionFilter(VersionFilter? selectedVersionFilter) =>
@@ -205,10 +205,10 @@ class _$VersionHeaderStateCWProxyImpl implements _$VersionHeaderStateCWProxy {
   VersionHeaderState songName(String songName) => this(songName: songName);
 
   @override
-  VersionHeaderState artistUrl(String? artistUrl) => this(artistUrl: artistUrl);
+  VersionHeaderState artistUrl(String artistUrl) => this(artistUrl: artistUrl);
 
   @override
-  VersionHeaderState songUrl(String? songUrl) => this(songUrl: songUrl);
+  VersionHeaderState songUrl(String songUrl) => this(songUrl: songUrl);
 
   @override
 
@@ -233,10 +233,10 @@ class _$VersionHeaderStateCWProxyImpl implements _$VersionHeaderStateCWProxy {
           ? _value.selectedInstrument
           // ignore: cast_nullable_to_non_nullable
           : selectedInstrument as Instrument?,
-      isFavorite: isFavorite == const $CopyWithPlaceholder()
+      isFavorite: isFavorite == const $CopyWithPlaceholder() || isFavorite == null
           ? _value.isFavorite
           // ignore: cast_nullable_to_non_nullable
-          : isFavorite as bool?,
+          : isFavorite as bool,
       selectedVersionFilter: selectedVersionFilter == const $CopyWithPlaceholder()
           ? _value.selectedVersionFilter
           // ignore: cast_nullable_to_non_nullable
@@ -253,14 +253,14 @@ class _$VersionHeaderStateCWProxyImpl implements _$VersionHeaderStateCWProxy {
           ? _value.songName
           // ignore: cast_nullable_to_non_nullable
           : songName as String,
-      artistUrl: artistUrl == const $CopyWithPlaceholder()
+      artistUrl: artistUrl == const $CopyWithPlaceholder() || artistUrl == null
           ? _value.artistUrl
           // ignore: cast_nullable_to_non_nullable
-          : artistUrl as String?,
-      songUrl: songUrl == const $CopyWithPlaceholder()
+          : artistUrl as String,
+      songUrl: songUrl == const $CopyWithPlaceholder() || songUrl == null
           ? _value.songUrl
           // ignore: cast_nullable_to_non_nullable
-          : songUrl as String?,
+          : songUrl as String,
     );
   }
 }

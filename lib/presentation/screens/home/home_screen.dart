@@ -134,8 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       HomeTopArtists(
                         artists: state.topArtists,
                         // coverage:ignore-start
-                        onTap: (artist) =>
-                            ArtistEntry.push(Nav.of(context), artist.url, artist.name), // coverage:ignore-end
+                        onTap: (artist) => ArtistEntry.push(Nav.of(context), artist.url), // coverage:ignore-end
                       ),
                       const SliverToBoxAdapter(child: SizedBox(height: 8)),
                       HomeButton(

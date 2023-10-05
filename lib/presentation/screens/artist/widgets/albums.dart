@@ -58,7 +58,7 @@ class _AlbumsState extends State<Albums> {
                     subtitle: "${album.totalSongs} ${context.text.songs(album.totalSongs ?? 0)} • ${album.releaseYear}",
                     cover: album.image?.image,
                     // coverage:ignore-start
-                    onTap: () => AlbumEntry.push(Nav.of(context), album.artistUrl, album.albumUrl, album.title),
+                    onTap: () => AlbumEntry.push(Nav.of(context), album.artistUrl, album.albumUrl),
                     // coverage:ignore-end
                     size: imageSize,
                   );
@@ -75,8 +75,7 @@ class _AlbumsState extends State<Albums> {
                       subtitle: searchAlbum.artistName,
                       cover: searchAlbum.albumCover,
                       // coverage:ignore-start
-                      onTap: () => AlbumEntry.push(
-                          Nav.of(context), searchAlbum.artistUrl, searchAlbum.albumUrl, searchAlbum.albumName),
+                      onTap: () => AlbumEntry.push(Nav.of(context), searchAlbum.artistUrl, searchAlbum.albumUrl),
                       // coverage:ignore-end
                       size: imageSize,
                     );

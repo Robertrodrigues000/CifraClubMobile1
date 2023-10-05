@@ -27,8 +27,7 @@ import 'package:nav/nav.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ArtistScreen extends StatefulWidget {
-  const ArtistScreen({super.key, required this.name, required this.versionOptionsBottomSheet});
-  final String name;
+  const ArtistScreen({super.key, required this.versionOptionsBottomSheet});
   final VersionOptionsBottomSheet versionOptionsBottomSheet;
 
   @override
@@ -184,13 +183,13 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
                     ),
                   ),
                 ),
-                if (state.songs.length > maxSongs)
+                if (state.songs.length > maxSongs && state.artistInfo != null)
                   SliverToBoxAdapter(
                     child: CifraClubButton(
                       type: ButtonType.outline,
                       // coverage:ignore-start
-                      onPressed: () => ArtistSongsEntry.push(
-                          Nav.of(context), state.artistInfo!.url, state.selectedInstrument?.name ?? "", widget.name),
+                      onPressed: () => ArtistSongsEntry.push(Nav.of(context), state.artistInfo!.url,
+                          state.selectedInstrument?.name ?? "", state.artistInfo!.name),
                       // coverage:ignore-end
                       padding: EdgeInsets.only(
                         left: context.appDimensionScheme.screenMargin,

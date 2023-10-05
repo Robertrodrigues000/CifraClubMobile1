@@ -95,7 +95,7 @@ class _TopArtistsScreenState extends State<TopArtistsScreen> {
                     return TopArtists(
                       topArtists: state.topArtists,
                       // coverage:ignore-start
-                      onTap: (artist) => ArtistEntry.push(Nav.of(context), artist.url, artist.name),
+                      onTap: (artist) => ArtistEntry.push(Nav.of(context), artist.url),
                       // coverage:ignore-end
                       selectedGenre: state.selectedGenre,
                     );

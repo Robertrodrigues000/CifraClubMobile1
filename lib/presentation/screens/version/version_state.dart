@@ -73,22 +73,22 @@ class VersionState {
 class VersionHeaderState {
   final String artistName;
   final String songName;
-  final String? artistUrl;
-  final String? songUrl;
-  final bool? isFavorite;
+  final String artistUrl;
+  final String songUrl;
+  final bool isFavorite;
   final VersionFilter? selectedVersionFilter;
   final List<VersionFilter> versionFilters;
   final Instrument? selectedInstrument;
 
   const VersionHeaderState({
     this.selectedInstrument,
-    this.isFavorite,
+    this.isFavorite = false,
     this.selectedVersionFilter,
     this.versionFilters = const [],
     this.artistName = "",
     this.songName = "",
-    this.artistUrl,
-    this.songUrl,
+    this.artistUrl = "",
+    this.songUrl = "",
   });
 }
 

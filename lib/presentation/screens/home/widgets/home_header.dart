@@ -43,7 +43,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             onPressed: widget.openLogin,
             child: Text(
               context.text.login,
-              style: context.typography.subtitle5.copyWith(fontWeight: FontWeight.bold),
+              style: context.typography.subtitle5.copyWith(fontWeight: FontWeight.bold, letterSpacing: 0),
             ),
           )
         else

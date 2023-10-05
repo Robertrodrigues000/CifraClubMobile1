@@ -14,9 +14,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
 class AlbumScreen extends StatefulWidget {
-  const AlbumScreen({super.key, required this.name, required this.versionOptionsBottomSheet});
+  const AlbumScreen({super.key, required this.versionOptionsBottomSheet});
   final VersionOptionsBottomSheet versionOptionsBottomSheet;
-  final String name;
 
   @override
   State<AlbumScreen> createState() => _AlbumScreenState();

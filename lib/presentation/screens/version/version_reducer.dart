@@ -13,6 +13,8 @@ class VersionReducer {
           versionHeaderState: VersionHeaderState(
             artistName: action.artistName ?? "",
             songName: action.songName ?? "",
+            songUrl: action.songUrl ?? "",
+            artistUrl: action.artistUrl ?? "",
             selectedInstrument: Instrument.guitar, // Todo receber isso pela shared preferences
           ),
         );
@@ -28,9 +30,10 @@ class VersionReducer {
           isLoading: false,
           version: action.versionData,
           versionHeaderState: state.versionHeaderState.copyWith(
-            versionFilters: action.versionFilters,
-            selectedVersionFilter: action.selectedFilter,
-          ),
+              versionFilters: action.versionFilters,
+              selectedVersionFilter: action.selectedFilter,
+              songName: action.versionData.song.name,
+              artistName: action.versionData.artist?.name),
         );
       case OnYouTubeVideoClosed():
         onEffect(OnCloseYouTubeVideo());

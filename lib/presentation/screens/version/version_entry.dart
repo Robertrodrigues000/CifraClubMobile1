@@ -68,7 +68,7 @@ class VersionEntry extends ScreenEntry {
           songUrl: songUrl,
           songbookVersionId: songbookVersionId,
         )),
-      child: VersionScreen(getIt()),
+      child: VersionScreen(getIt(), versionOptionsBottomSheet: getIt()),
     );
   }
 }

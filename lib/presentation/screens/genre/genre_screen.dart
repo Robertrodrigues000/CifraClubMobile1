@@ -62,7 +62,7 @@ class _GenreScreenState extends State<GenreScreen> {
                     title: artist.name,
                     imageUrl: artist.image?.size162,
                     ranking: (index + 1).toString(),
-                    onTap: () => ArtistEntry.push(Nav.of(context), artist.url, artist.name), // coverage:ignore-line
+                    onTap: () => ArtistEntry.push(Nav.of(context), artist.url), // coverage:ignore-line
                   );
                 },
               );

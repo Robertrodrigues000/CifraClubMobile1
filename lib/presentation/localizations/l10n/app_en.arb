@@ -328,5 +328,7 @@
     "favoriteVersionMessage": "Chord added to favorites",
     "unFavoriteVersionMessage": "Chord removed from favorites",
     "favoriteVersionErrorMessage": "Failed to add chord to favorites",
-    "unFavoriteVersionErrorMessage": "Failed to remove chord from favorites"
+    "unFavoriteVersionErrorMessage": "Failed to remove chord from favorites",
+    "hideChords": "Hide chords on screen",
+    "fixChords": "Fix chords on screen"
 }

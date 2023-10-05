@@ -270,5 +270,7 @@
     "favoriteVersionMessage": "Cifra favoritada",
     "unFavoriteVersionMessage": "Cifra desfavoritada",
     "favoriteVersionErrorMessage": "Falha ao favoritar cifra",
-    "unFavoriteVersionErrorMessage": "Falha ao desfavoritar cifra"
+    "unFavoriteVersionErrorMessage": "Falha ao desfavoritar cifra",
+    "hideChords": "Ocultar acordes na tela",
+    "fixChords": "Fixar acordes na tela"
 }

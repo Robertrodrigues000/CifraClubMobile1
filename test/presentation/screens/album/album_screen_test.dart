@@ -60,7 +60,6 @@ void main() {
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
           child: AlbumScreen(
-            name: "A Tempestade",
             versionOptionsBottomSheet: bottomSheet,
           ),
         ),
@@ -77,7 +76,6 @@ void main() {
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
           child: AlbumScreen(
-            name: "A Tempestade",
             versionOptionsBottomSheet: bottomSheet,
           ),
         ),
@@ -98,7 +96,6 @@ void main() {
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
             child: AlbumScreen(
-              name: "A Tempestade",
               versionOptionsBottomSheet: bottomSheet,
             ),
           ),
@@ -121,7 +118,6 @@ void main() {
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
             child: AlbumScreen(
-              name: "A Tempestade",
               versionOptionsBottomSheet: bottomSheet,
             ),
           ),
@@ -143,7 +139,6 @@ void main() {
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
           child: AlbumScreen(
-            name: "A Tempestade",
             versionOptionsBottomSheet: bottomSheet,
           ),
         ),
@@ -162,7 +157,6 @@ void main() {
         child: BlocProvider<AlbumBloc>.value(
           value: bloc,
           child: AlbumScreen(
-            name: "A Tempestade",
             versionOptionsBottomSheet: bottomSheet,
           ),
         ),
@@ -183,7 +177,6 @@ void main() {
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
             child: AlbumScreen(
-              name: "A Tempestade",
               versionOptionsBottomSheet: bottomSheet,
             ),
           ),
@@ -209,7 +202,6 @@ void main() {
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
             child: AlbumScreen(
-              name: "A Tempestade",
               versionOptionsBottomSheet: bottomSheet,
             ),
           ),
@@ -236,7 +228,6 @@ void main() {
           child: BlocProvider<AlbumBloc>.value(
             value: bloc,
             child: AlbumScreen(
-              name: "A Tempestade",
               versionOptionsBottomSheet: bottomSheet,
             ),
           ),
@@ -270,7 +261,6 @@ void main() {
             child: BlocProvider<AlbumBloc>.value(
               value: bloc,
               child: AlbumScreen(
-                name: "A Tempestade",
                 versionOptionsBottomSheet: bottomSheet,
               ),
             ),
@@ -294,7 +284,6 @@ void main() {
         BlocProvider<AlbumBloc>.value(
           value: bloc,
           child: AlbumScreen(
-            name: "A Tempestade",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),
@@ -322,7 +311,6 @@ void main() {
         BlocProvider<AlbumBloc>.value(
           value: bloc,
           child: AlbumScreen(
-            name: "A Tempestade",
             versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
           ),
         ),

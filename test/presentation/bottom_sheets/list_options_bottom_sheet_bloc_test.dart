@@ -87,7 +87,7 @@ void main() {
     );
   });
 
-  test("When `clearlist` is called should call deleteAllCifras", () async {
+  test("When `clearList` is called should call deleteAllVersions", () async {
     final deleteAllCifras = _ClearVersionsFromSongbookMock();
     when(() => deleteAllCifras(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
