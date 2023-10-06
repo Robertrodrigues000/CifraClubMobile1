@@ -8,7 +8,7 @@ class MultiLineChordsSectionFactory extends SectionFactory {
 
   MultiLineChordsSectionFactory()
       : super(RegExp(
-          r'(?<TWCM>^(?<TWCML1>(?:([ \t]*?)(<b>(?:(?!</b>).)*?</b>)([ \t]*?))+)\n(?<TWCML2>(?:(?![ \t]*?(<b>(?:(?!</b>).)*?</b>)[ \t]*?|#t1#).)+))',
+          r'(?<TWCM>^((?:[ \t]*(?:<b>(?:(?!</b>).)*?</b>))+[ \t]*?)\n((?:(?!(?:[ \t]*<b>(?:(?!</b>).)*?</b>)+[ \t]*?|#t1#).)+))',
           multiLine: true,
           dotAll: false,
         ));
