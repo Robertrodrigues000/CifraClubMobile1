@@ -95,41 +95,42 @@ class VersionTile extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: context.appDimensionScheme.iconTileSpace),
-                child: editable
-                    ? ReorderableDragStartListener(
-                        index: index ?? 0,
-                        child: IconButton(
-                          // coverage:ignore-start
-                          onPressed: () {},
-                          // coverage:ignore-end
+            if (onVersionTap != null)
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(right: context.appDimensionScheme.iconTileSpace),
+                  child: editable
+                      ? ReorderableDragStartListener(
+                          index: index ?? 0,
+                          child: IconButton(
+                            // coverage:ignore-start
+                            onPressed: () {},
+                            // coverage:ignore-end
+                            padding: const EdgeInsets.all(12),
+                            highlightColor: Theme.of(context).splashColor,
+                            icon: SvgImage(
+                              assetPath: AppSvgs.dragIcon,
+                              color: context.colors.textPrimary,
+                              height: 24,
+                              width: 24,
+                            ),
+                          ),
+                        )
+                      : IconButton(
+                          key: const Key("options-button"),
+                          onPressed: onOptionsTap,
                           padding: const EdgeInsets.all(12),
                           highlightColor: Theme.of(context).splashColor,
                           icon: SvgImage(
-                            assetPath: AppSvgs.dragIcon,
+                            assetPath: AppSvgs.songbookOptionsIcon,
                             color: context.colors.textPrimary,
                             height: 24,
                             width: 24,
                           ),
                         ),
-                      )
-                    : IconButton(
-                        key: const Key("options-button"),
-                        onPressed: onOptionsTap,
-                        padding: const EdgeInsets.all(12),
-                        highlightColor: Theme.of(context).splashColor,
-                        icon: SvgImage(
-                          assetPath: AppSvgs.songbookOptionsIcon,
-                          color: context.colors.textPrimary,
-                          height: 24,
-                          width: 24,
-                        ),
-                      ),
+                ),
               ),
-            ),
           ],
         ),
       ),

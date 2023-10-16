@@ -42,4 +42,34 @@ void main() {
 
     expect(find.byType(SongbookInformationSection), findsNothing);
   });
+
+  testWidgets("When songbook is not null should show username", (widgetTester) async {
+    const username = "Joao";
+    await widgetTester.pumpWidgetWithWrapper(
+      CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: SongbookInformationSection(
+              isScrolledUnder: true,
+              isPublic: false,
+              songbookName: "Songbook name",
+              listType: ListType.user,
+              preview: [],
+              isPro: false,
+              userName: username,
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: 50,
+              (context, index) => const SizedBox(
+                height: 50,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    expect(find.text(username), findsOneWidget);
+  });
 }

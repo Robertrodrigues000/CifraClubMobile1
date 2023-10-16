@@ -415,4 +415,55 @@ void main() {
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });
+
+  group("When getSongbookById is called", () {
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final mockResponse = await File("test/data/songbook/data_source/songbook_mock_json_response.json").readAsString();
+      await networkService.mock<SongbookDto>(response: mockResponse);
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result = await songbookDataSource.getSongbookById(songbookId: 1);
+
+      expect(result.isSuccess, true);
+      final songbook = result.get()!;
+
+      expect(songbook.id, 10019906);
+      expect(songbook.name, "trstasd");
+      expect(songbook.userId, 545320573);
+      expect(songbook.userName, "João Gonçalves");
+      expect(songbook.createdAt, "2023-05-08 09:12:05");
+      expect(songbook.lastUpdated, "2023-07-17 12:10:30");
+      expect(songbook.isPublic, true);
+      expect(songbook.status, 1);
+      expect(songbook.totalSongs, 2);
+      expect(songbook.versions?.length, 2);
+      expect(songbook.versions?.first.remoteDatabaseId, 136853322);
+      expect(songbook.versions?.first.songUrl, "its-my-life");
+      expect(songbook.versions?.first.type, 1);
+      expect(songbook.versions?.first.key, "D#");
+      expect(songbook.versions?.first.name, "It's My Life");
+      expect(songbook.versions?.last.remoteDatabaseId, 136853323);
+      expect(songbook.versions?.last.songUrl, "livin-on-prayer");
+      expect(songbook.versions?.last.type, 1);
+      expect(songbook.versions?.last.key, "G");
+      expect(songbook.versions?.last.name, "Livin' On A Prayer");
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<SongbookDto>(request: captureAny(named: "request"))).thenAnswer(
+        (invocation) => SynchronousFuture(
+          Err(ServerError(statusCode: 404)),
+        ),
+      );
+
+      final songbookDataSource = SongbookDataSource(networkService);
+      final result = await songbookDataSource.getSongbookById(songbookId: 1);
+
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
 }

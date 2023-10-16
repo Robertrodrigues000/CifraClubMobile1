@@ -241,4 +241,23 @@ void main() {
       expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
     });
   });
+
+  test("When geSongbookById is called, should return songbook domain entity", () async {
+    final songbookDataSource = _SongbookDataSourceMock();
+    final songbookDto = _SongbookDtoMock();
+    final songbook = (songbook: getFakeSongbook(), versions: [getFakeVersion(), getFakeVersion()]);
+
+    when(songbookDto.toDomain).thenReturn(songbook);
+    when(() => songbookDataSource.getSongbookById(songbookId: any(named: "songbookId")))
+        .thenAnswer((invocation) => SynchronousFuture(Ok(songbookDto)));
+
+    final songbookRepository = SongbookRepositoryImpl(songbookDataSource);
+    final result = await songbookRepository.getSongbookById(songbookId: 1);
+
+    verify(songbookDto.toDomain).called(1);
+    verify(() => songbookDataSource.getSongbookById(songbookId: any(named: "songbookId"))).called(1);
+
+    expect(result.get()!.songbook.id, songbook.songbook.id);
+    expect(result.get()!.versions.length, songbook.versions.length);
+  });
 }

@@ -1,16 +1,16 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
-import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
-import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_bloc.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 
-class VersionsEntry extends ScreenEntry {
-  static const name = "Versions";
+class VersionsSharedEntry extends ScreenEntry {
+  static const name = "VersionsShared";
   static const songbookIdParamKey = "songbookId";
   static const userIdParamKey = "userId";
-  VersionsEntry(super.params);
+  VersionsSharedEntry(super.params);
 
   static void push(Nav nav, int songbookId, int userId) {
     nav.push(screenName: name, params: {
@@ -29,15 +29,16 @@ class VersionsEntry extends ScreenEntry {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VersionsBloc>(
-      create: (context) => VersionsBloc(
-          getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())
-        ..init(songbookId),
-      child: VersionsScreen(
-        isTablet: false,
+    return BlocProvider<VersionsSharedBloc>(
+      create: (context) => VersionsSharedBloc(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      )..init(songbookId),
+      child: VersionsSharedScreen(
         userId: userId,
         songbookId: songbookId,
-        listOptionsBottomSheet: getIt(),
       ),
     );
   }

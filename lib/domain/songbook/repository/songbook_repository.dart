@@ -24,4 +24,6 @@ abstract class SongbookRepository {
     required SongbookVersionInput versionInput,
   });
   Future<Result<void, RequestError>> sortVersionFromSongbook({required int songbookId, required List<int> versionsId});
+  Future<Result<({Songbook songbook, List<Version> versions}), RequestError>> getSongbookById(
+      {required int songbookId});
 }

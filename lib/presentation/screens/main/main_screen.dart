@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'package:cifraclub/presentation/navigator/navigators_controller.dart';
 import 'package:cifraclub/presentation/screens/main/main_bloc.dart';
 import 'package:cifraclub/presentation/screens/main/main_state.dart';
 import 'package:cifraclub/presentation/screens/main/widgets/main_bottom_navigation.dart';
@@ -10,17 +10,18 @@ import 'package:nav/nav.dart';
 typedef NavFrameBuilder = Widget Function(Nav nav);
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key, required this.pageController, required this.navFrameBuilder});
+  const MainScreen(
+      {super.key, required this.pageController, required this.navFrameBuilder, required this.navigatorsController});
 
   final PageController pageController;
   final NavFrameBuilder navFrameBuilder;
+  final NavigatorsController navigatorsController;
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  StreamSubscription? _blocStateSubscription;
   late MainBloc bloc;
 
   @override
@@ -31,15 +32,18 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void didChangeDependencies() {
+    widget.navigatorsController.restorableBottomNavigationIndex.addListener(_listenToBottomNavigationSelectedItem);
     super.didChangeDependencies();
-
-    _blocStateSubscription?.cancel();
-    _blocStateSubscription = bloc.stream.listen((event) {
-      if (widget.pageController.page?.round() != event.selectedPage.index) {
-        widget.pageController.jumpToPage(event.selectedPage.index);
-      }
-    });
   }
+
+  // coverage:ignore-start
+  void _listenToBottomNavigationSelectedItem() {
+    final selectedItem = widget.navigatorsController.currentBottomNavigationScreen;
+    if (widget.pageController.page?.round() != selectedItem.index) {
+      widget.pageController.jumpToPage(selectedItem.index);
+    }
+  }
+  // coverage:ignore-end
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +51,39 @@ class _MainScreenState extends State<MainScreen> {
       builder: (context, state) {
         final safeAreaBottomOffset = MediaQuery.of(context).padding.bottom;
         return BackButtonHandler(
-          onWillPop: bloc.onWillPop,
+          onWillPop: widget.navigatorsController.onWillPop,
           child: Scaffold(
             body: PageView(
               physics: const NeverScrollableScrollPhysics(),
               controller: widget.pageController,
               children: List.generate(
-                state.bottomNavigationNavs.length,
-                (index) => widget.navFrameBuilder(state.bottomNavigationNavs[index]),
+                widget.navigatorsController.navs.length,
+                (index) => widget.navFrameBuilder(widget.navigatorsController.navs[index]),
                 growable: false,
               ),
             ),
-            bottomNavigationBar: MainBottomNavigation(
-              safeAreaBottomOffset: safeAreaBottomOffset,
-              currentItem: state.selectedPage,
-              onItemSelected: (selectedItem) {
-                bloc.setSelectedItem(selectedItem);
-                widget.pageController.jumpToPage(selectedItem.index);
+            bottomNavigationBar: AnimatedBuilder(
+              animation: widget.navigatorsController.restorableBottomNavigationIndex,
+              builder: (context, _) {
+                return MainBottomNavigation(
+                  key: const Key("bottomNav"),
+                  safeAreaBottomOffset: safeAreaBottomOffset,
+                  onItemSelected: (selectedItem) {
+                    widget.navigatorsController.setSelectedItem(selectedItem);
+                  },
+                  currentItem: widget.navigatorsController.currentBottomNavigationScreen,
+                );
               },
             ),
           ),
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    widget.navigatorsController.restorableBottomNavigationIndex.removeListener(_listenToBottomNavigationSelectedItem);
+    super.dispose();
   }
 }

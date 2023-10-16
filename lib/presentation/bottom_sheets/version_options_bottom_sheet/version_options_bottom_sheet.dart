@@ -94,7 +94,9 @@ class VersionOptionsBottomSheet {
                         onClick: () async {
                           switch (e) {
                             case VersionOptionsBottomSheetItem.saveVersion:
-                              DefaultBottomSheet.close(context);
+                              if (context.mounted) {
+                                DefaultBottomSheet.close(context);
+                              }
                               if (state.isLoggedIn) {
                                 await saveToListBottomSheet.show(
                                     context: screenContext, artistUrl: artistUrl, songUrl: songUrl);
@@ -102,7 +104,9 @@ class VersionOptionsBottomSheet {
                                 bloc.openLoginPage();
                               }
                             case VersionOptionsBottomSheetItem.favoriteVersion:
-                              DefaultBottomSheet.close(context);
+                              if (context.mounted) {
+                                DefaultBottomSheet.close(context);
+                              }
                               if (state.isLoggedIn) {
                                 final result = await bloc.onFavorite(artistUrl, songUrl);
                                 if (screenContext.mounted) {
@@ -112,11 +116,13 @@ class VersionOptionsBottomSheet {
                                 bloc.openLoginPage();
                               }
                             case VersionOptionsBottomSheetItem.share:
-                              DefaultBottomSheet.close(context);
-                              final box = context.findRenderObject() as RenderBox?;
-                              final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
-                              final link = AppUrls.versionUrlFormat(artistUrl, songUrl);
-                              await bloc.shareLink(link, rect);
+                              if (context.mounted) {
+                                DefaultBottomSheet.close(context);
+                                final box = context.findRenderObject() as RenderBox?;
+                                final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
+                                final link = AppUrls.versionUrlFormat(artistUrl, songUrl);
+                                await bloc.shareLink(link, rect);
+                              }
                             case VersionOptionsBottomSheetItem.correctVersion:
                             //TODO
                           }

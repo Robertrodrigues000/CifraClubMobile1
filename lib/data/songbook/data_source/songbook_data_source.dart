@@ -109,4 +109,15 @@ class SongbookDataSource {
       _ => "/v3/songbook/$songbookId/song",
     };
   }
+
+  Future<Result<SongbookDto, RequestError>> getSongbookById({required int songbookId}) {
+    var request = NetworkRequest(
+        type: NetworkRequestType.get,
+        path: "/v3/songbook/$songbookId",
+        parser: (data) {
+          return SongbookDto.fromJson(data);
+        });
+
+    return _networkService.execute(request: request);
+  }
 }

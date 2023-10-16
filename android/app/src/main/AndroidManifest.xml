@@ -22,10 +22,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize">
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
@@ -38,6 +38,38 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="www.cifraclub.com.br" />
+            </intent-filter>
+
+            <intent-filter>
+                    <!-- Scheme -->
+                    <data android:scheme="http" />
+                    <data android:scheme="https" />
+                    <data android:scheme="cifraclub" />
+                    <!-- Host -->
+                    <data android:host="cifraclub.com" />
+                    <data android:host="cifraclub.com.br" />
+                    <data android:host="www.cifraclub.com" />
+                    <data android:host="www.cifraclub.com.br" />
+                    <data android:host="m.cifraclub.com" />
+                    <data android:host="m.cifraclub.com.br" />
+                   
+                    <!-- Action -->
+                    <action android:name="android.intent.action.VIEW" />
+                    <!-- Category -->
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
 

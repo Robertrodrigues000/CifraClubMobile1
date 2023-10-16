@@ -81,4 +81,10 @@ class SongbookRepositoryImpl extends SongbookRepository {
 
     return _songbookDataSource.sortVersions(songbookId, input);
   }
+
+  @override
+  Future<Result<({Songbook songbook, List<Version> versions}), RequestError>> getSongbookById(
+      {required int songbookId}) async {
+    return (await _songbookDataSource.getSongbookById(songbookId: songbookId)).map((songbook) => songbook.toDomain());
+  }
 }

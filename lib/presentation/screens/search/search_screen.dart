@@ -16,6 +16,7 @@ import 'package:cifraclub/presentation/screens/search/search_state.dart';
 import 'package:cifraclub/presentation/screens/search/widgets/search_app_bar.dart';
 import 'package:cifraclub/presentation/screens/search/widgets/search_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/search/widgets/search_tile.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -185,7 +186,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             return SearchTile(
                               subtitle:
                                   "${songbookResult.totalSongs} ${context.text.songs(songbookResult.totalSongs)} • ${songbookResult.userName}",
-                              onTap: () {}, // coverage:ignore-line
+                              // coverage:ignore-start
+                              onTap: () {
+                                Nav.of(context).push(screenName: VersionsSharedEntry.name, params: {
+                                  VersionsSharedEntry.songbookIdParamKey: songbookResult.songbookId.toString(),
+                                  VersionsSharedEntry.userIdParamKey: songbookResult.userId.toString()
+                                });
+                              },
+                              // coverage:ignore-end
                               title: songbookResult.songbookName,
                               listPreview: songbookResult.songbookPreview,
                             );

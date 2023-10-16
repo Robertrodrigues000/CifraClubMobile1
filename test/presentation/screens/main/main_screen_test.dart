@@ -1,111 +1,156 @@
 import 'dart:async';
 
+import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/presentation/navigator/navigators_controller.dart';
 import 'package:cifraclub/presentation/screens/main/bottom_navigation_item.dart';
 import 'package:cifraclub/presentation/screens/main/main_bloc.dart';
 import 'package:cifraclub/presentation/screens/main/main_screen.dart';
 import 'package:cifraclub/presentation/screens/main/main_state.dart';
 import 'package:cifraclub/presentation/screens/main/widgets/main_bottom_navigation.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:nav/nav.dart';
+import 'package:mocktail/mocktail.dart';
 
 import '../../../shared_mocks/presentation/navigator/fake_screen_entry.dart';
-import '../../../shared_mocks/presentation/navigator/mock_main_bloc.dart';
 import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
-import '../../../test_helpers/bloc_stream.dart';
+import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
-class _MainBlocMock extends Mock implements MainBloc {}
+class MockMainBloc extends MockCubit<MainState> implements MainBloc {
+  MockMainBloc();
+
+  MockMainBloc.dummy({Stream<MainState>? statesStream}) {
+    whenListen<MainState>(
+      this,
+      statesStream ?? Stream.fromIterable([]),
+      initialState: const MainState(),
+    );
+  }
+}
+
+class FakeRestorableBottomNavigationItem extends Fake implements RestorableBottomNavigationItem {
+  FakeRestorableBottomNavigationItem({this.value = BottomNavigationItem.home});
+
+  @override
+  void addListener(VoidCallback listener) {}
+
+  @override
+  void removeListener(VoidCallback listener) {}
+
+  @override
+  BottomNavigationItem value;
+}
+
+class _MockNavigatorsController extends Mock implements NavigatorsController {
+  _MockNavigatorsController();
+
+  @override
+  final navs = [
+    NavMock.getDummy(screens: [FakeScreenEntry(fakeScreenName: 'home')]),
+    NavMock.getDummy(screens: [
+      FakeScreenEntry(
+        fakeScreenName: 'songbook',
+      )
+    ]),
+    NavMock.getDummy(screens: [
+      FakeScreenEntry(
+        fakeScreenName: 'search',
+      )
+    ]),
+    NavMock.getDummy(screens: [
+      FakeScreenEntry(
+        fakeScreenName: 'academy',
+      )
+    ]),
+    NavMock.getDummy(screens: [
+      FakeScreenEntry(
+        fakeScreenName: 'more',
+      )
+    ]),
+  ];
+
+  factory _MockNavigatorsController.dummy() {
+    final restorable = FakeRestorableBottomNavigationItem();
+    final mock = _MockNavigatorsController();
+    when(() => mock.restorableBottomNavigationIndex).thenReturn(restorable);
+    when(() => mock.currentBottomNavigationScreen).thenReturn(restorable.value);
+    return mock;
+  }
+}
 
 void main() {
-  late MainBloc bloc;
-  Widget fakeNavFrameBuilder(Nav nav) => const SizedBox();
+  const navFrameKey = Key("testando");
 
   setUpAll(() {
-    bloc = _MainBlocMock();
-    when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
+    registerFallbackValue(BottomNavigationItem.home);
   });
 
-  group("When state is HomeInitialState", () {
-    testWidgets("Show bottom navigation", (widgetTester) async {
-      bloc.mockStream(const MainState(bottomNavigationNavs: [], selectedPage: BottomNavigationItem.home));
+  Widget getMainScreen({
+    PageController? pageController,
+    Widget Function(Nav)? navFrameBuilder,
+    NavigatorsController? navigatorsController,
+  }) {
+    return MainScreen(
+      pageController: pageController ?? PageController(),
+      navFrameBuilder: navFrameBuilder ??
+          (nav) => Container(
+                key: navFrameKey,
+              ),
+      navigatorsController: navigatorsController ?? _MockNavigatorsController.dummy(),
+    );
+  }
 
-      await widgetTester.pumpWidget(
-        TestWrapper(
-          child: BlocProvider<MainBloc>.value(
-            value: bloc,
-            child: MainScreen(
-              pageController: PageController(),
-              navFrameBuilder: fakeNavFrameBuilder,
-            ),
-          ),
+  group("When screen is built", () {
+    testWidgets('show the bottom navigation', (WidgetTester tester) async {
+      final nav = NavMock.getDummy();
+
+      await tester.pumpWidgetWithWrapper(
+        nav: nav,
+        BlocProvider<MainBloc>(
+          create: (BuildContext context) => MockMainBloc.dummy(),
+          child: getMainScreen(),
         ),
       );
-
       expect(find.byType(MainBottomNavigation), findsOneWidget);
     });
 
-    testWidgets("Navigate when tapping ", (widgetTester) async {
-      final pageController = PageController();
-
-      bloc.mockStream(MainState(bottomNavigationNavs: [
-        NavMock.getDummy(screens: [FakeScreenEntry("")]),
-        NavMock.getDummy(screens: [FakeScreenEntry("")]),
-        NavMock.getDummy(screens: [FakeScreenEntry("")])
-      ], selectedPage: BottomNavigationItem.home));
-
-      await widgetTester.pumpWidget(
-        TestWrapper(
-          child: BlocProvider<MainBloc>.value(
-            value: bloc,
-            child: MainScreen(
-              pageController: pageController,
-              navFrameBuilder: fakeNavFrameBuilder,
-            ),
-          ),
+    testWidgets('show the NavFrame', (WidgetTester tester) async {
+      await tester.pumpWidgetWithWrapper(
+        BlocProvider<MainBloc>(
+          create: (BuildContext context) => MockMainBloc.dummy(),
+          child: getMainScreen(),
         ),
       );
-
-      await widgetTester.tap(find.text("Search"));
-      await widgetTester.pumpAndSettle();
-
-      expect(pageController.page, equals(BottomNavigationItem.search.index));
+      expect(find.byKey(navFrameKey), findsOneWidget);
     });
   });
 
-  testWidgets("when new state is emit, pagecontroller must have the same index as the state", (widgetTester) async {
+  testWidgets("when tap on bottom navigation item, should call set selected item", (tester) async {
     final stream = StreamController<MainState>();
     final pageController = PageController();
-    var bloc = MockMainBloc.dummy(statesStream: stream.stream);
-    await widgetTester.pumpWidget(
+    final navigatorController = _MockNavigatorsController.dummy();
+
+    when(() => navigatorController.setSelectedItem(any())).thenAnswer((_) {});
+    await tester.pumpWidget(
       TestWrapper(
-        child: BlocProvider<MainBloc>.value(
-          value: bloc,
-          child: MainScreen(
+        child: BlocProvider<MainBloc>(
+          create: (BuildContext context) => MockMainBloc.dummy(
+            statesStream: stream.stream,
+          ),
+          child: getMainScreen(
+            navigatorsController: navigatorController,
             pageController: pageController,
-            navFrameBuilder: fakeNavFrameBuilder,
           ),
         ),
       ),
     );
 
-    stream.add(
-      MainState(
-        bottomNavigationNavs: [
-          NavMock.getDummy(),
-          NavMock.getDummy(),
-        ],
-        selectedPage: BottomNavigationItem.songbook,
-      ),
-    );
+    await tester.tap(find.text(appTextEn.home));
+    await tester.pumpAndSettle();
 
-    await widgetTester.pumpAndSettle();
-
-    expect(pageController.page, BottomNavigationItem.songbook.index);
+    verify(() => navigatorController.setSelectedItem(any())).called(1);
     stream.close();
   });
 }

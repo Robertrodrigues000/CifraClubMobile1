@@ -14,6 +14,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/versions_entry.
 import 'package:cifraclub/presentation/screens/more/more_entry.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/songbook_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_entry.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
@@ -91,5 +92,9 @@ final List<NavRoute> routes = [
   NavRoute(
     VersionEntry.name,
     (params, _) => VersionEntry(params),
+  ),
+  NavRoute(
+    VersionsSharedEntry.name,
+    (params, _) => VersionsSharedEntry(params),
   ),
 ];

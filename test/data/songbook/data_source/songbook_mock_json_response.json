@@ -1,0 +1,67 @@
+{
+    "id": 10019906,
+    "name": "trstasd",
+    "userId": 545320573,
+    "userName": "João Gonçalves",
+    "createdAt": "2023-05-08 09:12:05",
+    "lastUpdate": "2023-07-17 12:10:30",
+    "public": true,
+    "status": 1,
+    "songs": [
+        {
+            "cifraId": 756,
+            "songId": 756,
+            "type": 1,
+            "name": "It's My Life",
+            "artist": {
+                "id": 8709,
+                "name": "Bon Jovi",
+                "url": "bon-jovi",
+                "image": "d/e/3/6/de3631a1bf40a9bf525d5f6ac28f0927.jpg",
+                "color": "#C4557F"
+            },
+            "siteUrl": "/bon-jovi/its-my-life/#instrument=guitar",
+            "apiUrl": "/bon-jovi/its-my-life",
+            "songUrl": "its-my-life",
+            "tone": "D#",
+            "stdTone": "Cm",
+            "capo": 0,
+            "tuning": "E A D G B E",
+            "id": 136853322,
+            "uuid": "b55c1a3c-840a-4e10-b851-7c97972da50a",
+            "isMinorScale": true,
+            "lastUpdate": "2023-05-08 09:12:13"
+        },
+        {
+            "cifraId": 757,
+            "songId": 757,
+            "type": 1,
+            "name": "Livin' On A Prayer",
+            "artist": {
+                "id": 8709,
+                "name": "Bon Jovi",
+                "url": "bon-jovi",
+                "image": "d/e/3/6/de3631a1bf40a9bf525d5f6ac28f0927.jpg",
+                "color": "#C4557F"
+            },
+            "siteUrl": "/bon-jovi/livin-on-prayer/#instrument=guitar",
+            "apiUrl": "/bon-jovi/livin-on-prayer",
+            "songUrl": "livin-on-prayer",
+            "tone": "G",
+            "stdTone": "Em",
+            "capo": 0,
+            "tuning": "E A D G B E",
+            "id": 136853323,
+            "uuid": "9cde9953-39ee-4ca2-bb37-53b876f2981f",
+            "isMinorScale": true,
+            "lastUpdate": "2023-05-08 09:12:14"
+        }
+    ],
+    "totalSongs": 2,
+    "timestamp": 1689606630,
+    "type": "default",
+    "thumb": "https://akamai.sscdn.co/letras/50x50/fotos/d/e/3/6/de3631a1bf40a9bf525d5f6ac28f0927-tb2.jpg",
+    "thumbURLs": [
+        "https://akamai.sscdn.co/letras/50x50/fotos/d/e/3/6/de3631a1bf40a9bf525d5f6ac28f0927-tb2.jpg"
+    ]
+}

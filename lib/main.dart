@@ -3,18 +3,14 @@ import 'dart:io';
 
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/di/inherited_widget_dependencies.dart';
-import 'package:cifraclub/di/navigator_module.dart';
+import 'package:cifraclub/domain/app/use_cases/deep_link_handler.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_user_songbooks_on_logout.dart';
 import 'package:cifraclub/domain/subscription/use_cases/watch_for_purchases.dart';
 import 'package:cifraclub/domain/subscription/use_cases/watch_for_subscriptions.dart';
 import 'package:cifraclub/domain/user/repository/authentication_repository.dart';
 import 'package:cifraclub/presentation/localizations/supported_locales.dart';
-import 'package:cifraclub/presentation/screens/academy/academy_entry.dart';
-import 'package:cifraclub/presentation/screens/home/home_entry.dart';
+import 'package:cifraclub/presentation/navigator/navigators_controller.dart';
 import 'package:cifraclub/presentation/screens/main/main_entry.dart';
-import 'package:cifraclub/presentation/screens/more/more_entry.dart';
-import 'package:cifraclub/presentation/screens/search/search_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/songbook_entry.dart';
 import 'package:cifraclub/presentation/style/typography/app_default_typography.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -43,6 +39,11 @@ void initializeClearUserSongbooksOnLogout() {
   clearUserSongbooksOnLogout();
 }
 
+NavigatorsController _getNavigatorsController({String? deepLinkPath}) {
+  final navigators = getIt<NavigatorsController>(param1: deepLinkPath);
+  return navigators..init();
+}
+
 /// Fix SSL certificate problems with Android 7.1.1 and below
 Future<void> applyLeHttp() async {
   if (Platform.isAndroid) {
@@ -62,14 +63,18 @@ void main() async {
   initializeWatchForPurchases();
   initializeWatchForSubscriptions();
   initializeClearUserSongbooksOnLogout();
-
-  runApp(const CifraClub());
+  getIt<DeepLinkHandler>().handleDeepLinks();
+  final deepLink = await getIt<DeepLinkHandler>().consumeOrGetFirstDeepLink();
+  runApp(CifraClub(
+    navigatorsController: _getNavigatorsController(deepLinkPath: deepLink),
+  ));
 }
 
 class CifraClub extends StatelessWidget {
-  static const _navigationRestorationScope = "NavigatorRestorationScope";
+  static const _navigationRestorationScope = "MainRestorationScope";
+  final NavigatorsController navigatorsController;
 
-  const CifraClub({super.key});
+  const CifraClub({super.key, required this.navigatorsController});
 
   @override
   Widget build(BuildContext context) {
@@ -96,23 +101,7 @@ class CifraClub extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         home: MainEntry(
-          bottomNavigationPages: [
-            getIt(
-              param1: NavConstructorParams(firstScreen: HomeEntry({}), restorationId: 'BottomNav1'),
-            ),
-            getIt(
-              param1: NavConstructorParams(firstScreen: SongbookEntry({}), restorationId: 'BottomNav2'),
-            ),
-            getIt(
-              param1: const NavConstructorParams(firstScreen: SearchEntry({}), restorationId: 'BottomNav3'),
-            ),
-            getIt(
-              param1: NavConstructorParams(firstScreen: AcademyEntry({}), restorationId: 'BottomNav4'),
-            ),
-            getIt(
-              param1: NavConstructorParams(firstScreen: MoreEntry({}), restorationId: 'BottomNav5'),
-            ),
-          ],
+          navigatorsController: navigatorsController,
         ),
       ),
     );

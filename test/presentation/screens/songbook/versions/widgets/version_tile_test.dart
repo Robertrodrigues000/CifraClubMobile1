@@ -25,12 +25,13 @@ void main() {
   });
 
   group("When editable is true", () {
-    const tab = VersionTile(
+    final tab = VersionTile(
       song: "Tempo Perdido",
       artist: "Legião Urbana",
       type: "Violão",
       versionKey: "A",
       editable: true,
+      onVersionTap: () {},
     );
 
     testWidgets("should show delete icon", (widgetTester) async {
@@ -52,5 +53,26 @@ void main() {
           ),
           findsNothing);
     });
+  });
+
+  testWidgets("when onVersionTap is null should hide options icon", (widgetTester) async {
+    const tab = VersionTile(
+      song: "Tempo Perdido",
+      artist: "Legião Urbana",
+      type: "Violão",
+      versionKey: "A",
+      editable: false,
+      onVersionTap: null,
+    );
+    await widgetTester.pumpWidgetWithWrapper(tab);
+    await widgetTester.pumpAndSettle();
+    expect(
+        find.byWidgetPredicate(
+          (Widget widget) {
+            return widget is SvgImage && widget.assetPath == AppSvgs.songbookOptionsIcon;
+          },
+          description: 'widget with options icon',
+        ),
+        findsNothing);
   });
 }

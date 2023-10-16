@@ -20,6 +20,9 @@ enum ListOrderType {
     };
   }
 
+  static List<ListOrderType> getValuesForSharedList() =>
+      List.from(ListOrderType.values)..removeWhere((element) => element == ListOrderType.custom);
+
   static List<ListOrderType> getValuesByListType(ListType listType) => switch (listType) {
         ListType.user => ListOrderType.values,
         _ => List<ListOrderType>.from(ListOrderType.values)..removeAt(0)
