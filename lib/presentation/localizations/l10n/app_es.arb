@@ -161,6 +161,7 @@
             }
         }
     },
+    "errorListSong": "Ocurrió un error al descargar la canción. La canción no estará disponible en modo offline.",
     "savingToList": "Guardando en la lista",
     "loadingSongs": "Cargando canciones...",
     "privateListErrorTitle": "No tienes acceso a esta lista privada",

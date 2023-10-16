@@ -69,7 +69,7 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
     if (listLimitState != ListLimitState.reached) {
       final result = await _insertUserSongbook(name: name);
       if (result.isSuccess) {
-        return addSongToSongbook(songbookId: result.get()?.id, name: name, isNewList: true);
+        return addSongToSongbook(songbookId: result.get()?.id, name: name);
       }
     }
     return SaveToListError();
@@ -78,19 +78,26 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
   Future<SaveToListResult> addSongToSongbook({
     int? songbookId,
     required String name,
-    bool isNewList = false,
   }) async {
     if (songbookId != null) {
       final versionListLimit = await _getVersionsLimitState(songbookId).first;
-      if (versionListLimit != ListLimitState.reached) {
-        await _insertVersionToSongbook(songbookId: songbookId, artistUrl: artistUrl, songUrl: songUrl);
-        return SaveVersionToListCompleted(name: name, isNewList: isNewList);
-      } else {
+      if (versionListLimit == ListLimitState.reached) {
         final versionsLimit = _getVersionsLimit(state.isPro);
         return VersionListLimitStateReached(versionsLimit: versionsLimit);
       }
+
+      final result = await _insertVersionToSongbook(songbookId: songbookId, artistUrl: artistUrl, songUrl: songUrl);
+      if (result.isSuccess) {
+        return SaveVersionToListCompleted(
+          name: name,
+          versionLimitState: await _getVersionsLimitState(songbookId).first,
+          listLimitState: await _getListLimitState().first,
+        );
+      } else {
+        return SaveToListError(listLimitState: await _getListLimitState().first);
+      }
     }
-    return SaveToListError();
+    return SaveToListError(listLimitState: await _getListLimitState().first);
   }
 
   Future<bool> isValidSongbookName(String name) async {

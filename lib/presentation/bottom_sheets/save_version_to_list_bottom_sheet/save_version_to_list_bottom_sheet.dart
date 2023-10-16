@@ -17,6 +17,7 @@ import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_lists.dart';
@@ -127,7 +128,7 @@ class SaveVersionToListBottomSheet {
                                     final result = await bloc.createNewSongbook(name);
 
                                     if (screenContext.mounted) {
-                                      handleResult(screenContext, result);
+                                      handleResult(screenContext, result, state.isPro);
                                     }
                                     break;
                                   case false:
@@ -140,8 +141,8 @@ class SaveVersionToListBottomSheet {
                               },
                             );
                           } else {
-                            ListLimitDialog.show(
-                                context: screenContext, isVersionLimit: false, limitCount: bloc.getListLimit());
+                            handleResult(screenContext,
+                                VersionListLimitStateReached(versionsLimit: bloc.getListLimit()), state.isPro);
                           }
                         },
                         icon: AppSvgs.newSongbookIcon,
@@ -150,20 +151,17 @@ class SaveVersionToListBottomSheet {
                     ),
                     SpecialLists(
                         lists: state.specialLists,
-                        // coverage:ignore-start
                         onTap: (songbook) async {
                           DefaultBottomSheet.close(context);
                           final result = await bloc.addSongToSongbook(
-                              songbookId: songbook.id,
-                              name: ListType.getListTitle(context, songbook),
-                              isNewList: false);
+                            songbookId: songbook.id,
+                            name: ListType.getListTitle(context, songbook),
+                          );
 
                           if (screenContext.mounted) {
-                            handleResult(screenContext, result);
+                            handleResult(screenContext, result, state.isPro);
                           }
-                        }
-                        // coverage:ignore-end
-                        ),
+                        }),
                     if (state.userLists.isNotEmpty)
                       SliverToBoxAdapter(
                         child: Padding(
@@ -176,18 +174,15 @@ class SaveVersionToListBottomSheet {
                       ),
                     UserLists(
                       lists: state.userLists,
-                      // coverage:ignore-start
                       onTap: (songbook) async {
                         DefaultBottomSheet.close(context);
-                        final result = await bloc.addSongToSongbook(
-                            songbookId: songbook.id, name: songbook.name, isNewList: false);
+                        final result = await bloc.addSongToSongbook(songbookId: songbook.id, name: songbook.name);
 
                         if (screenContext.mounted) {
-                          handleResult(screenContext, result);
+                          handleResult(screenContext, result, state.isPro);
                         }
                       },
                       validatePreview: (preview) => bloc.validatePreview(preview),
-                      // coverage:ignore-end
                     )
                   ],
                 ),
@@ -199,13 +194,36 @@ class SaveVersionToListBottomSheet {
         scrollController: controller);
   }
 
-  void handleResult(BuildContext context, SaveToListResult result) {
+  void handleResult(BuildContext context, SaveToListResult result, bool isPro) {
     switch (result) {
       case VersionListLimitStateReached():
-        ListLimitDialog.show(context: context, isVersionLimit: true, limitCount: result.versionsLimit);
+        isPro
+            ? ListLimitProDialog.show(context: context, isVersionLimit: true, limitCount: result.versionsLimit)
+            : ListLimitDialog.show(context: context, isVersionLimit: true, limitCount: result.versionsLimit);
       case SaveVersionToListCompleted():
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(context.text.saveVersionToListMessage(result.name))));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(context.text.saveVersionToListMessage(result.name))));
+          _showLimitWarningSnackBar(context, result.listLimitState, isPro, result.versionLimitState);
+        }
+      case SaveToListError():
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.errorListSong)));
+          _showLimitWarningSnackBar(context, result.listLimitState, isPro);
+        }
+    }
+  }
+
+  void _showLimitWarningSnackBar(
+    BuildContext context,
+    ListLimitState? listLimitState,
+    bool isPro, [
+    ListLimitState? versionLimitState,
+  ]) {
+    if (versionLimitState == ListLimitState.atWarning && !isPro) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.listLimitTitle)));
+    } else if (listLimitState == ListLimitState.atWarning && !isPro) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.listLimitProDescription1)));
     }
   }
 }

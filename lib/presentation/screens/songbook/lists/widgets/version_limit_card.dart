@@ -3,15 +3,15 @@ import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart
 import 'package:flutter/widgets.dart';
 
 class VersionLimitCard extends StatelessWidget {
-  const VersionLimitCard({
-    super.key,
-    required this.versionsCount,
-    required this.limit,
-    required this.isPro,
-    required this.isWithinLimit,
-    required this.onTap,
-    this.isList = true,
-  });
+  const VersionLimitCard(
+      {super.key,
+      required this.versionsCount,
+      required this.limit,
+      required this.isPro,
+      required this.isWithinLimit,
+      required this.onTap,
+      this.isList = true,
+      this.height});
 
   final int versionsCount;
   final int limit;
@@ -19,13 +19,16 @@ class VersionLimitCard extends StatelessWidget {
   final bool isWithinLimit;
   final VoidCallback onTap;
   final bool isList;
+  final double? height;
+
   @override
   Widget build(BuildContext context) {
     final bool hasBorder = isPro ? !isList : true;
 
     return ContainerWithRippleEffect(
       onTap: isPro ? null : onTap,
-      height: isPro ? context.appDimensionScheme.heightLimitCardPro : context.appDimensionScheme.heightLimitCardFree,
+      height: height ??
+          (isPro ? context.appDimensionScheme.heightLimitCardPro : context.appDimensionScheme.heightLimitCardFree),
       decoration: hasBorder
           ? BoxDecoration(
               color: context.colors.neutralPrimary,

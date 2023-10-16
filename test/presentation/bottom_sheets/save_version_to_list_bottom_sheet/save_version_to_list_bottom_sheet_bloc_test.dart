@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
@@ -147,7 +148,7 @@ void main() {
         songbookId: any(named: "songbookId"),
         artistUrl: any(named: "artistUrl"),
         songUrl: any(named: "songUrl"))).called(1);
-    verify(getListLimitState.call).called(1);
+    verify(getListLimitState.call).called(2);
   });
 
   test("When `createNewSongbook` is called and ListLimit is reached, should return error result", () async {
@@ -185,13 +186,13 @@ void main() {
 
     final bloc =
         getBloc(getVersionsLimitStateMock: getVersionsLimitState, insertVersionToSongbookMock: insertVersionToSongbook);
-    await bloc.addSongToSongbook(songbookId: 1, name: "Testando", isNewList: false);
+    await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
 
     verify(() => insertVersionToSongbook.call(
         songbookId: any(named: "songbookId"),
         artistUrl: any(named: "artistUrl"),
         songUrl: any(named: "songUrl"))).called(1);
-    verify(() => getVersionsLimitState.call(any())).called(1);
+    verify(() => getVersionsLimitState.call(any())).called(2);
   });
 
   test("When `addSongToSongbook` is called and versions limit state is reached, should return correct result",
@@ -212,7 +213,7 @@ void main() {
         insertVersionToSongbookMock: insertVersionToSongbook,
         getVersionsLimitMock: getVersionsLimit);
 
-    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando", isNewList: false);
+    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
 
     verify(() => getVersionsLimitState.call(any())).called(1);
     expect(result, isA<VersionListLimitStateReached>());
@@ -235,8 +236,29 @@ void main() {
         insertVersionToSongbookMock: insertVersionToSongbook,
         getVersionsLimitMock: getVersionsLimit);
 
-    final result = await bloc.addSongToSongbook(songbookId: null, name: "Testando", isNewList: false);
+    final result = await bloc.addSongToSongbook(songbookId: null, name: "Testando");
 
+    expect(result, isA<SaveToListError>());
+  });
+
+  test("When `addSongToSongbook` is called and request error occurs should return error result", () async {
+    final insertVersionToSongbook = _InsertVersionToSongbookMock();
+    final getVersionsLimitState = _GetVersionsLimitStateMock(listState: ListLimitState.withinLimit);
+
+    when(() => insertVersionToSongbook(
+        songbookId: any(named: "songbookId"),
+        artistUrl: any(named: "artistUrl"),
+        songUrl: any(named: "songUrl"))).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+    final bloc =
+        getBloc(getVersionsLimitStateMock: getVersionsLimitState, insertVersionToSongbookMock: insertVersionToSongbook);
+    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
+
+    verify(() => insertVersionToSongbook.call(
+        songbookId: any(named: "songbookId"),
+        artistUrl: any(named: "artistUrl"),
+        songUrl: any(named: "songUrl"))).called(1);
+    verify(() => getVersionsLimitState.call(any())).called(1);
     expect(result, isA<SaveToListError>());
   });
 

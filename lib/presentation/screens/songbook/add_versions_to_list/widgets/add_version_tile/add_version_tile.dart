@@ -107,6 +107,7 @@ class AddVersionTile extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(width: context.appDimensionScheme.screenMargin),
             if (state.icon != null)
               SvgImage(
                 assetPath: state.icon,
