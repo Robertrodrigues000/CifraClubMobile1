@@ -26,6 +26,7 @@ class FingerWidget extends StatelessWidget {
       child: Center(
         child: Text(
           '$id',
+          textScaleFactor: 1,
           textDirection: TextDirection.ltr,
           style: TextStyle(
             textBaseline: TextBaseline.alphabetic,

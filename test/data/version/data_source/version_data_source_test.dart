@@ -123,7 +123,7 @@ void _versionDataJsonResponseExpects(VersionDataDto versionData) {
   expect(versionData.instrumentVersions?.first.label, "Violão e guitarra");
   expect(versionData.instrumentVersions?.first.type, 1);
   expect(versionData.instrumentVersions?.first.versions?.first.versionId, 3219);
-  expect(versionData.instrumentVersions?.first.versions?.first.label, "Principal");
+  expect(versionData.instrumentVersions?.first.versions?.first.versionName, "Principal");
   expect(versionData.instrumentVersions?.first.versions?.first.versionUrl, "principal");
   expect(versionData.instrumentVersions?.first.versions?.first.isVerified, true);
   expect(versionData.instrumentVersions?.first.versions?.first.completePath,

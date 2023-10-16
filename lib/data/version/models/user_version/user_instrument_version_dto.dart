@@ -7,7 +7,7 @@ part 'user_instrument_version_dto.g.dart';
 @embedded
 class UserInstrumentVersionDto {
   late final int id;
-  late final String label;
+  late final String versionName;
   late final String versionUrl;
   late final UserVersionDataVideoLessonDto? videoLesson;
   late final String completePath;
@@ -17,7 +17,7 @@ class UserInstrumentVersionDto {
 
   UserInstrumentVersionDto.fromDomain(InstrumentVersion versionDataSong) {
     id = versionDataSong.id;
-    label = versionDataSong.label;
+    versionName = versionDataSong.versionName;
     versionUrl = versionDataSong.versionUrl;
     videoLesson = versionDataSong.videoLesson != null
         ? UserVersionDataVideoLessonDto.fromDomain(versionDataSong.videoLesson!)

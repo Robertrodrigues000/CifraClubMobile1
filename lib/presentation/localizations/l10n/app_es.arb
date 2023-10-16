@@ -126,8 +126,8 @@
     "inputDialogHint": "Ex.: Luau con amigos",
     "inputDialogLabel": "Nombre da lista",
     "searchSongs" : "Buscar musica",
-    "versionsCount": "{count} {count,plural, =1{seleccionado}other{seleccionados}}",
-    "@versionsCount":{
+    "selectedVersionsCount": "{count} {count,plural, =1{seleccionado}other{seleccionados}}",
+    "@selectedVersionsCount":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -266,11 +266,21 @@
     "newVersion": "Nueva Versión",
     "identifyMusic": "Identificar música",
     "createListButtonText": "Crear lista",
+    "version": "Versión",
     "unFavoriteVersion": "Eliminar cifrado de favoritos",
     "favoriteVersionMessage": "Cifrado agregado a favoritos",
     "unFavoriteVersionMessage": "Cifrado eliminado de favoritos",
     "favoriteVersionErrorMessage": "No se pudo agregar el cifrado a favoritos",
     "unFavoriteVersionErrorMessage": "No se pudo eliminar el cifrado de favoritos",
+    "versionsCount": "({count} {count,plural, =1{versión}other{versiones}})",
+    "@versionsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
     "hideChords": "Ocultar acordes en pantalla",
     "fixChords": "Fijar acordes en pantalla"
 }

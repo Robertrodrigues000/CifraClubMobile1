@@ -180,8 +180,8 @@
     "inputDialogHint": "Ex.: Luau with friends",
     "inputDialogLabel": "List name",
     "searchSongs" : "Search songs",
-    "versionsCount": "{count} selected",
-    "@versionsCount": {
+    "selectedVersionsCount": "{count} selected",
+    "@selectedVersionsCount": {
       "placeholders": {
             "count": {
                 "type": "int",
@@ -324,11 +324,21 @@
     "newVersion": "New Version",
     "identifyMusic": "Identify music",
     "createListButtonText": "Create list",
+    "version": "Version",
     "unFavoriteVersion": "Unfavorite chord",
     "favoriteVersionMessage": "Chord added to favorites",
     "unFavoriteVersionMessage": "Chord removed from favorites",
     "favoriteVersionErrorMessage": "Failed to add chord to favorites",
     "unFavoriteVersionErrorMessage": "Failed to remove chord from favorites",
+    "versionsCount": "({count} {count,plural, =1{version}other{versions}})",
+    "@versionsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
     "hideChords": "Hide chords on screen",
     "fixChords": "Fix chords on screen"
 }

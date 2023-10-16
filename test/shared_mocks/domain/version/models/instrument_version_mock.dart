@@ -5,7 +5,7 @@ import 'version_data_video_lesson.dart';
 
 InstrumentVersion getFakeInstrumentVersion() => InstrumentVersion(
       id: faker.randomGenerator.integer(100),
-      label: faker.lorem.word(),
+      versionName: faker.lorem.word(),
       versionUrl: faker.internet.email(),
       videoLesson: getFakeVersionDataVideoLesson(),
       completePath: faker.internet.httpUrl(),

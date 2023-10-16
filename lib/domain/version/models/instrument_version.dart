@@ -1,8 +1,12 @@
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
+import 'package:copy_with_extension/copy_with_extension.dart';
 
+part 'instrument_version.g.dart';
+
+@CopyWith()
 class InstrumentVersion {
   final int id;
-  final String label;
+  final String versionName;
   final String versionUrl;
   final VersionDataVideoLesson? videoLesson;
   final String completePath;
@@ -10,7 +14,7 @@ class InstrumentVersion {
 
   InstrumentVersion({
     required this.id,
-    required this.label,
+    required this.versionName,
     required this.versionUrl,
     this.videoLesson,
     required this.completePath,

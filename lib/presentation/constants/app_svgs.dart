@@ -73,4 +73,6 @@ class AppSvgs {
   static const unpickedStringIcon = "assets/images/unpicked_string.svg";
   static const baseBody = "assets/images/base_body.svg";
   static const baseHead = "assets/images/base_head_130.svg";
+
+  static const youtubeIcon = "assets/images/youtube_icon.svg";
 }

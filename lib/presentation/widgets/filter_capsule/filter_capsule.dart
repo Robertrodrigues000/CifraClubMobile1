@@ -50,6 +50,8 @@ class FilterCapsule extends StatelessWidget {
               child: Text(
                 label,
                 style: isSelected ? typography.body6.copyWith(color: colors.textPrimaryInverse) : typography.body6,
+                textHeightBehavior:
+                    const TextHeightBehavior(applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
               ),
             ),
             if (trailingIconUri != null)

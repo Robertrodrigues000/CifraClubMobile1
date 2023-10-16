@@ -1,5 +1,7 @@
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
 import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/domain/version/use_cases/get_all_instrument_versions.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
@@ -12,8 +14,9 @@ import 'package:injectable/injectable.dart';
 class ContentMiddleware extends VersionMiddleware {
   final ParseSections _parseSections;
   final ProcessSections _processSections;
+  final GetAllInstrumentVersions _getAllInstrumentVersions;
 
-  ContentMiddleware(this._parseSections, this._processSections);
+  ContentMiddleware(this._parseSections, this._processSections, this._getAllInstrumentVersions);
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
@@ -30,7 +33,7 @@ class ContentMiddleware extends VersionMiddleware {
           .map(
             (e) => VersionFilter(
               instrument: action.versionData.instrument,
-              versionName: e.label,
+              versionName: e.versionName,
               versionUrl: e.versionUrl,
               isVerified: e.isVerified,
             ),
@@ -43,13 +46,17 @@ class ContentMiddleware extends VersionMiddleware {
         instrument: action.versionData.instrument,
       );
 
+      var versionData = action.versionData;
+      versionData = action.versionData
+          .copyWith(instrumentVersions: _getAllInstrumentVersions(action.versionData.instrumentVersions ?? []));
+
       if (versionFilters == null) {
         addAction(OnVersionError(error: VersionEmptyError()));
       } else {
         addAction(
           OnContentParsed(
             sections: sections,
-            versionData: action.versionData,
+            versionData: versionData,
             versionFilters: versionFilters,
             selectedFilter: selectedFilter,
           ),

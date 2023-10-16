@@ -57,7 +57,7 @@ class CountSelectedVersions extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    context.text.versionsCount(versionsCount),
+                    context.text.selectedVersionsCount(versionsCount),
                     style: context.typography.subtitle4,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

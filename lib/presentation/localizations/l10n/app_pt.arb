@@ -126,8 +126,8 @@
     "inputDialogHint": "Ex.: Luau com amigos",
     "inputDialogLabel": "Nome da lista",
     "searchSongs" : "Buscar músicas",
-    "versionsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
-    "@versionsCount":{
+    "selectedVersionsCount": "{count} {count,plural, =1{selecionada}other{selecionadas}}",
+    "@selectedVersionsCount":{
       "placeholders": {
             "count": {
                 "type": "int",
@@ -266,11 +266,21 @@
     "newVersion": "Nova Versão",
     "identifyMusic": "Identificar música",
     "createListButtonText": "Criar lista",
+    "version": "Versão",
     "unFavoriteVersion": "Desfavoritar cifra",
     "favoriteVersionMessage": "Cifra favoritada",
     "unFavoriteVersionMessage": "Cifra desfavoritada",
     "favoriteVersionErrorMessage": "Falha ao favoritar cifra",
     "unFavoriteVersionErrorMessage": "Falha ao desfavoritar cifra",
+    "versionsCount": "({count} {count,plural, =1{versão}other{versões}})",
+    "@versionsCount": {
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "1"
+            }
+        }
+    },
     "hideChords": "Ocultar acordes na tela",
     "fixChords": "Fixar acordes na tela"
 }

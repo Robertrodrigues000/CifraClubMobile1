@@ -8,7 +8,8 @@ part 'instrument_version_dto.g.dart';
 class InstrumentVersionDto {
   @JsonKey(name: 'id')
   final int versionId;
-  final String label;
+  @JsonKey(name: 'label')
+  final String versionName;
   final String versionUrl;
   final VersionDataVideoLessonDto? videoLesson;
   @JsonKey(name: 'url')
@@ -18,7 +19,7 @@ class InstrumentVersionDto {
 
   InstrumentVersionDto({
     required this.versionId,
-    required this.label,
+    required this.versionName,
     required this.versionUrl,
     this.videoLesson,
     required this.completePath,
@@ -29,7 +30,7 @@ class InstrumentVersionDto {
 
   InstrumentVersion toDomain() => InstrumentVersion(
         id: versionId,
-        label: label,
+        versionName: versionName,
         versionUrl: versionUrl,
         videoLesson: videoLesson?.toDomain(),
         completePath: completePath,

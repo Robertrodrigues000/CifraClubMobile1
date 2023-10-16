@@ -28,9 +28,9 @@ const UserInstrumentVersionDtoSchema = Schema(
       name: r'isVerified',
       type: IsarType.bool,
     ),
-    r'label': PropertySchema(
+    r'versionName': PropertySchema(
       id: 3,
-      name: r'label',
+      name: r'versionName',
       type: IsarType.string,
     ),
     r'versionUrl': PropertySchema(
@@ -58,7 +58,7 @@ int _userInstrumentVersionDtoEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.completePath.length * 3;
-  bytesCount += 3 + object.label.length * 3;
+  bytesCount += 3 + object.versionName.length * 3;
   bytesCount += 3 + object.versionUrl.length * 3;
   {
     final value = object.videoLesson;
@@ -80,7 +80,7 @@ void _userInstrumentVersionDtoSerialize(
   writer.writeString(offsets[0], object.completePath);
   writer.writeLong(offsets[1], object.id);
   writer.writeBool(offsets[2], object.isVerified);
-  writer.writeString(offsets[3], object.label);
+  writer.writeString(offsets[3], object.versionName);
   writer.writeString(offsets[4], object.versionUrl);
   writer.writeObject<UserVersionDataVideoLessonDto>(
     offsets[5],
@@ -100,7 +100,7 @@ UserInstrumentVersionDto _userInstrumentVersionDtoDeserialize(
   object.completePath = reader.readString(offsets[0]);
   object.id = reader.readLong(offsets[1]);
   object.isVerified = reader.readBool(offsets[2]);
-  object.label = reader.readString(offsets[3]);
+  object.versionName = reader.readString(offsets[3]);
   object.versionUrl = reader.readString(offsets[4]);
   object.videoLesson = reader.readObjectOrNull<UserVersionDataVideoLessonDto>(
     offsets[5],
@@ -332,20 +332,20 @@ extension UserInstrumentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelEqualTo(
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'label',
+        property: r'versionName',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelGreaterThan(
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -353,14 +353,14 @@ extension UserInstrumentVersionDtoQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'label',
+        property: r'versionName',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelLessThan(
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -368,14 +368,14 @@ extension UserInstrumentVersionDtoQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'label',
+        property: r'versionName',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelBetween(
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -384,7 +384,7 @@ extension UserInstrumentVersionDtoQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'label',
+        property: r'versionName',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -394,67 +394,69 @@ extension UserInstrumentVersionDtoQueryFilter
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelStartsWith(
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'label',
+        property: r'versionName',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelEndsWith(
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'label',
+        property: r'versionName',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelContains(String value,
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'label',
+        property: r'versionName',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelMatches(String pattern,
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'label',
+        property: r'versionName',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelIsEmpty() {
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'label',
+        property: r'versionName',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> labelIsNotEmpty() {
+  QueryBuilder<UserInstrumentVersionDto, UserInstrumentVersionDto, QAfterFilterCondition> versionNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'label',
+        property: r'versionName',
         value: '',
       ));
     });

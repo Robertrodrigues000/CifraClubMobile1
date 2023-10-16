@@ -2,6 +2,7 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
@@ -158,7 +159,19 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                         filters: state.versionHeaderState.versionFilters,
                         selectedFilter: state.versionHeaderState.selectedVersionFilter,
                         onTapFilter: (filter) => _bloc.add(OnVersionSelected(filter)),
-                        onTapMoreFilters: () {/*TODO*/},
+                        onTapMoreFilters: () {
+                          if (state.version != null) {
+                            InstrumentVersionsBottomSheet.show(
+                              context,
+                              state.version!.instrumentVersions ?? [],
+                              state.version!.instrument,
+                              state.version!.versionName,
+                              (versionFilter) {
+                                _bloc.add(OnVersionSelected(versionFilter));
+                              },
+                            );
+                          }
+                        },
                       ),
                     ),
                     if (state.isLoading)

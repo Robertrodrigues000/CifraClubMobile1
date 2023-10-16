@@ -8,7 +8,7 @@ part of 'instrument_version_dto.dart';
 
 InstrumentVersionDto _$InstrumentVersionDtoFromJson(Map<String, dynamic> json) => InstrumentVersionDto(
       versionId: json['id'] as int,
-      label: json['label'] as String,
+      versionName: json['label'] as String,
       versionUrl: json['versionUrl'] as String,
       videoLesson: json['videoLesson'] == null
           ? null

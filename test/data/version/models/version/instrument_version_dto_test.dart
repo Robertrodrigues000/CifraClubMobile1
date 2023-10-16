@@ -14,7 +14,7 @@ void main() {
 
     final instrumentVersionDto = InstrumentVersionDto(
       versionId: 1,
-      label: "label",
+      versionName: "label",
       versionUrl: "versionUrl",
       completePath: "url",
       isVerified: true,
@@ -24,7 +24,7 @@ void main() {
 
     verify(videoLesson.toDomain).called(1);
     expect(instrumentVersion.id, 1);
-    expect(instrumentVersion.label, "label");
+    expect(instrumentVersion.versionName, "label");
     expect(instrumentVersion.versionUrl, "versionUrl");
     expect(instrumentVersion.completePath, "url");
     expect(instrumentVersion.isVerified, true);
