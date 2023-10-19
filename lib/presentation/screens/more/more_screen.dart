@@ -39,7 +39,7 @@ class _MoreScreenState extends State<MoreScreen> {
     return Scaffold(
       appBar: CosmosAppBar(
         toolbarHeight: context.appDimensionScheme.appBarHeight,
-        title: Text(context.text.more, style: context.typography.title3),
+        title: Text(context.text.more, style: context.typography.title5),
         leading: null,
         automaticallyImplyLeading: false,
       ),
@@ -91,7 +91,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   ),
                   child: Text(
                     context.text.ourApps,
-                    style: context.typography.title3,
+                    style: context.typography.title5,
                   ),
                 ),
               ),
@@ -107,7 +107,7 @@ class _MoreScreenState extends State<MoreScreen> {
                   ),
                   child: Text(
                     context.text.followCifraClub,
-                    style: context.typography.title3,
+                    style: context.typography.title5,
                   ),
                 ),
               ),

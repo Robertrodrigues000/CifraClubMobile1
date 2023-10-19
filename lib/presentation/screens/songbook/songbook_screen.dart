@@ -35,7 +35,7 @@ class _SongbookScreenState extends State<SongbookScreen> {
           return Scaffold(
               appBar: CosmosAppBar(
                 toolbarHeight: context.appDimensionScheme.appBarHeight,
-                title: Text(context.text.lists, style: context.typography.title3),
+                title: Text(context.text.lists, style: context.typography.title5),
                 leading: null,
                 automaticallyImplyLeading: false,
               ),

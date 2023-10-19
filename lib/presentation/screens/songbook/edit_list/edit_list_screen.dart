@@ -99,7 +99,7 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
                 appBar: CosmosAppBar(
                   title: Text(
                     widget.name,
-                    style: context.typography.title3,
+                    style: context.typography.title6,
                   ),
                   toolbarHeight: context.appDimensionScheme.appBarHeight,
                   automaticallyImplyLeading: false,

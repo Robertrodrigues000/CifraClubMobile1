@@ -3,7 +3,7 @@ import 'package:cifraclub/domain/search/models/search_models/album_search.dart';
 import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
 import 'package:cifraclub/extensions/text_style.dart';
 import 'package:cifraclub/presentation/screens/album/album_entry.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/album_item.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/album_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:nav/nav.dart';

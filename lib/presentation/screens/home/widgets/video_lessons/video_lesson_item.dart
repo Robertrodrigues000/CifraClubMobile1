@@ -8,13 +8,13 @@ import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 
 class VideoLessonItem extends StatefulWidget {
-  final VideoLesson videolesson;
+  final VideoLesson videoLesson;
   final double width;
   final double height;
   final VoidCallback onTap;
   const VideoLessonItem({
     super.key,
-    required this.videolesson,
+    required this.videoLesson,
     required this.width,
     required this.height,
     required this.onTap,
@@ -101,7 +101,7 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
             },
             child: RemoteImage(
               // coverage:ignore-start
-              imageUrl: widget.videolesson.images.medium,
+              imageUrl: widget.videoLesson.images.medium,
               imageBuilder: (context, imageProvider) {
                 return Container(
                   width: widget.width,
@@ -135,16 +135,16 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
                 children: [
                   const SizedBox(height: 8),
                   Text(
-                    widget.videolesson.title,
+                    widget.videoLesson.title,
                     style: styles.subtitle4,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                   const SizedBox(height: 4),
-                  if (widget.videolesson.artist != null)
+                  if (widget.videoLesson.artist != null)
                     Text(
-                      key: const Key("videolesson artist name"),
-                      widget.videolesson.artist!.name,
+                      key: const Key("video lesson artist name"),
+                      widget.videoLesson.artist!.name,
                       style: styles.subtitle4.copyWith(
                         color: context.colors.primary,
                       ),
@@ -152,7 +152,7 @@ class _VideoLessonItemState extends State<VideoLessonItem> with SingleTickerProv
                     ),
                   const SizedBox(height: 2),
                   Text(
-                    widget.videolesson.version?.label.formatString() ?? "",
+                    widget.videoLesson.version?.label.formatString() ?? "",
                     style: styles.subtitle5,
                     overflow: TextOverflow.ellipsis,
                   ),

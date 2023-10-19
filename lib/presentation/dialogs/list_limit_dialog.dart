@@ -34,7 +34,7 @@ class ListLimitDialog extends StatelessWidget {
         image: context.isDarkMode ? AppWebp.listLimitDark : AppWebp.listLimitLight,
         title: Text(
           isVersionLimit ? context.text.versionsLimitTitle : context.text.listLimitTitle,
-          style: typography.title4.copyWith(color: colorScheme.textPrimary),
+          style: typography.title6,
           textAlign: TextAlign.center,
         ),
         description: RichText(
@@ -47,12 +47,13 @@ class ListLimitDialog extends StatelessWidget {
             children: <TextSpan>[
               TextSpan(
                   text: isVersionLimit ? context.text.tenTimes : context.text.hundredTimes,
-                  style: typography.body10.copyWith(fontWeight: FontWeight.w700)),
+                  style: typography.body9.copyWith(color: colorScheme.textSecondary)),
               TextSpan(
                 text: context.text.listLimitDescription2,
               ),
               TextSpan(
-                  text: context.text.cifraClubProLimit, style: typography.body10.copyWith(fontWeight: FontWeight.w700)),
+                  text: context.text.cifraClubProLimit,
+                  style: typography.body9.copyWith(color: colorScheme.textSecondary)),
             ],
           ),
         ),

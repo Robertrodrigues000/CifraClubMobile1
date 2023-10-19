@@ -99,7 +99,7 @@ class SaveVersionToListBottomSheet {
                         padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
                         child: Text(
                           context.text.saveVersionToList,
-                          style: context.typography.title3,
+                          style: context.typography.title5,
                         ),
                       ),
                     ),

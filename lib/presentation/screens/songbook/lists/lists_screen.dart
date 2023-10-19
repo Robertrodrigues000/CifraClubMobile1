@@ -49,7 +49,7 @@ class _ListsScreenState extends State<ListsScreen> {
         return Scaffold(
           appBar: CosmosAppBar(
             toolbarHeight: context.appDimensionScheme.appBarHeight,
-            title: Text(context.text.lists, style: context.typography.title3),
+            title: Text(context.text.lists, style: context.typography.title5),
             leading: null,
             automaticallyImplyLeading: false,
             actions: [
@@ -105,7 +105,7 @@ class _ListsScreenState extends State<ListsScreen> {
                   ),
                   child: Text(
                     context.text.newlyCreated,
-                    style: context.typography.title3,
+                    style: context.typography.title5,
                   ),
                 ),
               ),

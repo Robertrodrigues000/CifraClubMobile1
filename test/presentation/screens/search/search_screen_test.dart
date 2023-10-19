@@ -3,7 +3,7 @@ import 'package:cifraclub/domain/search/models/search_models/album_search.dart';
 import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:cifraclub/domain/search/models/search_models/songbook_search.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/search/search_bloc.dart';
 import 'package:cifraclub/presentation/screens/search/search_screen.dart';
 import 'package:cifraclub/presentation/screens/search/search_state.dart';

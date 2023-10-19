@@ -43,7 +43,7 @@ class Highlights extends StatelessWidget {
                   position: index,
                   child: ListAnimation(
                     verticalOffset: null,
-                    horziontalOffset: 100,
+                    horizontalOffset: 100,
                     child: Padding(
                       padding: EdgeInsets.only(
                         left: dimensions.internalMargin,

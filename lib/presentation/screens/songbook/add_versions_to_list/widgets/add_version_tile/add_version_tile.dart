@@ -41,7 +41,7 @@ class AddVersionTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Opacity(
-              opacity: state == SongState.added ? 0.5 : 1,
+              opacity: state == SongState.added ? 0.4 : 1,
               child: RemoteImage(
                 imageUrl: imageUrl,
                 // coverage:ignore-start

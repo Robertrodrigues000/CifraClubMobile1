@@ -76,7 +76,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
           appBar: CosmosAppBar(
             title: Text(
               context.text.songs(2),
-              style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+              style: context.typography.title6,
             ),
             automaticallyImplyLeading: false,
             leading: Padding(

@@ -10,7 +10,7 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/album/album_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/search/search_bloc.dart';
 import 'package:cifraclub/presentation/screens/search/search_state.dart';
 import 'package:cifraclub/presentation/screens/search/widgets/search_app_bar.dart';

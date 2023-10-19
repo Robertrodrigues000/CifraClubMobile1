@@ -34,7 +34,7 @@ class _TopSongsScreenState extends State<TopSongsScreen> {
       appBar: CosmosAppBar(
         title: Text(
           context.text.topSongs,
-          style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+          style: context.typography.title6,
         ),
         automaticallyImplyLeading: false,
         leading: Padding(

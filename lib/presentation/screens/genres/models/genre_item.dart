@@ -37,9 +37,9 @@ enum GenreHeaderType {
   String getLocalizedText(BuildContext context) {
     switch (this) {
       case top:
-        return context.text.genreHeaderTops; // TODO: revisar textos
+        return context.text.genreHeaderTops;
       case all:
-        return context.text.genreHeaderAll; // TODO: revisar textos
+        return context.text.genreHeaderAll;
       case musicalStyles:
         return context.text.musicalStyles;
     }

@@ -1,8 +1,8 @@
 import 'package:cifraclub/domain/artist/models/album.dart';
 import 'package:cifraclub/domain/search/models/search_models/album_search.dart';
 import 'package:cifraclub/domain/search/models/search_models/search_item.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/album_item.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/album_item.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

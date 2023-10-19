@@ -34,7 +34,7 @@ class _TopArtistsScreenState extends State<TopArtistsScreen> {
       appBar: CosmosAppBar(
         title: Text(
           context.text.topArtists,
-          style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+          style: context.typography.title6,
         ),
         automaticallyImplyLeading: false,
         leading: Padding(

@@ -61,7 +61,7 @@ class SaveVersionsInListDialog extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(
               context.text.savingToList,
-              style: context.typography.title5,
+              style: context.typography.title6,
             ),
           ),
           Divider(height: 1, color: context.colors.neutralTertiary),
@@ -89,9 +89,8 @@ class SaveVersionsInListDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text("${((count / totalSongs) * 100).round()}%",
-                    style: context.typography.body6.copyWith(color: context.colors.textPrimary)),
-                Text("$count/$totalSongs", style: context.typography.body6.copyWith(color: context.colors.textPrimary)),
+                Text("${((count / totalSongs) * 100).round()}%", style: context.typography.body6),
+                Text("$count/$totalSongs", style: context.typography.body6),
               ],
             ),
           ),

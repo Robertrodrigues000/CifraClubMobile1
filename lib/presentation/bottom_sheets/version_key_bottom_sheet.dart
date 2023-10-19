@@ -29,7 +29,7 @@ class VersionKeyBottomSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
             child: Text(
               context.text.key,
-              style: context.typography.title3,
+              style: context.typography.title5,
             ),
           ),
           const SizedBox(

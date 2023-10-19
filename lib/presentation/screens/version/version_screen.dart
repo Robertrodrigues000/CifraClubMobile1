@@ -115,7 +115,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                 onPressed: () => _bloc.add(OnToggleIsChordPinned()),
                 child: Text(
                   state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
-                  style: context.typography.body9.copyWith(letterSpacing: 0),
+                  style: context.typography.body9,
                 ),
               ),
             ],

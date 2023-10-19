@@ -52,7 +52,7 @@ void main() {
       ),
     );
 
-    await widgetTester.tap(find.text(version.last.versionName).first);
+    await widgetTester.tap(find.text(version.last.versionName).first, warnIfMissed: false);
     expect(completer.isCompleted, true);
     final versionFilter = await completer.future;
     expect(versionFilter.instrument, Instrument.bass);

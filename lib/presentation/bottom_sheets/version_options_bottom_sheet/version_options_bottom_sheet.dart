@@ -81,7 +81,7 @@ class VersionOptionsBottomSheet {
                     padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
                     child: Text(
                       context.text.versionOptionsBottomSheet,
-                      style: context.typography.title3,
+                      style: context.typography.title5,
                     ),
                   ),
                   const SizedBox(

@@ -2,7 +2,7 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_bloc.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_screen.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_state.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:flutter/foundation.dart';

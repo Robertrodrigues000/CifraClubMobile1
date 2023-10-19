@@ -34,7 +34,7 @@ class HomeTitle extends StatelessWidget {
                     Expanded(
                       child: Text(
                         text,
-                        style: context.typography.title3,
+                        style: context.typography.title5,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

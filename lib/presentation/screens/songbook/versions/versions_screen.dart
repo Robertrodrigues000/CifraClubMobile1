@@ -4,7 +4,7 @@ import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/l
 import 'package:cifraclub/presentation/bottom_sheets/list_version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/constants/app_urls.dart';
-import 'package:cifraclub/presentation/dialogs/delete_version_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_version_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';

@@ -11,7 +11,7 @@ import 'package:cifraclub/presentation/screens/artist/artist_state.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_header.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';

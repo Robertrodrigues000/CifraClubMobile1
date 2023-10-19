@@ -49,7 +49,7 @@ class VersionHeader extends StatelessWidget {
                   children: [
                     Text(
                       songName,
-                      style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+                      style: context.typography.title6,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -60,7 +60,7 @@ class VersionHeader extends StatelessWidget {
                       onTap: onTapArtistName,
                       child: Text(
                         artistName,
-                        style: context.typography.subtitle4.copyWith(color: context.colors.primary),
+                        style: context.typography.title7.copyWith(color: context.colors.primary),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),

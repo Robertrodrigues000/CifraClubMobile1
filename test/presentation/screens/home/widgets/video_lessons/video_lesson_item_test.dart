@@ -31,7 +31,7 @@ void main() {
         child: Scaffold(
           body: RemoteImageCacheManager(
             cacheManager: cacheManager,
-            child: VideoLessonItem(videolesson: videoLesson, width: 100, height: 100, onTap: completer.complete),
+            child: VideoLessonItem(videoLesson: videoLesson, width: 100, height: 100, onTap: completer.complete),
           ),
         ),
       ),

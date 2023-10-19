@@ -13,7 +13,7 @@ class GenreHeader extends StatelessWidget {
           horizontal: context.appDimensionScheme.screenMargin, vertical: context.appDimensionScheme.internalMargin),
       child: Text(
         text,
-        style: context.typography.title3,
+        style: context.typography.title5,
       ),
     );
   }

@@ -82,8 +82,7 @@ class _AddVersionsToListScreenState extends State<AddVersionsToListScreen> {
                       padding: EdgeInsets.all(context.appDimensionScheme.screenMargin),
                       child: Column(
                         children: [
-                          Text(context.text.searchNotFound,
-                              style: context.typography.title4.copyWith(color: context.colors.textPrimary)),
+                          Text(context.text.searchNotFound, style: context.typography.title4),
                           const SizedBox(height: 8),
                           Text(context.text.searchNewTerm, style: context.typography.subtitle7),
                         ],

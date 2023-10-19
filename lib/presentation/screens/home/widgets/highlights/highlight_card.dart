@@ -38,14 +38,14 @@ class HighlightCard extends StatelessWidget {
         children: [
           Text(
             highlight.title,
-            style: styles.title4,
+            style: styles.title6.copyWith(color: context.colors.primary),
           ),
           const SizedBox(
             height: 4,
           ),
           Text(
             highlight.subtitle,
-            style: styles.title2.copyWith(color: CosmosColors.white),
+            style: styles.title4.copyWith(color: CosmosColors.white),
           ),
           if (highlight.icon.isNotEmpty && highlight.description.isNotEmpty) ...[
             const SizedBox(

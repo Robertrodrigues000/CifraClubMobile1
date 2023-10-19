@@ -58,7 +58,7 @@ class InstrumentVersionsBottomSheet extends StatelessWidget {
               ),
               child: Text(
                 context.text.version,
-                style: context.typography.title3,
+                style: context.typography.title5,
               ),
             ),
             ExpansionPanelList.radio(
@@ -83,7 +83,7 @@ class InstrumentVersionsBottomSheet extends StatelessWidget {
                               children: [
                                 TextSpan(
                                   text: instrumentVersion.instrument.getInstrumentName(context),
-                                  style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+                                  style: context.typography.title6.copyWith(color: context.colors.textPrimary),
                                 ),
                                 const WidgetSpan(child: SizedBox(width: 8)),
                                 TextSpan(

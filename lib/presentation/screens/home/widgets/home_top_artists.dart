@@ -126,14 +126,14 @@ class _ArtistCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _artist.name,
+                      _artist.genre?.name ?? "",
                       style: context.typography.subtitle4.copyWith(color: CosmosColors.grey80),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      _artist.genre?.name ?? "",
+                      _artist.name,
                       style: context.typography.subtitle4.copyWith(color: CosmosColors.white),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

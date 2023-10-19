@@ -93,7 +93,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                       sliver: SliverToBoxAdapter(
                         child: Text(
                           context.text.disc(state.discs.indexOf(disc) + 1),
-                          style: context.typography.title5,
+                          style: context.typography.title6,
                         ),
                       ),
                     ),

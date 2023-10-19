@@ -68,7 +68,7 @@ class SongbookInformationSection extends StatelessWidget {
                   ),
                 TextSpan(
                   text: songbookName,
-                  style: context.typography.title3,
+                  style: context.typography.title5,
                 ),
               ],
             ),

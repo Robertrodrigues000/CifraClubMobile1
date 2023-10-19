@@ -30,7 +30,7 @@ class _GenreScreenState extends State<GenreScreen> {
         appBar: CosmosAppBar(
           title: Text(
             state.genreName ?? "",
-            style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+            style: context.typography.title6,
           ),
           automaticallyImplyLeading: false,
           leading: Padding(

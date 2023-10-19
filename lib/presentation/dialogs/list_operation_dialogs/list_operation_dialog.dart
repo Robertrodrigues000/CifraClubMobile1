@@ -31,7 +31,7 @@ class ListOperationDialog extends StatelessWidget {
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+        style: context.typography.title6.copyWith(color: context.colors.textPrimary),
       ),
       description: description,
       buttons: hasVerticalButtons

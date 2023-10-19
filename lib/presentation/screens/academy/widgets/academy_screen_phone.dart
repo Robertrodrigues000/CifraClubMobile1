@@ -52,14 +52,14 @@ class AcademyScreenPhone extends StatelessWidget {
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      style: context.typography.title3,
+                      style: context.typography.title5,
                       children: [
                         TextSpan(
                           text: context.text.academyScreenTitle1,
                         ),
                         TextSpan(
                           text: context.text.academyScreenTitle2,
-                          style: context.typography.title3.copyWith(color: context.colors.primary),
+                          style: context.typography.title5.copyWith(color: context.colors.primary),
                         ),
                       ],
                     ),

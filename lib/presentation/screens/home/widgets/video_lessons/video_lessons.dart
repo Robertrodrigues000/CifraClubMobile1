@@ -55,7 +55,7 @@ class _VideoLessonsState extends State<VideoLessons> {
                 columnCount: dimensions.topVideosItemsPerRow,
                 child: ListAnimation(
                   child: VideoLessonItem(
-                    videolesson: widget.list[index],
+                    videoLesson: widget.list[index],
                     // coverage:ignore-start
                     onTap: () {},
                     // coverage:ignore-end

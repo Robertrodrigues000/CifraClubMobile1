@@ -21,7 +21,7 @@ class _NtpTestScreenState extends State<NtpTestScreen> {
         backgroundColor: widget.color,
         title: Text(
           context.text.ntpScreen,
-          style: context.typography.title2,
+          style: context.typography.title4,
         ),
       ),
       body: BlocBuilder<NtpTestBloc, NtpTestState>(

@@ -22,7 +22,7 @@ class LogoutDialog extends StatelessWidget {
     return DefaultDialog(
       title: Text(
         context.text.logout,
-        style: context.typography.title3,
+        style: context.typography.title5,
         textAlign: TextAlign.center,
       ),
       description: Text(

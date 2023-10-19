@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cifraclub/presentation/screens/artist/widgets/album_item.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/album_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

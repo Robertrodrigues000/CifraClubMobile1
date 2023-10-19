@@ -81,7 +81,7 @@ class _ArtistHeaderState extends State<ArtistHeader> {
         opacity: _collapsedOpacity,
         child: Text(
           widget.artistName,
-          style: context.typography.title5.copyWith(color: Colors.white),
+          style: context.typography.title4.copyWith(color: Colors.white),
         ),
       ),
       leading: Row(

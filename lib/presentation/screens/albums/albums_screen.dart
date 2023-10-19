@@ -3,7 +3,7 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_bloc.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_state.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/albums.dart';
+import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cosmos/cosmos.dart';
@@ -31,7 +31,7 @@ class _AlbumsScreenState extends State<AlbumsScreen> {
       appBar: CosmosAppBar(
         title: Text(
           context.text.albums,
-          style: context.typography.title4.copyWith(color: context.colors.textPrimary),
+          style: context.typography.title6,
         ),
         automaticallyImplyLeading: false,
         leading: Padding(
