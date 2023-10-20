@@ -54,6 +54,14 @@ class VersionReducer {
         return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: false));
       case OnChordListLoaded():
         return state.copyWith(chordState: state.chordState.copyWith(chordRepresentations: action.chords));
+      case OnFloatingFooterBarModeChange():
+        return state.copyWith(floatingFooterBarState: state.floatingFooterBarState.copyWith(mode: action.mode));
+      case OnShowListenBottomSheet():
+        onEffect(OnShowListenBottomSheetEffect());
+        return state;
+      case OnShowOptionsBottomSheet():
+        onEffect(OnShowOptionsBottomSheetEffect());
+        return state;
       default:
         return state;
     }

@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter/foundation.dart';
 
@@ -25,6 +26,8 @@ class VersionState {
   final AutoScrollState autoScrollState;
 
   final ChordState chordState;
+
+  final FloatingFooterBarState floatingFooterBarState;
 
   /*
   
@@ -65,6 +68,7 @@ class VersionState {
     this.versionHeaderState = const VersionHeaderState(),
     this.autoScrollState = const AutoScrollState(),
     this.chordState = const ChordState(),
+    this.floatingFooterBarState = const FloatingFooterBarState(),
   });
 }
 
@@ -100,7 +104,7 @@ class AutoScrollState {
 
   const AutoScrollState({
     this.isAutoScrollRunning = false,
-    this.speedFactor = 0,
+    this.speedFactor = 0.5,
   });
 }
 
@@ -111,5 +115,15 @@ class ChordState {
 
   const ChordState({
     this.chordRepresentations = const [],
+  });
+}
+
+@CopyWith()
+@immutable
+class FloatingFooterBarState {
+  final FloatingFooterBarMode mode;
+
+  const FloatingFooterBarState({
+    this.mode = FloatingFooterBarMode.main,
   });
 }

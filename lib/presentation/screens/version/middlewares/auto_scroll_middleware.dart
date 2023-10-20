@@ -10,6 +10,7 @@ class AutoScrollMiddleware implements VersionMiddleware {
   final double _screenDensity;
   final GetAutoScrollStream _getAutoScrollStream;
   final subscriptions = CompositeSubscription();
+  double? nextSpeedFactor;
 
   AutoScrollMiddleware(@factoryParam this._screenDensity, this._getAutoScrollStream);
 
@@ -18,12 +19,10 @@ class AutoScrollMiddleware implements VersionMiddleware {
     switch (action) {
       case OnAutoScrollSpeedSelected():
         if (state.autoScrollState.isAutoScrollRunning) {
-          _stop();
-          _start(speedFactor: action.speedFactor, screenDensity: _screenDensity, addAction: addAction);
+          nextSpeedFactor = action.speedFactor;
         }
-
       case OnAutoScrollStart():
-        _start(speedFactor: state.autoScrollState.speedFactor, screenDensity: _screenDensity, addAction: addAction);
+        _start(speedFactor: state.autoScrollState.speedFactor, addAction: addAction);
       case OnAutoScrollStop():
         _stop();
       default:
@@ -31,14 +30,15 @@ class AutoScrollMiddleware implements VersionMiddleware {
     }
   }
 
-  void _start({
-    required double speedFactor,
-    required double screenDensity,
-    required ActionEmitter addAction,
-  }) {
+  void _start({required double speedFactor, required ActionEmitter addAction}) {
     assert(subscriptions.isEmpty);
     _getAutoScrollStream(speedFactor: speedFactor, screenDensity: _screenDensity).listen((delta) {
-      addAction(OnAutoScrollTickAction(delta));
+      addAction!(OnAutoScrollTickAction(delta));
+      if (nextSpeedFactor != null) {
+        _stop();
+        _start(speedFactor: nextSpeedFactor!, addAction: addAction);
+        nextSpeedFactor = null;
+      }
     }).addTo(subscriptions);
   }
 

@@ -4,6 +4,8 @@ import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
+import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_action.dart';
 
 typedef ActionEmitter = Function(VersionAction);
 
@@ -90,3 +92,19 @@ class OnChordListLoaded implements VersionAction {
 
   OnChordListLoaded(this.chords);
 }
+
+class OnFloatingFooterBarAction implements VersionAction {
+  final FloatingFooterBarAction action;
+
+  OnFloatingFooterBarAction({required this.action});
+}
+
+class OnFloatingFooterBarModeChange implements VersionAction {
+  final FloatingFooterBarMode mode;
+
+  OnFloatingFooterBarModeChange({required this.mode});
+}
+
+class OnShowListenBottomSheet implements VersionAction {}
+
+class OnShowOptionsBottomSheet implements VersionAction {}

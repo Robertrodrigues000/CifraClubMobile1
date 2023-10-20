@@ -13,3 +13,7 @@ class OnAutoScrollTickEffect implements VersionEffect {
 
   OnAutoScrollTickEffect(this.delta);
 }
+
+class OnShowListenBottomSheetEffect implements VersionEffect {}
+
+class OnShowOptionsBottomSheetEffect implements VersionEffect {}

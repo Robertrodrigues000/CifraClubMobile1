@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
 import 'package:cifraclub/presentation/screens/version/version_reducer.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
+import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -151,5 +152,56 @@ void main() {
     );
 
     expect(state, versionState);
+  });
+
+  test("When action is OnFloatingFooterBarModeChange", () {
+    final reducer = VersionReducer();
+    const versionState = VersionState();
+
+    expect(versionState.floatingFooterBarState.mode, FloatingFooterBarMode.main);
+    final state = reducer.reduce(
+      versionState,
+      OnFloatingFooterBarModeChange(mode: FloatingFooterBarMode.autoscroll),
+      (_) => null,
+    );
+    expect(state.floatingFooterBarState.mode, FloatingFooterBarMode.autoscroll);
+  });
+
+  test("When action is OnShowListenBottomSheet", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowListenBottomSheetEffect>(),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnShowListenBottomSheet(),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
+  test("When action is OnShowOptionsBottomSheet", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowOptionsBottomSheetEffect>(),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnShowOptionsBottomSheet(),
+      effectStream.add,
+    );
+
+    effectStream.close();
   });
 }

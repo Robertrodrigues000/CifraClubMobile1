@@ -25,6 +25,8 @@ abstract class _$VersionStateCWProxy {
 
   VersionState chordState(ChordState chordState);
 
+  VersionState floatingFooterBarState(FloatingFooterBarState floatingFooterBarState);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -41,6 +43,7 @@ abstract class _$VersionStateCWProxy {
     VersionHeaderState? versionHeaderState,
     AutoScrollState? autoScrollState,
     ChordState? chordState,
+    FloatingFooterBarState? floatingFooterBarState,
   });
 }
 
@@ -79,6 +82,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
   VersionState chordState(ChordState chordState) => this(chordState: chordState);
 
   @override
+  VersionState floatingFooterBarState(FloatingFooterBarState floatingFooterBarState) =>
+      this(floatingFooterBarState: floatingFooterBarState);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -96,6 +103,7 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? versionHeaderState = const $CopyWithPlaceholder(),
     Object? autoScrollState = const $CopyWithPlaceholder(),
     Object? chordState = const $CopyWithPlaceholder(),
+    Object? floatingFooterBarState = const $CopyWithPlaceholder(),
   }) {
     return VersionState(
       version: version == const $CopyWithPlaceholder()
@@ -134,6 +142,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.chordState
           // ignore: cast_nullable_to_non_nullable
           : chordState as ChordState,
+      floatingFooterBarState: floatingFooterBarState == const $CopyWithPlaceholder() || floatingFooterBarState == null
+          ? _value.floatingFooterBarState
+          // ignore: cast_nullable_to_non_nullable
+          : floatingFooterBarState as FloatingFooterBarState,
     );
   }
 }
@@ -379,4 +391,53 @@ extension $ChordStateCopyWith on ChordState {
   /// Returns a callable class that can be used as follows: `instanceOfChordState.copyWith(...)` or like so:`instanceOfChordState.copyWith.fieldName(...)`.
   // ignore: library_private_types_in_public_api
   _$ChordStateCWProxy get copyWith => _$ChordStateCWProxyImpl(this);
+}
+
+abstract class _$FloatingFooterBarStateCWProxy {
+  FloatingFooterBarState mode(FloatingFooterBarMode mode);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `FloatingFooterBarState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// FloatingFooterBarState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  FloatingFooterBarState call({
+    FloatingFooterBarMode? mode,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfFloatingFooterBarState.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfFloatingFooterBarState.copyWith.fieldName(...)`
+class _$FloatingFooterBarStateCWProxyImpl implements _$FloatingFooterBarStateCWProxy {
+  const _$FloatingFooterBarStateCWProxyImpl(this._value);
+
+  final FloatingFooterBarState _value;
+
+  @override
+  FloatingFooterBarState mode(FloatingFooterBarMode mode) => this(mode: mode);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `FloatingFooterBarState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// FloatingFooterBarState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  FloatingFooterBarState call({
+    Object? mode = const $CopyWithPlaceholder(),
+  }) {
+    return FloatingFooterBarState(
+      mode: mode == const $CopyWithPlaceholder() || mode == null
+          ? _value.mode
+          // ignore: cast_nullable_to_non_nullable
+          : mode as FloatingFooterBarMode,
+    );
+  }
+}
+
+extension $FloatingFooterBarStateCopyWith on FloatingFooterBarState {
+  /// Returns a callable class that can be used as follows: `instanceOfFloatingFooterBarState.copyWith(...)` or like so:`instanceOfFloatingFooterBarState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$FloatingFooterBarStateCWProxy get copyWith => _$FloatingFooterBarStateCWProxyImpl(this);
 }

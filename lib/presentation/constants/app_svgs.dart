@@ -75,4 +75,20 @@ class AppSvgs {
   static const baseHead = "assets/images/base_head_130.svg";
 
   static const youtubeIcon = "assets/images/youtube_icon.svg";
+
+  static const floatingBarAutoscroll = "assets/images/floating_bar_autoscroll.svg";
+  static const floatingBarListen = "assets/images/floating_bar_listen.svg";
+  static const floatingBarSettings = "assets/images/floating_bar_settings.svg";
+  static const floatingBarMinifyVideo = "assets/images/floating_bar_minify_video.svg";
+
+  static const floatingBarAutoscrollStart = "assets/images/floating_bar_autoscroll_start.svg";
+  static const floatingBarAutoscrollFast = "assets/images/floating_bar_autoscroll_fast.svg";
+  static const floatingBarAutoscrollClose = "assets/images/floating_bar_autoscroll_close.svg";
+  static const floatingBarAutoscrollSlow = "assets/images/floating_bar_autoscroll_slow.svg";
+  static const floatingBarAutoscrollPause = "assets/images/floating_bar_autoscroll_pause.svg";
+
+  static const floatingBarFontConfirm = "assets/images/floating_bar_font_confirm.svg";
+  static const floatingBarFontReset = "assets/images/floating_bar_font_reset.svg";
+  static const floatingBarFontSmaller = "assets/images/floating_bar_font_smaller.svg";
+  static const floatingBarFontBigger = "assets/images/floating_bar_font_bigger.svg";
 }

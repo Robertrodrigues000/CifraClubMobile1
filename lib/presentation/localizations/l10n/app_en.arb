@@ -326,6 +326,12 @@
     "identifyMusic": "Identify music",
     "createListButtonText": "Create list",
     "version": "Version",
+
+    "scroll": "Scroll",
+    "options": "Options",
+    "restore": "Restore",
+    "done": "Done",
+
     "unFavoriteVersion": "Unfavorite chord",
     "favoriteVersionMessage": "Chord added to favorites",
     "unFavoriteVersionMessage": "Chord removed from favorites",

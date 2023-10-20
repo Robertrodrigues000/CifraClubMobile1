@@ -13,6 +13,8 @@ import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_widget.dart';
+import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
+import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_action.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/version_header.dart';
 import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
 import 'package:cosmos/cosmos.dart';
@@ -73,22 +75,51 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
           }
           _scrollController.animateTo(
             _scrollController.offset + effect.delta,
-            duration: const Duration(milliseconds: 20),
+            duration: const Duration(milliseconds: 110),
             curve: Curves.linear,
           );
+        case OnShowListenBottomSheetEffect():
+          if (context.mounted) {
+            widget.listenBottomSheet.open(
+              context: context,
+              artistName: _bloc.state.version?.artist?.name ?? "",
+              songName: _bloc.state.version?.song.name ?? "",
+            );
+          }
+        case OnShowOptionsBottomSheetEffect():
+          if (context.mounted) {
+            var newKey = await VersionKeyBottomSheet(
+              musicalScale:
+                  _bloc.state.version!.stdKey!.contains("m") ? MusicalScale.minorScale : MusicalScale.majorScale,
+              originalKey: _bloc.state.version!.stdKey!,
+              selectedKey: selectedKey!,
+            ).open(
+              context: context,
+            );
+            if (newKey != null) {
+              setState(() {
+                selectedKey = newKey;
+              });
+            }
+          }
       }
     }).addTo(subscriptions);
   }
 
   void onScroll() {
-    if (_scrollController.offset >= _scrollController.position.maxScrollExtent) {
-      _bloc.add(OnAutoScrollStop());
-    }
     final currentOffset = _scrollController.offset;
+    if (currentOffset >= _scrollController.position.maxScrollExtent) {
+      _bloc.add(OnAutoScrollStop());
+      return;
+    }
+    if (currentOffset <= 0) {
+      return;
+    }
+
     final previousOffset = _scrollController.initialScrollOffset;
     final currentIsFooterBarVisible = currentOffset < previousOffset;
 
-    if (!_bloc.state.autoScrollState.isAutoScrollRunning && currentIsFooterBarVisible != isFooterBarVisible) {
+    if (isUserDraggingScreen && currentIsFooterBarVisible != isFooterBarVisible) {
       setState(() {
         isFooterBarVisible = currentIsFooterBarVisible;
       });
@@ -112,7 +143,15 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
           appBar: CosmosAppBar(
             actions: [
               TextButton(
-                onPressed: () => _bloc.add(OnToggleIsChordPinned()),
+                onPressed: () {
+                  _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
+                },
+                child: const Text("fontsize"),
+              ),
+              TextButton(
+                onPressed: () {
+                  _bloc.add(OnToggleIsChordPinned());
+                },
                 child: Text(
                   state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
                   style: context.typography.body9,
@@ -120,17 +159,17 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
               ),
             ],
           ),
-          body: Listener(
-            onPointerDown: (_) {
-              isUserDraggingScreen = true;
-            },
-            onPointerUp: (_) {
-              isUserDraggingScreen = false;
-            },
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                CustomScrollView(
+          body: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Listener(
+                onPointerDown: (_) {
+                  isUserDraggingScreen = true;
+                },
+                onPointerUp: (_) {
+                  isUserDraggingScreen = false;
+                },
+                child: CustomScrollView(
                   controller: _scrollController,
                   slivers: [
                     if (state.isYouTubeVisible && _youtubePlayerController != null)
@@ -202,65 +241,22 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                         },
                       ),
                     ],
+                    const SliverFillRemaining(),
                   ],
                 ),
-                AnimatedPositioned(
-                  bottom: isFooterBarVisible ? 0 : -32,
-                  duration: const Duration(milliseconds: 150),
-                  child: Container(
-                    height: 32,
-                    width: 300,
-                    color: Colors.amber,
-                    child: Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              _bloc.add(
-                                  state.autoScrollState.isAutoScrollRunning ? OnAutoScrollStop() : OnAutoScrollStart());
-                            },
-                            child: const Icon(Icons.video_chat)),
-                        TextButton(
-                            onPressed: () {
-                              widget.listenBottomSheet.open(
-                                context: context,
-                                artistName: state.version?.artist?.name ?? "",
-                                songName: state.version?.song.name ?? "",
-                              );
-                            },
-                            child: const Icon(Icons.arrow_outward)),
-                        TextButton(
-                            onPressed: () async {
-                              var newKey = await VersionKeyBottomSheet(
-                                musicalScale: state.version!.stdKey!.contains("m")
-                                    ? MusicalScale.minorScale
-                                    : MusicalScale.majorScale,
-                                originalKey: state.version!.stdKey!,
-                                selectedKey: selectedKey!,
-                              ).open(
-                                context: context,
-                              );
-                              if (newKey != null) {
-                                setState(() {
-                                  selectedKey = newKey;
-                                });
-                              }
-                            },
-                            child: const Icon(Icons.settings)),
-                        TextButton(
-                            onPressed: () {
-                              state.isYouTubeVisible
-                                  ? _bloc.add(OnYouTubeVideoClosed())
-                                  : _bloc.add(
-                                      OnYouTubeVideoSelected(state.version?.videoLesson?.youtubeId ?? "Pt9elq3DYNM"),
-                                    );
-                            },
-                            child: const Icon(Icons.youtube_searched_for_outlined))
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+              ),
+              FloatingFooterBar(
+                mode: state.floatingFooterBarState.mode,
+                isVisible: isFooterBarVisible,
+                isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
+                autoScrollSpeedFactor: state.autoScrollState.speedFactor,
+                isVideoOpen: state.isYouTubeVisible,
+                videoThumb: state.version?.videoLesson?.thumb,
+                onAction: (action) {
+                  _bloc.add(OnFloatingFooterBarAction(action: action));
+                },
+              )
+            ],
           ),
         );
       },
