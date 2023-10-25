@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart'
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/songbook/models/songbook_error.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
@@ -72,7 +73,7 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
         return addSongToSongbook(songbookId: result.get()?.id, name: name);
       }
     }
-    return SaveToListError();
+    return ListLimitStateReached(listLimit: getListLimit());
   }
 
   Future<SaveToListResult> addSongToSongbook({
@@ -80,13 +81,8 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
     required String name,
   }) async {
     if (songbookId != null) {
-      final versionListLimit = await _getVersionsLimitState(songbookId).first;
-      if (versionListLimit == ListLimitState.reached) {
-        final versionsLimit = _getVersionsLimit(state.isPro);
-        return VersionListLimitStateReached(versionsLimit: versionsLimit);
-      }
-
-      final result = await _insertVersionToSongbook(songbookId: songbookId, artistUrl: artistUrl, songUrl: songUrl);
+      final result = await _insertVersionToSongbook(
+          songbookId: songbookId, artistUrl: artistUrl, songUrl: songUrl, isPro: state.isPro);
       if (result.isSuccess) {
         return SaveVersionToListCompleted(
           name: name,
@@ -94,7 +90,12 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
           listLimitState: await _getListLimitState().first,
         );
       } else {
-        return SaveToListError(listLimitState: await _getListLimitState().first);
+        final error = result.getError()!;
+        return switch (error) {
+          SongbookVersionsLimitReachedError() => VersionListLimitStateReached(versionsLimit: error.versionsLimit),
+          SongbookRepeatedSongError() => VersionIsAlreadyOnListError(),
+          SongbookRequestError() => SaveToListError()
+        };
       }
     }
     return SaveToListError(listLimitState: await _getListLimitState().first);

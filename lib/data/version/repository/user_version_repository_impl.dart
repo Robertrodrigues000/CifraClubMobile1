@@ -134,4 +134,9 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
       songbookId: songbookId,
     ));
   }
+
+  @override
+  Future<bool> getIsVersionOnSongbook(int songbookId, int versionId) {
+    return _userVersionDataSource.getIsVersionOnSongbook(songbookId, versionId);
+  }
 }

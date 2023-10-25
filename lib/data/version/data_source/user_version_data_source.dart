@@ -146,4 +146,8 @@ class UserVersionDataSource {
       return _isar.userVersionDataDtos.put(versionData);
     });
   }
+
+  Future<bool> getIsVersionOnSongbook(int songbookId, int versionId) {
+    return _isar.userVersionDtos.where().songbookIdVersionIdEqualTo(songbookId, versionId).isNotEmpty();
+  }
 }

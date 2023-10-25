@@ -200,6 +200,10 @@ class SaveVersionToListBottomSheet {
         isPro
             ? ListLimitProDialog.show(context: context, isVersionLimit: true, limitCount: result.versionsLimit)
             : ListLimitDialog.show(context: context, isVersionLimit: true, limitCount: result.versionsLimit);
+      case ListLimitStateReached():
+        isPro
+            ? ListLimitProDialog.show(context: context, isVersionLimit: false, limitCount: result.listLimit)
+            : ListLimitDialog.show(context: context, isVersionLimit: false, limitCount: result.listLimit);
       case SaveVersionToListCompleted():
         if (context.mounted) {
           ScaffoldMessenger.of(context)
@@ -210,6 +214,10 @@ class SaveVersionToListBottomSheet {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.errorListSong)));
           _showLimitWarningSnackBar(context, result.listLimitState, isPro);
+        }
+      case VersionIsAlreadyOnListError():
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.repeatedSongError)));
         }
     }
   }

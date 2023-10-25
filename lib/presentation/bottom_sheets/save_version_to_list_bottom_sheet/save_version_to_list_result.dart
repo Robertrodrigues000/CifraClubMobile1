@@ -9,6 +9,12 @@ class VersionListLimitStateReached implements SaveToListResult {
   const VersionListLimitStateReached({required this.versionsLimit});
 }
 
+class ListLimitStateReached implements SaveToListResult {
+  final int listLimit;
+
+  ListLimitStateReached({required this.listLimit});
+}
+
 class SaveVersionToListCompleted implements SaveToListResult {
   final String name;
   final ListLimitState versionLimitState;
@@ -22,3 +28,5 @@ class SaveToListError implements SaveToListResult {
 
   SaveToListError({this.listLimitState});
 }
+
+class VersionIsAlreadyOnListError implements SaveToListResult {}

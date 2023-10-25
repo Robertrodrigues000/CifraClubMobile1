@@ -289,5 +289,6 @@
         }
     },
     "hideChords": "Ocultar acordes na tela",
-    "fixChords": "Fixar acordes na tela"
+    "fixChords": "Fixar acordes na tela",
+    "repeatedSongError": "Esta cifra já está na lista"
 }

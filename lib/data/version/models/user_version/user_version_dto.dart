@@ -25,6 +25,7 @@ class UserVersionDto extends Equatable {
   @Index()
   final String? artistImage;
   @Index(composite: [CompositeIndex('artistImage')])
+  @Index(composite: [CompositeIndex('versionId')])
   @Index()
   final int songbookId;
   final int order;

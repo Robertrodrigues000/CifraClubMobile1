@@ -134,7 +134,7 @@ void main() {
       expect(find.byType(SelectableItem, skipOffstage: false), findsNWidgets(2));
     });
 
-    testWidgets("when tapping in create new list,should show input dialog", (widgetTester) async {
+    testWidgets("when tapping in create new list, should show input dialog", (widgetTester) async {
       bloc.mockStream(const SaveVersionToListState());
       await mockNetworkImagesFor(() async {
         await widgetTester.pumpWidgetWithWrapper(
@@ -159,7 +159,7 @@ void main() {
       expect(find.byType(InputDialog, skipOffstage: false), findsOneWidget);
     });
 
-    testWidgets("when tapping in create new list and ListLimitState is Reached,should show Limit dialog",
+    testWidgets("when tapping in create new list and ListLimitState is Reached, should show Limit dialog",
         (widgetTester) async {
       bloc.mockStream(const SaveVersionToListState(listState: ListLimitState.reached));
       await mockNetworkImagesFor(() async {
@@ -305,7 +305,7 @@ void main() {
     expect(find.byType(ListLimitProDialog, skipOffstage: false), findsOneWidget);
   });
 
-  testWidgets("When tap in item of user list and erro occurs should show error snackbar", (widgetTester) async {
+  testWidgets("When tap in item of user list and error occurs should show error snack bar", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook], isPro: true));
 
@@ -336,16 +336,19 @@ void main() {
     expect(find.text(appTextEn.errorListSong), findsOneWidget);
   });
 
-  testWidgets("When tap in item and is success and close to version limit should show snackbars", (widgetTester) async {
+  testWidgets("When tap in item and is success and close to version limit should show snack bars",
+      (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
     when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
-        .thenAnswer((_) => SynchronousFuture(const SaveVersionToListCompleted(
-              name: "teste",
-              versionLimitState: ListLimitState.atWarning,
-              listLimitState: ListLimitState.withinLimit,
-            )));
+        .thenAnswer((_) => SynchronousFuture(
+              const SaveVersionToListCompleted(
+                name: "teste",
+                versionLimitState: ListLimitState.atWarning,
+                listLimitState: ListLimitState.withinLimit,
+              ),
+            ));
 
     await widgetTester.pumpWidgetWithWrapper(
       Builder(
@@ -375,7 +378,7 @@ void main() {
     expect(find.text(appTextEn.listLimitTitle), findsOneWidget);
   });
 
-  testWidgets("When tap in item and is success and close to list limit should show snackbars", (widgetTester) async {
+  testWidgets("When tap in item and is success and close to list limit should show snack bars", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
@@ -412,5 +415,38 @@ void main() {
     ScaffoldMessenger.of(widgetTester.element(inkWell)).hideCurrentSnackBar();
     await widgetTester.pumpAndSettle();
     expect(find.text(appTextEn.listLimitProDescription1), findsOneWidget);
+  });
+
+  testWidgets("when tapping in a list and version is already on list, should show snack bar with correct message",
+      (widgetTester) async {
+    final songbook = getFakeSongbook();
+    bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
+
+    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
+        .thenAnswer((_) => SynchronousFuture(VersionIsAlreadyOnListError()));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () async {
+                await setShowSaveVersionToListBottomSheet(context, bloc, "", "");
+              },
+            ),
+          );
+        },
+      ),
+    );
+
+    final inkWell = find.byType(InkWell);
+    expect(inkWell, findsOneWidget);
+    await widgetTester.tap(inkWell, warnIfMissed: false);
+    await widgetTester.pumpAndSettle();
+
+    await widgetTester.tap(find.text(songbook.name, skipOffstage: false), warnIfMissed: false);
+    await widgetTester.pumpAndSettle();
+
+    expect(find.text(appTextEn.repeatedSongError), findsOneWidget);
   });
 }

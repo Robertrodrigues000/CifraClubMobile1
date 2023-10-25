@@ -289,5 +289,6 @@
         }
     },
     "hideChords": "Ocultar acordes en pantalla",
-    "fixChords": "Fijar acordes en pantalla"
+    "fixChords": "Fijar acordes en pantalla",
+    "repeatedSongError": "Este cifrado ya está en la lista"
 }

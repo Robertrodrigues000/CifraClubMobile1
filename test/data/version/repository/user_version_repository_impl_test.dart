@@ -3,6 +3,7 @@ import 'package:cifraclub/data/version/models/user_version/user_recent_version_d
 import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/data/version/repository/user_version_repository_impl.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -309,5 +310,14 @@ void main() {
     var wasRecentDeleted = await userVersionRepository.deleteOldestRecentVersion();
     expect(wasRecentDeleted, true);
     verify(userVersionDataSource.deleteOldestRecentVersion).called(1);
+  });
+
+  test("when getIsVersionOnSongbook", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    when(() => userVersionDataSource.getIsVersionOnSongbook(any(), any())).thenAnswer((_) => SynchronousFuture(false));
+    final repository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    var result = await repository.getIsVersionOnSongbook(ListType.favorites.localId, 123);
+    expect(result, isFalse);
   });
 }

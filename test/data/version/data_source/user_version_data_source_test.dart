@@ -510,4 +510,39 @@ void main() {
     expect(wasRecentDeleted, true);
     expect(recentVersions, [1, 2, 4, 5, 6]);
   });
+
+  test("when 'getIsVersionOnSongbook' is called, should return false if version is not in songbook", () async {
+    var version = getUserVersionDto();
+
+    final versions = [
+      getUserVersionDto(),
+      getUserVersionDto(),
+    ];
+
+    await isar.writeTxn(() async {
+      await isar.userVersionDtos.putAll(versions);
+    });
+
+    final isVersionOnSongbook =
+        await userVersionDataSource.getIsVersionOnSongbook(version.songbookId, version.versionId);
+    expect(isVersionOnSongbook, isFalse);
+  });
+
+  test("when 'getIsVersionOnSongbook' is called, should return true if version is already in songbook", () async {
+    var version = getUserVersionDto();
+
+    final versions = [
+      getUserVersionDto(),
+      getUserVersionDto(),
+      version,
+    ];
+
+    await isar.writeTxn(() async {
+      await isar.userVersionDtos.putAll(versions);
+    });
+
+    final isVersionOnSongbook =
+        await userVersionDataSource.getIsVersionOnSongbook(version.songbookId, version.versionId);
+    expect(isVersionOnSongbook, isTrue);
+  });
 }
