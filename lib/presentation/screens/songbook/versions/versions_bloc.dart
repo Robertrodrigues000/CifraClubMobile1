@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_list_order_type_preference.dart';
 import 'package:cifraclub/domain/preferences/use_cases/set_list_order_type_preference.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_versions_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
@@ -33,7 +34,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
   final GetOrderedVersions _getOrderedVersions;
   final DeleteVersions _deleteVersions;
   final ValidateArtistImagePreview _validateArtistImagePreview;
-
+  final GetVersionsLimitConstants _getVersionsLimitConstants;
   VersionsBloc(
     this._getSongbookStreamById,
     this._shareLink,
@@ -46,6 +47,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     this._getOrderedVersions,
     this._deleteVersions,
     this._validateArtistImagePreview,
+    this._getVersionsLimitConstants,
   ) : super(const VersionsState());
 
   Future<void> init(int? songbookId) async {
@@ -78,15 +80,19 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     ));
   }
 
+  Future<ListLimitState> getListLimitState(int songbookId) async => _getVersionsLimitState(songbookId).first;
+
   void _updateVersionLimitState(ListLimitState tabLimitState) {
     emit(state.copyWith(versionLimitState: tabLimitState));
   }
 
   Future<void> _updateProStatus(bool isPro) async {
     final versionsLimit = _getVersionsLimit(isPro);
+    final proLimit = _getVersionsLimitConstants().maxVersionsForPro;
     emit(state.copyWith(
       versionsLimit: versionsLimit,
       isPro: isPro,
+      proLimit: proLimit,
     ));
   }
 

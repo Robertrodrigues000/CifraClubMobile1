@@ -656,6 +656,7 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i162.GetVersionsLimit>(),
         gh<_i158.GetProStatusStream>(),
         gh<_i133.ValidateArtistImagePreview>(),
+        gh<_i92.GetListLimitConstants>(),
       ));
   gh.factory<_i185.SongbookMiddleware>(() => _i185.SongbookMiddleware(gh<_i183.InsertVersionDataToRecents>()));
   gh.factory<_i186.VersionOptionsBottomSheet>(() => bottomSheetModule.getVersionOptionsBottomSheet(

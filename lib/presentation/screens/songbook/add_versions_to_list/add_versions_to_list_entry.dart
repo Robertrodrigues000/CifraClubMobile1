@@ -9,9 +9,8 @@ import 'package:nav/nav.dart';
 class AddVersionsToListEntry extends ScreenEntry {
   static const name = "AddVersionsToList";
   static const songbookIdParamKey = "songbookId";
-
-  static void push(Nav nav, int songbookId) {
-    nav.push(screenName: name, params: {songbookIdParamKey: songbookId.toString()});
+  static Future<void> push(Nav nav, int songbookId) {
+    return nav.push(screenName: name, params: {songbookIdParamKey: songbookId.toString()});
   }
 
   AddVersionsToListEntry(super.params);
@@ -29,6 +28,7 @@ class AddVersionsToListEntry extends ScreenEntry {
     return BlocProvider(
       create: (context) => AddVersionsToListBloc(
         songbookId!,
+        getIt(),
         getIt(),
         getIt(),
         getIt(),

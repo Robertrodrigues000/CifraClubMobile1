@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
@@ -8,6 +9,8 @@ import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
@@ -153,7 +156,9 @@ void main() {
   testWidgets(
       "Tapping add icon should open InputDialog and create a new songbook and navigate to addCifrasToList screen",
       (widgetTester) async {
-    bloc.mockStream(const ListsState());
+    bloc.mockStream(
+      const ListsState(shouldShowLimitToast: true, listState: ListLimitState.atWarning),
+    );
     var newSongbookName = "list";
     final nav = NavMock.getDummy();
 
@@ -183,10 +188,63 @@ void main() {
     expect(find.text(newSongbookName), findsOneWidget);
 
     await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.create));
+    await widgetTester.pumpAndSettle();
     verify(() => bloc.createNewSongbook(newSongbookName)).called(1);
     verify(() => AddVersionsToListEntry.push(nav, songbookFake.id!)).called(1);
   });
 
+  testWidgets("Tapping add icon should should show LimitDialog if ListLimitState is reached", (widgetTester) async {
+    bloc.mockStream(const ListsState(listState: ListLimitState.reached, shouldShowLimitToast: false));
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<ListsBloc>.value(
+        value: bloc,
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
+      ),
+      nav: nav,
+    );
+
+    final addIconFinder = find.byWidgetPredicate((widget) =>
+        widget is SvgPicture &&
+        widget.pictureProvider is ExactAssetPicture &&
+        (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon);
+    expect(addIconFinder, findsOneWidget);
+
+    await widgetTester.tap(addIconFinder, warnIfMissed: false);
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(InputDialog), findsNothing);
+    expect(find.byType(CosmosInputField), findsNothing);
+    expect(find.byType(ListLimitDialog), findsOneWidget);
+  });
+
+  testWidgets("Tapping add icon should should show LimitDialog if ListLimitState is reached and user is pro",
+      (widgetTester) async {
+    bloc.mockStream(const ListsState(listState: ListLimitState.reached, shouldShowLimitToast: false, isPro: true));
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<ListsBloc>.value(
+        value: bloc,
+        child: ListsScreen(onTapSongbook: (_) {}, listOptionsBottomSheet: bottomSheet, isTablet: false),
+      ),
+      nav: nav,
+    );
+
+    final addIconFinder = find.byWidgetPredicate((widget) =>
+        widget is SvgPicture &&
+        widget.pictureProvider is ExactAssetPicture &&
+        (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon);
+    expect(addIconFinder, findsOneWidget);
+
+    await widgetTester.tap(addIconFinder, warnIfMissed: false);
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(InputDialog), findsNothing);
+    expect(find.byType(CosmosInputField), findsNothing);
+    expect(find.byType(ListLimitProDialog), findsOneWidget);
+  });
   testWidgets("Tapping add icon and songbook is repeated should show a dialog with information", (widgetTester) async {
     bloc.mockStream(const ListsState());
     var newSongbookName = "list";

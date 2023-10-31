@@ -29,6 +29,10 @@ abstract class _$AddVersionsToListStateCWProxy {
 
   AddVersionsToListState isHistory(bool isHistory);
 
+  AddVersionsToListState prolimit(int prolimit);
+
+  AddVersionsToListState limitThreshold(int limitThreshold);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AddVersionsToListState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -47,6 +51,8 @@ abstract class _$AddVersionsToListStateCWProxy {
     bool? isLoading,
     List<int?>? songsId,
     bool? isHistory,
+    int? prolimit,
+    int? limitThreshold,
   });
 }
 
@@ -90,6 +96,12 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
   AddVersionsToListState isHistory(bool isHistory) => this(isHistory: isHistory);
 
   @override
+  AddVersionsToListState prolimit(int prolimit) => this(prolimit: prolimit);
+
+  @override
+  AddVersionsToListState limitThreshold(int limitThreshold) => this(limitThreshold: limitThreshold);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AddVersionsToListState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -109,6 +121,8 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
     Object? isLoading = const $CopyWithPlaceholder(),
     Object? songsId = const $CopyWithPlaceholder(),
     Object? isHistory = const $CopyWithPlaceholder(),
+    Object? prolimit = const $CopyWithPlaceholder(),
+    Object? limitThreshold = const $CopyWithPlaceholder(),
   }) {
     return AddVersionsToListState(
       songbookId: songbookId == const $CopyWithPlaceholder() || songbookId == null
@@ -155,6 +169,14 @@ class _$AddVersionsToListStateCWProxyImpl implements _$AddVersionsToListStateCWP
           ? _value.isHistory
           // ignore: cast_nullable_to_non_nullable
           : isHistory as bool,
+      prolimit: prolimit == const $CopyWithPlaceholder() || prolimit == null
+          ? _value.prolimit
+          // ignore: cast_nullable_to_non_nullable
+          : prolimit as int,
+      limitThreshold: limitThreshold == const $CopyWithPlaceholder() || limitThreshold == null
+          ? _value.limitThreshold
+          // ignore: cast_nullable_to_non_nullable
+          : limitThreshold as int,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
@@ -22,6 +23,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songboo
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
+import 'package:cifraclub/presentation/widgets/limit_warning.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/foundation.dart';
@@ -89,6 +91,7 @@ void main() {
     when(() => bloc.shareLink(any(), any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.deleteVersion(any(), any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.getPreview()).thenReturn([]);
+    when(() => bloc.getListLimitState(any())).thenAnswer((_) => SynchronousFuture(ListLimitState.withinLimit));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });
 
@@ -300,7 +303,12 @@ void main() {
   testWidgets('When click in add should navigate to addVersionsToListScreen', (widgetTester) async {
     widgetTester.view.physicalSize = const Size(460, 800);
     widgetTester.view.devicePixelRatio = 1.0;
-    bloc.mockStream(VersionsState(songbook: getFakeSongbook(isPublic: true)));
+    bloc.mockStream(VersionsState(
+      songbook: getFakeSongbook(
+        isPublic: true,
+      ),
+      versionLimitState: ListLimitState.atWarning,
+    ));
 
     final nav = NavMock.getDummy();
 
@@ -329,6 +337,42 @@ void main() {
     await widgetTester.tap(finder);
 
     verify(() => AddVersionsToListEntry.push(nav, 1));
+  });
+
+  testWidgets('When click in add and ListLimitState is reached should not navigate to addVersionsToListScreen ',
+      (widgetTester) async {
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
+    bloc.mockStream(
+        VersionsState(songbook: getFakeSongbook(isPublic: true), versionLimitState: ListLimitState.reached));
+
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<VersionsBloc>.value(
+        value: bloc,
+        child: VersionsScreen(
+          isTablet: false,
+          listOptionsBottomSheet: bottomSheet,
+          songbookId: 1,
+          userId: 1,
+        ),
+      ),
+      nav: nav,
+    );
+
+    final finder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is SvgPicture &&
+          widget.pictureProvider is ExactAssetPicture &&
+          (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
+      description: 'add icon',
+    );
+    expect(finder, findsOneWidget);
+
+    await widgetTester.tap(finder);
+    await widgetTester.pumpAndSettle();
+    verifyNever(() => AddVersionsToListEntry.push(nav, 1));
   });
 
   testWidgets("When versions is empty and click in search songs should navigate to addVersionsScreen",
@@ -508,5 +552,93 @@ void main() {
     expect(find.byType(ListOperationDialog), findsNothing);
 
     verify(() => bloc.deleteVersion(any(), any())).called(1);
+  });
+
+  testWidgets(
+      'When click in add and ListLimitState is reached and user is pro should not navigate to AddVersionsToList screen ',
+      (widgetTester) async {
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
+    bloc.mockStream(
+      VersionsState(
+        isPro: true,
+        songbook: getFakeSongbook(isPublic: true),
+        versionLimitState: ListLimitState.reached,
+      ),
+    );
+
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<VersionsBloc>.value(
+        value: bloc,
+        child: VersionsScreen(
+          isTablet: false,
+          listOptionsBottomSheet: bottomSheet,
+          songbookId: 1,
+          userId: 1,
+        ),
+      ),
+      nav: nav,
+    );
+
+    final finder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is SvgPicture &&
+          widget.pictureProvider is ExactAssetPicture &&
+          (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
+      description: 'add icon',
+    );
+    expect(finder, findsOneWidget);
+
+    await widgetTester.tap(finder);
+    await widgetTester.pumpAndSettle();
+    verifyNever(() => AddVersionsToListEntry.push(nav, 1));
+  });
+
+  testWidgets(
+      'When click in add and navigate to AddVersionsToList screen when ListLimitState is not withinLimit should show limit warning snackbar',
+      (widgetTester) async {
+    widgetTester.view.physicalSize = const Size(460, 800);
+    widgetTester.view.devicePixelRatio = 1.0;
+    bloc.mockStream(
+      VersionsState(
+        isPro: false,
+        songbook: getFakeSongbook(isPublic: true),
+        versionLimitState: ListLimitState.withinLimit,
+      ),
+    );
+
+    when(() => bloc.getListLimitState(any())).thenAnswer((_) => SynchronousFuture(ListLimitState.atWarning));
+
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<VersionsBloc>.value(
+        value: bloc,
+        child: VersionsScreen(
+          isTablet: false,
+          listOptionsBottomSheet: bottomSheet,
+          songbookId: 1,
+          userId: 1,
+        ),
+      ),
+      nav: nav,
+    );
+
+    final finder = find.byWidgetPredicate(
+      (Widget widget) =>
+          widget is SvgPicture &&
+          widget.pictureProvider is ExactAssetPicture &&
+          (widget.pictureProvider as ExactAssetPicture).assetName == AppSvgs.addIcon,
+      description: 'add icon',
+    );
+    expect(finder, findsOneWidget);
+
+    await widgetTester.tap(finder);
+
+    await widgetTester.pump();
+    expect(find.byType(LimitWarning), findsOneWidget);
+    verify(() => AddVersionsToListEntry.push(nav, 1));
   });
 }

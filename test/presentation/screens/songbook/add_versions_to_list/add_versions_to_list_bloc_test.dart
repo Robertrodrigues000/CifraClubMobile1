@@ -1,8 +1,10 @@
 import 'package:async/async.dart' hide Result;
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_constants.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook_error.dart';
@@ -33,6 +35,18 @@ class _GetVersionLimitStateByCountMock extends Mock implements GetVersionLimitSt
 
 class _GetAllVersionsFromSongbookMock extends Mock implements GetAllVersionsFromSongbook {}
 
+class _GetListLimitConstantsMock extends Mock implements GetListLimitConstants {
+  _GetListLimitConstantsMock() {
+    when(call).thenReturn(
+      const ListLimitConstants(
+        maxListsForFree: 100,
+        maxListsForPro: 1000,
+        listWarningCountThreshold: 10,
+      ),
+    );
+  }
+}
+
 void main() {
   AddVersionsToListBloc getBloc({
     _GetProStatusStreamMock? getProStatusStream,
@@ -41,6 +55,7 @@ void main() {
     _InsertVersionToSongbookMock? insertVersionToSongbook,
     _GetVersionLimitStateByCountMock? getVersionLimitStateByCount,
     _GetAllVersionsFromSongbookMock? getAllVersionsFromSongbook,
+    _GetListLimitConstantsMock? getListLimitConstantsMock,
   }) =>
       AddVersionsToListBloc(
         10,
@@ -50,6 +65,7 @@ void main() {
         getVersionLimitStateByCount ?? _GetVersionLimitStateByCountMock(),
         insertVersionToSongbook ?? _InsertVersionToSongbookMock(),
         getAllVersionsFromSongbook ?? _GetAllVersionsFromSongbookMock(),
+        getListLimitConstantsMock ?? _GetListLimitConstantsMock(),
       );
 
   group("When init bloc", () {
@@ -280,11 +296,14 @@ void main() {
       when(() => insertVersionToSongbook(
           artistUrl: songSearchList.first.artistUrl,
           songUrl: songSearchList.first.songUrl,
-          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.first.songId)));
+          songbookId: 10,
+          isPro: false)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.first.songId)));
+
       when(() => insertVersionToSongbook(
           artistUrl: songSearchList.last.artistUrl,
           songUrl: songSearchList.last.songUrl,
-          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last.songId)));
+          songbookId: 10,
+          isPro: false)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last.songId)));
 
       blocTest(
         "should return count of success",
@@ -312,11 +331,18 @@ void main() {
       final songSearchList = [getFakeSongSearch(), getFakeSongSearch()];
       final insertVersionToSongbook = _InsertVersionToSongbookMock();
       when(() => insertVersionToSongbook(
-              artistUrl: songSearchList.first.artistUrl, songUrl: songSearchList.first.songUrl, songbookId: 10))
-          .thenAnswer((_) => SynchronousFuture(Err(SongbookRequestError(ServerError(statusCode: 404)))));
+            artistUrl: songSearchList.first.artistUrl,
+            songUrl: songSearchList.first.songUrl,
+            songbookId: 10,
+            isPro: false,
+          )).thenAnswer((_) => SynchronousFuture(Err(SongbookRequestError(ServerError(statusCode: 404)))));
+
       when(() => insertVersionToSongbook(
-              artistUrl: songSearchList.last.artistUrl, songUrl: songSearchList.last.songUrl, songbookId: 10))
-          .thenAnswer((_) => SynchronousFuture(Err(SongbookRequestError(ServerError(statusCode: 404)))));
+            artistUrl: songSearchList.last.artistUrl,
+            songUrl: songSearchList.last.songUrl,
+            songbookId: 10,
+            isPro: false,
+          )).thenAnswer((_) => SynchronousFuture(Err(SongbookRequestError(ServerError(statusCode: 404)))));
 
       blocTest(
         "should return count of errors",
@@ -345,12 +371,17 @@ void main() {
       final versionReponseList = [getFakeVersion(), getFakeVersion()];
       final insertVersionToSongbook = _InsertVersionToSongbookMock();
       when(() => insertVersionToSongbook(
-              artistUrl: songSearchList.first.artistUrl, songUrl: songSearchList.first.songUrl, songbookId: 10))
-          .thenAnswer((_) => SynchronousFuture(Err(SongbookRequestError(ServerError(statusCode: 404)))));
+            artistUrl: songSearchList.first.artistUrl,
+            songUrl: songSearchList.first.songUrl,
+            songbookId: 10,
+            isPro: false,
+          )).thenAnswer((_) => SynchronousFuture(Err(SongbookRequestError(ServerError(statusCode: 404)))));
       when(() => insertVersionToSongbook(
-          artistUrl: songSearchList.last.artistUrl,
-          songUrl: songSearchList.last.songUrl,
-          songbookId: 10)).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last.songId)));
+            artistUrl: songSearchList.last.artistUrl,
+            songUrl: songSearchList.last.songUrl,
+            songbookId: 10,
+            isPro: false,
+          )).thenAnswer((_) => SynchronousFuture(Ok(versionReponseList.last.songId)));
 
       blocTest(
         "should return count of success and errors",

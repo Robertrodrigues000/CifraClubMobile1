@@ -15,7 +15,7 @@ class VersionsState {
   final int versionsLimit;
   final int versionsCount;
   final ListOrderType selectedListOrderType;
-
+  final int proLimit;
   const VersionsState({
     this.versions = const [],
     this.songbook,
@@ -24,5 +24,6 @@ class VersionsState {
     this.versionsLimit = 0,
     this.versionsCount = 0,
     this.selectedListOrderType = ListOrderType.custom,
+    this.proLimit = 1000,
   });
 }

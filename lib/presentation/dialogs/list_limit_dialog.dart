@@ -61,6 +61,7 @@ class ListLimitDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             CifraClubButton(
+              onPressed: () {}, // coverage:ignore-line
               type: ButtonType.solidGreen,
               child: Text(context.text.testPro),
               //TODO: direct to pro screen

@@ -3,6 +3,8 @@ import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/logout_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
@@ -10,6 +12,8 @@ import 'package:cifraclub/presentation/screens/songbook/lists/widgets/list_limit
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
+import 'package:cifraclub/presentation/widgets/limit_warning.dart';
+import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
 import 'package:cifraclub/presentation/widgets/user_card.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
@@ -39,7 +43,7 @@ class ListsScreen extends StatefulWidget {
   State<ListsScreen> createState() => _ListsScreenState();
 }
 
-class _ListsScreenState extends State<ListsScreen> {
+class _ListsScreenState extends State<ListsScreen> with SubscriptionHolder {
   late final ListsBloc _bloc = BlocProvider.of<ListsBloc>(context);
 
   @override
@@ -54,7 +58,17 @@ class _ListsScreenState extends State<ListsScreen> {
             automaticallyImplyLeading: false,
             actions: [
               InkWell(
-                onTap: () => _createSongbook(context, _bloc),
+                onTap: () {
+                  if (state.listState == ListLimitState.reached) {
+                    if (state.isPro) {
+                      ListLimitProDialog.show(context: context, isVersionLimit: false, limitCount: state.listLimit);
+                    } else {
+                      ListLimitDialog.show(context: context, isVersionLimit: false, limitCount: state.listLimit);
+                    }
+                  } else {
+                    _createSongbook(context, _bloc);
+                  }
+                },
                 child: SizedBox(
                   height: 48,
                   width: 48,
@@ -176,9 +190,23 @@ void _createSongbook(
       switch (isValidInput) {
         case true:
           (await bloc.createNewSongbook(name)).when(
-            success: (songbook) {
+            success: (songbook) async {
               InputDialog.close(context);
-              AddVersionsToListEntry.push(Nav.of(context), songbook.id!);
+              await AddVersionsToListEntry.push(Nav.of(context), songbook.id!);
+              if (context.mounted && bloc.state.shouldShowLimitToast) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  ListLimitWarningSnackBar.getListLimitSnackBar(
+                    limit: bloc.state.listLimit,
+                    isVersionLimit: false,
+                    count: bloc.state.listCount,
+                    listLimitState: bloc.state.listState,
+                    proLimit: bloc.state.proLimit,
+                    isPro: bloc.state.isPro,
+                  ),
+                );
+
+                bloc.setShouldShowLimitToast(false);
+              }
             },
             failure: (_) {
               ScaffoldMessenger.of(widgetContext).showSnackBar(SnackBar(content: Text(context.text.listServerError)));

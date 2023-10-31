@@ -23,6 +23,10 @@ abstract class _$ListsStateCWProxy {
 
   ListsState listLimit(int listLimit);
 
+  ListsState shouldShowLimitToast(bool shouldShowLimitToast);
+
+  ListsState proLimit(int proLimit);
+
   ListsState listState(ListLimitState listState);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ListsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -40,6 +44,8 @@ abstract class _$ListsStateCWProxy {
     bool? isPro,
     int? listCount,
     int? listLimit,
+    bool? shouldShowLimitToast,
+    int? proLimit,
     ListLimitState? listState,
   });
 }
@@ -75,6 +81,12 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
   ListsState listLimit(int listLimit) => this(listLimit: listLimit);
 
   @override
+  ListsState shouldShowLimitToast(bool shouldShowLimitToast) => this(shouldShowLimitToast: shouldShowLimitToast);
+
+  @override
+  ListsState proLimit(int proLimit) => this(proLimit: proLimit);
+
+  @override
   ListsState listState(ListLimitState listState) => this(listState: listState);
 
   @override
@@ -94,6 +106,8 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
     Object? isPro = const $CopyWithPlaceholder(),
     Object? listCount = const $CopyWithPlaceholder(),
     Object? listLimit = const $CopyWithPlaceholder(),
+    Object? shouldShowLimitToast = const $CopyWithPlaceholder(),
+    Object? proLimit = const $CopyWithPlaceholder(),
     Object? listState = const $CopyWithPlaceholder(),
   }) {
     return ListsState(
@@ -129,6 +143,14 @@ class _$ListsStateCWProxyImpl implements _$ListsStateCWProxy {
           ? _value.listLimit
           // ignore: cast_nullable_to_non_nullable
           : listLimit as int,
+      shouldShowLimitToast: shouldShowLimitToast == const $CopyWithPlaceholder() || shouldShowLimitToast == null
+          ? _value.shouldShowLimitToast
+          // ignore: cast_nullable_to_non_nullable
+          : shouldShowLimitToast as bool,
+      proLimit: proLimit == const $CopyWithPlaceholder() || proLimit == null
+          ? _value.proLimit
+          // ignore: cast_nullable_to_non_nullable
+          : proLimit as int,
       listState: listState == const $CopyWithPlaceholder() || listState == null
           ? _value.listState
           // ignore: cast_nullable_to_non_nullable

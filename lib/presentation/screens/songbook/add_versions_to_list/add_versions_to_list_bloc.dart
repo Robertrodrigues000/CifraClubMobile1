@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state_by_count.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/search/models/search_models/song_search.dart';
 import 'package:cifraclub/domain/search/use_cases/search_songs.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -22,6 +23,7 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
   final GetVersionLimitStateByCount _getVersionLimitStateByCount;
   final InsertVersionToSongbook _insertVersionToSongbook;
   final GetAllVersionsFromSongbook _getAllVersionsFromSongbook;
+  final GetListLimitConstants _getListLimitConstants;
 
   AddVersionsToListBloc(
     this.songbookId,
@@ -31,6 +33,7 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
     this._getVersionLimitStateByCount,
     this._insertVersionToSongbook,
     this._getAllVersionsFromSongbook,
+    this._getListLimitConstants,
   ) : super(AddVersionsToListState(songbookId: songbookId));
 
   StreamSubscription? _getProStatusSubscription;
@@ -46,6 +49,7 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
 
   Future<void> _updateLimitState(int songbookId) async {
     final versions = await _getAllVersionsFromSongbook(songbookId);
+
     final count = versions.length;
     final songsId = versions.map((e) => e.songId).toList();
 
@@ -53,6 +57,7 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
       limitState: _getVersionLimitStateByCount(state.isPro, count),
       songsCount: count,
       songsId: songsId,
+      prolimit: _getListLimitConstants().maxListsForPro,
     ));
   }
 
@@ -140,6 +145,7 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
         songbookId: state.songbookId,
         artistUrl: song.artistUrl,
         songUrl: song.songUrl,
+        isPro: state.isPro,
       );
 
       result.when(

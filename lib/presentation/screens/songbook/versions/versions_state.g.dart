@@ -21,6 +21,8 @@ abstract class _$VersionsStateCWProxy {
 
   VersionsState selectedListOrderType(ListOrderType selectedListOrderType);
 
+  VersionsState proLimit(int proLimit);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -35,6 +37,7 @@ abstract class _$VersionsStateCWProxy {
     int? versionsLimit,
     int? versionsCount,
     ListOrderType? selectedListOrderType,
+    int? proLimit,
   });
 }
 
@@ -67,6 +70,9 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
       this(selectedListOrderType: selectedListOrderType);
 
   @override
+  VersionsState proLimit(int proLimit) => this(proLimit: proLimit);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `VersionsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -82,6 +88,7 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
     Object? versionsLimit = const $CopyWithPlaceholder(),
     Object? versionsCount = const $CopyWithPlaceholder(),
     Object? selectedListOrderType = const $CopyWithPlaceholder(),
+    Object? proLimit = const $CopyWithPlaceholder(),
   }) {
     return VersionsState(
       versions: versions == const $CopyWithPlaceholder() || versions == null
@@ -112,6 +119,10 @@ class _$VersionsStateCWProxyImpl implements _$VersionsStateCWProxy {
           ? _value.selectedListOrderType
           // ignore: cast_nullable_to_non_nullable
           : selectedListOrderType as ListOrderType,
+      proLimit: proLimit == const $CopyWithPlaceholder() || proLimit == null
+          ? _value.proLimit
+          // ignore: cast_nullable_to_non_nullable
+          : proLimit as int,
     );
   }
 }

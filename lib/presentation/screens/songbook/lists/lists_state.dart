@@ -16,7 +16,9 @@ class ListsState {
   final bool isPro;
   final int listCount;
   final int listLimit;
+  final int proLimit;
   final ListLimitState listState;
+  final bool shouldShowLimitToast;
 
   const ListsState({
     this.userLists = const [],
@@ -27,6 +29,23 @@ class ListsState {
     this.isPro = false,
     this.listCount = 0,
     this.listLimit = 10,
+    this.shouldShowLimitToast = false,
+    this.proLimit = 100,
     this.listState = ListLimitState.withinLimit,
+  });
+}
+
+class ListLimitWarning {
+  final int? count;
+  final int limit;
+  final int proLimit;
+  final ListLimitState listState;
+  final bool isVersionLimit;
+  ListLimitWarning({
+    this.count,
+    required this.limit,
+    required this.proLimit,
+    required this.listState,
+    required this.isVersionLimit,
   });
 }

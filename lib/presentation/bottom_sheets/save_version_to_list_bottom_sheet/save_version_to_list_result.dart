@@ -1,7 +1,8 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
 
-sealed class SaveToListResult {}
+abstract class SaveToListResult {}
 
 class VersionListLimitStateReached implements SaveToListResult {
   final int versionsLimit;
@@ -12,15 +13,20 @@ class VersionListLimitStateReached implements SaveToListResult {
 class ListLimitStateReached implements SaveToListResult {
   final int listLimit;
 
-  ListLimitStateReached({required this.listLimit});
+  const ListLimitStateReached({required this.listLimit});
 }
 
 class SaveVersionToListCompleted implements SaveToListResult {
   final String name;
-  final ListLimitState versionLimitState;
-  final ListLimitState listLimitState;
-
-  const SaveVersionToListCompleted({required this.name, required this.versionLimitState, required this.listLimitState});
+  final bool showListsLimitWarning;
+  final ListLimitWarning? limitWarning;
+  final bool isNewList;
+  const SaveVersionToListCompleted({
+    required this.name,
+    required this.isNewList,
+    required this.showListsLimitWarning,
+    this.limitWarning,
+  });
 }
 
 class SaveToListError implements SaveToListResult {

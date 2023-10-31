@@ -1,9 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_constants.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
@@ -70,6 +72,16 @@ class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {
   }
 }
 
+class _GetListLimitConstantsMock extends Mock implements GetListLimitConstants {
+  _GetListLimitConstantsMock() {
+    when(call).thenReturn(const ListLimitConstants(
+      maxListsForFree: 10,
+      maxListsForPro: 1000,
+      listWarningCountThreshold: 2,
+    ));
+  }
+}
+
 void main() {
   SaveVersionToListBottomSheetBloc getBloc({
     _GetAllUserSongbooksMock? getAllUserSongbooksMock,
@@ -82,6 +94,7 @@ void main() {
     _GetProStatusStreamMock? getProStatusStreamMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
     _ValidateArtistImagePreviewMock? validateArtistImagePreviewMock,
+    _GetListLimitConstantsMock? getListLimitConstants,
   }) =>
       SaveVersionToListBottomSheetBloc(
         getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
@@ -94,6 +107,7 @@ void main() {
         getVersionsLimitMock ?? _GetVersionsLimitMock(),
         getProStatusStreamMock ?? _GetProStatusStreamMock(),
         validateArtistImagePreviewMock ?? _ValidateArtistImagePreviewMock(),
+        getListLimitConstants ?? _GetListLimitConstantsMock(),
         "",
         "",
       );
@@ -160,7 +174,7 @@ void main() {
     final getListLimitState = _GetListLimitStateStreamMock(listState: ListLimitState.reached);
     final getListLimit = _GetListLimitMock();
 
-    when(() => getListLimit(any())).thenReturn(100);
+    when(() => getListLimit.call(any())).thenAnswer((_) => 10);
 
     when(() => insertUserSongbook(name: any(named: "name")))
         .thenAnswer((_) => SynchronousFuture(Ok(getFakeSongbook())));
@@ -175,8 +189,27 @@ void main() {
     final bloc = getBloc(
         insertUserSongbookMock: insertUserSongbook,
         getListLimitStateMock: getListLimitState,
-        getListLimitMock: getListLimit,
-        insertVersionToSongbookMock: insertVersionToSongbook);
+        insertVersionToSongbookMock: insertVersionToSongbook,
+        getListLimitMock: getListLimit);
+    final result = await bloc.createNewSongbook("testando");
+
+    verify(getListLimitState.call).called(1);
+    expect(result, isA<ListLimitStateReached>());
+  });
+
+  test("When `createNewSongbook` is called and fails, should return error result", () async {
+    final insertUserSongbook = _InsertUserSongbookMock();
+    final getListLimitState = _GetListLimitStateStreamMock(listState: ListLimitState.withinLimit);
+    final getListLimit = _GetListLimitMock();
+    final insertVersionToSongbook = _InsertVersionToSongbookMock();
+    when(() => getListLimit.call(any())).thenAnswer((_) => 10);
+
+    when(() => insertUserSongbook(name: any(named: "name"))).thenAnswer((_) => SynchronousFuture(Err(ServerError())));
+
+    final bloc = getBloc(
+        insertUserSongbookMock: insertUserSongbook,
+        getListLimitStateMock: getListLimitState,
+        getListLimitMock: getListLimit);
     final result = await bloc.createNewSongbook("testando");
 
     verify(getListLimitState.call).called(1);
@@ -185,7 +218,7 @@ void main() {
         artistUrl: any(named: "artistUrl"),
         songUrl: any(named: "songUrl"),
         isPro: any(named: "isPro")));
-    expect(result, isA<ListLimitStateReached>());
+    expect(result, isA<SaveToListError>());
   });
 
   test("When `addSongToSongbook` is called, should call use case", () async {
@@ -198,7 +231,7 @@ void main() {
         isPro: any(named: "isPro"))).thenAnswer((_) => SynchronousFuture(const Ok(1)));
 
     final bloc = getBloc(insertVersionToSongbookMock: insertVersionToSongbook);
-    await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
+    await bloc.addSongToSongbook(songbookId: 1, name: "Testando", isNewList: true);
 
     verify(() => insertVersionToSongbook.call(
         songbookId: any(named: "songbookId"),
@@ -222,11 +255,46 @@ void main() {
 
     final bloc = getBloc(insertVersionToSongbookMock: insertVersionToSongbook, getVersionsLimitMock: getVersionsLimit);
 
-    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
+    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando", isNewList: false);
+
     expect(result, isA<VersionListLimitStateReached>());
   });
 
-  test("When `addSongToSongbook` is called and version is already on list, should return correct result", () async {
+  test("When `addSongToSongbook` is called and versions limit state is atWarning, should return correct result",
+      () async {
+    final insertVersionToSongbook = _InsertVersionToSongbookMock();
+    final getVersionsLimitState = _GetVersionsLimitStateMock(listState: ListLimitState.atWarning);
+    final getVersionsLimit = _GetVersionsLimitMock();
+
+    when(() => insertVersionToSongbook(
+        songbookId: any(named: "songbookId"),
+        artistUrl: any(named: "artistUrl"),
+        songUrl: any(named: "songUrl"),
+        isPro: any(named: "isPro"))).thenAnswer((_) => SynchronousFuture(const Ok(1)));
+
+    when(() => getVersionsLimit(any())).thenAnswer((_) => 100);
+
+    final bloc = getBloc(
+        getVersionsLimitStateMock: getVersionsLimitState,
+        insertVersionToSongbookMock: insertVersionToSongbook,
+        getVersionsLimitMock: getVersionsLimit);
+
+    final result = await bloc.addSongToSongbook(
+      songbookId: 1,
+      name: "Testando",
+      isNewList: false,
+    );
+
+    verify(() => getVersionsLimitState.call(any())).called(1);
+    expect(
+        result,
+        isA<SaveVersionToListCompleted>()
+            .having((result) => result.showListsLimitWarning, "shouldShowLimitToast", true)
+            .having((result) => result.limitWarning?.limit, "limit", 10)
+            .having((result) => result.limitWarning?.proLimit, "proLimit", 1000));
+  });
+
+  test("When `addSongToSongbook` is called and songbookId is null, should return error result", () async {
     final insertVersionToSongbook = _InsertVersionToSongbookMock();
     final getVersionsLimit = _GetVersionsLimitMock();
 
@@ -240,14 +308,14 @@ void main() {
 
     final bloc = getBloc(insertVersionToSongbookMock: insertVersionToSongbook, getVersionsLimitMock: getVersionsLimit);
 
-    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
+    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando", isNewList: false);
     expect(result, isA<VersionIsAlreadyOnListError>());
   });
 
   test("When `addSongToSongbook` is called and songbookId is null, should return error result", () async {
     final bloc = getBloc();
 
-    final result = await bloc.addSongToSongbook(songbookId: null, name: "Testando");
+    final result = await bloc.addSongToSongbook(songbookId: null, name: "Testando", isNewList: true);
 
     expect(result, isA<SaveToListError>());
   });
@@ -265,7 +333,7 @@ void main() {
 
     final bloc =
         getBloc(getVersionsLimitStateMock: getVersionsLimitState, insertVersionToSongbookMock: insertVersionToSongbook);
-    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando");
+    final result = await bloc.addSongToSongbook(songbookId: 1, name: "Testando", isNewList: false);
 
     verify(() => insertVersionToSongbook.call(
         songbookId: any(named: "songbookId"),

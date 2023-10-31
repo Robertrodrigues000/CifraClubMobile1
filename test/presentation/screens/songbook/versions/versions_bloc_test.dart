@@ -1,10 +1,12 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/domain/list_limit/models/versions_limit_constants.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_list_order_type_preference.dart';
 import 'package:cifraclub/domain/preferences/use_cases/set_list_order_type_preference.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_versions_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
@@ -31,7 +33,11 @@ class _ShareLinkMock extends Mock implements ShareLink {}
 
 class _GetVersionsStreamBySongbookIdMock extends Mock implements GetVersionsStreamBySongbookId {}
 
-class _GetVersionsLimitStateMock extends Mock implements GetVersionsLimitState {}
+class _GetVersionsLimitStateMock extends Mock implements GetVersionsLimitState {
+  _GetVersionsLimitStateMock({ListLimitState listState = ListLimitState.withinLimit}) {
+    when(() => call(any())).thenAnswer((_) => BehaviorSubject.seeded(listState));
+  }
+}
 
 class _GetProStatusStreamMock extends Mock implements GetProStatusStream {}
 
@@ -51,6 +57,18 @@ class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImag
   }
 }
 
+class _GetVersionsLimitConstantsMock extends Mock implements GetVersionsLimitConstants {
+  _GetVersionsLimitConstantsMock() {
+    when(call).thenReturn(
+      const VersionsLimitConstants(
+        maxVersionsForFree: 100,
+        maxVersionsForPro: 1000,
+        versionsWarningCountThreshold: 10,
+      ),
+    );
+  }
+}
+
 void main() {
   VersionsBloc getBloc({
     _GetSongbookStreamByIdMock? getSongbookStreamByIdMock,
@@ -64,6 +82,7 @@ void main() {
     _GetOrderedVersionsMock? getOrderedVersions,
     _DeleteVersions? deleteVersions,
     _ValidateArtistImagePreviewMock? validateArtistImagePreview,
+    _GetVersionsLimitConstantsMock? getListLimitConstantsMock,
   }) =>
       VersionsBloc(
         getSongbookStreamByIdMock ?? _GetSongbookStreamByIdMock(),
@@ -77,6 +96,7 @@ void main() {
         getOrderedVersions ?? _GetOrderedVersionsMock(),
         deleteVersions ?? _DeleteVersions(),
         validateArtistImagePreview ?? _ValidateArtistImagePreviewMock(),
+        getListLimitConstantsMock ?? _GetVersionsLimitConstantsMock(),
       );
 
   setUpAll(() {
@@ -153,7 +173,7 @@ void main() {
           getSongbookStreamByIdMock: getSongbookStreamById,
           getProStatusStreamMock: getProStatus,
           getVersionsStreamBySongbookIdMock: getVersionsStream,
-          getTabsLimitStateMock: getTabsLimitState,
+          getTabsLimitStateMock: _GetVersionsLimitStateMock(listState: ListLimitState.atWarning),
           getTabsLimitMock: getTabsLimit,
           getOrderFilterPreferences: getOrderFilterPreferences,
           getOrderedVersions: getOrderedVersions,
@@ -173,7 +193,7 @@ void main() {
           isA<VersionsState>()
               .having((state) => state.selectedListOrderType, "ordered capsule", ListOrderType.custom)
               .having((state) => state.versions.length, "ordered version list", versions.length),
-          isA<VersionsState>().having((state) => state.versionLimitState, "limit state", ListLimitState.withinLimit),
+          isA<VersionsState>().having((state) => state.versionLimitState, "limit state", ListLimitState.atWarning),
           isA<VersionsState>().having((state) => state.songbook, "new songbook", newSongbook)
         ],
       );
@@ -375,5 +395,18 @@ void main() {
         verifyNever(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions")));
       },
     );
+  });
+
+  test("When 'getListLimitState' is called should return correct result", () async {
+    final getTabsLimitState = _GetVersionsLimitStateMock();
+
+    when(() => getTabsLimitState(any())).thenAnswer((_) => BehaviorSubject.seeded(ListLimitState.withinLimit));
+    final bloc = getBloc(
+      getTabsLimitStateMock: getTabsLimitState,
+    );
+    final limitState = await bloc.getListLimitState(1);
+
+    expect(limitState, ListLimitState.withinLimit);
+    verify(() => getTabsLimitState.call(any())).called(1);
   });
 }

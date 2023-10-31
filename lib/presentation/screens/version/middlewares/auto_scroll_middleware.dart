@@ -33,7 +33,7 @@ class AutoScrollMiddleware implements VersionMiddleware {
   void _start({required double speedFactor, required ActionEmitter addAction}) {
     assert(subscriptions.isEmpty);
     _getAutoScrollStream(speedFactor: speedFactor, screenDensity: _screenDensity).listen((delta) {
-      addAction!(OnAutoScrollTickAction(delta));
+      addAction(OnAutoScrollTickAction(delta));
       if (nextSpeedFactor != null) {
         _stop();
         _start(speedFactor: nextSpeedFactor!, addAction: addAction);

@@ -1,3 +1,6 @@
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
@@ -5,12 +8,14 @@ import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/wid
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/count_selected_versions.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/version_limit_card.dart';
+import 'package:cifraclub/presentation/widgets/limit_warning.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../../../shared_mocks/domain/search/models/search_mock.dart';
 import '../../../../test_helpers/app_localizations.dart';
@@ -68,13 +73,14 @@ void main() {
     final song = getFakeSongSearch();
 
     bloc.mockStream(AddVersionsToListState(songs: [song], songbookId: 1));
-
-    await widgetTester.pumpWidgetWithWrapper(
-      BlocProvider<AddVersionsToListBloc>.value(
-        value: bloc,
-        child: const AddVersionsToListScreen(),
-      ),
-    );
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AddVersionsToListBloc>.value(
+          value: bloc,
+          child: const AddVersionsToListScreen(),
+        ),
+      );
+    });
 
     await widgetTester.tap(find.byType(AddVersionTile).first);
 
@@ -197,5 +203,83 @@ void main() {
 
     expect(find.text(appTextEn.searchNotFound), findsOneWidget);
     expect(find.text(appTextEn.searchNewTerm), findsOneWidget);
+  });
+
+  testWidgets("When click to add a song and limit state is reached should show ListLimitDialog", (widgetTester) async {
+    final song = getFakeSongSearch();
+
+    bloc.mockStream(AddVersionsToListState(
+      songs: [song],
+      songbookId: 1,
+      limitState: ListLimitState.reached,
+      songsCount: 10,
+      versionsLimit: 10,
+    ));
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AddVersionsToListBloc>.value(
+          value: bloc,
+          child: const AddVersionsToListScreen(),
+        ),
+      );
+    });
+
+    await widgetTester.tap(find.byType(AddVersionTile).first);
+    await widgetTester.pump();
+    expect(find.byType(ListLimitDialog), findsOneWidget);
+    verifyNever(() => bloc.addOrRemoveVersion(song));
+  });
+
+  testWidgets("When click to add a song and limit state is reached and user is pro should show ListLimitProDialog",
+      (widgetTester) async {
+    final song = getFakeSongSearch();
+
+    bloc.mockStream(AddVersionsToListState(
+      songs: [song],
+      songbookId: 1,
+      limitState: ListLimitState.reached,
+      songsCount: 10,
+      versionsLimit: 10,
+      isPro: true,
+    ));
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AddVersionsToListBloc>.value(
+          value: bloc,
+          child: const AddVersionsToListScreen(),
+        ),
+      );
+    });
+
+    await widgetTester.tap(find.byType(AddVersionTile).first);
+    await widgetTester.pump();
+    expect(find.byType(ListLimitProDialog), findsOneWidget);
+    verifyNever(() => bloc.addOrRemoveVersion(song));
+  });
+
+  testWidgets("When click to add a song and limit state change to reached should show snackbar", (widgetTester) async {
+    final song = getFakeSongSearch();
+
+    bloc.mockStream(AddVersionsToListState(
+      songs: [song],
+      songbookId: 1,
+      limitState: ListLimitState.reached,
+      songsCount: 9,
+      versionsLimit: 10,
+      isPro: true,
+    ));
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<AddVersionsToListBloc>.value(
+          value: bloc,
+          child: const AddVersionsToListScreen(),
+        ),
+      );
+    });
+
+    await widgetTester.tap(find.byType(AddVersionTile).first);
+    await widgetTester.pump();
+    expect(find.byType(LimitWarning), findsOneWidget);
+    verify(() => bloc.addOrRemoveVersion(song)).called(1);
   });
 }

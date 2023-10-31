@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
@@ -35,7 +36,7 @@ class ListsBloc extends Cubit<ListsState> {
   final GetProStatusStream _getProStatusStream;
   final ValidateSongbookName _validateSongbookName;
   final ValidateArtistImagePreview _validateArtistImagePreview;
-
+  final GetListLimitConstants _getListLimitConstants;
   ListsBloc(
     this._getListLimitState,
     this._getTotalSongbooks,
@@ -50,6 +51,7 @@ class ListsBloc extends Cubit<ListsState> {
     this._getProStatusStream,
     this._validateSongbookName,
     this._validateArtistImagePreview,
+    this._getListLimitConstants,
   ) : super(const ListsState());
 
   StreamSubscription<List<Songbook>>? _songbooksSubscription;
@@ -69,7 +71,12 @@ class ListsBloc extends Cubit<ListsState> {
 
   Future<void> initListLimitStreams() async {
     _listLimitStateSubscription = _getListLimitState().listen((listState) {
-      emit(state.copyWith(listState: listState));
+      if (listState != ListLimitState.withinLimit) {
+        final proLimit = _getListLimitConstants().maxListsForPro;
+        emit(state.copyWith(proLimit: proLimit, shouldShowLimitToast: true, listState: listState));
+      } else {
+        emit(state.copyWith(listState: listState));
+      }
     });
 
     _totalSongbooksSubscription = _getTotalSongbooks().listen((total) {
@@ -129,6 +136,8 @@ class ListsBloc extends Cubit<ListsState> {
   }
 
   List<String> validatePreview(List<String?> preview) => _validateArtistImagePreview(preview);
+
+  void setShouldShowLimitToast(bool value) => emit(state.copyWith(shouldShowLimitToast: value));
 
   @override
   Future<void> close() {

@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
@@ -21,6 +22,7 @@ import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_lists.dart';
+import 'package:cifraclub/presentation/widgets/limit_warning.dart';
 import 'package:cifraclub/presentation/widgets/selectable_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +38,7 @@ class SaveVersionToListBottomSheet {
   final GetVersionsLimit _getVersionsLimit;
   final GetProStatusStream _getProStatusStream;
   final ValidateArtistImagePreview _validateArtistImagePreview;
+  final GetListLimitConstants _getListLimitConstants;
 
   SaveVersionToListBottomSheet(
     this._getAllUserSongbooks,
@@ -48,6 +51,7 @@ class SaveVersionToListBottomSheet {
     this._getVersionsLimit,
     this._getProStatusStream,
     this._validateArtistImagePreview,
+    this._getListLimitConstants,
   );
 
   // coverage:ignore-start
@@ -71,6 +75,7 @@ class SaveVersionToListBottomSheet {
               _getVersionsLimit,
               _getProStatusStream,
               _validateArtistImagePreview,
+              _getListLimitConstants,
               artistUrl,
               songUrl)
         ..init(),
@@ -84,7 +89,7 @@ class SaveVersionToListBottomSheet {
   ) {
     final controller = ScrollController();
 
-    return DefaultBottomSheet.showBottomSheet<SaveToListResult>(
+    return DefaultBottomSheet.showBottomSheet<void>(
         child: BlocProvider(
           create: (_) => bloc,
           child: BlocBuilder<SaveVersionToListBottomSheetBloc, SaveVersionToListState>(
@@ -141,8 +146,8 @@ class SaveVersionToListBottomSheet {
                               },
                             );
                           } else {
-                            handleResult(screenContext,
-                                VersionListLimitStateReached(versionsLimit: bloc.getListLimit()), state.isPro);
+                            handleResult(
+                                screenContext, ListLimitStateReached(listLimit: bloc.getListLimit()), state.isPro);
                           }
                         },
                         icon: AppSvgs.newSongbookIcon,
@@ -156,6 +161,7 @@ class SaveVersionToListBottomSheet {
                           final result = await bloc.addSongToSongbook(
                             songbookId: songbook.id,
                             name: ListType.getListTitle(context, songbook),
+                            isNewList: false,
                           );
 
                           if (screenContext.mounted) {
@@ -176,7 +182,8 @@ class SaveVersionToListBottomSheet {
                       lists: state.userLists,
                       onTap: (songbook) async {
                         DefaultBottomSheet.close(context);
-                        final result = await bloc.addSongToSongbook(songbookId: songbook.id, name: songbook.name);
+                        final result = await bloc.addSongToSongbook(
+                            songbookId: songbook.id, name: songbook.name, isNewList: false);
 
                         if (screenContext.mounted) {
                           handleResult(screenContext, result, state.isPro);
@@ -206,32 +213,34 @@ class SaveVersionToListBottomSheet {
             : ListLimitDialog.show(context: context, isVersionLimit: false, limitCount: result.listLimit);
       case SaveVersionToListCompleted():
         if (context.mounted) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(context.text.saveVersionToListMessage(result.name))));
-          _showLimitWarningSnackBar(context, result.listLimitState, isPro, result.versionLimitState);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              context.text.saveVersionToListMessage(result.name),
+            ),
+          ));
+          if (result.showListsLimitWarning) {
+            if (result.isNewList && result.limitWarning?.isVersionLimit == false ||
+                result.limitWarning?.isVersionLimit == true) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                ListLimitWarningSnackBar.getListLimitSnackBar(
+                    limit: result.limitWarning!.limit,
+                    isVersionLimit: result.limitWarning?.isVersionLimit ?? false,
+                    count: result.limitWarning?.count ?? 0,
+                    listLimitState: result.limitWarning!.listState,
+                    proLimit: result.limitWarning!.proLimit,
+                    isPro: isPro),
+              );
+            }
+          }
         }
       case SaveToListError():
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.errorListSong)));
-          _showLimitWarningSnackBar(context, result.listLimitState, isPro);
         }
       case VersionIsAlreadyOnListError():
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.repeatedSongError)));
         }
-    }
-  }
-
-  void _showLimitWarningSnackBar(
-    BuildContext context,
-    ListLimitState? listLimitState,
-    bool isPro, [
-    ListLimitState? versionLimitState,
-  ]) {
-    if (versionLimitState == ListLimitState.atWarning && !isPro) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.listLimitTitle)));
-    } else if (listLimitState == ListLimitState.atWarning && !isPro) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.listLimitProDescription1)));
     }
   }
 }

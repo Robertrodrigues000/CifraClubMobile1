@@ -267,6 +267,48 @@
     "newVersion": "Nova Versão",
     "identifyMusic": "Identificar música",
     "createListButtonText": "Criar lista",
+    "listLimitReached": "Você atingiu o limite de {limit} {listType}. Quer expandir para {proLimit}? Faça parte do Cifra Club Pro :) ",
+    "listLimitReachedPro": "Ops! Você atingiu o seu limite de listas :(",
+    "versionsLimitReachedPro": "Ops! Você atingiu o seu limite de cifras nesta lista :(",
+    
+    "@listLimitReached": {
+        "placeholders": {
+            "limit" : {
+                "type": "int",
+                "example": "10"
+            },
+            "proLimit" : {
+                "type": "int",
+                "example": "1000"
+            },
+           "listType":{
+                "type":"String",
+                "example":"cifras"
+            }
+            
+        }
+    },
+     "listLimitWarning": "Você está próximo de atingir o limite de {limit} {listType}. Quer expandir para {proLimit}?",
+     "versionsLimitWarningPro" : "Ops! Você está próximo de atingir o seu limite de cifras inseridas nesta lista :(",
+      "listLimitWarningPro": "Ops! Você está próximo de atingir o seu limite de listas :(",
+    "@listLimitWarning": {
+        "placeholders": {
+            "limit" : {
+                "type": "int",
+                "example": "10"
+            },
+            "proLimit" : {
+                "type": "int",
+                "example": "1000"
+            },
+            "listType":{
+                "type":"string",
+                "example":"cifras"
+            }
+            
+        }
+    },
+     "joinCifraClubPro":"Faça parte do Cifra Club Pro :)",
     "version": "Versão",
 
     "scroll": "Rolagem",

@@ -1,9 +1,12 @@
+import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/constants/app_urls.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
+import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_version_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
@@ -11,6 +14,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songboo
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
+import 'package:cifraclub/presentation/widgets/limit_warning.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
@@ -132,7 +136,32 @@ class _VersionsScreenState extends State<VersionsScreen> {
                   );
                 }),
               InkWell(
-                onTap: () => AddVersionsToListEntry.push(Nav.of(context), widget.songbookId ?? 0),
+                onTap: () async {
+                  if (state.versionLimitState == ListLimitState.reached) {
+                    if (state.isPro) {
+                      ListLimitProDialog.show(context: context, isVersionLimit: true, limitCount: state.versionsLimit);
+                    } else {
+                      ListLimitDialog.show(context: context, isVersionLimit: true, limitCount: state.versionsLimit);
+                    }
+                  } else {
+                    await AddVersionsToListEntry.push(Nav.of(context), widget.songbookId ?? 0);
+                    final versionsLimitState = await _bloc.getListLimitState(widget.songbookId!);
+                    if (context.mounted &&
+                        versionsLimitState != ListLimitState.withinLimit &&
+                        versionsLimitState != state.versionLimitState) {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        ListLimitWarningSnackBar.getListLimitSnackBar(
+                            limit: state.versionsLimit,
+                            isVersionLimit: true,
+                            count: state.versionsCount,
+                            listLimitState: versionsLimitState,
+                            proLimit: state.proLimit,
+                            isPro: state.isPro),
+                      );
+                    }
+                  }
+                },
                 child: SizedBox(
                   height: 48,
                   width: 48,

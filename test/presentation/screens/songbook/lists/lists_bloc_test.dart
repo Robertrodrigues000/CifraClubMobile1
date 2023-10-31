@@ -1,7 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:cifraclub/domain/list_limit/models/list_limit_constants.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_total_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -110,6 +112,16 @@ class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImag
   }
 }
 
+class _GetListLimitConstantsMock extends Mock implements GetListLimitConstants {
+  _GetListLimitConstantsMock() {
+    when(call).thenReturn(const ListLimitConstants(
+      maxListsForFree: 10,
+      maxListsForPro: 1000,
+      listWarningCountThreshold: 2,
+    ));
+  }
+}
+
 void main() {
   ListsBloc getBloc({
     _GetListLimitStateStreamMock? getListLimitStateMock,
@@ -125,21 +137,24 @@ void main() {
     _GetProStatusStreamMock? getProStatusStreamMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
     _ValidateArtistImagePreviewMock? validateArtistImagePreview,
+    _GetListLimitConstantsMock? getListLimitConstantsMock,
   }) =>
       ListsBloc(
-          getListLimitStateMock ?? _GetListLimitStateStreamMock(),
-          getTotalSongbooksMock ?? _GetTotalSongbooksStreamMock(),
-          insertUserSongbookMock ?? _InsertUserSongbookMock(),
-          getListLimitMock ?? _GetListLimitMock(),
-          getCredentialStreamMock ?? _GetCredentialStreamMock(),
-          logoutMock ?? _LogoutMock(),
-          openLoginPageMock ?? _OpenLoginPageMock(),
-          openUserProfileMock ?? _OpenUserProfileMock(),
-          refreshAllSongbooksMock ?? _RefreshAllSongbooksMock(Err(ConnectionError())),
-          getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
-          getProStatusStreamMock ?? _GetProStatusStreamMock(),
-          validateSongbookNameMock ?? _ValidateSongbookNameMock(),
-          validateArtistImagePreview ?? _ValidateArtistImagePreviewMock());
+        getListLimitStateMock ?? _GetListLimitStateStreamMock(),
+        getTotalSongbooksMock ?? _GetTotalSongbooksStreamMock(),
+        insertUserSongbookMock ?? _InsertUserSongbookMock(),
+        getListLimitMock ?? _GetListLimitMock(),
+        getCredentialStreamMock ?? _GetCredentialStreamMock(),
+        logoutMock ?? _LogoutMock(),
+        openLoginPageMock ?? _OpenLoginPageMock(),
+        openUserProfileMock ?? _OpenUserProfileMock(),
+        refreshAllSongbooksMock ?? _RefreshAllSongbooksMock(Err(ConnectionError())),
+        getAllUserSongbooksMock ?? _GetAllUserSongbooksMock([]),
+        getProStatusStreamMock ?? _GetProStatusStreamMock(),
+        validateSongbookNameMock ?? _ValidateSongbookNameMock(),
+        validateArtistImagePreview ?? _ValidateArtistImagePreviewMock(),
+        getListLimitConstantsMock ?? _GetListLimitConstantsMock(),
+      );
 
   test("When logout should call 'Logout' use case", () async {
     final logout = _LogoutMock.newDummy();
@@ -284,5 +299,12 @@ void main() {
     final result = bloc.validatePreview(["image"]);
 
     expect(result, ["https://solr.co/image"]);
+  });
+
+  test("When `setShouldShowLimitToast` is called should update state with bew value", () async {
+    final bloc = getBloc();
+    bloc.setShouldShowLimitToast(true);
+
+    expect(bloc.state.shouldShowLimitToast, true);
   });
 }

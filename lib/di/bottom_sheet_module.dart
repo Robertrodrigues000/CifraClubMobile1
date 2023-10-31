@@ -5,6 +5,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
@@ -60,18 +61,21 @@ abstract class BottomSheetModule {
     final GetVersionsLimit getVersionsLimit,
     final GetProStatusStream getProStatusStream,
     final ValidateArtistImagePreview validateArtistImagePreview,
+    final GetListLimitConstants getListLimitConstants,
   ) =>
       SaveVersionToListBottomSheet(
-          getAllUserSongbooks,
-          insertUserSongbook,
-          getListLimitState,
-          getVersionsLimitState,
-          insertVersionToSongbook,
-          validateSongbookName,
-          getListLimit,
-          getVersionsLimit,
-          getProStatusStream,
-          validateArtistImagePreview);
+        getAllUserSongbooks,
+        insertUserSongbook,
+        getListLimitState,
+        getVersionsLimitState,
+        insertVersionToSongbook,
+        validateSongbookName,
+        getListLimit,
+        getVersionsLimit,
+        getProStatusStream,
+        validateArtistImagePreview,
+        getListLimitConstants,
+      );
 
   VersionOptionsBottomSheet getVersionOptionsBottomSheet(
     final SaveVersionToListBottomSheet saveToListBottomSheet,

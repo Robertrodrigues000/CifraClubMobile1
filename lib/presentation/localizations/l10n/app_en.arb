@@ -325,6 +325,46 @@
     "newVersion": "New Version",
     "identifyMusic": "Identify music",
     "createListButtonText": "Create list",
+    "listLimitReached": "You have reached the limit of {listType}. Want to expand to {proLimit}? Join Cifra Club Pro :) ",
+    "listLimitReachedPro": "Oops! You've reached your list limit :(",
+    "versionsLimitReachedPro": "Oops! You've reached your song limit in this list :(",
+    "@listLimitReached": {
+        "placeholders": {
+            "limit" : {
+                "type": "int",
+                "example": "10"
+            },
+            "proLimit" : {
+                "type": "int",
+                "example": "1000"
+            },
+            "listType":{
+                "type":"String",
+                "example":"cifras"
+            }
+        }
+    },
+    "listLimitWarning": "You are close to reaching the limit of {limit} {listType}. Want to expand to {proLimit}?",
+    "versionsLimitWarningPro": "Oops! You're close to reaching your song limit in this list :(",
+    "listLimitWarningPro": "Oops! You're close to reaching your list limit :(",
+    "@listLimitWarning": {
+        "placeholders": {
+            "limit" : {
+                "type": "int",
+                "example": "10"
+            },
+            "proLimit" : {
+                "type": "int",
+                "example": "1000"
+            },
+            "listType":{
+                "type":"String",
+                "example":"cifras"
+            }
+            
+        }
+    },
+    "joinCifraClubPro":"Join Cifra Club Pro :)",
     "version": "Version",
 
     "scroll": "Scroll",

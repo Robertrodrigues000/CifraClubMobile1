@@ -17,17 +17,22 @@ class AddVersionsToListState {
   final bool isLoading;
   final List<int?> songsId;
   final bool isHistory;
+  final int prolimit;
+  final int limitThreshold;
 
-  const AddVersionsToListState(
-      {required this.songbookId,
-      this.songs = const [],
-      this.isPro = false,
-      this.versionsLimit = 0,
-      this.songsCount = 0,
-      this.savedSongsCount = 0,
-      this.limitState = ListLimitState.withinLimit,
-      this.selectedSongs = const [],
-      this.isLoading = false,
-      this.songsId = const [],
-      this.isHistory = true});
+  const AddVersionsToListState({
+    required this.songbookId,
+    this.songs = const [],
+    this.isPro = false,
+    this.versionsLimit = 100,
+    this.songsCount = 0,
+    this.savedSongsCount = 0,
+    this.limitState = ListLimitState.withinLimit,
+    this.selectedSongs = const [],
+    this.isLoading = false,
+    this.songsId = const [],
+    this.isHistory = true,
+    this.prolimit = 1000,
+    this.limitThreshold = 10,
+  });
 }

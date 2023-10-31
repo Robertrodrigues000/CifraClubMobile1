@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit_state.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
+import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
@@ -18,6 +19,7 @@ import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/list_operation_dialog.dart';
+import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/special_lists.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/user_lists.dart';
 import 'package:cifraclub/presentation/widgets/selectable_item.dart';
@@ -57,6 +59,8 @@ class _SaveVersionToListBottomSheetBlocMock extends Mock implements SaveVersionT
 
 class _ValidateArtistImagePreviewMock extends Mock implements ValidateArtistImagePreview {}
 
+class _GetListLimitConstants extends Mock implements GetListLimitConstants {}
+
 void main() {
   late _SaveVersionToListBottomSheetBlocMock bloc;
   late SaveVersionToListBottomSheet saveVersionToListBottomSheet;
@@ -69,21 +73,15 @@ void main() {
     when(() => bloc.init()).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.getListLimit()).thenAnswer((_) => 10);
     when(() => bloc.getVersionsLimit()).thenAnswer((_) => 100);
-    when(() => bloc.addSongToSongbook(name: any(named: "name")))
-        .thenAnswer((_) => Future.value(const SaveVersionToListCompleted(
-              name: "TESTANDO",
-              versionLimitState: ListLimitState.withinLimit,
-              listLimitState: ListLimitState.withinLimit,
-            )));
+    when(() => bloc.addSongToSongbook(name: any(named: "name"), isNewList: false)).thenAnswer((_) => Future.value(
+        const SaveVersionToListCompleted(name: "TESTANDO", showListsLimitWarning: false, isNewList: false)));
     when(() => bloc.validatePreview(any())).thenReturn([]);
     when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
     when(() => bloc.createNewSongbook(
-          any(),
-        )).thenAnswer((_) => Future.value(const SaveVersionToListCompleted(
-          name: "TESTANDO",
-          versionLimitState: ListLimitState.withinLimit,
-          listLimitState: ListLimitState.withinLimit,
-        )));
+              any(),
+            ))
+        .thenAnswer((_) => Future.value(
+            const SaveVersionToListCompleted(name: "TESTANDO", showListsLimitWarning: false, isNewList: false)));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
 
     saveVersionToListBottomSheet = SaveVersionToListBottomSheet(
@@ -97,6 +95,7 @@ void main() {
       _GetVersionsLimitMock(),
       _GetProStatusStreamMock(),
       _ValidateArtistImagePreviewMock(),
+      _GetListLimitConstants(),
     );
   });
 
@@ -185,9 +184,44 @@ void main() {
       expect(find.byType(ListLimitDialog, skipOffstage: false), findsOneWidget);
     });
 
+    testWidgets(
+        "when tapping in create new list and ListLimitState is Reachedand user is pro,should show Limit Pro dialog",
+        (widgetTester) async {
+      bloc.mockStream(const SaveVersionToListState(listState: ListLimitState.reached, isPro: true));
+      await mockNetworkImagesFor(() async {
+        await widgetTester.pumpWidgetWithWrapper(
+          Builder(
+            builder: (context) {
+              return Scaffold(
+                body: InkWell(
+                  onTap: () async {
+                    await setShowSaveVersionToListBottomSheet(context, bloc, "", "");
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      });
+      expect(find.byType(InkWell), findsOneWidget);
+      await widgetTester.tap(find.byType(InkWell));
+      await widgetTester.pumpAndSettle();
+      await widgetTester.tap(find.byKey(const Key("create-new-list")));
+      await widgetTester.pumpAndSettle();
+      expect(find.byType(ListLimitProDialog, skipOffstage: false), findsOneWidget);
+    });
+
     testWidgets("when tapping in create new list and save, should call createNewSongbook", (widgetTester) async {
       bloc.mockStream(const SaveVersionToListState());
-
+      when(() => bloc.createNewSongbook(
+                any(),
+              ))
+          .thenAnswer((_) => Future.value(SaveVersionToListCompleted(
+              name: "testando",
+              showListsLimitWarning: true,
+              isNewList: true,
+              limitWarning: ListLimitWarning(
+                  limit: 10, proLimit: 100, listState: ListLimitState.atWarning, isVersionLimit: false))));
       when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
 
       await mockNetworkImagesFor(() async {
@@ -226,6 +260,7 @@ void main() {
       await widgetTester.tap(buttonFinder);
       await widgetTester.pumpAndSettle();
       verify(() => bloc.createNewSongbook(any())).called(1);
+      expect(find.byType(SnackBar), findsOneWidget);
     });
 
     testWidgets("when tapping in create new list and name already exists, should not call createNewSongbook",
@@ -278,7 +313,8 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(userLists: [songbook], isPro: true));
 
-    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
+    when(() => bloc.addSongToSongbook(
+            name: any(named: "name"), songbookId: any(named: "songbookId"), isNewList: any(named: "isNewList")))
         .thenAnswer((_) => SynchronousFuture(const VersionListLimitStateReached(versionsLimit: 100)));
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -309,7 +345,8 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook], isPro: true));
 
-    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
+    when(() => bloc.addSongToSongbook(
+            name: any(named: "name"), songbookId: any(named: "songbookId"), isNewList: any(named: "isNewList")))
         .thenAnswer((_) => SynchronousFuture(SaveToListError(listLimitState: ListLimitState.withinLimit)));
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -336,19 +373,18 @@ void main() {
     expect(find.text(appTextEn.errorListSong), findsOneWidget);
   });
 
-  testWidgets("When tap in item and is success and close to version limit should show snack bars",
-      (widgetTester) async {
+  testWidgets("When save to list and is close to version limit should show snackbars", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
-    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
-        .thenAnswer((_) => SynchronousFuture(
-              const SaveVersionToListCompleted(
-                name: "teste",
-                versionLimitState: ListLimitState.atWarning,
-                listLimitState: ListLimitState.withinLimit,
-              ),
-            ));
+    when(() => bloc.addSongToSongbook(
+            name: any(named: "name"), songbookId: any(named: "songbookId"), isNewList: any(named: "isNewList")))
+        .thenAnswer((_) => SynchronousFuture(SaveVersionToListCompleted(
+            name: songbook.name,
+            limitWarning:
+                ListLimitWarning(limit: 10, proLimit: 100, listState: ListLimitState.atWarning, isVersionLimit: true),
+            showListsLimitWarning: true,
+            isNewList: false)));
 
     await widgetTester.pumpWidgetWithWrapper(
       Builder(
@@ -372,22 +408,26 @@ void main() {
     await widgetTester.tap(find.text(songbook.name), warnIfMissed: false);
     await widgetTester.pumpAndSettle();
 
-    expect(find.text(appTextEn.saveVersionToListMessage("teste")), findsOneWidget);
+    expect(find.text(appTextEn.saveVersionToListMessage(songbook.name)), findsOneWidget);
     ScaffoldMessenger.of(widgetTester.element(inkWell)).hideCurrentSnackBar();
     await widgetTester.pumpAndSettle();
-    expect(find.text(appTextEn.listLimitTitle), findsOneWidget);
   });
 
   testWidgets("When tap in item and is success and close to list limit should show snack bars", (widgetTester) async {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
-    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
-        .thenAnswer((_) => SynchronousFuture(const SaveVersionToListCompleted(
-              name: "teste",
-              versionLimitState: ListLimitState.withinLimit,
-              listLimitState: ListLimitState.atWarning,
-            )));
+    when(() =>
+        bloc.addSongToSongbook(
+            name: any(named: "name"),
+            songbookId: any(named: "songbookId"),
+            isNewList: any(named: "isNewList"))).thenAnswer((_) => SynchronousFuture(SaveVersionToListCompleted(
+          name: songbook.name,
+          limitWarning:
+              ListLimitWarning(limit: 10, proLimit: 100, listState: ListLimitState.withinLimit, isVersionLimit: false),
+          showListsLimitWarning: true,
+          isNewList: true,
+        )));
 
     await widgetTester.pumpWidgetWithWrapper(
       Builder(
@@ -411,10 +451,10 @@ void main() {
     await widgetTester.tap(find.text(songbook.name), warnIfMissed: false);
     await widgetTester.pumpAndSettle();
 
-    expect(find.text(appTextEn.saveVersionToListMessage("teste")), findsOneWidget);
+    expect(find.text(appTextEn.saveVersionToListMessage(songbook.name)), findsOneWidget);
     ScaffoldMessenger.of(widgetTester.element(inkWell)).hideCurrentSnackBar();
     await widgetTester.pumpAndSettle();
-    expect(find.text(appTextEn.listLimitProDescription1), findsOneWidget);
+    expect(find.text(appTextEn.listLimitWarning(10, 100, appTextEn.lists)), findsOneWidget);
   });
 
   testWidgets("when tapping in a list and version is already on list, should show snack bar with correct message",
@@ -422,8 +462,10 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
-    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
-        .thenAnswer((_) => SynchronousFuture(VersionIsAlreadyOnListError()));
+    when(() => bloc.addSongToSongbook(
+        name: any(named: "name"),
+        songbookId: any(named: "songbookId"),
+        isNewList: any(named: "isNewList"))).thenAnswer((_) => SynchronousFuture(VersionIsAlreadyOnListError()));
 
     await widgetTester.pumpWidgetWithWrapper(
       Builder(
