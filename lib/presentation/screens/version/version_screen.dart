@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nav/nav.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VersionScreen extends StatefulWidget {
@@ -139,124 +140,134 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
     return BlocBuilder<VersionBloc, VersionState>(
       builder: (context, state) {
         selectedKey ??= state.version?.stdKey; // Todo: remover isso aqui quando transpose estiver funcionando
-        return Scaffold(
-          appBar: CosmosAppBar(
-            actions: [
-              TextButton(
-                onPressed: () {
-                  _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
-                },
-                child: const Text("fontsize"),
-              ),
-              TextButton(
-                onPressed: () {
-                  _bloc.add(OnToggleIsChordPinned());
-                },
-                child: Text(
-                  state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
-                  style: context.typography.body9,
+        return VisibilityDetector(
+          key: const Key("version_screen_visibility"),
+          onVisibilityChanged: (info) {
+            final visiblePercentage = info.visibleFraction * 100;
+
+            if (visiblePercentage < 1 && _youtubePlayerController != null) {
+              _youtubePlayerController!.pauseVideo();
+            }
+          },
+          child: Scaffold(
+            appBar: CosmosAppBar(
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
+                  },
+                  child: const Text("fontsize"),
                 ),
-              ),
-            ],
-          ),
-          body: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Listener(
-                onPointerDown: (_) {
-                  isUserDraggingScreen = true;
-                },
-                onPointerUp: (_) {
-                  isUserDraggingScreen = false;
-                },
-                child: CustomScrollView(
-                  controller: _scrollController,
-                  slivers: [
-                    if (state.isYouTubeVisible && _youtubePlayerController != null)
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: YouTubeHeaderDelegate(
-                          MediaQuery.sizeOf(context).width * 9 / 16,
-                          _youtubePlayerController!,
+                TextButton(
+                  onPressed: () {
+                    _bloc.add(OnToggleIsChordPinned());
+                  },
+                  child: Text(
+                    state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
+                    style: context.typography.body9,
+                  ),
+                ),
+              ],
+            ),
+            body: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Listener(
+                  onPointerDown: (_) {
+                    isUserDraggingScreen = true;
+                  },
+                  onPointerUp: (_) {
+                    isUserDraggingScreen = false;
+                  },
+                  child: CustomScrollView(
+                    controller: _scrollController,
+                    slivers: [
+                      if (state.isYouTubeVisible && _youtubePlayerController != null)
+                        SliverPersistentHeader(
+                          pinned: true,
+                          delegate: YouTubeHeaderDelegate(
+                            MediaQuery.sizeOf(context).width * 9 / 16,
+                            _youtubePlayerController!,
+                          ),
                         ),
-                      ),
-                    SliverToBoxAdapter(
-                      child: VersionHeader(
-                        songName: state.versionHeaderState.songName,
-                        artistName: state.versionHeaderState.artistName,
-                        isFavorite: state.versionHeaderState.isFavorite,
-                        onTapFavoriteIcon: () {/*TODO*/},
-                        onTapArtistName: () => ArtistEntry.push(Nav.of(context), state.versionHeaderState.artistUrl),
-                        onTapOptionsIcon: () async {
-                          await widget.versionOptionsBottomSheet.show(
-                            context: context,
-                            artistUrl: state.versionHeaderState.artistUrl,
-                            songUrl: state.versionHeaderState.songUrl,
-                            songId: state.version!.song.songId,
-                          );
-                        },
-                        filters: state.versionHeaderState.versionFilters,
-                        selectedFilter: state.versionHeaderState.selectedVersionFilter,
-                        onTapFilter: (filter) => _bloc.add(OnVersionSelected(filter)),
-                        onTapMoreFilters: () {
-                          if (state.version != null) {
-                            InstrumentVersionsBottomSheet.show(
-                              context,
-                              state.version!.instrumentVersions ?? [],
-                              state.version!.instrument,
-                              state.version!.versionName,
-                              (versionFilter) {
-                                _bloc.add(OnVersionSelected(versionFilter));
-                              },
+                      SliverToBoxAdapter(
+                        child: VersionHeader(
+                          songName: state.versionHeaderState.songName,
+                          artistName: state.versionHeaderState.artistName,
+                          isFavorite: state.versionHeaderState.isFavorite,
+                          onTapFavoriteIcon: () {/*TODO*/},
+                          onTapArtistName: () => ArtistEntry.push(Nav.of(context), state.versionHeaderState.artistUrl),
+                          onTapOptionsIcon: () async {
+                            await widget.versionOptionsBottomSheet.show(
+                              context: context,
+                              artistUrl: state.versionHeaderState.artistUrl,
+                              songUrl: state.versionHeaderState.songUrl,
+                              songId: state.version!.song.songId,
                             );
-                          }
-                        },
-                      ),
-                    ),
-                    if (state.isLoading)
-                      const SliverFillRemaining(
-                        child: Center(
-                          child: LoadingIndicator(),
-                        ),
-                      )
-                    else ...[
-                      SliverPersistentHeader(
-                        pinned: state.isChordListPinned,
-                        delegate: ChordListHeaderDelegate(
-                          haveScroll: false,
-                          maxExtend: 110,
-                          child: const Text("Acordes"),
-                          isPinned: state.isChordListPinned,
-                          chords: state.chordState.chordRepresentations,
+                          },
+                          filters: state.versionHeaderState.versionFilters,
+                          selectedFilter: state.versionHeaderState.selectedVersionFilter,
+                          onTapFilter: (filter) => _bloc.add(OnVersionSelected(filter)),
+                          onTapMoreFilters: () {
+                            if (state.version != null) {
+                              InstrumentVersionsBottomSheet.show(
+                                context,
+                                state.version!.instrumentVersions ?? [],
+                                state.version!.instrument,
+                                state.version!.versionName,
+                                (versionFilter) {
+                                  _bloc.add(OnVersionSelected(versionFilter));
+                                },
+                              );
+                            }
+                          },
                         ),
                       ),
-                      SliverList.builder(
-                        itemCount: state.sections.length,
-                        itemBuilder: (context, index) {
-                          final section = state.sections[index];
-                          return Text.rich(
-                            TextSpan(children: section.getSpans()),
-                            style: context.typography.body8,
-                          );
-                        },
-                      ),
+                      if (state.isLoading)
+                        const SliverFillRemaining(
+                          child: Center(
+                            child: LoadingIndicator(),
+                          ),
+                        )
+                      else ...[
+                        SliverPersistentHeader(
+                          pinned: state.isChordListPinned,
+                          delegate: ChordListHeaderDelegate(
+                            haveScroll: false,
+                            maxExtend: 110,
+                            child: const Text("Acordes"),
+                            isPinned: state.isChordListPinned,
+                            chords: state.chordState.chordRepresentations,
+                          ),
+                        ),
+                        SliverList.builder(
+                          itemCount: state.sections.length,
+                          itemBuilder: (context, index) {
+                            final section = state.sections[index];
+                            return Text.rich(
+                              TextSpan(children: section.getSpans()),
+                              style: context.typography.body8,
+                            );
+                          },
+                        ),
+                      ],
+                      const SliverFillRemaining(),
                     ],
-                    const SliverFillRemaining(),
-                  ],
+                  ),
                 ),
-              ),
-              FloatingFooterBar(
-                mode: state.floatingFooterBarState.mode,
-                isVisible: isFooterBarVisible,
-                isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
-                autoScrollSpeedFactor: state.autoScrollState.speedFactor,
-                isVideoOpen: state.isYouTubeVisible,
-                videoThumb: state.version?.videoLesson?.thumb,
-                onAction: (action) {
-                  _bloc.add(OnFloatingFooterBarAction(action: action));
-                },
-              )
-            ],
+                FloatingFooterBar(
+                  mode: state.floatingFooterBarState.mode,
+                  isVisible: isFooterBarVisible,
+                  isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
+                  autoScrollSpeedFactor: state.autoScrollState.speedFactor,
+                  isVideoOpen: state.isYouTubeVisible,
+                  videoThumb: state.version?.videoLesson?.thumb,
+                  onAction: (action) {
+                    _bloc.add(OnFloatingFooterBarAction(action: action));
+                  },
+                )
+              ],
+            ),
           ),
         );
       },
