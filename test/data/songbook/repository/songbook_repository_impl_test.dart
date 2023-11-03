@@ -63,17 +63,14 @@ void main() {
     final songbookDataSource = _SongbookDataSourceMock();
     final songbook = getFakeSongbook();
     final response = NewSongbookResponseDto(
-      id: songbook.id!,
-      name: songbook.name,
-      isPublic: songbook.isPublic ? 1 : 0,
-    );
+        id: songbook.id!, name: songbook.name, isPublic: songbook.isPublic ? 1 : 0, versions: null);
     when(() => songbookDataSource.addSongbook(any())).thenAnswer((_) => SynchronousFuture(Ok(response)));
 
     final songbookRepository = SongbookRepositoryImpl(songbookDataSource);
     final result = await songbookRepository.addSongbook(
         name: songbook.name, isPublic: songbook.isPublic, createdAt: songbook.createdAt);
 
-    expect(result.getOrThrow().id, songbook.id);
+    expect(result.getOrThrow().songbook.id, songbook.id);
   });
 
   test("When deleteSongbook is called should delete a songbook", () async {

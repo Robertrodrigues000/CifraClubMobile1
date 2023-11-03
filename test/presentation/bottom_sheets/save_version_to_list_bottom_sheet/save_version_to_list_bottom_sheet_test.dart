@@ -73,7 +73,7 @@ void main() {
     when(() => bloc.init()).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.getListLimit()).thenAnswer((_) => 10);
     when(() => bloc.getVersionsLimit()).thenAnswer((_) => 100);
-    when(() => bloc.addSongToSongbook(name: any(named: "name"), isNewList: false)).thenAnswer((_) => Future.value(
+    when(() => bloc.addSongToSongbook(name: any(named: "name"))).thenAnswer((_) => Future.value(
         const SaveVersionToListCompleted(name: "TESTANDO", showListsLimitWarning: false, isNewList: false)));
     when(() => bloc.validatePreview(any())).thenReturn([]);
     when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
@@ -313,8 +313,7 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(userLists: [songbook], isPro: true));
 
-    when(() => bloc.addSongToSongbook(
-            name: any(named: "name"), songbookId: any(named: "songbookId"), isNewList: any(named: "isNewList")))
+    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
         .thenAnswer((_) => SynchronousFuture(const VersionListLimitStateReached(versionsLimit: 100)));
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -345,8 +344,7 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook], isPro: true));
 
-    when(() => bloc.addSongToSongbook(
-            name: any(named: "name"), songbookId: any(named: "songbookId"), isNewList: any(named: "isNewList")))
+    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId")))
         .thenAnswer((_) => SynchronousFuture(SaveToListError(listLimitState: ListLimitState.withinLimit)));
 
     await widgetTester.pumpWidgetWithWrapper(
@@ -377,9 +375,8 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
-    when(() => bloc.addSongToSongbook(
-            name: any(named: "name"), songbookId: any(named: "songbookId"), isNewList: any(named: "isNewList")))
-        .thenAnswer((_) => SynchronousFuture(SaveVersionToListCompleted(
+    when(() => bloc.addSongToSongbook(name: any(named: "name"), songbookId: any(named: "songbookId"))).thenAnswer((_) =>
+        SynchronousFuture(SaveVersionToListCompleted(
             name: songbook.name,
             limitWarning:
                 ListLimitWarning(limit: 10, proLimit: 100, listState: ListLimitState.atWarning, isVersionLimit: true),
@@ -417,11 +414,10 @@ void main() {
     final songbook = getFakeSongbook();
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
-    when(() =>
-        bloc.addSongToSongbook(
-            name: any(named: "name"),
-            songbookId: any(named: "songbookId"),
-            isNewList: any(named: "isNewList"))).thenAnswer((_) => SynchronousFuture(SaveVersionToListCompleted(
+    when(() => bloc.addSongToSongbook(
+          name: any(named: "name"),
+          songbookId: any(named: "songbookId"),
+        )).thenAnswer((_) => SynchronousFuture(SaveVersionToListCompleted(
           name: songbook.name,
           limitWarning:
               ListLimitWarning(limit: 10, proLimit: 100, listState: ListLimitState.withinLimit, isVersionLimit: false),
@@ -463,9 +459,9 @@ void main() {
     bloc.mockStream(SaveVersionToListState(specialLists: [songbook]));
 
     when(() => bloc.addSongToSongbook(
-        name: any(named: "name"),
-        songbookId: any(named: "songbookId"),
-        isNewList: any(named: "isNewList"))).thenAnswer((_) => SynchronousFuture(VersionIsAlreadyOnListError()));
+          name: any(named: "name"),
+          songbookId: any(named: "songbookId"),
+        )).thenAnswer((_) => SynchronousFuture(VersionIsAlreadyOnListError()));
 
     await widgetTester.pumpWidgetWithWrapper(
       Builder(

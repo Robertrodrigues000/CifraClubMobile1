@@ -5,10 +5,11 @@ import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:typed_result/typed_result.dart';
 
 abstract class SongbookRepository {
-  Future<Result<Songbook, RequestError>> addSongbook({
+  Future<Result<({Songbook songbook, Version? version}), RequestError>> addSongbook({
     required String name,
     required bool isPublic,
     required DateTime createdAt,
+    SongbookVersionInput? versionInput,
   });
   Future<Result<List<({Songbook songbook, List<Version> versions})>, RequestError>> getAllSongbooks();
   Future<Result<void, RequestError>> deleteSongbook(int songbookId);

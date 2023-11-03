@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_s
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_bloc.dart';
@@ -26,13 +27,14 @@ class VersionOptionsBottomSheet {
   final ShareLink _shareLink;
 
   const VersionOptionsBottomSheet(
-      this.saveToListBottomSheet,
-      this._insertVersionToSongbook,
-      this._getIsFavoriteVersionBySongId,
-      this._deleteVersionFromFavorites,
-      this._getCredentialStream,
-      this._openLoginView,
-      this._shareLink);
+    this.saveToListBottomSheet,
+    this._insertVersionToSongbook,
+    this._getIsFavoriteVersionBySongId,
+    this._deleteVersionFromFavorites,
+    this._getCredentialStream,
+    this._openLoginView,
+    this._shareLink,
+  );
 
   // coverage:ignore-start
   Future<void> show({
@@ -40,6 +42,7 @@ class VersionOptionsBottomSheet {
     required String artistUrl,
     required String songUrl,
     required int songId,
+    VersionData? versionData,
     VersionOptionsBottomSheetBloc? bloc,
   }) {
     return _show(
@@ -47,6 +50,7 @@ class VersionOptionsBottomSheet {
       artistUrl,
       songUrl,
       songId,
+      versionData,
       bloc ??
           VersionOptionsBottomSheetBloc(_insertVersionToSongbook, _getIsFavoriteVersionBySongId,
               _deleteVersionFromFavorites, _getCredentialStream, _openLoginView, _shareLink, songId)
@@ -60,6 +64,7 @@ class VersionOptionsBottomSheet {
     String artistUrl,
     String songUrl,
     int songId,
+    VersionData? versionData,
     VersionOptionsBottomSheetBloc bloc,
   ) {
     final controller = ScrollController();
@@ -99,7 +104,11 @@ class VersionOptionsBottomSheet {
                               }
                               if (state.isLoggedIn) {
                                 await saveToListBottomSheet.show(
-                                    context: screenContext, artistUrl: artistUrl, songUrl: songUrl);
+                                  context: screenContext,
+                                  artistUrl: artistUrl,
+                                  songUrl: songUrl,
+                                  versionData: versionData,
+                                );
                               } else {
                                 bloc.openLoginPage();
                               }

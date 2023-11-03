@@ -21,10 +21,11 @@ class SaveVersionToListCompleted implements SaveToListResult {
   final bool showListsLimitWarning;
   final ListLimitWarning? limitWarning;
   final bool isNewList;
+
   const SaveVersionToListCompleted({
     required this.name,
-    required this.isNewList,
     required this.showListsLimitWarning,
+    this.isNewList = false,
     this.limitWarning,
   });
 }

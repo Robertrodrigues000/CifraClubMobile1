@@ -203,6 +203,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                               artistUrl: state.versionHeaderState.artistUrl,
                               songUrl: state.versionHeaderState.songUrl,
                               songId: state.version!.song.songId,
+                              versionData: state.version!,
                             );
                           },
                           filters: state.versionHeaderState.versionFilters,

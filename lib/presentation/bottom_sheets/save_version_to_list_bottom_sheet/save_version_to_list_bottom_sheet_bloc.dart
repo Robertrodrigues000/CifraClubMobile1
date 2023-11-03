@@ -12,6 +12,7 @@ import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.d
 import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_result.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/lists_state.dart';
@@ -33,6 +34,7 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
   final GetListLimitConstants _getListLimitConstants;
   final String artistUrl;
   final String songUrl;
+  final VersionData? versionData;
 
   SaveVersionToListBottomSheetBloc(
     this._getAllUserSongbooks,
@@ -48,6 +50,7 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
     this._getListLimitConstants,
     this.artistUrl,
     this.songUrl,
+    this.versionData,
   ) : super(const SaveVersionToListState());
 
   Future<void> init() async {
@@ -76,19 +79,27 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
       return ListLimitStateReached(listLimit: getListLimit());
     }
 
-    final result = await _insertUserSongbook(name: name);
+    final result = await _insertUserSongbook(
+      params: versionData != null
+          ? InsertUserSongbookWithVersionData(name: name, versionData: versionData!)
+          : InsertUserSongbookWithUrl(name: name, songUrl: songUrl, artistUrl: artistUrl),
+    );
 
     if (result.isSuccess) {
-      return addSongToSongbook(songbookId: result.get()?.id, name: name, isNewList: true);
-    } else {
-      return SaveToListError();
+      final limitState = await _getListLimitState().first;
+      return SaveVersionToListCompleted(
+        name: name,
+        isNewList: true,
+        showListsLimitWarning: limitState != ListLimitState.withinLimit,
+        limitWarning: getListLimitWarning(limitState, ListLimitState.withinLimit),
+      );
     }
+    return SaveToListError();
   }
 
   Future<SaveToListResult> addSongToSongbook({
     int? songbookId,
     required String name,
-    required bool isNewList,
   }) async {
     if (songbookId == null) {
       return SaveToListError();
@@ -113,22 +124,20 @@ class SaveVersionToListBottomSheetBloc extends Cubit<SaveVersionToListState> wit
     final currentVersionsListState = await _getVersionsLimitState(songbookId).first;
 
     if (currentListState == ListLimitState.withinLimit && currentVersionsListState == ListLimitState.withinLimit) {
-      return SaveVersionToListCompleted(name: name, showListsLimitWarning: false, isNewList: isNewList);
+      return SaveVersionToListCompleted(name: name, showListsLimitWarning: false);
     }
 
     return SaveVersionToListCompleted(
       name: name,
       showListsLimitWarning: true,
-      limitWarning: await getListLimitWarning(currentListState, currentVersionsListState, songbookId),
-      isNewList: isNewList,
+      limitWarning: getListLimitWarning(currentListState, currentVersionsListState),
     );
   }
 
-  Future<ListLimitWarning?> getListLimitWarning(
+  ListLimitWarning? getListLimitWarning(
     ListLimitState currentListState,
     ListLimitState currentVersionsListState,
-    int songbookId,
-  ) async {
+  ) {
     final limitConstants = _getListLimitConstants();
     final listState = currentListState != ListLimitState.withinLimit ? currentListState : currentVersionsListState;
 

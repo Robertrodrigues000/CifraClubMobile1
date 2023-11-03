@@ -10,4 +10,7 @@ NewSongbookResponseDto _$NewSongbookResponseDtoFromJson(Map<String, dynamic> jso
       id: json['id'] as int,
       name: json['name'] as String,
       isPublic: json['public'] as int? ?? 1,
+      versions: (json['songs'] as List<dynamic>?)
+          ?.map((e) => SongbookVersionDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );

@@ -11,6 +11,7 @@ import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.d
 import 'package:cifraclub/domain/songbook/use_cases/validate_artist_image_preview.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
+import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_result.dart';
@@ -60,24 +61,27 @@ class SaveVersionToListBottomSheet {
     SaveVersionToListBottomSheetBloc? bloc,
     required String artistUrl,
     required String songUrl,
+    VersionData? versionData,
   }) {
     return _show(
       context,
       bloc ??
           SaveVersionToListBottomSheetBloc(
-              _getAllUserSongbooks,
-              _insertUserSongbook,
-              _getListLimitState,
-              _getVersionsLimitState,
-              _insertVersionToSongbook,
-              _validateSongbookName,
-              _getListLimit,
-              _getVersionsLimit,
-              _getProStatusStream,
-              _validateArtistImagePreview,
-              _getListLimitConstants,
-              artistUrl,
-              songUrl)
+            _getAllUserSongbooks,
+            _insertUserSongbook,
+            _getListLimitState,
+            _getVersionsLimitState,
+            _insertVersionToSongbook,
+            _validateSongbookName,
+            _getListLimit,
+            _getVersionsLimit,
+            _getProStatusStream,
+            _validateArtistImagePreview,
+            _getListLimitConstants,
+            artistUrl,
+            songUrl,
+            versionData,
+          )
         ..init(),
     );
   }
@@ -147,7 +151,10 @@ class SaveVersionToListBottomSheet {
                             );
                           } else {
                             handleResult(
-                                screenContext, ListLimitStateReached(listLimit: bloc.getListLimit()), state.isPro);
+                              screenContext,
+                              ListLimitStateReached(listLimit: bloc.getListLimit()),
+                              state.isPro,
+                            );
                           }
                         },
                         icon: AppSvgs.newSongbookIcon,
@@ -161,7 +168,6 @@ class SaveVersionToListBottomSheet {
                           final result = await bloc.addSongToSongbook(
                             songbookId: songbook.id,
                             name: ListType.getListTitle(context, songbook),
-                            isNewList: false,
                           );
 
                           if (screenContext.mounted) {
@@ -182,8 +188,7 @@ class SaveVersionToListBottomSheet {
                       lists: state.userLists,
                       onTap: (songbook) async {
                         DefaultBottomSheet.close(context);
-                        final result = await bloc.addSongToSongbook(
-                            songbookId: songbook.id, name: songbook.name, isNewList: false);
+                        final result = await bloc.addSongToSongbook(songbookId: songbook.id, name: songbook.name);
 
                         if (screenContext.mounted) {
                           handleResult(screenContext, result, state.isPro);
@@ -219,18 +224,16 @@ class SaveVersionToListBottomSheet {
             ),
           ));
           if (result.showListsLimitWarning) {
-            if (result.isNewList && result.limitWarning?.isVersionLimit == false ||
-                result.limitWarning?.isVersionLimit == true) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                ListLimitWarningSnackBar.getListLimitSnackBar(
-                    limit: result.limitWarning!.limit,
-                    isVersionLimit: result.limitWarning?.isVersionLimit ?? false,
-                    count: result.limitWarning?.count ?? 0,
-                    listLimitState: result.limitWarning!.listState,
-                    proLimit: result.limitWarning!.proLimit,
-                    isPro: isPro),
-              );
-            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              ListLimitWarningSnackBar.getListLimitSnackBar(
+                limit: result.limitWarning!.limit,
+                isVersionLimit: result.limitWarning?.isVersionLimit ?? false,
+                count: result.limitWarning?.count ?? 0,
+                listLimitState: result.limitWarning!.listState,
+                proLimit: result.limitWarning!.proLimit,
+                isPro: isPro,
+              ),
+            );
           }
         }
       case SaveToListError():

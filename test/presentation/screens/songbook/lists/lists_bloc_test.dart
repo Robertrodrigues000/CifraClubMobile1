@@ -246,8 +246,10 @@ void main() {
     });
 
     group("when creating new songbook", () {
+      registerFallbackValue(InsertUserSongbookWithName(name: "name"));
+
       final insertUserSongbookMock = _InsertUserSongbookMock();
-      when(() => insertUserSongbookMock(name: any(named: "name")))
+      when(() => insertUserSongbookMock(params: any(named: "params")))
           .thenAnswer((_) => SynchronousFuture(Ok(getFakeSongbook())));
 
       blocTest(
@@ -255,7 +257,7 @@ void main() {
         build: () => getBloc(insertUserSongbookMock: insertUserSongbookMock),
         act: (bloc) => bloc.createNewSongbook("name"),
         verify: (bloc) {
-          verify(() => insertUserSongbookMock(name: "name")).called(1);
+          verify(() => insertUserSongbookMock(params: any(named: "params"))).called(1);
         },
       );
     });

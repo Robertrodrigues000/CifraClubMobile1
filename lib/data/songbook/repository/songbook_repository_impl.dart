@@ -16,17 +16,19 @@ class SongbookRepositoryImpl extends SongbookRepository {
   SongbookRepositoryImpl(this._songbookDataSource);
 
   @override
-  Future<Result<Songbook, RequestError>> addSongbook({
+  Future<Result<({Songbook songbook, Version? version}), RequestError>> addSongbook({
     required String name,
     required bool isPublic,
     required DateTime createdAt,
+    SongbookVersionInput? versionInput,
   }) async {
     final input = SongbookInputDto(
       name: name,
       isPublic: isPublic,
       timestamp: createdAt.format(apiDateTimeFormat),
+      versionsInput: versionInput == null ? null : [SongbookVersionInputDto.fromDomain(versionInput)],
     );
-    return (await _songbookDataSource.addSongbook(input)).map((e) => e.toDomain().copyWith(createdAt: createdAt));
+    return (await _songbookDataSource.addSongbook(input)).map((e) => e.toDomain(createdAt));
   }
 
   @override

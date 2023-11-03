@@ -107,7 +107,9 @@ class ListsBloc extends Cubit<ListsState> {
     emit(state.copyWith(listLimit: listLimit, isPro: isPro));
   }
 
-  Future<Result<Songbook, RequestError>> createNewSongbook(String name) => _insertUserSongbook(name: name);
+  Future<Result<Songbook, RequestError>> createNewSongbook(String name) => _insertUserSongbook(
+        params: InsertUserSongbookWithName(name: name),
+      );
 
   Future<void> syncList() async {
     if (state.isSyncing) {

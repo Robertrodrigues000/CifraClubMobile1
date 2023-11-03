@@ -16,31 +16,43 @@ class InsertVersionDataToSongbook {
   final UserVersionRepository _userVersionRepository;
   final UpdateSongbookPreview _updateSongbookPreview;
 
-  InsertVersionDataToSongbook(
-      this._songbookRepository, this._userSongbookRepository, this._userVersionRepository, this._updateSongbookPreview);
+  const InsertVersionDataToSongbook(
+    this._songbookRepository,
+    this._userSongbookRepository,
+    this._userVersionRepository,
+    this._updateSongbookPreview,
+  );
 
-  Future<Result<int, RequestError>> call(
-      {required VersionData versionData, required int songbookId, int? versionLocalDatabaseId}) async {
-    final versionInput = SongbookVersionInput(
-      versionId: versionData.versionId,
-      type: versionData.instrument.apiType,
-    );
+  Future<Result<int, RequestError>> call({
+    required VersionData versionData,
+    required int songbookId,
+    int? versionLocalDatabaseId,
+    Version? addedVersion,
+  }) async {
+    Result<Version?, RequestError>? addResult;
 
-    final addResult =
-        await _songbookRepository.addVersionToSongbook(songbookId: songbookId, versionInput: versionInput);
+    if (addedVersion == null) {
+      final versionInput = SongbookVersionInput(
+        versionId: versionData.versionId,
+        type: versionData.instrument.apiType,
+      );
 
-    if (addResult.isFailure) {
-      return Err(addResult.getError()!);
+      addResult = await _songbookRepository.addVersionToSongbook(songbookId: songbookId, versionInput: versionInput);
+
+      if (addResult.isFailure) {
+        return Err(addResult.getError()!);
+      }
     }
 
-    Version version = addResult.get() ?? Version.fromVersionData(versionData, lastUpdate: DateTime.now());
+    Version version =
+        addedVersion ?? addResult?.get() ?? Version.fromVersionData(versionData, lastUpdate: DateTime.now());
 
     if (versionLocalDatabaseId != null) {
       version = version.copyWith(localDatabaseId: versionLocalDatabaseId);
     }
 
-    await _userVersionRepository.putVersionsToSongbook([version], songbookId).then((value) async {
-      await _userVersionRepository.addVersionData(
+    await _userVersionRepository.putVersionsToSongbook([version], songbookId).then((value) {
+      _userVersionRepository.addVersionData(
         versionData: versionData,
         versionLocalDatabaseId: value.first,
         songbookId: songbookId,
