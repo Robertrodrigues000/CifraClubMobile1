@@ -1,6 +1,7 @@
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
@@ -58,8 +59,8 @@ class UserVersionDto extends Equatable {
         songUrl: songUrl,
         key: key,
         stdKey: stdKey,
+        tuning: Tuning.getTuningByValue(tuning),
         capo: Capo.getCapoById(capo),
-        tuning: tuning,
         artist: artist.toDomain(artistImage),
         versionId: versionId,
         order: order,
@@ -77,7 +78,7 @@ class UserVersionDto extends Equatable {
           songId: version.songId,
           capo: version.capo?.capoId,
           stdKey: version.stdKey,
-          tuning: version.tuning,
+          tuning: version.tuning?.value,
           artist: UserVersionArtistDto.fromDomain(version.artist),
           artistImage: (version.artist.image?.size162 ?? "").isNotEmpty ? version.artist.image?.size162 : null,
           versionId: version.versionId,

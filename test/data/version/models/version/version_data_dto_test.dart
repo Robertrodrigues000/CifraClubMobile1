@@ -5,6 +5,7 @@ import 'package:cifraclub/data/version/models/version/version_data_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_song_dto.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -21,7 +22,7 @@ void main() {
       shapeKey: "shapeKey",
       stdKey: "stdKey",
       stdShapeKey: "stdShapeKey",
-      tuning: "tuning",
+      tuning: Tuning.defaultTuning.value,
       capo: 1,
       composers: "composers",
       isVerified: true,
@@ -48,7 +49,7 @@ void main() {
     expect(version.shapeKey, "shapeKey");
     expect(version.stdKey, "stdKey");
     expect(version.stdShapeKey, "stdShapeKey");
-    expect(version.tuning, "tuning");
+    expect(version.tuning, Tuning.defaultTuning);
     expect(version.capo, Capo.capo1);
     expect(version.composers, "composers");
     expect(version.isVerified, true);

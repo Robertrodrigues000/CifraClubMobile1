@@ -2,6 +2,7 @@ import 'package:cifraclub/data/version/models/user_version/user_recent_version_d
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,7 +19,7 @@ void main() {
         capo: 1,
         stdKey: "t",
         key: "s",
-        tuning: "abc",
+        tuning: Tuning.defaultTuning.value,
         artistImage: "123",
         artist: UserVersionArtistDto(id: 1, name: "telo", color: "#FFFFFF", url: "https"),
         versionId: 10,
@@ -33,7 +34,7 @@ void main() {
     expect(version.songUrl, "test");
     expect(version.key, "s");
     expect(version.stdKey, "t");
-    expect(version.tuning, "abc");
+    expect(version.tuning, Tuning.defaultTuning);
     expect(version.instrument, Instrument.bass);
     expect(version.artist.id, 1);
     expect(version.artist.name, "telo");
@@ -55,7 +56,7 @@ void main() {
       capo: Capo.capo1,
       stdKey: "A",
       key: "B",
-      tuning: "AB",
+      tuning: Tuning.c,
       artist: artist,
       versionId: 12,
       order: 0,
@@ -70,8 +71,8 @@ void main() {
     expect(userVersionDto.instrument, Instrument.bass);
     expect(userVersionDto.songId, 1);
     expect(userVersionDto.stdKey, "A");
+    expect(userVersionDto.tuning, Tuning.c.value);
     expect(userVersionDto.capo, Capo.capo1.capoId);
-    expect(userVersionDto.tuning, "AB");
     expect(userVersionDto.artist.id, artist.id);
     expect(userVersionDto.artist.name, artist.name);
     expect(userVersionDto.artist.url, artist.url);

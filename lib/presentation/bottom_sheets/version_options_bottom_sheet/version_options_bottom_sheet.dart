@@ -4,9 +4,12 @@ import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_s
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
+import 'package:cifraclub/presentation/bottom_sheets/tuning_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_state.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_result.dart';
@@ -133,7 +136,13 @@ class VersionOptionsBottomSheet {
                                 await bloc.shareLink(link, rect);
                               }
                             case VersionOptionsBottomSheetItem.correctVersion:
-                            //TODO
+                              //TODO
+                              if (context.mounted) {
+                                TuningBottomSheet.show(context, (tuning) {
+                                  // ignore: avoid_print
+                                  print("Tuning value: $tuning");
+                                }, Tuning.defaultTuning, Instrument.guitar);
+                              }
                           }
                         },
                         // coverage:ignore-end

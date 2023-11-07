@@ -6,6 +6,7 @@ import 'package:cifraclub/data/version/models/version/instrument_versions_dto.da
 import 'package:cifraclub/data/version/models/version/version_data_video_lesson_dto.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -82,7 +83,7 @@ class VersionDataDto {
         shapeKey: shapeKey,
         stdKey: stdKey,
         stdShapeKey: stdShapeKey,
-        tuning: tuning,
+        tuning: Tuning.getTuningByValue(tuning),
         capo: Capo.getCapoById(capo),
         composers: composers,
         isVerified: isVerified,

@@ -389,6 +389,7 @@
     "hideChords": "Hide chords on screen",
     "fixChords": "Fix chords on screen",
     "repeatedSongError": "This tab is already on the list",
+    "tuning": "Tuning",
     "capo":"Capo",
     "noCapo":"No capo",
     "capo1": "1st fret",

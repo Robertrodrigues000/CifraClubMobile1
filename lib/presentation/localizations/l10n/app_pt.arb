@@ -333,6 +333,7 @@
     "hideChords": "Ocultar acordes na tela",
     "fixChords": "Fixar acordes na tela",
     "repeatedSongError": "Esta cifra já está na lista",
+    "tuning":"Afinação",
     "capo":"Capotraste",
     "noCapo":"Sem capo",
     "capo1": "1ª casa",

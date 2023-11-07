@@ -35,7 +35,7 @@ abstract class _$VersionDataCWProxy {
 
   VersionData stdShapeKey(String? stdShapeKey);
 
-  VersionData tuning(String? tuning);
+  VersionData tuning(Tuning? tuning);
 
   VersionData capo(Capo capo);
 
@@ -80,7 +80,7 @@ abstract class _$VersionDataCWProxy {
     String? shapeKey,
     String? stdKey,
     String? stdShapeKey,
-    String? tuning,
+    Tuning? tuning,
     Capo? capo,
     String? composers,
     bool? isVerified,
@@ -145,7 +145,7 @@ class _$VersionDataCWProxyImpl implements _$VersionDataCWProxy {
   VersionData stdShapeKey(String? stdShapeKey) => this(stdShapeKey: stdShapeKey);
 
   @override
-  VersionData tuning(String? tuning) => this(tuning: tuning);
+  VersionData tuning(Tuning? tuning) => this(tuning: tuning);
 
   @override
   VersionData capo(Capo capo) => this(capo: capo);
@@ -278,7 +278,7 @@ class _$VersionDataCWProxyImpl implements _$VersionDataCWProxy {
       tuning: tuning == const $CopyWithPlaceholder()
           ? _value.tuning
           // ignore: cast_nullable_to_non_nullable
-          : tuning as String?,
+          : tuning as Tuning?,
       capo: capo == const $CopyWithPlaceholder() || capo == null
           ? _value.capo
           // ignore: cast_nullable_to_non_nullable

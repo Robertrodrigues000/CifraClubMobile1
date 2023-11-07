@@ -95,7 +95,7 @@ class UserVersionDataDto extends Equatable {
           shapeKey: versionData.shapeKey,
           stdKey: versionData.stdKey,
           stdShapeKey: versionData.stdShapeKey,
-          tuning: versionData.tuning,
+          tuning: versionData.tuning?.value,
           capo: versionData.capo.capoId,
           composers: versionData.composers,
           isVerified: versionData.isVerified,

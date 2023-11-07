@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:faker/faker.dart';
 
@@ -18,7 +19,7 @@ Version getFakeVersion(
     songId: faker.randomGenerator.integer(100),
     capo: Capo.getCapoById(faker.randomGenerator.integer(12)),
     stdKey: faker.food.restaurant(),
-    tuning: faker.food.restaurant(),
+    tuning: Tuning.c,
     artist: getFakeArtist(),
     versionId: versionId ?? faker.randomGenerator.integer(10000),
     order: order ?? faker.randomGenerator.integer(10000),

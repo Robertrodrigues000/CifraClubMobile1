@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/version/models/chord.dart';
 import 'package:cifraclub/domain/version/models/contributor.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/instrument_version.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data_song.dart';
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
@@ -27,7 +28,7 @@ class VersionData extends Equatable {
   final String? shapeKey;
   final String? stdKey;
   final String? stdShapeKey;
-  final String? tuning;
+  final Tuning? tuning;
   final Capo capo;
   final String composers;
   final bool isVerified;
