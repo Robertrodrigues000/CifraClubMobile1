@@ -27,7 +27,7 @@ abstract class _$VersionCWProxy {
 
   Version stdKey(String? stdKey);
 
-  Version capo(int? capo);
+  Version capo(Capo? capo);
 
   Version tuning(String? tuning);
 
@@ -52,7 +52,7 @@ abstract class _$VersionCWProxy {
     String? songUrl,
     String? key,
     String? stdKey,
-    int? capo,
+    Capo? capo,
     String? tuning,
     Artist? artist,
     int? order,
@@ -96,7 +96,7 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
   Version stdKey(String? stdKey) => this(stdKey: stdKey);
 
   @override
-  Version capo(int? capo) => this(capo: capo);
+  Version capo(Capo? capo) => this(capo: capo);
 
   @override
   Version tuning(String? tuning) => this(tuning: tuning);
@@ -175,7 +175,7 @@ class _$VersionCWProxyImpl implements _$VersionCWProxy {
       capo: capo == const $CopyWithPlaceholder()
           ? _value.capo
           // ignore: cast_nullable_to_non_nullable
-          : capo as int?,
+          : capo as Capo?,
       tuning: tuning == const $CopyWithPlaceholder()
           ? _value.tuning
           // ignore: cast_nullable_to_non_nullable

@@ -28,7 +28,7 @@ class SelectableItem extends StatelessWidget {
     return ContainerWithRippleEffect(
       onTap: onTap,
       decoration: isSelected ? BoxDecoration(color: context.colors.neutralSecondary) : null,
-      height: 56,
+      height: context.appDimensionScheme.selectableItemHeight,
       child: Row(
         children: [
           if (isSelected)

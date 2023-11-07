@@ -1,5 +1,6 @@
 import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,7 +27,7 @@ void main() {
 
     expect(version.remoteDatabaseId, null);
     expect(version.localDatabaseId, 10);
-    expect(version.capo, 1);
+    expect(version.capo, Capo.capo1);
     expect(version.name, "name");
     expect(version.songId, 3);
     expect(version.songUrl, "test");
@@ -51,7 +52,7 @@ void main() {
       instrument: Instrument.bass,
       name: "name",
       songUrl: "songUrl",
-      capo: 3,
+      capo: Capo.capo1,
       stdKey: "A",
       key: "B",
       tuning: "AB",
@@ -69,7 +70,7 @@ void main() {
     expect(userVersionDto.instrument, Instrument.bass);
     expect(userVersionDto.songId, 1);
     expect(userVersionDto.stdKey, "A");
-    expect(userVersionDto.capo, 3);
+    expect(userVersionDto.capo, Capo.capo1.capoId);
     expect(userVersionDto.tuning, "AB");
     expect(userVersionDto.artist.id, artist.id);
     expect(userVersionDto.artist.name, artist.name);

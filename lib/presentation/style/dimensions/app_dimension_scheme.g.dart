@@ -95,6 +95,8 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme heightLimitCardFree(double heightLimitCardFree);
 
+  AppDimensionScheme selectableItemHeight(double selectableItemHeight);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -146,6 +148,7 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? searchHeaderCapsuleHeight,
     double? heightLimitCardPro,
     double? heightLimitCardFree,
+    double? selectableItemHeight,
   });
 }
 
@@ -308,6 +311,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
   AppDimensionScheme heightLimitCardFree(double heightLimitCardFree) => this(heightLimitCardFree: heightLimitCardFree);
 
   @override
+  AppDimensionScheme selectableItemHeight(double selectableItemHeight) =>
+      this(selectableItemHeight: selectableItemHeight);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -360,6 +367,7 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? searchHeaderCapsuleHeight = const $CopyWithPlaceholder(),
     Object? heightLimitCardPro = const $CopyWithPlaceholder(),
     Object? heightLimitCardFree = const $CopyWithPlaceholder(),
+    Object? selectableItemHeight = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
       appBarHeight: appBarHeight == const $CopyWithPlaceholder() || appBarHeight == null
@@ -549,6 +557,10 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.heightLimitCardFree
           // ignore: cast_nullable_to_non_nullable
           : heightLimitCardFree as double,
+      selectableItemHeight: selectableItemHeight == const $CopyWithPlaceholder() || selectableItemHeight == null
+          ? _value.selectableItemHeight
+          // ignore: cast_nullable_to_non_nullable
+          : selectableItemHeight as double,
     );
   }
 }

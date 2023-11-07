@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,7 +23,7 @@ void main() {
       stdKey: "Std Key",
       stdShapeKey: "Std Shape Key",
       tuning: "Tuning",
-      capo: 5,
+      capo: Capo.capo10,
       composers: "Composers",
       isVerified: true,
       blocked: false,
@@ -48,7 +49,7 @@ void main() {
     expect(userVersionDataDto.stdKey, "Std Key");
     expect(userVersionDataDto.stdShapeKey, "Std Shape Key");
     expect(userVersionDataDto.tuning, "Tuning");
-    expect(userVersionDataDto.capo, 5);
+    expect(userVersionDataDto.capo, Capo.capo10.capoId);
     expect(userVersionDataDto.composers, "Composers");
     expect(userVersionDataDto.isVerified, true);
     expect(userVersionDataDto.blocked, false);

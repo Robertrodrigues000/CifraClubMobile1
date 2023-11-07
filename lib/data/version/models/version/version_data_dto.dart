@@ -4,6 +4,7 @@ import 'package:cifraclub/data/version/models/version/contributor_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_song_dto.dart';
 import 'package:cifraclub/data/version/models/version/instrument_versions_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_video_lesson_dto.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -82,7 +83,7 @@ class VersionDataDto {
         stdKey: stdKey,
         stdShapeKey: stdShapeKey,
         tuning: tuning,
-        capo: capo,
+        capo: Capo.getCapoById(capo),
         composers: composers,
         isVerified: isVerified,
         blocked: blocked,

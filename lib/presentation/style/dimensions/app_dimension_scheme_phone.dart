@@ -14,6 +14,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   appBarLeadingWidth: 56,
   bottomPaddingCard: 12,
   topPaddingCard: 4,
+  selectableItemHeight: 56,
 
   // Home
   topSongsItemsPerRow: 1,

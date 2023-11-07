@@ -50,6 +50,7 @@ class AppDimensionScheme {
   final double searchHeaderCapsuleHeight;
   final double heightLimitCardPro;
   final double heightLimitCardFree;
+  final double selectableItemHeight;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -96,5 +97,6 @@ class AppDimensionScheme {
     required this.searchHeaderCapsuleHeight,
     required this.heightLimitCardPro,
     required this.heightLimitCardFree,
+    required this.selectableItemHeight,
   });
 }

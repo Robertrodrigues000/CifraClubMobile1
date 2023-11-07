@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/songbook/models/songbook_version_artist_dto.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:equatable/equatable.dart';
@@ -51,7 +52,7 @@ class SongbookVersionDto extends Equatable {
         songUrl: songUrl,
         key: key,
         stdKey: stdKey,
-        capo: capo,
+        capo: Capo.getCapoById(capo),
         tuning: tuning,
         artist: artist.toDomain(),
         versionId: versionId,

@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_preview.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
@@ -317,7 +318,7 @@ void main() {
         versions: version,
       );
       final localVersions = [
-        ...version.map((e) => e.copyWith(capo: 10)).toList(),
+        ...version.map((e) => e.copyWith(capo: Capo.capo10)).toList(),
       ];
       final userSongbook = getFakeSongbook(lastUpdated: DateTime(2020), id: songbookVersions.songbook.id);
 

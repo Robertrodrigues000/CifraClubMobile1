@@ -14,6 +14,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   appBarLeadingWidth: 64,
   bottomPaddingCard: 16,
   topPaddingCard: 8,
+  selectableItemHeight: 72,
 
   // Home
   topSongsItemsPerRow: 2,

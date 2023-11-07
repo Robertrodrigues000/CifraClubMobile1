@@ -330,5 +330,19 @@
     },
     "hideChords": "Ocultar acordes en pantalla",
     "fixChords": "Fijar acordes en pantalla",
-    "repeatedSongError": "Este cifrado ya está en la lista"
+    "repeatedSongError": "Este cifrado ya está en la lista",
+    "capo":"Capotraste",
+    "noCapo":"Sin capo",
+    "capo1": "1ª traste",
+    "capo2": "2ª traste",
+    "capo3": "3ª traste",
+    "capo4": "4ª traste",
+    "capo5": "5ª traste",
+    "capo6": "6ª traste",
+    "capo7": "7ª traste",
+    "capo8": "8ª traste",
+    "capo9": "9ª traste",
+    "capo10": "10ª traste",
+    "capo11": "11ª traste",
+    "capo12": "12ª traste"
 }

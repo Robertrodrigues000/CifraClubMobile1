@@ -3,6 +3,7 @@ import 'package:cifraclub/data/version/models/version/chord_dto.dart';
 import 'package:cifraclub/data/version/models/version/contributor_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_dto.dart';
 import 'package:cifraclub/data/version/models/version/version_data_song_dto.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -48,7 +49,7 @@ void main() {
     expect(version.stdKey, "stdKey");
     expect(version.stdShapeKey, "stdShapeKey");
     expect(version.tuning, "tuning");
-    expect(version.capo, 1);
+    expect(version.capo, Capo.capo1);
     expect(version.composers, "composers");
     expect(version.isVerified, true);
     expect(version.blocked, false);

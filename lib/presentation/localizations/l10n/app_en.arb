@@ -388,5 +388,19 @@
     },
     "hideChords": "Hide chords on screen",
     "fixChords": "Fix chords on screen",
-    "repeatedSongError": "This tab is already on the list"
+    "repeatedSongError": "This tab is already on the list",
+    "capo":"Capo",
+    "noCapo":"No capo",
+    "capo1": "1st fret",
+    "capo2": "2nd fret",
+    "capo3": "3rd fret",
+    "capo4": "4th fret",
+    "capo5": "5th fret",
+    "capo6": "6th fret",
+    "capo7": "7th fret",
+    "capo8": "8th fret",
+    "capo9": "9th fret",
+    "capo10": "10th fret",
+    "capo11": "11th fret",
+    "capo12": "12th fret"
 }

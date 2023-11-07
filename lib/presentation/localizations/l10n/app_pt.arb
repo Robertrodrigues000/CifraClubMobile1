@@ -332,5 +332,19 @@
     },
     "hideChords": "Ocultar acordes na tela",
     "fixChords": "Fixar acordes na tela",
-    "repeatedSongError": "Esta cifra já está na lista"
+    "repeatedSongError": "Esta cifra já está na lista",
+    "capo":"Capotraste",
+    "noCapo":"Sem capo",
+    "capo1": "1ª casa",
+    "capo2": "2ª casa",
+    "capo3": "3ª casa",
+    "capo4": "4ª casa",
+    "capo5": "5ª casa",
+    "capo6": "6ª casa",
+    "capo7": "7ª casa",
+    "capo8": "8ª casa",
+    "capo9": "9ª casa",
+    "capo10": "10ª casa",
+    "capo11": "11ª casa",
+    "capo12": "12ª casa"
 }

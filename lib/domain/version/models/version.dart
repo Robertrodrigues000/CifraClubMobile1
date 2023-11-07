@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/artist/models/artist.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
@@ -18,7 +19,7 @@ class Version extends Equatable {
   final String songUrl;
   final String? key;
   final String? stdKey;
-  final int? capo;
+  final Capo? capo;
   final String? tuning;
   final Artist artist;
   final int order;

@@ -41,7 +41,7 @@ class SongbookVersionInput extends Equatable {
           artistUrl: version.artist.url,
           songUrl: version.songUrl,
           instrument: version.instrument.instrumentUrl,
-          capo: version.capo,
+          capo: version.capo?.capoId,
           key: version.key,
           tuning: version.tuning,
           type: version.instrument.apiType,

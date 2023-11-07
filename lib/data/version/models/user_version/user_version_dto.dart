@@ -1,4 +1,5 @@
 import 'package:cifraclub/data/version/models/user_version/user_version_artist_dto.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
@@ -57,7 +58,7 @@ class UserVersionDto extends Equatable {
         songUrl: songUrl,
         key: key,
         stdKey: stdKey,
-        capo: capo,
+        capo: Capo.getCapoById(capo),
         tuning: tuning,
         artist: artist.toDomain(artistImage),
         versionId: versionId,
@@ -74,7 +75,7 @@ class UserVersionDto extends Equatable {
           type: version.instrument.apiType,
           key: version.key,
           songId: version.songId,
-          capo: version.capo,
+          capo: version.capo?.capoId,
           stdKey: version.stdKey,
           tuning: version.tuning,
           artist: UserVersionArtistDto.fromDomain(version.artist),
