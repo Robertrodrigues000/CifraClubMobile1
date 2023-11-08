@@ -55,14 +55,14 @@ void main() {
     });
   });
 
-  testWidgets("when onVersionTap is null should hide options icon", (widgetTester) async {
+  testWidgets("when onOptionsTap is null and editable is false should hide options icon", (widgetTester) async {
     const tab = VersionTile(
       song: "Tempo Perdido",
       artist: "Legião Urbana",
       type: "Violão",
       versionKey: "A",
       editable: false,
-      onVersionTap: null,
+      onOptionsTap: null,
     );
     await widgetTester.pumpWidgetWithWrapper(tab);
     await widgetTester.pumpAndSettle();

@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/genre/use_cases/get_user_genres_as_stream.dart'
 import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart';
 import 'package:cifraclub/domain/home/models/home_info.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -25,6 +26,7 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
   final GetHomeInfo _getHomeInfo;
   StreamSubscription? _credentialStreamSubscription;
   CancelableOperation<Result<HomeInfo, RequestError>>? currentRequest;
+  final GetProStatusStream _getProStatusStream;
 
   @override
   final GetUserGenresAsStream getUserGenresAsStream;
@@ -40,10 +42,14 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
     this._openUserProfilePage,
     this._logout,
     this._getHomeInfo,
+    this._getProStatusStream,
   ) : super(const HomeState(user: null, isPro: false));
+
+  StreamSubscription? _getProStatusSubscription;
 
   void init() {
     _credentialStreamSubscription = _getCredentialsStream().listen(_updateStateWithNewCredential);
+    _getProStatusSubscription = _getProStatusStream().listen(_updateProStatus);
     initGenres();
 
     requestHomeData(genreUrl: state.selectedGenre);
@@ -73,10 +79,14 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
 
   void _updateStateWithNewCredential(UserCredential credential) {
     if (credential.isUserLoggedIn) {
-      emit(state.copyWith(user: credential.user, isPro: true));
+      emit(state.copyWith(user: credential.user));
     } else {
-      emit(state.copyWith(user: null, isPro: false));
+      emit(state.copyWith(user: null));
     }
+  }
+
+  void _updateProStatus(bool isPro) {
+    emit(state.copyWith(isPro: isPro));
   }
 
   Future<void> requestHomeData({String? genreUrl = ""}) async {
@@ -119,6 +129,7 @@ class HomeBloc extends Cubit<HomeState> with GenresCapsuleMixin {
   @override
   Future<void> close() {
     _credentialStreamSubscription?.cancel();
+    _getProStatusSubscription?.cancel();
     return super.close();
   }
 }

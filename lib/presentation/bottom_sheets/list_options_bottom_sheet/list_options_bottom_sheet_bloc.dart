@@ -45,11 +45,13 @@ class ListOptionsBottomSheetBloc extends Cubit {
     }
   }
 
-  Future<void> clearList(int? songbookId) async {
-    if (songbookId == null) {
-      logger?.sendNonFatalCrash(exception: "Clear songbook with null Id"); // coverage:ignore-line
+  Future<Result<void, RequestError>> clearList(int? songbookId) async {
+    if (songbookId != null) {
+      final result = await _clearSongsFromSongbook(songbookId);
+      return result;
     } else {
-      await _clearSongsFromSongbook(songbookId);
+      logger?.sendNonFatalCrash(exception: "Clear songbook with null Id"); // coverage:ignore-line
+      return Err(ServerError());
     }
   }
 
@@ -57,8 +59,7 @@ class ListOptionsBottomSheetBloc extends Cubit {
     await _shareLink(link: link, sharePositionOrigin: rect);
   }
 
-  Future<bool> deleteSongbook(int? songbookId) async {
-    final result = await _deleteSongbook(songbookId!);
-    return result.isSuccess;
+  Future<Result<void, RequestError>> deleteSongbook(int? songbookId) async {
+    return _deleteSongbook(songbookId!);
   }
 }

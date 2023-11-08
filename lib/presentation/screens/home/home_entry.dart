@@ -20,7 +20,7 @@ class HomeEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
-      create: (context) => HomeBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())..init(),
+      create: (context) => HomeBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt())..init(),
       child: HomeScreen(getIt()),
     );
   }

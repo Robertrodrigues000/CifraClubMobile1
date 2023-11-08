@@ -8,6 +8,7 @@ import 'package:cifraclub/presentation/widgets/default_placeholder.dart';
 import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cosmos/cosmos.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,6 +29,7 @@ class AlbumHeader extends StatefulWidget {
     required this.releaseYear,
     required this.onShare,
     required this.isError,
+    required this.onTapArtistName,
   });
 
   final ScrollController scrollController;
@@ -42,6 +44,7 @@ class AlbumHeader extends StatefulWidget {
   final bool isLoading;
   final bool isError;
   final VoidCallback onShare;
+  final VoidCallback onTapArtistName;
 
   @override
   State<AlbumHeader> createState() => _ArtistHeaderState();
@@ -187,20 +190,22 @@ class _ArtistHeaderState extends State<AlbumHeader> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Flexible(
-                                  child: RichText(
-                                text: TextSpan(
-                                  text: "${context.text.albumOf} ",
-                                  style: context.typography.subtitle7.copyWith(color: Colors.white),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: widget.artistName,
-                                      style: const TextStyle(
-                                        decoration: TextDecoration.underline,
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: "${context.text.albumOf} ",
+                                    style: context.typography.subtitle7.copyWith(color: Colors.white),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: widget.artistName,
+                                        recognizer: TapGestureRecognizer()..onTap = widget.onTapArtistName,
+                                        style: const TextStyle(
+                                          decoration: TextDecoration.underline,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              )),
+                              ),
                               Flexible(
                                 child: Text(
                                   widget.albumName,

@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
@@ -112,10 +113,23 @@ class ListOptionsBottomSheet {
                           onClick: () async {
                             switch (e) {
                               case ListOptionsBottomSheetItem.clear:
+                                if (!context.mounted) {
+                                  break;
+                                }
                                 DefaultBottomSheet.close(context);
                                 final clearDialog = await ClearDialog.show(context);
                                 if (clearDialog) {
-                                  await bloc.clearList(songbook.id);
+                                  (await bloc.clearList(songbook.id)).when(success: (_) {
+                                    showOperationSnackBar(context, context.text.clearSongbookSucceed);
+                                  }, failure: (error) {
+                                    // coverage:ignore-start
+                                    showOperationSnackBar(
+                                        context,
+                                        error is ConnectionError
+                                            ? context.text.noConnection
+                                            : context.text.listServerError);
+                                    // coverage:ignore-end
+                                  });
                                 }
                                 break;
                               case ListOptionsBottomSheetItem.delete:
@@ -125,10 +139,17 @@ class ListOptionsBottomSheet {
                                 DefaultBottomSheet.close(context);
                                 final result = await DeleteDialog.show(context);
                                 if (result) {
-                                  await bloc.deleteSongbook(songbook.id).then((value) {
-                                    if (value) {
-                                      onDeleteSongbook();
-                                    }
+                                  (await bloc.deleteSongbook(songbook.id)).when(success: (_) {
+                                    showOperationSnackBar(context, context.text.deleteSongbookSucceed);
+                                    onDeleteSongbook();
+                                  }, failure: (error) {
+                                    // coverage:ignore-start
+                                    showOperationSnackBar(
+                                        context,
+                                        error is ConnectionError
+                                            ? context.text.noConnection
+                                            : context.text.listServerError);
+                                    // coverage:ignore-end
                                   });
                                 }
                                 break;
@@ -156,19 +177,22 @@ class ListOptionsBottomSheet {
                                         (await bloc.updateSongbookData(songbook: songbook, songbookName: newName)).when(
                                           success: (_) {
                                             InputDialog.close(context);
+                                            showOperationSnackBar(context, context.text.renameSongbookSucceed(newName));
                                           },
-                                          failure: (_) {
-                                            ScaffoldMessenger.of(widgetContext).showSnackBar(
-                                              SnackBar(content: Text(context.text.listServerError)),
-                                            );
+                                          failure: (error) {
+                                            // coverage:ignore-start
+                                            showOperationSnackBar(
+                                                widgetContext,
+                                                error is ConnectionError
+                                                    ? context.text.noConnection
+                                                    : context.text.listServerError);
+                                            // coverage:ignore-end
                                           },
                                         );
                                         break;
                                       case false:
                                         if (context.mounted) {
-                                          ScaffoldMessenger.of(widgetContext).showSnackBar(
-                                            SnackBar(content: Text(context.text.listUsedName)),
-                                          );
+                                          showOperationSnackBar(widgetContext, context.text.listUsedName);
                                         }
                                         break;
                                     }
@@ -190,10 +214,24 @@ class ListOptionsBottomSheet {
                                   break;
                                 }
                                 DefaultBottomSheet.close(context);
+
                                 PrivacyBottomSheet(
                                   isPublic: songbook.isPublic,
                                   onTap: (privacy) async {
-                                    await bloc.updateSongbookData(songbook: songbook, isPublic: privacy);
+                                    (await bloc.updateSongbookData(songbook: songbook, isPublic: privacy)).when(
+                                      success: (_) {
+                                        showOperationSnackBar(context, context.text.privacyChangeSucceed);
+                                      },
+                                      failure: (error) {
+                                        // coverage:ignore-start
+                                        showOperationSnackBar(
+                                            context,
+                                            error is ConnectionError
+                                                ? context.text.noConnection
+                                                : context.text.listServerError);
+                                        // coverage:ignore-end
+                                      },
+                                    );
                                   },
                                 ).show(context);
                                 break;
@@ -207,10 +245,17 @@ class ListOptionsBottomSheet {
                   else
                     IconTextTile(
                       onClick: () async {
-                        DefaultBottomSheet.close(context);
-                        final clearDialog = await ClearDialog.show(context);
-                        if (clearDialog) {
-                          await bloc.clearList(songbook.id);
+                        if (context.mounted) {
+                          DefaultBottomSheet.close(context);
+                          final clearDialog = await ClearDialog.show(context);
+                          if (clearDialog) {
+                            (await bloc.clearList(songbook.id)).when(success: (_) {
+                              showOperationSnackBar(context, context.text.clearSongbookSucceed);
+                            }, failure: (error) {
+                              showOperationSnackBar(context,
+                                  error is ConnectionError ? context.text.noConnection : context.text.listServerError);
+                            });
+                          }
                         }
                       },
                       text: ListOptionsBottomSheetItem.clear.getText(context),
@@ -225,6 +270,14 @@ class ListOptionsBottomSheet {
       ),
       context: context,
       scrollController: controller,
+    );
+  }
+
+  void showOperationSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
     );
   }
 }

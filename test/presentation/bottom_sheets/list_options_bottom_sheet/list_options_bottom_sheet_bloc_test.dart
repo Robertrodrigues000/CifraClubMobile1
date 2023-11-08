@@ -12,7 +12,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:typed_result/typed_result.dart';
 
-import '../../shared_mocks/domain/songbook/models/songbook_mock.dart';
+import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
 
 class _ClearVersionsFromSongbookMock extends Mock implements ClearVersionsFromSongbook {}
 
@@ -33,14 +33,14 @@ void main() {
     _DeleteSongbookMock? deleteSongbookMock,
     _UpdateSongbookDataMock? updateSongbookDataMock,
     _ValidateSongbookNameMock? validateSongbookNameMock,
-    _ClearVersionsFromSongbookMock? deleteAllCifrasMock,
+    _ClearVersionsFromSongbookMock? clearVersionsFromSongbookMock,
     _ShareLinkMock? shareLinkMock,
   }) =>
       ListOptionsBottomSheetBloc(
         deleteSongbookMock ?? _DeleteSongbookMock(),
         updateSongbookDataMock ?? _UpdateSongbookDataMock(),
         validateSongbookNameMock ?? _ValidateSongbookNameMock(),
-        deleteAllCifrasMock ?? _ClearVersionsFromSongbookMock(),
+        clearVersionsFromSongbookMock ?? _ClearVersionsFromSongbookMock(),
         shareLinkMock ?? _ShareLinkMock(),
       );
 
@@ -87,25 +87,36 @@ void main() {
     );
   });
 
-  test("When `clearList` is called should call deleteAllVersions", () async {
-    final deleteAllCifras = _ClearVersionsFromSongbookMock();
-    when(() => deleteAllCifras(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+  group("When `clearList` is called", () {
+    test("and songbook is not null should call clearVersionsFromSongbook", () async {
+      final clearVersionsFromSongbook = _ClearVersionsFromSongbookMock();
+      when(() => clearVersionsFromSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
-    final bloc = getBloc(deleteAllCifrasMock: deleteAllCifras);
-    await bloc.clearList(10);
+      final bloc = getBloc(clearVersionsFromSongbookMock: clearVersionsFromSongbook);
+      await bloc.clearList(10);
 
-    verify(() => deleteAllCifras(10)).called(1);
+      verify(() => clearVersionsFromSongbook(10)).called(1);
+    });
+    test("and songbook is null should return error", () async {
+      final clearVersionsFromSongbook = _ClearVersionsFromSongbookMock();
+
+      final bloc = getBloc(clearVersionsFromSongbookMock: clearVersionsFromSongbook);
+      final result = await bloc.clearList(null);
+
+      verifyNever(() => clearVersionsFromSongbook(10)).called(0);
+      expect(result.isFailure, isTrue);
+    });
   });
 
-  test("When `shareLink` is called should call Sharelink lib", () async {
-    final sharelink = _ShareLinkMock();
-    when(() => sharelink(link: any(named: "link")))
+  test("When `shareLink` is called should call shareLink lib", () async {
+    final shareLink = _ShareLinkMock();
+    when(() => shareLink(link: any(named: "link")))
         .thenAnswer((_) => SynchronousFuture(const ShareResult("raw", ShareResultStatus.success)));
 
-    final bloc = getBloc(shareLinkMock: sharelink);
+    final bloc = getBloc(shareLinkMock: shareLink);
     await bloc.shareLink("https.com", null);
 
-    verify(() => sharelink(link: "https.com")).called(1);
+    verify(() => shareLink(link: "https.com")).called(1);
   });
 
   test("When `deleteSongbook` is called should call delete songbook by id", () async {

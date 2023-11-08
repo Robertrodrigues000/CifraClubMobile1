@@ -21,6 +21,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:cifraclub/presentation/widgets/limit_warning.dart';
@@ -73,7 +74,7 @@ void main() {
     registerFallbackValue(getFakeVersion());
 
     blocBottomSheet = _ListOptionsBottomSheetBlocMock();
-    when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
+    when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
     when(blocBottomSheet.close).thenAnswer((_) => SynchronousFuture(null));
 
     final bottomSheetMock = _ListOptionBottomSheetMock();
@@ -640,5 +641,31 @@ void main() {
     await widgetTester.pump();
     expect(find.byType(LimitWarning), findsOneWidget);
     verify(() => AddVersionsToListEntry.push(nav, 1));
+  });
+
+  testWidgets("when tap version tile, should navigate to version screen", (widgetTester) async {
+    final version = getFakeVersion();
+    bloc.mockStream(VersionsState(versions: [version], songbook: getFakeSongbook(isPublic: true)));
+    final nav = NavMock.getDummy();
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidgetWithWrapper(
+        BlocProvider<VersionsBloc>.value(
+          value: bloc,
+          child: VersionsScreen(
+            isTablet: true,
+            listOptionsBottomSheet: bottomSheet,
+            userId: 1,
+            songbookId: 1,
+          ),
+        ),
+        nav: nav,
+      );
+    });
+
+    expect(find.byType(VersionTile, skipOffstage: false), findsOneWidget);
+    await widgetTester.tap(find.byType(VersionTile), warnIfMissed: false);
+    verify(() => VersionEntry.pushFromSong(nav, version.artist.url, version.songUrl, version.artist.name, version.name))
+        .called(1);
   });
 }

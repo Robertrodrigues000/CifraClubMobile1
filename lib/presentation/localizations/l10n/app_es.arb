@@ -181,7 +181,7 @@
         }
     },
     "listUsedName": "Ya existe una lista con este nombre. Por favor, introduce otro.",
-    "listServerError": "No se puede acceder al servidor",
+    "listServerError": "Error inesperado. Inténtalo de nuevo.",
     "deleteVersionOption": "Eliminar cifrado",
     "versionOptionsBottomSheet": "Opciones de cifrado",
     "deleteVersionDialogDescription": "¿Seguro que quieres eliminar este cifrado?",
@@ -345,5 +345,18 @@
     "capo9": "9ª traste",
     "capo10": "10ª traste",
     "capo11": "11ª traste",
-    "capo12": "12ª traste"
+    "capo12": "12ª traste",
+    "removeVersionSucceed": "Cifrado eliminado.",
+    "deleteSongbookSucceed": "Lista eliminada con éxito!",
+    "clearSongbookSucceed": "Todas las canciones han sido eliminadas de la lista.",
+    "renameSongbookSucceed": "Lista renombrada para {newName}.",
+    "@renameSongbookSucceed": {
+        "placeholders": {
+            "newName" : {
+                "type": "String",
+                "example": "Luau"
+            }
+        }
+    },
+    "privacyChangeSucceed": "Privacidad alterada."
 }

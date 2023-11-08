@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/constants/app_urls.dart';
 import 'package:cifraclub/presentation/screens/album/album_bloc.dart';
 import 'package:cifraclub/presentation/screens/album/album_state.dart';
 import 'package:cifraclub/presentation/screens/album/widgets/album_header.dart';
+import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -52,6 +53,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
                 albumThumbSize: context.appDimensionScheme.albumHeaderThumbHeight,
                 totalSongs: state.album?.totalSongs ?? 0,
                 releaseYear: state.album?.releaseYear,
+                onTapArtistName: () =>
+                    ArtistEntry.push(Nav.of(context), state.album?.artistUrl ?? ""), // coverage:ignore-file
               ),
               if (state.isLoading)
                 SliverToBoxAdapter(

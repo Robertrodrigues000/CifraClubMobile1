@@ -236,7 +236,7 @@
         }
     },
     "listUsedName": "There is already a list with that name. Please choose another.",
-    "listServerError": "Unable to access the server",
+    "listServerError": "Unexpected error. Try again.",
     "deleteVersionOption": "Delete tab",
     "versionOptionsBottomSheet": "Tab options",
     "deleteVersionDialogDescription": "Are you sure you want to delete this tab?",
@@ -403,5 +403,18 @@
     "capo9": "9th fret",
     "capo10": "10th fret",
     "capo11": "11th fret",
-    "capo12": "12th fret"
+    "capo12": "12th fret",
+    "removeVersionSucceed": "Tab deleted.",
+    "deleteSongbookSucceed": "Songbook deleted successfully!",
+    "clearSongbookSucceed": "All songs were deleted from the songbook.",
+    "renameSongbookSucceed": "Songbook renamed to {newName}.",
+    "@renameSongbookSucceed": {
+        "placeholders": {
+            "newName" : {
+                "type": "String",
+                "example": "Luau"
+            }
+        }
+    },
+    "privacyChangeSucceed": "Privacy changed."
 }

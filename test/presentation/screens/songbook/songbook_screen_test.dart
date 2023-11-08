@@ -76,7 +76,7 @@ void main() {
     registerFallbackValue(_BuildContextMock());
 
     blocBottomSheet = _ListOptionsBottomSheetBlocMock();
-    when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
+    when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
     when(blocBottomSheet.close).thenAnswer((_) => SynchronousFuture(null));
 
     final bottomSheetMock = _ListOptionBottomSheetMock();

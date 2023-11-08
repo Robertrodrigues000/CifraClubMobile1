@@ -17,6 +17,7 @@ import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dial
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
+import 'package:cifraclub/presentation/widgets/selectable_item.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:typed_result/typed_result.dart';
 
-import '../../shared_mocks/domain/songbook/models/songbook_mock.dart';
-import '../../shared_mocks/presentation/navigator/nav_mock.dart';
-import '../../test_helpers/app_localizations.dart';
-import '../../test_helpers/bloc_stream.dart';
-import '../../test_helpers/test_wrapper.dart';
+import '../../../shared_mocks/domain/songbook/models/songbook_mock.dart';
+import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
+import '../../../test_helpers/app_localizations.dart';
+import '../../../test_helpers/bloc_stream.dart';
+import '../../../test_helpers/test_wrapper.dart';
 
 class _ClearVersionsFromSongbookMock extends Mock implements ClearVersionsFromSongbook {}
 
@@ -56,8 +57,8 @@ void main() {
     registerFallbackValue(_BuildContextMock());
 
     bloc = _ListOptionsBottomSheetBlocMock();
-    when(() => bloc.clearList(any())).thenAnswer((_) => SynchronousFuture(null));
-    when(() => bloc.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
+    when(() => bloc.clearList(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+    when(() => bloc.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
     when(() => bloc.shareLink(any(), any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(true));
     when(() => bloc.updateSongbookData(
@@ -291,6 +292,51 @@ void main() {
     verify(() => bloc.clearList(songbook.id)).called(1);
   });
 
+  testWidgets("When tap in clear list option and an error occurred, should show snackbar with message",
+      (widgetTester) async {
+    bloc.mockStream(null);
+    final songbook = getFakeSongbook(isPublic: true);
+    when(() => bloc.clearList(any())).thenAnswer((_) => SynchronousFuture(Err(ConnectionError())));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () async {
+                await setOpenListOptionBottomSheet(
+                  context,
+                  true,
+                  1,
+                  songbook,
+                  false,
+                  bloc,
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+
+    await widgetTester.tap(find.text(appTextEn.clearList));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(ClearDialog), findsOneWidget);
+
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.yes));
+    await widgetTester.pump();
+
+    expect(find.text(appTextEn.noConnection), findsOneWidget);
+    verify(() => bloc.clearList(songbook.id)).called(1);
+  });
+
   testWidgets("When tap in deleteSongbook option should call dialog and delete songbook", (widgetTester) async {
     bloc.mockStream(null);
     final songbook = getFakeSongbook(isPublic: true);
@@ -336,6 +382,54 @@ void main() {
     verify(() => bloc.deleteSongbook(songbook.id)).called(1);
   });
 
+  testWidgets("When tap in deleteSongbook option and an error occurred, should show snackbar with message",
+      (widgetTester) async {
+    bloc.mockStream(null);
+    final songbook = getFakeSongbook(isPublic: true);
+    final completer = Completer();
+    when(() => bloc.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () async {
+                await setOpenListOptionBottomSheet(
+                  context,
+                  true,
+                  1,
+                  songbook,
+                  false,
+                  bloc,
+                  completer.complete,
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+
+    await widgetTester.tap(find.text(appTextEn.deleteList));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(DeleteDialog), findsOneWidget);
+
+    await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.yes));
+    await widgetTester.pump();
+
+    expect(completer.isCompleted, isFalse);
+    expect(find.text(appTextEn.listServerError), findsOneWidget);
+    verify(() => bloc.deleteSongbook(songbook.id)).called(1);
+  });
+
   testWidgets("When tap in privacy option should show privacy bottom sheet", (widgetTester) async {
     bloc.mockStream(null);
     final songbook = getFakeSongbook(isPublic: true);
@@ -364,6 +458,48 @@ void main() {
     await widgetTester.pumpAndSettle();
 
     expect(find.byType(PrivacyBottomSheet), findsOneWidget);
+  });
+
+  testWidgets(
+      "When tap in privacy option, select privacy from PrivacyBottomSheet and an error occurred, should show snackbar with message",
+      (widgetTester) async {
+    bloc.mockStream(null);
+    final songbook = getFakeSongbook(isPublic: true);
+
+    when(() => bloc.updateSongbookData(
+        songbookName: any(named: "songbookName"),
+        songbook: any(named: "songbook"),
+        isPublic: any(named: "isPublic"))).thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () async {
+                await setOpenListOptionBottomSheet(context, true, 1, songbook, false, bloc);
+              },
+            ),
+          );
+        },
+      ),
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+
+    await widgetTester.tap(find.text(appTextEn.privacyList));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(PrivacyBottomSheet), findsOneWidget);
+    await widgetTester.tap(find.widgetWithText(SelectableItem, appTextEn.private), warnIfMissed: false);
+    await widgetTester.pump();
+
+    expect(find.text(appTextEn.listServerError), findsOneWidget);
+    verify(() => bloc.updateSongbookData(songbook: songbook, isPublic: false)).called(1);
   });
 
   testWidgets("When tap in shareLink option should call share link", (widgetTester) async {
@@ -402,6 +538,11 @@ void main() {
     const newSongbookName = "teste name";
     final songbook = getFakeSongbook(isPublic: true);
 
+    when(() => bloc.updateSongbookData(
+        songbookName: any(named: "songbookName"),
+        songbook: any(named: "songbook"),
+        isPublic: any(named: "isPublic"))).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
     await widgetTester.pumpWidgetWithWrapper(
       Builder(
         builder: (context) {
@@ -433,10 +574,13 @@ void main() {
     expect(find.text(newSongbookName), findsOneWidget);
 
     await widgetTester.tap(find.widgetWithText(CifraClubButton, appTextEn.save));
+    await widgetTester.pump();
+
+    expect(find.text(appTextEn.renameSongbookSucceed(newSongbookName)), findsOneWidget);
     verify(() => bloc.updateSongbookData(songbook: songbook, songbookName: newSongbookName)).called(1);
   });
 
-  testWidgets("When tap in nameList option and name is repetead should show snackbar message", (widgetTester) async {
+  testWidgets("When tap in nameList option and name is repeated should show snackbar message", (widgetTester) async {
     bloc.mockStream(null);
     const newSongbookName = "teste name";
     when(() => bloc.isValidSongbookName(any())).thenAnswer((_) => SynchronousFuture(false));
@@ -561,6 +705,11 @@ void main() {
     final songbook = getFakeSongbook(isPublic: true);
     final nav = NavMock.getDummy();
 
+    when(() => bloc.updateSongbookData(
+        songbookName: any(named: "songbookName"),
+        songbook: any(named: "songbook"),
+        isPublic: any(named: "isPublic"))).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
     await widgetTester.pumpWidgetWithWrapper(
       Builder(
         builder: (context) {
@@ -591,6 +740,8 @@ void main() {
         ),
         warnIfMissed: false);
     await widgetTester.pumpAndSettle();
+
+    expect(find.text(appTextEn.privacyChangeSucceed), findsOneWidget);
 
     verify(() => bloc.updateSongbookData(songbook: songbook, isPublic: false)).called(1);
   });

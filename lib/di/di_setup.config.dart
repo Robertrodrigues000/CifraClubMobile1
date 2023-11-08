@@ -493,6 +493,7 @@ Future<_i1.GetIt> $initGetIt(
         gh<_i127.SongbookRepository>(),
         gh<_i62.UserVersionRepository>(),
         gh<_i132.UpdateSongbookPreview>(),
+        gh<_i60.UserSongbookRepository>(),
       ));
   gh.factory<_i142.DeleteSongbook>(() => _i142.DeleteSongbook(
         gh<_i127.SongbookRepository>(),

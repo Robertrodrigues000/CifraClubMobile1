@@ -6,6 +6,7 @@ import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
@@ -20,6 +21,7 @@ import 'package:cifraclub/presentation/widgets/subscription_holder.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nav/nav.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -151,6 +153,22 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
           },
           child: Scaffold(
             appBar: CosmosAppBar(
+              automaticallyImplyLeading: false,
+              leading: Padding(
+                padding: EdgeInsets.only(left: context.appDimensionScheme.appBarMargin),
+                child: InkWell(
+                  onTap: () => Nav.of(context).pop(), // coverage:ignore-line
+                  child: SizedBox(
+                    height: 48,
+                    width: 48,
+                    child: SvgPicture.asset(
+                      AppSvgs.backArrowIcon,
+                      fit: BoxFit.none,
+                      color: context.colors.textPrimary,
+                    ),
+                  ),
+                ),
+              ),
               actions: [
                 TextButton(
                   onPressed: () {

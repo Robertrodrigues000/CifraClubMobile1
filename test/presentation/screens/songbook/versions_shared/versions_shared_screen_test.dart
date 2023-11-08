@@ -7,6 +7,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions
 import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions_shared_state.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/foundation.dart';
@@ -186,5 +187,26 @@ void main() {
     );
 
     expect(find.byType(ErrorDescriptionWidget, skipOffstage: false), findsOneWidget);
+  });
+
+  testWidgets("When tap version tile should navigate to version screen", (widgetTester) async {
+    final version = getFakeVersion();
+    bloc.mockStream(VersionsSharedState(versions: [version], songbook: getFakeSongbook(isPublic: true)));
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      BlocProvider<VersionsSharedBloc>.value(
+        value: bloc,
+        child: const VersionsSharedScreen(
+          songbookId: 1,
+        ),
+      ),
+      nav: nav,
+    );
+
+    expect(find.byType(VersionTile, skipOffstage: false), findsOneWidget);
+    await widgetTester.tap(find.byType(VersionTile), warnIfMissed: false);
+    verify(() => VersionEntry.pushFromSong(nav, version.artist.url, version.songUrl, version.artist.name, version.name))
+        .called(1);
   });
 }

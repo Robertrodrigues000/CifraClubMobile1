@@ -181,7 +181,7 @@
         }
     },
     "listUsedName": "Já existe uma lista com esse nome. Por favor, informe outro.",
-    "listServerError": "Não foi possível acessar o servidor",
+    "listServerError": "Erro inesperado. Tente novamente.",
     "deleteVersionOption": "Excluir cifra",
     "versionOptionsBottomSheet": "Opções da cifra",
     "deleteVersionDialogDescription": "Tem certeza que deseja excluir esta cifra?",
@@ -347,5 +347,18 @@
     "capo9": "9ª casa",
     "capo10": "10ª casa",
     "capo11": "11ª casa",
-    "capo12": "12ª casa"
+    "capo12": "12ª casa",
+    "removeVersionSucceed": "Cifra excluída.",
+    "deleteSongbookSucceed": "Lista excluída com sucesso!",
+    "clearSongbookSucceed": "Todas as músicas foram excluídas da lista.",
+    "renameSongbookSucceed": "Lista renomeada para {newName}.",
+    "@renameSongbookSucceed": {
+        "placeholders": {
+            "newName" : {
+                "type": "String",
+                "example": "Luau"
+            }
+        }
+    },
+    "privacyChangeSucceed": "Privacidade alterada."
 }

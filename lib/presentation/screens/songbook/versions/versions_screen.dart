@@ -12,6 +12,7 @@ import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cifraclub/presentation/widgets/limit_warning.dart';
@@ -255,7 +256,7 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       song: item.name,
                       artist: item.artist.name,
                       type: item.instrument.getInstrumentName(context),
-                      versionKey: item.key ?? "",
+                      versionKey: item.key,
                       // coverage:ignore-start
                       onOptionsTap: () {
                         ListVersionOptionsBottomSheet(onTap: () async {
@@ -265,11 +266,23 @@ class _VersionsScreenState extends State<VersionsScreen> {
                           );
                           if (shouldDeleteVersion == true) {
                             await _bloc.deleteVersion(widget.songbookId, state.versions[index]);
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(context.text.removeVersionSucceed)),
+                              );
+                            }
+                          } else {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(context.text.listServerError)),
+                              );
+                            }
                           }
                         }).show(context);
                       },
-                      onVersionTap: () {},
-                      onDeleteTap: () {},
+                      onVersionTap: () => VersionEntry.pushFromSong(
+                          Nav.of(context), item.artist.url, item.songUrl, item.artist.name, item.name),
                       // coverage:ignore-end
                       editable: false,
                     );

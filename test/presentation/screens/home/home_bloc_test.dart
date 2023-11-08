@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/genre/use_cases/insert_user_genre.dart';
 import 'package:cifraclub/domain/home/models/home_info.dart';
 import 'package:cifraclub/domain/home/use_cases/get_home_info.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/domain/user/models/user.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
@@ -57,6 +58,12 @@ class _GetCredentialStreamMock extends Mock implements GetCredentialStream {
     final mock = _GetCredentialStreamMock();
     when(mock.call).thenAnswer((_) => BehaviorSubject.seeded(credentials));
     return mock;
+  }
+}
+
+class _GetProStatusStreamMock extends Mock implements GetProStatusStream {
+  _GetProStatusStreamMock() {
+    when(call).thenAnswer((_) => BehaviorSubject.seeded(false));
   }
 }
 
@@ -112,16 +119,17 @@ void main() {
     _OpenUserProfileMock? openUserProfile,
     _LogoutMock? logout,
     _GetHomeInfoMock? getHomeInfo,
+    _GetProStatusStreamMock? getProStatusStream,
   }) =>
       HomeBloc(
-        getUserGenresAsStream ?? _GetUserGenresAsStreamMock.newDummy(),
-        insertUserGenreMock ?? _InsertUserGenreMock(),
-        getCredentialStream ?? _GetCredentialStreamMock.newDummy(),
-        openLoginPage ?? _OpenLoginPageMock.newDummy(),
-        openUserProfile ?? _OpenUserProfileMock.newDummy(),
-        logout ?? _LogoutMock.newDummy(),
-        getHomeInfo ?? _GetHomeInfoMock.newDummy(),
-      );
+          getUserGenresAsStream ?? _GetUserGenresAsStreamMock.newDummy(),
+          insertUserGenreMock ?? _InsertUserGenreMock(),
+          getCredentialStream ?? _GetCredentialStreamMock.newDummy(),
+          openLoginPage ?? _OpenLoginPageMock.newDummy(),
+          openUserProfile ?? _OpenUserProfileMock.newDummy(),
+          logout ?? _LogoutMock.newDummy(),
+          getHomeInfo ?? _GetHomeInfoMock.newDummy(),
+          getProStatusStream ?? _GetProStatusStreamMock());
 
   test("When user action is openLoginPage should call openLoginPage use case", () async {
     final openLoginPage = _OpenLoginPageMock.newDummy();

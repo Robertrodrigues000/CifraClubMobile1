@@ -91,7 +91,7 @@ void main() {
     when(bloc.initListLimitStreams).thenAnswer((_) => SynchronousFuture(null));
 
     blocBottomSheet = _ListOptionsBottomSheetBlocMock();
-    when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(true));
+    when(() => blocBottomSheet.deleteSongbook(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
     when(blocBottomSheet.close).thenAnswer((_) => SynchronousFuture(null));
 
     bottomSheet = bottomSheetMock;
