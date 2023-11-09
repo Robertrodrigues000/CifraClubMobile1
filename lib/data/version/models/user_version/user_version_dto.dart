@@ -19,6 +19,7 @@ class UserVersionDto extends Equatable {
   final String songUrl;
   final String? key;
   final int type;
+  @Index(composite: [CompositeIndex('songbookId')])
   final int songId;
   final String? stdKey;
   final int? capo;

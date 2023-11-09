@@ -1,3 +1,5 @@
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
+
 sealed class VersionEffect {}
 
 class OnShowYouTubeVideo implements VersionEffect {
@@ -17,3 +19,9 @@ class OnAutoScrollTickEffect implements VersionEffect {
 class OnShowListenBottomSheetEffect implements VersionEffect {}
 
 class OnShowOptionsBottomSheetEffect implements VersionEffect {}
+
+class OnFavoriteError implements VersionEffect {
+  final VersionOptionsResult haveError;
+
+  OnFavoriteError({required this.haveError});
+}

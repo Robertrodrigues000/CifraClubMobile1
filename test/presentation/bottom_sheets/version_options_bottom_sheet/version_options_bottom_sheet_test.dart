@@ -1,14 +1,13 @@
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
+import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
-import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom_sheet/save_version_to_list_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_state.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_result.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +22,13 @@ class _SaveVersionToListBottomSheetMock extends Mock implements SaveVersionToLis
 
 class _BuildContextMock extends Mock implements BuildContext {}
 
-class _InsertVersionToSongbookMock extends Mock implements InsertVersionToSongbook {}
+class _FavoriteUnfavoriteVersionMock extends Mock implements FavoriteUnfavoriteVersion {}
 
 class _GetCredentialStreamMock extends Mock implements GetCredentialStream {}
 
 class _GetIsFavoriteVersionBySongIdMock extends Mock implements GetIsFavoriteVersionBySongId {}
 
 class _OpenLoginPageMock extends Mock implements OpenLoginPage {}
-
-class _DeleteVersionFromFavoritesMock extends Mock implements DeleteVersionFromFavorites {}
 
 class _ShareLinkMock extends Mock implements ShareLink {}
 
@@ -53,12 +50,11 @@ void main() {
 
     versionOptionsBottomSheet = VersionOptionsBottomSheet(
       _SaveVersionToListBottomSheetMock(),
-      _InsertVersionToSongbookMock(),
       _GetIsFavoriteVersionBySongIdMock(),
-      _DeleteVersionFromFavoritesMock(),
       _GetCredentialStreamMock(),
       _OpenLoginPageMock(),
       _ShareLinkMock(),
+      _FavoriteUnfavoriteVersionMock(),
     );
   });
 
@@ -106,12 +102,11 @@ void main() {
 
       versionOptionsBottomSheet = VersionOptionsBottomSheet(
         saveVersionToListBottomSheet,
-        _InsertVersionToSongbookMock(),
         _GetIsFavoriteVersionBySongIdMock(),
-        _DeleteVersionFromFavoritesMock(),
         _GetCredentialStreamMock(),
         _OpenLoginPageMock(),
         _ShareLinkMock(),
+        _FavoriteUnfavoriteVersionMock(),
       );
 
       await widgetTester.pumpWidgetWithWrapper(

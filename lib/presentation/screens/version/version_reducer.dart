@@ -19,11 +19,13 @@ class VersionReducer {
           ),
         );
       case OnStartLoading():
-        return state.copyWith(isLoading: true, version: null);
+        return state.copyWith(isLoading: true);
       case OnVersionSelected():
         return state.copyWith(
           versionHeaderState: state.versionHeaderState.copyWith(selectedVersionFilter: action.filter),
         );
+      case OnVersionError():
+        return state.copyWith(version: null);
       case OnContentParsed():
         return state.copyWith(
           sections: action.sections,
@@ -62,6 +64,11 @@ class VersionReducer {
       case OnShowOptionsBottomSheet():
         onEffect(OnShowOptionsBottomSheetEffect());
         return state;
+      case OnFavoriteChange():
+        if (action.haveError != null) {
+          onEffect(OnFavoriteError(haveError: action.haveError!));
+        }
+        return state.copyWith(versionHeaderState: state.versionHeaderState.copyWith(isFavorite: action.isFavorite));
       default:
         return state;
     }

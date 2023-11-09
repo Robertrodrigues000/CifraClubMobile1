@@ -29,7 +29,7 @@ void main() {
 
   test("When call use case and request is successful should remove songs of local db", () async {
     final songs = [getFakeVersion()];
-    when(() => songbookRepository.deleteVersions(songbookId: 1, versionsId: [songs.first.remoteDatabaseId!]))
+    when(() => songbookRepository.deleteVersions(songbookId: 15, versionsId: [songs.first.remoteDatabaseId!]))
         .thenAnswer((_) => Future.value(const Ok(null)));
     when(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!], any()))
         .thenAnswer((invocation) => SynchronousFuture(1));
@@ -38,29 +38,45 @@ void main() {
         .thenAnswer((_) => SynchronousFuture(1));
 
     final result = await DeleteVersions(songbookRepository, userCifraRepository, userSongbookRepository)(
-      songbookId: 1,
+      songbookId: 15,
       versions: songs,
     );
 
     expect(result.isSuccess, isTrue);
 
-    verify(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!], 1)).called(1);
+    verify(() => userCifraRepository.deleteVersionsById([songs.first.localDatabaseId!], 15)).called(1);
     verify(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId"))).called(1);
   });
 
   test("When call use case and request fails should return request error", () async {
     final songs = [getFakeVersion()];
-    when(() => songbookRepository.deleteVersions(versionsId: [songs.first.remoteDatabaseId!], songbookId: 1))
+    when(() => songbookRepository.deleteVersions(versionsId: [songs.first.remoteDatabaseId!], songbookId: 15))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
     when(() => userSongbookRepository.updateTotalSongs(songbookId: 1)).thenAnswer((invocation) => SynchronousFuture(1));
 
     final result = await DeleteVersions(songbookRepository, userCifraRepository, userSongbookRepository)(
-        songbookId: 1, versions: songs);
+      songbookId: 15,
+      versions: songs,
+    );
 
     expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "status code", 404));
 
-    verifyNever(() => userCifraRepository.deleteVersionsById(any(), 1));
+    verifyNever(() => userCifraRepository.deleteVersionsById(any(), 15));
+    verifyNever(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")));
+  });
+
+  test("When call use case and is fixed songbook should return a throw", () async {
+    final songs = [getFakeVersion()];
+
+    final result = DeleteVersions(songbookRepository, userCifraRepository, userSongbookRepository)(
+      songbookId: 1,
+      versions: songs,
+    );
+
+    expect(() async => result, throwsException);
+
+    verifyNever(() => userCifraRepository.deleteVersionsById(any(), 15));
     verifyNever(() => userSongbookRepository.updateTotalSongs(songbookId: any(named: "songbookId")));
   });
 }

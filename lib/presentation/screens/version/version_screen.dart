@@ -6,6 +6,7 @@ import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
@@ -104,6 +105,20 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                 selectedKey = newKey;
               });
             }
+          }
+        case OnFavoriteError():
+          if (!context.mounted) {
+            break;
+          }
+          switch (effect.haveError) {
+            case FavoriteVersionError():
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(context.text.favoriteVersionErrorMessage)));
+            case UnFavoriteVersionError():
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(context.text.unFavoriteVersionErrorMessage)));
+            default:
+              break;
           }
       }
     }).addTo(subscriptions);
@@ -213,7 +228,9 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                           songName: state.versionHeaderState.songName,
                           artistName: state.versionHeaderState.artistName,
                           isFavorite: state.versionHeaderState.isFavorite,
-                          onTapFavoriteIcon: () {/*TODO*/},
+                          onTapFavoriteIcon: () {
+                            _bloc.add(OnTapFavoriteButton());
+                          },
                           onTapArtistName: () => ArtistEntry.push(Nav.of(context), state.versionHeaderState.artistUrl),
                           onTapOptionsIcon: () async {
                             await widget.versionOptionsBottomSheet.show(

@@ -139,4 +139,9 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   Future<bool> getIsVersionOnSongbook(int songbookId, int versionId) {
     return _userVersionDataSource.getIsVersionOnSongbook(songbookId, versionId);
   }
+
+  @override
+  Future<Version?> getVersionBySongId(int songbookId, int songId) async {
+    return (await _userVersionDataSource.getVersionBySongId(songbookId, songId))?.toDomain();
+  }
 }

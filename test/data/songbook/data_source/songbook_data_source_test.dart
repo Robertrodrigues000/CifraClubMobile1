@@ -281,7 +281,7 @@ void main() {
 
   group("When addVersionToSongbook is called", () {
     const songbookId = 0;
-    test("and request is successful", () async {
+    test("and request is successful and is user songbook", () async {
       final networkService = NetworkServiceMock();
       final songbookDataSource = SongbookDataSource(networkService);
 
@@ -464,6 +464,65 @@ void main() {
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When deleteVersionsFromRecentsAndCanPlay is called", () {
+    test("and request is successful and is favorites songbook", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final result = await songbookDataSource.deleteVersionsFromFavoriteAndCanPlay(
+        ListType.favorites.localId,
+        SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()),
+      );
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/user/unfavorite-song");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+    });
+
+    test("and request is successful and is recent can play", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final result = await songbookDataSource.deleteVersionsFromFavoriteAndCanPlay(
+        ListType.canPlay.localId,
+        SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()),
+      );
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/user/remove-can-play");
+      expect(request.type, NetworkRequestType.post);
+
+      expect(result.isSuccess, true);
+    });
+
+    test("and is different songbook type should return a throw", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      expect(
+        () async => songbookDataSource.deleteVersionsFromFavoriteAndCanPlay(
+          ListType.recents.localId,
+          SongbookVersionInputDto.fromDomain(getFakeSongbookVersionInput()),
+        ),
+        throwsException,
+      );
     });
   });
 }

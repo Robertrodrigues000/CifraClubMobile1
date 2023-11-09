@@ -67,6 +67,29 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
+  Future<Result<void, RequestError>> deleteVersionsFromFavoriteAndCanPlay(
+    int songbookId,
+    SongbookVersionInputDto songbookVersionInputDto,
+  ) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.post,
+      path: _getDeleteVersionRequestPath(songbookId),
+      data: songbookVersionInputDto.toJson(),
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
+
+  String _getDeleteVersionRequestPath(int songbookId) {
+    final listType = ListType.getListTypeById(songbookId);
+
+    return switch (listType) {
+      ListType.favorites => "/v3/user/unfavorite-song",
+      ListType.canPlay || ListType.cantPlay => "/v3/user/remove-can-play",
+      _ => throw Exception("Songbook type not supported"),
+    };
+  }
+
   Future<Result<void, RequestError>> sortVersions(
     int songbookId,
     VersionsIdsInputDto orderedVersionInput,
@@ -86,7 +109,7 @@ class SongbookDataSource {
   ) {
     var request = NetworkRequest(
       type: NetworkRequestType.post,
-      path: _getRequestPath(songbookId),
+      path: _getAddVersionRequestPath(songbookId),
       data: songbookSongInputDto.toJson(),
       parser: (data) {
         if (data is Map<String, dynamic>) {
@@ -98,7 +121,7 @@ class SongbookDataSource {
     return _networkService.execute(request: request);
   }
 
-  String _getRequestPath(int songbookId) {
+  String _getAddVersionRequestPath(int songbookId) {
     final listType = ListType.getListTypeById(songbookId);
 
     return switch (listType) {

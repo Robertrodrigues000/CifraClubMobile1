@@ -308,9 +308,9 @@ void main() {
       final versionRepository = _VersionRepositoryMock();
 
       final version = [
-        getFakeVersion(remoteDatabaseId: 1, localDatabaseId: 1),
-        getFakeVersion(remoteDatabaseId: 2, localDatabaseId: 2),
-        getFakeVersion(remoteDatabaseId: 3, localDatabaseId: 3),
+        getFakeVersion(remoteDatabaseId: 1, localDatabaseId: 1, capo: Capo.capo1),
+        getFakeVersion(remoteDatabaseId: 2, localDatabaseId: 2, capo: Capo.capo2),
+        getFakeVersion(remoteDatabaseId: 3, localDatabaseId: 3, capo: Capo.capo3),
       ];
 
       final songbookVersions = getFakeSongbookVersions(

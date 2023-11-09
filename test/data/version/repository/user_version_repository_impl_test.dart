@@ -320,4 +320,21 @@ void main() {
     var result = await repository.getIsVersionOnSongbook(ListType.favorites.localId, 123);
     expect(result, isFalse);
   });
+
+  test("when getVersionBySongId should return version", () async {
+    final userVersionDto = _UserVersionDtoMock();
+    final fakeVersion = getFakeVersion();
+    final userVersionDataSource = _UserVersionDataSourceMock();
+
+    when(userVersionDto.toDomain).thenReturn(fakeVersion);
+    when(() => userVersionDataSource.getVersionBySongId(any(), any()))
+        .thenAnswer((_) => SynchronousFuture(userVersionDto));
+
+    final repository = UserVersionRepositoryImpl(userVersionDataSource);
+    var result = await repository.getVersionBySongId(15, 123);
+
+    expect(result?.songId, fakeVersion.songId);
+    expect(result?.remoteDatabaseId, fakeVersion.remoteDatabaseId);
+    verify(userVersionDto.toDomain).called(1);
+  });
 }

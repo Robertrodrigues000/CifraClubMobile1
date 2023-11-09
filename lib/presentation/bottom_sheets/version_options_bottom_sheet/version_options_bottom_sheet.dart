@@ -1,7 +1,6 @@
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
+import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
-import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
@@ -12,7 +11,7 @@ import 'package:cifraclub/presentation/bottom_sheets/save_version_to_list_bottom
 import 'package:cifraclub/presentation/bottom_sheets/tuning_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_state.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_result.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_urls.dart';
@@ -22,21 +21,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VersionOptionsBottomSheet {
   final SaveVersionToListBottomSheet saveToListBottomSheet;
-  final InsertVersionToSongbook _insertVersionToSongbook;
   final GetIsFavoriteVersionBySongId _getIsFavoriteVersionBySongId;
-  final DeleteVersionFromFavorites _deleteVersionFromFavorites;
   final GetCredentialStream _getCredentialStream;
   final OpenLoginPage _openLoginView;
+  final FavoriteUnfavoriteVersion _favoriteUnfavoriteVersion;
   final ShareLink _shareLink;
 
   const VersionOptionsBottomSheet(
     this.saveToListBottomSheet,
-    this._insertVersionToSongbook,
     this._getIsFavoriteVersionBySongId,
-    this._deleteVersionFromFavorites,
     this._getCredentialStream,
     this._openLoginView,
     this._shareLink,
+    this._favoriteUnfavoriteVersion,
   );
 
   // coverage:ignore-start
@@ -55,8 +52,14 @@ class VersionOptionsBottomSheet {
       songId,
       versionData,
       bloc ??
-          VersionOptionsBottomSheetBloc(_insertVersionToSongbook, _getIsFavoriteVersionBySongId,
-              _deleteVersionFromFavorites, _getCredentialStream, _openLoginView, _shareLink, songId)
+          VersionOptionsBottomSheetBloc(
+            _getIsFavoriteVersionBySongId,
+            _getCredentialStream,
+            _openLoginView,
+            _shareLink,
+            _favoriteUnfavoriteVersion,
+            songId,
+          )
         ..init(),
     );
   }
@@ -166,6 +169,7 @@ class VersionOptionsBottomSheet {
 
 // coverage:ignore-start
 void handleResult(BuildContext context, VersionOptionsResult result) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
   switch (result) {
     case FavoriteVersionSuccess():
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.favoriteVersionMessage)));

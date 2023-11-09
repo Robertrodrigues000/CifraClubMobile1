@@ -17,8 +17,13 @@ class InsertVersionToSongbook {
   final GetVersionsLimitState _getVersionsLimitState;
   final GetVersionsLimit _getVersionsLimit;
 
-  InsertVersionToSongbook(this._getVersionData, this._insertVersionDataToSongbook, this._isVersionOnSongbook,
-      this._getVersionsLimitState, this._getVersionsLimit);
+  InsertVersionToSongbook(
+    this._getVersionData,
+    this._insertVersionDataToSongbook,
+    this._isVersionOnSongbook,
+    this._getVersionsLimitState,
+    this._getVersionsLimit,
+  );
 
   Future<Result<int, SongbookError>> call({
     required int songbookId,

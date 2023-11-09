@@ -1,5 +1,5 @@
 // coverage:ignore-file
-abstract class VersionOptionsResult {}
+sealed class VersionOptionsResult {}
 
 class FavoriteVersionSuccess implements VersionOptionsResult {}
 

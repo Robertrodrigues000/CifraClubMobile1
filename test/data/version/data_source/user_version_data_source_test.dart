@@ -545,4 +545,15 @@ void main() {
         await userVersionDataSource.getIsVersionOnSongbook(version.songbookId, version.versionId);
     expect(isVersionOnSongbook, isTrue);
   });
+
+  test("when 'getVersionBySongId' is called, should return version in db", () async {
+    final version = getUserVersionDto();
+
+    await isar.writeTxn(() async {
+      await isar.userVersionDtos.put(version);
+    });
+
+    final isVersionOnSongbook = await userVersionDataSource.getVersionBySongId(version.songbookId, version.songId);
+    expect(isVersionOnSongbook, version);
+  });
 }

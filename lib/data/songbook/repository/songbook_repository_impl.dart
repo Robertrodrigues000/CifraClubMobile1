@@ -66,6 +66,16 @@ class SongbookRepositoryImpl extends SongbookRepository {
   }
 
   @override
+  Future<Result<void, RequestError>> deleteVersionsFromFavoriteAndCanPlay({
+    required int songbookId,
+    required SongbookVersionInput versionInput,
+  }) {
+    final input = SongbookVersionInputDto.fromDomain(versionInput);
+
+    return _songbookDataSource.deleteVersionsFromFavoriteAndCanPlay(songbookId, input);
+  }
+
+  @override
   Future<Result<Version?, RequestError>> addVersionToSongbook({
     required int songbookId,
     required SongbookVersionInput versionInput,

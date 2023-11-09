@@ -150,4 +150,8 @@ class UserVersionDataSource {
   Future<bool> getIsVersionOnSongbook(int songbookId, int versionId) {
     return _isar.userVersionDtos.where().songbookIdVersionIdEqualTo(songbookId, versionId).isNotEmpty();
   }
+
+  Future<UserVersionDto?> getVersionBySongId(int songbookId, int songId) {
+    return _isar.userVersionDtos.where().songIdSongbookIdEqualTo(songId, songbookId).findFirst();
+  }
 }

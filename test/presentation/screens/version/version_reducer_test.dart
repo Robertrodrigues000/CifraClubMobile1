@@ -1,5 +1,7 @@
 import 'package:cifraclub/domain/section/models/text_section.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
@@ -203,5 +205,38 @@ void main() {
     );
 
     effectStream.close();
+  });
+
+  test("When action is OnFavoriteChange", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+      effectStream.stream,
+      emitsInOrder([
+        isA<OnFavoriteError>().having((error) => error.haveError, "error", isA<FavoriteVersionError>()),
+      ]),
+    );
+
+    final state = reducer.reduce(
+      VersionState(version: getFakeVersionData()),
+      OnFavoriteChange(isFavorite: true, haveError: FavoriteVersionError()),
+      effectStream.add,
+    );
+
+    expect(state.versionHeaderState.isFavorite, true);
+    effectStream.close();
+  });
+
+  test("When action is OnVersionError", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      VersionState(version: getFakeVersionData()),
+      OnVersionError(error: VersionEmptyError()),
+      (_) => null,
+    );
+
+    expect(state.version, null);
   });
 }

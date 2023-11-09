@@ -2,29 +2,31 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
-import 'package:cifraclub/domain/songbook/models/list_type.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
+import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
-import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_state.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_result.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState> {
-  final InsertVersionToSongbook _insertVersionToSongbook;
   final GetIsFavoriteVersionBySongId _getIsFavoriteVersionBySongId;
-  final DeleteVersionFromFavorites _deleteVersionFromFavorites;
   final GetCredentialStream _getCredentialStream;
   final OpenLoginPage _openLoginView;
   final ShareLink _shareLink;
+  final FavoriteUnfavoriteVersion _favoriteUnfavoriteVersion;
   final int songId;
 
-  VersionOptionsBottomSheetBloc(this._insertVersionToSongbook, this._getIsFavoriteVersionBySongId,
-      this._deleteVersionFromFavorites, this._getCredentialStream, this._openLoginView, this._shareLink, this.songId)
-      : super(const VersionOptionsBottomSheetState(isLoggedIn: false));
+  VersionOptionsBottomSheetBloc(
+    this._getIsFavoriteVersionBySongId,
+    this._getCredentialStream,
+    this._openLoginView,
+    this._shareLink,
+    this._favoriteUnfavoriteVersion,
+    this.songId,
+  ) : super(const VersionOptionsBottomSheetState(isLoggedIn: false));
 
   StreamSubscription<UserCredential>? _userSubscription;
 
@@ -38,14 +40,7 @@ class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState
 
   Future<VersionOptionsResult> onFavorite(String artistUrl, String songUrl) async {
     bool isFavorite = state.isFavorite;
-    if (isFavorite) {
-      final result = await _deleteVersionFromFavorites(songId: songId);
-      return result.isSuccess ? UnFavoriteVersionSuccess() : UnFavoriteVersionError();
-    } else {
-      final result = await _insertVersionToSongbook(
-          artistUrl: artistUrl, songUrl: songUrl, songbookId: ListType.favorites.localId);
-      return result.isSuccess ? FavoriteVersionSuccess() : FavoriteVersionError();
-    }
+    return _favoriteUnfavoriteVersion(artistUrl: artistUrl, songUrl: songUrl, songId: songId, isFavorite: isFavorite);
   }
 
   Future<void> _updateCredential(UserCredential? userCredential) async {

@@ -6,8 +6,6 @@ import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:typed_result/typed_result.dart';
 
-typedef ActionEmitter = void Function(VersionAction);
-
 @injectable
 class VersionLoaderMiddleware extends VersionMiddleware {
   final GetVersionData _getVersionData;

@@ -2,6 +2,7 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
@@ -108,3 +109,12 @@ class OnFloatingFooterBarModeChange implements VersionAction {
 class OnShowListenBottomSheet implements VersionAction {}
 
 class OnShowOptionsBottomSheet implements VersionAction {}
+
+class OnTapFavoriteButton implements VersionAction {}
+
+class OnFavoriteChange implements VersionAction {
+  final bool isFavorite;
+  final VersionOptionsResult? haveError;
+
+  OnFavoriteChange({required this.isFavorite, this.haveError});
+}

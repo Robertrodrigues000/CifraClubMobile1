@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/preferences/use_cases/set_list_order_type_prefe
 import 'package:cifraclub/domain/remote_config/use_cases/get_versions_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites_or_can_play.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.dart';
@@ -35,6 +36,8 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
   final DeleteVersions _deleteVersions;
   final ValidateArtistImagePreview _validateArtistImagePreview;
   final GetVersionsLimitConstants _getVersionsLimitConstants;
+  final DeleteVersionFromFavoritesOrCanPlay _deleteVersionFromFavoritesOrCanPlay;
+
   VersionsBloc(
     this._getSongbookStreamById,
     this._shareLink,
@@ -48,6 +51,7 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
     this._deleteVersions,
     this._validateArtistImagePreview,
     this._getVersionsLimitConstants,
+    this._deleteVersionFromFavoritesOrCanPlay,
   ) : super(const VersionsState());
 
   Future<void> init(int? songbookId) async {
@@ -134,7 +138,17 @@ class VersionsBloc extends Cubit<VersionsState> with SubscriptionHolder {
 
   Future<void> deleteVersion(int? songbookId, Version version) async {
     if (songbookId != null) {
-      await _deleteVersions(songbookId: songbookId, versions: [version]);
+      final songbookType = ListType.getListTypeById(songbookId);
+
+      switch (songbookType) {
+        case ListType.user:
+          await _deleteVersions(songbookId: songbookId, versions: [version]);
+        case ListType.recents:
+          // TODO: Implementar uma forma de deletar da recents
+          break;
+        default:
+          await _deleteVersionFromFavoritesOrCanPlay(songbookId: songbookId, version: version);
+      }
     }
   }
 

@@ -23,4 +23,5 @@ abstract class UserVersionRepository {
     required int songbookId,
   });
   Future<bool> getIsVersionOnSongbook(int songbookId, int versionId);
+  Future<Version?> getVersionBySongId(int songbookId, int songId);
 }

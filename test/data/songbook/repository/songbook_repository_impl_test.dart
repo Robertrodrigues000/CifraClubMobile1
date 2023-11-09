@@ -239,7 +239,7 @@ void main() {
     });
   });
 
-  test("When geSongbookById is called, should return songbook domain entity", () async {
+  test("When deleteVersionsFromRecentsAndCanPlay is called, should return ...", () async {
     final songbookDataSource = _SongbookDataSourceMock();
     final songbookDto = _SongbookDtoMock();
     final songbook = (songbook: getFakeSongbook(), versions: [getFakeVersion(), getFakeVersion()]);
@@ -256,5 +256,19 @@ void main() {
 
     expect(result.get()!.songbook.id, songbook.songbook.id);
     expect(result.get()!.versions.length, songbook.versions.length);
+  });
+
+  test("When deleteVersionsFromFavoriteAndCanPlay is called, should return result", () async {
+    final songbookDataSource = _SongbookDataSourceMock();
+    final versionInput = getFakeSongbookVersionInput();
+
+    when(() => songbookDataSource.deleteVersionsFromFavoriteAndCanPlay(any(), any()))
+        .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+    final result =
+        await songbookRepositoryImpl.deleteVersionsFromFavoriteAndCanPlay(songbookId: 1, versionInput: versionInput);
+
+    expect(result.isSuccess, isTrue);
   });
 }

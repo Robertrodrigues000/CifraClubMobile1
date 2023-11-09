@@ -13,6 +13,7 @@ import 'music_mock.dart';
 VersionData getFakeVersionData({
   List<({Instrument instrument, List<InstrumentVersion> versions})>? instrumentVersions,
   VersionDataVideoLesson? videoLesson,
+  int? songId,
 }) {
   final label = faker.food.restaurant();
   return VersionData(
@@ -38,7 +39,7 @@ VersionData getFakeVersionData({
         [
           (versions: [getFakeInstrumentVersion()], instrument: Instrument.bass)
         ],
-    song: getFakeSong(),
+    song: getFakeSong(songId: songId),
     artist: getFakeArtist(),
   );
 }

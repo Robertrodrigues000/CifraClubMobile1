@@ -6,8 +6,15 @@ import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
 
-Version getFakeVersion(
-    {int? versionId, String? name, int? remoteDatabaseId, int? localDatabaseId, int? order, DateTime? lastUpdate}) {
+Version getFakeVersion({
+  int? versionId,
+  String? name,
+  int? remoteDatabaseId,
+  int? localDatabaseId,
+  int? order,
+  DateTime? lastUpdate,
+  Capo? capo,
+}) {
   return Version(
     localDatabaseId: localDatabaseId ?? faker.randomGenerator.integer(100),
     remoteDatabaseId: remoteDatabaseId ?? faker.randomGenerator.integer(100),
@@ -17,7 +24,7 @@ Version getFakeVersion(
     key: faker.vehicle.model(),
     instrument: Instrument.bass,
     songId: faker.randomGenerator.integer(100),
-    capo: Capo.getCapoById(faker.randomGenerator.integer(12)),
+    capo: capo ?? Capo.getCapoById(faker.randomGenerator.integer(12)),
     stdKey: faker.food.restaurant(),
     tuning: Tuning.c,
     artist: getFakeArtist(),

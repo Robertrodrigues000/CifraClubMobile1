@@ -302,6 +302,24 @@ const UserVersionDtoSchema = CollectionSchema(
   deserializeProp: _userVersionDtoDeserializeProp,
   idName: r'localDatabaseId',
   indexes: {
+    r'songId_songbookId': IndexSchema(
+      id: -3076409603347183380,
+      name: r'songId_songbookId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'songId',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+        IndexPropertySchema(
+          name: r'songbookId',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
     r'artistImage': IndexSchema(
       id: 897173347989801551,
       name: r'artistImage',
@@ -530,6 +548,14 @@ extension UserVersionDtoQueryWhereSort on QueryBuilder<UserVersionDto, UserVersi
     });
   }
 
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhere> anySongIdSongbookId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'songId_songbookId'),
+      );
+    });
+  }
+
   QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhere> anySongbookIdVersionId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -608,6 +634,186 @@ extension UserVersionDtoQueryWhere on QueryBuilder<UserVersionDto, UserVersionDt
         lower: lowerLocalDatabaseId,
         includeLower: includeLower,
         upper: upperLocalDatabaseId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdEqualToAnySongbookId(int songId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'songId_songbookId',
+        value: [songId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdNotEqualToAnySongbookId(int songId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [],
+              upper: [songId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [songId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [songId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [],
+              upper: [songId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdGreaterThanAnySongbookId(
+    int songId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId_songbookId',
+        lower: [songId],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdLessThanAnySongbookId(
+    int songId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId_songbookId',
+        lower: [],
+        upper: [songId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdBetweenAnySongbookId(
+    int lowerSongId,
+    int upperSongId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId_songbookId',
+        lower: [lowerSongId],
+        includeLower: includeLower,
+        upper: [upperSongId],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdSongbookIdEqualTo(int songId, int songbookId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'songId_songbookId',
+        value: [songId, songbookId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdEqualToSongbookIdNotEqualTo(
+      int songId, int songbookId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [songId],
+              upper: [songId, songbookId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [songId, songbookId],
+              includeLower: false,
+              upper: [songId],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [songId, songbookId],
+              includeLower: false,
+              upper: [songId],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'songId_songbookId',
+              lower: [songId],
+              upper: [songId, songbookId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdEqualToSongbookIdGreaterThan(
+    int songId,
+    int songbookId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId_songbookId',
+        lower: [songId, songbookId],
+        includeLower: include,
+        upper: [songId],
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdEqualToSongbookIdLessThan(
+    int songId,
+    int songbookId, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId_songbookId',
+        lower: [songId],
+        upper: [songId, songbookId],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<UserVersionDto, UserVersionDto, QAfterWhereClause> songIdEqualToSongbookIdBetween(
+    int songId,
+    int lowerSongbookId,
+    int upperSongbookId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'songId_songbookId',
+        lower: [songId, lowerSongbookId],
+        includeLower: includeLower,
+        upper: [songId, upperSongbookId],
         includeUpper: includeUpper,
       ));
     });

@@ -1,30 +1,26 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
+import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
-import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_bloc.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_state.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_result.dart';
+import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/domain/user/models/user_mock.dart';
 
-class _InsertVersionToSongbookMock extends Mock implements InsertVersionToSongbook {}
-
 class _GetIsFavoriteVersionBySongIdMock extends Mock implements GetIsFavoriteVersionBySongId {}
 
-class _DeleteVersionFromFavoritesMock extends Mock implements DeleteVersionFromFavorites {}
-
 class _GetCredentialStreamMock extends Mock implements GetCredentialStream {}
+
+class _FavoriteUnfavoriteVersionMock extends Mock implements FavoriteUnfavoriteVersion {}
 
 class _OpenLoginPageMock extends Mock implements OpenLoginPage {
   static _OpenLoginPageMock newDummy() {
@@ -38,21 +34,19 @@ class _ShareLinkMock extends Mock implements ShareLink {}
 
 void main() {
   VersionOptionsBottomSheetBloc getBloc({
-    _InsertVersionToSongbookMock? insertVersionToSongbookMock,
     _GetIsFavoriteVersionBySongIdMock? getIsFavoriteVersionBySongIdMock,
-    _DeleteVersionFromFavoritesMock? deleteVersionFromFavoritesMock,
     _GetCredentialStreamMock? getCredentialStreamMock,
     _OpenLoginPageMock? openLoginPageMock,
     _ShareLinkMock? shareLinkMock,
+    _FavoriteUnfavoriteVersionMock? favoriteUnfavoriteVersionMock,
     int? songId,
   }) =>
       VersionOptionsBottomSheetBloc(
-        insertVersionToSongbookMock ?? _InsertVersionToSongbookMock(),
         getIsFavoriteVersionBySongIdMock ?? _GetIsFavoriteVersionBySongIdMock(),
-        deleteVersionFromFavoritesMock ?? _DeleteVersionFromFavoritesMock(),
         getCredentialStreamMock ?? _GetCredentialStreamMock(),
         openLoginPageMock ?? _OpenLoginPageMock(),
         shareLinkMock ?? _ShareLinkMock(),
+        favoriteUnfavoriteVersionMock ?? _FavoriteUnfavoriteVersionMock(),
         songId ?? 1,
       );
 
@@ -82,35 +76,49 @@ void main() {
 
   group("when onFavorite is called", () {
     test("and state isFavorite is false", () async {
-      final insertVersionToSongbook = _InsertVersionToSongbookMock();
-      when(() => insertVersionToSongbook(
-          artistUrl: any(named: 'artistUrl'),
-          songUrl: any(named: 'songUrl'),
-          songbookId: any(named: 'songbookId'))).thenAnswer((_) => SynchronousFuture(const Ok(1)));
+      final favoriteUnfavoriteVersion = _FavoriteUnfavoriteVersionMock();
+      when(() => favoriteUnfavoriteVersion(
+            artistUrl: any(named: 'artistUrl'),
+            songUrl: any(named: 'songUrl'),
+            isFavorite: any(named: "isFavorite"),
+            songId: any(named: "songId"),
+          )).thenAnswer((_) => SynchronousFuture(FavoriteVersionSuccess()));
 
-      final bloc = getBloc(insertVersionToSongbookMock: insertVersionToSongbook);
+      final bloc = getBloc(favoriteUnfavoriteVersionMock: favoriteUnfavoriteVersion, songId: 2);
       final result = await bloc.onFavorite('artistUrl', 'songUrl');
 
-      verify(() => insertVersionToSongbook.call(
-          songbookId: any(named: "songbookId"),
-          artistUrl: any(named: "artistUrl"),
-          songUrl: any(named: "songUrl"))).called(1);
+      verify(() => favoriteUnfavoriteVersion(
+            artistUrl: 'artistUrl',
+            songUrl: 'songUrl',
+            isFavorite: false,
+            songId: 2,
+          )).called(1);
       expect(result, isA<FavoriteVersionSuccess>());
     });
+
     test("and state isFavorite is true", () async {
-      final deleteVersionFromSongbook = _DeleteVersionFromFavoritesMock();
-      when(() => deleteVersionFromSongbook(songId: any(named: 'songId')))
-          .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+      final favoriteUnfavoriteVersion = _FavoriteUnfavoriteVersionMock();
+      when(() => favoriteUnfavoriteVersion(
+            artistUrl: any(named: 'artistUrl'),
+            songUrl: any(named: 'songUrl'),
+            isFavorite: any(named: "isFavorite"),
+            songId: any(named: "songId"),
+          )).thenAnswer((_) => SynchronousFuture(UnFavoriteVersionSuccess()));
 
       final bloc = getBloc(
-        deleteVersionFromFavoritesMock: deleteVersionFromSongbook,
-        songId: 2,
+        favoriteUnfavoriteVersionMock: favoriteUnfavoriteVersion,
+        songId: 1,
       );
       bloc.emit(const VersionOptionsBottomSheetState(isFavorite: true));
       final result = await bloc.onFavorite('artistUrl', 'songUrl');
 
       expect(result, isA<UnFavoriteVersionSuccess>());
-      verify(() => deleteVersionFromSongbook.call(songId: any(named: 'songId'))).called(1);
+      verify(() => favoriteUnfavoriteVersion(
+            artistUrl: 'artistUrl',
+            songUrl: 'songUrl',
+            isFavorite: true,
+            songId: 1,
+          )).called(1);
     });
   });
 

@@ -8,6 +8,7 @@ import 'package:cifraclub/domain/preferences/use_cases/get_list_order_type_prefe
 import 'package:cifraclub/domain/preferences/use_cases/set_list_order_type_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_versions_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites_or_can_play.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_versions.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_versions_stream_by_songbook_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_songbook_stream_by_id.dart';
@@ -69,6 +70,8 @@ class _GetVersionsLimitConstantsMock extends Mock implements GetVersionsLimitCon
   }
 }
 
+class _DeleteVersionFromFavoritesAndCanPlayMock extends Mock implements DeleteVersionFromFavoritesOrCanPlay {}
+
 void main() {
   VersionsBloc getBloc({
     _GetSongbookStreamByIdMock? getSongbookStreamByIdMock,
@@ -83,21 +86,22 @@ void main() {
     _DeleteVersions? deleteVersions,
     _ValidateArtistImagePreviewMock? validateArtistImagePreview,
     _GetVersionsLimitConstantsMock? getListLimitConstantsMock,
+    _DeleteVersionFromFavoritesAndCanPlayMock? deleteVersionFromFavoritesOrCanPlayMock,
   }) =>
       VersionsBloc(
-        getSongbookStreamByIdMock ?? _GetSongbookStreamByIdMock(),
-        shareLinkMock ?? _ShareLinkMock(),
-        getVersionsStreamBySongbookIdMock ?? _GetVersionsStreamBySongbookIdMock(),
-        getTabsLimitStateMock ?? _GetVersionsLimitStateMock(),
-        getProStatusStreamMock ?? _GetProStatusStreamMock(),
-        getTabsLimitMock ?? _GetVersionsLimitMock(),
-        getOrderFilterPreferences ?? _GetOrderFilterPreferencesMock(),
-        setOrderFilterPreferences ?? _SetOrderFilterPreferencesMock(),
-        getOrderedVersions ?? _GetOrderedVersionsMock(),
-        deleteVersions ?? _DeleteVersions(),
-        validateArtistImagePreview ?? _ValidateArtistImagePreviewMock(),
-        getListLimitConstantsMock ?? _GetVersionsLimitConstantsMock(),
-      );
+          getSongbookStreamByIdMock ?? _GetSongbookStreamByIdMock(),
+          shareLinkMock ?? _ShareLinkMock(),
+          getVersionsStreamBySongbookIdMock ?? _GetVersionsStreamBySongbookIdMock(),
+          getTabsLimitStateMock ?? _GetVersionsLimitStateMock(),
+          getProStatusStreamMock ?? _GetProStatusStreamMock(),
+          getTabsLimitMock ?? _GetVersionsLimitMock(),
+          getOrderFilterPreferences ?? _GetOrderFilterPreferencesMock(),
+          setOrderFilterPreferences ?? _SetOrderFilterPreferencesMock(),
+          getOrderedVersions ?? _GetOrderedVersionsMock(),
+          deleteVersions ?? _DeleteVersions(),
+          validateArtistImagePreview ?? _ValidateArtistImagePreviewMock(),
+          getListLimitConstantsMock ?? _GetVersionsLimitConstantsMock(),
+          deleteVersionFromFavoritesOrCanPlayMock ?? _DeleteVersionFromFavoritesAndCanPlayMock());
 
   setUpAll(() {
     registerFallbackValue(ListOrderType.alphabeticOrder);
@@ -362,18 +366,34 @@ void main() {
   group("When 'deleteVersion' is called", () {
     final version = getFakeVersion();
     final deleteVersions = _DeleteVersions();
+    final deleteVersionFavorite = _DeleteVersionFromFavoritesAndCanPlayMock();
+    registerFallbackValue(getFakeVersion());
 
     when(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions")))
         .thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
+    when(() => deleteVersionFavorite(songbookId: any(named: "songbookId"), version: any(named: "version")))
+        .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
     blocTest(
-      "should call use case",
+      "when is user songbook should call DeleteVersions",
       build: () => getBloc(
         deleteVersions: deleteVersions,
       ),
-      act: (bloc) => bloc.deleteVersion(1, version),
+      act: (bloc) => bloc.deleteVersion(10, version),
       verify: (bloc) {
-        verify(() => deleteVersions(songbookId: any(named: "songbookId"), versions: any(named: "versions"))).called(1);
+        verify(() => deleteVersions(songbookId: 10, versions: [version])).called(1);
+      },
+    );
+
+    blocTest(
+      "when is favorite songbook should call DeleteVersionFromFavoritesAndCanPlay",
+      build: () => getBloc(
+        deleteVersionFromFavoritesOrCanPlayMock: deleteVersionFavorite,
+      ),
+      act: (bloc) => bloc.deleteVersion(ListType.favorites.localId, version),
+      verify: (bloc) {
+        verify(() => deleteVersionFavorite(songbookId: ListType.favorites.localId, version: version)).called(1);
       },
     );
   });

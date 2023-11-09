@@ -8,7 +8,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.d
 import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
-import 'package:cifraclub/domain/songbook/use_cases/delete_version_from_favorites.dart';
+import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
 import 'package:cifraclub/domain/songbook/use_cases/insert_user_songbook.dart';
@@ -79,13 +79,18 @@ abstract class BottomSheetModule {
 
   VersionOptionsBottomSheet getVersionOptionsBottomSheet(
     final SaveVersionToListBottomSheet saveToListBottomSheet,
-    final InsertVersionToSongbook insertVersionToSongbook,
     final GetIsFavoriteVersionBySongId getIsFavoriteVersionBySongId,
-    final DeleteVersionFromFavorites deleteVersionFromFavorites,
     final GetCredentialStream getCredentialStream,
     final OpenLoginPage openLoginView,
     final ShareLink shareLink,
+    final FavoriteUnfavoriteVersion favoriteUnfavoriteVersion,
   ) =>
-      VersionOptionsBottomSheet(saveToListBottomSheet, insertVersionToSongbook, getIsFavoriteVersionBySongId,
-          deleteVersionFromFavorites, getCredentialStream, openLoginView, shareLink);
+      VersionOptionsBottomSheet(
+        saveToListBottomSheet,
+        getIsFavoriteVersionBySongId,
+        getCredentialStream,
+        openLoginView,
+        shareLink,
+        favoriteUnfavoriteVersion,
+      );
 }
