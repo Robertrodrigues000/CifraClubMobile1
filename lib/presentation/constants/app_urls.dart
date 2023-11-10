@@ -1,4 +1,6 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/version/models/instrument.dart';
+
 class AppUrls {
   static const supportUrl = "https://suporte.cifraclub.com.br/support/home";
   static const cifraClubStoreUrl = "https://cifraclubstore.com.br/";
@@ -18,4 +20,43 @@ class AppUrls {
   static String artistUrlFormat(String artistUrl) => "https://www.cifraclub.com.br/$artistUrl";
   static String albumUrlFormat(String artistUrl, String albumUrl) =>
       "https://www.cifraclub.com.br/$artistUrl/discografia/$albumUrl/";
+  static String shareVersionWithConfig({
+    required String artistUrl,
+    required String songUrl,
+    Instrument? instrument,
+    String? tuning,
+    int? capo,
+    int? key,
+    String? versionUrl,
+  }) {
+    final queryParameters = <String>[];
+    final baseUrl = "https://www.cifraclub.com.br/$artistUrl/$songUrl";
+    final versionInfo = versionUrl != null ? "$versionUrl.html" : "";
+
+    if (instrument != null) {
+      if (instrument == Instrument.bass || instrument == Instrument.drums || instrument == Instrument.harmonica) {
+        return Uri.encodeFull("$baseUrl/${instrument.instrumentUrl}/$versionInfo");
+      }
+
+      queryParameters.add('instrument=${instrument.videoLessonInstrumentNames.first}');
+    }
+
+    if (tuning != null) {
+      queryParameters.add('tuning=$tuning');
+    }
+
+    if (capo != null) {
+      queryParameters.add('capo=$capo');
+    }
+
+    if (key != null) {
+      queryParameters.add('key=$key');
+    }
+
+    final query = queryParameters.join('&');
+
+    final url = Uri.encodeFull("$baseUrl/$versionInfo#$query");
+
+    return url;
+  }
 }

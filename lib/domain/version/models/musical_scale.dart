@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 enum MusicalScale {
   majorScale(["A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab"]),
   minorScale(["Am", "Bbm", "Bm", "Cm", "C#m", "Dm", "Ebm", "Em", "Fm", "F#m", "Gm", "G#m"]),
@@ -7,4 +9,8 @@ enum MusicalScale {
   final List<String> notes;
 
   const MusicalScale(this.notes);
+
+  static int? getMusicalScale(String key) {
+    return MusicalScale.values.firstWhereOrNull((element) => element.notes.contains(key))?.notes.indexOf(key);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.
 import 'package:cifraclub/domain/songbook/use_cases/get_is_favorite_version_by_song_id.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
+import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
@@ -135,7 +136,16 @@ class VersionOptionsBottomSheet {
                                 DefaultBottomSheet.close(context);
                                 final box = context.findRenderObject() as RenderBox?;
                                 final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
-                                final link = AppUrls.versionUrlFormat(artistUrl, songUrl);
+                                final link = AppUrls.shareVersionWithConfig(
+                                  artistUrl: artistUrl,
+                                  songUrl: songUrl,
+                                  instrument: versionData?.instrument,
+                                  capo: versionData?.capo.capoId,
+                                  key:
+                                      versionData?.key != null ? MusicalScale.getMusicalScale(versionData!.key!) : null,
+                                  tuning: versionData?.tuning?.value,
+                                  versionUrl: versionData?.versionUrl,
+                                );
                                 await bloc.shareLink(link, rect);
                               }
                             case VersionOptionsBottomSheetItem.correctVersion:
