@@ -1,10 +1,8 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
-import 'package:cifraclub/domain/version/models/musical_scale.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
-import 'package:cifraclub/presentation/bottom_sheets/version_key_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
@@ -92,19 +90,29 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
           }
         case OnShowOptionsBottomSheetEffect():
           if (context.mounted) {
-            var newKey = await VersionKeyBottomSheet(
-              musicalScale:
-                  _bloc.state.version!.stdKey!.contains("m") ? MusicalScale.minorScale : MusicalScale.majorScale,
-              originalKey: _bloc.state.version!.stdKey!,
-              selectedKey: selectedKey!,
-            ).open(
-              context: context,
+            widget.versionOptionsBottomSheet.show(
+                context: context,
+                artistUrl: _bloc.state.versionHeaderState.artistUrl,
+                songUrl: _bloc.state.versionHeaderState.songUrl,
+                songId: _bloc.state.version!.song.songId,
+                isVersionBottomSheet: true,
+                versionData: _bloc.state.version!,
+                isPro: false,
+                onAction: (action) {
+                  _bloc.add(OnVersionOptionsAction(action: action));
+                });
+          }
+        case OnShowSelectVersionBottomSheetEffect():
+          if (context.mounted) {
+            InstrumentVersionsBottomSheet.show(
+              context,
+              _bloc.state.version!.instrumentVersions ?? [],
+              _bloc.state.version!.instrument,
+              _bloc.state.version!.versionName,
+              (versionSelected) {
+                _bloc.add(OnVersionSelected(versionSelected));
+              },
             );
-            if (newKey != null) {
-              setState(() {
-                selectedKey = newKey;
-              });
-            }
           }
         case OnFavoriteError():
           if (!context.mounted) {
@@ -120,6 +128,14 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
             default:
               break;
           }
+        case OnChangeVersionKeyEffect():
+          setState(() {
+            selectedKey = effect.newKey;
+          });
+        case OnShowFontSizeFooterBarEffect():
+          _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
+        case OnShowTuningBottomSheetEffect():
+        case OnShowCapoBottomSheetEffect():
       }
     }).addTo(subscriptions);
   }
@@ -187,12 +203,6 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
               actions: [
                 TextButton(
                   onPressed: () {
-                    _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
-                  },
-                  child: const Text("fontsize"),
-                ),
-                TextButton(
-                  onPressed: () {
                     _bloc.add(OnToggleIsChordPinned());
                   },
                   child: Text(
@@ -238,7 +248,6 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                               artistUrl: state.versionHeaderState.artistUrl,
                               songUrl: state.versionHeaderState.songUrl,
                               songId: state.version!.song.songId,
-                              versionData: state.version!,
                             );
                           },
                           filters: state.versionHeaderState.versionFilters,

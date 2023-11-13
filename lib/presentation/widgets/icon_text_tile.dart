@@ -11,6 +11,7 @@ class IconTextTile extends StatelessWidget {
     this.leadingIconUrl,
     this.leadingIconPlaceholder,
     required this.text,
+    this.trailingIcon,
   }) : assert(leadingIconAsset == null || leadingIconUrl == null, "Should use a asset or a url for the icon, not both");
 
   final VoidCallback onClick;
@@ -18,6 +19,7 @@ class IconTextTile extends StatelessWidget {
   final String? leadingIconUrl;
   final String? leadingIconPlaceholder;
   final String text;
+  final String? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class IconTextTile extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgImage(
                   assetPath: leadingIconAsset,
@@ -47,7 +50,17 @@ class IconTextTile extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                )
+                ),
+                if (trailingIcon != null)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SvgImage(
+                      assetPath: trailingIcon,
+                      width: 16,
+                      height: 16,
+                      color: context.colors.textSecondary,
+                    ),
+                  ),
               ],
             ),
           ),

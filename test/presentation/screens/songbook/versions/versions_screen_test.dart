@@ -644,7 +644,7 @@ void main() {
   });
 
   testWidgets("when tap version tile, should navigate to version screen", (widgetTester) async {
-    final version = getFakeVersion();
+    final version = getFakeVersion(name: "a");
     bloc.mockStream(VersionsState(versions: [version], songbook: getFakeSongbook(isPublic: true)));
     final nav = NavMock.getDummy();
 

@@ -46,6 +46,9 @@ void main() {
           artistUrl: any(named: 'artistUrl'),
           songUrl: any(named: 'songUrl'),
           songId: any(named: 'songId'),
+          isVersionBottomSheet: any(named: 'isVersionBottomSheet'),
+          versionData: any(named: 'versionData'),
+          onAction: any(named: 'onAction'),
         )).thenAnswer((_) => SynchronousFuture(null));
     bottomSheet = bottomSheetMock;
   });
@@ -322,6 +325,9 @@ void main() {
           artistUrl: any(named: 'artistUrl'),
           songUrl: any(named: 'songUrl'),
           songId: any(named: 'songId'),
+          isVersionBottomSheet: any(named: 'isVersionBottomSheet'),
+          versionData: any(named: 'versionData'),
+          onAction: any(named: 'onAction'),
         )).called(1);
   });
 

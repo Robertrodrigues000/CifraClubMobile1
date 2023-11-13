@@ -15,8 +15,6 @@ class AppUrls {
 
   static String songbookUrlFormat(int ccid, int songbookId) =>
       "https://www.cifraclub.com.br/musico/$ccid/repertorio/$songbookId/";
-  static String versionUrlFormat(String artistUrl, String songUrl) =>
-      "https://www.cifraclub.com.br/$artistUrl/$songUrl";
   static String artistUrlFormat(String artistUrl) => "https://www.cifraclub.com.br/$artistUrl";
   static String albumUrlFormat(String artistUrl, String albumUrl) =>
       "https://www.cifraclub.com.br/$artistUrl/discografia/$albumUrl/";

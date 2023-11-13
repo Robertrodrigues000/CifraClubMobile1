@@ -1,4 +1,6 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/app/use_cases/is_app_installed.dart';
+import 'package:cifraclub/domain/app/use_cases/open_app_or_store.dart';
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/genre/use_cases/get_genres.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_list_limit.dart';
@@ -83,6 +85,8 @@ abstract class BottomSheetModule {
     final GetCredentialStream getCredentialStream,
     final OpenLoginPage openLoginView,
     final ShareLink shareLink,
+    final OpenAppOrStore openAppOrStore,
+    final IsAppInstalled isAppInstalled,
     final FavoriteUnfavoriteVersion favoriteUnfavoriteVersion,
   ) =>
       VersionOptionsBottomSheet(
@@ -91,6 +95,8 @@ abstract class BottomSheetModule {
         getCredentialStream,
         openLoginView,
         shareLink,
+        openAppOrStore,
+        isAppInstalled,
         favoriteUnfavoriteVersion,
       );
 }

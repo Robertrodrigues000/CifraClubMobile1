@@ -360,5 +360,11 @@
             }
         }
     },
-    "privacyChangeSucceed": "Privacidade alterada."
+    "privacyChangeSucceed": "Privacidade alterada.",
+    "showBeat": "Mostrar batida",
+    "showTabs": "Mostrar tabs",
+    "tuner": "Afinador",
+    "leftHanded": "Canhoto",
+    "fontSize": "Tamanho da fonte",
+    "resetSettings": "Resetar configurações"
 }

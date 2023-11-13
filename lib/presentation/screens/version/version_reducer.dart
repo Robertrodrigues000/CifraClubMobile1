@@ -69,6 +69,18 @@ class VersionReducer {
           onEffect(OnFavoriteError(haveError: action.haveError!));
         }
         return state.copyWith(versionHeaderState: state.versionHeaderState.copyWith(isFavorite: action.isFavorite));
+      case OnShowTuningBottomSheet():
+        onEffect(OnShowTuningBottomSheetEffect());
+        return state;
+      case OnShowCapoBottomSheet():
+        onEffect(OnShowCapoBottomSheetEffect());
+        return state;
+      case OnShowSelectVersionBottomSheet():
+        onEffect(OnShowSelectVersionBottomSheetEffect());
+        return state;
+      case OnChangeVersionKey():
+        onEffect(OnChangeVersionKeyEffect(action.newKey));
+        return state;
       default:
         return state;
     }

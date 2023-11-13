@@ -358,5 +358,11 @@
             }
         }
     },
-    "privacyChangeSucceed": "Privacidad alterada."
+    "privacyChangeSucceed": "Privacidad alterada.",
+    "showBeat": "Mostrar ritmo",
+    "showTabs": "Mostrar tablatura",
+    "tuner": "Afinador",
+    "leftHanded": "Zurdo",
+    "fontSize": "Tamaño de fuente",
+    "resetSettings": "Reiniciar ajustes"
 }

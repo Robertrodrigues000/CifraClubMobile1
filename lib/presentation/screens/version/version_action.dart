@@ -2,6 +2,7 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_action.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_filter.dart';
@@ -117,4 +118,22 @@ class OnFavoriteChange implements VersionAction {
   final VersionOptionsResult? haveError;
 
   OnFavoriteChange({required this.isFavorite, this.haveError});
+}
+
+class OnVersionOptionsAction implements VersionAction {
+  final VersionOptionsBottomSheetAction action;
+
+  OnVersionOptionsAction({required this.action});
+}
+
+class OnShowSelectVersionBottomSheet implements VersionAction {}
+
+class OnShowTuningBottomSheet implements VersionAction {}
+
+class OnShowCapoBottomSheet implements VersionAction {}
+
+class OnChangeVersionKey implements VersionAction {
+  final String newKey;
+
+  OnChangeVersionKey(this.newKey);
 }

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
+import 'package:cifraclub/presentation/screens/version/middlewares/version_options_bottom_sheet_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/auto_scroll_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/chord_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/content_middleware.dart';
@@ -64,6 +65,7 @@ class VersionEntry extends ScreenEntry {
         getIt<ChordMiddleware>(),
         getIt<FloatingFooterBarMiddleware>(),
         getIt<HeaderMiddleware>(),
+        getIt<VersionOptionsBottomSheetMiddleware>(),
       ], getIt())
         ..add(OnVersionInit(
           artistName: artistName,

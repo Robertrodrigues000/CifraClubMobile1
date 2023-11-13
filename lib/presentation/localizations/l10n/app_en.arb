@@ -416,5 +416,11 @@
             }
         }
     },
-    "privacyChangeSucceed": "Privacy changed."
+    "privacyChangeSucceed": "Privacy changed.",
+    "showBeat": "Show beat",
+    "showTabs": "Show tabs",
+    "tuner": "Tuner",
+    "leftHanded": "Left-Handed",
+    "fontSize": "Font size",
+    "resetSettings": "Reset settings"
 }

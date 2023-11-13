@@ -207,6 +207,82 @@ void main() {
     effectStream.close();
   });
 
+  test("When action is OnShowTuningBottomSheetEffect", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowTuningBottomSheetEffect>(),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnShowTuningBottomSheet(),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
+  test("When action is OnShowCapoBottomSheetEffect", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowCapoBottomSheetEffect>(),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnShowCapoBottomSheet(),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
+  test("When action is OnShowSelectVersionBottomSheetEffect", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowSelectVersionBottomSheetEffect>(),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnShowSelectVersionBottomSheet(),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
+  test("When action is OnChangeVersionKeyEffect", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnChangeVersionKeyEffect>().having((effect) => effect.newKey, "new key", "E"),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnChangeVersionKey("E"),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
   test("When action is OnFavoriteChange", () {
     final reducer = VersionReducer();
     final effectStream = PublishSubject<VersionEffect>();

@@ -25,3 +25,17 @@ class OnFavoriteError implements VersionEffect {
 
   OnFavoriteError({required this.haveError});
 }
+
+class OnShowTuningBottomSheetEffect implements VersionEffect {}
+
+class OnShowCapoBottomSheetEffect implements VersionEffect {}
+
+class OnShowSelectVersionBottomSheetEffect implements VersionEffect {}
+
+class OnChangeVersionKeyEffect implements VersionEffect {
+  final String newKey;
+
+  OnChangeVersionKeyEffect(this.newKey);
+}
+
+class OnShowFontSizeFooterBarEffect implements VersionEffect {}
