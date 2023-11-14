@@ -41,9 +41,23 @@ abstract class _$ChordUISettingsCWProxy {
 
   ChordUISettings titlePadding(double titlePadding);
 
+  ChordUISettings titlePaddingToSubtitle(double titlePaddingToSubtitle);
+
   ChordUISettings neckFontSize(double neckFontSize);
 
   ChordUISettings neckIndicatorWidth(double neckIndicatorWidth);
+
+  ChordUISettings countFontSize(double countFontSize);
+
+  ChordUISettings countHeight(double countHeight);
+
+  ChordUISettings countPadding(double countPadding);
+
+  ChordUISettings subtitleFontSize(double subtitleFontSize);
+
+  ChordUISettings subtitleHeight(double subtitleHeight);
+
+  ChordUISettings subtitlePadding(double subtitlePadding);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordUISettings(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -69,8 +83,15 @@ abstract class _$ChordUISettingsCWProxy {
     double? titleHeight,
     double? titleFontSize,
     double? titlePadding,
+    double? titlePaddingToSubtitle,
     double? neckFontSize,
     double? neckIndicatorWidth,
+    double? countFontSize,
+    double? countHeight,
+    double? countPadding,
+    double? subtitleFontSize,
+    double? subtitleHeight,
+    double? subtitlePadding,
   });
 }
 
@@ -133,10 +154,32 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
   ChordUISettings titlePadding(double titlePadding) => this(titlePadding: titlePadding);
 
   @override
+  ChordUISettings titlePaddingToSubtitle(double titlePaddingToSubtitle) =>
+      this(titlePaddingToSubtitle: titlePaddingToSubtitle);
+
+  @override
   ChordUISettings neckFontSize(double neckFontSize) => this(neckFontSize: neckFontSize);
 
   @override
   ChordUISettings neckIndicatorWidth(double neckIndicatorWidth) => this(neckIndicatorWidth: neckIndicatorWidth);
+
+  @override
+  ChordUISettings countFontSize(double countFontSize) => this(countFontSize: countFontSize);
+
+  @override
+  ChordUISettings countHeight(double countHeight) => this(countHeight: countHeight);
+
+  @override
+  ChordUISettings countPadding(double countPadding) => this(countPadding: countPadding);
+
+  @override
+  ChordUISettings subtitleFontSize(double subtitleFontSize) => this(subtitleFontSize: subtitleFontSize);
+
+  @override
+  ChordUISettings subtitleHeight(double subtitleHeight) => this(subtitleHeight: subtitleHeight);
+
+  @override
+  ChordUISettings subtitlePadding(double subtitlePadding) => this(subtitlePadding: subtitlePadding);
 
   @override
 
@@ -164,8 +207,15 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
     Object? titleHeight = const $CopyWithPlaceholder(),
     Object? titleFontSize = const $CopyWithPlaceholder(),
     Object? titlePadding = const $CopyWithPlaceholder(),
+    Object? titlePaddingToSubtitle = const $CopyWithPlaceholder(),
     Object? neckFontSize = const $CopyWithPlaceholder(),
     Object? neckIndicatorWidth = const $CopyWithPlaceholder(),
+    Object? countFontSize = const $CopyWithPlaceholder(),
+    Object? countHeight = const $CopyWithPlaceholder(),
+    Object? countPadding = const $CopyWithPlaceholder(),
+    Object? subtitleFontSize = const $CopyWithPlaceholder(),
+    Object? subtitleHeight = const $CopyWithPlaceholder(),
+    Object? subtitlePadding = const $CopyWithPlaceholder(),
   }) {
     return ChordUISettings(
       numStrings: numStrings == const $CopyWithPlaceholder() || numStrings == null
@@ -237,6 +287,10 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.titlePadding
           // ignore: cast_nullable_to_non_nullable
           : titlePadding as double,
+      titlePaddingToSubtitle: titlePaddingToSubtitle == const $CopyWithPlaceholder() || titlePaddingToSubtitle == null
+          ? _value.titlePaddingToSubtitle
+          // ignore: cast_nullable_to_non_nullable
+          : titlePaddingToSubtitle as double,
       neckFontSize: neckFontSize == const $CopyWithPlaceholder() || neckFontSize == null
           ? _value.neckFontSize
           // ignore: cast_nullable_to_non_nullable
@@ -245,6 +299,30 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.neckIndicatorWidth
           // ignore: cast_nullable_to_non_nullable
           : neckIndicatorWidth as double,
+      countFontSize: countFontSize == const $CopyWithPlaceholder() || countFontSize == null
+          ? _value.countFontSize
+          // ignore: cast_nullable_to_non_nullable
+          : countFontSize as double,
+      countHeight: countHeight == const $CopyWithPlaceholder() || countHeight == null
+          ? _value.countHeight
+          // ignore: cast_nullable_to_non_nullable
+          : countHeight as double,
+      countPadding: countPadding == const $CopyWithPlaceholder() || countPadding == null
+          ? _value.countPadding
+          // ignore: cast_nullable_to_non_nullable
+          : countPadding as double,
+      subtitleFontSize: subtitleFontSize == const $CopyWithPlaceholder() || subtitleFontSize == null
+          ? _value.subtitleFontSize
+          // ignore: cast_nullable_to_non_nullable
+          : subtitleFontSize as double,
+      subtitleHeight: subtitleHeight == const $CopyWithPlaceholder() || subtitleHeight == null
+          ? _value.subtitleHeight
+          // ignore: cast_nullable_to_non_nullable
+          : subtitleHeight as double,
+      subtitlePadding: subtitlePadding == const $CopyWithPlaceholder() || subtitlePadding == null
+          ? _value.subtitlePadding
+          // ignore: cast_nullable_to_non_nullable
+          : subtitlePadding as double,
     );
   }
 }

@@ -64,6 +64,15 @@ class VersionReducer {
       case OnShowOptionsBottomSheet():
         onEffect(OnShowOptionsBottomSheetEffect());
         return state;
+      case OnShowChordShapeBottomSheet():
+        onEffect(
+          OnShowChordShapeBottomSheetEffect(
+            chords: action.chords,
+            instrument: action.instrument,
+            selectedChord: action.selectedChord,
+          ),
+        );
+        return state;
       case OnFavoriteChange():
         if (action.haveError != null) {
           onEffect(OnFavoriteError(haveError: action.haveError!));

@@ -25,6 +25,7 @@ void main() {
     expect(scalledSettings.titleHeight, originalSettings.titleHeight * factor);
     expect(scalledSettings.titleFontSize, originalSettings.titleFontSize * factor);
     expect(scalledSettings.titlePadding, originalSettings.titlePadding * factor);
+    expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
     expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
     expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
   });
@@ -52,6 +53,7 @@ void main() {
     expect(scalledSettings.titleHeight, originalSettings.titleHeight * factor);
     expect(scalledSettings.titleFontSize, originalSettings.titleFontSize * factor);
     expect(scalledSettings.titlePadding, originalSettings.titlePadding * factor);
+    expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
     expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
     expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
   });
@@ -80,6 +82,7 @@ void main() {
       expect(scalledSettings.titleHeight, originalSettings.titleHeight * factor);
       expect(scalledSettings.titleFontSize, originalSettings.titleFontSize * factor);
       expect(scalledSettings.titlePadding, originalSettings.titlePadding * factor);
+      expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
       expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
       expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
     });
@@ -107,6 +110,7 @@ void main() {
       expect(scalledSettings.titleHeight, originalSettings.titleHeight * factor);
       expect(scalledSettings.titleFontSize, originalSettings.titleFontSize * factor);
       expect(scalledSettings.titlePadding, originalSettings.titlePadding * factor);
+      expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
       expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
       expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
     });

@@ -389,6 +389,19 @@
     "hideChords": "Hide chords on screen",
     "fixChords": "Fix chords on screen",
     "repeatedSongError": "This tab is already on the list",
+    "chordCount":"{index} of {total}",
+    "@chordCount": {
+        "placeholders": {
+            "index" : {
+                "type": "int",
+                "example": "10"
+            },
+            "total" : {
+                "type": "int",
+                "example": "1000"
+            }
+        }
+    },
     "tuning": "Tuning",
     "capo":"Capo",
     "noCapo":"No capo",

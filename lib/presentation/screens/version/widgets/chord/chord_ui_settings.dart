@@ -24,8 +24,15 @@ class ChordUISettings {
   final double titleHeight;
   final double titleFontSize;
   final double titlePadding;
+  final double titlePaddingToSubtitle;
   final double neckFontSize;
   final double neckIndicatorWidth;
+  final double countFontSize;
+  final double countHeight;
+  final double countPadding;
+  final double subtitleFontSize;
+  final double subtitleHeight;
+  final double subtitlePadding;
 
   ChordUISettings({
     required this.numStrings,
@@ -43,17 +50,30 @@ class ChordUISettings {
     this.ballFontSize = 16,
     this.barPadding = 12,
     this.titleHeight = 24,
-    this.titleFontSize = 20,
+    this.titleFontSize = 24,
     this.titlePadding = 8,
+    this.titlePaddingToSubtitle = 2,
     this.neckFontSize = 12,
     this.neckIndicatorWidth = 24,
+    this.countFontSize = 12,
+    this.countHeight = 16,
+    this.countPadding = 8,
+    this.subtitleFontSize = 14,
+    this.subtitleHeight = 18,
+    this.subtitlePadding = 16,
   });
 
   ChordUISettings.guitar() : this(numStrings: 6, chordGridWidth: 108, width: 156);
 
-  ChordUISettings scaledToFit({double? width, double? height}) {
+  ChordUISettings scaledToFit({double? width, double? height, bool hasSubtitle = false, bool hasCount = false}) {
     final double currentWidth = this.width;
-    final double currentHeight = titleHeight + titlePadding + chordGridHeight + stringPlayIndicationPadding + noteSize;
+    final double currentHeight = titleHeight +
+        (hasSubtitle ? titlePaddingToSubtitle : titlePadding) +
+        chordGridHeight +
+        stringPlayIndicationPadding +
+        noteSize +
+        (hasCount ? countHeight + countPadding : 0) +
+        (hasCount ? subtitleHeight + subtitlePadding : 0);
     final double currentAspectRatio = currentHeight / currentWidth;
     final double factor;
 
@@ -88,8 +108,15 @@ class ChordUISettings {
       titleHeight: titleHeight * factor,
       titleFontSize: titleFontSize * factor,
       titlePadding: titlePadding * factor,
+      titlePaddingToSubtitle: titlePaddingToSubtitle * factor,
       neckFontSize: neckFontSize * factor,
       neckIndicatorWidth: neckIndicatorWidth * factor,
+      countFontSize: countFontSize * factor,
+      countHeight: countHeight * factor,
+      countPadding: countPadding * factor,
+      subtitleFontSize: subtitleFontSize * factor,
+      subtitleHeight: subtitleHeight * factor,
+      subtitlePadding: subtitlePadding * factor,
     );
   }
 

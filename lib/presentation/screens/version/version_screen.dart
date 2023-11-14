@@ -1,5 +1,7 @@
 // coverage:ignore-file
+
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
@@ -7,6 +9,7 @@ import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_shee
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
+import 'package:cifraclub/presentation/bottom_sheets/chord_shape_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
@@ -46,7 +49,6 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
   var isFooterBarVisible = true;
   var isUserDraggingScreen = false;
   String? selectedKey; // Todo: remover isso aqui quando transpose estiver funcionando
-
   YoutubePlayerController? _youtubePlayerController;
 
   @override
@@ -112,6 +114,16 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
               (versionSelected) {
                 _bloc.add(OnVersionSelected(versionSelected));
               },
+            );
+          }
+        case OnShowChordShapeBottomSheetEffect():
+          if (context.mounted) {
+            ChordShapeBottomSheet.show(
+              context,
+              effect.selectedChord,
+              effect.chords,
+              Instrument.guitar,
+              (chord) => _bloc.add(OnChordShapeChange(chord: chord)),
             );
           }
         case OnFavoriteError():
@@ -283,6 +295,14 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                             child: const Text("Acordes"),
                             isPinned: state.isChordListPinned,
                             chords: state.chordState.chordRepresentations,
+                            onTap: (chord) {
+                              _bloc.add(
+                                OnChordTap(
+                                  selectedChord: chord,
+                                  instrument: state.version!.instrument,
+                                ),
+                              );
+                            },
                           ),
                         ),
                         SliverList.builder(
@@ -356,6 +376,7 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
   final bool haveScroll;
   final bool isPinned;
+  final Function(ChordRepresentation chord) onTap;
   final List<ChordRepresentation> chords;
 
   ChordListHeaderDelegate({
@@ -364,6 +385,7 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
     required this.haveScroll,
     required this.isPinned,
     required this.chords,
+    required this.onTap,
   });
 
   @override
@@ -385,12 +407,15 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final chord = chords[index];
-            return Padding(
-              padding: const EdgeInsets.only(top: 4, bottom: 12),
-              child: ChordWidget(
-                  chordRepresentation: chord,
-                  chordUiSettings: ChordUISettings.guitar().scaledToFit(height: maxExtend - 16),
-                  isLeftHanded: false),
+            return InkWell(
+              onTap: () => onTap(chord),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4, bottom: 12),
+                child: ChordWidget(
+                    chordRepresentation: chord,
+                    chordUiSettings: ChordUISettings.guitar().scaledToFit(height: maxExtend - 16),
+                    isLeftHanded: false),
+              ),
             );
           },
         ),
@@ -400,9 +425,6 @@ class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return oldDelegate is! ChordListHeaderDelegate ||
-        oldDelegate.haveScroll != haveScroll ||
-        oldDelegate.child != child ||
-        oldDelegate.chords != chords;
+    return true;
   }
 }

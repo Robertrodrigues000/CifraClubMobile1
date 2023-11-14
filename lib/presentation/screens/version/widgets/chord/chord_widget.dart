@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_grid_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_title_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 class ChordWidget extends StatelessWidget {
   final ChordRepresentation chordRepresentation;
   final ChordUISettings chordUiSettings;
+  final String? count;
+  final String? subtitle;
   final bool isLeftHanded;
 
   const ChordWidget({
@@ -16,6 +19,8 @@ class ChordWidget extends StatelessWidget {
     required this.chordRepresentation,
     required this.chordUiSettings,
     required this.isLeftHanded,
+    this.count,
+    this.subtitle,
   });
 
   @override
@@ -26,9 +31,56 @@ class ChordWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: chordUiSettings.neckIndicatorWidth, bottom: chordUiSettings.titlePadding),
+            padding: EdgeInsets.only(
+                left: chordUiSettings.neckIndicatorWidth,
+                bottom: subtitle != null ? chordUiSettings.titlePaddingToSubtitle : chordUiSettings.titlePadding),
             child: ChordTitleWidget(chordName: chordRepresentation.name, settings: chordUiSettings),
           ),
+          if (subtitle != null)
+            Padding(
+              padding:
+                  EdgeInsets.only(left: chordUiSettings.neckIndicatorWidth, bottom: chordUiSettings.subtitlePadding),
+              child: SizedBox(
+                width: chordUiSettings.chordGridWidth,
+                height: chordUiSettings.subtitleHeight,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    subtitle!,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: context.colors.textSecondary,
+                      fontWeight: FontWeight.normal,
+                      fontSize: chordUiSettings.subtitleFontSize,
+                      height: 1.286,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          if (count != null)
+            Padding(
+              padding: EdgeInsets.only(left: chordUiSettings.neckIndicatorWidth, bottom: chordUiSettings.countPadding),
+              child: SizedBox(
+                width: chordUiSettings.chordGridWidth,
+                height: chordUiSettings.countHeight,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    count!,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: context.colors.textSecondary,
+                      fontWeight: FontWeight.normal,
+                      fontSize: chordUiSettings.countFontSize,
+                      height: 1.333,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

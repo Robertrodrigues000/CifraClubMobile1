@@ -11,6 +11,7 @@ import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_foot
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../shared_mocks/domain/chord/chord_representation_mock.dart';
 import '../../../shared_mocks/domain/version/models/version_data_mock.dart';
 
 void main() {
@@ -277,6 +278,32 @@ void main() {
     reducer.reduce(
       const VersionState(),
       OnChangeVersionKey("E"),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
+  test("When action is OnShowChordShapeBottomSheet", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowChordShapeBottomSheetEffect>(),
+        ]));
+
+    reducer.reduce(
+      const VersionState(),
+      OnShowChordShapeBottomSheet(
+        instrument: Instrument.guitar,
+        selectedChord: getFakeChordRepresentation(name: "A"),
+        chords: [
+          getFakeChordRepresentation(name: "A"),
+          getFakeChordRepresentation(name: "A"),
+        ],
+      ),
       effectStream.add,
     );
 

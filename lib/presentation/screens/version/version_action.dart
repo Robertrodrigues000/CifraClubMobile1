@@ -1,6 +1,7 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_action.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
@@ -110,6 +111,27 @@ class OnFloatingFooterBarModeChange implements VersionAction {
 class OnShowListenBottomSheet implements VersionAction {}
 
 class OnShowOptionsBottomSheet implements VersionAction {}
+
+class OnChordTap implements VersionAction {
+  final Instrument instrument;
+  final ChordRepresentation selectedChord;
+
+  OnChordTap({required this.instrument, required this.selectedChord});
+}
+
+class OnShowChordShapeBottomSheet implements VersionAction {
+  final Instrument instrument;
+  final ChordRepresentation selectedChord;
+  final List<ChordRepresentation> chords;
+
+  OnShowChordShapeBottomSheet({required this.instrument, required this.selectedChord, required this.chords});
+}
+
+class OnChordShapeChange implements VersionAction {
+  final ChordRepresentation chord;
+
+  OnChordShapeChange({required this.chord});
+}
 
 class OnTapFavoriteButton implements VersionAction {}
 

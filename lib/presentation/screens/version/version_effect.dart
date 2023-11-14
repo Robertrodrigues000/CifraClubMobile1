@@ -1,3 +1,5 @@
+import 'package:cifraclub/domain/chord/models/chord_representation.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 
 sealed class VersionEffect {}
@@ -19,6 +21,14 @@ class OnAutoScrollTickEffect implements VersionEffect {
 class OnShowListenBottomSheetEffect implements VersionEffect {}
 
 class OnShowOptionsBottomSheetEffect implements VersionEffect {}
+
+class OnShowChordShapeBottomSheetEffect implements VersionEffect {
+  final List<ChordRepresentation> chords;
+  final Instrument instrument;
+  final ChordRepresentation selectedChord;
+
+  OnShowChordShapeBottomSheetEffect({required this.chords, required this.instrument, required this.selectedChord});
+}
 
 class OnFavoriteError implements VersionEffect {
   final VersionOptionsResult haveError;

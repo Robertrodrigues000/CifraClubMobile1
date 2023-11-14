@@ -331,6 +331,19 @@
     "hideChords": "Ocultar acordes en pantalla",
     "fixChords": "Fijar acordes en pantalla",
     "repeatedSongError": "Este cifrado ya está en la lista",
+    "chordCount":"{index} de {total}",
+    "@chordCount": {
+        "placeholders": {
+            "index" : {
+                "type": "int",
+                "example": "10"
+            },
+            "total" : {
+                "type": "int",
+                "example": "1000"
+            }
+        }
+    },
      "tuning": "Afinación",
     "capo":"Capotraste",
     "noCapo":"Sin capo",

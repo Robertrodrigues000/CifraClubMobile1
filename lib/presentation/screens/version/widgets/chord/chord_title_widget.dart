@@ -1,6 +1,6 @@
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
+import 'package:cifraclub/presentation/style/typography/font_families.dart';
 import 'package:flutter/material.dart';
-import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 
 class ChordTitleWidget extends StatelessWidget {
@@ -25,8 +25,8 @@ class ChordTitleWidget extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(
             color: context.colors.primary,
-            height: 1.2,
-            fontFamily: FontFamilies.roboto,
+            height: 1.3,
+            fontFamily: FontFamilies.montserrat,
             fontSize: settings.titleFontSize,
             fontWeight: FontWeight.bold,
           ),
