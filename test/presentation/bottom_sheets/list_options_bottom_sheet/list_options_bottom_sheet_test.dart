@@ -14,6 +14,7 @@ import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/l
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/clear_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_event.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
@@ -68,7 +69,7 @@ void main() {
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
 
     editListScreenBuilder = _EditListScreenBuilderMock();
-    when(() => editListScreenBuilder.push(any(), any(), any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => editListScreenBuilder.push(any(), any(), any())).thenAnswer((_) => SynchronousFuture(ReorderSuccess()));
 
     listOptionsBottomSheet = ListOptionsBottomSheet(
       _ClearVersionsFromSongbookMock(),
@@ -697,6 +698,39 @@ void main() {
     await widgetTester.tap(find.text(appTextEn.editTabsList));
     await widgetTester.pumpAndSettle();
 
+    verify(() => editListScreenBuilder.push(any(), songbook.name, songbook.id!)).called(1);
+  });
+
+  testWidgets("When tap in edit option should navigate to edit screen", (widgetTester) async {
+    bloc.mockStream(null);
+    final songbook = getFakeSongbook(isPublic: true);
+    final nav = NavMock.getDummy();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () async {
+                await setOpenListOptionBottomSheet(context, true, 1, songbook, true, bloc);
+              },
+            ),
+          );
+        },
+      ),
+      nav: nav,
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(SingleChildScrollView), findsOneWidget);
+
+    await widgetTester.tap(find.text(appTextEn.editTabsList));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(SnackBar), findsOneWidget);
     verify(() => editListScreenBuilder.push(any(), songbook.name, songbook.id!)).called(1);
   });
 

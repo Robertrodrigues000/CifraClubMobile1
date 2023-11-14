@@ -114,6 +114,9 @@ void main() {
   });
 
   group("When call 'save'", () {
+    final versions = [getFakeVersion(versionId: 0), getFakeVersion(versionId: 1), getFakeVersion(versionId: 2)];
+    final getAllVersionsFromSongbook = _GetAllVersionsFromSongbookMock();
+    final getOrderedVersions = _GetOrderedVersionsMock();
     final deleteVersions = _DeleteVersionsMock();
     when(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions')))
         .thenAnswer((_) => SynchronousFuture(const Ok(null)));
@@ -121,9 +124,16 @@ void main() {
     final sortVersions = _SortVersionFromSongbookMock();
     when(() => sortVersions(any(), any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
 
+    when(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).thenReturn(versions);
+    when(() => getAllVersionsFromSongbook(0)).thenAnswer((_) => SynchronousFuture(versions));
+
     blocTest(
       "should save order and deleted songs",
-      build: () => getBloc(deleteVersions: deleteVersions, sortVersionFromSongbook: sortVersions),
+      build: () => getBloc(
+          deleteVersions: deleteVersions,
+          sortVersionFromSongbook: sortVersions,
+          getAllVersionsFromSongbook: getAllVersionsFromSongbook,
+          getOrderedVersions: getOrderedVersions),
       act: (bloc) async {
         bloc.emit(EditListState(
             songbookId: 0,
@@ -142,12 +152,19 @@ void main() {
       verify: (bloc) {
         verify(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions'))).called(1);
         verify(() => sortVersions(any(), any())).called(1);
+        verify(() => getAllVersionsFromSongbook(any())).called(1);
+        verify(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).called(1);
       },
     );
 
     blocTest(
       "and don't have delete versions should save order",
-      build: () => getBloc(deleteVersions: deleteVersions, sortVersionFromSongbook: sortVersions),
+      build: () => getBloc(
+        deleteVersions: deleteVersions,
+        sortVersionFromSongbook: sortVersions,
+        getAllVersionsFromSongbook: getAllVersionsFromSongbook,
+        getOrderedVersions: getOrderedVersions,
+      ),
       act: (bloc) async {
         bloc.emit(EditListState(
           songbookId: 0,
@@ -166,12 +183,21 @@ void main() {
       verify: (bloc) {
         verifyNever(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions')));
         verify(() => sortVersions(any(), any())).called(1);
+        verify(() => getAllVersionsFromSongbook(any())).called(1);
+        verify(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).called(1);
       },
     );
   });
 
-  group("When call 'save' and an error occurs in the request", () {
+  group("When call 'save' and an error occurs in the request and keep changes", () {
+    final versions = [getFakeVersion(versionId: 0), getFakeVersion(versionId: 1), getFakeVersion(versionId: 2)];
+    final getAllVersionsFromSongbook = _GetAllVersionsFromSongbookMock();
+    final getOrderedVersions = _GetOrderedVersionsMock();
     final deleteVersions = _DeleteVersionsMock();
+
+    when(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).thenReturn(versions);
+    when(() => getAllVersionsFromSongbook(0)).thenAnswer((_) => SynchronousFuture(versions));
+
     when(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions')))
         .thenAnswer((_) => SynchronousFuture(Err(ServerError(statusCode: 404))));
 
@@ -180,7 +206,12 @@ void main() {
 
     blocTest(
       "should add stream event",
-      build: () => getBloc(deleteVersions: deleteVersions, sortVersionFromSongbook: sortVersions),
+      build: () => getBloc(
+        deleteVersions: deleteVersions,
+        sortVersionFromSongbook: sortVersions,
+        getAllVersionsFromSongbook: getAllVersionsFromSongbook,
+        getOrderedVersions: getOrderedVersions,
+      ),
       act: (bloc) async {
         bloc.emit(EditListState(
           songbookId: 0,
@@ -196,11 +227,55 @@ void main() {
         isA<EditListState>().having((state) => state.isLoading, "loading", isTrue),
         isA<EditListState>()
             .having((state) => state.isLoading, "loading", isFalse)
-            .having((state) => state.hasChanges, "has changes", isFalse)
+            .having((state) => state.hasChanges, "has changes", isTrue)
       ],
       verify: (bloc) async {
         verify(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions'))).called(1);
         verify(() => sortVersions(any(), any())).called(1);
+        verify(() => getAllVersionsFromSongbook(any())).called(1);
+        verify(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).called(1);
+      },
+    );
+  });
+
+  group("When call 'save' edited list is equal original list should return reorder success", () {
+    final versions = [getFakeVersion(versionId: 0), getFakeVersion(versionId: 1), getFakeVersion(versionId: 2)];
+    final getAllVersionsFromSongbook = _GetAllVersionsFromSongbookMock();
+    final getOrderedVersions = _GetOrderedVersionsMock();
+    final deleteVersions = _DeleteVersionsMock();
+
+    when(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).thenReturn(versions);
+    when(() => getAllVersionsFromSongbook(0)).thenAnswer((_) => SynchronousFuture(versions));
+
+    when(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions')))
+        .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final sortVersions = _SortVersionFromSongbookMock();
+    when(() => sortVersions(any(), any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    blocTest(
+      "should add stream event",
+      build: () => getBloc(
+        deleteVersions: deleteVersions,
+        sortVersionFromSongbook: sortVersions,
+        getAllVersionsFromSongbook: getAllVersionsFromSongbook,
+        getOrderedVersions: getOrderedVersions,
+      ),
+      act: (bloc) async {
+        bloc.emit(EditListState(
+          songbookId: 0,
+          deletedVersions: [],
+          versions: versions,
+          hasChanges: true,
+        ));
+        await bloc.save();
+        expect(await bloc.editListEventStream.first, isA<ReorderSuccess>());
+      },
+      verify: (bloc) async {
+        verifyNever(() => deleteVersions(songbookId: any(named: 'songbookId'), versions: any(named: 'versions')));
+        verifyNever(() => sortVersions(any(), any()));
+        verify(() => getAllVersionsFromSongbook(any())).called(1);
+        verify(() => getOrderedVersions(ListOrderType.custom, any(), ListType.user)).called(1);
       },
     );
   });

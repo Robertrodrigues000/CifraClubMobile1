@@ -61,16 +61,7 @@ class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder
           );
           break;
         case ReorderSuccess():
-          ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text(context.text.savedReorderChanges),
-                margin: EdgeInsets.only(
-                  bottom: 96,
-                  left: context.appDimensionScheme.screenMargin,
-                  right: context.appDimensionScheme.screenMargin,
-                )),
-          );
+          navigator.pop(event);
           break;
       }
     }).addTo(subscriptions);

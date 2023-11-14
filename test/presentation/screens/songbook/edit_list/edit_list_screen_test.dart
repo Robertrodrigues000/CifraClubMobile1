@@ -225,7 +225,7 @@ void main() {
     expect(find.text(appTextEn.sortReorderErrorMessage), findsOneWidget);
   });
 
-  testWidgets("When emit success event should show snack bar with success message", (widgetTester) async {
+  testWidgets("When emit success event should show pop edit list screen", (widgetTester) async {
     // ignore: close_sinks
     final publishSubject = PublishSubject<EditListEvent>();
     when(() => bloc.editListEventStream).thenAnswer((_) => publishSubject.stream);
@@ -241,6 +241,6 @@ void main() {
 
     publishSubject.add(ReorderSuccess());
     await widgetTester.pumpAndSettle();
-    expect(find.text(appTextEn.savedReorderChanges), findsOneWidget);
+    expect(find.byType(EditListScreen), findsNothing);
   });
 }

@@ -8,6 +8,7 @@ import 'package:cifraclub/domain/version/use_cases/get_ordered_versions.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_event.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/list_order_type.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:typed_result/typed_result.dart';
@@ -47,33 +48,51 @@ class EditListBloc extends Cubit<EditListState> {
   }
 
   Future<void> save() async {
-    Result<void, RequestError>? deleteVersionsResult;
+    final originalVersions = _getOrderedVersions(
+      ListOrderType.custom,
+      await _getAllVersionsFromSongbook(_songbookId),
+      ListType.user,
+    );
+
+    if (originalVersions.equals(state.versions)) {
+      _eventController.add(ReorderSuccess());
+      return;
+    }
+
     emit(state.copyWith(isLoading: true));
 
+    Result<void, RequestError>? deleteVersionsResult;
+
     if (state.deletedVersions.isNotEmpty) {
-      deleteVersionsResult = await _deleteVersions(songbookId: _songbookId, versions: state.deletedVersions);
+      deleteVersionsResult = await _deleteVersions(
+        songbookId: _songbookId,
+        versions: state.deletedVersions,
+      );
     }
+
     final sortVersionResult = await _sortVersionFromSongbook(_songbookId, state.versions);
 
-    if ((deleteVersionsResult?.isFailure ?? false) || sortVersionResult.isFailure) {
+    if (deleteVersionsResult?.isFailure ?? false || sortVersionResult.isFailure) {
       _eventController.add(ReorderError(
         error: sortVersionResult.isFailure ? sortVersionResult.getError()! : deleteVersionsResult!.getError()!,
         deleteError: deleteVersionsResult?.isFailure ?? false,
         sortError: sortVersionResult.isFailure,
       ));
+      emit(state.copyWith(isLoading: false, hasChanges: true));
     } else {
       _eventController.add(ReorderSuccess());
+      emit(state.copyWith(isLoading: false, hasChanges: false));
     }
-
-    emit(state.copyWith(isLoading: false, hasChanges: false));
   }
 
   void onReorderList(int oldIndex, int newIndex) {
     final currentState = state;
-    final versions = List<Version>.from(currentState.versions, growable: true);
+    final versions = List<Version>.from(currentState.versions);
 
-    if (oldIndex < newIndex) {
-      newIndex -= 1; // coverage:ignore-line
+    newIndex = oldIndex < newIndex ? newIndex - 1 : newIndex;
+
+    if (oldIndex == newIndex) {
+      return;
     }
 
     final version = versions.removeAt(oldIndex);

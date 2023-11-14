@@ -14,6 +14,7 @@ import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/clear_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/input_dialog.dart';
+import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_event.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
 import 'package:cifraclub/presentation/widgets/icon_text_tile.dart';
 import 'package:flutter/material.dart';
@@ -111,12 +112,11 @@ class ListOptionsBottomSheet {
                       (e) {
                         return IconTextTile(
                           onClick: () async {
+                            if (context.mounted) {
+                              DefaultBottomSheet.close(context);
+                            }
                             switch (e) {
                               case ListOptionsBottomSheetItem.clear:
-                                if (!context.mounted) {
-                                  break;
-                                }
-                                DefaultBottomSheet.close(context);
                                 final clearDialog = await ClearDialog.show(context);
                                 if (clearDialog) {
                                   (await bloc.clearList(songbook.id)).when(success: (_) {
@@ -136,7 +136,6 @@ class ListOptionsBottomSheet {
                                 if (!context.mounted) {
                                   break;
                                 }
-                                DefaultBottomSheet.close(context);
                                 final result = await DeleteDialog.show(context);
                                 if (result) {
                                   (await bloc.deleteSongbook(songbook.id)).when(success: (_) {
@@ -157,14 +156,27 @@ class ListOptionsBottomSheet {
                                 if (!context.mounted) {
                                   break;
                                 }
-                                DefaultBottomSheet.close(context);
-                                await _editListScreenBuilder.push(context, songbook.name, songbook.id ?? 0);
+                                final result =
+                                    await _editListScreenBuilder.push(context, songbook.name, songbook.id ?? 0);
+                                if (result is ReorderSuccess) {
+                                  if (!context.mounted) {
+                                    break;
+                                  }
+                                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(context.text.savedReorderChanges),
+                                        margin: EdgeInsets.only(
+                                          left: context.appDimensionScheme.screenMargin,
+                                          right: context.appDimensionScheme.screenMargin,
+                                        )),
+                                  );
+                                }
                                 break;
                               case ListOptionsBottomSheetItem.rename:
                                 if (!context.mounted) {
                                   break;
                                 }
-                                DefaultBottomSheet.close(context);
                                 InputDialog.show(
                                   context: context,
                                   isNewList: false,
@@ -206,15 +218,12 @@ class ListOptionsBottomSheet {
                                 final box = context.findRenderObject() as RenderBox?;
                                 final rect = box != null ? box.localToGlobal(Offset.zero) & box.size : null;
                                 final link = AppUrls.songbookUrlFormat(ccid!, songbook.id!);
-                                DefaultBottomSheet.close(context);
                                 await bloc.shareLink(link, rect);
                                 break;
                               case ListOptionsBottomSheetItem.privacy:
                                 if (!context.mounted) {
                                   break;
                                 }
-                                DefaultBottomSheet.close(context);
-
                                 PrivacyBottomSheet(
                                   isPublic: songbook.isPublic,
                                   onTap: (privacy) async {
