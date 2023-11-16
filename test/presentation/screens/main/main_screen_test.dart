@@ -7,6 +7,7 @@ import 'package:cifraclub/presentation/screens/main/main_bloc.dart';
 import 'package:cifraclub/presentation/screens/main/main_screen.dart';
 import 'package:cifraclub/presentation/screens/main/main_state.dart';
 import 'package:cifraclub/presentation/screens/main/widgets/main_bottom_navigation.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -151,6 +152,32 @@ void main() {
     await tester.pumpAndSettle();
 
     verify(() => navigatorController.setSelectedItem(any())).called(1);
+    stream.close();
+  });
+
+  testWidgets("when navigated to Version screen should hide bottom navigation", (tester) async {
+    final stream = StreamController<MainState>();
+    final pageController = PageController();
+    final navigatorController = _MockNavigatorsController.dummy();
+
+    when(() => navigatorController.currentScreen).thenReturn(FakeScreenEntry(fakeScreenName: VersionEntry.name));
+
+    await tester.pumpWidget(
+      TestWrapper(
+        child: BlocProvider<MainBloc>(
+          create: (BuildContext context) => MockMainBloc.dummy(
+            statesStream: stream.stream,
+          ),
+          child: getMainScreen(
+            navigatorsController: navigatorController,
+            pageController: pageController,
+          ),
+        ),
+      ),
+    );
+
+    expect(find.byType(MainBottomNavigation), findsNothing);
+
     stream.close();
   });
 }

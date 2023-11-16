@@ -1,4 +1,6 @@
 // coverage:ignore-file
+import 'dart:io';
+
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_action.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_autoscroll.dart';
@@ -35,45 +37,48 @@ class _FloatingFooterBarState extends State<FloatingFooterBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSlide(
-      offset: Offset(0, widget.isVisible && ((_currentMode ?? FloatingFooterBarMode.main) == widget.mode) ? 0 : 1.2),
-      duration: const Duration(milliseconds: 200),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ConstrainedBox(
-          constraints: BoxConstraints.loose(const Size.fromWidth(440)),
-          child: LayoutBuilder(builder: (context, constraints) {
-            var collapsed = constraints.maxWidth < 320;
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                height: 40,
-                color: context.colors.neutralSecondary,
-                child: switch (_currentMode ?? FloatingFooterBarMode.main) {
-                  FloatingFooterBarMode.main => FloatingFooterBarMain(
-                      onAction: widget.onAction,
-                      collapsed: collapsed,
-                      isVideoOpen: widget.isVideoOpen,
-                      videoThumb: widget.videoThumb,
-                    ),
-                  FloatingFooterBarMode.autoscroll => FloatingFooterBarAutoscroll(
-                      isAutoScrollRunning: widget.isAutoScrollRunning,
-                      onAction: widget.onAction,
-                      autoScrollSpeedFactor: widget.autoScrollSpeedFactor,
-                    ),
-                  FloatingFooterBarMode.fontSize =>
-                    FloatingFooterBarFontSize(onAction: widget.onAction, collapsed: collapsed),
-                },
-              ),
-            );
-          }),
+    return Padding(
+      padding: Platform.isIOS ? const EdgeInsets.only(bottom: 16) : EdgeInsets.zero,
+      child: AnimatedSlide(
+        offset: Offset(0, widget.isVisible && ((_currentMode ?? FloatingFooterBarMode.main) == widget.mode) ? 0 : 1.2),
+        duration: const Duration(milliseconds: 200),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ConstrainedBox(
+            constraints: BoxConstraints.loose(const Size.fromWidth(440)),
+            child: LayoutBuilder(builder: (context, constraints) {
+              var collapsed = constraints.maxWidth < 320;
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  height: 40,
+                  color: context.colors.neutralSecondary,
+                  child: switch (_currentMode ?? FloatingFooterBarMode.main) {
+                    FloatingFooterBarMode.main => FloatingFooterBarMain(
+                        onAction: widget.onAction,
+                        collapsed: collapsed,
+                        isVideoOpen: widget.isVideoOpen,
+                        videoThumb: widget.videoThumb,
+                      ),
+                    FloatingFooterBarMode.autoscroll => FloatingFooterBarAutoscroll(
+                        isAutoScrollRunning: widget.isAutoScrollRunning,
+                        onAction: widget.onAction,
+                        autoScrollSpeedFactor: widget.autoScrollSpeedFactor,
+                      ),
+                    FloatingFooterBarMode.fontSize =>
+                      FloatingFooterBarFontSize(onAction: widget.onAction, collapsed: collapsed),
+                  },
+                ),
+              );
+            }),
+          ),
         ),
+        onEnd: () {
+          setState(() {
+            _currentMode = widget.mode;
+          });
+        },
       ),
-      onEnd: () {
-        setState(() {
-          _currentMode = widget.mode;
-        });
-      },
     );
   }
 }

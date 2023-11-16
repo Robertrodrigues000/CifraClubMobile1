@@ -104,4 +104,10 @@ class NavigatorsController {
       }
     }
   }
+
+  void addNavListener(VoidCallback listener) {
+    for (var nav in navs) {
+      nav.addListener(listener);
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:cifraclub/presentation/navigator/navigators_controller.dart';
 import 'package:cifraclub/presentation/screens/main/main_bloc.dart';
 import 'package:cifraclub/presentation/screens/main/main_state.dart';
 import 'package:cifraclub/presentation/screens/main/widgets/main_bottom_navigation.dart';
+import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/back_button_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,11 +24,14 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late MainBloc bloc;
-
+  var shouldShowBottomNavigation = true;
   @override
   void initState() {
     super.initState();
     bloc = BlocProvider.of<MainBloc>(context);
+    _verifyCurrentScreen();
+
+    widget.navigatorsController.addNavListener(_verifyCurrentScreen);
   }
 
   @override
@@ -53,32 +57,45 @@ class _MainScreenState extends State<MainScreen> {
         return BackButtonHandler(
           onWillPop: widget.navigatorsController.onWillPop,
           child: Scaffold(
-            body: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: widget.pageController,
-              children: List.generate(
-                widget.navigatorsController.navs.length,
-                (index) => widget.navFrameBuilder(widget.navigatorsController.navs[index]),
-                growable: false,
+              body: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: widget.pageController,
+                children: List.generate(
+                  widget.navigatorsController.navs.length,
+                  (index) => widget.navFrameBuilder(widget.navigatorsController.navs[index]),
+                  growable: false,
+                ),
               ),
-            ),
-            bottomNavigationBar: AnimatedBuilder(
-              animation: widget.navigatorsController.restorableBottomNavigationIndex,
-              builder: (context, _) {
-                return MainBottomNavigation(
-                  key: const Key("bottomNav"),
-                  safeAreaBottomOffset: safeAreaBottomOffset,
-                  onItemSelected: (selectedItem) {
-                    widget.navigatorsController.setSelectedItem(selectedItem);
-                  },
-                  currentItem: widget.navigatorsController.currentBottomNavigationScreen,
-                );
-              },
-            ),
-          ),
+              bottomNavigationBar: AnimatedBuilder(
+                animation: widget.navigatorsController.restorableBottomNavigationIndex,
+                builder: (context, _) {
+                  return shouldShowBottomNavigation
+                      ? MainBottomNavigation(
+                          key: const Key("bottomNav"),
+                          safeAreaBottomOffset: safeAreaBottomOffset,
+                          onItemSelected: (selectedItem) {
+                            widget.navigatorsController.setSelectedItem(selectedItem);
+                          },
+                          currentItem: widget.navigatorsController.currentBottomNavigationScreen,
+                        )
+                      : const SizedBox();
+                },
+              )),
         );
       },
     );
+  }
+
+  void _verifyCurrentScreen() {
+    final isVersionEntry = widget.navigatorsController.currentScreen?.screenName == VersionEntry.name;
+
+    if (!isVersionEntry && shouldShowBottomNavigation) {
+      return;
+    }
+
+    setState(() {
+      shouldShowBottomNavigation = !isVersionEntry;
+    });
   }
 
   @override

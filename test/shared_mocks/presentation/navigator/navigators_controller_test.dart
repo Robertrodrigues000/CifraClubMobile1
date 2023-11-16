@@ -324,4 +324,23 @@ void main() {
       expect(newEntries.last, same(moreEntry));
     });
   });
+
+  test("when call addNavListener should add listener to navs", () {
+    final navs = [
+      NavMock.getDummy(screens: [
+        FakeScreenEntry(fakeScreenName: "home"),
+        FakeScreenEntry(fakeScreenName: "artist"),
+      ]),
+      NavMock.getDummy(screens: [
+        FakeScreenEntry(fakeScreenName: "more"),
+      ]),
+    ];
+
+    final controller = getController(navs: navs);
+
+    controller.addNavListener(() {});
+
+    verify(() => navs.last.addListener(any(that: const TypeMatcher<Function>()))).called(1);
+    verify(() => navs.first.addListener(any(that: const TypeMatcher<Function>()))).called(1);
+  });
 }
