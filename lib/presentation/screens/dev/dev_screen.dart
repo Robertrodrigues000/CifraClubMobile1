@@ -205,6 +205,7 @@ class _DevScreenState extends State<DevScreen> {
                                   chordRepresentation: state.chordRepresentation![index],
                                   chordUiSettings: chordSettings,
                                   isLeftHanded: false,
+                                  isSelected: true,
                                 );
                               })),
                             ]);

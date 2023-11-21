@@ -61,6 +61,6 @@ class ChordRepresentation extends Equatable {
   }
 
   @override
-  List<Object?> get props => [bar, fingers, notes, instrument, neck];
+  List<Object?> get props => [bar, fingers, notes, instrument, neck, original, name];
   // coverage:ignore-end
 }

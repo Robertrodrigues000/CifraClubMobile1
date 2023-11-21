@@ -260,7 +260,7 @@ void main() {
       final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
           as NetworkRequest<void>;
 
-      expect(request.path, "/v3/songbook/$songbookId/sort");
+      expect(request.path, "/v3/songbook/$songbookId/reorder");
       expect(request.type, NetworkRequestType.put);
 
       expect(result.isSuccess, true);

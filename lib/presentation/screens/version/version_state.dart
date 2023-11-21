@@ -112,9 +112,11 @@ class AutoScrollState {
 @immutable
 class ChordState {
   final List<ChordRepresentation> chordRepresentations;
+  final String? selectedChord;
 
   const ChordState({
     this.chordRepresentations = const [],
+    this.selectedChord,
   });
 }
 

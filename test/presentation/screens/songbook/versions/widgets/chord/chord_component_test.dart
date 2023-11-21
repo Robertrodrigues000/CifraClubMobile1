@@ -34,6 +34,7 @@ void main() {
           chordUiSettings: ChordUISettings.guitar(),
           chordRepresentation: chordRepresentation,
           isLeftHanded: false,
+          isSelected: false,
         ),
       ),
     );
@@ -61,6 +62,7 @@ void main() {
           chordUiSettings: ChordUISettings.guitar(),
           chordRepresentation: chordRepresentation,
           isLeftHanded: false,
+          isSelected: false,
         ),
       ),
     );
@@ -87,6 +89,7 @@ void main() {
           chordUiSettings: ChordUISettings.guitar(),
           chordRepresentation: chordRepresentation,
           isLeftHanded: false,
+          isSelected: false,
         ),
       ),
     );
@@ -114,6 +117,7 @@ void main() {
           chordUiSettings: ChordUISettings.guitar(),
           chordRepresentation: chordRepresentation,
           isLeftHanded: false,
+          isSelected: false,
         ),
       ),
     );
@@ -151,6 +155,7 @@ void main() {
           chordUiSettings: ChordUISettings.guitar(),
           chordRepresentation: chordRepresentation,
           isLeftHanded: false,
+          isSelected: false,
         ),
       ),
     );

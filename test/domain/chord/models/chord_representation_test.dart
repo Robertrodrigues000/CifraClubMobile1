@@ -31,7 +31,7 @@ void main() {
 
     final chordRepresentationCopy = chordRepresentation.copyWith(original: "002210");
 
-    expect(chordRepresentation == chordRepresentationCopy, true);
+    expect(chordRepresentation == chordRepresentationCopy, false);
     expect(chordRepresentationCopy.original, "002210");
     expect(chordRepresentationCopy.neck, chordRepresentation.neck);
     expect(

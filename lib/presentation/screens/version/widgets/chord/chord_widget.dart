@@ -13,12 +13,14 @@ class ChordWidget extends StatelessWidget {
   final String? count;
   final String? subtitle;
   final bool isLeftHanded;
+  final bool isSelected;
 
   const ChordWidget({
     super.key,
     required this.chordRepresentation,
     required this.chordUiSettings,
     required this.isLeftHanded,
+    this.isSelected = false,
     this.count,
     this.subtitle,
   });
@@ -101,11 +103,23 @@ class ChordWidget extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-                left: chordUiSettings.neckIndicatorWidth, top: chordUiSettings.stringPlayIndicationPadding),
+              left: chordUiSettings.neckIndicatorWidth,
+              top: chordUiSettings.stringPlayIndicationPadding,
+            ),
             child: StringPlayIndicationWidget(
               chordRepresentation: chordRepresentation,
               chordUiSettings: chordUiSettings,
               isLeftHanded: isLeftHanded,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            height: 4,
+            margin: EdgeInsets.symmetric(horizontal: chordUiSettings.neckIndicatorWidth),
+            width: chordUiSettings.width,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              color: isSelected ? context.colors.primary : Colors.transparent,
             ),
           ),
         ],

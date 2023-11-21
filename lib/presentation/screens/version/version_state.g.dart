@@ -346,6 +346,8 @@ extension $AutoScrollStateCopyWith on AutoScrollState {
 abstract class _$ChordStateCWProxy {
   ChordState chordRepresentations(List<ChordRepresentation> chordRepresentations);
 
+  ChordState selectedChord(String? selectedChord);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -354,6 +356,7 @@ abstract class _$ChordStateCWProxy {
   /// ````
   ChordState call({
     List<ChordRepresentation>? chordRepresentations,
+    String? selectedChord,
   });
 }
 
@@ -368,6 +371,9 @@ class _$ChordStateCWProxyImpl implements _$ChordStateCWProxy {
       this(chordRepresentations: chordRepresentations);
 
   @override
+  ChordState selectedChord(String? selectedChord) => this(selectedChord: selectedChord);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -377,12 +383,17 @@ class _$ChordStateCWProxyImpl implements _$ChordStateCWProxy {
   /// ````
   ChordState call({
     Object? chordRepresentations = const $CopyWithPlaceholder(),
+    Object? selectedChord = const $CopyWithPlaceholder(),
   }) {
     return ChordState(
       chordRepresentations: chordRepresentations == const $CopyWithPlaceholder() || chordRepresentations == null
           ? _value.chordRepresentations
           // ignore: cast_nullable_to_non_nullable
           : chordRepresentations as List<ChordRepresentation>,
+      selectedChord: selectedChord == const $CopyWithPlaceholder()
+          ? _value.selectedChord
+          // ignore: cast_nullable_to_non_nullable
+          : selectedChord as String?,
     );
   }
 }

@@ -1,6 +1,4 @@
 // coverage:ignore-file
-
-import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
@@ -14,8 +12,7 @@ import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
-import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
-import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_widget.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord_list_header.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_action.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/version_header.dart';
@@ -225,78 +222,79 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                   ),
               ],
             ),
-            body: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Listener(
-                  onPointerDown: (_) {
-                    isUserDraggingScreen = true;
-                  },
-                  onPointerUp: (_) {
-                    isUserDraggingScreen = false;
-                  },
-                  child: CustomScrollView(
-                    controller: _scrollController,
-                    slivers: [
-                      if (state.isYouTubeVisible && _youtubePlayerController != null)
-                        SliverPersistentHeader(
-                          pinned: true,
-                          delegate: YouTubeHeaderDelegate(
-                            MediaQuery.sizeOf(context).width * 9 / 16,
-                            _youtubePlayerController!,
+            body: ScrolledUnderBuilder(builder: (context, isScrolledUnder) {
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Listener(
+                    onPointerDown: (_) {
+                      isUserDraggingScreen = true;
+                    },
+                    onPointerUp: (_) {
+                      isUserDraggingScreen = false;
+                    },
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        if (state.isYouTubeVisible && _youtubePlayerController != null)
+                          SliverPersistentHeader(
+                            pinned: true,
+                            delegate: YouTubeHeaderDelegate(
+                              MediaQuery.sizeOf(context).width * 9 / 16,
+                              _youtubePlayerController!,
+                            ),
                           ),
-                        ),
-                      SliverToBoxAdapter(
-                        child: VersionHeader(
-                          songName: state.versionHeaderState.songName,
-                          artistName: state.versionHeaderState.artistName,
-                          isFavorite: state.versionHeaderState.isFavorite,
-                          onTapFavoriteIcon: () {
-                            _bloc.add(OnTapFavoriteButton());
-                          },
-                          onTapArtistName: () => ArtistEntry.push(Nav.of(context), state.versionHeaderState.artistUrl),
-                          onTapOptionsIcon: () async {
-                            await widget.versionOptionsBottomSheet.show(
-                              context: context,
-                              artistUrl: state.versionHeaderState.artistUrl,
-                              songUrl: state.versionHeaderState.songUrl,
-                              songId: state.version!.song.songId,
-                            );
-                          },
-                          filters: state.versionHeaderState.versionFilters,
-                          selectedFilter: state.versionHeaderState.selectedVersionFilter,
-                          onTapFilter: (filter) => _bloc.add(OnVersionSelected(filter)),
-                          onTapMoreFilters: () {
-                            if (state.version != null) {
-                              InstrumentVersionsBottomSheet.show(
-                                context,
-                                state.version!.instrumentVersions ?? [],
-                                state.version!.instrument,
-                                state.version!.versionName,
-                                (versionFilter) {
-                                  _bloc.add(OnVersionSelected(versionFilter));
-                                },
+                        SliverToBoxAdapter(
+                          child: VersionHeader(
+                            songName: state.versionHeaderState.songName,
+                            artistName: state.versionHeaderState.artistName,
+                            isFavorite: state.versionHeaderState.isFavorite,
+                            onTapFavoriteIcon: () {
+                              _bloc.add(OnTapFavoriteButton());
+                            },
+                            onTapArtistName: () =>
+                                ArtistEntry.push(Nav.of(context), state.versionHeaderState.artistUrl),
+                            onTapOptionsIcon: () async {
+                              await widget.versionOptionsBottomSheet.show(
+                                context: context,
+                                artistUrl: state.versionHeaderState.artistUrl,
+                                songUrl: state.versionHeaderState.songUrl,
+                                songId: state.version!.song.songId,
                               );
-                            }
-                          },
-                        ),
-                      ),
-                      if (state.isLoading)
-                        const SliverFillRemaining(
-                          child: Center(
-                            child: LoadingIndicator(),
+                            },
+                            filters: state.versionHeaderState.versionFilters,
+                            selectedFilter: state.versionHeaderState.selectedVersionFilter,
+                            onTapFilter: (filter) => _bloc.add(OnVersionSelected(filter)),
+                            onTapMoreFilters: () {
+                              if (state.version != null) {
+                                InstrumentVersionsBottomSheet.show(
+                                  context,
+                                  state.version!.instrumentVersions ?? [],
+                                  state.version!.instrument,
+                                  state.version!.versionName,
+                                  (versionFilter) {
+                                    _bloc.add(OnVersionSelected(versionFilter));
+                                  },
+                                );
+                              }
+                            },
+                            isScrolledUnder: isScrolledUnder,
                           ),
-                        )
-                      else if (state.version?.instrument.isCifraInstrument ?? false) ...[
-                        SliverPersistentHeader(
-                          pinned: state.isChordListPinned,
-                          delegate: ChordListHeaderDelegate(
-                            haveScroll: false,
-                            maxExtend: 110,
-                            child: const Text("Acordes"),
-                            isPinned: state.isChordListPinned,
-                            chords: state.chordState.chordRepresentations,
+                        ),
+                        if (state.isLoading)
+                          const SliverFillRemaining(
+                            child: Center(
+                              child: LoadingIndicator(),
+                            ),
+                          )
+                        else if (state.version?.instrument.isCifraInstrument ?? false) ...[
+                          ChordListHeader(
+                            isChordListPinned: state.isChordListPinned,
+                            isScrolledUnder: isScrolledUnder,
+                            chordRepresentations: state.chordState.chordRepresentations,
+                            selectedChord: state.chordState.selectedChord,
                             onTap: (chord) {
+                              _bloc.add(OnChangeSelectedChord(selectedChord: chord.name));
                               _bloc.add(
                                 OnChordTap(
                                   selectedChord: chord,
@@ -305,43 +303,47 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                               );
                             },
                           ),
-                        ),
-                        SliverList.builder(
-                          itemCount: state.sections.length,
-                          itemBuilder: (context, index) {
-                            final section = state.sections[index];
-                            return Text.rich(
-                              TextSpan(children: section.getSpans()),
-                              style: context.typography.body8,
-                            );
-                          },
-                        ),
-                      ] else
-                        SliverToBoxAdapter(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              state.version?.content ?? "",
-                              style: context.typography.body8,
+                          SliverList.builder(
+                            itemCount: state.sections.length,
+                            itemBuilder: (context, index) {
+                              final section = state.sections[index];
+                              return Text.rich(
+                                TextSpan(children: section.getSpans(
+                                  (chord) {
+                                    _bloc.add(OnChangeSelectedChord(selectedChord: chord));
+                                  },
+                                )),
+                                style: context.typography.body8,
+                              );
+                            },
+                          ),
+                        ] else
+                          SliverToBoxAdapter(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                state.version?.content ?? "",
+                                style: context.typography.body8,
+                              ),
                             ),
                           ),
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                FloatingFooterBar(
-                  mode: state.floatingFooterBarState.mode,
-                  isVisible: isFooterBarVisible,
-                  isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
-                  autoScrollSpeedFactor: state.autoScrollState.speedFactor,
-                  isVideoOpen: state.isYouTubeVisible,
-                  videoThumb: state.version?.videoLesson?.thumb,
-                  onAction: (action) {
-                    _bloc.add(OnFloatingFooterBarAction(action: action));
-                  },
-                )
-              ],
-            ),
+                  FloatingFooterBar(
+                    mode: state.floatingFooterBarState.mode,
+                    isVisible: isFooterBarVisible,
+                    isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
+                    autoScrollSpeedFactor: state.autoScrollState.speedFactor,
+                    isVideoOpen: state.isYouTubeVisible,
+                    videoThumb: state.version?.videoLesson?.thumb,
+                    onAction: (action) {
+                      _bloc.add(OnFloatingFooterBarAction(action: action));
+                    },
+                  )
+                ],
+              );
+            }),
           ),
         );
       },
@@ -377,63 +379,5 @@ class YouTubeHeaderDelegate extends SliverPersistentHeaderDelegate {
     return oldDelegate is! YouTubeHeaderDelegate ||
         oldDelegate.height != height ||
         oldDelegate.controller != controller;
-  }
-}
-
-class ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final double maxExtend;
-  final Widget child;
-  final bool haveScroll;
-  final bool isPinned;
-  final Function(ChordRepresentation chord) onTap;
-  final List<ChordRepresentation> chords;
-
-  ChordListHeaderDelegate({
-    required this.maxExtend,
-    required this.child,
-    required this.haveScroll,
-    required this.isPinned,
-    required this.chords,
-    required this.onTap,
-  });
-
-  @override
-  double get maxExtent => maxExtend;
-
-  @override
-  double get minExtent => isPinned ? maxExtend : 0;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      reverse: true,
-      child: Container(
-        color: context.colors.neutralPrimary,
-        height: maxExtend,
-        child: ListView.builder(
-          itemCount: chords.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            final chord = chords[index];
-            return InkWell(
-              onTap: () => onTap(chord),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 4, bottom: 12),
-                child: ChordWidget(
-                    chordRepresentation: chord,
-                    chordUiSettings: ChordUISettings.guitar().scaledToFit(height: maxExtend - 16),
-                    isLeftHanded: false),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
   }
 }

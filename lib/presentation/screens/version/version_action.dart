@@ -142,6 +142,12 @@ class OnFavoriteChange implements VersionAction {
   OnFavoriteChange({required this.isFavorite, this.haveError});
 }
 
+class OnChangeSelectedChord implements VersionAction {
+  final String? selectedChord;
+
+  OnChangeSelectedChord({required this.selectedChord});
+}
+
 class OnVersionOptionsAction implements VersionAction {
   final VersionOptionsBottomSheetAction action;
 

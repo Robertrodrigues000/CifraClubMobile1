@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/section/models/chord_text.dart';
 import 'package:cifraclub/domain/section/models/section_offset.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 abstract class Section {
@@ -36,9 +37,9 @@ abstract class Section {
     displayText = text;
   }
 
-  List<TextSpan> getSpans() {
+  List<TextSpan> getSpans(Function(String) onTapOnChord) {
     if (_spans.isEmpty) {
-      _spans.addAll(_buildSpans(displayText, displayChords));
+      _spans.addAll(_buildSpans(displayText, displayChords, onTapOnChord));
       assert(_spans.isNotEmpty);
     }
     return _spans;
@@ -100,7 +101,7 @@ abstract class Section {
     }
   }
 
-  List<TextSpan> _buildSpans(String text, List<ChordText> chords) {
+  List<TextSpan> _buildSpans(String text, List<ChordText> chords, Function(String) onTapOnChord) {
     final spans = <TextSpan>[];
     final validChords = chords.where((e) {
       return e.offset.start < text.length && e.offset.end <= text.length && e.offset.start < e.offset.end;
@@ -117,11 +118,14 @@ abstract class Section {
       if (chordText.name.matchAsPrefix(text, currentPosition) != null) {
         spans.add(
           TextSpan(
-            text: chordText.name,
-            style: const TextStyle(
-              color: Colors.red,
-            ),
-          ),
+              text: chordText.name,
+              style: const TextStyle(
+                color: Colors.red,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  onTapOnChord(chordText.name);
+                }),
         );
       } else {
         spans.add(TextSpan(text: text.substring(currentPosition, chordText.offset.end)));

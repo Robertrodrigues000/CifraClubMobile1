@@ -342,4 +342,17 @@ void main() {
 
     expect(state.version, null);
   });
+
+  test("When action is OnChangeSelectedChord", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnChangeSelectedChord(selectedChord: "Bm"),
+      (_) => null,
+    );
+
+    expect(state.isChordListPinned, true);
+    expect(state.chordState.selectedChord, "Bm");
+  });
 }

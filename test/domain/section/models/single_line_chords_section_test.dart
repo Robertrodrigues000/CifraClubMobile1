@@ -77,7 +77,7 @@ void main() {
       );
 
       section.processLineBreak(20);
-      final spans = section.getSpans();
+      final spans = section.getSpans((_) => null);
 
       expect(spans, [
         predicate<TextSpan>((e) => e.text == "Abc " && e.style?.color == null),

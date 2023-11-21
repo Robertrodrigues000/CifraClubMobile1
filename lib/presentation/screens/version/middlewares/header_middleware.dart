@@ -17,7 +17,7 @@ class HeaderMiddleware extends VersionMiddleware {
   HeaderMiddleware(this._getIsFavoriteVersionBySongId, this._favoriteUnfavoriteVersion, this._openLoginView);
 
   CompositeSubscription compositeSubscription = CompositeSubscription();
-  var perdingFavorite = false;
+  var pendingFavorite = false;
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) async {
@@ -37,10 +37,10 @@ class HeaderMiddleware extends VersionMiddleware {
           await compositeSubscription.clear();
 
           _getIsFavoriteVersionBySongId(songId).listen((isFavorite) {
-            if (!perdingFavorite) {
+            if (!pendingFavorite) {
               addAction(OnFavoriteChange(isFavorite: isFavorite));
             }
-            perdingFavorite = false;
+            pendingFavorite = false;
           }).addTo(compositeSubscription);
         }
       default:
@@ -56,7 +56,7 @@ class HeaderMiddleware extends VersionMiddleware {
     final isFavorite = state.versionHeaderState.isFavorite;
 
     addAction(OnFavoriteChange(isFavorite: !isFavorite));
-    perdingFavorite = true;
+    pendingFavorite = true;
     final result = await _favoriteUnfavoriteVersion(
       isFavorite: state.versionHeaderState.isFavorite,
       songId: state.version!.song.songId,
@@ -70,7 +70,7 @@ class HeaderMiddleware extends VersionMiddleware {
         break;
       case FavoriteVersionError():
       case UnFavoriteVersionError():
-        perdingFavorite = false;
+        pendingFavorite = false;
         addAction(OnFavoriteChange(isFavorite: isFavorite, haveError: result));
     }
   }

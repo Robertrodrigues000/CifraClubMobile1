@@ -23,6 +23,7 @@ class VersionReducer {
       case OnVersionSelected():
         return state.copyWith(
           versionHeaderState: state.versionHeaderState.copyWith(selectedVersionFilter: action.filter),
+          chordState: state.chordState.copyWith(selectedChord: null),
         );
       case OnVersionError():
         return state.copyWith(version: null);
@@ -78,6 +79,11 @@ class VersionReducer {
           onEffect(OnFavoriteError(haveError: action.haveError!));
         }
         return state.copyWith(versionHeaderState: state.versionHeaderState.copyWith(isFavorite: action.isFavorite));
+      case OnChangeSelectedChord():
+        return state.copyWith(
+          isChordListPinned: true,
+          chordState: state.chordState.copyWith(selectedChord: action.selectedChord),
+        );
       case OnShowTuningBottomSheet():
         onEffect(OnShowTuningBottomSheetEffect());
         return state;

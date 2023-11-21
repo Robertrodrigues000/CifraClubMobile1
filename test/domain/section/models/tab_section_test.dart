@@ -226,7 +226,7 @@ Eb|-3--|
       expect(tab.displayText, "\n");
       expect(tab.tabLineHeads, []);
       expect(tab.tabLines, []);
-      expect(tab.getSpans(), [isA<TextSpan>().having((e) => e.text, "text", "\n")]);
+      expect(tab.getSpans((_) => null), [isA<TextSpan>().having((e) => e.text, "text", "\n")]);
     });
 
     test('should be able to break tab with no common break', () {
@@ -334,7 +334,7 @@ B|-0-0-0----------------------|#/t2##/t1#''');
 
       expect(tab.displayText, "E|---A---|\n\n");
       expect(tab.displayChords, isEmpty);
-      expect(tab.getSpans(), [predicate<TextSpan>((e) => e.text == "E|---A---|\n\n")]);
+      expect(tab.getSpans((_) => null), [predicate<TextSpan>((e) => e.text == "E|---A---|\n\n")]);
     });
 
     test('should create chords inside tabs header', () {
@@ -359,7 +359,7 @@ E|-7---7---7---7---7---7---7---7------------|#/t2##/t1#''';
       tab.updateOffset(0);
       tab.processLineBreak(15);
 
-      final spans = tab.getSpans();
+      final spans = tab.getSpans((_) => null);
       expect(spans, hasLength(3));
       expect(spans, [
         predicate<TextSpan>((e) => e.style?.color == null),
@@ -401,7 +401,7 @@ C|-0-0-0--
 
 ''');
 
-      expect(tab.getSpans(), [
+      expect(tab.getSpans((_) => null), [
         predicate<TextSpan>((e) => e.text == "A" && e.style?.color != null),
         predicate<TextSpan>((e) => e.text == "         \nA|-0-0-0--\nB|-0-0-0--\nC|-0-0-0--\n\n"),
       ]);

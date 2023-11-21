@@ -117,7 +117,7 @@ class SongbookDataSource {
   ) {
     var request = NetworkRequest(
       type: NetworkRequestType.put,
-      path: "/v3/songbook/$songbookId/sort",
+      path: "/v3/songbook/$songbookId/reorder",
       data: orderedVersionInput.toJson(),
       parser: (_) => null, // coverage:ignore-line
     );

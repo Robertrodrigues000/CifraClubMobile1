@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
 import 'package:cifraclub/domain/chord/use_cases/get_chords_representation.dart';
 import 'package:cifraclub/domain/chord/use_cases/get_instrument_chords.dart';
@@ -24,7 +25,8 @@ class ChordMiddleware extends VersionMiddleware {
       case OnChordShapeChange():
         final changedIndex =
             state.chordState.chordRepresentations.indexWhere((element) => element.name == action.chord.name);
-        final chordRepresentation = state.chordState.chordRepresentations..[changedIndex] = action.chord;
+        final chordRepresentation = List<ChordRepresentation>.from(state.chordState.chordRepresentations)
+          ..[changedIndex] = action.chord;
         addAction(OnChordListLoaded(chordRepresentation));
       case OnChordTap():
         final chords = _getChordsRepresentation(
