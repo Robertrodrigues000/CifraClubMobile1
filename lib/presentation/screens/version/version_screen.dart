@@ -213,15 +213,16 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                 ),
               ),
               actions: [
-                TextButton(
-                  onPressed: () {
-                    _bloc.add(OnToggleIsChordPinned());
-                  },
-                  child: Text(
-                    state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
-                    style: context.typography.body9,
+                if (state.version?.instrument.isCifraInstrument ?? false)
+                  TextButton(
+                    onPressed: () {
+                      _bloc.add(OnToggleIsChordPinned());
+                    },
+                    child: Text(
+                      state.isChordListPinned ? context.text.hideChords : context.text.fixChords,
+                      style: context.typography.body9,
+                    ),
                   ),
-                ),
               ],
             ),
             body: Stack(
@@ -286,7 +287,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                             child: LoadingIndicator(),
                           ),
                         )
-                      else ...[
+                      else if (state.version?.instrument.isCifraInstrument ?? false) ...[
                         SliverPersistentHeader(
                           pinned: state.isChordListPinned,
                           delegate: ChordListHeaderDelegate(
@@ -315,8 +316,16 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
                             );
                           },
                         ),
-                      ],
-                      const SliverFillRemaining(),
+                      ] else
+                        SliverToBoxAdapter(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              state.version?.content ?? "",
+                              style: context.typography.body8,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

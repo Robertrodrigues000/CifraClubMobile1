@@ -39,7 +39,11 @@ abstract class NetworkService {
       if (error.error is SocketException) {
         return Err(ConnectionError());
       }
-      return Err(ServerError(statusCode: error.response?.statusCode));
+      Map<String, dynamic>? errorData;
+      if (error.response?.data is Map<String, dynamic>) {
+        errorData = error.response?.data;
+      }
+      return Err(ServerError(statusCode: error.response?.statusCode, data: errorData));
     } catch (error) {
       // Todo: logar erro ao crashlytics
       return Err(ServerError());

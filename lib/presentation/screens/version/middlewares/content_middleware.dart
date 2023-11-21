@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
 import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
@@ -21,12 +22,6 @@ class ContentMiddleware extends VersionMiddleware {
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
     if (action is OnVersionLoaded) {
-      // TODO: Verificar cifra autorizada
-
-      final sections = _parseSections(action.versionData.content);
-      // TODO: Mover pra uma Action especializada. Quando trocarmos tamanho de fonte, poderemos só chamar o Process sem Parse.
-      _processSections(sections, 40);
-
       final versionFilters = action.versionData.instrumentVersions!
           .firstWhereOrNull((element) => element.instrument == action.versionData.instrument)
           ?.versions
@@ -53,6 +48,15 @@ class ContentMiddleware extends VersionMiddleware {
       if (versionFilters == null) {
         addAction(OnVersionError(error: VersionEmptyError()));
       } else {
+        // TODO: Verificar cifra autorizada
+
+        List<Section> sections = [];
+        if (action.versionData.instrument.isCifraInstrument) {
+          sections = _parseSections(action.versionData.content);
+          // TODO: Mover pra uma Action especializada. Quando trocarmos tamanho de fonte, poderemos só chamar o Process sem Parse.
+          _processSections(sections, 40);
+        }
+
         addAction(
           OnContentParsed(
             sections: sections,

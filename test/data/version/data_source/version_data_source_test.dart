@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cifraclub/data/clients/http/network_request.dart';
@@ -12,11 +13,37 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(NetworkRequest(type: NetworkRequestType.get, path: "", parser: (_) {}));
+  });
   group("When getVersionData is called", () {
     test("and request is successful", () async {
       final networkService = NetworkServiceMock();
       final mockResponse = await File("test/data/version/data_source/version_data_json_response.json").readAsString();
       await networkService.mock<VersionDataDto>(response: mockResponse);
+
+      final versionDataSource = VersionDataSource(networkService);
+      final result = await versionDataSource.getVersionData("artistUrl", "songUrl", "instrument", "version");
+      final request = verify(() => networkService.execute<VersionDataDto>(request: captureAny(named: "request")))
+          .captured
+          .first as NetworkRequest<VersionDataDto>;
+
+      expect(result.isSuccess, true);
+      expect(request.path, "/v3/version/artistUrl/songUrl/instrument/version");
+      expect(request.type, NetworkRequestType.get);
+      final versionData = result.getOrThrow();
+
+      _versionDataJsonResponseExpects(versionData);
+    });
+
+    test("and response is 409 with data", () async {
+      final networkService = NetworkServiceMock();
+      final mockResponse = await File("test/data/version/data_source/version_data_json_response.json").readAsString();
+      final data = jsonDecode(mockResponse);
+
+      when(() => networkService.execute<VersionDataDto>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 409, data: data))),
+      );
 
       final versionDataSource = VersionDataSource(networkService);
       final result = await versionDataSource.getVersionData("artistUrl", "songUrl", "instrument", "version");

@@ -25,7 +25,14 @@ class VersionDataSource {
         return VersionDataDto.fromJson(data);
       },
     );
-    return _networkService.execute(request: request);
+    final result = await _networkService.execute(request: request);
+    final error = result.getError();
+    if (error is ServerError && error.data != null) {
+      try {
+        return Ok(VersionDataDto.fromJson(error.data!));
+      } catch (_) {}
+    }
+    return result;
   }
 
   Future<Result<VersionDataDto, RequestError>> getVersionDataByVersionId(

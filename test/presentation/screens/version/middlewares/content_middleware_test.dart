@@ -13,6 +13,7 @@ import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../../shared_mocks/domain/version/models/instrument_version_mock.dart';
 import '../../../../shared_mocks/domain/version/models/version_data_mock.dart';
 
 class _SectionMock extends Mock implements Section {}
@@ -37,9 +38,14 @@ void main() {
       when(() => parseSections(any())).thenReturn(sections);
       when(() => processSections.call(sections, any())).thenReturn(null);
       when(() => getAllInstrumentVersions(any()))
-          .thenReturn([(instrument: Instrument.bass, versions: List<InstrumentVersion>.empty())]);
+          .thenReturn([(instrument: Instrument.guitar, versions: List<InstrumentVersion>.empty())]);
 
-      final versionData = getFakeVersionData();
+      final versionData = getFakeVersionData(
+        instrument: Instrument.guitar,
+        instrumentVersions: [
+          (versions: [getFakeInstrumentVersion()], instrument: Instrument.guitar)
+        ],
+      );
       final completer = Completer<VersionAction>();
       final contentMiddleware = ContentMiddleware(parseSections, processSections, getAllInstrumentVersions);
 
@@ -87,7 +93,7 @@ void main() {
       );
 
       final versionAction = await completer.future;
-      verify(() => processSections.call(sections, any())).called(1);
+      verifyNever(() => processSections.call(any(), any()));
       expect(versionAction, isA<OnVersionError>().having((action) => action.error, "error", isA<VersionEmptyError>()));
     });
   });

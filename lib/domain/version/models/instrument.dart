@@ -43,6 +43,18 @@ enum Instrument {
     }
   }
 
+  bool get isCifraInstrument => switch (this) {
+        guitar => true,
+        ukulele => true,
+        keyboard => true,
+        cavaco => true,
+        violaCaipira => true,
+        bass => false,
+        drums => false,
+        harmonica => false,
+        unknown => false,
+      };
+
   static Instrument? getInstrumentByType(int? apiType) {
     return Instrument.values.firstWhereOrNull((element) => element.apiType == apiType);
   }

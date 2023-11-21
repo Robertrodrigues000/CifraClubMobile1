@@ -210,6 +210,27 @@ void main() {
         expect((response.getError() as ServerError).statusCode, 404);
         _verifyDioRequest(dio);
       });
+
+      test("Throw server error with data", () async {
+        var cancelToken = _CancelTokenMock();
+        var requestOptions = RequestOptions(path: "v3/test");
+        var dioError = DioError(requestOptions: requestOptions);
+        dioError.requestOptions.cancelToken = cancelToken;
+        dioError.response = Response(requestOptions: requestOptions, statusCode: 409, data: {"answer": 42});
+        when(() => cancelToken.isCancelled).thenAnswer((invocation) => false);
+        _whenDioRequest(dio).thenThrow(dioError);
+
+        var networkService = _TestNetworkService(dio: dio);
+        var response = await _executeRequest(
+          networkService,
+          parser: (data) => data,
+        );
+        expect(response.isSuccess, false);
+        expect(response.getError(), isA<ServerError>());
+        expect((response.getError() as ServerError).statusCode, 409);
+        expect((response.getError() as ServerError).data, {"answer": 42});
+        _verifyDioRequest(dio);
+      });
     });
 
     group("when no internet connection is available", () {
