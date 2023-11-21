@@ -4,7 +4,7 @@ import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
-import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/screens/version/version_reducer.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';

@@ -7,6 +7,7 @@ import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_bloc
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_event.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
+import 'package:cifraclub/presentation/shared/on_context_ready.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/loading_indicator_container.dart';
@@ -25,17 +26,12 @@ class EditListScreen extends StatefulWidget {
   State<EditListScreen> createState() => _EditListScreenState();
 }
 
-class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder {
+class _EditListScreenState extends State<EditListScreen> with SubscriptionHolder, OnContextReady {
   late final _bloc = BlocProvider.of<EditListBloc>(context);
   late final navigator = Navigator.of(context, rootNavigator: true);
 
   @override
-  void initState() {
-    super.initState();
-    listenEvents();
-  }
-
-  void listenEvents() {
+  void onContextReady(BuildContext context) {
     _bloc.editListEventStream.listen((event) {
       switch (event) {
         case ReorderError():

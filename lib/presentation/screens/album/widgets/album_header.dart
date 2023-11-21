@@ -47,10 +47,10 @@ class AlbumHeader extends StatefulWidget {
   final VoidCallback onTapArtistName;
 
   @override
-  State<AlbumHeader> createState() => _ArtistHeaderState();
+  State<AlbumHeader> createState() => _AlbumHeaderState();
 }
 
-class _ArtistHeaderState extends State<AlbumHeader> {
+class _AlbumHeaderState extends State<AlbumHeader> {
   var isScrolledUnder = false;
   double _expandedOpacity = 1.0;
   double _collapsedOpacity = 0.0;
@@ -73,6 +73,12 @@ class _ArtistHeaderState extends State<AlbumHeader> {
   void initState() {
     super.initState();
     widget.scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(_onScroll);
+    super.dispose();
   }
 
   @override
@@ -232,11 +238,5 @@ class _ArtistHeaderState extends State<AlbumHeader> {
             : null,
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(_onScroll);
-    super.dispose();
   }
 }

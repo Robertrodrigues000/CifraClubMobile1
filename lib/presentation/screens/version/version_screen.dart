@@ -13,6 +13,7 @@ import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord_list_header.dart';
+import 'package:cifraclub/presentation/shared/on_context_ready.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_action.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/version_header.dart';
@@ -40,7 +41,7 @@ class VersionScreen extends StatefulWidget {
   State<VersionScreen> createState() => _VersionScreenState();
 }
 
-class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
+class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, OnContextReady {
   late final _bloc = BlocProvider.of<VersionBloc>(context);
   final _scrollController = TrackingScrollController();
   var isFooterBarVisible = true;
@@ -52,7 +53,10 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder {
   void initState() {
     super.initState();
     _scrollController.addListener(onScroll);
+  }
 
+  @override
+  void onContextReady(BuildContext context) {
     _bloc.versionEffectStream.listen((effect) async {
       switch (effect) {
         case OnShowYouTubeVideo():

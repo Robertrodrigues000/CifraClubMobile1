@@ -152,7 +152,7 @@ void main() {
     verify(() => bloc.getArtistSongsAndVideoLessons()).called(1);
   });
 
-  testWidgets('If the videolesson request fails, should show empty state', (widgetTester) async {
+  testWidgets('If the video lesson request fails, should show empty state', (widgetTester) async {
     clearInteractions(bloc);
     bloc.mockStream(ArtistSongsState(isLoading: false, videoLessonsError: ServerError(), shouldShowSearch: false));
 
@@ -359,5 +359,120 @@ void main() {
     expect(find.byType(ArtistSongItem), findsOneWidget);
     await widgetTester.tap(find.byType(ArtistSongItem), warnIfMissed: false);
     verify(() => VersionEntry.pushFromSong(nav, "", song.url, 'Legião Urbana', song.name)).called(1);
+  });
+
+  testWidgets("when tapping options icon of a song in alphabetical order, should show bottom sheet",
+      (widgetTester) async {
+    var songs = [getFakeArtistSong(name: "Funk rave")];
+    bloc.mockStream(ArtistSongsState(
+        isLoading: false,
+        shouldShowSearch: true,
+        songs: songs,
+        songsFilteredBySearch: songs,
+        rankingPrefixes: ["1"],
+        alphabeticalPrefixes: ["F"]));
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          child: BlocProvider<ArtistSongsBloc>.value(
+            value: bloc,
+            child: ArtistSongsScreen(
+              artistName: "Anitta",
+              versionOptionsBottomSheet: bottomSheet,
+            ),
+          ),
+        ),
+      );
+    });
+
+    await widgetTester.pumpAndSettle();
+    var tabBar = find.byType(TabBar).evaluate().first.widget as TabBar;
+    Tab tab = tabBar.tabs.firstWhere((element) => (element as Tab).text == appTextEn.alphabeticalOrder) as Tab;
+    await widgetTester.tap(find.byWidget(tab));
+    await widgetTester.pumpAndSettle();
+
+    await widgetTester.tap(find.byKey(const Key("options-icon")));
+
+    verify(() => bottomSheet.show(
+          context: any(named: 'context'),
+          artistUrl: any(named: 'artistUrl'),
+          songUrl: any(named: 'songUrl'),
+          songId: any(named: 'songId'),
+          isVersionBottomSheet: any(named: 'isVersionBottomSheet'),
+          versionData: any(named: 'versionData'),
+          onAction: any(named: 'onAction'),
+        )).called(1);
+  });
+
+  testWidgets("when tapping song in alphabetical order, should navigate to version screen", (widgetTester) async {
+    var song = getFakeArtistSong(name: "Funk rave");
+    bloc.mockStream(ArtistSongsState(
+        isLoading: false,
+        shouldShowSearch: true,
+        songs: [song],
+        songsFilteredBySearch: [song],
+        rankingPrefixes: ["1"],
+        alphabeticalPrefixes: ["F"]));
+    final nav = NavMock.getDummy();
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          nav: nav,
+          child: BlocProvider<ArtistSongsBloc>.value(
+            value: bloc,
+            child: ArtistSongsScreen(
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+              artistName: 'Anitta',
+            ),
+          ),
+        ),
+      );
+    });
+
+    await widgetTester.pumpAndSettle();
+    var tabBar = find.byType(TabBar).evaluate().first.widget as TabBar;
+    Tab tab = tabBar.tabs.firstWhere((element) => (element as Tab).text == appTextEn.alphabeticalOrder) as Tab;
+    await widgetTester.tap(find.byWidget(tab));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(ArtistSongItem), findsOneWidget);
+    await widgetTester.tap(find.byType(ArtistSongItem), warnIfMissed: false);
+    verify(() => VersionEntry.pushFromSong(nav, "", song.url, 'Anitta', song.name)).called(1);
+  });
+
+  testWidgets("when tapping video lesson, should navigate to version screen", (widgetTester) async {
+    var videoLessons = [getFakeVideoLessons()];
+    bloc.mockStream(ArtistSongsState(
+        isLoading: false,
+        shouldShowSearch: true,
+        videoLessons: videoLessons,
+        videoLessonsFilteredBySearch: videoLessons));
+
+    final nav = NavMock.getDummy();
+
+    await mockNetworkImagesFor(() async {
+      await widgetTester.pumpWidget(
+        TestWrapper(
+          nav: nav,
+          child: BlocProvider<ArtistSongsBloc>.value(
+            value: bloc,
+            child: ArtistSongsScreen(
+              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+              artistName: 'Anitta',
+            ),
+          ),
+        ),
+      );
+    });
+
+    await widgetTester.tap(find.text(appTextEn.videoLessons));
+    await widgetTester.pumpAndSettle();
+
+    expect(find.byType(ArtistVideoLessonItem), findsOneWidget);
+    await widgetTester.tap(find.byType(ArtistVideoLessonItem), warnIfMissed: false);
+    verify(() => VersionEntry.pushFromSong(
+        nav, "", videoLessons.first.song?.url ?? "", 'Anitta', videoLessons.first.song?.name ?? "")).called(1);
   });
 }

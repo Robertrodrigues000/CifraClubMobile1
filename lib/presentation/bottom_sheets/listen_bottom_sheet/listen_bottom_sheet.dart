@@ -64,14 +64,13 @@ class _ListenBottomSheetWidget extends StatefulWidget {
 }
 
 class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  late final TabController _tabController = TabController(length: 2, vsync: this);
   var isFirstCall = true;
   final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_onPageChange);
   }
 
@@ -177,7 +176,7 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                                       return YouTubeVideoTile(
                                         duration: youtubeVideo.duration,
                                         imageUrl: youtubeVideo.imageUrl,
-                                        videoName: youtubeVideo.title,
+                                        videoName: youtubeVideo.title.replaceAll("&amp;", "&"),
                                         views:
                                             "${_formatNumber(int.tryParse(youtubeVideo.viewCount))} ${context.text.views}",
                                         onTap: () {}, // coverage:ignore-line

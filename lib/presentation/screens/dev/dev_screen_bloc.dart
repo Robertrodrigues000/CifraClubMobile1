@@ -6,9 +6,6 @@ import 'package:cifraclub/domain/log/repository/log_repository.dart';
 import 'package:cifraclub/domain/preferences/use_cases/get_is_pro_preference.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_remote_products.dart';
 import 'package:cifraclub/domain/search/use_cases/search_shazam.dart';
-import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
-import 'package:cifraclub/domain/search/models/search_filter.dart';
-import 'package:cifraclub/domain/search/use_cases/search.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/subscription/models/purchase.dart';
 import 'package:cifraclub/domain/subscription/repository/in_app_purchase_repository.dart';
@@ -33,8 +30,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
   final GetIsProPreference _getIsProPreference;
   final GetVersionData _getVersionData;
   final GetChordsRepresentation _getChordsRepresentation;
-  final ClearVersionsFromSongbook _clearSongsFromSongbook;
-  final Search _searchAll;
   final SearchShazam _searchShazam;
 
   DevScreenBloc(
@@ -45,10 +40,8 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     this._getOrders,
     this._postPurchaseOrder,
     this._getIsProPreference,
-    this._clearSongsFromSongbook,
     this._getChordsRepresentation,
     this._getVersionData,
-    this._searchAll,
     this._searchShazam,
   ) : super(const DevScreenState(isLoading: false));
 
@@ -97,10 +90,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     emit(DevScreenState(isLoading: !state.isLoading));
   }
 
-  Future<void> deleteCifrasTest() async {
-    await _clearSongsFromSongbook(10093245);
-  }
-
   Future<void> getChordsRepresentation() async {
     final versionDataResult = await _getVersionData(
       artistUrl: "joao-bosco",
@@ -122,22 +111,6 @@ class DevScreenBloc extends Cubit<DevScreenState> {
 
       emit(DevScreenState(isLoading: false, chordRepresentation: chordRepresentation));
     }
-  }
-
-  Future<void> searchRequest(String query, SearchFilter? searchFilter) async {
-    currentRequest?.cancel();
-    currentRequest = _searchAll(query: query, searchFilter: searchFilter);
-    final request = await currentRequest!.valueOrCancellation(Err(RequestCancelled()));
-
-    request?.when(
-      success: (value) {
-        for (var item in value) {
-          // ignore: avoid_print
-          print(item);
-        }
-      },
-      failure: print,
-    );
   }
 
   void shazamRequest() async {

@@ -1,22 +1,18 @@
 import 'package:cifraclub/domain/artist/models/artist_song.dart';
-import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/screens/artist/widgets/artist_song_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_page.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.dart';
-import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_fixed_header.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_songs_collapsed_header.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/widgets/songs_by_alphabetical_order_tab.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/widgets/songs_by_most_accessed_tab.dart';
+import 'package:cifraclub/presentation/screens/artist_songs/widgets/video_lessons_tab.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
-import 'package:collection/collection.dart';
-import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
-import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cosmos/cosmos.dart';
-import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,6 +20,7 @@ import 'package:nav/nav.dart';
 
 class ArtistSongsScreen extends StatefulWidget {
   const ArtistSongsScreen({super.key, required this.artistName, required this.versionOptionsBottomSheet});
+
   final String artistName;
   final VersionOptionsBottomSheet versionOptionsBottomSheet;
 
@@ -33,14 +30,13 @@ class ArtistSongsScreen extends StatefulWidget {
 
 class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTickerProviderStateMixin {
   late final ArtistSongsBloc _bloc = BlocProvider.of<ArtistSongsBloc>(context);
-  late TabController _tabController;
+  late final _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
   final scrollController = ScrollController();
   var isScrolledUnder = false;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     scrollController.addListener(_onScroll);
     _tabController.addListener(_onPageChange);
   }
@@ -49,6 +45,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
     _bloc.onPageChange(ArtistSongsPage.fromIndex(_tabController.index));
   }
 
+  // coverage:ignore-start
   void _onScroll() {
     final currentOffset = scrollController.offset;
     final oldScrolledUnder = isScrolledUnder;
@@ -57,6 +54,7 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
       setState(() {});
     }
   }
+  // coverage:ignore-end
 
   @override
   void dispose() {
@@ -125,211 +123,72 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                 physics: const PageScrollPhysics(),
                 controller: _tabController,
                 children: <Widget>[
-                  SafeArea(
-                    top: false,
-                    bottom: false,
-                    child: Builder(builder: (context) {
-                      return CustomScrollView(
-                        slivers: [
-                          SliverOverlapInjector(
-                            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                          ),
-                          if (state.songsError != null)
-                            SliverFillRemaining(
-                              child: Center(
-                                child: SingleChildScrollView(
-                                  child: ErrorDescriptionWidget(
-                                    typeError: state.songsError! is ConnectionError
-                                        ? ErrorDescriptionWidgetType.connection
-                                        : ErrorDescriptionWidgetType.server,
-                                    onClick: () => _bloc.getArtistSongsAndVideoLessons(),
-                                  ),
-                                ),
-                              ),
-                            )
-                          else if (state.isLoading)
-                            const SliverFillRemaining(child: Center(child: LoadingIndicator()))
-                          else if (state.songsFilteredBySearch.isNotEmpty)
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                childCount: state.songsFilteredBySearch.length,
-                                (context, index) {
-                                  final song = state.songsFilteredBySearch[index];
-                                  return ArtistSongItem(
-                                      onTap: () {
-                                        VersionEntry.pushFromSong(
-                                          Nav.of(context),
-                                          _bloc.artistUrl ?? "",
-                                          song.url,
-                                          widget.artistName,
-                                          song.name,
-                                        );
-                                      },
-                                      onOptionsTap: () async {
-                                        await widget.versionOptionsBottomSheet.show(
-                                          context: context,
-                                          artistUrl: _bloc.artistUrl ?? "",
-                                          songUrl: song.url,
-                                          songId: song.id,
-                                        );
-                                      },
-                                      name: song.name,
-                                      prefix: state.rankingPrefixes[index],
-                                      isVerified: song.verified,
-                                      hasVideoLessons: _hasInstrumentVideoLesson(state.instrument, song));
-                                },
-                              ),
-                            )
-                          else
-                            SliverPadding(
-                              padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
-                              sliver: const SliverToBoxAdapter(
-                                child: ErrorDescriptionWidget(
-                                  typeError: ErrorDescriptionWidgetType.resultNotFound,
-                                ),
-                              ),
-                            ),
-                        ],
+                  SongsByMostAccessedTab(
+                    songsFilteredBySearch: state.songsFilteredBySearch,
+                    rankingPrefixes: state.rankingPrefixes,
+                    songsError: state.songsError,
+                    isLoading: state.isLoading,
+                    onTapReload: () => _bloc.getArtistSongsAndVideoLessons(),
+                    hasVideoLesson: (song) => _hasInstrumentVideoLesson(state.instrument, song),
+                    onTapVersion: (song) {
+                      VersionEntry.pushFromSong(
+                        Nav.of(context),
+                        _bloc.artistUrl ?? "",
+                        song.url,
+                        widget.artistName,
+                        song.name,
                       );
-                    }),
-                  ),
-                  SafeArea(
-                    top: false,
-                    bottom: false,
-                    child: Builder(builder: (context) {
-                      final alphabeticalSongs =
-                          state.songsFilteredBySearch.sortedBy((a) => removeDiacritics(a.name).toLowerCase());
-                      return CustomScrollView(
-                        slivers: [
-                          SliverOverlapInjector(
-                            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                          ),
-                          if (state.songsError != null)
-                            SliverFillRemaining(
-                              child: Center(
-                                child: SingleChildScrollView(
-                                  child: ErrorDescriptionWidget(
-                                    typeError: state.songsError! is ConnectionError
-                                        ? ErrorDescriptionWidgetType.connection
-                                        : ErrorDescriptionWidgetType.server,
-                                    onClick: () => _bloc.getArtistSongsAndVideoLessons(),
-                                  ),
-                                ),
-                              ),
-                            )
-                          else if (state.isLoading)
-                            const SliverFillRemaining(child: Center(child: LoadingIndicator()))
-                          else if (alphabeticalSongs.isNotEmpty)
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                childCount: alphabeticalSongs.length,
-                                (context, index) {
-                                  final song = alphabeticalSongs[index];
-                                  return ArtistSongItem(
-                                      // coverage:ignore-start
-                                      onTap: () {
-                                        VersionEntry.pushFromSong(
-                                          Nav.of(context),
-                                          _bloc.artistUrl ?? "",
-                                          song.url,
-                                          widget.artistName,
-                                          song.name,
-                                        );
-                                      },
-                                      onOptionsTap: () async {
-                                        await widget.versionOptionsBottomSheet.show(
-                                          context: context,
-                                          artistUrl: _bloc.artistUrl ?? "",
-                                          songUrl: song.url,
-                                          songId: song.id,
-                                        );
-                                      },
-                                      // coverage:ignore-end
-                                      name: song.name,
-                                      prefix: state.alphabeticalPrefixes[index],
-                                      isVerified: song.verified,
-                                      hasVideoLessons: _hasInstrumentVideoLesson(state.instrument, song));
-                                },
-                              ),
-                            )
-                          else
-                            SliverPadding(
-                              padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
-                              sliver: const SliverToBoxAdapter(
-                                child: ErrorDescriptionWidget(
-                                  typeError: ErrorDescriptionWidgetType.resultNotFound,
-                                ),
-                              ),
-                            ),
-                        ],
+                    },
+                    onTapVersionOptions: (song) async {
+                      await widget.versionOptionsBottomSheet.show(
+                        context: context,
+                        artistUrl: _bloc.artistUrl ?? "",
+                        songUrl: song.url,
+                        songId: song.id,
                       );
-                    }),
+                    },
                   ),
-                  SafeArea(
-                    top: false,
-                    bottom: false,
-                    child: Builder(builder: (context) {
-                      return CustomScrollView(slivers: [
-                        SliverOverlapInjector(
-                          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                        ),
-                        if (state.videoLessonsError != null)
-                          SliverFillRemaining(
-                            child: Center(
-                              child: SingleChildScrollView(
-                                child: ErrorDescriptionWidget(
-                                  typeError: state.videoLessonsError! is ConnectionError
-                                      ? ErrorDescriptionWidgetType.connection
-                                      : ErrorDescriptionWidgetType.server,
-                                  onClick: () => _bloc.getArtistSongsAndVideoLessons(),
-                                ),
-                              ),
-                            ),
-                          )
-                        else if (state.isLoading)
-                          const SliverFillRemaining(child: Center(child: LoadingIndicator()))
-                        else if (state.videoLessons.isEmpty)
-                          const SliverFillRemaining(
-                            child: Center(
-                              child: SingleChildScrollView(
-                                child: ErrorDescriptionWidget(
-                                  typeError: ErrorDescriptionWidgetType.videoLesson,
-                                ),
-                              ),
-                            ),
-                          )
-                        else if (state.videoLessonsFilteredBySearch.isEmpty)
-                          SliverPadding(
-                            padding: EdgeInsets.only(top: context.appDimensionScheme.artistSongsHeaderSpace),
-                            sliver: const SliverToBoxAdapter(
-                              child: SingleChildScrollView(
-                                child: ErrorDescriptionWidget(
-                                  typeError: ErrorDescriptionWidgetType.resultNotFound,
-                                ),
-                              ),
-                            ),
-                          )
-                        else
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              childCount: state.videoLessonsFilteredBySearch.length,
-                              (context, index) {
-                                final videoLesson = state.videoLessonsFilteredBySearch[index];
-                                return ArtistVideoLessonItem(
-                                  onTap: () {},
-                                  imageUrl: videoLesson.images.small,
-                                  artistName: videoLesson.artist?.name ?? "",
-                                  title: videoLesson.title,
-                                  views: videoLesson.views,
-                                  duration: videoLesson.duration,
-                                  versionLabel: videoLesson.version?.label ?? "",
-                                );
-                              },
-                            ),
-                          ),
-                      ]);
-                    }),
+                  SongsByAlphabeticalOrderTab(
+                    songsFilteredBySearch: state.songsFilteredBySearch,
+                    alphabeticalPrefixes: state.alphabeticalPrefixes,
+                    songsError: state.songsError,
+                    isLoading: state.isLoading,
+                    onTapReload: () => _bloc.getArtistSongsAndVideoLessons(),
+                    hasVideoLesson: (song) => _hasInstrumentVideoLesson(state.instrument, song),
+                    onTapVersion: (song) {
+                      VersionEntry.pushFromSong(
+                        Nav.of(context),
+                        _bloc.artistUrl ?? "",
+                        song.url,
+                        widget.artistName,
+                        song.name,
+                      );
+                    },
+                    onTapVersionOptions: (song) async {
+                      await widget.versionOptionsBottomSheet.show(
+                        context: context,
+                        artistUrl: _bloc.artistUrl ?? "",
+                        songUrl: song.url,
+                        songId: song.id,
+                      );
+                    },
                   ),
+                  VideoLessonsTab(
+                    videoLessons: state.videoLessons,
+                    videoLessonsFilteredBySearch: state.videoLessonsFilteredBySearch,
+                    isLoading: state.isLoading,
+                    videoLessonsError: state.videoLessonsError,
+                    onTapReload: () => _bloc.getArtistSongsAndVideoLessons(),
+                    onTapVideoLesson: (videoLesson) {
+                      VersionEntry.pushFromSong(
+                        Nav.of(context),
+                        _bloc.artistUrl ?? "",
+                        videoLesson.song?.url ?? "",
+                        widget.artistName,
+                        videoLesson.song?.name ?? "",
+                      );
+                    },
+                  )
                 ],
               );
             }),

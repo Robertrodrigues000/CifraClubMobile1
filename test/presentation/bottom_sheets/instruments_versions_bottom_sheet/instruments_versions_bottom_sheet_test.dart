@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
-import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/selectable_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 

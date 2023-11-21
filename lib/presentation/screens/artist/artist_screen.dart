@@ -14,6 +14,7 @@ import 'package:cifraclub/presentation/screens/artist/widgets/artist_title.dart'
 import 'package:cifraclub/presentation/screens/albums/widgets/albums.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
+import 'package:cifraclub/presentation/shared/on_context_ready.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
@@ -34,19 +35,14 @@ class ArtistScreen extends StatefulWidget {
   State<ArtistScreen> createState() => _ArtistScreenState();
 }
 
-class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
+class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder, OnContextReady {
   late final ArtistBloc _bloc = BlocProvider.of<ArtistBloc>(context);
   final _scrollController = ScrollController();
   static const maxSongs = 10;
   static const maxAlbums = 4;
 
   @override
-  void initState() {
-    super.initState();
-    listenEvents();
-  }
-
-  void listenEvents() {
+  void onContextReady(BuildContext context) {
     _bloc.artistEventStream.listen((event) {
       switch (event) {
         case FavoriteError():
@@ -59,6 +55,13 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
           );
       }
     }).addTo(subscriptions);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    disposeAll();
+    super.dispose();
   }
 
   @override
@@ -238,12 +241,5 @@ class _ArtistScreenState extends State<ArtistScreen> with SubscriptionHolder {
     } else {
       return song.videoLessonsInstruments?.contains(instrument) ?? false;
     }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    disposeAll();
-    super.dispose();
   }
 }

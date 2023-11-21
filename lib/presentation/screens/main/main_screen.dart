@@ -23,12 +23,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late MainBloc bloc;
+  late final MainBloc bloc = BlocProvider.of<MainBloc>(context);
   var shouldShowBottomNavigation = true;
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<MainBloc>(context);
     _verifyCurrentScreen();
 
     widget.navigatorsController.addNavListener(_verifyCurrentScreen);

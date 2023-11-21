@@ -6,7 +6,7 @@ import 'package:cifraclub/domain/version/use_cases/get_all_instrument_versions.d
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
-import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';

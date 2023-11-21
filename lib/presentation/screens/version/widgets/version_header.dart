@@ -1,7 +1,7 @@
 // coverage:ignore-file
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter.dart';
 import 'package:cifraclub/presentation/widgets/filter_capsule/filter_capsule_list.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';

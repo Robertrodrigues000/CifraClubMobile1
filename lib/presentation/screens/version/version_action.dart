@@ -6,7 +6,7 @@ import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_action.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
-import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar_action.dart';
 

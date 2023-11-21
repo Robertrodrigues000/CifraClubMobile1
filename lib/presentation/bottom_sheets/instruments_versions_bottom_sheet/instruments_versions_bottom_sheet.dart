@@ -3,7 +3,7 @@ import 'package:cifraclub/domain/version/models/instrument_version.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/screens/version/version_filter.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/selectable_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

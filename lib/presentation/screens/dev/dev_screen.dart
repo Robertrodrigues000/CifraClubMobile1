@@ -11,7 +11,6 @@ import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/ntp_test/ntp_test_entry.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/bottom_sheets/capo_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
@@ -42,12 +41,11 @@ class DevScreen extends StatefulWidget {
 }
 
 class _DevScreenState extends State<DevScreen> {
-  late DevScreenBloc _bloc;
+  late final DevScreenBloc _bloc = BlocProvider.of<DevScreenBloc>(context);
 
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<DevScreenBloc>(context);
     _bloc.getChordsRepresentation();
   }
 
@@ -162,26 +160,6 @@ class _DevScreenState extends State<DevScreen> {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.add_chart_sharp,
-                    color: context.colors.textPrimary,
-                  ),
-                  title: const Text("Add cifras to List"),
-                  onTap: () {
-                    Nav.of(context).push(screenName: AddVersionsToListEntry.name);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.delete,
-                    color: context.colors.textPrimary,
-                  ),
-                  title: const Text("Delete cifras"),
-                  onTap: () {
-                    _bloc.deleteCifrasTest();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
                     Icons.music_note,
                     color: context.colors.textPrimary,
                   ),
@@ -217,20 +195,10 @@ class _DevScreenState extends State<DevScreen> {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.search,
-                    color: context.colors.textPrimary,
-                  ),
-                  title: const Text("Search All"),
-                  onTap: () {
-                    _bloc.searchRequest("melhor", null);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
                     Icons.search_off,
                     color: context.colors.textPrimary,
                   ),
-                  title: const Text("Shazam Seach"),
+                  title: const Text("Shazam Search"),
                   onTap: () {
                     _bloc.shazamRequest();
                   },
@@ -240,7 +208,7 @@ class _DevScreenState extends State<DevScreen> {
                     Icons.search_off_sharp,
                     color: context.colors.textPrimary,
                   ),
-                  title: const Text("Cancel Shazam Seach"),
+                  title: const Text("Cancel Shazam Search"),
                   onTap: () {
                     _bloc.cancelShazam();
                   },

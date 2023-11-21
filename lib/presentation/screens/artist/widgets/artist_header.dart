@@ -69,6 +69,12 @@ class _ArtistHeaderState extends State<ArtistHeader> {
   }
 
   @override
+  void dispose() {
+    widget.scrollController.removeListener(_onScroll);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
@@ -212,11 +218,5 @@ class _ArtistHeaderState extends State<ArtistHeader> {
               ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(_onScroll);
-    super.dispose();
   }
 }
