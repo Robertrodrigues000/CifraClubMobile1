@@ -3,6 +3,7 @@ import 'package:cifraclub/data/version/models/user_version/user_recent_version_d
 import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/repository/user_version_repository.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
@@ -143,5 +144,10 @@ class UserVersionRepositoryImpl extends UserVersionRepository {
   @override
   Future<Version?> getVersionBySongId(int songbookId, int songId) async {
     return (await _userVersionDataSource.getVersionBySongId(songbookId, songId))?.toDomain();
+  }
+
+  @override
+  Future<int> deleteVersionFromRecent(int songId, Instrument instrument) {
+    return _userVersionDataSource.deleteVersionFromRecent(songId, instrument);
   }
 }

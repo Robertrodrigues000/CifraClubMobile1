@@ -44,6 +44,7 @@ class VersionsEntry extends ScreenEntry {
         getIt(),
         getIt(),
         getIt(),
+        getIt(),
       )..init(songbookId),
       child: VersionsScreen(
         isTablet: false,

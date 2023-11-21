@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 
@@ -24,4 +25,5 @@ abstract class UserVersionRepository {
   });
   Future<bool> getIsVersionOnSongbook(int songbookId, int versionId);
   Future<Version?> getVersionBySongId(int songbookId, int songId);
+  Future<int> deleteVersionFromRecent(int songId, Instrument instrument);
 }

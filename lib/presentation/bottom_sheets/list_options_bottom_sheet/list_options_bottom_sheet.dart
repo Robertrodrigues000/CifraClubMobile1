@@ -2,6 +2,7 @@ import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_recents.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
@@ -28,6 +29,7 @@ class ListOptionsBottomSheet {
   final ClearVersionsFromSongbook _clearSongsFromSongbook;
   final ShareLink _shareLink;
   final EditListScreenBuilder _editListScreenBuilder;
+  final ClearRecents _clearRecents;
 
   const ListOptionsBottomSheet(
     this._clearSongsFromSongbook,
@@ -36,6 +38,7 @@ class ListOptionsBottomSheet {
     this._updateSongbookData,
     this._validateSongbookName,
     this._editListScreenBuilder,
+    this._clearRecents,
   );
 
   // coverage:ignore-start
@@ -57,6 +60,7 @@ class ListOptionsBottomSheet {
             _validateSongbookName,
             _clearSongsFromSongbook,
             _shareLink,
+            _clearRecents,
           ),
       isUserList,
       ccid,

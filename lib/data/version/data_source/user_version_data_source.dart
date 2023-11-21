@@ -1,7 +1,9 @@
 import 'package:cifraclub/data/version/models/user_version/user_recent_version_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_data_dto.dart';
+import 'package:cifraclub/data/version/models/user_version/user_version_data_song_dto.dart';
 import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:isar/isar.dart';
 
 class UserVersionDataSource {
@@ -120,6 +122,24 @@ class UserVersionDataSource {
         return false;
       }
       return _isar.userRecentVersionDtos.delete(versionToDelete!.localDatabaseId);
+    });
+  }
+
+  Future<int> deleteVersionFromRecent(int songId, Instrument instrument) {
+    return _isar.writeTxn(() async {
+      await _isar.userRecentVersionDtos
+          .where()
+          .filter()
+          .songIdEqualTo(songId)
+          .instrumentEqualTo(instrument)
+          .deleteAll();
+      return _isar.userVersionDataDtos
+          .where()
+          .songbookIdEqualTo(ListType.recents.localId)
+          .filter()
+          .instrumentEqualTo(instrument)
+          .song((song) => song.songIdEqualTo(songId))
+          .deleteAll();
     });
   }
 

@@ -62,13 +62,14 @@ void main() {
     int? localDatabaseId,
     int? songId,
     DateTime? lastUpdate,
+    Instrument? instrument,
   }) =>
       UserRecentVersionDto(
         localDatabaseId: localDatabaseId ?? faker.randomGenerator.integer(10000),
         name: faker.food.cuisine(),
         songUrl: faker.animal.name(),
         key: faker.animal.name(),
-        instrument: Instrument.bass,
+        instrument: instrument ?? Instrument.bass,
         songId: songId ?? faker.randomGenerator.integer(10000),
         artist: userVersionArtistDto ?? UserVersionArtistDto(),
         artistImage: artistImage,
@@ -555,5 +556,42 @@ void main() {
 
     final isVersionOnSongbook = await userVersionDataSource.getVersionBySongId(version.songbookId, version.songId);
     expect(isVersionOnSongbook, version);
+  });
+
+  test("When 'deleteVersionFromRecent' is called, should delete recent song by songId", () async {
+    final versions = [
+      getUserRecentVersionDto(
+          localDatabaseId: 1,
+          lastUpdate: DateTime.fromMillisecondsSinceEpoch(8000),
+          songId: 2,
+          instrument: Instrument.guitar),
+      getUserRecentVersionDto(
+          localDatabaseId: 2,
+          lastUpdate: DateTime.fromMillisecondsSinceEpoch(4000),
+          songId: 3,
+          instrument: Instrument.guitar),
+      getUserRecentVersionDto(
+          localDatabaseId: 3,
+          lastUpdate: DateTime.fromMillisecondsSinceEpoch(1000),
+          songId: 4,
+          instrument: Instrument.guitar),
+      getUserRecentVersionDto(
+          localDatabaseId: 4,
+          lastUpdate: DateTime.fromMillisecondsSinceEpoch(7000),
+          songId: 2,
+          instrument: Instrument.drums),
+    ];
+
+    await isar.writeTxn(
+      () async {
+        await isar.userRecentVersionDtos.putAll(versions);
+      },
+    );
+
+    final result = await userVersionDataSource.deleteVersionFromRecent(2, Instrument.guitar);
+    final recentVersions = await isar.userRecentVersionDtos.where().songIdProperty().findAll();
+
+    expect(result, 0);
+    expect(recentVersions, [3, 4, 2]);
   });
 }

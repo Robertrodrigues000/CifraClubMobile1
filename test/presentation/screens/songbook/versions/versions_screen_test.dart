@@ -4,6 +4,7 @@ import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_recents.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
@@ -15,6 +16,7 @@ import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/list_opera
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/edit_list/edit_list_screen_builder.dart';
+import 'package:cifraclub/presentation/screens/songbook/songbook_result.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
@@ -63,6 +65,8 @@ class _ListOptionsBottomSheetBlocMock extends Mock implements ListOptionsBottomS
 
 class _EditListScreenBuilderMock extends Mock implements EditListScreenBuilder {}
 
+class _ClearRecentsMock extends Mock implements ClearRecents {}
+
 void main() {
   late VersionsBloc bloc;
   late ListOptionsBottomSheet bottomSheet;
@@ -90,7 +94,7 @@ void main() {
     bloc = _VersionsBlocMock();
     when(() => bloc.init(any())).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.shareLink(any(), any())).thenAnswer((_) => SynchronousFuture(null));
-    when(() => bloc.deleteVersion(any(), any())).thenAnswer((_) => SynchronousFuture(null));
+    when(() => bloc.deleteVersion(any(), any())).thenAnswer((_) => SynchronousFuture(OnVersionDeleted()));
     when(() => bloc.getPreview()).thenReturn([]);
     when(() => bloc.getListLimitState(any())).thenAnswer((_) => SynchronousFuture(ListLimitState.withinLimit));
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
@@ -417,6 +421,7 @@ void main() {
       _UpdateSongbookDataMock(),
       _ValidateSongbookNameMock(),
       _EditListScreenBuilderMock(),
+      _ClearRecentsMock(),
     );
 
     final songbook = getFakeSongbook();
@@ -474,6 +479,7 @@ void main() {
       _UpdateSongbookDataMock(),
       _ValidateSongbookNameMock(),
       _EditListScreenBuilderMock(),
+      _ClearRecentsMock(),
     );
 
     final songbook = getFakeSongbook();

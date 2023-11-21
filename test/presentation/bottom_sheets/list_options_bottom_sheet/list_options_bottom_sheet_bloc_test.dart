@@ -1,7 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_recents.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/update_songbook_data.dart';
 import 'package:cifraclub/domain/songbook/use_cases/validate_songbook_name.dart';
@@ -28,6 +30,8 @@ class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {
   }
 }
 
+class _ClearRecentsMock extends Mock implements ClearRecents {}
+
 void main() {
   ListOptionsBottomSheetBloc getBloc({
     _DeleteSongbookMock? deleteSongbookMock,
@@ -35,6 +39,7 @@ void main() {
     _ValidateSongbookNameMock? validateSongbookNameMock,
     _ClearVersionsFromSongbookMock? clearVersionsFromSongbookMock,
     _ShareLinkMock? shareLinkMock,
+    _ClearRecentsMock? clearRecentsMock,
   }) =>
       ListOptionsBottomSheetBloc(
         deleteSongbookMock ?? _DeleteSongbookMock(),
@@ -42,6 +47,7 @@ void main() {
         validateSongbookNameMock ?? _ValidateSongbookNameMock(),
         clearVersionsFromSongbookMock ?? _ClearVersionsFromSongbookMock(),
         shareLinkMock ?? _ShareLinkMock(),
+        clearRecentsMock ?? _ClearRecentsMock(),
       );
 
   group("When update a songbook and request is successful", () {
@@ -96,6 +102,15 @@ void main() {
       await bloc.clearList(10);
 
       verify(() => clearVersionsFromSongbook(10)).called(1);
+    });
+    test("and is recents should call deleteAllRecents", () async {
+      final clearRecents = _ClearRecentsMock();
+      when(clearRecents).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+      final bloc = getBloc(clearRecentsMock: clearRecents);
+      await bloc.clearList(ListType.recents.localId);
+
+      verify(clearRecents).called(1);
     });
     test("and songbook is null should return error", () async {
       final clearVersionsFromSongbook = _ClearVersionsFromSongbookMock();

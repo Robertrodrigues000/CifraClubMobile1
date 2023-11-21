@@ -271,4 +271,27 @@ void main() {
 
     expect(result.isSuccess, isTrue);
   });
+  test("When deleteVersionFromRecents is called, should return result", () async {
+    final songbookDataSource = _SongbookDataSourceMock();
+    final version = getFakeVersion();
+
+    when(() => songbookDataSource.deleteVersionFromRecents(any(), any()))
+        .thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+    final result =
+        await songbookRepositoryImpl.deleteVersionFromRecents(songId: version.songId, instrument: version.instrument);
+
+    expect(result.isSuccess, isTrue);
+  });
+  test("When clearRecents is called, should return result", () async {
+    final songbookDataSource = _SongbookDataSourceMock();
+
+    when(songbookDataSource.clearRecents).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final songbookRepositoryImpl = SongbookRepositoryImpl(songbookDataSource);
+    final result = await songbookRepositoryImpl.clearRecents();
+
+    expect(result.isSuccess, isTrue);
+  });
 }

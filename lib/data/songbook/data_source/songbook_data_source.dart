@@ -90,6 +90,27 @@ class SongbookDataSource {
     };
   }
 
+  Future<Result<void, RequestError>> clearRecents() {
+    var request = NetworkRequest(
+      type: NetworkRequestType.delete,
+      path: "/v3/user/recents",
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
+
+  Future<Result<void, RequestError>> deleteVersionFromRecents(
+    int songId,
+    int instrumentId,
+  ) {
+    var request = NetworkRequest(
+      type: NetworkRequestType.delete,
+      path: "/v3/songbook/recents/$songId/$instrumentId",
+      parser: (_) => null, // coverage:ignore-line
+    );
+    return _networkService.execute(request: request);
+  }
+
   Future<Result<void, RequestError>> sortVersions(
     int songbookId,
     VersionsIdsInputDto orderedVersionInput,

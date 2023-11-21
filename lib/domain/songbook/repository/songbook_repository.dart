@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:typed_result/typed_result.dart';
 
@@ -31,4 +32,6 @@ abstract class SongbookRepository {
   Future<Result<void, RequestError>> sortVersionFromSongbook({required int songbookId, required List<int> versionsId});
   Future<Result<({Songbook songbook, List<Version> versions}), RequestError>> getSongbookById(
       {required int songbookId});
+  Future<Result<void, RequestError>> deleteVersionFromRecents({required int songId, required Instrument instrument});
+  Future<Result<void, RequestError>> clearRecents();
 }

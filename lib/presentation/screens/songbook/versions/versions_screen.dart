@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/list_limit/models/list_limit_state.dart';
+import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet.dart';
@@ -9,6 +10,7 @@ import 'package:cifraclub/presentation/dialogs/list_limit_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_limit_pro_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/list_operation_dialogs/delete_version_dialog.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_entry.dart';
+import 'package:cifraclub/presentation/screens/songbook/songbook_result.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/version_tile.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/songbook_information_section.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/widgets/versions_fixed_header.dart';
@@ -264,19 +266,26 @@ class _VersionsScreenState extends State<VersionsScreen> {
                             context: context,
                             versionName: item.name,
                           );
-                          if (shouldDeleteVersion == true) {
-                            await _bloc.deleteVersion(widget.songbookId, state.versions[index]);
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(context.text.removeVersionSucceed)),
-                              );
-                            }
-                          } else {
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(context.text.listServerError)),
-                              );
+                          if (shouldDeleteVersion) {
+                            final result = await _bloc.deleteVersion(widget.songbookId, item);
+                            switch (result) {
+                              case OnVersionDeleted():
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(context.text.removeVersionSucceed)),
+                                  );
+                                }
+                              case OnVersionDeletedFailed():
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(result.error is ConnectionError
+                                          ? context.text.noConnection
+                                          : context.text.listServerError),
+                                    ),
+                                  );
+                                }
                             }
                           }
                         }).show(context);

@@ -9,6 +9,7 @@ import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit.dart';
 import 'package:cifraclub/domain/list_limit/use_cases/get_versions_limit_state.dart';
 import 'package:cifraclub/domain/remote_config/use_cases/get_list_limit_constants.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_recents.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/favorite_unfavorite_version.dart';
 import 'package:cifraclub/domain/songbook/use_cases/get_all_user_songbooks.dart';
@@ -42,6 +43,7 @@ abstract class BottomSheetModule {
     ClearVersionsFromSongbook clearSongsFromSongbook,
     ShareLink shareLink,
     EditListScreenBuilder editListScreenBuilder,
+    ClearRecents clearRecents,
   ) =>
       ListOptionsBottomSheet(
         clearSongsFromSongbook,
@@ -50,6 +52,7 @@ abstract class BottomSheetModule {
         updateSongbookData,
         validateSongbookName,
         editListScreenBuilder,
+        clearRecents,
       );
 
   SaveVersionToListBottomSheet getSaveVersionToListBottomSheet(

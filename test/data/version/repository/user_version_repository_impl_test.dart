@@ -4,6 +4,7 @@ import 'package:cifraclub/data/version/models/user_version/user_version_data_dto
 import 'package:cifraclub/data/version/models/user_version/user_version_dto.dart';
 import 'package:cifraclub/data/version/repository/user_version_repository_impl.dart';
 import 'package:cifraclub/domain/songbook/models/list_type.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -336,5 +337,18 @@ void main() {
     expect(result?.songId, fakeVersion.songId);
     expect(result?.remoteDatabaseId, fakeVersion.remoteDatabaseId);
     verify(userVersionDto.toDomain).called(1);
+  });
+
+  test("when deleteVersionFromRecent is called, the datasource method should be called", () async {
+    final userVersionDataSource = _UserVersionDataSourceMock();
+    registerFallbackValue(Instrument.guitar);
+
+    when(() => userVersionDataSource.deleteVersionFromRecent(any(), any())).thenAnswer((_) => SynchronousFuture(1));
+
+    final userVersionRepository = UserVersionRepositoryImpl(userVersionDataSource);
+
+    var songsDeleted = await userVersionRepository.deleteVersionFromRecent(2, Instrument.guitar);
+    expect(songsDeleted, 1);
+    verify(() => userVersionDataSource.deleteVersionFromRecent(2, Instrument.guitar)).called(1);
   });
 }

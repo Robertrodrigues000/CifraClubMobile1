@@ -19,6 +19,7 @@ import 'package:typed_result/typed_result.dart';
 
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 import '../../../shared_mocks/domain/songbook/models/songbook_version_input_mock.dart';
+import '../../../shared_mocks/domain/version/models/version_mock.dart';
 
 void main() {
   const songbookVersion = SongbookVersionDto(
@@ -523,6 +524,73 @@ void main() {
         ),
         throwsException,
       );
+    });
+  });
+
+  group("When clearRecents is called", () {
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+      final result = await songbookDataSource.clearRecents();
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/user/recents");
+      expect(request.type, NetworkRequestType.delete);
+
+      expect(result.isSuccess, true);
+    });
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+      final result = await songbookDataSource.clearRecents();
+
+      expect(result.isFailure, true);
+      expect(result.getError().runtimeType, ServerError);
+      expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+  group("When deleteVersionFromRecents is called", () {
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+      final version = getFakeVersion();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final result = await songbookDataSource.deleteVersionFromRecents(version.songId, version.instrument.apiType);
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(request.path, "/v3/songbook/recents/${version.songId}/${version.instrument.apiType}");
+      expect(request.type, NetworkRequestType.delete);
+
+      expect(result.isSuccess, true);
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      final songbookDataSource = SongbookDataSource(networkService);
+      final version = getFakeVersion();
+
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final result = await songbookDataSource.deleteVersionFromRecents(version.songId, version.instrument.apiType);
+
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });
 }

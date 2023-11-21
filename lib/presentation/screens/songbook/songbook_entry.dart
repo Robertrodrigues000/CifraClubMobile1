@@ -58,6 +58,7 @@ class SongbookEntry extends ScreenEntry {
               getIt(),
               getIt(),
               getIt(),
+              getIt(),
             ),
           ),
       ], child: SongbookScreen(deviceType, getIt()));

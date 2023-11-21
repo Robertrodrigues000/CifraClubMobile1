@@ -77,18 +77,22 @@ class VersionTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        type,
-                        style: context.typography.subtitle5,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      if (versionKey != null)
-                        Text(
-                          context.text.versionKey(versionKey!),
+                      Flexible(
+                        child: Text(
+                          type,
                           style: context.typography.subtitle5,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
+                        ),
+                      ),
+                      if (versionKey != null)
+                        Expanded(
+                          child: Text(
+                            context.text.versionKey(versionKey!),
+                            style: context.typography.subtitle5,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                     ],
                   )

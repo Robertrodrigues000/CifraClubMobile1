@@ -6,6 +6,7 @@ import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/repository/songbook_repository.dart';
 import 'package:cifraclub/domain/songbook/models/songbook_version_input.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version.dart';
 import 'package:cifraclub/extensions/date_time_extension.dart';
 import 'package:typed_result/typed_result.dart';
@@ -98,5 +99,15 @@ class SongbookRepositoryImpl extends SongbookRepository {
   Future<Result<({Songbook songbook, List<Version> versions}), RequestError>> getSongbookById(
       {required int songbookId}) async {
     return (await _songbookDataSource.getSongbookById(songbookId: songbookId)).map((songbook) => songbook.toDomain());
+  }
+
+  @override
+  Future<Result<void, RequestError>> clearRecents() {
+    return _songbookDataSource.clearRecents();
+  }
+
+  @override
+  Future<Result<void, RequestError>> deleteVersionFromRecents({required int songId, required Instrument instrument}) {
+    return _songbookDataSource.deleteVersionFromRecents(songId, instrument.apiType);
   }
 }

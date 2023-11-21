@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/app/use_cases/share_link.dart';
 import 'package:cifraclub/domain/songbook/models/songbook.dart';
 import 'package:cifraclub/domain/songbook/use_cases/clear_versions_from_songbook.dart';
+import 'package:cifraclub/domain/songbook/use_cases/clear_recents.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/presentation/bottom_sheets/list_options_bottom_sheet/list_options_bottom_sheet.dart';
 import 'package:cifraclub/domain/songbook/use_cases/delete_songbook.dart';
@@ -63,6 +64,8 @@ class _ValidateSongbookNameMock extends Mock implements ValidateSongbookName {}
 class _ListOptionsBottomSheetBlocMock extends Mock implements ListOptionsBottomSheetBloc {}
 
 class _EditListScreenBuilderMock extends Mock implements EditListScreenBuilder {}
+
+class _ClearRecentsMock extends Mock implements ClearRecents {}
 
 void main() {
   late SongbookBloc bloc;
@@ -265,6 +268,7 @@ void main() {
           _UpdateSongbookDataMock(),
           _ValidateSongbookNameMock(),
           _EditListScreenBuilderMock(),
+          _ClearRecentsMock(),
         );
 
         final songbook = getFakeSongbook(isPublic: true);
