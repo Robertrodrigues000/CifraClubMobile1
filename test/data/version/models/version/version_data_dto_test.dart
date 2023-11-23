@@ -6,6 +6,7 @@ import 'package:cifraclub/data/version/models/version/version_data_song_dto.dart
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/tuning.dart';
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -34,6 +35,7 @@ void main() {
       videoLesson: null,
       contributors: [ContributorDto(name: "name", id: 2, type: 3, url: "url")],
       instrumentVersions: [],
+      status: 1,
     );
 
     final version = versionDataDto.toDomain();
@@ -71,5 +73,6 @@ void main() {
     expect(version.contributors?.first.type, 3);
     expect(version.contributors?.first.url, "url");
     expect(version.instrumentVersions, []);
+    expect(version.status, VersionStatus.unauthorized);
   });
 }

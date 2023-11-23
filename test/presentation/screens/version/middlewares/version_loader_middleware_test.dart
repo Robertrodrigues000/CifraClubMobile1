@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_loader_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
@@ -33,6 +34,32 @@ void main() {
         emitsInOrder([
           isA<OnStartLoading>(),
           isA<OnVersionLoaded>().having((e) => e.versionData, "versionData", versionData),
+        ]),
+      );
+
+      middleware.onAction(OnVersionInit(artistUrl: "a", songUrl: "b"), const VersionState(), (action) {
+        actionStream.add(action);
+      });
+
+      verify(() => getVersionData(artistUrl: "a", songUrl: "b")).called(1);
+      actionStream.close();
+    });
+
+    test("when is success and version is unautorized should emit version error with unauthorized", () {
+      final versionData = getFakeVersionData(status: VersionStatus.unauthorized);
+
+      final getVersionData = _GetVersionDataMock();
+      when(() => getVersionData(artistUrl: any(named: "artistUrl"), songUrl: any(named: "songUrl")))
+          .thenAnswer((_) => SynchronousFuture(Ok(versionData)));
+
+      final middleware = VersionLoaderMiddleware(getVersionData);
+      var actionStream = PublishSubject<VersionAction>();
+
+      expectLater(
+        actionStream.stream,
+        emitsInOrder([
+          isA<OnStartLoading>(),
+          isA<OnVersionError>().having((e) => e.error, "version unauthorized", isA<VersionUnauthorizedError>()),
         ]),
       );
 

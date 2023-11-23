@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_data_to_recents.dart';
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
@@ -12,7 +13,7 @@ class SongbookMiddleware extends VersionMiddleware {
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
-    if (action is OnVersionLoaded) {
+    if (action is OnVersionLoaded && action.versionData.status != VersionStatus.unauthorized) {
       _insertVersionDataToRecents(versionData: action.versionData);
     }
   }

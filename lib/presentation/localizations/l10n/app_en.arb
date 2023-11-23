@@ -435,5 +435,20 @@
     "tuner": "Tuner",
     "leftHanded": "Left-Handed",
     "fontSize": "Font size",
-    "resetSettings": "Reset settings"
+    "resetSettings": "Reset settings",
+    "blockedVersionTitle": "Cifra Club is working to obtain the licensing for this content.",
+    "blockedVersionDescription": "The song by composer {artistName} has been removed at the request of the copyright holders. To be notified when this work is available again, please register your email below:",
+    "@blockedVersionDescription": {
+        "placeholders": {
+            "artistName" : {
+                "type": "String",
+                "example": "Ana Carolina"
+            }
+        }
+    },
+    "registerEmail": "Register email",
+    "yourEmail": "Your email",
+    "emailAlreadyRegistered": "Email already registered",
+    "successEmailRegisterTitle": "Email successfully registered!",
+    "successEmailRegisterDescription": "We will notify you as soon as the content is available again!"
 }

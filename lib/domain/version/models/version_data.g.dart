@@ -11,6 +11,8 @@ abstract class _$VersionDataCWProxy {
 
   VersionData localDatabaseId(int? localDatabaseId);
 
+  VersionData status(VersionStatus? status);
+
   VersionData versionLocalDatabaseId(int? versionLocalDatabaseId);
 
   VersionData versionId(int versionId);
@@ -68,6 +70,7 @@ abstract class _$VersionDataCWProxy {
   VersionData call({
     int? songbookId,
     int? localDatabaseId,
+    VersionStatus? status,
     int? versionLocalDatabaseId,
     int? versionId,
     Instrument? instrument,
@@ -106,6 +109,9 @@ class _$VersionDataCWProxyImpl implements _$VersionDataCWProxy {
 
   @override
   VersionData localDatabaseId(int? localDatabaseId) => this(localDatabaseId: localDatabaseId);
+
+  @override
+  VersionData status(VersionStatus? status) => this(status: status);
 
   @override
   VersionData versionLocalDatabaseId(int? versionLocalDatabaseId) =>
@@ -193,6 +199,7 @@ class _$VersionDataCWProxyImpl implements _$VersionDataCWProxy {
   VersionData call({
     Object? songbookId = const $CopyWithPlaceholder(),
     Object? localDatabaseId = const $CopyWithPlaceholder(),
+    Object? status = const $CopyWithPlaceholder(),
     Object? versionLocalDatabaseId = const $CopyWithPlaceholder(),
     Object? versionId = const $CopyWithPlaceholder(),
     Object? instrument = const $CopyWithPlaceholder(),
@@ -227,6 +234,10 @@ class _$VersionDataCWProxyImpl implements _$VersionDataCWProxy {
           ? _value.localDatabaseId
           // ignore: cast_nullable_to_non_nullable
           : localDatabaseId as int?,
+      status: status == const $CopyWithPlaceholder()
+          ? _value.status
+          // ignore: cast_nullable_to_non_nullable
+          : status as VersionStatus?,
       versionLocalDatabaseId: versionLocalDatabaseId == const $CopyWithPlaceholder()
           ? _value.versionLocalDatabaseId
           // ignore: cast_nullable_to_non_nullable

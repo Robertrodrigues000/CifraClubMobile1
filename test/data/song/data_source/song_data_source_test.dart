@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/clients/http/network_request.dart';
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
+import 'package:cifraclub/data/song/models/send_email_to_blocked_song_dto.dart';
 import 'package:cifraclub/data/song/models/top_songs_dto.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:flutter/foundation.dart';
@@ -13,6 +14,14 @@ import 'package:typed_result/typed_result.dart';
 import '../../../shared_mocks/data/clients/http/network_service_mock.dart';
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(NetworkRequest<void>(
+      parser: (_) => throw Exception(""),
+      path: "",
+      type: NetworkRequestType.get,
+    ));
+  });
+
   group("When getTopSongs is called", () {
     test("When request is successful with params", () async {
       final queryParams = {
@@ -25,7 +34,7 @@ void main() {
       final mockResponse = await File("test/data/song/data_source/top_songs_mock_json_response.json").readAsString();
       await networkService.mock<TopSongsDto>(response: mockResponse);
 
-      final songDataSource = SongDataSource(networkService: networkService);
+      final songDataSource = SongDataSource(networkService);
       final result = await songDataSource
           .getTopSongs(
             genreUrl: queryParams['genre'] as String,
@@ -63,7 +72,7 @@ void main() {
       final mockResponse = await File("test/data/song/data_source/top_songs_mock_json_response.json").readAsString();
       await networkService.mock<TopSongsDto>(response: mockResponse);
 
-      final songDataSource = SongDataSource(networkService: networkService);
+      final songDataSource = SongDataSource(networkService);
       final result = await songDataSource
           .getTopSongs(
             limit: queryParams['limit'] as int,
@@ -101,7 +110,7 @@ void main() {
         ),
       );
 
-      final songDataSource = SongDataSource(networkService: networkService);
+      final songDataSource = SongDataSource(networkService);
       final result = await songDataSource
           .getTopSongs(
             limit: 2,
@@ -112,6 +121,41 @@ void main() {
       expect(result.isFailure, true);
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, 404);
+    });
+  });
+
+  group("When sendEmail is called", () {
+    test("and request is successful", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(const Ok(null)),
+      );
+
+      final songDataSource = SongDataSource(networkService);
+      final result = await songDataSource.sendEmail(SendEmailToBlockedSongDto(email: "email@test.com", url: "url"));
+
+      final request = verify(() => networkService.execute<void>(request: captureAny(named: "request"))).captured.first
+          as NetworkRequest<void>;
+
+      expect(result.isSuccess, isTrue);
+
+      expect(request.type, NetworkRequestType.post);
+      expect(request.path, "/v3/song/blocked/signup");
+      expect(request.data!["email"], "email@test.com");
+      expect(request.data!["url"], "url");
+    });
+
+    test("and request fails", () async {
+      final networkService = NetworkServiceMock();
+      when(() => networkService.execute<void>(request: captureAny(named: "request"))).thenAnswer(
+        (_) => SynchronousFuture(Err(ServerError(statusCode: 404))),
+      );
+
+      final songDataSource = SongDataSource(networkService);
+      final result = await songDataSource.sendEmail(SendEmailToBlockedSongDto(email: "email@test.com", url: "url"));
+
+      expect(result.isFailure, isTrue);
+      expect(result.getError(), isA<ServerError>().having((error) => error.statusCode, "statusCode", 404));
     });
   });
 }

@@ -5,6 +5,7 @@ import 'package:cifraclub/domain/version/models/instrument_version.dart';
 import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:faker/faker.dart';
 
 import '../../artist/models/artist_mock.dart';
@@ -16,11 +17,13 @@ VersionData getFakeVersionData({
   VersionDataVideoLesson? videoLesson,
   Instrument? instrument,
   int? songId,
+  VersionStatus? status,
 }) {
   final label = faker.food.restaurant();
   return VersionData(
     videoLesson: videoLesson,
     versionId: faker.randomGenerator.integer(100),
+    status: status ?? VersionStatus.normal,
     instrument: instrument ?? Instrument.bass,
     content: faker.food.restaurant(),
     versionName: label,

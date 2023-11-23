@@ -1,6 +1,7 @@
 // coverage:ignore-file
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
+import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_action.dart';
@@ -190,4 +191,28 @@ class OnChangeVersionKey implements VersionAction {
   final String newKey;
 
   OnChangeVersionKey(this.newKey);
+}
+
+class OnChangeEmail implements VersionAction {
+  final String email;
+
+  OnChangeEmail({required this.email});
+}
+
+class OnValidateEmail implements VersionAction {
+  final bool isValid;
+
+  OnValidateEmail({required this.isValid});
+}
+
+class OnSendEmail implements VersionAction {
+  final String email;
+
+  OnSendEmail({required this.email});
+}
+
+class OnEmailValidate implements VersionAction {
+  final EmailOptionsResult result;
+
+  OnEmailValidate({required this.result});
 }

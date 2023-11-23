@@ -14,6 +14,10 @@ part 'version_state.g.dart';
 @immutable
 class VersionState {
   final VersionData? version;
+  final bool restrictContent;
+  final bool isValidEmail;
+  final bool? isConflictError;
+
   final bool isLoading;
   final RequestError? error;
   final List<Section> sections;
@@ -62,6 +66,9 @@ class VersionState {
 
   const VersionState({
     this.version,
+    this.restrictContent = false,
+    this.isValidEmail = false,
+    this.isConflictError,
     this.isLoading = false,
     this.error,
     this.sections = const [],

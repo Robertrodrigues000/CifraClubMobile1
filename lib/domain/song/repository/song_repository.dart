@@ -10,4 +10,5 @@ abstract class SongRepository {
     required int limit,
     required int offset,
   });
+  Future<Result<void, RequestError>> sendEmail(String email, String url);
 }

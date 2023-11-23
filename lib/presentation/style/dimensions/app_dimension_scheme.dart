@@ -51,6 +51,7 @@ class AppDimensionScheme {
   final double heightLimitCardPro;
   final double heightLimitCardFree;
   final double selectableItemHeight;
+  final double registerEmailButtonWidth;
 
   const AppDimensionScheme({
     required this.appBarHeight,
@@ -98,5 +99,6 @@ class AppDimensionScheme {
     required this.heightLimitCardPro,
     required this.heightLimitCardFree,
     required this.selectableItemHeight,
+    required this.registerEmailButtonWidth,
   });
 }

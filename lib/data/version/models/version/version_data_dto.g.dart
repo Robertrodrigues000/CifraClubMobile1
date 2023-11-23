@@ -9,6 +9,7 @@ part of 'version_data_dto.dart';
 VersionDataDto _$VersionDataDtoFromJson(Map<String, dynamic> json) => VersionDataDto(
       versionId: json['id'] as int,
       type: json['type'] as int,
+      status: json['status'] as int,
       content: json['content'] as String,
       label: json['label'] as String,
       versionUrl: json['versionUrl'] as String,

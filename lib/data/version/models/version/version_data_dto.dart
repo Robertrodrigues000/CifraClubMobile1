@@ -8,6 +8,7 @@ import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'version_data_dto.g.dart';
@@ -17,6 +18,7 @@ class VersionDataDto {
   @JsonKey(name: 'id')
   final int versionId;
   final int type;
+  final int status;
   final String content;
   final String label;
   final String versionUrl;
@@ -46,6 +48,7 @@ class VersionDataDto {
   VersionDataDto({
     required this.versionId,
     required this.type,
+    required this.status,
     required this.content,
     required this.label,
     required this.versionUrl,
@@ -74,6 +77,7 @@ class VersionDataDto {
   VersionData toDomain() => VersionData(
         versionId: versionId,
         instrument: Instrument.getInstrumentByType(type) ?? Instrument.unknown,
+        status: VersionStatus.values.elementAtOrNull(status),
         content: content,
         versionName: label,
         versionUrl: versionUrl,

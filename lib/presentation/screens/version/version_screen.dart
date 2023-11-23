@@ -1,4 +1,5 @@
 // coverage:ignore-file
+import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
@@ -6,12 +7,14 @@ import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/confirm_register_dialog.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/bottom_sheets/chord_shape_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_bloc.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/blocked_content.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord_list_header.dart';
 import 'package:cifraclub/presentation/shared/on_context_ready.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
@@ -147,6 +150,20 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
           });
         case OnShowFontSizeFooterBarEffect():
           _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
+        case OnEmailValidateEffect():
+          if (!context.mounted) {
+            break;
+          }
+          switch (effect.result) {
+            case SendEmailSuccess():
+              ConfirmRegisterDialog.show(context: context);
+            case SendEmailNetworkError():
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.noConnection)));
+            case SendEmailError():
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.text.serverErrorDescription)));
+            default:
+              break;
+          }
         case OnShowTuningBottomSheetEffect():
         case OnShowCapoBottomSheetEffect():
       }
@@ -214,7 +231,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                 ),
               ),
               actions: [
-                if (state.version?.instrument.isCifraInstrument ?? false)
+                if ((state.version?.instrument.isCifraInstrument ?? false) && !state.restrictContent)
                   TextButton(
                     onPressed: () {
                       _bloc.add(OnToggleIsChordPinned());
@@ -283,12 +300,27 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                               }
                             },
                             isScrolledUnder: isScrolledUnder,
+                            restrictContent: state.restrictContent,
                           ),
                         ),
                         if (state.isLoading)
                           const SliverFillRemaining(
                             child: Center(
                               child: LoadingIndicator(),
+                            ),
+                          ),
+                        if (state.restrictContent)
+                          SliverToBoxAdapter(
+                            child: BlockedContent(
+                              artistName: state.version?.artist?.name,
+                              onChangeEmail: (email) {
+                                _bloc.add(OnChangeEmail(email: email));
+                              },
+                              onTapSendEmail: (email) {
+                                _bloc.add(OnSendEmail(email: email));
+                              },
+                              isValidEmail: state.isValidEmail,
+                              isConflictError: state.isConflictError,
                             ),
                           )
                         else if (state.version?.instrument.isCifraInstrument ?? false) ...[
@@ -338,19 +370,20 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                       ],
                     ),
                   ),
-                  FloatingFooterBar(
-                    mode: state.floatingFooterBarState.mode,
-                    isVisible: isFooterBarVisible,
-                    isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
-                    autoScrollSpeedFactor: state.autoScrollState.speedFactor,
-                    isVideoOpen: state.isYouTubeVisible,
-                    videoThumb: state.version?.videoLesson?.thumb,
-                    isFontDecreaseEnabled: state.fontSizeState.isDecreaseEnabled,
-                    isFontIncreaseEnabled: state.fontSizeState.isIncreaseEnabled,
-                    onAction: (action) {
-                      _bloc.add(OnFloatingFooterBarAction(action: action));
-                    },
-                  )
+                  if (!state.restrictContent)
+                    FloatingFooterBar(
+                      mode: state.floatingFooterBarState.mode,
+                      isVisible: isFooterBarVisible,
+                      isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
+                      autoScrollSpeedFactor: state.autoScrollState.speedFactor,
+                      isVideoOpen: state.isYouTubeVisible,
+                      videoThumb: state.version?.videoLesson?.thumb,
+                      isFontDecreaseEnabled: state.fontSizeState.isDecreaseEnabled,
+                      isFontIncreaseEnabled: state.fontSizeState.isIncreaseEnabled,
+                      onAction: (action) {
+                        _bloc.add(OnFloatingFooterBarAction(action: action));
+                      },
+                    )
                 ],
               );
             }),

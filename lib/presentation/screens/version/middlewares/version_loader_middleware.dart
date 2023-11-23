@@ -1,3 +1,4 @@
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
@@ -60,7 +61,11 @@ class VersionLoaderMiddleware extends VersionMiddleware {
 
     result.when(
       success: (versionData) {
-        addAction(OnVersionLoaded(versionData));
+        if (versionData.status != VersionStatus.unauthorized) {
+          addAction(OnVersionLoaded(versionData));
+        } else {
+          addAction(OnVersionError(error: VersionUnauthorizedError(version: versionData)));
+        }
       },
       failure: (error) {
         addAction(OnVersionError(error: VersionLoadError(error)));

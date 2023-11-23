@@ -84,6 +84,13 @@ AppTypographyScheme getTypographyScheme(CosmosColorScheme cosmosColorScheme) {
     ),
 
     /// Corpo
+    body5: TextStyle(
+      color: cosmosColorScheme.textPrimary,
+      fontWeight: FontWeight.bold,
+      fontSize: 16.0,
+      height: 1.5,
+      letterSpacing: 0,
+    ),
     body6: TextStyle(
       color: cosmosColorScheme.textPrimary,
       fontWeight: FontWeight.normal,

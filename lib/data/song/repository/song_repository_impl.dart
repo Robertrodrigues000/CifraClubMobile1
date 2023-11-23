@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
+import 'package:cifraclub/data/song/models/send_email_to_blocked_song_dto.dart';
 import 'package:cifraclub/domain/song/models/song.dart';
 import 'package:cifraclub/domain/song/repository/song_repository.dart';
 import 'package:typed_result/typed_result.dart';
@@ -22,5 +23,10 @@ class SongRepositoryImpl extends SongRepository {
     return songDataSource
         .getTopSongs(genreUrl: genreUrl, limit: limit, offset: offset)
         .then((result) => result.map((topSongsDto) => topSongsDto.toDomain()));
+  }
+
+  @override
+  Future<Result<void, RequestError>> sendEmail(String email, String url) {
+    return songDataSource.sendEmail(SendEmailToBlockedSongDto(email: email, url: url));
   }
 }

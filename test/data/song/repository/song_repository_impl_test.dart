@@ -1,5 +1,6 @@
 import 'package:async/async.dart' hide Result;
 import 'package:cifraclub/data/song/data_source/song_data_source.dart';
+import 'package:cifraclub/data/song/models/send_email_to_blocked_song_dto.dart';
 import 'package:cifraclub/data/song/models/top_songs_dto.dart';
 import 'package:cifraclub/data/song/repository/song_repository_impl.dart';
 import 'package:cifraclub/domain/shared/paginated_list.dart';
@@ -15,6 +16,8 @@ import '../../../shared_mocks/domain/song/models/song_mock.dart';
 class _SongDataSourceMock extends Mock implements SongDataSource {}
 
 class _TopSongsDtoMock extends Mock implements TopSongsDto {}
+
+class _SendEmailToBlockedSongDtoFake extends Fake implements SendEmailToBlockedSongDto {}
 
 void main() {
   group("When getTopSongs() is called", () {
@@ -62,5 +65,21 @@ void main() {
       expect(result.getError().runtimeType, ServerError);
       expect((result.getError() as ServerError).statusCode, null);
     });
+  });
+
+  test("When sendEmail is called should return result", () async {
+    registerFallbackValue(_SendEmailToBlockedSongDtoFake());
+    final songDataSource = _SongDataSourceMock();
+
+    when(() => songDataSource.sendEmail(any())).thenAnswer((_) => SynchronousFuture(const Ok(null)));
+
+    final repository = SongRepositoryImpl(songDataSource: songDataSource);
+    final result = await repository.sendEmail("teste@gmail.com", "url");
+
+    final sendEmail = verify(() => songDataSource.sendEmail(captureAny())).captured.first as SendEmailToBlockedSongDto;
+
+    expect(result.isSuccess, isTrue);
+    expect(sendEmail.email, "teste@gmail.com");
+    expect(sendEmail.url, "url");
   });
 }

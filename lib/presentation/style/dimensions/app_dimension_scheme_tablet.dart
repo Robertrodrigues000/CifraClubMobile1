@@ -71,4 +71,7 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   //Limit card
   heightLimitCardPro: 26,
   heightLimitCardFree: 50,
+
+  //Register email
+  registerEmailButtonWidth: 200,
 );

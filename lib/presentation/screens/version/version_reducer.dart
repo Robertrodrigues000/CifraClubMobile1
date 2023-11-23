@@ -1,4 +1,6 @@
+import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
@@ -26,10 +28,17 @@ class VersionReducer {
           chordState: state.chordState.copyWith(selectedChord: null),
         );
       case OnVersionError():
-        return state.copyWith(version: null);
+        switch (action.error) {
+          case VersionUnauthorizedError error:
+            return state.copyWith(restrictContent: true, version: error.version, isLoading: false);
+          default:
+            return state.copyWith(version: null, isLoading: false);
+        }
       case OnContentParsed():
         return state.copyWith(
           sections: action.sections,
+          isLoading: false,
+          restrictContent: false,
           version: action.versionData,
           versionHeaderState: state.versionHeaderState.copyWith(
             versionFilters: action.versionFilters,
@@ -106,6 +115,20 @@ class VersionReducer {
       case OnChangeVersionKey():
         onEffect(OnChangeVersionKeyEffect(action.newKey));
         return state;
+      case OnChangeEmail _:
+        return state.copyWith(isConflictError: false);
+      case OnValidateEmail():
+        return state.copyWith(isValidEmail: action.isValid);
+      case OnEmailValidate():
+        switch (action.result) {
+          case SendEmailConflictError():
+            return state.copyWith(isConflictError: true);
+          case SendEmailSuccess():
+          case SendEmailNetworkError():
+          case SendEmailError():
+            onEffect(OnEmailValidateEffect(result: action.result));
+            return state;
+        }
       default:
         return state;
     }

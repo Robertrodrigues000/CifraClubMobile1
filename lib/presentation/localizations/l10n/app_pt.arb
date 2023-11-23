@@ -379,5 +379,20 @@
     "tuner": "Afinador",
     "leftHanded": "Canhoto",
     "fontSize": "Tamanho da fonte",
-    "resetSettings": "Resetar configurações"
+    "resetSettings": "Resetar configurações",
+    "blockedVersionTitle": "O Cifra Club está trabalhando para obter o licenciamento desse conteúdo.",
+    "blockedVersionDescription": "A música de autoria do(a) compositor(a) {artistName} foi removida por solicitação dos titulares da obra. Para ser avisado quando esta obra estiver disponível novamente, cadastre seu e-mail abaixo:",
+    "@blockedVersionDescription": {
+        "placeholders": {
+            "artistName" : {
+                "type": "String",
+                "example": "Ana Carolina"
+            }
+        }
+    },
+    "registerEmail": "Cadastrar e-mail",
+    "yourEmail": "Seu e-mail",
+    "emailAlreadyRegistered": "E-mail já cadastrado",
+    "successEmailRegisterTitle": "E-mail cadastrado com sucesso!",
+    "successEmailRegisterDescription": "Iremos avisar assim que o conteúdo estiver disponível novamente!"
 }

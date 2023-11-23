@@ -11,9 +11,7 @@ import 'package:local_songs/pigeon.g.dart';
 @module
 abstract class SongModule {
   SongDataSource getSongDataSource(CifraClubAPINetworkService networkService) {
-    return SongDataSource(
-      networkService: networkService,
-    );
+    return SongDataSource(networkService);
   }
 
   SongRepository getSongRepository(SongDataSource songDataSource) {

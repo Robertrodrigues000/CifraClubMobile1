@@ -14,6 +14,7 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
   final TextStyle subtitle5;
   final TextStyle subtitle6;
   final TextStyle subtitle7;
+  final TextStyle body5;
   final TextStyle body6;
   final TextStyle body7;
   final TextStyle body8;
@@ -22,24 +23,26 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
   final TextStyle body11;
   final TextStyle body12;
 
-  const AppTypographyScheme(
-      {required this.title4,
-      required this.title5,
-      required this.title6,
-      required this.title7,
-      required this.subtitle2,
-      required this.subtitle3,
-      required this.subtitle4,
-      required this.subtitle5,
-      required this.subtitle6,
-      required this.subtitle7,
-      required this.body6,
-      required this.body7,
-      required this.body8,
-      required this.body9,
-      required this.body10,
-      required this.body11,
-      required this.body12});
+  const AppTypographyScheme({
+    required this.title4,
+    required this.title5,
+    required this.title6,
+    required this.title7,
+    required this.subtitle2,
+    required this.subtitle3,
+    required this.subtitle4,
+    required this.subtitle5,
+    required this.subtitle6,
+    required this.subtitle7,
+    required this.body5,
+    required this.body6,
+    required this.body7,
+    required this.body8,
+    required this.body9,
+    required this.body10,
+    required this.body11,
+    required this.body12,
+  });
 
   @override
   ThemeExtension<AppTypographyScheme> copyWith({
@@ -53,6 +56,7 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
     TextStyle? subtitle5,
     TextStyle? subtitle6,
     TextStyle? subtitle7,
+    TextStyle? body5,
     TextStyle? body6,
     TextStyle? body7,
     TextStyle? body8,
@@ -72,6 +76,7 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
       subtitle5: subtitle5 ?? this.subtitle5,
       subtitle6: subtitle6 ?? this.subtitle6,
       subtitle7: subtitle7 ?? this.subtitle7,
+      body5: body5 ?? this.body5,
       body6: body6 ?? this.body6,
       body7: body7 ?? this.body7,
       body8: body8 ?? this.body8,
@@ -98,6 +103,7 @@ class AppTypographyScheme extends ThemeExtension<AppTypographyScheme> {
       subtitle5: subtitle5.copyWith(color: Color.lerp(subtitle5.color, other.subtitle5.color, t)),
       subtitle6: subtitle6.copyWith(color: Color.lerp(subtitle6.color, other.subtitle6.color, t)),
       subtitle7: subtitle7.copyWith(color: Color.lerp(subtitle7.color, other.subtitle7.color, t)),
+      body5: body5.copyWith(color: Color.lerp(body5.color, other.body5.color, t)),
       body6: body6.copyWith(color: Color.lerp(body6.color, other.body6.color, t)),
       body7: body7.copyWith(color: Color.lerp(body7.color, other.body7.color, t)),
       body8: body8.copyWith(color: Color.lerp(body8.color, other.body8.color, t)),

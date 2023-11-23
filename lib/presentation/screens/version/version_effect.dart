@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
+import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 
@@ -49,3 +50,9 @@ class OnChangeVersionKeyEffect implements VersionEffect {
 }
 
 class OnShowFontSizeFooterBarEffect implements VersionEffect {}
+
+class OnEmailValidateEffect implements VersionEffect {
+  final EmailOptionsResult result;
+
+  OnEmailValidateEffect({required this.result});
+}

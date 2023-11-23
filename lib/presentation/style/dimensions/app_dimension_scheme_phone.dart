@@ -71,4 +71,7 @@ const appDimensionSchemePhone = AppDimensionScheme(
   //Limit card
   heightLimitCardPro: 22,
   heightLimitCardFree: 42,
+
+  //Register email
+  registerEmailButtonWidth: double.infinity,
 );

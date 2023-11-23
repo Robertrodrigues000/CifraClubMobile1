@@ -7,6 +7,7 @@ import 'package:cifraclub/domain/version/models/instrument_version.dart';
 import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data_song.dart';
 import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
+import 'package:cifraclub/domain/version/models/version_status.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,6 +17,7 @@ part 'version_data.g.dart';
 class VersionData extends Equatable {
   final int? localDatabaseId;
   final int? songbookId;
+  final VersionStatus? status;
   final int? versionLocalDatabaseId;
   final int versionId;
   final Instrument instrument;
@@ -44,6 +46,7 @@ class VersionData extends Equatable {
   const VersionData({
     this.songbookId,
     this.localDatabaseId,
+    this.status,
     this.versionLocalDatabaseId,
     required this.versionId,
     required this.instrument,

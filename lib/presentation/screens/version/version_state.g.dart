@@ -9,6 +9,12 @@ part of 'version_state.dart';
 abstract class _$VersionStateCWProxy {
   VersionState version(VersionData? version);
 
+  VersionState restrictContent(bool restrictContent);
+
+  VersionState isValidEmail(bool isValidEmail);
+
+  VersionState isConflictError(bool? isConflictError);
+
   VersionState isLoading(bool isLoading);
 
   VersionState error(RequestError? error);
@@ -37,6 +43,9 @@ abstract class _$VersionStateCWProxy {
   /// ````
   VersionState call({
     VersionData? version,
+    bool? restrictContent,
+    bool? isValidEmail,
+    bool? isConflictError,
     bool? isLoading,
     RequestError? error,
     List<Section>? sections,
@@ -58,6 +67,15 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
 
   @override
   VersionState version(VersionData? version) => this(version: version);
+
+  @override
+  VersionState restrictContent(bool restrictContent) => this(restrictContent: restrictContent);
+
+  @override
+  VersionState isValidEmail(bool isValidEmail) => this(isValidEmail: isValidEmail);
+
+  @override
+  VersionState isConflictError(bool? isConflictError) => this(isConflictError: isConflictError);
 
   @override
   VersionState isLoading(bool isLoading) => this(isLoading: isLoading);
@@ -101,6 +119,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
   /// ````
   VersionState call({
     Object? version = const $CopyWithPlaceholder(),
+    Object? restrictContent = const $CopyWithPlaceholder(),
+    Object? isValidEmail = const $CopyWithPlaceholder(),
+    Object? isConflictError = const $CopyWithPlaceholder(),
     Object? isLoading = const $CopyWithPlaceholder(),
     Object? error = const $CopyWithPlaceholder(),
     Object? sections = const $CopyWithPlaceholder(),
@@ -117,6 +138,18 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.version
           // ignore: cast_nullable_to_non_nullable
           : version as VersionData?,
+      restrictContent: restrictContent == const $CopyWithPlaceholder() || restrictContent == null
+          ? _value.restrictContent
+          // ignore: cast_nullable_to_non_nullable
+          : restrictContent as bool,
+      isValidEmail: isValidEmail == const $CopyWithPlaceholder() || isValidEmail == null
+          ? _value.isValidEmail
+          // ignore: cast_nullable_to_non_nullable
+          : isValidEmail as bool,
+      isConflictError: isConflictError == const $CopyWithPlaceholder()
+          ? _value.isConflictError
+          // ignore: cast_nullable_to_non_nullable
+          : isConflictError as bool?,
       isLoading: isLoading == const $CopyWithPlaceholder() || isLoading == null
           ? _value.isLoading
           // ignore: cast_nullable_to_non_nullable

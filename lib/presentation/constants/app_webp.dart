@@ -56,4 +56,6 @@ class AppWebp {
 
   static const searchResultNotFoundLight = "assets/images/result_not_found_light.webp";
   static const searchResultNotFoundDark = "assets/images/result_not_found_dark.webp";
+
+  static const registeredEmail = "assets/images/register_email.webp";
 }

@@ -93,4 +93,6 @@ class AppSvgs {
   static const floatingBarFontBigger = "assets/images/floating_bar_font_bigger.svg";
   static const fontSizeIcon = "assets/images/font_size_icon.svg";
   static const resetSettingsIcon = "assets/images/reset_settings_icon.svg";
+
+  static const blockedContentLock = "assets/images/blocked_content_lock.svg";
 }

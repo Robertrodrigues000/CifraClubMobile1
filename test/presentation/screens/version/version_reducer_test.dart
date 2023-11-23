@@ -1,4 +1,5 @@
 import 'package:cifraclub/domain/section/models/text_section.dart';
+import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
@@ -365,6 +366,105 @@ void main() {
     );
 
     expect(state.version, null);
+    expect(state.isLoading, isFalse);
+  });
+
+  test("When action is OnVersionError and error is Unauthorized", () {
+    final reducer = VersionReducer();
+    final version = getFakeVersionData();
+
+    final state = reducer.reduce(
+      VersionState(version: getFakeVersionData()),
+      OnVersionError(error: VersionUnauthorizedError(version: version)),
+      (_) => null,
+    );
+
+    expect(state.version, version);
+    expect(state.isLoading, isFalse);
+    expect(state.restrictContent, true);
+  });
+
+  test("When action is OnChangeEmail", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(isConflictError: true),
+      OnChangeEmail(email: ""),
+      (_) => null,
+    );
+
+    expect(state.isConflictError, isFalse);
+  });
+
+  test("When action is OnValidateEmail", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(isConflictError: true),
+      OnValidateEmail(isValid: true),
+      (_) => null,
+    );
+
+    expect(state.isValidEmail, isTrue);
+  });
+
+  group("When action is OnEmailValidate", () {
+    final reducer = VersionReducer();
+    test("and is SendEmailConflictError", () {
+      final state = reducer.reduce(
+        const VersionState(isConflictError: true),
+        OnEmailValidate(result: SendEmailConflictError()),
+        (_) => null,
+      );
+
+      expect(state.isConflictError, isTrue);
+    });
+
+    test("and is other status", () {
+      final effectStream = PublishSubject<VersionEffect>();
+
+      expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnEmailValidateEffect>().having((effect) => effect.result, "email result", isA<SendEmailSuccess>()),
+          isA<OnEmailValidateEffect>().having((effect) => effect.result, "email result", isA<SendEmailNetworkError>()),
+          isA<OnEmailValidateEffect>().having((effect) => effect.result, "email result", isA<SendEmailError>()),
+        ]),
+      );
+
+      reducer.reduce(
+        const VersionState(isConflictError: true),
+        OnEmailValidate(result: SendEmailSuccess()),
+        effectStream.add,
+      );
+
+      reducer.reduce(
+        const VersionState(isConflictError: true),
+        OnEmailValidate(result: SendEmailNetworkError()),
+        effectStream.add,
+      );
+
+      reducer.reduce(
+        const VersionState(isConflictError: true),
+        OnEmailValidate(result: SendEmailError()),
+        effectStream.add,
+      );
+
+      effectStream.close();
+    });
+  });
+
+  test("When action is OnChangeSelectedChord", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnChangeSelectedChord(selectedChord: "Bm"),
+      (_) => null,
+    );
+
+    expect(state.isChordListPinned, true);
+    expect(state.chordState.selectedChord, "Bm");
   });
 
   test("When action is OnChangeSelectedChord", () {
