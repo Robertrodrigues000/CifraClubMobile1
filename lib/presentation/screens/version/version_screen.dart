@@ -317,7 +317,9 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                                     _bloc.add(OnChangeSelectedChord(selectedChord: chord));
                                   },
                                 )),
-                                style: context.typography.body8,
+                                textScaleFactor: 1,
+                                style: context.typography.body8
+                                    .copyWith(fontSize: state.fontSizeState.fontSize.toDouble()),
                               );
                             },
                           ),
@@ -327,7 +329,9 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                               scrollDirection: Axis.horizontal,
                               child: Text(
                                 state.version?.content ?? "",
-                                style: context.typography.body8,
+                                textScaleFactor: 1,
+                                style: context.typography.body8
+                                    .copyWith(fontSize: state.fontSizeState.fontSize.toDouble()),
                               ),
                             ),
                           ),
@@ -341,6 +345,8 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                     autoScrollSpeedFactor: state.autoScrollState.speedFactor,
                     isVideoOpen: state.isYouTubeVisible,
                     videoThumb: state.version?.videoLesson?.thumb,
+                    isFontDecreaseEnabled: state.fontSizeState.isDecreaseEnabled,
+                    isFontIncreaseEnabled: state.fontSizeState.isIncreaseEnabled,
                     onAction: (action) {
                       _bloc.add(OnFloatingFooterBarAction(action: action));
                     },

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
@@ -20,15 +19,12 @@ class _SectionMock extends Mock implements Section {}
 
 class _ParseSectionsMock extends Mock implements ParseSections {}
 
-class _ProcessSectionsMock extends Mock implements ProcessSections {}
-
 class _GetAllInstrumentVersionsMock extends Mock implements GetAllInstrumentVersions {}
 
 void main() {
   group('When action is OnVersionLoaded', () {
     test('should emit OnContentParsed action with the parsed values', () async {
       final parseSections = _ParseSectionsMock();
-      final processSections = _ProcessSectionsMock();
       final getAllInstrumentVersions = _GetAllInstrumentVersionsMock();
 
       final sections = [
@@ -36,7 +32,6 @@ void main() {
         _SectionMock(),
       ];
       when(() => parseSections(any())).thenReturn(sections);
-      when(() => processSections.call(sections, any())).thenReturn(null);
       when(() => getAllInstrumentVersions(any()))
           .thenReturn([(instrument: Instrument.guitar, versions: List<InstrumentVersion>.empty())]);
 
@@ -47,7 +42,7 @@ void main() {
         ],
       );
       final completer = Completer<VersionAction>();
-      final contentMiddleware = ContentMiddleware(parseSections, processSections, getAllInstrumentVersions);
+      final contentMiddleware = ContentMiddleware(parseSections, getAllInstrumentVersions);
 
       contentMiddleware.onAction(
         OnVersionLoaded(versionData),
@@ -56,7 +51,6 @@ void main() {
       );
 
       final versionAction = await completer.future;
-      verify(() => processSections.call(sections, any())).called(1);
       expect(
           versionAction,
           isA<OnContentParsed>()
@@ -70,7 +64,6 @@ void main() {
 
     test('should emit VersionEmptyError when there is no version with the selected instrument', () async {
       final parseSections = _ParseSectionsMock();
-      final processSections = _ProcessSectionsMock();
       final getAllInstrumentVersions = _GetAllInstrumentVersionsMock();
 
       final sections = [
@@ -78,13 +71,12 @@ void main() {
         _SectionMock(),
       ];
       when(() => parseSections(any())).thenReturn(sections);
-      when(() => processSections.call(sections, any())).thenReturn(null);
       when(() => getAllInstrumentVersions(any()))
           .thenReturn([(instrument: Instrument.bass, versions: List<InstrumentVersion>.empty())]);
 
       final versionData = getFakeVersionData(instrumentVersions: []);
       final completer = Completer<VersionAction>();
-      final contentMiddleware = ContentMiddleware(parseSections, processSections, getAllInstrumentVersions);
+      final contentMiddleware = ContentMiddleware(parseSections, getAllInstrumentVersions);
 
       contentMiddleware.onAction(
         OnVersionLoaded(versionData),
@@ -93,7 +85,6 @@ void main() {
       );
 
       final versionAction = await completer.future;
-      verifyNever(() => processSections.call(any(), any()));
       expect(versionAction, isA<OnVersionError>().having((action) => action.error, "error", isA<VersionEmptyError>()));
     });
   });

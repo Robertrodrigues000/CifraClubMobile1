@@ -1,6 +1,5 @@
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
-import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/use_cases/get_all_instrument_versions.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
@@ -14,10 +13,9 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ContentMiddleware extends VersionMiddleware {
   final ParseSections _parseSections;
-  final ProcessSections _processSections;
   final GetAllInstrumentVersions _getAllInstrumentVersions;
 
-  ContentMiddleware(this._parseSections, this._processSections, this._getAllInstrumentVersions);
+  ContentMiddleware(this._parseSections, this._getAllInstrumentVersions);
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
@@ -53,8 +51,6 @@ class ContentMiddleware extends VersionMiddleware {
         List<Section> sections = [];
         if (action.versionData.instrument.isCifraInstrument) {
           sections = _parseSections(action.versionData.content);
-          // TODO: Mover pra uma Action especializada. Quando trocarmos tamanho de fonte, poderemos só chamar o Process sem Parse.
-          _processSections(sections, 40);
         }
 
         addAction(

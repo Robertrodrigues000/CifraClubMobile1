@@ -15,6 +15,8 @@ class FloatingFooterBar extends StatefulWidget {
   final bool isVisible;
   final bool isVideoOpen;
   final String? videoThumb;
+  final bool isFontDecreaseEnabled;
+  final bool isFontIncreaseEnabled;
   final void Function(FloatingFooterBarAction) onAction;
 
   const FloatingFooterBar({
@@ -25,6 +27,8 @@ class FloatingFooterBar extends StatefulWidget {
     required this.isVisible,
     required this.onAction,
     required this.isVideoOpen,
+    required this.isFontDecreaseEnabled,
+    required this.isFontIncreaseEnabled,
     this.videoThumb,
   });
 
@@ -65,8 +69,12 @@ class _FloatingFooterBarState extends State<FloatingFooterBar> {
                         onAction: widget.onAction,
                         autoScrollSpeedFactor: widget.autoScrollSpeedFactor,
                       ),
-                    FloatingFooterBarMode.fontSize =>
-                      FloatingFooterBarFontSize(onAction: widget.onAction, collapsed: collapsed),
+                    FloatingFooterBarMode.fontSize => FloatingFooterBarFontSize(
+                        onAction: widget.onAction,
+                        collapsed: collapsed,
+                        isDecreaseEnabled: widget.isFontDecreaseEnabled,
+                        isIncreaseEnabled: widget.isFontIncreaseEnabled,
+                      ),
                   },
                 ),
               );

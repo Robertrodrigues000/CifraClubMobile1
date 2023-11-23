@@ -24,11 +24,22 @@ class SharedPreferencesRepositoryImpl extends SharedPreferencesRepository {
   String? getString(SharedPreferencesKeys preferencesKeys) {
     return _prefs.getString(preferencesKeys.key);
   }
+
+  @override
+  int? getInt(SharedPreferencesKeys preferencesKeys) {
+    return _prefs.getInt(preferencesKeys.key);
+  }
+
+  @override
+  Future<bool> setInt(SharedPreferencesKeys preferencesKeys, int value) {
+    return _prefs.setInt(preferencesKeys.key, value);
+  }
 }
 
 enum SharedPreferencesKeys {
   pro("PRO_KEY"),
-  orderType("LAST_FILTER");
+  orderType("LAST_FILTER"),
+  fontSize("FONT_SIZE");
 
   final String key;
   const SharedPreferencesKeys(this.key);

@@ -14,22 +14,15 @@ class FloatingFooterBarMiddleware extends VersionMiddleware {
     }
 
     var floatingFooterAction = action.action;
-    // coverage:ignore-start
     switch (floatingFooterAction) {
       case FloatingFooterBarDidTapOnResetFontSize():
+        addAction(OnFontSizeRestore());
       case FloatingFooterBarDidTapOnIncreaseFontSize():
+        addAction(OnFontSizeIncrease());
       case FloatingFooterBarDidTapOnDecreaseFontSize():
+        addAction(OnFontSizeDecrease());
       case FloatingFooterBarDidTapOnConfirmFontSize():
-        switch (state.floatingFooterBarState.mode) {
-          // Temporário para debug
-          case FloatingFooterBarMode.main:
-            addAction(OnFloatingFooterBarModeChange(mode: FloatingFooterBarMode.fontSize));
-          case FloatingFooterBarMode.fontSize:
-            addAction(OnFloatingFooterBarModeChange(mode: FloatingFooterBarMode.main));
-          default:
-        }
-        break;
-      // coverage:ignore-end
+        addAction(OnFloatingFooterBarModeChange(mode: FloatingFooterBarMode.main));
       case FloatingFooterBarDidTapOnAutoscroll():
         addAction(OnFloatingFooterBarModeChange(mode: FloatingFooterBarMode.autoscroll));
         addAction(OnAutoScrollStart());

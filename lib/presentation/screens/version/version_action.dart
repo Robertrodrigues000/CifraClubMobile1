@@ -64,6 +64,20 @@ class OnContentParsed implements VersionAction {
   });
 }
 
+class OnContentProcessed implements VersionAction {
+  final List<Section> sections;
+  final int fontSize;
+  final bool isFontIncreaseEnabled;
+  final bool isFontDecreaseEnabled;
+
+  OnContentProcessed({
+    required this.sections,
+    required this.fontSize,
+    required this.isFontIncreaseEnabled,
+    required this.isFontDecreaseEnabled,
+  });
+}
+
 class OnYouTubeVideoSelected implements VersionAction {
   final String videoId;
 
@@ -94,6 +108,18 @@ class OnChordListLoaded implements VersionAction {
   final List<ChordRepresentation> chords;
 
   OnChordListLoaded(this.chords);
+}
+
+class OnFontSizeIncrease implements VersionAction {}
+
+class OnFontSizeDecrease implements VersionAction {}
+
+class OnFontSizeRestore implements VersionAction {}
+
+class OnFontSizeSet implements VersionAction {
+  final int fontSize;
+
+  OnFontSizeSet(this.fontSize);
 }
 
 class OnFloatingFooterBarAction implements VersionAction {

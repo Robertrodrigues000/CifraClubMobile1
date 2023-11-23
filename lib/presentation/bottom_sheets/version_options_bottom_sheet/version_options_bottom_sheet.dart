@@ -146,8 +146,7 @@ class VersionOptionsBottomSheet {
                         await bloc.shareLink(link, rect);
                       }
                     },
-                    onFontSizeChanged: () =>
-                        onAction?.call(OnVersionBottomSheetTapOnFontSize()), // coverage:ignore-line
+                    onSetFontSize: () => onAction?.call(OnVersionBottomSheetTapOnFontSize()), // coverage:ignore-line
                     isVersionBottomSheet: isVersionBottomSheet,
                     isFavorite: state.isFavorite,
                     isPro: state.isPro,

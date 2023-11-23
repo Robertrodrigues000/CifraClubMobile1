@@ -15,6 +15,8 @@ abstract class _$VersionStateCWProxy {
 
   VersionState sections(List<Section> sections);
 
+  VersionState fontSizeState(FontSizeState fontSizeState);
+
   VersionState isChordListPinned(bool isChordListPinned);
 
   VersionState isYouTubeVisible(bool isYouTubeVisible);
@@ -38,6 +40,7 @@ abstract class _$VersionStateCWProxy {
     bool? isLoading,
     RequestError? error,
     List<Section>? sections,
+    FontSizeState? fontSizeState,
     bool? isChordListPinned,
     bool? isYouTubeVisible,
     VersionHeaderState? versionHeaderState,
@@ -64,6 +67,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
 
   @override
   VersionState sections(List<Section> sections) => this(sections: sections);
+
+  @override
+  VersionState fontSizeState(FontSizeState fontSizeState) => this(fontSizeState: fontSizeState);
 
   @override
   VersionState isChordListPinned(bool isChordListPinned) => this(isChordListPinned: isChordListPinned);
@@ -98,6 +104,7 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? isLoading = const $CopyWithPlaceholder(),
     Object? error = const $CopyWithPlaceholder(),
     Object? sections = const $CopyWithPlaceholder(),
+    Object? fontSizeState = const $CopyWithPlaceholder(),
     Object? isChordListPinned = const $CopyWithPlaceholder(),
     Object? isYouTubeVisible = const $CopyWithPlaceholder(),
     Object? versionHeaderState = const $CopyWithPlaceholder(),
@@ -122,6 +129,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.sections
           // ignore: cast_nullable_to_non_nullable
           : sections as List<Section>,
+      fontSizeState: fontSizeState == const $CopyWithPlaceholder() || fontSizeState == null
+          ? _value.fontSizeState
+          // ignore: cast_nullable_to_non_nullable
+          : fontSizeState as FontSizeState,
       isChordListPinned: isChordListPinned == const $CopyWithPlaceholder() || isChordListPinned == null
           ? _value.isChordListPinned
           // ignore: cast_nullable_to_non_nullable
@@ -451,4 +462,75 @@ extension $FloatingFooterBarStateCopyWith on FloatingFooterBarState {
   /// Returns a callable class that can be used as follows: `instanceOfFloatingFooterBarState.copyWith(...)` or like so:`instanceOfFloatingFooterBarState.copyWith.fieldName(...)`.
   // ignore: library_private_types_in_public_api
   _$FloatingFooterBarStateCWProxy get copyWith => _$FloatingFooterBarStateCWProxyImpl(this);
+}
+
+abstract class _$FontSizeStateCWProxy {
+  FontSizeState fontSize(int fontSize);
+
+  FontSizeState isIncreaseEnabled(bool isIncreaseEnabled);
+
+  FontSizeState isDecreaseEnabled(bool isDecreaseEnabled);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `FontSizeState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// FontSizeState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  FontSizeState call({
+    int? fontSize,
+    bool? isIncreaseEnabled,
+    bool? isDecreaseEnabled,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfFontSizeState.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfFontSizeState.copyWith.fieldName(...)`
+class _$FontSizeStateCWProxyImpl implements _$FontSizeStateCWProxy {
+  const _$FontSizeStateCWProxyImpl(this._value);
+
+  final FontSizeState _value;
+
+  @override
+  FontSizeState fontSize(int fontSize) => this(fontSize: fontSize);
+
+  @override
+  FontSizeState isIncreaseEnabled(bool isIncreaseEnabled) => this(isIncreaseEnabled: isIncreaseEnabled);
+
+  @override
+  FontSizeState isDecreaseEnabled(bool isDecreaseEnabled) => this(isDecreaseEnabled: isDecreaseEnabled);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `FontSizeState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// FontSizeState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  FontSizeState call({
+    Object? fontSize = const $CopyWithPlaceholder(),
+    Object? isIncreaseEnabled = const $CopyWithPlaceholder(),
+    Object? isDecreaseEnabled = const $CopyWithPlaceholder(),
+  }) {
+    return FontSizeState(
+      fontSize: fontSize == const $CopyWithPlaceholder() || fontSize == null
+          ? _value.fontSize
+          // ignore: cast_nullable_to_non_nullable
+          : fontSize as int,
+      isIncreaseEnabled: isIncreaseEnabled == const $CopyWithPlaceholder() || isIncreaseEnabled == null
+          ? _value.isIncreaseEnabled
+          // ignore: cast_nullable_to_non_nullable
+          : isIncreaseEnabled as bool,
+      isDecreaseEnabled: isDecreaseEnabled == const $CopyWithPlaceholder() || isDecreaseEnabled == null
+          ? _value.isDecreaseEnabled
+          // ignore: cast_nullable_to_non_nullable
+          : isDecreaseEnabled as bool,
+    );
+  }
+}
+
+extension $FontSizeStateCopyWith on FontSizeState {
+  /// Returns a callable class that can be used as follows: `instanceOfFontSizeState.copyWith(...)` or like so:`instanceOfFontSizeState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$FontSizeStateCWProxy get copyWith => _$FontSizeStateCWProxyImpl(this);
 }

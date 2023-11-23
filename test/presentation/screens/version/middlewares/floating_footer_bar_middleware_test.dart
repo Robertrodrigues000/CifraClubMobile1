@@ -10,6 +10,81 @@ import '../../../../shared_mocks/domain/version/models/version_data_mock.dart';
 import '../../../../shared_mocks/domain/version/models/version_data_video_lesson.dart';
 
 void main() {
+  test('When FloatingFooterBarAction is FloatingFooterBarDidTapOnResetFontSize', () async {
+    final middleware = FloatingFooterBarMiddleware();
+    var actionStream = PublishSubject<VersionAction>();
+
+    expectLater(
+      actionStream.stream,
+      emitsInOrder([
+        isA<OnFontSizeRestore>(),
+      ]),
+    );
+
+    middleware.onAction(
+        OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()), const VersionState(), (action) {
+      actionStream.add(action);
+    });
+
+    actionStream.close();
+  });
+
+  test('When FloatingFooterBarAction is FloatingFooterBarDidTapOnIncreaseFontSize', () async {
+    final middleware = FloatingFooterBarMiddleware();
+    var actionStream = PublishSubject<VersionAction>();
+
+    expectLater(
+      actionStream.stream,
+      emitsInOrder([
+        isA<OnFontSizeIncrease>(),
+      ]),
+    );
+
+    middleware.onAction(
+        OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnIncreaseFontSize()), const VersionState(), (action) {
+      actionStream.add(action);
+    });
+
+    actionStream.close();
+  });
+
+  test('When FloatingFooterBarAction is FloatingFooterBarDidTapOnDecreaseFontSize', () async {
+    final middleware = FloatingFooterBarMiddleware();
+    var actionStream = PublishSubject<VersionAction>();
+
+    expectLater(
+      actionStream.stream,
+      emitsInOrder([
+        isA<OnFontSizeDecrease>(),
+      ]),
+    );
+
+    middleware.onAction(
+        OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnDecreaseFontSize()), const VersionState(), (action) {
+      actionStream.add(action);
+    });
+
+    actionStream.close();
+  });
+
+  test('When FloatingFooterBarAction is FloatingFooterBarDidTapOnConfirmFontSize', () async {
+    final middleware = FloatingFooterBarMiddleware();
+    var actionStream = PublishSubject<VersionAction>();
+
+    expectLater(
+      actionStream.stream,
+      emitsInOrder([
+        isA<OnFloatingFooterBarModeChange>().having((e) => e.mode, "mode", FloatingFooterBarMode.main),
+      ]),
+    );
+
+    middleware.onAction(
+        OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnConfirmFontSize()), const VersionState(), (action) {
+      actionStream.add(action);
+    });
+
+    actionStream.close();
+  });
   test('When FloatingFooterBarAction is FloatingFooterBarDidTapOnAutoscroll', () async {
     final middleware = FloatingFooterBarMiddleware();
     var actionStream = PublishSubject<VersionAction>();

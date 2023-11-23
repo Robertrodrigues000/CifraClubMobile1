@@ -5,4 +5,6 @@ abstract class SharedPreferencesRepository {
   bool? getBool(SharedPreferencesKeys preferencesKeys);
   Future<bool> setString(SharedPreferencesKeys preferencesKeys, String value);
   String? getString(SharedPreferencesKeys preferencesKeys);
+  Future<bool> setInt(SharedPreferencesKeys preferencesKeys, int value);
+  int? getInt(SharedPreferencesKeys preferencesKeys);
 }

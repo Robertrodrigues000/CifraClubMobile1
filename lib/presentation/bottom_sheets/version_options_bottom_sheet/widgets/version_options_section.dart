@@ -12,14 +12,14 @@ class VersionOptionsSection extends StatelessWidget {
       required this.onFavoriteVersion,
       required this.onShareVersion,
       required this.isVersionBottomSheet,
-      required this.onFontSizeChanged,
+      required this.onSetFontSize,
       required this.isFavorite,
       required this.isPro});
 
   final VoidCallback onSaveVersionToList;
   final VoidCallback onFavoriteVersion;
   final VoidCallback onShareVersion;
-  final VoidCallback onFontSizeChanged;
+  final VoidCallback onSetFontSize;
   final bool isVersionBottomSheet;
   final bool isFavorite;
   final bool isPro;
@@ -64,12 +64,10 @@ class VersionOptionsSection extends StatelessWidget {
                   case VersionOptionsBottomSheetItem.share:
                     onShareVersion();
                   case VersionOptionsBottomSheetItem.fontSize:
-                    if (isPro) {
-                      if (context.mounted) {
-                        DefaultBottomSheet.close(context);
-                      }
-                      onFontSizeChanged();
+                    if (context.mounted) {
+                      DefaultBottomSheet.close(context);
                     }
+                    onSetFontSize();
                   case VersionOptionsBottomSheetItem.correctVersion:
                   //TODO
                 }

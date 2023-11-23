@@ -13,6 +13,7 @@ void main() {
     preferences = _SharedPreferencesMock();
     when(() => preferences.setBool(captureAny(), captureAny())).thenAnswer((_) => SynchronousFuture(true));
     when(() => preferences.setString(captureAny(), captureAny())).thenAnswer((_) => SynchronousFuture(true));
+    when(() => preferences.setInt(captureAny(), captureAny())).thenAnswer((_) => SynchronousFuture(true));
   });
 
   test("When 'setBool' is called should save a new bool value", () {
@@ -55,5 +56,26 @@ void main() {
 
     verify(() => preferences.getString(any())).called(1);
     expect(value, "RECENTS_KEY");
+  });
+
+  test("When 'setInt' is called should save a new int value", () {
+    final repository = SharedPreferencesRepositoryImpl(preferences);
+
+    repository.setInt(SharedPreferencesKeys.fontSize, 10);
+
+    final getParams = verify(() => preferences.setInt(captureAny(), captureAny())).captured;
+
+    expect(getParams[0], "FONT_SIZE");
+    expect(getParams[1], 10);
+  });
+
+  test("When 'getInt' is called should return bool value", () {
+    final repository = SharedPreferencesRepositoryImpl(preferences);
+    when(() => preferences.getInt(any())).thenReturn(12);
+
+    final value = repository.getInt(SharedPreferencesKeys.fontSize);
+
+    verify(() => preferences.getInt(any())).called(1);
+    expect(value, 12);
   });
 }

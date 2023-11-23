@@ -20,6 +20,8 @@ class VersionState {
 
   final bool isChordListPinned;
 
+  final FontSizeState fontSizeState;
+
   final bool isYouTubeVisible;
   final VersionHeaderState versionHeaderState;
 
@@ -63,6 +65,7 @@ class VersionState {
     this.isLoading = false,
     this.error,
     this.sections = const [],
+    this.fontSizeState = const FontSizeState(),
     this.isChordListPinned = false,
     this.isYouTubeVisible = false,
     this.versionHeaderState = const VersionHeaderState(),
@@ -127,5 +130,19 @@ class FloatingFooterBarState {
 
   const FloatingFooterBarState({
     this.mode = FloatingFooterBarMode.main,
+  });
+}
+
+@CopyWith()
+@immutable
+class FontSizeState {
+  final int fontSize;
+  final bool isIncreaseEnabled;
+  final bool isDecreaseEnabled;
+
+  const FontSizeState({
+    this.fontSize = 14,
+    this.isIncreaseEnabled = true,
+    this.isDecreaseEnabled = true,
   });
 }

@@ -30,13 +30,23 @@ class VersionReducer {
       case OnContentParsed():
         return state.copyWith(
           sections: action.sections,
-          isLoading: false,
           version: action.versionData,
           versionHeaderState: state.versionHeaderState.copyWith(
-              versionFilters: action.versionFilters,
-              selectedVersionFilter: action.selectedFilter,
-              songName: action.versionData.song.name,
-              artistName: action.versionData.artist?.name),
+            versionFilters: action.versionFilters,
+            selectedVersionFilter: action.selectedFilter,
+            songName: action.versionData.song.name,
+            artistName: action.versionData.artist?.name,
+          ),
+        );
+      case OnContentProcessed():
+        return state.copyWith(
+          sections: action.sections,
+          fontSizeState: state.fontSizeState.copyWith(
+            fontSize: action.fontSize,
+            isDecreaseEnabled: action.isFontDecreaseEnabled,
+            isIncreaseEnabled: action.isFontIncreaseEnabled,
+          ),
+          isLoading: false,
         );
       case OnYouTubeVideoClosed():
         onEffect(OnCloseYouTubeVideo());
