@@ -1,3 +1,4 @@
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/style/typography/font_families.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +20,9 @@ class FingerWidget extends StatelessWidget {
     return Container(
       width: ballSize,
       height: ballSize,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.black,
+        color: context.colors.textPrimary,
       ),
       child: Center(
         child: Text(
@@ -30,7 +31,7 @@ class FingerWidget extends StatelessWidget {
           textDirection: TextDirection.ltr,
           style: TextStyle(
             textBaseline: TextBaseline.alphabetic,
-            color: Colors.white,
+            color: context.colors.textPrimaryInverse,
             fontWeight: FontWeight.bold,
             fontSize: fontSize,
             fontFamily: FontFamilies.montserrat,

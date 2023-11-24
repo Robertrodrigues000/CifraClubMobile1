@@ -138,7 +138,7 @@ class _ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
                     padding: const EdgeInsets.only(top: 4),
                     child: ChordWidget(
                       chordRepresentation: chord,
-                      chordUiSettings: ChordUISettings.guitar().scaledToFit(height: height),
+                      chordUiSettings: ChordUISettings.guitar().scaledToFit(height: height, hasSelector: true),
                       isLeftHanded: false,
                       isSelected: chord.name == selectedChord,
                     ),

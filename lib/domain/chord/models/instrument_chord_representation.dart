@@ -5,13 +5,14 @@ import 'package:cifraclub/domain/chord/models/instrument_chord.dart';
 import 'package:cifraclub/domain/chord/models/neck.dart';
 import 'package:cifraclub/domain/chord/models/note.dart';
 import 'package:cifraclub/domain/chord/models/note_state.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 
 abstract class InstrumentChordRepresentation {
   final int numStrings;
 
   InstrumentChordRepresentation({required this.numStrings});
 
-  ChordRepresentation buildChord({required InstrumentChord instrumentChord}) {
+  ChordRepresentation buildChord({required InstrumentChord instrumentChord, Capo? capo}) {
     var mount = instrumentChord.fretDiagram.split(" ").sublist(0, numStrings);
 
     var lowestFret = 100; // armazena menor casa pressionada (sem corda solta)
@@ -134,6 +135,7 @@ abstract class InstrumentChordRepresentation {
       bar: bar,
       instrument: this,
       name: instrumentChord.name,
+      capo: capo,
     );
   }
 }

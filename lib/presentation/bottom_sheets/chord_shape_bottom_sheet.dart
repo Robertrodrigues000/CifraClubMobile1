@@ -87,8 +87,12 @@ class _ChordShapeBottomSheetState extends State<ChordShapeBottomSheet> {
                       var maxHeight = MediaQuery.of(layoutcontext).size.height;
 
                       //TODO: Selecionar ChordUiSettings de acordo com instrumento
-                      final chordSettings = ChordUISettings.guitar()
-                          .scaledToFit(width: maxWidth / 2, height: maxHeight / 3, hasCount: true, hasSubtitle: true);
+                      final chordSettings = ChordUISettings.guitar().scaledToFit(
+                          width: maxWidth / 2,
+                          height: maxHeight / 3,
+                          hasCount: true,
+                          hasSubtitle: true,
+                          hasCapo: widget.shapes[index].capo != null);
                       return ChordWidget(
                         key: ValueKey(widget.shapes[index].original),
                         chordRepresentation: widget.shapes[index],
@@ -130,6 +134,7 @@ class _ChordShapeBottomSheetState extends State<ChordShapeBottomSheet> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgImage(
+                    key: const ValueKey("restoreButton"),
                     assetPath: AppSvgs.refreshIcon,
                     height: 24,
                     width: 24,

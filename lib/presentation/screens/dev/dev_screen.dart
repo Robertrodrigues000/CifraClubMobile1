@@ -173,8 +173,11 @@ class _DevScreenState extends State<DevScreen> {
                           padding: const EdgeInsets.only(bottom: 16),
                           child: LayoutBuilder(builder: (context, constraints) {
                             var maxWidth = MediaQuery.of(context).size.width;
-                            final chordSettings =
-                                ChordUISettings.guitar().scaledToFit(width: maxWidth, height: constraints.maxHeight);
+                            final chordSettings = ChordUISettings.guitar().scaledToFit(
+                                width: maxWidth,
+                                height: constraints.maxHeight,
+                                hasCapo: state.chordRepresentation?.first.capo != null,
+                                hasSelector: true);
                             return CustomScrollView(scrollDirection: Axis.horizontal, shrinkWrap: true, slivers: [
                               SliverList(
                                   delegate: SliverChildBuilderDelegate(childCount: state.chordRepresentation!.length,
@@ -183,7 +186,7 @@ class _DevScreenState extends State<DevScreen> {
                                   chordRepresentation: state.chordRepresentation![index],
                                   chordUiSettings: chordSettings,
                                   isLeftHanded: false,
-                                  isSelected: true,
+                                  isSelected: index / 2 == 0,
                                 );
                               })),
                             ]);

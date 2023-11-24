@@ -10,6 +10,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,14 +99,12 @@ class _VersionsSharedScreenState extends State<VersionsSharedScreen> {
                           final link = AppUrls.songbookUrlFormat(widget.userId!, state.songbook!.id!);
                           await _bloc.shareLink(link, rect);
                         },
-                        child: SizedBox(
+                        child: SvgImage(
                           height: 48,
                           width: 48,
-                          child: SvgPicture.asset(
-                            AppSvgs.shareIcon,
-                            fit: BoxFit.none,
-                            color: context.colors.textPrimary,
-                          ),
+                          assetPath: AppSvgs.shareIcon,
+                          fit: BoxFit.none,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                     );

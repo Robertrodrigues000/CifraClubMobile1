@@ -28,6 +28,20 @@ void main() {
     expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
     expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
     expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
+    expect(scalledSettings.subtitleFontSize, originalSettings.subtitleFontSize * factor);
+    expect(scalledSettings.subtitleHeight, originalSettings.subtitleHeight * factor);
+    expect(scalledSettings.subtitlePadding, originalSettings.subtitlePadding * factor);
+    expect(scalledSettings.countFontSize, originalSettings.countFontSize * factor);
+    expect(scalledSettings.countHeight, originalSettings.countHeight * factor);
+    expect(scalledSettings.countPadding, originalSettings.countPadding * factor);
+    expect(scalledSettings.capoFontSize, originalSettings.capoFontSize * factor);
+    expect(scalledSettings.capoHeight, originalSettings.capoHeight * factor);
+    expect(scalledSettings.capoNutHeight, originalSettings.capoNutHeight * factor);
+    expect(scalledSettings.capoPadding, originalSettings.capoPadding * factor);
+    expect(scalledSettings.capoWordSpacing, originalSettings.capoWordSpacing * factor);
+    expect(scalledSettings.stringsPadding, originalSettings.stringsPadding * factor);
+    expect(scalledSettings.selectorHeight, originalSettings.selectorHeight * factor);
+    expect(scalledSettings.selectorPadding, originalSettings.selectorPadding * factor);
   });
 
   test("ChordUISettings should scale correctly by width", () {
@@ -56,6 +70,20 @@ void main() {
     expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
     expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
     expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
+    expect(scalledSettings.subtitleFontSize, originalSettings.subtitleFontSize * factor);
+    expect(scalledSettings.subtitleHeight, originalSettings.subtitleHeight * factor);
+    expect(scalledSettings.subtitlePadding, originalSettings.subtitlePadding * factor);
+    expect(scalledSettings.countFontSize, originalSettings.countFontSize * factor);
+    expect(scalledSettings.countHeight, originalSettings.countHeight * factor);
+    expect(scalledSettings.countPadding, originalSettings.countPadding * factor);
+    expect(scalledSettings.capoFontSize, originalSettings.capoFontSize * factor);
+    expect(scalledSettings.capoHeight, originalSettings.capoHeight * factor);
+    expect(scalledSettings.capoNutHeight, originalSettings.capoNutHeight * factor);
+    expect(scalledSettings.capoPadding, originalSettings.capoPadding * factor);
+    expect(scalledSettings.capoWordSpacing, originalSettings.capoWordSpacing * factor);
+    expect(scalledSettings.stringsPadding, originalSettings.stringsPadding * factor);
+    expect(scalledSettings.selectorHeight, originalSettings.selectorHeight * factor);
+    expect(scalledSettings.selectorPadding, originalSettings.selectorPadding * factor);
   });
 
   group("ChordUISettings should scale correctly by width", () {
@@ -85,6 +113,20 @@ void main() {
       expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
       expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
       expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
+      expect(scalledSettings.subtitleFontSize, originalSettings.subtitleFontSize * factor);
+      expect(scalledSettings.subtitleHeight, originalSettings.subtitleHeight * factor);
+      expect(scalledSettings.subtitlePadding, originalSettings.subtitlePadding * factor);
+      expect(scalledSettings.countFontSize, originalSettings.countFontSize * factor);
+      expect(scalledSettings.countHeight, originalSettings.countHeight * factor);
+      expect(scalledSettings.countPadding, originalSettings.countPadding * factor);
+      expect(scalledSettings.capoFontSize, originalSettings.capoFontSize * factor);
+      expect(scalledSettings.capoHeight, originalSettings.capoHeight * factor);
+      expect(scalledSettings.capoNutHeight, originalSettings.capoNutHeight * factor);
+      expect(scalledSettings.capoPadding, originalSettings.capoPadding * factor);
+      expect(scalledSettings.capoWordSpacing, originalSettings.capoWordSpacing * factor);
+      expect(scalledSettings.stringsPadding, originalSettings.stringsPadding * factor);
+      expect(scalledSettings.selectorHeight, originalSettings.selectorHeight * factor);
+      expect(scalledSettings.selectorPadding, originalSettings.selectorPadding * factor);
     });
 
     test("when aspectRatio is smaller than original", () {
@@ -113,6 +155,20 @@ void main() {
       expect(scalledSettings.titlePaddingToSubtitle, originalSettings.titlePaddingToSubtitle * factor);
       expect(scalledSettings.neckFontSize, originalSettings.neckFontSize * factor);
       expect(scalledSettings.neckIndicatorWidth, originalSettings.neckIndicatorWidth * factor);
+      expect(scalledSettings.subtitleFontSize, originalSettings.subtitleFontSize * factor);
+      expect(scalledSettings.subtitleHeight, originalSettings.subtitleHeight * factor);
+      expect(scalledSettings.subtitlePadding, originalSettings.subtitlePadding * factor);
+      expect(scalledSettings.countFontSize, originalSettings.countFontSize * factor);
+      expect(scalledSettings.countHeight, originalSettings.countHeight * factor);
+      expect(scalledSettings.countPadding, originalSettings.countPadding * factor);
+      expect(scalledSettings.capoFontSize, originalSettings.capoFontSize * factor);
+      expect(scalledSettings.capoHeight, originalSettings.capoHeight * factor);
+      expect(scalledSettings.capoNutHeight, originalSettings.capoNutHeight * factor);
+      expect(scalledSettings.capoPadding, originalSettings.capoPadding * factor);
+      expect(scalledSettings.capoWordSpacing, originalSettings.capoWordSpacing * factor);
+      expect(scalledSettings.stringsPadding, originalSettings.stringsPadding * factor);
+      expect(scalledSettings.selectorHeight, originalSettings.selectorHeight * factor);
+      expect(scalledSettings.selectorPadding, originalSettings.selectorPadding * factor);
     });
   });
 }

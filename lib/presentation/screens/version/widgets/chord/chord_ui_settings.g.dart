@@ -17,6 +17,8 @@ abstract class _$ChordUISettingsCWProxy {
 
   ChordUISettings spaceBetweenFrets(double spaceBetweenFrets);
 
+  ChordUISettings stringsPadding(double stringsPadding);
+
   ChordUISettings startX(double startX);
 
   ChordUISettings startY(double startY);
@@ -47,6 +49,8 @@ abstract class _$ChordUISettingsCWProxy {
 
   ChordUISettings neckIndicatorWidth(double neckIndicatorWidth);
 
+  ChordUISettings nutBorderPixel(double nutBorderPixel);
+
   ChordUISettings countFontSize(double countFontSize);
 
   ChordUISettings countHeight(double countHeight);
@@ -58,6 +62,20 @@ abstract class _$ChordUISettingsCWProxy {
   ChordUISettings subtitleHeight(double subtitleHeight);
 
   ChordUISettings subtitlePadding(double subtitlePadding);
+
+  ChordUISettings capoHeight(double capoHeight);
+
+  ChordUISettings capoPadding(double capoPadding);
+
+  ChordUISettings capoFontSize(double capoFontSize);
+
+  ChordUISettings capoWordSpacing(double capoWordSpacing);
+
+  ChordUISettings capoNutHeight(double capoNutHeight);
+
+  ChordUISettings selectorHeight(double selectorHeight);
+
+  ChordUISettings selectorPadding(double selectorPadding);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordUISettings(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -71,6 +89,7 @@ abstract class _$ChordUISettingsCWProxy {
     double? width,
     double? spaceBetweenStrings,
     double? spaceBetweenFrets,
+    double? stringsPadding,
     double? startX,
     double? startY,
     double? ballSize,
@@ -86,12 +105,20 @@ abstract class _$ChordUISettingsCWProxy {
     double? titlePaddingToSubtitle,
     double? neckFontSize,
     double? neckIndicatorWidth,
+    double? nutBorderPixel,
     double? countFontSize,
     double? countHeight,
     double? countPadding,
     double? subtitleFontSize,
     double? subtitleHeight,
     double? subtitlePadding,
+    double? capoHeight,
+    double? capoPadding,
+    double? capoFontSize,
+    double? capoWordSpacing,
+    double? capoNutHeight,
+    double? selectorHeight,
+    double? selectorPadding,
   });
 }
 
@@ -115,6 +142,9 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
 
   @override
   ChordUISettings spaceBetweenFrets(double spaceBetweenFrets) => this(spaceBetweenFrets: spaceBetweenFrets);
+
+  @override
+  ChordUISettings stringsPadding(double stringsPadding) => this(stringsPadding: stringsPadding);
 
   @override
   ChordUISettings startX(double startX) => this(startX: startX);
@@ -164,6 +194,9 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
   ChordUISettings neckIndicatorWidth(double neckIndicatorWidth) => this(neckIndicatorWidth: neckIndicatorWidth);
 
   @override
+  ChordUISettings nutBorderPixel(double nutBorderPixel) => this(nutBorderPixel: nutBorderPixel);
+
+  @override
   ChordUISettings countFontSize(double countFontSize) => this(countFontSize: countFontSize);
 
   @override
@@ -182,6 +215,27 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
   ChordUISettings subtitlePadding(double subtitlePadding) => this(subtitlePadding: subtitlePadding);
 
   @override
+  ChordUISettings capoHeight(double capoHeight) => this(capoHeight: capoHeight);
+
+  @override
+  ChordUISettings capoPadding(double capoPadding) => this(capoPadding: capoPadding);
+
+  @override
+  ChordUISettings capoFontSize(double capoFontSize) => this(capoFontSize: capoFontSize);
+
+  @override
+  ChordUISettings capoWordSpacing(double capoWordSpacing) => this(capoWordSpacing: capoWordSpacing);
+
+  @override
+  ChordUISettings capoNutHeight(double capoNutHeight) => this(capoNutHeight: capoNutHeight);
+
+  @override
+  ChordUISettings selectorHeight(double selectorHeight) => this(selectorHeight: selectorHeight);
+
+  @override
+  ChordUISettings selectorPadding(double selectorPadding) => this(selectorPadding: selectorPadding);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ChordUISettings(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -195,6 +249,7 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
     Object? width = const $CopyWithPlaceholder(),
     Object? spaceBetweenStrings = const $CopyWithPlaceholder(),
     Object? spaceBetweenFrets = const $CopyWithPlaceholder(),
+    Object? stringsPadding = const $CopyWithPlaceholder(),
     Object? startX = const $CopyWithPlaceholder(),
     Object? startY = const $CopyWithPlaceholder(),
     Object? ballSize = const $CopyWithPlaceholder(),
@@ -210,12 +265,20 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
     Object? titlePaddingToSubtitle = const $CopyWithPlaceholder(),
     Object? neckFontSize = const $CopyWithPlaceholder(),
     Object? neckIndicatorWidth = const $CopyWithPlaceholder(),
+    Object? nutBorderPixel = const $CopyWithPlaceholder(),
     Object? countFontSize = const $CopyWithPlaceholder(),
     Object? countHeight = const $CopyWithPlaceholder(),
     Object? countPadding = const $CopyWithPlaceholder(),
     Object? subtitleFontSize = const $CopyWithPlaceholder(),
     Object? subtitleHeight = const $CopyWithPlaceholder(),
     Object? subtitlePadding = const $CopyWithPlaceholder(),
+    Object? capoHeight = const $CopyWithPlaceholder(),
+    Object? capoPadding = const $CopyWithPlaceholder(),
+    Object? capoFontSize = const $CopyWithPlaceholder(),
+    Object? capoWordSpacing = const $CopyWithPlaceholder(),
+    Object? capoNutHeight = const $CopyWithPlaceholder(),
+    Object? selectorHeight = const $CopyWithPlaceholder(),
+    Object? selectorPadding = const $CopyWithPlaceholder(),
   }) {
     return ChordUISettings(
       numStrings: numStrings == const $CopyWithPlaceholder() || numStrings == null
@@ -238,6 +301,10 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.spaceBetweenFrets
           // ignore: cast_nullable_to_non_nullable
           : spaceBetweenFrets as double,
+      stringsPadding: stringsPadding == const $CopyWithPlaceholder() || stringsPadding == null
+          ? _value.stringsPadding
+          // ignore: cast_nullable_to_non_nullable
+          : stringsPadding as double,
       startX: startX == const $CopyWithPlaceholder() || startX == null
           ? _value.startX
           // ignore: cast_nullable_to_non_nullable
@@ -299,6 +366,10 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.neckIndicatorWidth
           // ignore: cast_nullable_to_non_nullable
           : neckIndicatorWidth as double,
+      nutBorderPixel: nutBorderPixel == const $CopyWithPlaceholder() || nutBorderPixel == null
+          ? _value.nutBorderPixel
+          // ignore: cast_nullable_to_non_nullable
+          : nutBorderPixel as double,
       countFontSize: countFontSize == const $CopyWithPlaceholder() || countFontSize == null
           ? _value.countFontSize
           // ignore: cast_nullable_to_non_nullable
@@ -323,6 +394,34 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.subtitlePadding
           // ignore: cast_nullable_to_non_nullable
           : subtitlePadding as double,
+      capoHeight: capoHeight == const $CopyWithPlaceholder() || capoHeight == null
+          ? _value.capoHeight
+          // ignore: cast_nullable_to_non_nullable
+          : capoHeight as double,
+      capoPadding: capoPadding == const $CopyWithPlaceholder() || capoPadding == null
+          ? _value.capoPadding
+          // ignore: cast_nullable_to_non_nullable
+          : capoPadding as double,
+      capoFontSize: capoFontSize == const $CopyWithPlaceholder() || capoFontSize == null
+          ? _value.capoFontSize
+          // ignore: cast_nullable_to_non_nullable
+          : capoFontSize as double,
+      capoWordSpacing: capoWordSpacing == const $CopyWithPlaceholder() || capoWordSpacing == null
+          ? _value.capoWordSpacing
+          // ignore: cast_nullable_to_non_nullable
+          : capoWordSpacing as double,
+      capoNutHeight: capoNutHeight == const $CopyWithPlaceholder() || capoNutHeight == null
+          ? _value.capoNutHeight
+          // ignore: cast_nullable_to_non_nullable
+          : capoNutHeight as double,
+      selectorHeight: selectorHeight == const $CopyWithPlaceholder() || selectorHeight == null
+          ? _value.selectorHeight
+          // ignore: cast_nullable_to_non_nullable
+          : selectorHeight as double,
+      selectorPadding: selectorPadding == const $CopyWithPlaceholder() || selectorPadding == null
+          ? _value.selectorPadding
+          // ignore: cast_nullable_to_non_nullable
+          : selectorPadding as double,
     );
   }
 }

@@ -71,8 +71,12 @@ class AppSvgs {
   static const chordBaseSmallNutIcon = "assets/images/chord_base_small_nut.svg";
   static const pickedStringIcon = "assets/images/picked_string.svg";
   static const unpickedStringIcon = "assets/images/unpicked_string.svg";
-  static const baseBody = "assets/images/base_body.svg";
-  static const baseHead = "assets/images/base_head_130.svg";
+
+  static const guitarHead = "assets/images/guitar_head.svg";
+  static const headCapo = "assets/images/head_capo.svg";
+  static const guitarStrings = "assets/images/guitar_strings.svg";
+  static const guitarFrets = "assets/images/guitar_frets.svg";
+  static const guitarCapo = "assets/images/guitar_capo.svg";
 
   static const youtubeIcon = "assets/images/youtube_icon.svg";
 

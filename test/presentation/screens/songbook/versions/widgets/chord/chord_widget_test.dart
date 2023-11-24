@@ -12,6 +12,7 @@ import 'package:cifraclub/presentation/screens/version/widgets/chord/finger_widg
 import 'package:cifraclub/presentation/screens/version/widgets/chord/fret_number_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/note_box.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/string_play_indication_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../../../test_helpers/test_wrapper.dart';
@@ -163,5 +164,43 @@ void main() {
     expect(find.byType(FingerWidget), findsNWidgets(4));
     expect(find.byType(StringPlayIndicationWidget), findsOneWidget);
     expect(find.byType(NoteBox), findsNWidgets(6));
+  });
+
+  testWidgets("When chord is selected should show selector", (widgetTester) async {
+    final chordRepresentation = ChordRepresentation(
+        original: "X02222",
+        neck: const Neck(start: 0),
+        fingers: const [
+          Finger(id: 1, fret: 2, string: 4),
+          Finger(id: 2, fret: 2, string: 3),
+          Finger(id: 3, fret: 2, string: 2),
+          Finger(id: 4, fret: 2, string: 1)
+        ],
+        notes: const [
+          Note(NoteState.notPicked),
+          Note(NoteState.bassNote),
+          Note(NoteState.picked),
+          Note(NoteState.picked),
+          Note(NoteState.picked),
+          Note(NoteState.picked),
+        ],
+        instrument: GuitarChordRepresentation(),
+        name: "A");
+
+    await widgetTester.pumpWidget(
+      TestWrapper(
+        child: ChordWidget(
+          chordUiSettings: ChordUISettings.guitar().scaledToFit(hasSelector: true, height: 65),
+          chordRepresentation: chordRepresentation,
+          isLeftHanded: false,
+          isSelected: true,
+        ),
+      ),
+    );
+
+    expect(find.byType(FingerWidget), findsNWidgets(4));
+    expect(find.byType(StringPlayIndicationWidget), findsOneWidget);
+    expect(find.byType(NoteBox), findsNWidgets(6));
+    expect(find.byKey(const ValueKey("selector")), findsOneWidget);
   });
 }

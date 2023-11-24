@@ -13,6 +13,7 @@ import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_products.dart';
 import 'package:cifraclub/domain/subscription/use_cases/post_purchase_order.dart';
 import 'package:cifraclub/domain/subscription/use_cases/purchase_product.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
@@ -105,6 +106,7 @@ class DevScreenBloc extends Cubit<DevScreenState> {
                 .toList() ??
             [],
         instrument: Instrument.guitar,
+        capo: Capo.capo6,
       );
       // ignore: avoid_print
       print(chordRepresentation.first);

@@ -1,5 +1,7 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord/capo_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_grid_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_title_widget.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/chord_ui_settings.dart';
@@ -38,6 +40,12 @@ class ChordWidget extends StatelessWidget {
                 bottom: subtitle != null ? chordUiSettings.titlePaddingToSubtitle : chordUiSettings.titlePadding),
             child: ChordTitleWidget(chordName: chordRepresentation.name, settings: chordUiSettings),
           ),
+          if (chordRepresentation.capo != null && chordRepresentation.capo != Capo.noCapo)
+            Padding(
+                padding: EdgeInsets.only(
+                  bottom: chordUiSettings.capoPadding,
+                ),
+                child: CapoWidget(settings: chordUiSettings, capo: chordRepresentation.capo!)),
           if (subtitle != null)
             Padding(
               padding:
@@ -89,7 +97,9 @@ class ChordWidget extends StatelessWidget {
             children: [
               if (chordRepresentation.neck.start > 0)
                 Padding(
-                  padding: EdgeInsets.only(top: chordUiSettings.getNeckPosition(neck: chordRepresentation.neck).dy),
+                  padding: EdgeInsets.only(
+                    top: chordUiSettings.getNeckPosition(neck: chordRepresentation.neck).dy,
+                  ),
                   child: FretNumberWidget(settings: chordUiSettings, fret: chordRepresentation.neck.start),
                 )
               else
@@ -112,16 +122,19 @@ class ChordWidget extends StatelessWidget {
               isLeftHanded: isLeftHanded,
             ),
           ),
-          const SizedBox(height: 8),
-          Container(
-            height: 4,
-            margin: EdgeInsets.symmetric(horizontal: chordUiSettings.neckIndicatorWidth),
-            width: chordUiSettings.width,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(2)),
-              color: isSelected ? context.colors.primary : Colors.transparent,
-            ),
-          ),
+          if (isSelected) ...[
+            SizedBox(height: chordUiSettings.selectorPadding),
+            Container(
+              key: const ValueKey("selector"),
+              height: chordUiSettings.selectorHeight,
+              margin: EdgeInsets.symmetric(horizontal: chordUiSettings.neckIndicatorWidth),
+              width: chordUiSettings.width,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(2)),
+                color: context.colors.primary,
+              ),
+            )
+          ],
         ],
       ),
     );

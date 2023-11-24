@@ -17,7 +17,8 @@
     "loggedOutListErrorTitle",
     "instrumentUkulele",
     "instrumentCavaco",
-    "instrumentViola"
+    "instrumentViola",
+    "chordCapo"
   ],
 
   "pt": [
@@ -38,6 +39,7 @@
     "loggedOutListErrorTitle",
     "instrumentUkulele",
     "instrumentCavaco",
-    "instrumentViola"
+    "instrumentViola",
+    "chordCapo"
   ]
 }

@@ -1,8 +1,9 @@
 import 'package:cifraclub/domain/chord/models/note.dart';
 import 'package:cifraclub/domain/chord/models/note_state.dart';
+import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class NoteBox extends StatelessWidget {
   final Note note;
@@ -18,10 +19,11 @@ class NoteBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final drawable = _getDrawableFromNoteType(note);
 
-    return SvgPicture.asset(
-      drawable,
+    return SvgImage(
+      assetPath: drawable,
       width: noteSize,
       height: noteSize,
+      color: context.colors.textPrimary,
     );
   }
 

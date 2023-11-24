@@ -18,6 +18,7 @@ import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
 import 'package:cifraclub/presentation/widgets/limit_warning.dart';
+import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/versions/versions_state.dart';
@@ -102,14 +103,12 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       SizedBox(width: context.appDimensionScheme.appBarMargin),
                       InkWell(
                         onTap: () => Nav.of(context).pop(),
-                        child: SizedBox(
+                        child: SvgImage(
                           height: 48,
                           width: 48,
-                          child: SvgPicture.asset(
-                            AppSvgs.backArrowIcon,
-                            fit: BoxFit.none,
-                            color: context.colors.textPrimary,
-                          ),
+                          assetPath: AppSvgs.backArrowIcon,
+                          fit: BoxFit.none,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                     ],
@@ -127,14 +126,12 @@ class _VersionsScreenState extends State<VersionsScreen> {
                       final link = AppUrls.songbookUrlFormat(widget.userId!, state.songbook!.id!);
                       await _bloc.shareLink(link, rect);
                     },
-                    child: SizedBox(
+                    child: SvgImage(
                       height: 48,
                       width: 48,
-                      child: SvgPicture.asset(
-                        AppSvgs.shareIcon,
-                        fit: BoxFit.none,
-                        color: context.colors.textPrimary,
-                      ),
+                      assetPath: AppSvgs.shareIcon,
+                      fit: BoxFit.none,
+                      color: context.colors.textPrimary,
                     ),
                   );
                 }),

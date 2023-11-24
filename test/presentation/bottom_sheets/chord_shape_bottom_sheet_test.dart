@@ -1,5 +1,8 @@
+import 'package:cifraclub/domain/chord/models/neck.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/bottom_sheets/chord_shape_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/version/widgets/chord/capo_widget.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
 import 'package:cosmos/cosmos.dart';
@@ -140,7 +143,8 @@ void main() {
       ),
     );
     final finder = find.byWidgetPredicate(
-      (Widget widget) => widget is SvgImage && widget.color == CosmosColors.grey10,
+      (Widget widget) =>
+          widget is SvgImage && widget.key == const ValueKey("restoreButton") && widget.color == CosmosColors.grey10,
     );
     expect(finder, findsOneWidget);
   });
@@ -160,5 +164,25 @@ void main() {
     await widgetTester.tap(find.byType(CifraClubButton));
     await widgetTester.pump();
     expect(find.byKey(ValueKey(shapes[0].original)), findsOneWidget);
+  });
+
+  testWidgets("When chord has capo should show capo", (widgetTester) async {
+    final shapes = [
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, neck: const Neck(start: 0)),
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, neck: const Neck(start: 0)),
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, neck: const Neck(start: 0))
+    ];
+    final selectedChord = shapes.last;
+
+    await widgetTester.pumpWidgetWithWrapper(
+      ChordShapeBottomSheet(
+        selectedChord: selectedChord,
+        shapes: shapes,
+        instrument: Instrument.guitar,
+        onTap: (chord) {},
+      ),
+    );
+
+    expect(find.byType(CapoWidget), findsOneWidget);
   });
 }

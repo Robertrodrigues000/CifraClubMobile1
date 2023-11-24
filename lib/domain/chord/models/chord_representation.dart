@@ -3,6 +3,7 @@ import 'package:cifraclub/domain/chord/models/finger.dart';
 import 'package:cifraclub/domain/chord/models/instrument_chord_representation.dart';
 import 'package:cifraclub/domain/chord/models/neck.dart';
 import 'package:cifraclub/domain/chord/models/note.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:equatable/equatable.dart';
 
 class ChordRepresentation extends Equatable {
@@ -12,7 +13,7 @@ class ChordRepresentation extends Equatable {
   final Bar? bar;
   final List<Note> notes;
   final List<Finger> fingers;
-
+  final Capo? capo;
   const ChordRepresentation({
     required this.original,
     required this.neck,
@@ -21,9 +22,17 @@ class ChordRepresentation extends Equatable {
     required this.notes,
     required this.instrument,
     required this.name,
+    this.capo,
   });
 
-  ChordRepresentation copyWith({String? original, Neck? neck, Bar? bar, List<Note>? notes, List<Finger>? fingers}) {
+  ChordRepresentation copyWith({
+    String? original,
+    Neck? neck,
+    Bar? bar,
+    List<Note>? notes,
+    List<Finger>? fingers,
+    Capo? capo,
+  }) {
     return ChordRepresentation(
       original: original ?? this.original,
       neck: neck ?? this.neck,
@@ -32,6 +41,7 @@ class ChordRepresentation extends Equatable {
       notes: notes ?? this.notes,
       instrument: instrument,
       name: name,
+      capo: capo,
     );
   }
 
@@ -43,6 +53,7 @@ class ChordRepresentation extends Equatable {
       notes: notes,
       instrument: instrument,
       name: name,
+      capo: capo,
     );
   }
 
@@ -57,7 +68,8 @@ class ChordRepresentation extends Equatable {
         'bar: $bar, '
         'notes: $notes, '
         'fingers: $fingers, '
-        'instrument: $instrument)';
+        'instrument: $instrument, '
+        'capo: ${capo?.capoId})';
   }
 
   @override
