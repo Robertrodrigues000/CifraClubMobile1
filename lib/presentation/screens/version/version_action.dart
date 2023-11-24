@@ -65,13 +65,25 @@ class OnContentParsed implements VersionAction {
   });
 }
 
+class OnContentProcess implements VersionAction {
+  final double screenWidth;
+  final double screenMargin;
+
+  OnContentProcess({required this.screenWidth, required this.screenMargin});
+}
+
 class OnContentProcessed implements VersionAction {
+  final List<Section> sections;
+  OnContentProcessed({required this.sections});
+}
+
+class OnReadyToProcessContent implements VersionAction {
   final List<Section> sections;
   final int fontSize;
   final bool isFontIncreaseEnabled;
   final bool isFontDecreaseEnabled;
 
-  OnContentProcessed({
+  OnReadyToProcessContent({
     required this.sections,
     required this.fontSize,
     required this.isFontIncreaseEnabled,

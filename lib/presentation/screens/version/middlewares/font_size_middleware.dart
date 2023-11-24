@@ -1,7 +1,6 @@
 import 'package:cifraclub/domain/preferences/use_cases/get_font_size_preference.dart';
 import 'package:cifraclub/domain/preferences/use_cases/set_font_size_preference.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
-import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
@@ -11,9 +10,8 @@ import 'package:injectable/injectable.dart';
 class FontSizeMiddleware extends VersionMiddleware {
   final GetFontSizePreference _getFontSizePreference;
   final SetFontSizePreference _setFontSizePreference;
-  final ProcessSections _processSections;
 
-  FontSizeMiddleware(this._getFontSizePreference, this._setFontSizePreference, this._processSections);
+  FontSizeMiddleware(this._getFontSizePreference, this._setFontSizePreference);
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
@@ -43,13 +41,9 @@ class FontSizeMiddleware extends VersionMiddleware {
     _setFontSizePreference(fontSize);
 
     List<Section> sections = action is OnContentParsed ? action.sections : state.sections;
-    final instrument = action is OnContentParsed ? action.versionData.instrument : state.version?.instrument;
-    if (instrument?.isCifraInstrument ?? false) {
-      _processSections(sections, 40);
-    }
 
     addAction(
-      OnContentProcessed(
+      OnReadyToProcessContent(
         sections: sections,
         fontSize: fontSize,
         isFontDecreaseEnabled: fontSize > GetFontSizePreference.minValue,

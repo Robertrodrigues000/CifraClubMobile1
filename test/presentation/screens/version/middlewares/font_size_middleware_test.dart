@@ -1,7 +1,6 @@
 import 'package:cifraclub/domain/preferences/use_cases/get_font_size_preference.dart';
 import 'package:cifraclub/domain/preferences/use_cases/set_font_size_preference.dart';
 import 'package:cifraclub/domain/section/models/text_section.dart';
-import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/font_size_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
@@ -18,8 +17,6 @@ class _GetFontSizePreferenceMock extends Mock implements GetFontSizePreference {
 
 class _SetFontSizePreferenceMock extends Mock implements SetFontSizePreference {}
 
-class _ProcessSectionsMock extends Mock implements ProcessSections {}
-
 void main() {
   const filter = VersionFilter(
     instrument: Instrument.bass,
@@ -30,22 +27,20 @@ void main() {
 
   final getFontSizePreference = _GetFontSizePreferenceMock();
   final setFontSizePreference = _SetFontSizePreferenceMock();
-  final processSections = _ProcessSectionsMock();
   final sections = [TextSection("section")];
 
   test('When the action is OnContentParsed, the middleware should emit an OnContentProcessed', () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     const versionState = VersionState();
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 14)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -63,8 +58,6 @@ void main() {
       actionStream.add,
     );
 
-    verify(() => processSections.call(sections, any())).called(1);
-
     await actionStream.close();
   });
 
@@ -73,16 +66,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 8);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     const versionState = VersionState();
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 8)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", false)
@@ -100,8 +92,6 @@ void main() {
       actionStream.add,
     );
 
-    verify(() => processSections.call(sections, any())).called(1);
-
     await actionStream.close();
   });
 
@@ -110,16 +100,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 24);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     const versionState = VersionState();
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 24)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -137,8 +126,6 @@ void main() {
       actionStream.add,
     );
 
-    verify(() => processSections.call(sections, any())).called(1);
-
     await actionStream.close();
   });
 
@@ -147,16 +134,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     const versionState = VersionState();
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 14)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -174,8 +160,6 @@ void main() {
       actionStream.add,
     );
 
-    verifyNever(() => processSections.call(sections, any()));
-
     await actionStream.close();
   });
 
@@ -184,16 +168,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 12)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -206,8 +189,6 @@ void main() {
       versionState,
       actionStream.add,
     );
-
-    verify(() => processSections.call(sections, any())).called(1);
 
     await actionStream.close();
   });
@@ -217,16 +198,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.bass));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 12)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -240,8 +220,6 @@ void main() {
       actionStream.add,
     );
 
-    verifyNever(() => processSections.call(sections, any()));
-
     await actionStream.close();
   });
 
@@ -250,16 +228,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 10);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 8)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", false)
@@ -273,8 +250,6 @@ void main() {
       actionStream.add,
     );
 
-    verify(() => processSections.call(sections, any())).called(1);
-
     await actionStream.close();
   });
 
@@ -283,9 +258,8 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 8);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     var actionEmitted = false;
 
@@ -297,8 +271,6 @@ void main() {
       },
     );
 
-    verifyNever(() => processSections.call(sections, any()));
-
     expect(actionEmitted, false);
   });
 
@@ -307,16 +279,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 16)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -329,8 +300,6 @@ void main() {
       versionState,
       actionStream.add,
     );
-
-    verify(() => processSections.call(sections, any())).called(1);
 
     await actionStream.close();
   });
@@ -340,16 +309,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.bass));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 16)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -363,8 +331,6 @@ void main() {
       actionStream.add,
     );
 
-    verifyNever(() => processSections.call(sections, any()));
-
     await actionStream.close();
   });
 
@@ -373,16 +339,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 22);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 24)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -396,8 +361,6 @@ void main() {
       actionStream.add,
     );
 
-    verify(() => processSections.call(sections, any())).called(1);
-
     await actionStream.close();
   });
 
@@ -406,9 +369,8 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 24);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     var actionEmitted = false;
 
@@ -420,8 +382,6 @@ void main() {
       },
     );
 
-    verifyNever(() => processSections.call(sections, any()));
-
     expect(actionEmitted, false);
   });
 
@@ -429,16 +389,15 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 18);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     final actionStream = PublishSubject<VersionAction>();
 
     expectLater(
       actionStream.stream,
       emitsInOrder([
-        isA<OnContentProcessed>()
+        isA<OnReadyToProcessContent>()
             .having((action) => action.sections, "sections", sections)
             .having((action) => action.fontSize, "fontSize", 14)
             .having((action) => action.isFontDecreaseEnabled, "isFontDecreaseEnabled", true)
@@ -452,8 +411,6 @@ void main() {
       actionStream.add,
     );
 
-    verify(() => processSections.call(sections, any())).called(1);
-
     await actionStream.close();
   });
 
@@ -462,9 +419,8 @@ void main() {
       () async {
     when(getFontSizePreference.call).thenAnswer((_) => 14);
     when(() => setFontSizePreference.call(any())).thenAnswer((_) => SynchronousFuture(true));
-    when(() => processSections.call(any(), any())).thenAnswer((_) => [TextSection("section")]);
 
-    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference, processSections);
+    final middleware = FontSizeMiddleware(getFontSizePreference, setFontSizePreference);
     final versionState = VersionState(sections: sections, version: getFakeVersionData(instrument: Instrument.guitar));
     var actionEmitted = false;
 
@@ -475,8 +431,6 @@ void main() {
         actionEmitted = true;
       },
     );
-
-    verifyNever(() => processSections.call(sections, any()));
 
     expect(actionEmitted, false);
   });

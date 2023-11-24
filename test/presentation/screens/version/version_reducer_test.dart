@@ -96,28 +96,48 @@ void main() {
     expect(state.versionHeaderState.selectedVersionFilter, filter);
   });
 
-  test("When action is OnContentProcessed", () {
+  test("When action is OnReadyToProcessContent", () {
     final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
 
     final sections = [TextSection("")];
     const fontSize = 14;
     const isFontIncreaseEnabled = true;
     const isFontDecreaseEnabled = true;
+
+    expectLater(effectStream.stream, emitsInOrder([isA<OnReadyToProcessContentEffect>()]));
+
     final state = reducer.reduce(
       const VersionState(),
-      OnContentProcessed(
+      OnReadyToProcessContent(
         sections: sections,
         fontSize: fontSize,
         isFontIncreaseEnabled: isFontIncreaseEnabled,
         isFontDecreaseEnabled: isFontDecreaseEnabled,
       ),
-      (_) => null,
+      effectStream.add,
     );
 
     expect(state.sections, sections);
     expect(state.fontSizeState.fontSize, 14);
     expect(state.fontSizeState.isDecreaseEnabled, true);
     expect(state.fontSizeState.isIncreaseEnabled, true);
+    effectStream.close();
+  });
+
+  test("When action is OnContentProcessed", () {
+    final reducer = VersionReducer();
+    final sections = [TextSection("")];
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnContentProcessed(
+        sections: sections,
+      ),
+      (_) {},
+    );
+
+    expect(state.sections, sections);
   });
 
   test("When action is OnYoutubeClosed", () {

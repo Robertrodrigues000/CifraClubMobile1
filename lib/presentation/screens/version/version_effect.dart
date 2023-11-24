@@ -51,6 +51,8 @@ class OnChangeVersionKeyEffect implements VersionEffect {
 
 class OnShowFontSizeFooterBarEffect implements VersionEffect {}
 
+class OnReadyToProcessContentEffect implements VersionEffect {}
+
 class OnEmailValidateEffect implements VersionEffect {
   final EmailOptionsResult result;
 

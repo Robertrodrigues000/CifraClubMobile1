@@ -1,5 +1,7 @@
 import 'package:cifraclub/domain/section/models/section.dart';
+import 'package:cifraclub/domain/section/use_cases/characters_per_line.dart';
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
+import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/version/use_cases/get_all_instrument_versions.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
@@ -14,54 +16,76 @@ import 'package:injectable/injectable.dart';
 class ContentMiddleware extends VersionMiddleware {
   final ParseSections _parseSections;
   final GetAllInstrumentVersions _getAllInstrumentVersions;
+  final ProcessSections _processSections;
+  final CharactersPerLine _charactersPerLine;
 
-  ContentMiddleware(this._parseSections, this._getAllInstrumentVersions);
+  ContentMiddleware(
+      this._parseSections, this._getAllInstrumentVersions, this._processSections, this._charactersPerLine);
 
   @override
   void onAction(VersionAction action, VersionState state, ActionEmitter addAction) {
-    if (action is OnVersionLoaded) {
-      final versionFilters = action.versionData.instrumentVersions!
-          .firstWhereOrNull((element) => element.instrument == action.versionData.instrument)
-          ?.versions
-          .map(
-            (e) => VersionFilter(
-              instrument: action.versionData.instrument,
-              versionName: e.versionName,
-              versionUrl: e.versionUrl,
-              isVerified: e.isVerified,
-            ),
-          )
-          .toList(growable: false);
-      final selectedFilter = VersionFilter(
-        versionName: action.versionData.versionName,
-        versionUrl: action.versionData.versionUrl,
-        isVerified: action.versionData.isVerified,
-        instrument: action.versionData.instrument,
-      );
+    switch (action) {
+      case OnVersionLoaded():
+        _loadVersion(action, addAction);
+      case OnContentProcess():
+        _processContent(state, action, addAction);
+      default:
+        break;
+    }
+  }
 
-      var versionData = action.versionData;
-      versionData = action.versionData
-          .copyWith(instrumentVersions: _getAllInstrumentVersions(action.versionData.instrumentVersions ?? []));
-
-      if (versionFilters == null) {
-        addAction(OnVersionError(error: VersionEmptyError()));
-      } else {
-        // TODO: Verificar cifra autorizada
-
-        List<Section> sections = [];
-        if (action.versionData.instrument.isCifraInstrument) {
-          sections = _parseSections(action.versionData.content);
-        }
-
-        addAction(
-          OnContentParsed(
-            sections: sections,
-            versionData: versionData,
-            versionFilters: versionFilters,
-            selectedFilter: selectedFilter,
+  void _loadVersion(OnVersionLoaded action, ActionEmitter addAction) {
+    final versionFilters = action.versionData.instrumentVersions!
+        .firstWhereOrNull((element) => element.instrument == action.versionData.instrument)
+        ?.versions
+        .map(
+          (e) => VersionFilter(
+            instrument: action.versionData.instrument,
+            versionName: e.versionName,
+            versionUrl: e.versionUrl,
+            isVerified: e.isVerified,
           ),
-        );
+        )
+        .toList(growable: false);
+    final selectedFilter = VersionFilter(
+      versionName: action.versionData.versionName,
+      versionUrl: action.versionData.versionUrl,
+      isVerified: action.versionData.isVerified,
+      instrument: action.versionData.instrument,
+    );
+
+    var versionData = action.versionData;
+    versionData = action.versionData
+        .copyWith(instrumentVersions: _getAllInstrumentVersions(action.versionData.instrumentVersions ?? []));
+
+    if (versionFilters == null) {
+      addAction(OnVersionError(error: VersionEmptyError()));
+    } else {
+      List<Section> sections = [];
+      if (action.versionData.instrument.isCifraInstrument) {
+        sections = _parseSections(action.versionData.content);
       }
+
+      addAction(
+        OnContentParsed(
+          sections: sections,
+          versionData: versionData,
+          versionFilters: versionFilters,
+          selectedFilter: selectedFilter,
+        ),
+      );
+    }
+  }
+
+  void _processContent(VersionState state, OnContentProcess action, ActionEmitter addAction) {
+    if (state.version?.instrument.isCifraInstrument ?? false) {
+      final maxChar = _charactersPerLine(
+        fontSize: state.fontSizeState.fontSize.toDouble(),
+        screenWidth: action.screenWidth,
+        screenPadding: action.screenMargin,
+      );
+      _processSections(state.sections, maxChar);
+      addAction(OnContentProcessed(sections: state.sections));
     }
   }
 }

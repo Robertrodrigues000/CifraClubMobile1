@@ -51,6 +51,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
   var isUserDraggingScreen = false;
   String? selectedKey; // Todo: remover isso aqui quando transpose estiver funcionando
   YoutubePlayerController? _youtubePlayerController;
+  late Orientation _orientation = MediaQuery.of(context).orientation;
 
   @override
   void initState() {
@@ -150,6 +151,14 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
           });
         case OnShowFontSizeFooterBarEffect():
           _bloc.add(OnFloatingFooterBarAction(action: FloatingFooterBarDidTapOnResetFontSize()));
+        case OnReadyToProcessContentEffect():
+          if (!context.mounted) {
+            break;
+          }
+          _bloc.add(OnContentProcess(
+            screenWidth: MediaQuery.of(context).size.width,
+            screenMargin: context.appDimensionScheme.screenMargin,
+          ));
         case OnEmailValidateEffect():
           if (!context.mounted) {
             break;
@@ -200,6 +209,15 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+    if (_orientation != orientation) {
+      _bloc.add(OnContentProcess(
+        screenWidth: MediaQuery.of(context).size.width,
+        screenMargin: context.appDimensionScheme.screenMargin,
+      ));
+      _orientation = orientation;
+    }
+
     return BlocBuilder<VersionBloc, VersionState>(
       builder: (context, state) {
         selectedKey ??= state.version?.stdKey; // Todo: remover isso aqui quando transpose estiver funcionando
@@ -339,21 +357,24 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                               );
                             },
                           ),
-                          SliverList.builder(
-                            itemCount: state.sections.length,
-                            itemBuilder: (context, index) {
-                              final section = state.sections[index];
-                              return Text.rich(
-                                TextSpan(children: section.getSpans(
-                                  (chord) {
-                                    _bloc.add(OnChangeSelectedChord(selectedChord: chord));
-                                  },
-                                )),
-                                textScaleFactor: 1,
-                                style: context.typography.body8
-                                    .copyWith(fontSize: state.fontSizeState.fontSize.toDouble()),
-                              );
-                            },
+                          SliverPadding(
+                            padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                            sliver: SliverList.builder(
+                              itemCount: state.sections.length,
+                              itemBuilder: (context, index) {
+                                final section = state.sections[index];
+                                return Text.rich(
+                                  TextSpan(children: section.getSpans(
+                                    (chord) {
+                                      _bloc.add(OnChangeSelectedChord(selectedChord: chord));
+                                    },
+                                  )),
+                                  textScaleFactor: 1,
+                                  style: context.typography.body8
+                                      .copyWith(fontSize: state.fontSizeState.fontSize.toDouble()),
+                                );
+                              },
+                            ),
                           ),
                         ] else
                           SliverToBoxAdapter(
@@ -367,6 +388,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                               ),
                             ),
                           ),
+                        const SliverToBoxAdapter(child: SizedBox(height: 16)),
                       ],
                     ),
                   ),

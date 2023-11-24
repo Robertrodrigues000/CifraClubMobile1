@@ -58,10 +58,11 @@ class VersionEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     var devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+    final deviceWidth = MediaQuery.of(context).size.width;
     return BlocProvider<VersionBloc>(
       create: (context) => VersionBloc([
         getIt<VersionLoaderMiddleware>(),
-        getIt<ContentMiddleware>(),
+        getIt<ContentMiddleware>(param1: deviceWidth),
         getIt<AutoScrollMiddleware>(param1: devicePixelRatio),
         getIt<SongbookMiddleware>(),
         getIt<ChordMiddleware>(),

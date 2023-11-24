@@ -48,6 +48,9 @@ class VersionReducer {
           ),
         );
       case OnContentProcessed():
+        return state.copyWith(sections: action.sections);
+      case OnReadyToProcessContent():
+        onEffect(OnReadyToProcessContentEffect());
         return state.copyWith(
           sections: action.sections,
           fontSizeState: state.fontSizeState.copyWith(
