@@ -62,69 +62,69 @@ class _ChordShapeBottomSheetState extends State<ChordShapeBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Material(
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                if (shouldShowArrowButtons)
-                  IgnorePointer(
-                    key: const ValueKey("leftArrow"),
-                    ignoring: index == 0,
-                    child: InkWell(
-                      onTap: () => setChordIndex(index - 1),
-                      child: SizedBox(
-                        height: 48,
-                        width: 48,
-                        child: SvgPicture.asset(
-                          AppSvgs.backArrowIcon,
-                          fit: BoxFit.none,
-                          color: index == 0 ? context.colors.disabled : context.colors.textPrimary,
-                        ),
-                      ),
-                    ),
-                  ),
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: LayoutBuilder(builder: (layoutcontext, constraints) {
-                      var maxWidth = MediaQuery.of(layoutcontext).size.width;
-                      var maxHeight = MediaQuery.of(layoutcontext).size.height;
-
-                      //TODO: Selecionar ChordUiSettings de acordo com instrumento
-                      final chordSettings = ChordUISettings.guitar().scaledToFit(
-                          width: maxWidth / 2,
-                          height: maxHeight / 3,
-                          hasCount: true,
-                          hasSubtitle: true,
-                          hasCapo: widget.shapes[index].capo != null);
-                      return ChordWidget(
-                        key: ValueKey(widget.shapes[index].original),
-                        chordRepresentation: widget.shapes[index],
-                        chordUiSettings: chordSettings,
-                        isLeftHanded: false,
-                        count: context.text.chordCount(index + 1, widget.shapes.length),
-                        subtitle: "dó maior",
-                      );
-                    })),
-                if (shouldShowArrowButtons)
-                  IgnorePointer(
-                    key: const ValueKey("rightArrow"),
-                    ignoring: index == widget.shapes.length - 1,
-                    child: InkWell(
-                      onTap: () => setChordIndex(index + 1),
-                      child: SizedBox(
-                        height: 48,
-                        width: 48,
-                        child: Transform.flip(
-                          flipX: true,
-                          child: SvgPicture.asset(
-                            AppSvgs.backArrowIcon,
-                            fit: BoxFit.none,
-                            color: index == widget.shapes.length - 1
-                                ? context.colors.disabled
-                                : context.colors.textPrimary,
+              child: Row(
+                  mainAxisAlignment: shouldShowArrowButtons ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
+                  children: [
+                    if (shouldShowArrowButtons)
+                      IgnorePointer(
+                        key: const ValueKey("leftArrow"),
+                        ignoring: index == 0,
+                        child: InkWell(
+                          onTap: () => setChordIndex(index - 1),
+                          child: SizedBox(
+                            height: 48,
+                            width: 48,
+                            child: SvgPicture.asset(
+                              AppSvgs.backArrowIcon,
+                              fit: BoxFit.none,
+                              color: index == 0 ? context.colors.disabled : context.colors.textPrimary,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-              ]),
+                    Padding(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        child: LayoutBuilder(builder: (layoutcontext, constraints) {
+                          var maxWidth = MediaQuery.of(layoutcontext).size.width;
+                          var maxHeight = MediaQuery.of(layoutcontext).size.height;
+                          final chordSettings = ChordUISettings.getChordSettingsForInstrument(
+                              instrument: widget.selectedChord.instrument,
+                              width: maxWidth / 2,
+                              height: maxHeight / 3,
+                              hasCount: true,
+                              hasSubtitle: true,
+                              hasCapo: widget.shapes[index].capo != null);
+                          return ChordWidget(
+                            key: ValueKey(widget.shapes[index].original),
+                            chordRepresentation: widget.shapes[index],
+                            chordUiSettings: chordSettings,
+                            isLeftHanded: false,
+                            count: context.text.chordCount(index + 1, widget.shapes.length),
+                          );
+                        })),
+                    if (shouldShowArrowButtons)
+                      IgnorePointer(
+                        key: const ValueKey("rightArrow"),
+                        ignoring: index == widget.shapes.length - 1,
+                        child: InkWell(
+                          onTap: () => setChordIndex(index + 1),
+                          child: SizedBox(
+                            height: 48,
+                            width: 48,
+                            child: Transform.flip(
+                              flipX: true,
+                              child: SvgPicture.asset(
+                                AppSvgs.backArrowIcon,
+                                fit: BoxFit.none,
+                                color: index == widget.shapes.length - 1
+                                    ? context.colors.disabled
+                                    : context.colors.textPrimary,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ]),
             ),
             CifraClubButton(
               type: ButtonType.outline,

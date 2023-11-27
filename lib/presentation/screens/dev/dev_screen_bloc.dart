@@ -13,7 +13,6 @@ import 'package:cifraclub/domain/subscription/use_cases/get_orders.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_products.dart';
 import 'package:cifraclub/domain/subscription/use_cases/post_purchase_order.dart';
 import 'package:cifraclub/domain/subscription/use_cases/purchase_product.dart';
-import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/use_cases/get_version_data.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
@@ -95,21 +94,22 @@ class DevScreenBloc extends Cubit<DevScreenState> {
     final versionDataResult = await _getVersionData(
       artistUrl: "joao-bosco",
       songUrl: "o-bebado-a-equilibrista",
-      instrumentUrl: Instrument.guitar.instrumentUrl,
+      instrumentUrl: Instrument.violaCaipira.instrumentUrl,
       versionUrl: "principal",
     );
     if (versionDataResult.isSuccess) {
       final versionData = versionDataResult.get();
+      //print(versionData?.chords?.map((e) => e.cavaco != null && e.cavaco!.isNotEmpty ? e.cavaco!.first : "").toList());
       final chordRepresentation = _getChordsRepresentation(
         chords: versionData?.chords
-                ?.map((e) => InstrumentChord(name: e.name, fretDiagram: e.guitar?.first ?? "", shapeName: e.shapeName))
+                ?.where((chord) => chord.viola != null && chord.viola!.isNotEmpty)
+                .map((e) => InstrumentChord(name: e.name, fretDiagram: e.viola!.first, shapeName: e.shapeName))
                 .toList() ??
             [],
-        instrument: Instrument.guitar,
-        capo: Capo.capo6,
+        instrument: Instrument.violaCaipira,
       );
       // ignore: avoid_print
-      print(chordRepresentation.first);
+      print(chordRepresentation);
 
       emit(DevScreenState(isLoading: false, chordRepresentation: chordRepresentation));
     }

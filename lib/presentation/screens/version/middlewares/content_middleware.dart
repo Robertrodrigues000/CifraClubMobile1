@@ -35,18 +35,6 @@ class ContentMiddleware extends VersionMiddleware {
   }
 
   void _loadVersion(OnVersionLoaded action, ActionEmitter addAction) {
-    final versionFilters = action.versionData.instrumentVersions!
-        .firstWhereOrNull((element) => element.instrument == action.versionData.instrument)
-        ?.versions
-        .map(
-          (e) => VersionFilter(
-            instrument: action.versionData.instrument,
-            versionName: e.versionName,
-            versionUrl: e.versionUrl,
-            isVerified: e.isVerified,
-          ),
-        )
-        .toList(growable: false);
     final selectedFilter = VersionFilter(
       versionName: action.versionData.versionName,
       versionUrl: action.versionData.versionUrl,
@@ -58,7 +46,20 @@ class ContentMiddleware extends VersionMiddleware {
     versionData = action.versionData
         .copyWith(instrumentVersions: _getAllInstrumentVersions(action.versionData.instrumentVersions ?? []));
 
-    if (versionFilters == null) {
+    final versionFilters = versionData.instrumentVersions!
+        .firstWhereOrNull((element) => element.instrument == action.versionData.instrument)
+        ?.versions
+        .map(
+          (e) => VersionFilter(
+            instrument: action.versionData.instrument,
+            versionName: e.versionName,
+            versionUrl: e.versionUrl,
+            isVerified: e.isVerified,
+          ),
+        )
+        .toList(growable: false);
+
+    if (versionFilters == null || versionFilters.isEmpty) {
       addAction(OnVersionError(error: VersionEmptyError()));
     } else {
       List<Section> sections = [];

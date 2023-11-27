@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // ignore_for_file: avoid_print
+import 'package:cifraclub/domain/chord/models/instrument_chord_representation.dart';
 import 'package:cifraclub/domain/user/models/user_credential.dart';
 import 'package:cifraclub/domain/user/use_cases/get_credential_stream.dart';
 import 'package:cifraclub/domain/user/use_cases/logout.dart';
@@ -173,11 +174,11 @@ class _DevScreenState extends State<DevScreen> {
                           padding: const EdgeInsets.only(bottom: 16),
                           child: LayoutBuilder(builder: (context, constraints) {
                             var maxWidth = MediaQuery.of(context).size.width;
-                            final chordSettings = ChordUISettings.guitar().scaledToFit(
-                                width: maxWidth,
-                                height: constraints.maxHeight,
-                                hasCapo: state.chordRepresentation?.first.capo != null,
-                                hasSelector: true);
+                            final chordSettings = ChordUISettings.getChordSettingsForInstrument(
+                              instrument: state.chordRepresentation?.first.instrument ?? GuitarChordRepresentation(),
+                              width: maxWidth,
+                              height: constraints.maxHeight,
+                            );
                             return CustomScrollView(scrollDirection: Axis.horizontal, shrinkWrap: true, slivers: [
                               SliverList(
                                   delegate: SliverChildBuilderDelegate(childCount: state.chordRepresentation!.length,

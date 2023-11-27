@@ -36,7 +36,7 @@ class ChordGridWidget extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             SvgImage(
-              assetPath: AppSvgs.guitarFrets,
+              assetPath: chordUiSettings.frets,
               height: stringsHeightTruncated,
               width: stringsWidthTruncated,
               color: context.colors.neutralQuaternary,
@@ -47,7 +47,7 @@ class ChordGridWidget extends StatelessWidget {
               Positioned(
                 top: 0,
                 child: SvgPicture.asset(
-                  AppSvgs.headCapo,
+                  AppSvgs.guitarHeadCapo,
                   width: stringsWidthTruncated,
                   color: context.colors.textPrimary,
                 ),
@@ -62,7 +62,7 @@ class ChordGridWidget extends StatelessWidget {
                 ).createShader(bounds);
               },
               child: SvgImage(
-                assetPath: AppSvgs.guitarStrings,
+                assetPath: chordUiSettings.strings,
                 width: stringsWidthTruncated,
                 height: stringsHeightTruncated,
                 color: context.colors.textPrimary,
@@ -72,7 +72,7 @@ class ChordGridWidget extends StatelessWidget {
               Positioned(
                 top: 0,
                 child: SvgPicture.asset(
-                  AppSvgs.guitarHead,
+                  chordUiSettings.head,
                   width: stringsWidthTruncated,
                   color: context.colors.textPrimary,
                 ),

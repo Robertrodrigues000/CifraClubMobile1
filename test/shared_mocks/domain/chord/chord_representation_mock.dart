@@ -8,7 +8,8 @@ import 'package:cifraclub/domain/chord/models/note_state.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:faker/faker.dart';
 
-ChordRepresentation getFakeChordRepresentation({String? name, String? original, Capo? capo, Neck? neck}) =>
+ChordRepresentation getFakeChordRepresentation(
+        {String? name, String? original, Capo? capo, Neck? neck, InstrumentChordRepresentation? instrument}) =>
     ChordRepresentation(
         name: name ?? faker.animal.name(),
         original: original ?? faker.address.city(),
@@ -28,5 +29,5 @@ ChordRepresentation getFakeChordRepresentation({String? name, String? original, 
           Note(NoteState.picked),
           Note(NoteState.picked)
         ],
-        instrument: GuitarChordRepresentation(),
+        instrument: instrument ?? GuitarChordRepresentation(),
         capo: capo);

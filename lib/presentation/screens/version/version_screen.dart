@@ -1,6 +1,6 @@
 // coverage:ignore-file
+
 import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
-import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
 import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_bottom_sheet.dart';
@@ -127,7 +127,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
               context,
               effect.selectedChord,
               effect.chords,
-              Instrument.guitar,
+              effect.instrument,
               (chord) => _bloc.add(OnChordShapeChange(chord: chord)),
             );
           }

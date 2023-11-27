@@ -1,7 +1,9 @@
-import 'package:cifraclub/domain/chord/models/neck.dart';
+import 'package:cifraclub/domain/chord/models/instrument_chord_representation.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/bottom_sheets/chord_shape_bottom_sheet.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/domain/chord/models/neck.dart';
 import 'package:cifraclub/presentation/screens/version/widgets/chord/capo_widget.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
@@ -184,5 +186,49 @@ void main() {
     );
 
     expect(find.byType(CapoWidget), findsOneWidget);
+  });
+
+  testWidgets("When chord instrument is viola should use viola assets", (widgetTester) async {
+    final shapes = [
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, instrument: ViolaChordRepresentation()),
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, instrument: ViolaChordRepresentation()),
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, instrument: ViolaChordRepresentation())
+    ];
+    final selectedChord = shapes.last;
+
+    await widgetTester.pumpWidgetWithWrapper(
+      ChordShapeBottomSheet(
+        selectedChord: selectedChord,
+        shapes: shapes,
+        instrument: Instrument.violaCaipira,
+        onTap: (chord) {},
+      ),
+    );
+    final finder = find.byWidgetPredicate(
+      (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.violaStrings,
+    );
+    expect(finder, findsOneWidget);
+  });
+
+  testWidgets("When chord instrument is cavaco or ukuelele should use cavaco ukulele assets", (widgetTester) async {
+    final shapes = [
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, instrument: CavacoChordRepresentation()),
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, instrument: CavacoChordRepresentation()),
+      getFakeChordRepresentation(name: "A", capo: Capo.capo10, instrument: CavacoChordRepresentation())
+    ];
+    final selectedChord = shapes.last;
+
+    await widgetTester.pumpWidgetWithWrapper(
+      ChordShapeBottomSheet(
+        selectedChord: selectedChord,
+        shapes: shapes,
+        instrument: Instrument.cavaco,
+        onTap: (chord) {},
+      ),
+    );
+    final finder = find.byWidgetPredicate(
+      (Widget widget) => widget is SvgImage && widget.assetPath == AppSvgs.ukuleleCavacoStrings,
+    );
+    expect(finder, findsOneWidget);
   });
 }

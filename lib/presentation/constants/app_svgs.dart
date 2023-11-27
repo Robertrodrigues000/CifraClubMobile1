@@ -73,10 +73,16 @@ class AppSvgs {
   static const unpickedStringIcon = "assets/images/unpicked_string.svg";
 
   static const guitarHead = "assets/images/guitar_head.svg";
-  static const headCapo = "assets/images/head_capo.svg";
+  static const guitarHeadCapo = "assets/images/guitar_head_capo.svg";
   static const guitarStrings = "assets/images/guitar_strings.svg";
   static const guitarFrets = "assets/images/guitar_frets.svg";
   static const guitarCapo = "assets/images/guitar_capo.svg";
+  static const ukuleleCavacoStrings = "assets/images/ukulele_cavaco_strings.svg";
+  static const ukuleleCavacoFrets = "assets/images/ukulele_cavaco_frets.svg";
+  static const ukuleleCavacoHead = "assets/images/ukulele_cavaco_head.svg";
+  static const violaStrings = "assets/images/viola_strings.svg";
+  static const violaFrets = "assets/images/viola_frets.svg";
+  static const violaHead = "assets/images/viola_head.svg";
 
   static const youtubeIcon = "assets/images/youtube_icon.svg";
 

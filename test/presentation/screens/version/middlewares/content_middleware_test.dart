@@ -40,8 +40,10 @@ void main() {
         _SectionMock(),
       ];
       when(() => parseSections(any())).thenReturn(sections);
-      when(() => getAllInstrumentVersions(any()))
-          .thenReturn([(instrument: Instrument.guitar, versions: List<InstrumentVersion>.empty())]);
+      //when(() => processSections.call(sections, any())).thenReturn(null);
+      when(() => getAllInstrumentVersions(any())).thenReturn([
+        (instrument: Instrument.guitar, versions: [getFakeInstrumentVersion()])
+      ]);
 
       final versionData = getFakeVersionData(
         instrument: Instrument.guitar,

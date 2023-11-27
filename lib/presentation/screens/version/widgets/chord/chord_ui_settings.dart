@@ -1,5 +1,7 @@
 import 'package:cifraclub/domain/chord/models/bar.dart';
+import 'package:cifraclub/domain/chord/models/instrument_chord_representation.dart';
 import 'package:cifraclub/domain/chord/models/neck.dart';
+import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +42,10 @@ class ChordUISettings {
   final double capoFontSize;
   final double capoWordSpacing;
   final double capoNutHeight;
+  final double fretNumberPadding;
+  final String strings;
+  final String frets;
+  final String head;
   final double selectorHeight;
   final double selectorPadding;
 
@@ -47,6 +53,9 @@ class ChordUISettings {
     required this.numStrings,
     required this.chordGridWidth,
     required this.width,
+    required this.strings,
+    required this.frets,
+    required this.head,
     this.spaceBetweenStrings = 18,
     this.spaceBetweenFrets = 24,
     this.stringsPadding = 8,
@@ -77,11 +86,42 @@ class ChordUISettings {
     this.capoFontSize = 14,
     this.capoWordSpacing = 8,
     this.capoNutHeight = 3,
+    this.fretNumberPadding = 4,
     this.selectorHeight = 4,
     this.selectorPadding = 8,
   });
 
-  ChordUISettings.guitar() : this(numStrings: 6, chordGridWidth: 108, width: 156);
+  ChordUISettings.guitar()
+      : this(
+          numStrings: 6,
+          chordGridWidth: 108,
+          width: 156,
+          strings: AppSvgs.guitarStrings,
+          frets: AppSvgs.guitarFrets,
+          head: AppSvgs.guitarHead,
+        );
+
+  ChordUISettings.ukuleleCavaco()
+      : this(
+          numStrings: 4,
+          chordGridWidth: 72,
+          width: 120,
+          strings: AppSvgs.ukuleleCavacoStrings,
+          frets: AppSvgs.ukuleleCavacoFrets,
+          head: AppSvgs.ukuleleCavacoHead,
+        );
+
+  ChordUISettings.viola()
+      : this(
+          numStrings: 5,
+          chordGridWidth: 90,
+          width: 138,
+          stringsPadding: 6,
+          barPadding: 12,
+          strings: AppSvgs.violaStrings,
+          frets: AppSvgs.violaFrets,
+          head: AppSvgs.violaHead,
+        );
 
   ChordUISettings scaledToFit(
       {double? width,
@@ -150,6 +190,7 @@ class ChordUISettings {
       capoWordSpacing: capoWordSpacing * factor,
       capoNutHeight: capoNutHeight * factor,
       stringsPadding: stringsPadding * factor,
+      fretNumberPadding: fretNumberPadding * factor,
       selectorHeight: selectorHeight * factor,
       selectorPadding: selectorPadding * factor,
     );
@@ -170,16 +211,42 @@ class ChordUISettings {
 
     final positionX = startX + ((numStrings - bar.string) * spaceBetweenStrings) - barPadding / 2;
     final positionY = startY + spaceBetweenFrets * (bar.fret - 1) + (spaceBetweenFrets - barHeight) / 2;
-    return Offset(positionX.floorToDouble(), positionY.floorToDouble());
+    return Offset(positionX, positionY.floorToDouble());
   }
 
   double getBarWidth({Bar? bar}) {
-    return (spaceBetweenStrings * ((bar?.string ?? 6) - 1)).floorToDouble() + barPadding;
+    return (spaceBetweenStrings * ((bar?.string ?? numStrings) - 1)).floorToDouble() + barPadding;
   }
 
   Offset getNeckPosition({required Neck neck}) {
     final positionY = startY + (spaceBetweenFrets - barHeight) / 3;
 
     return Offset(0.0, positionY.ceilToDouble());
+  }
+
+  static ChordUISettings getChordSettingsForInstrument(
+      {double? width,
+      double? height,
+      bool hasSubtitle = false,
+      bool hasCount = false,
+      bool hasCapo = false,
+      bool hasSelector = false,
+      required InstrumentChordRepresentation instrument}) {
+    var chordUiSettings = switch (instrument) {
+      CavacoChordRepresentation() => ChordUISettings.ukuleleCavaco(),
+      UkuleleChordRepresentation() => ChordUISettings.ukuleleCavaco(),
+      GuitarChordRepresentation() => ChordUISettings.guitar(),
+      ViolaChordRepresentation() => ChordUISettings.viola(),
+      _ => ChordUISettings.guitar()
+    };
+
+    return chordUiSettings.scaledToFit(
+      width: width,
+      height: height,
+      hasSubtitle: hasSubtitle,
+      hasCount: hasCount,
+      hasCapo: hasCapo,
+      hasSelector: hasSelector,
+    );
   }
 }

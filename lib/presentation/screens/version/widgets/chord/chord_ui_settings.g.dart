@@ -13,6 +13,12 @@ abstract class _$ChordUISettingsCWProxy {
 
   ChordUISettings width(double width);
 
+  ChordUISettings strings(String strings);
+
+  ChordUISettings frets(String frets);
+
+  ChordUISettings head(String head);
+
   ChordUISettings spaceBetweenStrings(double spaceBetweenStrings);
 
   ChordUISettings spaceBetweenFrets(double spaceBetweenFrets);
@@ -73,6 +79,8 @@ abstract class _$ChordUISettingsCWProxy {
 
   ChordUISettings capoNutHeight(double capoNutHeight);
 
+  ChordUISettings fretNumberPadding(double fretNumberPadding);
+
   ChordUISettings selectorHeight(double selectorHeight);
 
   ChordUISettings selectorPadding(double selectorPadding);
@@ -87,6 +95,9 @@ abstract class _$ChordUISettingsCWProxy {
     int? numStrings,
     double? chordGridWidth,
     double? width,
+    String? strings,
+    String? frets,
+    String? head,
     double? spaceBetweenStrings,
     double? spaceBetweenFrets,
     double? stringsPadding,
@@ -117,6 +128,7 @@ abstract class _$ChordUISettingsCWProxy {
     double? capoFontSize,
     double? capoWordSpacing,
     double? capoNutHeight,
+    double? fretNumberPadding,
     double? selectorHeight,
     double? selectorPadding,
   });
@@ -136,6 +148,15 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
 
   @override
   ChordUISettings width(double width) => this(width: width);
+
+  @override
+  ChordUISettings strings(String strings) => this(strings: strings);
+
+  @override
+  ChordUISettings frets(String frets) => this(frets: frets);
+
+  @override
+  ChordUISettings head(String head) => this(head: head);
 
   @override
   ChordUISettings spaceBetweenStrings(double spaceBetweenStrings) => this(spaceBetweenStrings: spaceBetweenStrings);
@@ -230,6 +251,9 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
   ChordUISettings capoNutHeight(double capoNutHeight) => this(capoNutHeight: capoNutHeight);
 
   @override
+  ChordUISettings fretNumberPadding(double fretNumberPadding) => this(fretNumberPadding: fretNumberPadding);
+
+  @override
   ChordUISettings selectorHeight(double selectorHeight) => this(selectorHeight: selectorHeight);
 
   @override
@@ -247,6 +271,9 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
     Object? numStrings = const $CopyWithPlaceholder(),
     Object? chordGridWidth = const $CopyWithPlaceholder(),
     Object? width = const $CopyWithPlaceholder(),
+    Object? strings = const $CopyWithPlaceholder(),
+    Object? frets = const $CopyWithPlaceholder(),
+    Object? head = const $CopyWithPlaceholder(),
     Object? spaceBetweenStrings = const $CopyWithPlaceholder(),
     Object? spaceBetweenFrets = const $CopyWithPlaceholder(),
     Object? stringsPadding = const $CopyWithPlaceholder(),
@@ -277,6 +304,7 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
     Object? capoFontSize = const $CopyWithPlaceholder(),
     Object? capoWordSpacing = const $CopyWithPlaceholder(),
     Object? capoNutHeight = const $CopyWithPlaceholder(),
+    Object? fretNumberPadding = const $CopyWithPlaceholder(),
     Object? selectorHeight = const $CopyWithPlaceholder(),
     Object? selectorPadding = const $CopyWithPlaceholder(),
   }) {
@@ -293,6 +321,18 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.width
           // ignore: cast_nullable_to_non_nullable
           : width as double,
+      strings: strings == const $CopyWithPlaceholder() || strings == null
+          ? _value.strings
+          // ignore: cast_nullable_to_non_nullable
+          : strings as String,
+      frets: frets == const $CopyWithPlaceholder() || frets == null
+          ? _value.frets
+          // ignore: cast_nullable_to_non_nullable
+          : frets as String,
+      head: head == const $CopyWithPlaceholder() || head == null
+          ? _value.head
+          // ignore: cast_nullable_to_non_nullable
+          : head as String,
       spaceBetweenStrings: spaceBetweenStrings == const $CopyWithPlaceholder() || spaceBetweenStrings == null
           ? _value.spaceBetweenStrings
           // ignore: cast_nullable_to_non_nullable
@@ -414,6 +454,10 @@ class _$ChordUISettingsCWProxyImpl implements _$ChordUISettingsCWProxy {
           ? _value.capoNutHeight
           // ignore: cast_nullable_to_non_nullable
           : capoNutHeight as double,
+      fretNumberPadding: fretNumberPadding == const $CopyWithPlaceholder() || fretNumberPadding == null
+          ? _value.fretNumberPadding
+          // ignore: cast_nullable_to_non_nullable
+          : fretNumberPadding as double,
       selectorHeight: selectorHeight == const $CopyWithPlaceholder() || selectorHeight == null
           ? _value.selectorHeight
           // ignore: cast_nullable_to_non_nullable

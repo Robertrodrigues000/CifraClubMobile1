@@ -18,7 +18,9 @@ class FretNumberWidget extends StatelessWidget {
       width: settings.neckIndicatorWidth,
       alignment: Alignment.topRight,
       child: Padding(
-        padding: const EdgeInsets.only(right: 2, top: 2),
+        padding: EdgeInsets.only(
+          right: settings.fretNumberPadding,
+        ),
         child: Text(
           fret.toString(),
           style: TextStyle(

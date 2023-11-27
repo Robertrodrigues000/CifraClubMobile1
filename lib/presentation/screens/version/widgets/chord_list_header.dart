@@ -37,8 +37,12 @@ class _ChordListHeaderState extends State<ChordListHeader> {
       final position = widget.chordRepresentations.indexWhere((element) => element.name == widget.selectedChord);
       if (position >= 0) {
         final upperLimit = (chordWidth! * widget.chordRepresentations.length) - MediaQuery.of(context).size.width;
+        if (upperLimit <= 0) {
+          return;
+        }
         final offset = (position * chordWidth!).clamp(0, upperLimit).toDouble();
         // https://github.com/flutter/flutter/issues/20480#issuecomment-415332934
+
         Future.delayed(Duration.zero, () {
           _scrollController.animateTo(
             offset,
@@ -124,6 +128,13 @@ class _ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
           itemBuilder: (context, index) {
             final chord = chords[index];
             final height = maxExtend - 16;
+            final chordUiSettings = ChordUISettings.getChordSettingsForInstrument(
+              instrument: chord.instrument,
+              height: height,
+              hasSelector: true,
+              hasCapo: chord.capo != null,
+            );
+
             if (index == 0 && isFirstCall) {
               return Builder(builder: (context) {
                 WidgetsBinding.instance.addPostFrameCallback(
@@ -138,7 +149,7 @@ class _ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
                     padding: const EdgeInsets.only(top: 4),
                     child: ChordWidget(
                       chordRepresentation: chord,
-                      chordUiSettings: ChordUISettings.guitar().scaledToFit(height: height, hasSelector: true),
+                      chordUiSettings: chordUiSettings,
                       isLeftHanded: false,
                       isSelected: chord.name == selectedChord,
                     ),
@@ -152,7 +163,7 @@ class _ChordListHeaderDelegate extends SliverPersistentHeaderDelegate {
                 padding: const EdgeInsets.only(top: 4),
                 child: ChordWidget(
                   chordRepresentation: chord,
-                  chordUiSettings: ChordUISettings.guitar().scaledToFit(height: height),
+                  chordUiSettings: chordUiSettings,
                   isLeftHanded: false,
                   isSelected: chord.name == selectedChord,
                 ),

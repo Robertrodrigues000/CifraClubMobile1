@@ -25,7 +25,7 @@ class StringPlayIndicationWidget extends StatelessWidget {
           final note = notes[index];
 
           return Padding(
-            padding: EdgeInsets.only(left: index * chordUiSettings.spaceBetweenStrings),
+            padding: EdgeInsets.only(left: index * chordUiSettings.ballSize),
             child: NoteBox(
               note: note,
               noteSize: chordUiSettings.noteSize,
