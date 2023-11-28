@@ -110,7 +110,7 @@ void main() {
     final isAppInstalled = _IsAppInstalledMock();
     when(() => isAppInstalled(App.afinador)).thenAnswer((_) => SynchronousFuture(true));
 
-    final versionData = getFakeVersionData();
+    final versionData = getFakeVersionData(key: "F");
 
     blocTest(
       "should update state with user and versionData info",
@@ -131,8 +131,8 @@ void main() {
             .having((state) => state.isTunerInstalled, "is tuner installed", isTrue)
             .having((state) => state.originalKey, "version key", versionData.key)
             .having((state) => state.selectedKey, "selected key", versionData.stdKey)
-            .having((state) => state.musicalScale, "musical scale",
-                versionData.key!.contains("m") ? MusicalScale.minorScale : MusicalScale.majorScale)
+            .having(
+                (state) => state.musicalScale, "musical scale", MusicalScale.getMusicalScaleByKey(versionData.stdKey))
             .having((state) => state.selectedVersion, "version name", versionData.versionName)
             .having((state) => state.instrument, "instrument", versionData.instrument)
             .having((state) => state.tuning, "tuning", versionData.tuning?.value)

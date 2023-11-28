@@ -392,5 +392,9 @@
     "yourEmail": "Su correo electrónico",
     "emailAlreadyRegistered": "Correo electrónico ya registrado",
     "successEmailRegisterTitle": "¡Correo electrónico registrado con éxito!",
-    "successEmailRegisterDescription": "¡Le avisaremos tan pronto como el contenido esté disponible nuevamente!"
+    "successEmailRegisterDescription": "¡Le avisaremos tan pronto como el contenido esté disponible nuevamente!",
+    "changeVersionDialogTitle": "¿Quieres conservar los cambios realizados en el cifrado?",
+    "changeVersionDialogDescription": "El cifrado es diferente al que se muestra en la lección en video.",
+    "keepChanges": "Mantener cambios",
+    "resetVersion": "Reiniciar cifrado"
 }

@@ -451,5 +451,9 @@
     "yourEmail": "Your email",
     "emailAlreadyRegistered": "Email already registered",
     "successEmailRegisterTitle": "Email successfully registered!",
-    "successEmailRegisterDescription": "We will notify you as soon as the content is available again!"
+    "successEmailRegisterDescription": "We will notify you as soon as the content is available again!",
+    "changeVersionDialogTitle": "Do you want to keep the changes you made to the tab?",
+    "changeVersionDialogDescription": "It is different from the one shown in the video lesson.",
+    "keepChanges": "Keep changes",
+    "resetVersion": "Reset tab"
 }

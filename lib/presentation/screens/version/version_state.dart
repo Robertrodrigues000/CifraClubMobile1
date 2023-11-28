@@ -1,5 +1,7 @@
 import 'package:cifraclub/domain/chord/models/chord_representation.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
+import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
@@ -27,6 +29,7 @@ class VersionState {
   final FontSizeState fontSizeState;
 
   final bool isYouTubeVisible;
+  final bool shouldShowChangeVersionDialog;
   final VersionHeaderState versionHeaderState;
 
   final AutoScrollState autoScrollState;
@@ -34,6 +37,7 @@ class VersionState {
   final ChordState chordState;
 
   final FloatingFooterBarState floatingFooterBarState;
+  final LocalVersionSettings localVersionSettings;
 
   /*
   
@@ -79,6 +83,8 @@ class VersionState {
     this.autoScrollState = const AutoScrollState(),
     this.chordState = const ChordState(),
     this.floatingFooterBarState = const FloatingFooterBarState(),
+    this.localVersionSettings = const LocalVersionSettings(instrument: Instrument.guitar),
+    this.shouldShowChangeVersionDialog = true,
   });
 }
 
@@ -152,4 +158,15 @@ class FontSizeState {
     this.isIncreaseEnabled = true,
     this.isDecreaseEnabled = true,
   });
+}
+
+@CopyWith()
+@immutable
+class LocalVersionSettings {
+  final Capo? capo;
+  final String? key;
+  final Instrument instrument;
+  final Tuning? tuning;
+
+  const LocalVersionSettings({this.capo, this.key, required this.instrument, this.tuning});
 }

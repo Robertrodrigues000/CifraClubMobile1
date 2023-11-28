@@ -7,6 +7,7 @@ import 'package:cifraclub/presentation/bottom_sheets/listen_bottom_sheet/listen_
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
+import 'package:cifraclub/presentation/dialogs/incompatible_version_dialog.dart';
 import 'package:cifraclub/presentation/dialogs/confirm_register_dialog.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/bottom_sheets/chord_shape_bottom_sheet.dart';
@@ -63,6 +64,14 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
   void onContextReady(BuildContext context) {
     _bloc.versionEffectStream.listen((effect) async {
       switch (effect) {
+        case OnShowVideoLessonVersionDialog():
+          {
+            await IncompatibleVersionDialog.show(
+              context: context,
+              onChangeVersion: () => _bloc.add(OnRestoreVersion()),
+              onKeepVersion: () => _bloc.add(OnYouTubeVideoOpened(_bloc.state.version!.videoLesson!.youtubeId)),
+            );
+          }
         case OnShowYouTubeVideo():
           if (_youtubePlayerController == null) {
             _youtubePlayerController = YoutubePlayerController(

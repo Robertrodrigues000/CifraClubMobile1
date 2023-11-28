@@ -198,4 +198,90 @@ void main() {
       actionStream.close();
     });
   });
+
+  group("When action is OnRestoreVersion and", () {
+    test("is success should emit OnVersionLoaded action with versionData", () async {
+      final versionData = getFakeVersionData();
+
+      final getVersionData = _GetVersionDataMock();
+      when(
+        () => getVersionData.call(
+            artistUrl: any(named: "artistUrl"),
+            songUrl: any(named: "songUrl"),
+            instrumentUrl: any(named: "instrumentUrl"),
+            versionUrl: any(named: "versionUrl")),
+      ).thenAnswer((_) => SynchronousFuture(Ok(versionData)));
+
+      final middleware = VersionLoaderMiddleware(getVersionData);
+      var actionStream = PublishSubject<VersionAction>();
+
+      expectLater(
+        actionStream.stream,
+        emitsInOrder([
+          isA<OnStartLoading>(),
+          isA<OnVersionLoaded>().having((e) => e.versionData, "versionData", versionData),
+        ]),
+      );
+
+      middleware.onAction(
+        OnRestoreVersion(),
+        VersionState(version: versionData),
+        (action) => actionStream.add(action),
+      );
+
+      verify(() => getVersionData.call(
+            artistUrl: versionData.artist!.url,
+            songUrl: versionData.song.url,
+            instrumentUrl: versionData.instrument.instrumentUrl,
+            versionUrl: versionData.versionUrl,
+          )).called(1);
+
+      actionStream.close();
+    });
+
+    test("fails should emit OnVersionError action with serverError", () async {
+      final error = ServerError(statusCode: 404);
+      final versionData = getFakeVersionData();
+
+      final getVersionData = _GetVersionDataMock();
+      when(
+        () => getVersionData.call(
+            artistUrl: any(named: "artistUrl"),
+            songUrl: any(named: "songUrl"),
+            instrumentUrl: any(named: "instrumentUrl"),
+            versionUrl: any(named: "versionUrl")),
+      ).thenAnswer((_) => SynchronousFuture(Err(error)));
+
+      final middleware = VersionLoaderMiddleware(getVersionData);
+
+      var actionStream = PublishSubject<VersionAction>();
+
+      expectLater(
+        actionStream.stream,
+        emitsInOrder([
+          isA<OnStartLoading>(),
+          isA<OnVersionError>().having(
+            (e) => e.error,
+            "versionError",
+            isA<VersionLoadError>().having((versionError) => versionError.error, "serverError", error),
+          ),
+        ]),
+      );
+
+      middleware.onAction(
+        OnRestoreVersion(),
+        VersionState(version: versionData),
+        (action) => actionStream.add(action),
+      );
+
+      verify(() => getVersionData.call(
+            artistUrl: versionData.artist!.url,
+            songUrl: versionData.song.url,
+            instrumentUrl: versionData.instrument.instrumentUrl,
+            versionUrl: versionData.versionUrl,
+          )).called(1);
+
+      actionStream.close();
+    });
+  });
 }

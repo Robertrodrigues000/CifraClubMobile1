@@ -1,7 +1,9 @@
 import 'package:cifraclub/domain/section/models/text_section.dart';
 import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
+import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/domain/version/models/version_data_video_lesson.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_effect.dart';
@@ -140,7 +142,7 @@ void main() {
     expect(state.sections, sections);
   });
 
-  test("When action is OnYoutubeClosed", () {
+  test("When action is OnYoutubeVideoClosed", () {
     final reducer = VersionReducer();
     final effectStream = PublishSubject<VersionEffect>();
 
@@ -156,7 +158,7 @@ void main() {
     effectStream.close();
   });
 
-  test("When action is OnYouTubeVideoSelected", () {
+  test("When action is OnYoutubeVideoOpened", () {
     final reducer = VersionReducer();
     final effectStream = PublishSubject<VersionEffect>();
     const videoId = "tesdas";
@@ -169,12 +171,82 @@ void main() {
 
     final state = reducer.reduce(
       const VersionState(),
-      OnYouTubeVideoSelected(videoId),
+      OnYouTubeVideoOpened(videoId),
       effectStream.add,
     );
     expect(state.isYouTubeVisible, isTrue);
 
     effectStream.close();
+  });
+
+  group("when action is OnYouTubeSelected", () {
+    test("and version has not changed", () {
+      final reducer = VersionReducer();
+      final effectStream = PublishSubject<VersionEffect>();
+      const videoId = "tesdas";
+
+      expectLater(
+          effectStream.stream,
+          emitsInOrder([
+            isA<OnShowYouTubeVideo>().having((effect) => effect.videoId, "video id", videoId),
+          ]));
+
+      final state = reducer.reduce(
+        const VersionState(),
+        OnYouTubeVideoSelected(videoId),
+        effectStream.add,
+      );
+      expect(state.isYouTubeVisible, isTrue);
+      expect(state.shouldShowChangeVersionDialog, isFalse);
+
+      effectStream.close();
+    });
+
+    test("and version has changed", () {
+      final reducer = VersionReducer();
+      final effectStream = PublishSubject<VersionEffect>();
+      const videoId = "tesdas";
+
+      expectLater(
+          effectStream.stream,
+          emitsInOrder([
+            isA<OnShowVideoLessonVersionDialog>(),
+          ]));
+
+      final state = reducer.reduce(
+        const VersionState(localVersionSettings: LocalVersionSettings(instrument: Instrument.guitar, capo: Capo.capo1)),
+        OnYouTubeVideoSelected(videoId),
+        effectStream.add,
+      );
+      expect(state.isYouTubeVisible, isFalse);
+      expect(state.shouldShowChangeVersionDialog, isFalse);
+
+      effectStream.close();
+    });
+
+    test("and version has changed, but dialog was already shown", () {
+      final reducer = VersionReducer();
+      final effectStream = PublishSubject<VersionEffect>();
+      const videoId = "tesdas";
+
+      expectLater(
+          effectStream.stream,
+          emitsInOrder([
+            isA<OnShowYouTubeVideo>().having((effect) => effect.videoId, "video id", videoId),
+          ]));
+
+      final state = reducer.reduce(
+        const VersionState(
+            shouldShowChangeVersionDialog: false,
+            localVersionSettings: LocalVersionSettings(instrument: Instrument.guitar, capo: Capo.capo1)),
+        OnYouTubeVideoSelected(videoId),
+        effectStream.add,
+      );
+      expect(state.isYouTubeVisible, isTrue);
+      expect(state.shouldShowChangeVersionDialog, isFalse);
+
+      effectStream.close();
+    });
   });
 
   test("When action is OnToggleIsChordPinned", () {
@@ -498,5 +570,31 @@ void main() {
 
     expect(state.isChordListPinned, true);
     expect(state.chordState.selectedChord, "Bm");
+  });
+
+  test("When action is OnRestoreVersion", () {
+    final versionData = getFakeVersionData(
+        videoLesson: VersionDataVideoLesson(id: 1, youtubeId: "teste", title: "Video aula", thumb: ""));
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+      effectStream.stream,
+      emitsInOrder([
+        isA<OnShowYouTubeVideo>().having((effect) => effect.videoId, "video id", versionData.videoLesson!.youtubeId),
+      ]),
+    );
+
+    final state = reducer.reduce(
+      VersionState(version: versionData),
+      OnRestoreVersion(),
+      effectStream.add,
+    );
+
+    expect(state.localVersionSettings.instrument, versionData.instrument);
+    expect(state.localVersionSettings.capo, versionData.capo);
+    expect(state.localVersionSettings.tuning, versionData.tuning);
+    expect(state.localVersionSettings.key, versionData.key);
+    effectStream.close();
   });
 }

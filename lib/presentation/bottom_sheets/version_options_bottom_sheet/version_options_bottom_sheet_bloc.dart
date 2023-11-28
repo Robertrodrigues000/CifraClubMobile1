@@ -49,12 +49,12 @@ class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState
       final isTunerInstalled = await _isAppInstalled(App.afinador);
       emit(
         state.copyWith(
-            originalKey: versionData!.key,
-            selectedKey: versionData!.stdKey,
-            musicalScale: versionData!.key!.contains("m") ? MusicalScale.minorScale : MusicalScale.majorScale,
-            selectedVersion: versionData!.versionName,
-            instrument: versionData!.instrument,
-            tuning: versionData!.tuning?.value,
+            originalKey: versionData?.key,
+            selectedKey: versionData?.stdKey,
+            musicalScale: MusicalScale.getMusicalScaleByKey(versionData?.stdKey),
+            selectedVersion: versionData?.versionName,
+            instrument: versionData?.instrument,
+            tuning: versionData?.tuning?.value,
             capo: "Sem capo",
             isPro: isPro,
             isTunerInstalled: isTunerInstalled),

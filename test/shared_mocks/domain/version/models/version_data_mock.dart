@@ -18,6 +18,7 @@ VersionData getFakeVersionData({
   Instrument? instrument,
   int? songId,
   VersionStatus? status,
+  String? key,
 }) {
   final label = faker.food.restaurant();
   return VersionData(
@@ -30,9 +31,9 @@ VersionData getFakeVersionData({
     versionUrl: faker.food.restaurant(),
     completePath: faker.food.restaurant(),
     siteUrl: faker.food.restaurant(),
-    key: faker.food.restaurant(),
+    key: key ?? faker.food.restaurant(),
     shapeKey: faker.food.restaurant(),
-    stdKey: faker.food.restaurant(),
+    stdKey: key ?? faker.food.restaurant(),
     stdShapeKey: faker.food.restaurant(),
     tuning: Tuning.c,
     capo: Capo.getCapoById(faker.randomGenerator.integer(12)),

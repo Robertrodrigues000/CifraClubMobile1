@@ -394,5 +394,9 @@
     "yourEmail": "Seu e-mail",
     "emailAlreadyRegistered": "E-mail já cadastrado",
     "successEmailRegisterTitle": "E-mail cadastrado com sucesso!",
-    "successEmailRegisterDescription": "Iremos avisar assim que o conteúdo estiver disponível novamente!"
+    "successEmailRegisterDescription": "Iremos avisar assim que o conteúdo estiver disponível novamente!",
+    "changeVersionDialogTitle": "Deseja manter as alterações feitas na cifra?",
+    "changeVersionDialogDescription": "Ela está diferente da apresentada na vídeo aula.",
+    "keepChanges": "Manter alterações",
+    "resetVersion": "Resetar cifra"
 }

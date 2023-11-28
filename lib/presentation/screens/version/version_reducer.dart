@@ -46,6 +46,12 @@ class VersionReducer {
             songName: action.versionData.song.name,
             artistName: action.versionData.artist?.name,
           ),
+          localVersionSettings: state.localVersionSettings.copyWith(
+            capo: action.versionData.capo,
+            tuning: action.versionData.tuning,
+            key: action.versionData.key,
+            instrument: action.versionData.instrument,
+          ),
         );
       case OnContentProcessed():
         return state.copyWith(sections: action.sections);
@@ -63,9 +69,26 @@ class VersionReducer {
       case OnYouTubeVideoClosed():
         onEffect(OnCloseYouTubeVideo());
         return state.copyWith(isYouTubeVisible: false);
-      case OnYouTubeVideoSelected():
+      case OnYouTubeVideoOpened():
         onEffect(OnShowYouTubeVideo(action.videoId));
         return state.copyWith(isYouTubeVisible: true);
+      case OnYouTubeVideoSelected():
+        final differentTuning = state.localVersionSettings.tuning != state.version?.tuning;
+        final differentCapo = state.localVersionSettings.capo != state.version?.capo;
+        final differentKey = state.localVersionSettings.key != state.version?.key;
+        if ((differentTuning || differentCapo || differentKey) && state.shouldShowChangeVersionDialog) {
+          onEffect(OnShowVideoLessonVersionDialog());
+        } else {
+          onEffect(OnShowYouTubeVideo(action.videoId));
+          return state.copyWith(
+            isYouTubeVisible: true,
+            shouldShowChangeVersionDialog: false,
+          );
+        }
+        return state.copyWith(
+          isYouTubeVisible: false,
+          shouldShowChangeVersionDialog: false,
+        );
       case OnToggleIsChordPinned():
         return state.copyWith(isChordListPinned: !state.isChordListPinned);
       case OnAutoScrollTickAction():
@@ -117,7 +140,17 @@ class VersionReducer {
         return state;
       case OnChangeVersionKey():
         onEffect(OnChangeVersionKeyEffect(action.newKey));
-        return state;
+        return state.copyWith(localVersionSettings: state.localVersionSettings.copyWith(key: action.newKey));
+      case OnRestoreVersion():
+        onEffect(OnShowYouTubeVideo(state.version!.videoLesson?.youtubeId ?? ""));
+        return state.copyWith(
+            localVersionSettings: state.localVersionSettings.copyWith(
+              capo: state.version!.capo,
+              tuning: state.version!.tuning,
+              key: state.version!.key,
+              instrument: state.version!.instrument,
+            ),
+            isYouTubeVisible: true);
       case OnChangeEmail _:
         return state.copyWith(isConflictError: false);
       case OnValidateEmail():

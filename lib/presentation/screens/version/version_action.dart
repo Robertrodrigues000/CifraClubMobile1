@@ -91,10 +91,18 @@ class OnReadyToProcessContent implements VersionAction {
   });
 }
 
+class OnRestoreVersion implements VersionAction {}
+
 class OnYouTubeVideoSelected implements VersionAction {
   final String videoId;
 
   OnYouTubeVideoSelected(this.videoId);
+}
+
+class OnYouTubeVideoOpened implements VersionAction {
+  final String videoId;
+
+  OnYouTubeVideoOpened(this.videoId);
 }
 
 class OnYouTubeVideoClosed implements VersionAction {}

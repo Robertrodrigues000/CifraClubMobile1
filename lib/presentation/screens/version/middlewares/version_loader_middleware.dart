@@ -38,6 +38,17 @@ class VersionLoaderMiddleware extends VersionMiddleware {
           action.filter.instrument.instrumentUrl,
           action.filter.versionUrl,
         );
+
+      case OnRestoreVersion():
+        final versionData = state.version;
+
+        _fetchVersion(
+          addAction,
+          versionData!.artist!.url,
+          versionData.song.url,
+          versionData.instrument.instrumentUrl,
+          versionData.versionUrl,
+        );
       default:
         break;
     }
