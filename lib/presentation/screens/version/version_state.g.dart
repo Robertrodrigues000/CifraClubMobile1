@@ -21,7 +21,11 @@ abstract class _$VersionStateCWProxy {
 
   VersionState sections(List<Section> sections);
 
+  VersionState filteredSections(List<Section> filteredSections);
+
   VersionState fontSizeState(FontSizeState fontSizeState);
+
+  VersionState isTabsVisible(bool isTabsVisible);
 
   VersionState isChordListPinned(bool isChordListPinned);
 
@@ -53,7 +57,9 @@ abstract class _$VersionStateCWProxy {
     bool? isLoading,
     RequestError? error,
     List<Section>? sections,
+    List<Section>? filteredSections,
     FontSizeState? fontSizeState,
+    bool? isTabsVisible,
     bool? isChordListPinned,
     bool? isYouTubeVisible,
     VersionHeaderState? versionHeaderState,
@@ -93,7 +99,13 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
   VersionState sections(List<Section> sections) => this(sections: sections);
 
   @override
+  VersionState filteredSections(List<Section> filteredSections) => this(filteredSections: filteredSections);
+
+  @override
   VersionState fontSizeState(FontSizeState fontSizeState) => this(fontSizeState: fontSizeState);
+
+  @override
+  VersionState isTabsVisible(bool isTabsVisible) => this(isTabsVisible: isTabsVisible);
 
   @override
   VersionState isChordListPinned(bool isChordListPinned) => this(isChordListPinned: isChordListPinned);
@@ -139,7 +151,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? isLoading = const $CopyWithPlaceholder(),
     Object? error = const $CopyWithPlaceholder(),
     Object? sections = const $CopyWithPlaceholder(),
+    Object? filteredSections = const $CopyWithPlaceholder(),
     Object? fontSizeState = const $CopyWithPlaceholder(),
+    Object? isTabsVisible = const $CopyWithPlaceholder(),
     Object? isChordListPinned = const $CopyWithPlaceholder(),
     Object? isYouTubeVisible = const $CopyWithPlaceholder(),
     Object? versionHeaderState = const $CopyWithPlaceholder(),
@@ -178,10 +192,18 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.sections
           // ignore: cast_nullable_to_non_nullable
           : sections as List<Section>,
+      filteredSections: filteredSections == const $CopyWithPlaceholder() || filteredSections == null
+          ? _value.filteredSections
+          // ignore: cast_nullable_to_non_nullable
+          : filteredSections as List<Section>,
       fontSizeState: fontSizeState == const $CopyWithPlaceholder() || fontSizeState == null
           ? _value.fontSizeState
           // ignore: cast_nullable_to_non_nullable
           : fontSizeState as FontSizeState,
+      isTabsVisible: isTabsVisible == const $CopyWithPlaceholder() || isTabsVisible == null
+          ? _value.isTabsVisible
+          // ignore: cast_nullable_to_non_nullable
+          : isTabsVisible as bool,
       isChordListPinned: isChordListPinned == const $CopyWithPlaceholder() || isChordListPinned == null
           ? _value.isChordListPinned
           // ignore: cast_nullable_to_non_nullable

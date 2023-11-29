@@ -23,7 +23,7 @@ abstract class _$VersionOptionsBottomSheetStateCWProxy {
 
   VersionOptionsBottomSheetState isBeatVisible(bool isBeatVisible);
 
-  VersionOptionsBottomSheetState isTabVisible(bool isTabVisible);
+  VersionOptionsBottomSheetState isTabsVisible(bool isTabsVisible);
 
   VersionOptionsBottomSheetState isLeftHanded(bool isLeftHanded);
 
@@ -50,7 +50,7 @@ abstract class _$VersionOptionsBottomSheetStateCWProxy {
     String? originalKey,
     String? selectedKey,
     bool? isBeatVisible,
-    bool? isTabVisible,
+    bool? isTabsVisible,
     bool? isLeftHanded,
     String? capo,
     String? tuning,
@@ -90,7 +90,7 @@ class _$VersionOptionsBottomSheetStateCWProxyImpl implements _$VersionOptionsBot
   VersionOptionsBottomSheetState isBeatVisible(bool isBeatVisible) => this(isBeatVisible: isBeatVisible);
 
   @override
-  VersionOptionsBottomSheetState isTabVisible(bool isTabVisible) => this(isTabVisible: isTabVisible);
+  VersionOptionsBottomSheetState isTabsVisible(bool isTabsVisible) => this(isTabsVisible: isTabsVisible);
 
   @override
   VersionOptionsBottomSheetState isLeftHanded(bool isLeftHanded) => this(isLeftHanded: isLeftHanded);
@@ -124,7 +124,7 @@ class _$VersionOptionsBottomSheetStateCWProxyImpl implements _$VersionOptionsBot
     Object? originalKey = const $CopyWithPlaceholder(),
     Object? selectedKey = const $CopyWithPlaceholder(),
     Object? isBeatVisible = const $CopyWithPlaceholder(),
-    Object? isTabVisible = const $CopyWithPlaceholder(),
+    Object? isTabsVisible = const $CopyWithPlaceholder(),
     Object? isLeftHanded = const $CopyWithPlaceholder(),
     Object? capo = const $CopyWithPlaceholder(),
     Object? tuning = const $CopyWithPlaceholder(),
@@ -164,10 +164,10 @@ class _$VersionOptionsBottomSheetStateCWProxyImpl implements _$VersionOptionsBot
           ? _value.isBeatVisible
           // ignore: cast_nullable_to_non_nullable
           : isBeatVisible as bool,
-      isTabVisible: isTabVisible == const $CopyWithPlaceholder() || isTabVisible == null
-          ? _value.isTabVisible
+      isTabsVisible: isTabsVisible == const $CopyWithPlaceholder() || isTabsVisible == null
+          ? _value.isTabsVisible
           // ignore: cast_nullable_to_non_nullable
-          : isTabVisible as bool,
+          : isTabsVisible as bool,
       isLeftHanded: isLeftHanded == const $CopyWithPlaceholder() || isLeftHanded == null
           ? _value.isLeftHanded
           // ignore: cast_nullable_to_non_nullable

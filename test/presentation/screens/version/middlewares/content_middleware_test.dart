@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cifraclub/domain/section/models/section_offset.dart';
+import 'package:cifraclub/domain/section/models/tab_section.dart';
 import 'package:cifraclub/domain/section/models/text_section.dart';
 import 'package:cifraclub/domain/section/use_cases/characters_per_line.dart';
 import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
@@ -153,6 +155,57 @@ void main() {
           screenWidth: any(named: "screenWidth"),
           fontSize: any(named: "fontSize")));
       verifyNever(() => processSections(any(), any()));
+    });
+  });
+
+  group("When action is OnChangeTabsVisibility", () {
+    final processSections = _ProcessSectionsMock();
+    final charactersPerLine = _CharactersPerLine();
+    final sections = [TextSection("section"), TabSection("tab", [], const SectionOffset(start: 0, end: 0))];
+
+    final contentMiddleware =
+        ContentMiddleware(_ParseSectionsMock(), _GetAllInstrumentVersionsMock(), processSections, charactersPerLine);
+
+    test("and visibility is true", () {
+      final actionStream = PublishSubject<VersionAction>();
+
+      expectLater(
+        actionStream.stream,
+        emitsInOrder(
+            [isA<OnTabsVisibilityChanged>().having((action) => action.filteredSections.length, "sections", 2)]),
+      );
+
+      contentMiddleware.onAction(
+        OnChangeTabsVisibility(true),
+        VersionState(
+            fontSizeState: const FontSizeState(fontSize: 16),
+            sections: sections,
+            version: getFakeVersionData(instrument: Instrument.guitar)),
+        actionStream.add,
+      );
+
+      actionStream.close();
+    });
+
+    test("and visibility is false", () {
+      final actionStream = PublishSubject<VersionAction>();
+
+      expectLater(
+        actionStream.stream,
+        emitsInOrder(
+            [isA<OnTabsVisibilityChanged>().having((action) => action.filteredSections.length, "sections", 1)]),
+      );
+
+      contentMiddleware.onAction(
+        OnChangeTabsVisibility(false),
+        VersionState(
+            fontSizeState: const FontSizeState(fontSize: 16),
+            sections: sections,
+            version: getFakeVersionData(instrument: Instrument.guitar)),
+        actionStream.add,
+      );
+
+      actionStream.close();
     });
   });
 }

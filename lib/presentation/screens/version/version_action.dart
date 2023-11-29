@@ -236,3 +236,15 @@ class OnEmailValidate implements VersionAction {
 
   OnEmailValidate({required this.result});
 }
+
+class OnChangeTabsVisibility implements VersionAction {
+  final bool newVisibility;
+
+  OnChangeTabsVisibility(this.newVisibility);
+}
+
+class OnTabsVisibilityChanged implements VersionAction {
+  final List<Section> filteredSections;
+
+  OnTabsVisibilityChanged(this.filteredSections);
+}

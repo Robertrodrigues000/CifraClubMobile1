@@ -1,6 +1,7 @@
 import 'package:cifraclub/domain/preferences/use_cases/get_font_size_preference.dart';
 import 'package:cifraclub/domain/preferences/use_cases/set_font_size_preference.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
+import 'package:cifraclub/domain/section/models/tab_section.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/version_action.dart';
 import 'package:cifraclub/presentation/screens/version/version_state.dart';
@@ -41,10 +42,11 @@ class FontSizeMiddleware extends VersionMiddleware {
     _setFontSizePreference(fontSize);
 
     List<Section> sections = action is OnContentParsed ? action.sections : state.sections;
+    List<Section> filteredSections = state.isTabsVisible ? sections : sections.where((e) => e is! TabSection).toList();
 
     addAction(
       OnReadyToProcessContent(
-        sections: sections,
+        sections: filteredSections,
         fontSize: fontSize,
         isFontDecreaseEnabled: fontSize > GetFontSizePreference.minValue,
         isFontIncreaseEnabled: fontSize < GetFontSizePreference.maxValue,

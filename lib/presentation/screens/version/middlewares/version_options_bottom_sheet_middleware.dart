@@ -25,6 +25,8 @@ class VersionOptionsBottomSheetMiddleware extends VersionMiddleware {
         addAction(OnShowCapoBottomSheet());
       case OnVersionBottomSheetTapOnFontSize():
         addAction(OnFloatingFooterBarModeChange(mode: FloatingFooterBarMode.fontSize));
+      case OnVersionBottomSheetTapOnTabsVisibility():
+        addAction(OnChangeTabsVisibility(versionOptionsAction.newVisibility));
     }
   }
 }

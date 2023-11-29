@@ -112,6 +112,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                 songUrl: _bloc.state.versionHeaderState.songUrl,
                 songId: _bloc.state.version!.song.songId,
                 isVersionBottomSheet: true,
+                isTabsVisible: _bloc.state.isTabsVisible,
                 versionData: _bloc.state.version!,
                 isPro: false,
                 onAction: (action) {
@@ -308,6 +309,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                                 artistUrl: state.versionHeaderState.artistUrl,
                                 songUrl: state.versionHeaderState.songUrl,
                                 songId: state.version!.song.songId,
+                                isTabsVisible: state.isTabsVisible,
                               );
                             },
                             filters: state.versionHeaderState.versionFilters,
@@ -369,9 +371,9 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                           SliverPadding(
                             padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
                             sliver: SliverList.builder(
-                              itemCount: state.sections.length,
+                              itemCount: state.filteredSections.length,
                               itemBuilder: (context, index) {
-                                final section = state.sections[index];
+                                final section = state.filteredSections[index];
                                 return Text.rich(
                                   TextSpan(children: section.getSpans(
                                     (chord) {
@@ -389,11 +391,14 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                           SliverToBoxAdapter(
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Text(
-                                state.version?.content ?? "",
-                                textScaleFactor: 1,
-                                style: context.typography.body8
-                                    .copyWith(fontSize: state.fontSizeState.fontSize.toDouble()),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: context.appDimensionScheme.screenMargin),
+                                child: Text(
+                                  state.version?.content ?? "",
+                                  textScaleFactor: 1,
+                                  style: context.typography.body8
+                                      .copyWith(fontSize: state.fontSizeState.fontSize.toDouble()),
+                                ),
                               ),
                             ),
                           ),

@@ -120,7 +120,7 @@ void main() {
       effectStream.add,
     );
 
-    expect(state.sections, sections);
+    expect(state.filteredSections, sections);
     expect(state.fontSizeState.fontSize, 14);
     expect(state.fontSizeState.isDecreaseEnabled, true);
     expect(state.fontSizeState.isIncreaseEnabled, true);
@@ -570,6 +570,39 @@ void main() {
 
     expect(state.isChordListPinned, true);
     expect(state.chordState.selectedChord, "Bm");
+  });
+
+  test("When action is OnChangeTabsVisibility", () {
+    final reducer = VersionReducer();
+
+    var state = reducer.reduce(
+      const VersionState(),
+      OnChangeTabsVisibility(true),
+      (_) => null,
+    );
+
+    expect(state.isTabsVisible, true);
+
+    state = reducer.reduce(
+      const VersionState(),
+      OnChangeTabsVisibility(false),
+      (_) => null,
+    );
+
+    expect(state.isTabsVisible, false);
+  });
+
+  test("When action is OnTabsVisibilityChanged", () {
+    final reducer = VersionReducer();
+    final filteredSections = [TextSection("section")];
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnTabsVisibilityChanged(filteredSections),
+      (_) => null,
+    );
+
+    expect(state.filteredSections, filteredSections);
   });
 
   test("When action is OnRestoreVersion", () {

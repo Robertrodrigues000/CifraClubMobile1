@@ -23,8 +23,10 @@ class VersionState {
   final bool isLoading;
   final RequestError? error;
   final List<Section> sections;
+  final List<Section> filteredSections;
 
   final bool isChordListPinned;
+  final bool isTabsVisible;
 
   final FontSizeState fontSizeState;
 
@@ -76,7 +78,9 @@ class VersionState {
     this.isLoading = false,
     this.error,
     this.sections = const [],
+    this.filteredSections = const [],
     this.fontSizeState = const FontSizeState(),
+    this.isTabsVisible = true,
     this.isChordListPinned = false,
     this.isYouTubeVisible = false,
     this.versionHeaderState = const VersionHeaderState(),

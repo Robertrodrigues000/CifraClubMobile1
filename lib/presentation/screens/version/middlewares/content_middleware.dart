@@ -1,5 +1,6 @@
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/section/use_cases/characters_per_line.dart';
+import 'package:cifraclub/domain/section/models/tab_section.dart';
 import 'package:cifraclub/domain/section/use_cases/parse_sections.dart';
 import 'package:cifraclub/domain/section/use_cases/process_sections.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
@@ -29,6 +30,8 @@ class ContentMiddleware extends VersionMiddleware {
         _loadVersion(action, addAction);
       case OnContentProcess():
         _processContent(state, action, addAction);
+      case OnChangeTabsVisibility():
+        _setTabsVisibility(state, action, addAction);
       default:
         break;
     }
@@ -88,5 +91,14 @@ class ContentMiddleware extends VersionMiddleware {
       _processSections(state.sections, maxChar);
       addAction(OnContentProcessed(sections: state.sections));
     }
+  }
+
+  void _setTabsVisibility(VersionState state, OnChangeTabsVisibility action, ActionEmitter addAction) {
+    List<Section> filteredSections =
+        action.newVisibility ? state.sections : state.sections.where((e) => e is! TabSection).toList();
+
+    addAction(
+      OnTabsVisibilityChanged(filteredSections),
+    );
   }
 }

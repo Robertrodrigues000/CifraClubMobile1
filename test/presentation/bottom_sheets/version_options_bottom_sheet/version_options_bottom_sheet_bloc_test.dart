@@ -54,6 +54,7 @@ void main() {
     int? songId,
     VersionData? versionData,
     bool? isPro,
+    bool? isTabsVisible,
   }) =>
       VersionOptionsBottomSheetBloc(
         getIsFavoriteVersionBySongIdMock ?? _GetIsFavoriteVersionBySongIdMock(),
@@ -66,6 +67,7 @@ void main() {
         songId ?? 1,
         versionData,
         isPro ?? false,
+        isTabsVisible ?? false,
       );
 
   group("when init is called and versionData is null", () {
@@ -227,10 +229,10 @@ void main() {
 
   test("when toggleTabsVisibility is called should switch", () async {
     final bloc = getBloc();
-    expect(bloc.state.isTabVisible, isTrue);
+    expect(bloc.state.isTabsVisible, isTrue);
 
     bloc.toggleTabsVisibility();
-    expect(bloc.state.isTabVisible, isFalse);
+    expect(bloc.state.isTabsVisible, isFalse);
   });
 
   test("when toggleLeftHanded is called should switch", () async {

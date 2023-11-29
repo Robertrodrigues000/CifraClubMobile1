@@ -53,6 +53,7 @@ class VersionOptionsBottomSheet {
     required String artistUrl,
     required String songUrl,
     required int songId,
+    bool isTabsVisible = false,
     bool isVersionBottomSheet = false,
     VersionData? versionData,
     bool isPro = false,
@@ -79,6 +80,7 @@ class VersionOptionsBottomSheet {
             songId,
             versionData,
             isPro,
+            isTabsVisible,
           )
         ..init(),
     );
@@ -194,7 +196,7 @@ class VersionOptionsBottomSheet {
                     VersionSettingsSection(
                       instrument: state.instrument,
                       isBeatVisible: state.isBeatVisible,
-                      isTabVisible: state.isTabVisible,
+                      isTabVisible: state.isTabsVisible,
                       isLeftHanded: state.isLeftHanded,
                       isTunerInstalled: state.isTunerInstalled,
                       tuning: state.tuning,
@@ -205,6 +207,7 @@ class VersionOptionsBottomSheet {
                       },
                       // coverage:ignore-end
                       onTabVisibilityChanged: (isVisible) {
+                        onAction?.call(OnVersionBottomSheetTapOnTabsVisibility(isVisible));
                         bloc.toggleTabsVisibility();
                       },
                       onLeftHandedChanged: (isLeftHanded) {

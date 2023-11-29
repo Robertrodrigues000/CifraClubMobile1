@@ -87,6 +87,39 @@ void main() {
     actionStream.close();
   });
 
+  test("when VersionOptionsBottomSheetAction is OnVersionBottomSheetTapOnTabsVisibility", () async {
+    final middleware = VersionOptionsBottomSheetMiddleware();
+    var actionStream = PublishSubject<VersionAction>();
+
+    expectLater(
+      actionStream.stream,
+      emitsInOrder([
+        isA<OnChangeTabsVisibility>().having(
+          (e) => e.newVisibility,
+          "newVisibility",
+          true,
+        ),
+        isA<OnChangeTabsVisibility>().having(
+          (e) => e.newVisibility,
+          "newVisibility",
+          false,
+        ),
+      ]),
+    );
+
+    middleware.onAction(
+        OnVersionOptionsAction(action: OnVersionBottomSheetTapOnTabsVisibility(true)), const VersionState(), (action) {
+      actionStream.add(action);
+    });
+
+    middleware.onAction(
+        OnVersionOptionsAction(action: OnVersionBottomSheetTapOnTabsVisibility(false)), const VersionState(), (action) {
+      actionStream.add(action);
+    });
+
+    actionStream.close();
+  });
+
   test("when VersionOptionsBottomSheetAction is OnVersionBottomSheetTapOnChangeKey", () async {
     final middleware = VersionOptionsBottomSheetMiddleware();
     var actionStream = PublishSubject<VersionAction>();

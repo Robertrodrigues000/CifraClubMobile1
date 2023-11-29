@@ -58,7 +58,7 @@ class VersionReducer {
       case OnReadyToProcessContent():
         onEffect(OnReadyToProcessContentEffect());
         return state.copyWith(
-          sections: action.sections,
+          filteredSections: action.sections,
           fontSizeState: state.fontSizeState.copyWith(
             fontSize: action.fontSize,
             isDecreaseEnabled: action.isFontDecreaseEnabled,
@@ -66,6 +66,10 @@ class VersionReducer {
           ),
           isLoading: false,
         );
+      case OnChangeTabsVisibility():
+        return state.copyWith(isTabsVisible: action.newVisibility);
+      case OnTabsVisibilityChanged():
+        return state.copyWith(filteredSections: action.filteredSections);
       case OnYouTubeVideoClosed():
         onEffect(OnCloseYouTubeVideo());
         return state.copyWith(isYouTubeVisible: false);

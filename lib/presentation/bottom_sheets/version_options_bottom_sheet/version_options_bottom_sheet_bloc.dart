@@ -27,6 +27,7 @@ class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState
   final int songId;
   final VersionData? versionData;
   final bool isPro;
+  final bool isTabsVisible;
 
   VersionOptionsBottomSheetBloc(
     this._getIsFavoriteVersionBySongId,
@@ -39,6 +40,7 @@ class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState
     this.songId,
     this.versionData,
     this.isPro,
+    this.isTabsVisible,
   ) : super(const VersionOptionsBottomSheetState(isLoggedIn: false));
 
   StreamSubscription<UserCredential>? _userSubscription;
@@ -49,15 +51,17 @@ class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState
       final isTunerInstalled = await _isAppInstalled(App.afinador);
       emit(
         state.copyWith(
-            originalKey: versionData?.key,
-            selectedKey: versionData?.stdKey,
-            musicalScale: MusicalScale.getMusicalScaleByKey(versionData?.stdKey),
-            selectedVersion: versionData?.versionName,
-            instrument: versionData?.instrument,
-            tuning: versionData?.tuning?.value,
-            capo: "Sem capo",
-            isPro: isPro,
-            isTunerInstalled: isTunerInstalled),
+          originalKey: versionData!.key,
+          selectedKey: versionData!.stdKey,
+          musicalScale: MusicalScale.getMusicalScaleByKey(versionData?.stdKey),
+          selectedVersion: versionData!.versionName,
+          instrument: versionData!.instrument,
+          tuning: versionData!.tuning?.value,
+          capo: "Sem capo",
+          isPro: isPro,
+          isTunerInstalled: isTunerInstalled,
+          isTabsVisible: isTabsVisible,
+        ),
       );
     }
   }
@@ -84,7 +88,7 @@ class VersionOptionsBottomSheetBloc extends Cubit<VersionOptionsBottomSheetState
   }
 
   void toggleTabsVisibility() {
-    emit(state.copyWith(isTabVisible: !state.isTabVisible));
+    emit(state.copyWith(isTabsVisible: !state.isTabsVisible));
   }
 
   void toggleLeftHanded() {

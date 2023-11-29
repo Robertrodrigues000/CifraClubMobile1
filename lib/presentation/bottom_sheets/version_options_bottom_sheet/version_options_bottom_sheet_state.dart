@@ -14,7 +14,7 @@ class VersionOptionsBottomSheetState {
   final String originalKey;
   final String selectedKey;
   final bool isBeatVisible;
-  final bool isTabVisible;
+  final bool isTabsVisible;
   final bool isLeftHanded;
   final String capo;
   final String tuning;
@@ -30,7 +30,7 @@ class VersionOptionsBottomSheetState {
     this.originalKey = "",
     this.selectedKey = "",
     this.isBeatVisible = true,
-    this.isTabVisible = true,
+    this.isTabsVisible = true,
     this.isLeftHanded = false,
     this.capo = "",
     this.tuning = "",

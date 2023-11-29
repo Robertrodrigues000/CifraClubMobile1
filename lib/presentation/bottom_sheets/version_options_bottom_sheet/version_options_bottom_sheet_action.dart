@@ -14,3 +14,9 @@ class OnVersionBottomSheetTapOnTuning implements VersionOptionsBottomSheetAction
 class OnVersionBottomSheetTapOnCapo implements VersionOptionsBottomSheetAction {}
 
 class OnVersionBottomSheetTapOnFontSize implements VersionOptionsBottomSheetAction {}
+
+class OnVersionBottomSheetTapOnTabsVisibility implements VersionOptionsBottomSheetAction {
+  final bool newVisibility;
+
+  OnVersionBottomSheetTapOnTabsVisibility(this.newVisibility);
+}
