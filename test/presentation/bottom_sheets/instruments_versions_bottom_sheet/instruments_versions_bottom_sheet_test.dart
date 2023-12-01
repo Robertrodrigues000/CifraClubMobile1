@@ -11,7 +11,10 @@ import '../../../test_helpers/app_localizations.dart';
 import '../../../test_helpers/test_wrapper.dart';
 
 void main() {
-  final version = [getFakeInstrumentVersion(), getFakeInstrumentVersion()];
+  final version = [
+    getFakeInstrumentVersion(VersionName: "version1"),
+    getFakeInstrumentVersion(VersionName: "version2"),
+  ];
 
   final instrumentVersions = [
     (instrument: Instrument.bass, versions: version),

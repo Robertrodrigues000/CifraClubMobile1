@@ -101,6 +101,7 @@ class VersionReducer {
       case OnAutoScrollSpeedSelected():
         return state.copyWith(autoScrollState: state.autoScrollState.copyWith(speedFactor: action.speedFactor));
       case OnAutoScrollStart():
+        onEffect(OnAutoScrollStartEffect());
         return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: true));
       case OnAutoScrollStop():
         return state.copyWith(autoScrollState: state.autoScrollState.copyWith(isAutoScrollRunning: false));

@@ -1,5 +1,7 @@
 // coverage:ignore-file
 
+import 'dart:async';
+
 import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/bottom_sheets/instruments_versions_bottom_sheet/instruments_versions_bottom_sheet.dart';
@@ -45,14 +47,35 @@ class VersionScreen extends StatefulWidget {
   State<VersionScreen> createState() => _VersionScreenState();
 }
 
-class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, OnContextReady {
+class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, OnContextReady, WidgetsBindingObserver {
   late final _bloc = BlocProvider.of<VersionBloc>(context);
   final _scrollController = TrackingScrollController();
   var isFooterBarVisible = true;
-  var isUserDraggingScreen = false;
+  var isUserTouchingScreen = false;
+  var isUserDragingScreen = false;
+  Timer? timerToHideFooterBar;
   String? selectedKey; // Todo: remover isso aqui quando transpose estiver funcionando
   YoutubePlayerController? _youtubePlayerController;
   late Orientation _orientation = MediaQuery.of(context).orientation;
+
+  void _startTimerToHideAutoScrollFooterBar() {
+    if (!_bloc.state.autoScrollState.isAutoScrollRunning || !isFooterBarVisible) {
+      return;
+    }
+
+    timerToHideFooterBar?.cancel();
+    timerToHideFooterBar = Timer(const Duration(seconds: 2), () {
+      if (_bloc.state.autoScrollState.isAutoScrollRunning && isFooterBarVisible) {
+        setState(() {
+          isFooterBarVisible = false;
+        });
+      }
+    });
+  }
+
+  void _stopTimerToHideAutoScrollFooterBar() {
+    timerToHideFooterBar?.cancel();
+  }
 
   @override
   void initState() {
@@ -62,6 +85,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
 
   @override
   void onContextReady(BuildContext context) {
+    WidgetsBinding.instance.addObserver(this);
     _bloc.versionEffectStream.listen((effect) async {
       switch (effect) {
         case OnShowVideoLessonVersionDialog():
@@ -87,8 +111,10 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
         case OnCloseYouTubeVideo():
           await _youtubePlayerController?.close();
           _youtubePlayerController = null;
+        case OnAutoScrollStartEffect():
+          _startTimerToHideAutoScrollFooterBar();
         case OnAutoScrollTickEffect():
-          if (isUserDraggingScreen) {
+          if (isUserTouchingScreen) {
             return;
           }
           _scrollController.animateTo(
@@ -202,7 +228,7 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
     final previousOffset = _scrollController.initialScrollOffset;
     final currentIsFooterBarVisible = currentOffset < previousOffset;
 
-    if (isUserDraggingScreen && currentIsFooterBarVisible != isFooterBarVisible) {
+    if (isUserTouchingScreen && currentIsFooterBarVisible != isFooterBarVisible) {
       setState(() {
         isFooterBarVisible = currentIsFooterBarVisible;
       });
@@ -214,6 +240,8 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
     disposeAll();
     _youtubePlayerController?.close();
     _scrollController.dispose();
+    _stopTimerToHideAutoScrollFooterBar();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -277,10 +305,20 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                 children: [
                   Listener(
                     onPointerDown: (_) {
-                      isUserDraggingScreen = true;
+                      isUserTouchingScreen = true;
                     },
                     onPointerUp: (_) {
-                      isUserDraggingScreen = false;
+                      if (!isUserDragingScreen) {
+                        setState(() {
+                          isFooterBarVisible = !isFooterBarVisible;
+                        });
+                      }
+                      _startTimerToHideAutoScrollFooterBar();
+                      isUserTouchingScreen = false;
+                      isUserDragingScreen = false;
+                    },
+                    onPointerMove: (_) {
+                      isUserDragingScreen = true;
                     },
                     child: CustomScrollView(
                       controller: _scrollController,
@@ -407,18 +445,26 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
                     ),
                   ),
                   if (!state.restrictContent)
-                    FloatingFooterBar(
-                      mode: state.floatingFooterBarState.mode,
-                      isVisible: isFooterBarVisible,
-                      isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
-                      autoScrollSpeedFactor: state.autoScrollState.speedFactor,
-                      isVideoOpen: state.isYouTubeVisible,
-                      videoThumb: state.version?.videoLesson?.thumb,
-                      isFontDecreaseEnabled: state.fontSizeState.isDecreaseEnabled,
-                      isFontIncreaseEnabled: state.fontSizeState.isIncreaseEnabled,
-                      onAction: (action) {
-                        _bloc.add(OnFloatingFooterBarAction(action: action));
+                    Listener(
+                      onPointerDown: (_) {
+                        _stopTimerToHideAutoScrollFooterBar();
                       },
+                      onPointerUp: (_) {
+                        _startTimerToHideAutoScrollFooterBar();
+                      },
+                      child: FloatingFooterBar(
+                        mode: state.floatingFooterBarState.mode,
+                        isVisible: isFooterBarVisible,
+                        isAutoScrollRunning: state.autoScrollState.isAutoScrollRunning,
+                        autoScrollSpeedFactor: state.autoScrollState.speedFactor,
+                        isVideoOpen: state.isYouTubeVisible,
+                        videoThumb: state.version?.videoLesson?.thumb,
+                        isFontDecreaseEnabled: state.fontSizeState.isDecreaseEnabled,
+                        isFontIncreaseEnabled: state.fontSizeState.isIncreaseEnabled,
+                        onAction: (action) {
+                          _bloc.add(OnFloatingFooterBarAction(action: action));
+                        },
+                      ),
                     )
                 ],
               );
@@ -427,6 +473,19 @@ class _VersionScreenState extends State<VersionScreen> with SubscriptionHolder, 
         );
       },
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) {
+      _bloc.add(OnAutoScrollStop());
+    }
+  }
+
+  @override
+  Future<bool> didPushRouteInformation(RouteInformation routeInformation) {
+    _bloc.add(OnAutoScrollStop());
+    return super.didPushRouteInformation(routeInformation);
   }
 }
 

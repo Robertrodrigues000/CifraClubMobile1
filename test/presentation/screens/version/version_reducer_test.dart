@@ -261,6 +261,73 @@ void main() {
     expect(state.isChordListPinned, isFalse);
   });
 
+  test("When action is OnAutoScrollTickAction", () {
+    final reducer = VersionReducer();
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+      effectStream.stream,
+      emitsInOrder([
+        isA<OnAutoScrollTickEffect>().having((e) => e.delta, "delta", 4.2),
+      ]),
+    );
+
+    reducer.reduce(
+      const VersionState(),
+      OnAutoScrollTickAction(4.2),
+      effectStream.add,
+    );
+
+    effectStream.close();
+  });
+
+  test("When action is OnAutoScrollSpeedSelected", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(isChordListPinned: true),
+      OnAutoScrollSpeedSelected(0.42),
+      (_) => null,
+    );
+
+    expect(state.autoScrollState.speedFactor, 0.42);
+  });
+
+  test("When action is OnAutoScrollStart", () {
+    final reducer = VersionReducer();
+
+    final effectStream = PublishSubject<VersionEffect>();
+
+    expectLater(
+      effectStream.stream,
+      emitsInOrder([
+        isA<OnAutoScrollStartEffect>(),
+      ]),
+    );
+
+    final state = reducer.reduce(
+      const VersionState(isChordListPinned: true),
+      OnAutoScrollStart(),
+      effectStream.add,
+    );
+
+    expect(state.autoScrollState.isAutoScrollRunning, true);
+
+    effectStream.close();
+  });
+
+  test("When action is OnAutoScrollStop", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(isChordListPinned: true),
+      OnAutoScrollStop(),
+      (_) => null,
+    );
+
+    expect(state.autoScrollState.isAutoScrollRunning, false);
+  });
+
   test("When action is OnVersionLoaded", () {
     final reducer = VersionReducer();
     const versionState = VersionState();
