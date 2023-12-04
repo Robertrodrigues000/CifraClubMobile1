@@ -4,8 +4,10 @@ import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
+import 'package:cifraclub/data/song/song_player_manager.dart';
 import 'package:cifraclub/presentation/bottom_sheets/version_options_bottom_sheet/version_options_bottom_sheet_action.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
+import 'package:cifraclub/presentation/screens/version/models/player_action.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_error.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
@@ -211,6 +213,42 @@ class OnChangeVersionKey implements VersionAction {
   final String newKey;
 
   OnChangeVersionKey(this.newKey);
+}
+
+class OnSongSelected implements VersionAction {
+  final String path;
+
+  OnSongSelected(this.path);
+}
+
+class OnGetSongDuration implements VersionAction {
+  final Duration? duration;
+
+  OnGetSongDuration({required this.duration});
+}
+
+class OnUpdateActualTime implements VersionAction {
+  final Duration duration;
+
+  OnUpdateActualTime({required this.duration});
+}
+
+class OnSongTimeChanged implements VersionAction {
+  final Duration duration;
+
+  OnSongTimeChanged({required this.duration});
+}
+
+class OnPlayerControllerAction implements VersionAction {
+  final PlayerAction? action;
+
+  OnPlayerControllerAction(this.action);
+}
+
+class OnSongPlayerStateChanged implements VersionAction {
+  final SongPlayerState state;
+
+  OnSongPlayerStateChanged(this.state);
 }
 
 class OnChangeEmail implements VersionAction {

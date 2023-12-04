@@ -13,7 +13,7 @@ import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.d
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_bloc.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_selection_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -169,7 +169,7 @@ void main() {
       final song = getFakeSongSearch();
 
       final result = bloc.getSongState(song);
-      expect(result, SongState.toAdd);
+      expect(result, SongSelectionState.toAdd);
     });
 
     test("and song is in localDB and not included in remote should return selected state", () {
@@ -177,7 +177,7 @@ void main() {
       bloc.emit(AddVersionsToListState(selectedSongs: [song], songbookId: 10));
 
       final result = bloc.getSongState(song);
-      expect(result, SongState.selected);
+      expect(result, SongSelectionState.selected);
     });
 
     test("and song is not in localDB and included in remote should return added state", () {
@@ -185,7 +185,7 @@ void main() {
       bloc.emit(AddVersionsToListState(songbookId: 10, songsId: [song.songId]));
 
       final result = bloc.getSongState(song);
-      expect(result, SongState.added);
+      expect(result, SongSelectionState.added);
     });
   });
 

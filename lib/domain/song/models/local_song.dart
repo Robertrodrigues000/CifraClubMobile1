@@ -3,6 +3,7 @@ class LocalSong {
   final String artistName;
 
   final String? path;
+  final String? completePath;
 
   final int duration;
   final String? albumId;
@@ -11,6 +12,7 @@ class LocalSong {
     required this.songName,
     required this.artistName,
     this.path,
+    this.completePath,
     required this.duration,
     this.albumId,
   });

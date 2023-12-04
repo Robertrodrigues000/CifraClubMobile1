@@ -170,6 +170,12 @@ class VersionReducer {
             onEffect(OnEmailValidateEffect(result: action.result));
             return state;
         }
+      case OnGetSongDuration():
+        return state.copyWith(songState: state.songState.copyWith(totalDuration: action.duration));
+      case OnUpdateActualTime():
+        return state.copyWith(songState: state.songState.copyWith(actualTime: action.duration));
+      case OnSongPlayerStateChanged():
+        return state.copyWith(songState: state.songState.copyWith(songPlayerState: action.state));
       default:
         return state;
     }

@@ -51,6 +51,9 @@ class AppDimensionScheme {
   final double heightLimitCardPro;
   final double heightLimitCardFree;
   final double selectableItemHeight;
+  final double playerHorizontalPadding;
+  final double playerVerticalPadding;
+  final double playerSpaceBetweenActionAndSlider;
   final double registerEmailButtonWidth;
 
   const AppDimensionScheme({
@@ -99,6 +102,9 @@ class AppDimensionScheme {
     required this.heightLimitCardPro,
     required this.heightLimitCardFree,
     required this.selectableItemHeight,
+    required this.playerHorizontalPadding,
+    required this.playerVerticalPadding,
+    required this.playerSpaceBetweenActionAndSlider,
     required this.registerEmailButtonWidth,
   });
 }

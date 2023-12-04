@@ -10,7 +10,7 @@ import 'package:cifraclub/domain/songbook/use_cases/get_all_versions_from_songbo
 import 'package:cifraclub/domain/songbook/use_cases/insert_version_to_songbook.dart';
 import 'package:cifraclub/domain/subscription/use_cases/get_pro_status_stream.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_selection_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:typed_result/typed_result.dart';
@@ -119,13 +119,13 @@ class AddVersionsToListBloc extends Cubit<AddVersionsToListState> {
     ));
   }
 
-  SongState getSongState(SongSearch song) {
+  SongSelectionState getSongState(SongSearch song) {
     if (state.selectedSongs.contains(song)) {
-      return SongState.selected;
+      return SongSelectionState.selected;
     } else if (state.songsId.any((element) => element == song.songId)) {
-      return SongState.added;
+      return SongSelectionState.added;
     }
-    return SongState.toAdd;
+    return SongSelectionState.toAdd;
   }
 
   void searchSongs(String query) {

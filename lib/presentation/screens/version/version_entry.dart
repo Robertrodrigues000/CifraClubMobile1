@@ -1,5 +1,6 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
+import 'package:cifraclub/presentation/screens/version/middlewares/song_player_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/register_email_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/font_size_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_options_bottom_sheet_middleware.dart';
@@ -69,6 +70,7 @@ class VersionEntry extends ScreenEntry {
         getIt<FloatingFooterBarMiddleware>(),
         getIt<HeaderMiddleware>(),
         getIt<VersionOptionsBottomSheetMiddleware>(),
+        getIt<SongPlayerMiddleware>(),
         getIt<RegisterEmailMiddleware>(),
         getIt<FontSizeMiddleware>(),
       ], getIt())

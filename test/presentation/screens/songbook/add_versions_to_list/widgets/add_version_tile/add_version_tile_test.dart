@@ -1,6 +1,6 @@
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/add_version_tile.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_selection_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +19,7 @@ void main() {
           imageUrl: "",
           song: "Musica",
           artist: "Artista",
-          state: SongState.toAdd,
+          state: SongSelectionState.toAdd,
         ),
       ),
     );
@@ -37,7 +37,7 @@ void main() {
             imageUrl: "",
             song: "Musica",
             artist: "Artista",
-            state: SongState.toAdd,
+            state: SongSelectionState.toAdd,
           ),
         ),
       );
@@ -62,7 +62,7 @@ void main() {
             imageUrl: "",
             song: "Musica",
             artist: "Artista",
-            state: SongState.added,
+            state: SongSelectionState.added,
           ),
         ),
       );
@@ -78,7 +78,7 @@ void main() {
             imageUrl: "",
             song: "Musica",
             artist: "Artista",
-            state: SongState.selected),
+            state: SongSelectionState.selected),
       ));
 
       expect(
@@ -101,7 +101,7 @@ void main() {
         artist: "Artista",
         song: "Musica",
         onTap: () {},
-        state: SongState.selected,
+        state: SongSelectionState.selected,
       ),
     ));
     await tester.pumpAndSettle();

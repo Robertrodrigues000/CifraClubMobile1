@@ -1,11 +1,11 @@
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
 
-enum SongState {
+enum SongSelectionState {
   added(icon: null),
   toAdd(icon: AppSvgs.addVersionIcon),
   selected(icon: AppSvgs.selectedVersionIcon);
 
-  const SongState({required this.icon});
+  const SongSelectionState({required this.icon});
 
   final String? icon;
 }

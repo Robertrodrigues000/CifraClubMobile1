@@ -19,6 +19,7 @@ class LocalSongDto {
   final String artistName;
 
   final String? path;
+  final String? completePath;
 
   final int duration;
   final String? albumId;
@@ -27,6 +28,7 @@ class LocalSongDto {
     required this.songName,
     required this.artistName,
     required this.path,
+    required this.completePath,
     required this.duration,
     required this.albumId,
   });

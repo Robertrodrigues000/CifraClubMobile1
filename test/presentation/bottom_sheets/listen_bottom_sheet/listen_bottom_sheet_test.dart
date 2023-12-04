@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cifraclub/data/permission/models/app_permission_status.dart';
 import 'package:cifraclub/domain/shared/request_error.dart';
 import 'package:cifraclub/domain/song/models/song_search_error.dart';
@@ -59,7 +61,14 @@ void main() {
                   _GetYouTubeVideosMock(),
                   _GetLocalSongImageMock(),
                   _GetLocalSongsMock(),
-                ).open(context: context, bloc: bloc, artistName: "", songName: "");
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: (p0) {},
+                );
               },
             ),
           );
@@ -91,7 +100,14 @@ void main() {
                   _GetYouTubeVideosMock(),
                   _GetLocalSongImageMock(),
                   _GetLocalSongsMock(),
-                ).open(context: context, bloc: bloc, artistName: "", songName: "");
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: (p0) {},
+                );
               },
             ),
           );
@@ -119,7 +135,14 @@ void main() {
                   _GetYouTubeVideosMock(),
                   _GetLocalSongImageMock(),
                   _GetLocalSongsMock(),
-                ).open(context: context, bloc: bloc, artistName: "", songName: "");
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: (p0) {},
+                );
               },
             ),
           );
@@ -147,7 +170,14 @@ void main() {
                   _GetYouTubeVideosMock(),
                   _GetLocalSongImageMock(),
                   _GetLocalSongsMock(),
-                ).open(context: context, bloc: bloc, artistName: "", songName: "");
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: (p0) {},
+                );
               },
             ),
           );
@@ -176,7 +206,14 @@ void main() {
                   _GetYouTubeVideosMock(),
                   _GetLocalSongImageMock(),
                   _GetLocalSongsMock(),
-                ).open(context: context, bloc: bloc, artistName: "", songName: "");
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: (p0) {},
+                );
               },
             ),
           );
@@ -208,7 +245,14 @@ void main() {
                   _GetYouTubeVideosMock(),
                   _GetLocalSongImageMock(),
                   _GetLocalSongsMock(),
-                ).open(context: context, bloc: bloc, artistName: "", songName: "");
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: (p0) {},
+                );
               },
             ),
           );
@@ -225,5 +269,90 @@ void main() {
 
     expect(find.byType(ErrorDescriptionWidget), findsOneWidget);
     expect(find.text(appTextEn.localSongsResultNotFound), findsOneWidget);
+  });
+
+  testWidgets("When tap youtube video should return video id", (widgetTester) async {
+    final youtubeVideo = getFakeYouTubeVideo();
+    bloc.mockStream(ListenBottomSheetState(youtubeVideos: [youtubeVideo]));
+    final completer = Completer<String>.sync();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () {
+                ListenBottomSheet(
+                  _GetYouTubeVideosMock(),
+                  _GetLocalSongImageMock(),
+                  _GetLocalSongsMock(),
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: (p0) {},
+                  onTapYoutube: completer.complete,
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    await widgetTester.tap(find.text(youtubeVideo.title));
+    await widgetTester.pumpAndSettle();
+
+    final value = await completer.future;
+    expect(value, youtubeVideo.videoId);
+  });
+
+  testWidgets("When tap local song should return song path", (widgetTester) async {
+    final localSong = getFakeLocalSong();
+    bloc.mockStream(ListenBottomSheetState(localSongs: [localSong]));
+    final completer = Completer<String>.sync();
+
+    await widgetTester.pumpWidgetWithWrapper(
+      Builder(
+        builder: (context) {
+          return Scaffold(
+            body: InkWell(
+              onTap: () {
+                ListenBottomSheet(
+                  _GetYouTubeVideosMock(),
+                  _GetLocalSongImageMock(),
+                  _GetLocalSongsMock(),
+                ).open(
+                  context: context,
+                  bloc: bloc,
+                  artistName: "",
+                  songName: "",
+                  onTapSong: completer.complete,
+                  onTapYoutube: (p0) {},
+                );
+              },
+            ),
+          );
+        },
+      ),
+    );
+
+    expect(find.byType(InkWell), findsOneWidget);
+    await widgetTester.tap(find.byType(InkWell));
+    await widgetTester.pumpAndSettle();
+
+    await widgetTester.tap(find.text(appTextEn.library));
+    await widgetTester.pumpAndSettle();
+
+    await widgetTester.tap(find.text(localSong.songName));
+    await widgetTester.pumpAndSettle();
+
+    final value = await completer.future;
+    expect(value, localSong.completePath);
   });
 }

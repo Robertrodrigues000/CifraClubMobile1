@@ -5,6 +5,7 @@ import 'package:cifraclub/domain/version/models/tuning.dart';
 import 'package:cifraclub/domain/version/models/version_data.dart';
 import 'package:cifraclub/domain/section/models/section.dart';
 import 'package:cifraclub/domain/version/models/instrument.dart';
+import 'package:cifraclub/data/song/song_player_manager.dart';
 import 'package:cifraclub/presentation/screens/version/models/version_filter.dart';
 import 'package:cifraclub/presentation/widgets/floating_footer_bar/floating_footer_bar.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
@@ -40,6 +41,8 @@ class VersionState {
 
   final FloatingFooterBarState floatingFooterBarState;
   final LocalVersionSettings localVersionSettings;
+
+  final SongState songState;
 
   /*
   
@@ -87,6 +90,7 @@ class VersionState {
     this.autoScrollState = const AutoScrollState(),
     this.chordState = const ChordState(),
     this.floatingFooterBarState = const FloatingFooterBarState(),
+    this.songState = const SongState(),
     this.localVersionSettings = const LocalVersionSettings(instrument: Instrument.guitar),
     this.shouldShowChangeVersionDialog = true,
   });
@@ -147,6 +151,20 @@ class FloatingFooterBarState {
 
   const FloatingFooterBarState({
     this.mode = FloatingFooterBarMode.main,
+  });
+}
+
+@CopyWith()
+@immutable
+class SongState {
+  final Duration? totalDuration;
+  final Duration actualTime;
+  final SongPlayerState songPlayerState;
+
+  const SongState({
+    this.totalDuration,
+    this.actualTime = Duration.zero,
+    this.songPlayerState = SongPlayerState.disposed,
   });
 }
 

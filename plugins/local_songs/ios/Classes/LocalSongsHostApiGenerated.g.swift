@@ -39,6 +39,7 @@ struct LocalSongDto {
   var songName: String
   var artistName: String
   var path: String? = nil
+  var completePath: String? = nil
   var duration: Int64
   var albumId: String? = nil
 
@@ -46,13 +47,15 @@ struct LocalSongDto {
     let songName = list[0] as! String
     let artistName = list[1] as! String
     let path: String? = nilOrValue(list[2])
-    let duration = list[3] is Int64 ? list[3] as! Int64 : Int64(list[3] as! Int32)
-    let albumId: String? = nilOrValue(list[4])
+    let completePath: String? = nilOrValue(list[3])
+    let duration = list[4] is Int64 ? list[4] as! Int64 : Int64(list[4] as! Int32)
+    let albumId: String? = nilOrValue(list[5])
 
     return LocalSongDto(
       songName: songName,
       artistName: artistName,
       path: path,
+      completePath: completePath,
       duration: duration,
       albumId: albumId
     )
@@ -62,6 +65,7 @@ struct LocalSongDto {
       songName,
       artistName,
       path,
+      completePath,
       duration,
       albumId,
     ]

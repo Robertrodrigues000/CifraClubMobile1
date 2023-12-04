@@ -47,6 +47,7 @@ data class LocalSongDto (
   val songName: String,
   val artistName: String,
   val path: String? = null,
+  val completePath: String? = null,
   val duration: Long,
   val albumId: String? = null
 
@@ -57,9 +58,10 @@ data class LocalSongDto (
       val songName = list[0] as String
       val artistName = list[1] as String
       val path = list[2] as String?
-      val duration = list[3].let { if (it is Int) it.toLong() else it as Long }
-      val albumId = list[4] as String?
-      return LocalSongDto(songName, artistName, path, duration, albumId)
+      val completePath = list[3] as String?
+      val duration = list[4].let { if (it is Int) it.toLong() else it as Long }
+      val albumId = list[5] as String?
+      return LocalSongDto(songName, artistName, path, completePath, duration, albumId)
     }
   }
   fun toList(): List<Any?> {
@@ -67,6 +69,7 @@ data class LocalSongDto (
       songName,
       artistName,
       path,
+      completePath,
       duration,
       albumId,
     )

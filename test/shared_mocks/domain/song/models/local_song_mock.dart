@@ -7,4 +7,5 @@ LocalSong getFakeLocalSong() => LocalSong(
       songName: faker.company.name(),
       albumId: faker.randomGenerator.integer(1000).toString(),
       path: faker.internet.ipv4Address(),
+      completePath: faker.internet.ipv4Address(),
     );

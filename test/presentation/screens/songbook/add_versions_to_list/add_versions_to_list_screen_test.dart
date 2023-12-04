@@ -5,7 +5,7 @@ import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_screen.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/add_versions_to_list_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/add_version_tile.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_selection_state.dart';
 import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/count_selected_versions.dart';
 import 'package:cifraclub/presentation/screens/songbook/lists/widgets/version_limit_card.dart';
 import 'package:cifraclub/presentation/widgets/limit_warning.dart';
@@ -34,7 +34,7 @@ void main() {
     when(() => bloc.init()).thenAnswer((_) => SynchronousFuture(null));
     when(() => bloc.addOrRemoveVersion(any())).thenReturn(null);
     when(bloc.clearCount).thenReturn(null);
-    when(() => bloc.getSongState(any())).thenReturn(SongState.selected);
+    when(() => bloc.getSongState(any())).thenReturn(SongSelectionState.selected);
     when(() => bloc.searchSongs(any())).thenReturn(null);
     when(bloc.close).thenAnswer((_) => SynchronousFuture(null));
   });

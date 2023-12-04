@@ -4,6 +4,7 @@ import LocalSongDto
 import android.content.ContentUris
 import android.content.Context
 import android.provider.MediaStore
+import android.util.Log
 
 class LoadLocalSongs {
     companion object {
@@ -13,6 +14,7 @@ class LoadLocalSongs {
         private const val ARTIST = MediaStore.Audio.Media.ARTIST
         private const val IS_MUSIC = MediaStore.Audio.Media.IS_MUSIC
         private const val ALBUM_ID = MediaStore.Audio.Media.ALBUM_ID
+        private const val DATA = MediaStore.Audio.Media.DATA
     }
 
     fun fetchMedias(
@@ -21,7 +23,7 @@ class LoadLocalSongs {
         songName: String,
     ): MutableList<LocalSongDto> {
         val songs = mutableListOf<LocalSongDto>()
-        val projection = arrayOf(DURATION, _ID, TITLE, ARTIST, ALBUM_ID)
+        val projection = arrayOf(DURATION, _ID, TITLE, ARTIST, ALBUM_ID, DATA)
 
         val selection =
             String.format("%s LIKE ? AND %s LIKE ? AND %s != 0", ARTIST, TITLE, IS_MUSIC)
@@ -44,6 +46,7 @@ class LoadLocalSongs {
             val titleColumnIndex = cursor.getColumnIndex(TITLE)
             val artistColumnIndex = cursor.getColumnIndex(ARTIST)
             val albumIdColumnIndex = cursor.getColumnIndex(ALBUM_ID)
+            val dataColumnIndex = cursor.getColumnIndex(DATA)
 
             if (cursor.moveToNext()) {
                 do {
@@ -56,12 +59,13 @@ class LoadLocalSongs {
                     val cursorSongName = cursor.getString(titleColumnIndex)
                     val cursorArtistName = cursor.getString(artistColumnIndex)
                     val albumId = cursor.getString(albumIdColumnIndex)
-
+                    val completePath = cursor.getString(dataColumnIndex)
 
                     val song = LocalSongDto(
                         songName = cursorSongName,
                         artistName = cursorArtistName,
                         path = contentUri.toString(),
+                        completePath = completePath,
                         duration = songDuration.toLong(),
                         albumId = albumId
                     )

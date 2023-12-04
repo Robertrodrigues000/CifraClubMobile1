@@ -72,6 +72,11 @@ const appDimensionSchemeTablet = AppDimensionScheme(
   heightLimitCardPro: 26,
   heightLimitCardFree: 50,
 
+  //Player
+  playerHorizontalPadding: 16,
+  playerVerticalPadding: 20,
+  playerSpaceBetweenActionAndSlider: 12,
+
   //Register email
   registerEmailButtonWidth: 200,
 );

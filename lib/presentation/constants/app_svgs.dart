@@ -91,11 +91,9 @@ class AppSvgs {
   static const floatingBarSettings = "assets/images/floating_bar_settings.svg";
   static const floatingBarMinifyVideo = "assets/images/floating_bar_minify_video.svg";
 
-  static const floatingBarAutoscrollStart = "assets/images/floating_bar_autoscroll_start.svg";
   static const floatingBarAutoscrollFast = "assets/images/floating_bar_autoscroll_fast.svg";
   static const floatingBarAutoscrollClose = "assets/images/floating_bar_autoscroll_close.svg";
   static const floatingBarAutoscrollSlow = "assets/images/floating_bar_autoscroll_slow.svg";
-  static const floatingBarAutoscrollPause = "assets/images/floating_bar_autoscroll_pause.svg";
 
   static const floatingBarFontConfirm = "assets/images/floating_bar_font_confirm.svg";
   static const floatingBarFontReset = "assets/images/floating_bar_font_reset.svg";
@@ -103,6 +101,9 @@ class AppSvgs {
   static const floatingBarFontBigger = "assets/images/floating_bar_font_bigger.svg";
   static const fontSizeIcon = "assets/images/font_size_icon.svg";
   static const resetSettingsIcon = "assets/images/reset_settings_icon.svg";
+
+  static const playIcon = "assets/images/play_icon.svg";
+  static const pauseIcon = "assets/images/pause_icon.svg";
 
   static const blockedContentLock = "assets/images/blocked_content_lock.svg";
 }

@@ -97,6 +97,12 @@ abstract class _$AppDimensionSchemeCWProxy {
 
   AppDimensionScheme selectableItemHeight(double selectableItemHeight);
 
+  AppDimensionScheme playerHorizontalPadding(double playerHorizontalPadding);
+
+  AppDimensionScheme playerVerticalPadding(double playerVerticalPadding);
+
+  AppDimensionScheme playerSpaceBetweenActionAndSlider(double playerSpaceBetweenActionAndSlider);
+
   AppDimensionScheme registerEmailButtonWidth(double registerEmailButtonWidth);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `AppDimensionScheme(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
@@ -151,6 +157,9 @@ abstract class _$AppDimensionSchemeCWProxy {
     double? heightLimitCardPro,
     double? heightLimitCardFree,
     double? selectableItemHeight,
+    double? playerHorizontalPadding,
+    double? playerVerticalPadding,
+    double? playerSpaceBetweenActionAndSlider,
     double? registerEmailButtonWidth,
   });
 }
@@ -318,6 +327,18 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
       this(selectableItemHeight: selectableItemHeight);
 
   @override
+  AppDimensionScheme playerHorizontalPadding(double playerHorizontalPadding) =>
+      this(playerHorizontalPadding: playerHorizontalPadding);
+
+  @override
+  AppDimensionScheme playerVerticalPadding(double playerVerticalPadding) =>
+      this(playerVerticalPadding: playerVerticalPadding);
+
+  @override
+  AppDimensionScheme playerSpaceBetweenActionAndSlider(double playerSpaceBetweenActionAndSlider) =>
+      this(playerSpaceBetweenActionAndSlider: playerSpaceBetweenActionAndSlider);
+
+  @override
   AppDimensionScheme registerEmailButtonWidth(double registerEmailButtonWidth) =>
       this(registerEmailButtonWidth: registerEmailButtonWidth);
 
@@ -375,6 +396,9 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
     Object? heightLimitCardPro = const $CopyWithPlaceholder(),
     Object? heightLimitCardFree = const $CopyWithPlaceholder(),
     Object? selectableItemHeight = const $CopyWithPlaceholder(),
+    Object? playerHorizontalPadding = const $CopyWithPlaceholder(),
+    Object? playerVerticalPadding = const $CopyWithPlaceholder(),
+    Object? playerSpaceBetweenActionAndSlider = const $CopyWithPlaceholder(),
     Object? registerEmailButtonWidth = const $CopyWithPlaceholder(),
   }) {
     return AppDimensionScheme(
@@ -569,6 +593,20 @@ class _$AppDimensionSchemeCWProxyImpl implements _$AppDimensionSchemeCWProxy {
           ? _value.selectableItemHeight
           // ignore: cast_nullable_to_non_nullable
           : selectableItemHeight as double,
+      playerHorizontalPadding:
+          playerHorizontalPadding == const $CopyWithPlaceholder() || playerHorizontalPadding == null
+              ? _value.playerHorizontalPadding
+              // ignore: cast_nullable_to_non_nullable
+              : playerHorizontalPadding as double,
+      playerVerticalPadding: playerVerticalPadding == const $CopyWithPlaceholder() || playerVerticalPadding == null
+          ? _value.playerVerticalPadding
+          // ignore: cast_nullable_to_non_nullable
+          : playerVerticalPadding as double,
+      playerSpaceBetweenActionAndSlider:
+          playerSpaceBetweenActionAndSlider == const $CopyWithPlaceholder() || playerSpaceBetweenActionAndSlider == null
+              ? _value.playerSpaceBetweenActionAndSlider
+              // ignore: cast_nullable_to_non_nullable
+              : playerSpaceBetweenActionAndSlider as double,
       registerEmailButtonWidth:
           registerEmailButtonWidth == const $CopyWithPlaceholder() || registerEmailButtonWidth == null
               ? _value.registerEmailButtonWidth

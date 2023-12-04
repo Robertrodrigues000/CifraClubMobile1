@@ -1,6 +1,8 @@
 PODS:
   - appcheck (1.0.3):
     - Flutter
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - Firebase/Analytics (10.15.0):
@@ -190,6 +192,7 @@ PODS:
 
 DEPENDENCIES:
   - appcheck (from `.symlinks/plugins/appcheck/ios`)
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -235,6 +238,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   appcheck:
     :path: ".symlinks/plugins/appcheck/ios"
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   firebase_analytics:
@@ -278,6 +283,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   appcheck: e1ab9d4e03736f03e0401554a134d1ed502d7629
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   Firebase: 66043bd4579e5b73811f96829c694c7af8d67435
   firebase_analytics: 68bdf6e60e38372bdcfa54a4a8edd29f2baec4ce

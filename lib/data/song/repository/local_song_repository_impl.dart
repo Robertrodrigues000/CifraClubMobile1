@@ -23,6 +23,7 @@ class LocalSongRepositoryImpl extends LocalSongRepository {
                 songName: e.songName,
                 artistName: e.artistName,
                 path: e.path,
+                completePath: e.completePath,
                 duration: e.duration,
                 albumId: e.albumId,
               ))

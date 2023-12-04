@@ -39,6 +39,8 @@ abstract class _$VersionStateCWProxy {
 
   VersionState floatingFooterBarState(FloatingFooterBarState floatingFooterBarState);
 
+  VersionState songState(SongState songState);
+
   VersionState localVersionSettings(LocalVersionSettings localVersionSettings);
 
   VersionState shouldShowChangeVersionDialog(bool shouldShowChangeVersionDialog);
@@ -66,6 +68,7 @@ abstract class _$VersionStateCWProxy {
     AutoScrollState? autoScrollState,
     ChordState? chordState,
     FloatingFooterBarState? floatingFooterBarState,
+    SongState? songState,
     LocalVersionSettings? localVersionSettings,
     bool? shouldShowChangeVersionDialog,
   });
@@ -128,6 +131,9 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
       this(floatingFooterBarState: floatingFooterBarState);
 
   @override
+  VersionState songState(SongState songState) => this(songState: songState);
+
+  @override
   VersionState localVersionSettings(LocalVersionSettings localVersionSettings) =>
       this(localVersionSettings: localVersionSettings);
 
@@ -160,6 +166,7 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
     Object? autoScrollState = const $CopyWithPlaceholder(),
     Object? chordState = const $CopyWithPlaceholder(),
     Object? floatingFooterBarState = const $CopyWithPlaceholder(),
+    Object? songState = const $CopyWithPlaceholder(),
     Object? localVersionSettings = const $CopyWithPlaceholder(),
     Object? shouldShowChangeVersionDialog = const $CopyWithPlaceholder(),
   }) {
@@ -228,6 +235,10 @@ class _$VersionStateCWProxyImpl implements _$VersionStateCWProxy {
           ? _value.floatingFooterBarState
           // ignore: cast_nullable_to_non_nullable
           : floatingFooterBarState as FloatingFooterBarState,
+      songState: songState == const $CopyWithPlaceholder() || songState == null
+          ? _value.songState
+          // ignore: cast_nullable_to_non_nullable
+          : songState as SongState,
       localVersionSettings: localVersionSettings == const $CopyWithPlaceholder() || localVersionSettings == null
           ? _value.localVersionSettings
           // ignore: cast_nullable_to_non_nullable
@@ -542,6 +553,77 @@ extension $FloatingFooterBarStateCopyWith on FloatingFooterBarState {
   /// Returns a callable class that can be used as follows: `instanceOfFloatingFooterBarState.copyWith(...)` or like so:`instanceOfFloatingFooterBarState.copyWith.fieldName(...)`.
   // ignore: library_private_types_in_public_api
   _$FloatingFooterBarStateCWProxy get copyWith => _$FloatingFooterBarStateCWProxyImpl(this);
+}
+
+abstract class _$SongStateCWProxy {
+  SongState totalDuration(Duration? totalDuration);
+
+  SongState actualTime(Duration actualTime);
+
+  SongState songPlayerState(SongPlayerState songPlayerState);
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SongState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// SongState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  SongState call({
+    Duration? totalDuration,
+    Duration? actualTime,
+    SongPlayerState? songPlayerState,
+  });
+}
+
+/// Proxy class for `copyWith` functionality. This is a callable class and can be used as follows: `instanceOfSongState.copyWith(...)`. Additionally contains functions for specific fields e.g. `instanceOfSongState.copyWith.fieldName(...)`
+class _$SongStateCWProxyImpl implements _$SongStateCWProxy {
+  const _$SongStateCWProxyImpl(this._value);
+
+  final SongState _value;
+
+  @override
+  SongState totalDuration(Duration? totalDuration) => this(totalDuration: totalDuration);
+
+  @override
+  SongState actualTime(Duration actualTime) => this(actualTime: actualTime);
+
+  @override
+  SongState songPlayerState(SongPlayerState songPlayerState) => this(songPlayerState: songPlayerState);
+
+  @override
+
+  /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SongState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
+  ///
+  /// Usage
+  /// ```dart
+  /// SongState(...).copyWith(id: 12, name: "My name")
+  /// ````
+  SongState call({
+    Object? totalDuration = const $CopyWithPlaceholder(),
+    Object? actualTime = const $CopyWithPlaceholder(),
+    Object? songPlayerState = const $CopyWithPlaceholder(),
+  }) {
+    return SongState(
+      totalDuration: totalDuration == const $CopyWithPlaceholder()
+          ? _value.totalDuration
+          // ignore: cast_nullable_to_non_nullable
+          : totalDuration as Duration?,
+      actualTime: actualTime == const $CopyWithPlaceholder() || actualTime == null
+          ? _value.actualTime
+          // ignore: cast_nullable_to_non_nullable
+          : actualTime as Duration,
+      songPlayerState: songPlayerState == const $CopyWithPlaceholder() || songPlayerState == null
+          ? _value.songPlayerState
+          // ignore: cast_nullable_to_non_nullable
+          : songPlayerState as SongPlayerState,
+    );
+  }
+}
+
+extension $SongStateCopyWith on SongState {
+  /// Returns a callable class that can be used as follows: `instanceOfSongState.copyWith(...)` or like so:`instanceOfSongState.copyWith.fieldName(...)`.
+  // ignore: library_private_types_in_public_api
+  _$SongStateCWProxy get copyWith => _$SongStateCWProxyImpl(this);
 }
 
 abstract class _$FontSizeStateCWProxy {

@@ -17,7 +17,8 @@ public class LocalSongsPlugin: NSObject, FlutterPlugin, LocalSongsHostApi {
         
         let results = songs?.map({ result -> LocalSongDto in
             let url = String(result.persistentID)
-            return LocalSongDto(songName: result.title ?? "", artistName: result.artist ?? "", path: url, duration: Int64(truncating: NSNumber(floatLiteral: result.playbackDuration)), albumId: result.albumPersistentID.description)
+            let completePath = result.assetURL?.absoluteString
+            return LocalSongDto(songName: result.title ?? "", artistName: result.artist ?? "", path: url, completePath: completePath, duration: Int64(truncating: NSNumber(floatLiteral: result.playbackDuration)), albumId: result.albumPersistentID.description)
         })
         return LocalSongsFetchResult(songs: results)
     }

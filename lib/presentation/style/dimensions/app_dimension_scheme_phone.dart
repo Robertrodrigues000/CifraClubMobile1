@@ -72,6 +72,11 @@ const appDimensionSchemePhone = AppDimensionScheme(
   heightLimitCardPro: 22,
   heightLimitCardFree: 42,
 
+  //Player
+  playerHorizontalPadding: 12,
+  playerVerticalPadding: 12,
+  playerSpaceBetweenActionAndSlider: 8,
+
   //Register email
   registerEmailButtonWidth: double.infinity,
 );

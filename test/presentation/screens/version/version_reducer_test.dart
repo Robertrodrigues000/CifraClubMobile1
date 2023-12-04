@@ -1,3 +1,4 @@
+import 'package:cifraclub/data/song/song_player_manager.dart';
 import 'package:cifraclub/domain/section/models/text_section.dart';
 import 'package:cifraclub/domain/songbook/models/email_options_result.dart';
 import 'package:cifraclub/domain/songbook/models/version_options_result.dart';
@@ -696,5 +697,43 @@ void main() {
     expect(state.localVersionSettings.tuning, versionData.tuning);
     expect(state.localVersionSettings.key, versionData.key);
     effectStream.close();
+  });
+
+  test("When action is OnGetSongDuration", () {
+    const duration = Duration.zero;
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnGetSongDuration(duration: duration),
+      (_) => null,
+    );
+
+    expect(state.songState.totalDuration, duration);
+  });
+
+  test("When action is OnUpdateActualTime", () {
+    const duration = Duration.zero;
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnUpdateActualTime(duration: duration),
+      (_) => null,
+    );
+
+    expect(state.songState.actualTime, duration);
+  });
+
+  test("When action is OnSongPlayerStateChanged", () {
+    final reducer = VersionReducer();
+
+    final state = reducer.reduce(
+      const VersionState(),
+      OnSongPlayerStateChanged(SongPlayerState.playing),
+      (_) => null,
+    );
+
+    expect(state.songState.songPlayerState, SongPlayerState.playing);
   });
 }

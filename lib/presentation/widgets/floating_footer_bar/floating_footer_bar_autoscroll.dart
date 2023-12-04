@@ -109,8 +109,7 @@ class _FloatingFooterBarAutoscrollState extends State<FloatingFooterBarAutoscrol
           width: 40,
           height: 32,
           child: SvgImage(
-            assetPath:
-                widget.isAutoScrollRunning ? AppSvgs.floatingBarAutoscrollPause : AppSvgs.floatingBarAutoscrollStart,
+            assetPath: widget.isAutoScrollRunning ? AppSvgs.pauseIcon : AppSvgs.playIcon,
             color: context.colors.textSecondary,
           ),
           onTap: () => widget.onAction(FloatingFooterBarDidTapOnPlayAutoScroll()),

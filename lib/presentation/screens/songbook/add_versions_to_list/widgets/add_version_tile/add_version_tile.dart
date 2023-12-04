@@ -1,6 +1,6 @@
 import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/constants/app_svgs.dart';
-import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_state.dart';
+import 'package:cifraclub/presentation/screens/songbook/add_versions_to_list/widgets/add_version_tile/song_selection_state.dart';
 import 'package:cifraclub/presentation/widgets/container_with_ripple_effect.dart';
 import 'package:cifraclub/presentation/widgets/remote_image/remote_image.dart';
 import 'package:cifraclub/presentation/widgets/svg_image.dart';
@@ -12,7 +12,7 @@ class AddVersionTile extends StatelessWidget {
   final String? imageUrl;
   final String song;
   final String? artist;
-  final SongState state;
+  final SongSelectionState state;
   final Widget? trailing;
 
   const AddVersionTile({
@@ -31,7 +31,7 @@ class AddVersionTile extends StatelessWidget {
     final maxWidth = MediaQuery.of(context).size.width;
     return ContainerWithRippleEffect(
       width: maxWidth,
-      onTap: state == SongState.added ? null : onTap,
+      onTap: state == SongSelectionState.added ? null : onTap,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: context.appDimensionScheme.screenMargin),
         child: Row(
@@ -41,7 +41,7 @@ class AddVersionTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Opacity(
-              opacity: state == SongState.added ? 0.4 : 1,
+              opacity: state == SongSelectionState.added ? 0.4 : 1,
               child: RemoteImage(
                 imageUrl: imageUrl,
                 // coverage:ignore-start
@@ -77,7 +77,7 @@ class AddVersionTile extends StatelessWidget {
             ),
             Expanded(
               child: Opacity(
-                opacity: state == SongState.added ? 0.5 : 1,
+                opacity: state == SongSelectionState.added ? 0.5 : 1,
                 child: Column(
                   mainAxisAlignment: artist != null ? MainAxisAlignment.start : MainAxisAlignment.center,
                   textBaseline: TextBaseline.ideographic,
@@ -111,7 +111,7 @@ class AddVersionTile extends StatelessWidget {
             if (state.icon != null)
               SvgImage(
                 assetPath: state.icon,
-                color: state == SongState.toAdd ? context.colors.textPrimary : null,
+                color: state == SongSelectionState.toAdd ? context.colors.textPrimary : null,
               )
             else ...[Text(context.text.onList, style: typography.subtitle5)],
           ],

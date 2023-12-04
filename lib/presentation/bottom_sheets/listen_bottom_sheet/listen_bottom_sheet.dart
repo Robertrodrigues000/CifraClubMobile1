@@ -33,11 +33,15 @@ class ListenBottomSheet {
     required BuildContext context,
     required String artistName,
     required String songName,
+    required Function(String) onTapYoutube,
+    required Function(String) onTapSong,
     ListenBottomSheetBloc? bloc,
   }) {
     DefaultBottomSheet.showBottomSheet(
       context: context,
       child: _ListenBottomSheetWidget(
+        onTapYoutube: onTapYoutube,
+        onTapSong: onTapSong,
         bloc: bloc ??
             ListenBottomSheetBloc(
               _getYouTubeVideos,
@@ -55,7 +59,10 @@ class ListenBottomSheet {
 }
 
 class _ListenBottomSheetWidget extends StatefulWidget {
-  const _ListenBottomSheetWidget({required this.bloc});
+  final Function(String) onTapYoutube;
+  final Function(String) onTapSong;
+
+  const _ListenBottomSheetWidget({required this.bloc, required this.onTapYoutube, required this.onTapSong});
 
   final ListenBottomSheetBloc bloc;
 
@@ -179,7 +186,10 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                                         videoName: youtubeVideo.title.replaceAll("&amp;", "&"),
                                         views:
                                             "${_formatNumber(int.tryParse(youtubeVideo.viewCount))} ${context.text.views}",
-                                        onTap: () {}, // coverage:ignore-line
+                                        onTap: () {
+                                          DefaultBottomSheet.close(context);
+                                          widget.onTapYoutube(youtubeVideo.videoId);
+                                        },
                                       );
                                     },
                                   ),
@@ -219,7 +229,10 @@ class _ListenBottomSheetWidgetState extends State<_ListenBottomSheetWidget> with
                                             image: snapshot.data,
                                             artistName: localSong.artistName,
                                             songName: localSong.songName,
-                                            onTap: () {}, // coverage:ignore-line
+                                            onTap: () {
+                                              DefaultBottomSheet.close(context);
+                                              widget.onTapSong(localSong.completePath ?? "");
+                                            },
                                           );
                                         },
                                       );
