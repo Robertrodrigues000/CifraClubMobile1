@@ -12,6 +12,7 @@ import 'package:cifraclub/presentation/screens/artist_songs/widgets/songs_by_alp
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/songs_by_most_accessed_tab.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/video_lessons_tab.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
+import 'package:cifraclub/presentation/screens/version/full_screen_video/full_screen_video_entry.dart';
 import 'package:cosmos/cosmos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -180,13 +181,14 @@ class _ArtistSongsScreenState extends State<ArtistSongsScreen> with SingleTicker
                     videoLessonsError: state.videoLessonsError,
                     onTapReload: () => _bloc.getArtistSongsAndVideoLessons(),
                     onTapVideoLesson: (videoLesson) {
-                      VersionEntry.pushFromSong(
-                        Nav.of(context),
-                        _bloc.artistUrl ?? "",
-                        videoLesson.song?.url ?? "",
-                        widget.artistName,
-                        videoLesson.song?.name ?? "",
-                      );
+                      if (videoLesson.version == null) {
+                        FullScreenVideoEntry.push(Nav.of(context), videoLesson.youtubeId);
+                      } else {
+                        VersionEntry.pushFromVideoLesson(
+                          Nav.of(context),
+                          videoLesson,
+                        );
+                      }
                     },
                   )
                 ],

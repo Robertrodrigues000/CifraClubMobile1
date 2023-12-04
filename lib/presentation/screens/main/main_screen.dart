@@ -3,6 +3,7 @@ import 'package:cifraclub/presentation/screens/main/main_bloc.dart';
 import 'package:cifraclub/presentation/screens/main/main_state.dart';
 import 'package:cifraclub/presentation/screens/main/widgets/main_bottom_navigation.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
+import 'package:cifraclub/presentation/screens/version/full_screen_video/full_screen_video_entry.dart';
 import 'package:cifraclub/presentation/widgets/back_button_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,44 +57,47 @@ class _MainScreenState extends State<MainScreen> {
         return BackButtonHandler(
           onWillPop: widget.navigatorsController.onWillPop,
           child: Scaffold(
-              body: PageView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: widget.pageController,
-                children: List.generate(
-                  widget.navigatorsController.navs.length,
-                  (index) => widget.navFrameBuilder(widget.navigatorsController.navs[index]),
-                  growable: false,
-                ),
+            body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: widget.pageController,
+              children: List.generate(
+                widget.navigatorsController.navs.length,
+                (index) => widget.navFrameBuilder(widget.navigatorsController.navs[index]),
+                growable: false,
               ),
-              bottomNavigationBar: AnimatedBuilder(
-                animation: widget.navigatorsController.restorableBottomNavigationIndex,
-                builder: (context, _) {
-                  return shouldShowBottomNavigation
-                      ? MainBottomNavigation(
-                          key: const Key("bottomNav"),
-                          safeAreaBottomOffset: safeAreaBottomOffset,
-                          onItemSelected: (selectedItem) {
-                            widget.navigatorsController.setSelectedItem(selectedItem);
-                          },
-                          currentItem: widget.navigatorsController.currentBottomNavigationScreen,
-                        )
-                      : const SizedBox();
-                },
-              )),
+            ),
+            bottomNavigationBar: AnimatedBuilder(
+              animation: widget.navigatorsController.restorableBottomNavigationIndex,
+              builder: (context, _) {
+                return shouldShowBottomNavigation
+                    ? MainBottomNavigation(
+                        key: const Key("bottomNav"),
+                        safeAreaBottomOffset: safeAreaBottomOffset,
+                        onItemSelected: (selectedItem) {
+                          widget.navigatorsController.setSelectedItem(selectedItem);
+                        },
+                        currentItem: widget.navigatorsController.currentBottomNavigationScreen,
+                      )
+                    : const SizedBox();
+              },
+            ),
+          ),
         );
       },
     );
   }
 
   void _verifyCurrentScreen() {
-    final isVersionEntry = widget.navigatorsController.currentScreen?.screenName == VersionEntry.name;
+    final isVersionOrFullScreenVideoEntry =
+        widget.navigatorsController.currentScreen?.screenName == VersionEntry.name ||
+            widget.navigatorsController.currentScreen?.screenName == FullScreenVideoEntry.name;
 
-    if (!isVersionEntry && shouldShowBottomNavigation) {
+    if (!isVersionOrFullScreenVideoEntry && shouldShowBottomNavigation) {
       return;
     }
 
     setState(() {
-      shouldShowBottomNavigation = !isVersionEntry;
+      shouldShowBottomNavigation = !isVersionOrFullScreenVideoEntry;
     });
   }
 

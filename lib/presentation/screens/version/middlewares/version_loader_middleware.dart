@@ -18,11 +18,21 @@ class VersionLoaderMiddleware extends VersionMiddleware {
     switch (action) {
       case OnVersionInit():
         if (action.artistUrl != null && action.songUrl != null) {
-          _fetchVersion(
-            addAction,
-            action.artistUrl!,
-            action.songUrl!,
-          );
+          if (action.instrument != null && action.versionUrl != null) {
+            _fetchVersion(
+              addAction,
+              action.artistUrl!,
+              action.songUrl!,
+              action.instrument!.instrumentUrl,
+              action.versionUrl!.isNotEmpty ? action.versionUrl : null,
+            );
+          } else if (action.youtubeId == null) {
+            _fetchVersion(
+              addAction,
+              action.artistUrl!,
+              action.songUrl!,
+            );
+          }
         }
 
       case OnVersionSelected():

@@ -92,7 +92,7 @@ class NavigatorsController {
     final index = currentBottomNavigationScreen.index;
     final currentNav = navs[index]; // current navigator on screen
     if (currentNav.canPop) {
-      navs[index].pop();
+      navs[index].onBackButtonPressed();
       return SynchronousFuture(false);
     } else {
       if (navigatedItems.length > 1) {

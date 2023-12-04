@@ -11,14 +11,21 @@ class VersionReducer {
   VersionState reduce(VersionState state, VersionAction action, Function(VersionEffect) onEffect) {
     switch (action) {
       case OnVersionInit():
+        final isVideoLesson = action.youtubeId != null;
+
+        if (isVideoLesson) {
+          onEffect(OnShowYouTubeVideo(action.youtubeId!));
+        }
         return state.copyWith(
           versionHeaderState: VersionHeaderState(
             artistName: action.artistName ?? "",
             songName: action.songName ?? "",
             songUrl: action.songUrl ?? "",
             artistUrl: action.artistUrl ?? "",
-            selectedInstrument: Instrument.guitar, // Todo receber isso pela shared preferences
+            selectedInstrument: action.instrument ?? Instrument.guitar,
+            // Todo receber isso pela shared preferences
           ),
+          isYouTubeVisible: action.youtubeId != null,
         );
       case OnStartLoading():
         return state.copyWith(isLoading: true);

@@ -19,33 +19,79 @@ class _GetVersionDataMock extends Mock implements GetVersionData {}
 
 void main() {
   group("When action is OnVersionInit", () {
-    test("when success should emit OnVersionLoaded action with versionData", () async {
-      final versionData = getFakeVersionData();
+    group("when success", () {
+      test("and youtubeId is null should emit OnVersionLoaded action with versionData", () async {
+        final versionData = getFakeVersionData();
 
-      final getVersionData = _GetVersionDataMock();
-      when(() => getVersionData(artistUrl: any(named: "artistUrl"), songUrl: any(named: "songUrl")))
-          .thenAnswer((_) => SynchronousFuture(Ok(versionData)));
+        final getVersionData = _GetVersionDataMock();
+        when(() => getVersionData(artistUrl: any(named: "artistUrl"), songUrl: any(named: "songUrl")))
+            .thenAnswer((_) => SynchronousFuture(Ok(versionData)));
 
-      final middleware = VersionLoaderMiddleware(getVersionData);
-      var actionStream = PublishSubject<VersionAction>();
+        final middleware = VersionLoaderMiddleware(getVersionData);
+        var actionStream = PublishSubject<VersionAction>();
 
-      expectLater(
-        actionStream.stream,
-        emitsInOrder([
-          isA<OnStartLoading>(),
-          isA<OnVersionLoaded>().having((e) => e.versionData, "versionData", versionData),
-        ]),
-      );
+        expectLater(
+          actionStream.stream,
+          emitsInOrder([
+            isA<OnStartLoading>(),
+            isA<OnVersionLoaded>().having((e) => e.versionData, "versionData", versionData),
+          ]),
+        );
 
-      middleware.onAction(OnVersionInit(artistUrl: "a", songUrl: "b"), const VersionState(), (action) {
-        actionStream.add(action);
+        middleware.onAction(OnVersionInit(artistUrl: "a", songUrl: "b"), const VersionState(), (action) {
+          actionStream.add(action);
+        });
+
+        verify(() => getVersionData(artistUrl: "a", songUrl: "b")).called(1);
+        actionStream.close();
       });
 
-      verify(() => getVersionData(artistUrl: "a", songUrl: "b")).called(1);
-      actionStream.close();
+      test("and youtubeId is not null should emit OnVersionLoaded action with versionData of the video lesson",
+          () async {
+        final versionData = getFakeVersionData();
+
+        final getVersionData = _GetVersionDataMock();
+        when(
+          () => getVersionData.call(
+              artistUrl: any(named: "artistUrl"),
+              songUrl: any(named: "songUrl"),
+              instrumentUrl: any(named: "instrumentUrl"),
+              versionUrl: any(named: "versionUrl")),
+        ).thenAnswer((_) => SynchronousFuture(Ok(versionData)));
+
+        final middleware = VersionLoaderMiddleware(getVersionData);
+        var actionStream = PublishSubject<VersionAction>();
+
+        expectLater(
+          actionStream.stream,
+          emitsInOrder([
+            isA<OnStartLoading>(),
+            isA<OnVersionLoaded>().having((e) => e.versionData, "versionData", versionData),
+          ]),
+        );
+
+        middleware.onAction(
+            OnVersionInit(
+                artistUrl: "a",
+                songUrl: "b",
+                youtubeId: "cghcjvjvjh",
+                instrument: Instrument.drums,
+                versionUrl: "principal"),
+            const VersionState(), (action) {
+          actionStream.add(action);
+        });
+
+        verify(() => getVersionData(
+              artistUrl: "a",
+              songUrl: "b",
+              instrumentUrl: Instrument.drums.instrumentUrl,
+              versionUrl: "principal",
+            )).called(1);
+        actionStream.close();
+      });
     });
 
-    test("when is success and version is unautorized should emit version error with unauthorized", () {
+    test("when is success and version is unauthorized should emit version error with unauthorized", () {
       final versionData = getFakeVersionData(status: VersionStatus.unauthorized);
 
       final getVersionData = _GetVersionDataMock();

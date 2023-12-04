@@ -18,6 +18,7 @@ import 'package:cifraclub/presentation/screens/songbook/versions_shared/versions
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
+import 'package:cifraclub/presentation/screens/version/full_screen_video/full_screen_video_entry.dart';
 import 'package:nav/nav.dart';
 
 final List<NavRoute> routes = [
@@ -96,5 +97,9 @@ final List<NavRoute> routes = [
   NavRoute(
     VersionsSharedEntry.name,
     (params, _) => VersionsSharedEntry(params),
+  ),
+  NavRoute(
+    FullScreenVideoEntry.name,
+    (params, _) => FullScreenVideoEntry(params),
   ),
 ];

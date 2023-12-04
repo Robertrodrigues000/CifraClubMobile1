@@ -16,6 +16,7 @@ void main() {
             slivers: [
               VideoLessons(
                 list: videoLessons,
+                onTap: (videoLesson) {},
               )
             ],
           ),

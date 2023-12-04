@@ -23,6 +23,9 @@ class OnVersionInit implements VersionAction {
   final String? artistUrl;
   final String? songUrl;
   final int? songbookVersionId;
+  final String? youtubeId;
+  final Instrument? instrument;
+  final String? versionUrl;
 
   OnVersionInit({
     this.artistName,
@@ -30,6 +33,9 @@ class OnVersionInit implements VersionAction {
     this.artistUrl,
     this.songUrl,
     this.songbookVersionId,
+    this.youtubeId,
+    this.instrument,
+    this.versionUrl,
   });
 }
 

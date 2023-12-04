@@ -10,7 +10,7 @@ import 'package:nav/nav.dart';
 import 'fake_screen_entry.dart';
 import 'nav_mock.dart';
 
-class _MockOnNewScreenSet extends Mock implements OnNewScreenSet {}
+class _OnNewScreenSetMock extends Mock implements OnNewScreenSet {}
 
 class _FakeRestorableBottomNavigationItem extends Fake implements RestorableBottomNavigationItem {
   _FakeRestorableBottomNavigationItem({this.value = BottomNavigationItem.home});
@@ -37,7 +37,7 @@ void main() {
     final restorable = restorableBottomNavigationItem ?? _FakeRestorableBottomNavigationItem();
 
     return NavigatorsController(
-      onNewScreenSet: onNewScreenSet ?? _MockOnNewScreenSet(),
+      onNewScreenSet: onNewScreenSet ?? _OnNewScreenSetMock(),
       navs: navs ?? [],
       restorableBottomNavigationIndex: restorable,
     );
@@ -161,7 +161,7 @@ void main() {
       final controller = getController(navs: navs, restorableBottomNavigationItem: restorable);
 
       await controller.onWillPop();
-      verify(() => navs[1].pop()).called(1);
+      verify(() => navs[1].onBackButtonPressed()).called(1);
     });
 
     test("return false if MainScreenNavigatorController can pop", () async {
@@ -181,7 +181,7 @@ void main() {
       controller.setSelectedItem(BottomNavigationItem.songbook);
 
       await controller.onWillPop();
-      verifyNever(() => navs[1].pop());
+      verifyNever(() => navs[1].onBackButtonPressed());
       expect(controller.currentBottomNavigationScreen, BottomNavigationItem.home);
     });
 
@@ -193,7 +193,7 @@ void main() {
       controller.setSelectedItem(BottomNavigationItem.songbook);
 
       await controller.onWillPop();
-      verifyNever(() => navs[1].pop());
+      verifyNever(() => navs[1].onBackButtonPressed());
       expect(controller.navigatedItems.length, 1);
     });
 
@@ -210,7 +210,7 @@ void main() {
     final entry = FakeScreenEntry(fakeScreenName: "Home");
     final navs = [NavMock.getDummy(), NavMock.getDummy(), NavMock.getDummy(), NavMock.getDummy(), NavMock.getDummy()];
     test("navigate to home page", () async {
-      final newScreenSet = _MockOnNewScreenSet();
+      final newScreenSet = _OnNewScreenSetMock();
       final streamController = StreamController<List<ScreenEntry>>(sync: true);
 
       when(newScreenSet).thenAnswer((_) => streamController.stream);
@@ -229,9 +229,9 @@ void main() {
       expect(newEntries.last, same(entry));
     });
 
-    test("if firt entry is SongbookEntry setSelectedItem based on first screen entry and navigate to the correct page",
+    test("if first entry is SongbookEntry setSelectedItem based on first screen entry and navigate to the correct page",
         () async {
-      final newScreenSet = _MockOnNewScreenSet();
+      final newScreenSet = _OnNewScreenSetMock();
       final streamController = StreamController<List<ScreenEntry>>(sync: true);
       when(newScreenSet).thenAnswer((_) => streamController.stream);
 
@@ -257,7 +257,7 @@ void main() {
 
     test("if first entry is Search setSelectedItem based on first screen entry and navigate to the correct page",
         () async {
-      final newScreenSet = _MockOnNewScreenSet();
+      final newScreenSet = _OnNewScreenSetMock();
       final streamController = StreamController<List<ScreenEntry>>(sync: true);
       when(newScreenSet).thenAnswer((_) => streamController.stream);
 
@@ -280,7 +280,7 @@ void main() {
 
     test("if first entry is Academy setSelectedItem based on first screen entry and navigate to the correct page",
         () async {
-      final newScreenSet = _MockOnNewScreenSet();
+      final newScreenSet = _OnNewScreenSetMock();
       final streamController = StreamController<List<ScreenEntry>>(sync: true);
       when(newScreenSet).thenAnswer((_) => streamController.stream);
 
@@ -303,7 +303,7 @@ void main() {
 
     test("if first entry is More setSelectedItem based on first screen entry and navigate to the correct page",
         () async {
-      final newScreenSet = _MockOnNewScreenSet();
+      final newScreenSet = _OnNewScreenSetMock();
       final streamController = StreamController<List<ScreenEntry>>(sync: true);
       when(newScreenSet).thenAnswer((_) => streamController.stream);
 

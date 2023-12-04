@@ -1,6 +1,8 @@
 // coverage:ignore-file
 import 'package:cifraclub/di/di_setup.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/song_player_middleware.dart';
+import 'package:cifraclub/domain/home/models/video_lesson.dart';
+import 'package:cifraclub/domain/version/models/instrument.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/register_email_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/font_size_middleware.dart';
 import 'package:cifraclub/presentation/screens/version/middlewares/version_options_bottom_sheet_middleware.dart';
@@ -25,6 +27,9 @@ class VersionEntry extends ScreenEntry {
   static const songbookVersionIdParamKey = "songbookVersionId";
   static const artistNameParamKey = "artistName";
   static const songNameParamKey = "songName";
+  static const youtubeIdParamKey = "youtubeId";
+  static const instrumentParamKey = "instrument";
+  static const versionLabelParamKey = "versionLabel";
 
   VersionEntry(super.params);
 
@@ -44,11 +49,29 @@ class VersionEntry extends ScreenEntry {
     );
   }
 
+  static void pushFromVideoLesson(
+    Nav nav,
+    VideoLesson videoLesson,
+  ) {
+    nav.push(screenName: name, params: {
+      artistUrlParamKey: videoLesson.artist?.url ?? "",
+      songUrlParamKey: videoLesson.song?.url ?? "",
+      artistNameParamKey: videoLesson.artist?.name ?? "",
+      songNameParamKey: videoLesson.song?.name ?? "",
+      youtubeIdParamKey: videoLesson.youtubeId,
+      instrumentParamKey: videoLesson.instrument?.apiType.toString() ?? "",
+      versionLabelParamKey: videoLesson.version?.label ?? "",
+    });
+  }
+
   String? get artistUrl => params[artistUrlParamKey];
   String? get songUrl => params[songUrlParamKey];
   int? get songbookVersionId => int.tryParse(params[songbookVersionIdParamKey] ?? "");
   String? get artistName => params[artistNameParamKey];
   String? get songName => params[songNameParamKey];
+  String? get youtubeId => params[youtubeIdParamKey];
+  Instrument? get instrument => Instrument.getInstrumentByType(int.tryParse(params[instrumentParamKey] ?? ""));
+  String? get versionLabel => params[versionLabelParamKey];
 
   @override
   String get screenName => name;
@@ -80,6 +103,9 @@ class VersionEntry extends ScreenEntry {
           artistUrl: artistUrl,
           songUrl: songUrl,
           songbookVersionId: songbookVersionId,
+          youtubeId: youtubeId,
+          instrument: instrument,
+          versionUrl: versionLabel,
         )),
       child: VersionScreen(getIt(), versionOptionsBottomSheet: getIt()),
     );

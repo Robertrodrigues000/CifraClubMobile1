@@ -150,12 +150,13 @@ class VersionHeader extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                Filter(
-                  label: context.text.more,
-                  onTap: onTapMoreFilters,
-                  isSelected: false,
-                  trailingIconUri: AppSvgs.dropdownIcon,
-                ),
+                if (filters.isNotEmpty)
+                  Filter(
+                    label: context.text.more,
+                    onTap: onTapMoreFilters,
+                    isSelected: false,
+                    trailingIconUri: AppSvgs.dropdownIcon,
+                  ),
               ],
             ),
           SizedBox(

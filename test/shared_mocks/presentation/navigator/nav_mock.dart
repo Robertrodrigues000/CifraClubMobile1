@@ -16,6 +16,8 @@ class NavMock extends Mock implements Nav {
         volatileParam: any(named: "volatileParam"),
       ),
     ).thenAnswer((invocation) => SynchronousFuture(null));
+    when(mock.onBackButtonPressed).thenAnswer((_) => SynchronousFuture(true));
+
     return mock;
   }
 }

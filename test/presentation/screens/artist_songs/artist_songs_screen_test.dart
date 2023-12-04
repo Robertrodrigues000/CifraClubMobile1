@@ -5,6 +5,7 @@ import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_bloc.da
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_screen.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_state.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/widgets/artist_video_lesson_item.dart';
+import 'package:cifraclub/presentation/screens/version/full_screen_video/full_screen_video_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cosmos/cosmos.dart';
@@ -16,6 +17,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 import '../../../shared_mocks/domain/artist/models/artist_song_mock.dart';
+import '../../../shared_mocks/domain/home/models/video_lesson_version_mock.dart';
 import '../../../shared_mocks/domain/home/models/video_lessons_mock.dart';
 import '../../../shared_mocks/presentation/navigator/nav_mock.dart';
 import '../../../test_helpers/app_localizations.dart';
@@ -442,37 +444,71 @@ void main() {
     verify(() => VersionEntry.pushFromSong(nav, "", song.url, 'Anitta', song.name)).called(1);
   });
 
-  testWidgets("when tapping video lesson, should navigate to version screen", (widgetTester) async {
-    var videoLessons = [getFakeVideoLessons()];
-    bloc.mockStream(ArtistSongsState(
-        isLoading: false,
-        shouldShowSearch: true,
-        videoLessons: videoLessons,
-        videoLessonsFilteredBySearch: videoLessons));
+  group("when tapping video lesson", () {
+    testWidgets("and version is null should navigate to full screen video screen", (widgetTester) async {
+      var videoLessons = [getFakeVideoLessons()];
+      bloc.mockStream(ArtistSongsState(
+          isLoading: false,
+          shouldShowSearch: true,
+          videoLessons: videoLessons,
+          videoLessonsFilteredBySearch: videoLessons));
 
-    final nav = NavMock.getDummy();
+      final nav = NavMock.getDummy();
 
-    await mockNetworkImagesFor(() async {
-      await widgetTester.pumpWidget(
-        TestWrapper(
-          nav: nav,
-          child: BlocProvider<ArtistSongsBloc>.value(
-            value: bloc,
-            child: ArtistSongsScreen(
-              versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
-              artistName: 'Anitta',
+      await mockNetworkImagesFor(() async {
+        await widgetTester.pumpWidget(
+          TestWrapper(
+            nav: nav,
+            child: BlocProvider<ArtistSongsBloc>.value(
+              value: bloc,
+              child: ArtistSongsScreen(
+                versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+                artistName: 'Anitta',
+              ),
             ),
           ),
-        ),
-      );
+        );
+      });
+
+      await widgetTester.tap(find.text(appTextEn.videoLessons));
+      await widgetTester.pumpAndSettle();
+
+      expect(find.byType(ArtistVideoLessonItem), findsOneWidget);
+      await widgetTester.tap(find.byType(ArtistVideoLessonItem), warnIfMissed: false);
+      verify(() => FullScreenVideoEntry.push(nav, videoLessons.first.youtubeId)).called(1);
     });
 
-    await widgetTester.tap(find.text(appTextEn.videoLessons));
-    await widgetTester.pumpAndSettle();
+    testWidgets("and version is not null should navigate to version screen", (widgetTester) async {
+      var videoLessons = [getFakeVideoLessons(videoLessonVersion: getFakeVideoLessonVersion())];
+      bloc.mockStream(ArtistSongsState(
+          isLoading: false,
+          shouldShowSearch: true,
+          videoLessons: videoLessons,
+          videoLessonsFilteredBySearch: videoLessons));
 
-    expect(find.byType(ArtistVideoLessonItem), findsOneWidget);
-    await widgetTester.tap(find.byType(ArtistVideoLessonItem), warnIfMissed: false);
-    verify(() => VersionEntry.pushFromSong(
-        nav, "", videoLessons.first.song?.url ?? "", 'Anitta', videoLessons.first.song?.name ?? "")).called(1);
+      final nav = NavMock.getDummy();
+
+      await mockNetworkImagesFor(() async {
+        await widgetTester.pumpWidget(
+          TestWrapper(
+            nav: nav,
+            child: BlocProvider<ArtistSongsBloc>.value(
+              value: bloc,
+              child: ArtistSongsScreen(
+                versionOptionsBottomSheet: _VersionOptionsBottomSheetMock(),
+                artistName: 'Anitta',
+              ),
+            ),
+          ),
+        );
+      });
+
+      await widgetTester.tap(find.text(appTextEn.videoLessons));
+      await widgetTester.pumpAndSettle();
+
+      expect(find.byType(ArtistVideoLessonItem), findsOneWidget);
+      await widgetTester.tap(find.byType(ArtistVideoLessonItem), warnIfMissed: false);
+      verify(() => VersionEntry.pushFromVideoLesson(nav, videoLessons.first)).called(1);
+    });
   });
 }

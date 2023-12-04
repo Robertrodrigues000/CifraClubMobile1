@@ -8,10 +8,12 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class VideoLessons extends StatefulWidget {
   final List<VideoLesson> list;
+  final Function(VideoLesson) onTap;
 
   const VideoLessons({
     super.key = const Key("video lessons"),
     required this.list,
+    required this.onTap,
   });
 
   @override
@@ -57,7 +59,7 @@ class _VideoLessonsState extends State<VideoLessons> {
                   child: VideoLessonItem(
                     videoLesson: widget.list[index],
                     // coverage:ignore-start
-                    onTap: () {},
+                    onTap: () => widget.onTap(widget.list[index]),
                     // coverage:ignore-end
                     width: imageWidth,
                     height: imageHeight,

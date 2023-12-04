@@ -19,21 +19,53 @@ import '../../../shared_mocks/domain/chord/chord_representation_mock.dart';
 import '../../../shared_mocks/domain/version/models/version_data_mock.dart';
 
 void main() {
-  test("When action is OnVersionInit", () {
-    final reducer = VersionReducer();
+  group("When action is OnVersionInit", () {
+    test("and youtubeId is null", () {
+      final reducer = VersionReducer();
 
-    final state = reducer.reduce(
-      const VersionState(),
-      OnVersionInit(
-        artistName: "Michel",
-        songName: "Se eu",
-      ),
-      (_) => null,
-    );
+      final state = reducer.reduce(
+        const VersionState(),
+        OnVersionInit(
+          artistName: "Michel",
+          songName: "Se eu",
+        ),
+        (_) => null,
+      );
 
-    expect(state.versionHeaderState.artistName, "Michel");
-    expect(state.versionHeaderState.songName, "Se eu");
-    expect(state.versionHeaderState.selectedInstrument, Instrument.guitar);
+      expect(state.versionHeaderState.artistName, "Michel");
+      expect(state.versionHeaderState.songName, "Se eu");
+      expect(state.versionHeaderState.selectedInstrument, Instrument.guitar);
+    });
+
+    test("and youtubeId is not null", () {
+      final reducer = VersionReducer();
+      final effectStream = PublishSubject<VersionEffect>();
+
+      expectLater(
+        effectStream.stream,
+        emitsInOrder([
+          isA<OnShowYouTubeVideo>().having((effect) => effect.videoId, "video id", "csdknksdnkl"),
+        ]),
+      );
+
+      final state = reducer.reduce(
+        const VersionState(),
+        OnVersionInit(
+          artistName: "Michel",
+          songName: "Se eu",
+          youtubeId: "csdknksdnkl",
+          instrument: Instrument.drums,
+        ),
+        effectStream.add,
+      );
+
+      expect(state.versionHeaderState.artistName, "Michel");
+      expect(state.versionHeaderState.songName, "Se eu");
+      expect(state.versionHeaderState.selectedInstrument, Instrument.drums);
+      expect(state.isYouTubeVisible, isTrue);
+
+      effectStream.close();
+    });
   });
 
   test("When action is OnStartLoading", () {

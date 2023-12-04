@@ -15,6 +15,7 @@ import 'package:cifraclub/presentation/bottom_sheets/profile_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/video_lessons/video_lessons.dart';
 import 'package:cifraclub/presentation/screens/top_artists/top_artists_entry.dart';
 import 'package:cifraclub/presentation/screens/top_songs/top_songs_entry.dart';
+import 'package:cifraclub/presentation/screens/version/full_screen_video/full_screen_video_entry.dart';
 import 'package:cifraclub/presentation/screens/version/version_entry.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget.dart';
 import 'package:cifraclub/presentation/widgets/error_description/error_description_widget_type.dart';
@@ -153,6 +154,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             horizontalPadding: dimensions.screenMargin),
                         VideoLessons(
                           list: state.videoLessons!.take(4).toList(),
+                          // coverage:ignore-start
+                          onTap: (videoLesson) {
+                            if (videoLesson.version == null) {
+                              FullScreenVideoEntry.push(Nav.of(context), videoLesson.youtubeId);
+                            } else {
+                              VersionEntry.pushFromVideoLesson(Nav.of(context), videoLesson);
+                            }
+                          },
+                          // coverage:ignore-end
                         ),
                         if (state.videoLessons!.length >= 4) ...[
                           const SliverToBoxAdapter(child: SizedBox(height: 8)),
