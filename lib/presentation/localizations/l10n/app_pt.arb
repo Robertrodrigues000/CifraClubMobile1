@@ -398,5 +398,10 @@
     "changeVersionDialogTitle": "Deseja manter as alterações feitas na cifra?",
     "changeVersionDialogDescription": "Ela está diferente da apresentada na vídeo aula.",
     "keepChanges": "Manter alterações",
-    "resetVersion": "Resetar cifra"
+    "resetVersion": "Resetar cifra",
+    "help": "Ajuda",
+    "seeOur": "Veja nossas ",
+    "publicationRules": "Regras para publicação de cifras, tablaturas e outras transcrições.",
+    "sendTabs": "Envie sua cifra ou tablatura",
+    "selectTabType": "Selecione o tipo de transcrição que deseja enviar."
 }

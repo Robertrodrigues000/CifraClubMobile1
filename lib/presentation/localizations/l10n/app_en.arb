@@ -455,5 +455,10 @@
     "changeVersionDialogTitle": "Do you want to keep the changes you made to the tab?",
     "changeVersionDialogDescription": "It is different from the one shown in the video lesson.",
     "keepChanges": "Keep changes",
-    "resetVersion": "Reset tab"
+    "resetVersion": "Reset tab",
+    "help": "Help",
+    "seeOur": "See our ",
+    "publicationRules": "Rules for publishing chords, tabs and other transcriptions.",
+    "sendTabs": "Send your chord or tab",
+    "selectTabType": "Select the type of transcription you want to send."
 }

@@ -34,32 +34,32 @@ import 'package:cifraclub/data/version/data_source/version_data_source.dart' as 
 import 'package:cifraclub/data/version/repository/version_repository_impl.dart' as _i74;
 import 'package:cifraclub/data/youtube/data_source/youtube_data_source.dart' as _i75;
 import 'package:cifraclub/data/youtube/repository/youtube_repository_impl.dart' as _i77;
-import 'package:cifraclub/di/analytics_module.dart' as _i215;
-import 'package:cifraclub/di/app_module.dart' as _i219;
-import 'package:cifraclub/di/artist_module.dart' as _i212;
+import 'package:cifraclub/di/analytics_module.dart' as _i202;
+import 'package:cifraclub/di/app_module.dart' as _i203;
+import 'package:cifraclub/di/artist_module.dart' as _i204;
 import 'package:cifraclub/di/authentication_module.dart' as _i205;
-import 'package:cifraclub/di/bottom_sheet_module.dart' as _i222;
-import 'package:cifraclub/di/controllers_module.dart' as _i223;
-import 'package:cifraclub/di/device_info_module.dart' as _i226;
-import 'package:cifraclub/di/device_module.dart' as _i224;
-import 'package:cifraclub/di/firebase_module.dart' as _i208;
-import 'package:cifraclub/di/genre_module.dart' as _i218;
-import 'package:cifraclub/di/home_module.dart' as _i211;
-import 'package:cifraclub/di/in_app_purchase_module.dart' as _i209;
-import 'package:cifraclub/di/isar_module.dart' as _i225;
-import 'package:cifraclub/di/log_module.dart' as _i206;
+import 'package:cifraclub/di/bottom_sheet_module.dart' as _i206;
+import 'package:cifraclub/di/controllers_module.dart' as _i207;
+import 'package:cifraclub/di/device_info_module.dart' as _i208;
+import 'package:cifraclub/di/device_module.dart' as _i209;
+import 'package:cifraclub/di/firebase_module.dart' as _i210;
+import 'package:cifraclub/di/genre_module.dart' as _i211;
+import 'package:cifraclub/di/home_module.dart' as _i212;
+import 'package:cifraclub/di/in_app_purchase_module.dart' as _i213;
+import 'package:cifraclub/di/isar_module.dart' as _i214;
+import 'package:cifraclub/di/log_module.dart' as _i215;
 import 'package:cifraclub/di/navigator_module.dart' as _i35;
-import 'package:cifraclub/di/network_module.dart' as _i221;
-import 'package:cifraclub/di/path_module.dart' as _i202;
-import 'package:cifraclub/di/permission_module.dart' as _i204;
-import 'package:cifraclub/di/remote_config_module.dart' as _i220;
-import 'package:cifraclub/di/search_module.dart' as _i207;
-import 'package:cifraclub/di/shared_preferences_module.dart' as _i214;
-import 'package:cifraclub/di/song_module.dart' as _i213;
-import 'package:cifraclub/di/songbook_module.dart' as _i217;
-import 'package:cifraclub/di/subscription_module.dart' as _i203;
-import 'package:cifraclub/di/time_module.dart' as _i210;
-import 'package:cifraclub/di/version_module.dart' as _i216;
+import 'package:cifraclub/di/network_module.dart' as _i216;
+import 'package:cifraclub/di/path_module.dart' as _i217;
+import 'package:cifraclub/di/permission_module.dart' as _i218;
+import 'package:cifraclub/di/remote_config_module.dart' as _i219;
+import 'package:cifraclub/di/search_module.dart' as _i220;
+import 'package:cifraclub/di/shared_preferences_module.dart' as _i221;
+import 'package:cifraclub/di/song_module.dart' as _i223;
+import 'package:cifraclub/di/songbook_module.dart' as _i222;
+import 'package:cifraclub/di/subscription_module.dart' as _i224;
+import 'package:cifraclub/di/time_module.dart' as _i225;
+import 'package:cifraclub/di/version_module.dart' as _i226;
 import 'package:cifraclub/domain/analytics/repository/analytics_repository.dart' as _i146;
 import 'package:cifraclub/domain/app/repository/device_info_repository.dart' as _i85;
 import 'package:cifraclub/domain/app/repository/installed_app_repository.dart' as _i28;
@@ -733,54 +733,54 @@ Future<_i1.GetIt> $initGetIt(
   return getIt;
 }
 
-class _$PathModule extends _i202.PathModule {}
+class _$AnalyticsModule extends _i202.AnalyticsModule {}
 
-class _$SubscriptionModule extends _i203.SubscriptionModule {}
+class _$AppModule extends _i203.AppModule {}
 
-class _$PermissionModule extends _i204.PermissionModule {}
+class _$ArtistModule extends _i204.ArtistModule {}
 
 class _$AuthenticationModule extends _i205.AuthenticationModule {}
 
-class _$LogModule extends _i206.LogModule {}
+class _$BottomSheetModule extends _i206.BottomSheetModule {}
 
-class _$SearchModule extends _i207.SearchModule {}
+class _$ControllersModule extends _i207.ControllersModule {}
 
-class _$FirebaseModule extends _i208.FirebaseModule {}
+class _$DeviceInfoModule extends _i208.DeviceInfoModule {}
 
-class _$InAppPurchaseModule extends _i209.InAppPurchaseModule {}
+class _$DeviceModule extends _i209.DeviceModule {}
 
-class _$TimeModule extends _i210.TimeModule {}
+class _$FirebaseModule extends _i210.FirebaseModule {}
 
-class _$HomeModule extends _i211.HomeModule {}
+class _$GenreModule extends _i211.GenreModule {}
 
-class _$ArtistModule extends _i212.ArtistModule {}
+class _$HomeModule extends _i212.HomeModule {}
 
-class _$SongModule extends _i213.SongModule {}
+class _$InAppPurchaseModule extends _i213.InAppPurchaseModule {}
 
-class _$SharedPreferencesModule extends _i214.SharedPreferencesModule {}
+class _$IsarModule extends _i214.IsarModule {}
 
-class _$AnalyticsModule extends _i215.AnalyticsModule {}
-
-class _$VersionModule extends _i216.VersionModule {}
+class _$LogModule extends _i215.LogModule {}
 
 class _$NavigatorModule extends _i35.NavigatorModule {}
 
-class _$SongbookModule extends _i217.SongbookModule {}
+class _$NetworkModule extends _i216.NetworkModule {}
 
-class _$GenreModule extends _i218.GenreModule {}
+class _$PathModule extends _i217.PathModule {}
 
-class _$AppModule extends _i219.AppModule {}
+class _$PermissionModule extends _i218.PermissionModule {}
 
-class _$RemoteConfigModule extends _i220.RemoteConfigModule {}
+class _$RemoteConfigModule extends _i219.RemoteConfigModule {}
 
-class _$NetworkModule extends _i221.NetworkModule {}
+class _$SearchModule extends _i220.SearchModule {}
 
-class _$BottomSheetModule extends _i222.BottomSheetModule {}
+class _$SharedPreferencesModule extends _i221.SharedPreferencesModule {}
 
-class _$ControllersModule extends _i223.ControllersModule {}
+class _$SongbookModule extends _i222.SongbookModule {}
 
-class _$DeviceModule extends _i224.DeviceModule {}
+class _$SongModule extends _i223.SongModule {}
 
-class _$IsarModule extends _i225.IsarModule {}
+class _$SubscriptionModule extends _i224.SubscriptionModule {}
 
-class _$DeviceInfoModule extends _i226.DeviceInfoModule {}
+class _$TimeModule extends _i225.TimeModule {}
+
+class _$VersionModule extends _i226.VersionModule {}

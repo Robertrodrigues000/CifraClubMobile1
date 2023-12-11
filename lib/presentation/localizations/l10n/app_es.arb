@@ -396,5 +396,10 @@
     "changeVersionDialogTitle": "¿Quieres conservar los cambios realizados en el cifrado?",
     "changeVersionDialogDescription": "El cifrado es diferente al que se muestra en la lección en video.",
     "keepChanges": "Mantener cambios",
-    "resetVersion": "Reiniciar cifrado"
+    "resetVersion": "Reiniciar cifrado",
+    "help": "Ayuda",
+    "seeOur": "Vea nuestras ",
+    "publicationRules": "Reglas para la publicación de cifrado, tablaturas y otras transcripciones.",
+    "sendTabs": "Envía tu cifrado o tablatura",
+    "selectTabType": "Seleccione el tipo de transcripción que desea enviar."
 }

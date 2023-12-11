@@ -8,6 +8,7 @@ import 'package:cifraclub/domain/user/use_cases/open_login_page.dart';
 import 'package:cifraclub/domain/user/use_cases/open_user_profile_page.dart';
 import 'package:cifraclub/domain/version/models/capo.dart';
 import 'package:cifraclub/presentation/bottom_sheets/default_bottom_sheet.dart';
+import 'package:cifraclub/presentation/screens/contrib/contrib_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_screen_state.dart';
 import 'package:cifraclub/presentation/bottom_sheets/dev_bottom_sheet/dev_bottom_sheet.dart';
@@ -125,8 +126,7 @@ class _DevScreenState extends State<DevScreen> {
                   ),
                   title: const Text("Bottom Sheet"),
                   onTap: () async {
-                    final result = await widget.devBottomSheet.open(context);
-                    print(result);
+                    await widget.devBottomSheet.open(context).then((_) => ContribScreenEntry.push(Nav.of(context)));
                   },
                 ),
                 ListTile(

@@ -4,6 +4,7 @@ import 'package:cifraclub/presentation/screens/album/album_entry.dart';
 import 'package:cifraclub/presentation/screens/albums/albums_entry.dart';
 import 'package:cifraclub/presentation/screens/artist/artist_entry.dart';
 import 'package:cifraclub/presentation/screens/artist_songs/artist_songs_entry.dart';
+import 'package:cifraclub/presentation/screens/contrib/contrib_entry.dart';
 import 'package:cifraclub/presentation/screens/dev/dev_entry.dart';
 import 'package:cifraclub/presentation/screens/genre/genre_entry.dart';
 import 'package:cifraclub/presentation/screens/genres/genres_entry.dart';
@@ -101,5 +102,9 @@ final List<NavRoute> routes = [
   NavRoute(
     FullScreenVideoEntry.name,
     (params, _) => FullScreenVideoEntry(params),
+  ),
+  NavRoute(
+    ContribScreenEntry.name,
+    (params, _) => ContribScreenEntry(params),
   ),
 ];
