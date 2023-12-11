@@ -47,17 +47,21 @@ class _ContribScreenState extends State<ContribScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                style: context.typography.title5,
-                children: [
-                  TextSpan(text: context.text.seeOur, style: context.typography.body11),
-                  TextSpan(
-                    text: context.text.publicationRules,
-                    style: context.typography.body11.copyWith(color: context.colors.primary),
-                  ),
-                ],
+            child: InkWell(
+              onTap: () => _bloc.openUrl(
+                  "https://suporte.cifraclub.com.br/pt-BR/support/solutions/articles/64000236814-conheca-o-padr%C3%A3o-para-envio-de-cifras-e-tablaturas"),
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  style: context.typography.title5,
+                  children: [
+                    TextSpan(text: context.text.seeOur, style: context.typography.body11),
+                    TextSpan(
+                      text: context.text.publicationRules,
+                      style: context.typography.body11.copyWith(color: context.colors.primary),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
