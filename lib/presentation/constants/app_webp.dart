@@ -58,4 +58,11 @@ class AppWebp {
   static const searchResultNotFoundDark = "assets/images/result_not_found_dark.webp";
 
   static const registeredEmail = "assets/images/register_email.webp";
+
+  static const contribCifra = "assets/images/cifra.webp";
+  static const contribGP = "assets/images/guitarPro.webp";
+  static const contribHarmonica = "assets/images/gaita.webp";
+  static const contribBass = "assets/images/baixo.webp";
+  static const contribDrum = "assets/images/bateria.webp";
+  static const contribScore = "assets/images/Partitura.webp";
 }

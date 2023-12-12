@@ -20,6 +20,8 @@ class ContribScreen extends StatefulWidget {
 
 class _ContribScreenState extends State<ContribScreen> {
   late final ContribScreenBloc _bloc = BlocProvider.of<ContribScreenBloc>(context);
+  final String patternLink =
+      "https://suporte.cifraclub.com.br/pt-BR/support/solutions/articles/64000236814-conheca-o-padr%C3%A3o-para-envio-de-cifras-e-tablaturas";
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +50,7 @@ class _ContribScreenState extends State<ContribScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: InkWell(
-              onTap: () => _bloc.openUrl(
-                  "https://suporte.cifraclub.com.br/pt-BR/support/solutions/articles/64000236814-conheca-o-padr%C3%A3o-para-envio-de-cifras-e-tablaturas"),
+              onTap: () => _bloc.openUrl(patternLink),
               child: RichText(
                 textAlign: TextAlign.start,
                 text: TextSpan(
@@ -113,10 +114,13 @@ class _ContribScreenState extends State<ContribScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 60,
                                   height: 60,
-                                  color: Colors.amber,
+                                  child: Image.asset(
+                                    instrument.instrumentImage,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                                 const SizedBox(height: 16),
                                 SizedBox(
