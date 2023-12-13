@@ -2,8 +2,10 @@
 // ignore_for_file: avoid_print
 import 'package:cifraclub/domain/version/models/instrument_contrib.dart';
 import 'package:cifraclub/extensions/build_context.dart';
+import 'package:cifraclub/presentation/bottom_sheets/contrib_help_bottom_sheet.dart';
 import 'package:cifraclub/presentation/screens/contrib/contrib_screen_bloc.dart';
 import 'package:cifraclub/presentation/screens/contrib/contrib_screen_state.dart';
+import 'package:cifraclub/presentation/screens/contrib/widgets/contrib_bottom_rules.dart';
 import 'package:cifraclub/presentation/screens/home/widgets/list_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,44 +31,29 @@ class _ContribScreenState extends State<ContribScreen> {
       return Scaffold(
         appBar: AppBar(
           actions: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.help_outline,
-                  size: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 16),
-                  child: Text(context.text.help, style: context.typography.body9),
-                ),
-              ],
+            InkWell(
+              onTap: () {
+                ContribHelpBottomSheet(
+                  onTap: () => _bloc.openUrl(patternLink),
+                  youtubeThumbnail: _bloc.getYoutubeThumbnail(),
+                ).show(context);
+              },
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.help_outline,
+                    size: 16,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 16),
+                    child: Text(context.text.help, style: context.typography.body9),
+                  ),
+                ],
+              ),
             )
           ],
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: context.colors.neutralTertiary),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: InkWell(
-              onTap: () => _bloc.openUrl(patternLink),
-              child: RichText(
-                textAlign: TextAlign.start,
-                text: TextSpan(
-                  style: context.typography.title5,
-                  children: [
-                    TextSpan(text: context.text.seeOur, style: context.typography.body11),
-                    TextSpan(
-                      text: context.text.publicationRules,
-                      style: context.typography.body11.copyWith(color: context.colors.primary),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+        bottomNavigationBar: ContribBottomRules(openUrl: () => _bloc.openUrl(patternLink)),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -126,7 +113,7 @@ class _ContribScreenState extends State<ContribScreen> {
                                 SizedBox(
                                   height: 24,
                                   child: Text(instrument.instrumentName, style: context.typography.body5),
-                                )
+                                ),
                               ],
                             ),
                           ),

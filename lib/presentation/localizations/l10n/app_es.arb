@@ -401,5 +401,8 @@
     "seeOur": "Vea nuestras ",
     "publicationRules": "Reglas para la publicación de cifrado, tablaturas y otras transcripciones.",
     "sendTabs": "Envía tu cifrado o tablatura",
-    "selectTabType": "Seleccione el tipo de transcripción que desea enviar."
+    "selectTabType": "Seleccione el tipo de transcripción que desea enviar.",
+    "contribDoubt": "¿Tienes alguna duda?",
+    "checkCompleteTutorial": "Consulte a continuación un tutorial completo sobre cómo enviar un cifrado",
+    "closeVideo": "Cerrar vídeo"
 }

@@ -403,5 +403,8 @@
     "seeOur": "Veja nossas ",
     "publicationRules": "Regras para publicação de cifras, tablaturas e outras transcrições.",
     "sendTabs": "Envie sua cifra ou tablatura",
-    "selectTabType": "Selecione o tipo de transcrição que deseja enviar."
+    "selectTabType": "Selecione o tipo de transcrição que deseja enviar.",
+    "contribDoubt": "Bateu aquela dúvida?",
+    "checkCompleteTutorial": "Confira abaixo um tutorial completo sobre como enviar uma cifra",
+    "closeVideo": "Fechar vídeo"
 }

@@ -11,4 +11,15 @@ class ContribScreenBloc extends Cubit<ContribScreenState> {
   ) : super(const ContribScreenState(isLoading: false));
 
   Future<void> openUrl(String url) => _openUrl(url);
+
+  String? getYoutubeThumbnail() {
+    const videoUrl = 'https://www.youtube.com/watch?v=2Rsz3JEbw0Y&ab';
+
+    final Uri? uri = Uri.tryParse(videoUrl);
+    if (uri == null) {
+      return null;
+    }
+
+    return 'https://img.youtube.com/vi/${uri.queryParameters['v']}/0.jpg';
+  }
 }

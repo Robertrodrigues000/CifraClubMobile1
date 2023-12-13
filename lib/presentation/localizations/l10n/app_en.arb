@@ -460,5 +460,8 @@
     "seeOur": "See our ",
     "publicationRules": "Rules for publishing chords, tabs and other transcriptions.",
     "sendTabs": "Send your chord or tab",
-    "selectTabType": "Select the type of transcription you want to send."
+    "selectTabType": "Select the type of transcription you want to send.",
+    "contribDoubt": "Do you have any doubts?",
+    "checkCompleteTutorial":"Check out a complete tutorial how to send a tab",
+    "closeVideo": "Close video"
 }

@@ -9,18 +9,20 @@ class CifraClubButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget? child;
   final EdgeInsets padding;
+  final EdgeInsets? innerPadding;
   final double height;
   final double? width;
 
-  const CifraClubButton(
-      {Key? key,
-      required this.type,
-      this.onPressed,
-      this.child,
-      this.padding = EdgeInsets.zero,
-      this.height = 48,
-      this.width})
-      : super(key: key);
+  const CifraClubButton({
+    Key? key,
+    required this.type,
+    this.onPressed,
+    this.child,
+    this.padding = EdgeInsets.zero,
+    this.height = 48,
+    this.width,
+    this.innerPadding,
+  }) : super(key: key);
 
   TextStyle _getTitleTextStyle(BuildContext context, CosmosColorScheme colorScheme, bool enabled) {
     final label = AppTypographyScheme.of(context).body9;
@@ -111,6 +113,7 @@ class CifraClubButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: onPressed,
           style: ButtonStyle(
+            padding: MaterialStateProperty.all(innerPadding),
             overlayColor: MaterialStateProperty.resolveWith((states) {
               return states.contains(MaterialState.pressed) ? _getOverlayColor(colorScheme) : null;
             }),
