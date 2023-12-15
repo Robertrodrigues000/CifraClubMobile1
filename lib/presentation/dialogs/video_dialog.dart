@@ -2,7 +2,6 @@ import 'package:cifraclub/extensions/build_context.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/button_type.dart';
 import 'package:cifraclub/presentation/widgets/cifraclub_button/cifraclub_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoDialog extends StatefulWidget {
@@ -28,23 +27,12 @@ class VideoDialog extends StatefulWidget {
 }
 
 class _VideoDialogState extends State<VideoDialog> {
-  var isYoutubeFullScreen = false;
   late final YoutubePlayerController _controller = YoutubePlayerController.fromVideoId(
     videoId: "2Rsz3JEbw0Y",
     params: const YoutubePlayerParams(
       showFullscreenButton: true,
     ),
   );
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller.setFullScreenListener((value) {
-      isYoutubeFullScreen = value;
-    });
-    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-  }
 
   @override
   void dispose() {

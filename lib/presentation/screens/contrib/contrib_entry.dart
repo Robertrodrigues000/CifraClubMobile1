@@ -24,7 +24,7 @@ class ContribScreenEntry extends ScreenEntry {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ContribScreenBloc(
+      create: (context) => ContribBloc(
         getIt(),
       ),
       child: const ContribScreen(),

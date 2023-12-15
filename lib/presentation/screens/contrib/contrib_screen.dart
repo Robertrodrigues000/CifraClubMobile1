@@ -22,18 +22,19 @@ class ContribScreen extends StatefulWidget {
 }
 
 class _ContribScreenState extends State<ContribScreen> {
-  late final ContribScreenBloc _bloc = BlocProvider.of<ContribScreenBloc>(context);
+  late final ContribBloc _bloc = BlocProvider.of<ContribBloc>(context);
   final String patternLink =
       "https://suporte.cifraclub.com.br/pt-BR/support/solutions/articles/64000236814-conheca-o-padr%C3%A3o-para-envio-de-cifras-e-tablaturas";
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContribScreenBloc, ContribScreenState>(
+    return BlocBuilder<ContribBloc, ContribState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             actions: [
               InkWell(
+                key: const Key("Open contrib help"),
                 onTap: () {
                   ContribHelpBottomSheet(
                     onTap: () => _bloc.openUrl(patternLink),

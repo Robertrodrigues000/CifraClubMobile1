@@ -1,5 +1,5 @@
-class ContribScreenState {
-  const ContribScreenState({
+class ContribState {
+  const ContribState({
     required this.isLoading,
   });
   final bool isLoading;

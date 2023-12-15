@@ -54,6 +54,7 @@ class ContribHelpBottomSheet extends StatelessWidget {
               Row(
                 children: [
                   ContainerWithRippleEffect(
+                    key: const Key("open-video"),
                     width: 100,
                     height: 56,
                     decoration: BoxDecoration(
@@ -104,9 +105,6 @@ class ContribHelpBottomSheet extends StatelessWidget {
           ),
         ),
         ContribBottomRules(openUrl: onTap),
-        const SizedBox(
-          height: 48,
-        ),
       ],
     );
   }
